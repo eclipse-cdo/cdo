@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.ecore.logicalstructure" version="2">
+    <resource path="src/org/eclipse/emf/cdo/ecore/logicalstructure/util/ContainerValue.java" type="org.eclipse.emf.cdo.ecore.logicalstructure.util.ContainerValue">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IJavaValue"/>
+                <message_argument value="ContainerValue"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/ecore/logicalstructure/util/DelegatingObject.java" type="org.eclipse.emf.cdo.ecore.logicalstructure.util.DelegatingObject">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IJavaObject"/>
+                <message_argument value="DelegatingObject"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="IJavaObject"/>
+                <message_argument value="DelegatingObject"/>
+                <message_argument value="IJavaValue"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/ecore/logicalstructure/util/DelegatingValue.java" type="org.eclipse.emf.cdo.ecore.logicalstructure.util.DelegatingValue">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IJavaValue"/>
+                <message_argument value="DelegatingValue"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/ecore/logicalstructure/util/Variable.java" type="org.eclipse.emf.cdo.ecore.logicalstructure.util.Variable">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IJavaVariable"/>
+                <message_argument value="Variable"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

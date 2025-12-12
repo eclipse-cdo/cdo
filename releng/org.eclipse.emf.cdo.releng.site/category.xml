@@ -10,8 +10,6 @@
   <feature id="org.eclipse.emf.cdo.examples" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.doc" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.sdk" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
-  <feature id="org.eclipse.emf.cdo.migrator" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
-  <feature id="org.eclipse.emf.cdo.ecore.dependencies" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.tests" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.dawn" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
   <feature id="org.eclipse.emf.cdo.server" version="0.0.0"><category name="org.eclipse.emf.cdo.category"/></feature>
@@ -23,6 +21,10 @@
   <category-def name="org.eclipse.emf.cdo.models.category" label="CDO Models"/>
   <plugin id="org.eclipse.emf.cdo.ecore" version="0.0.0"><category name="org.eclipse.emf.cdo.models.category"/></plugin>
   <plugin id="org.eclipse.emf.cdo.gmf.notation" version="0.0.0"><category name="org.eclipse.emf.cdo.models.category"/></plugin>
+
+  <!-- CDO Tools -->
+  <category-def name="org.eclipse.emf.cdo.tools.category" label="CDO Tools"/>
+  <feature id="org.eclipse.emf.cdo.tools" version="0.0.0"><category name="org.eclipse.emf.cdo.tools.category"/></feature>
 
   <!-- Net4j Signalling Platform -->
   <category-def name="org.eclipse.net4j.category" label="Net4j Signalling Platform"/>

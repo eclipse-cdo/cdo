@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension point="org.eclipse.emf.cdo.ecore.logicalstructure.containerValues">
+      <ContainerValue name="cdo" typeConstraint="org.eclipse.emf.spi.cdo.InternalCDOObject">
+         <Variable name="state" expression="return cdoState();"/>
+         <Variable name="id" expression="return cdoID();"/>
+         <Variable name="view" expression="return cdoView();"/>
+         <Variable name="revision" expression="return cdoRevision(false);"/>
+         <Variable name="delta" expression="return org.eclipse.emf.cdo.util.CDOUtil.getRevisionDelta(this);"/>
+         <!--
+         <Variable name="branch" expression="return cdoRevision() == null ? null : cdoRevision().getBranch();"/>
+         <Variable name="version" expression="return cdoRevision() == null ? 0 : cdoRevision().getVersion();"/>
+         <Variable name="timeStamp" expression="return cdoRevision() == null ? 0L : cdoRevision().getTimeStamp();"/>
+         <Variable name="revised" expression="return cdoRevision() == null ? 0L : cdoRevision().getRevised();"/>
+         -->
+      </ContainerValue>
+   </extension>
+
+</plugin>

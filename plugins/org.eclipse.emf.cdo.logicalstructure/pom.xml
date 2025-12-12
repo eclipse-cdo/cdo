@@ -23,9 +23,8 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
 
-  <groupId>org.eclipse.emf.cdo</groupId>
-  <artifactId>org.eclipse.emf.cdo.migrator</artifactId>
-  <version>3.4.3-SNAPSHOT</version>
+  <artifactId>org.eclipse.emf.cdo.logicalstructure</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

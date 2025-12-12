@@ -6,7 +6,7 @@
     xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/projects/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Projects.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/projects/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Projects.ecore"
     name="cdo-explorer"
     label="CDO Explorer">
   <annotation
@@ -42,11 +42,11 @@
     <requirement
         name="org.eclipse.emf.cdo.examples.installer.feature.group"/>
     <requirement
-        name="org.eclipse.emf.cdo.migrator.feature.group"/>
-    <requirement
         name="org.eclipse.net4j.sdk.feature.group"/>
     <requirement
         name="org.eclipse.emf.ecp.emfforms.runtime.feature.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.cdo.migrator"/>
   </setupTask>
   <setupTask
       xsi:type="setup:ResourceCopyTask"

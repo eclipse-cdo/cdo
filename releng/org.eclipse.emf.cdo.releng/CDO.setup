@@ -73,7 +73,7 @@
       xsi:type="setup.p2:P2Task"
       label="CDO">
     <requirement
-        name="org.eclipse.emf.cdo.migrator.feature.group"
+        name="org.eclipse.emf.cdo.tools.feature.group"
         optional="true"/>
     <requirement
         name="org.eclipse.emf.cdo.releng.apireports"
@@ -1697,7 +1697,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.19/@workingSets[name='CDO%20Tests'] //@setupTasks.19/@workingSets[name='CDO%20Examples'] //@setupTasks.19/@workingSets[name='CDO%20Dawn'] //@setupTasks.19/@workingSets[name='CDO%20Features'] //@setupTasks.19/@workingSets[name='CDO%20Releng']"/>
+            excludedWorkingSet="//@setupTasks.19/@workingSets[name='CDO%20Tests'] //@setupTasks.19/@workingSets[name='CDO%20Examples'] //@setupTasks.19/@workingSets[name='CDO%20Dawn'] //@setupTasks.19/@workingSets[name='CDO%20Tools'] //@setupTasks.19/@workingSets[name='CDO%20Features'] //@setupTasks.19/@workingSets[name='CDO%20Releng']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1744,6 +1744,22 @@
             xsi:type="workingsets:ExclusionPredicate"
             excludedWorkingSet="//@setupTasks.19/@workingSets[name='CDO%20Features']"/>
       </predicate>
+    </workingSet>
+    <workingSet
+        name="CDO Tools"
+        id="CDO CDO Tools">
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.eclipse\.emf\.cdo\.migrator"/>
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.eclipse\.emf\.cdo\.ecore\.dependencies"/>
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.eclipse\.emf\.cdo\.ecore\.logicalstructure"/>
+      <predicate
+          xsi:type="predicates:NamePredicate"
+          pattern="org\.eclipse\.emf\.cdo\.logicalstructure"/>
     </workingSet>
     <workingSet
         name="CDO Features"
@@ -1837,7 +1853,7 @@
           pattern="org\.eclipse\.emf\.cdo\.releng\.promotion.*"/>
       <predicate
           xsi:type="predicates:NamePredicate"
-          pattern="org\.eclipse\.emf\.cdo\.releng\.doc\.supplemental.*"/>
+          pattern="org\.eclipse\.oomph\.releng\.doc.*"/>
       <predicate
           xsi:type="predicates:NamePredicate"
           pattern="cdo\.www.*"/>

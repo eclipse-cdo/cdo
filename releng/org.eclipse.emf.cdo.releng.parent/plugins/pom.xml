@@ -23,7 +23,6 @@ Eike Stepper - initial API and implementation
     <relativePath>..</relativePath>
   </parent>
 
-  <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.plugins</artifactId>
   <version>4.7.0-SNAPSHOT</version>
   <packaging>pom</packaging>
@@ -42,6 +41,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.doc</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ecore</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ecore.dependencies</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.ecore.logicalstructure</module>
     <module>../../../plugins/org.eclipse.emf.cdo.edit</module>
     <module>../../../plugins/org.eclipse.emf.cdo.examples</module>
     <module>../../../plugins/org.eclipse.emf.cdo.examples.client</module>
@@ -73,6 +73,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.lm.security.edit</module>
     <module>../../../plugins/org.eclipse.emf.cdo.lm.server</module>
     <module>../../../plugins/org.eclipse.emf.cdo.lm.ui</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.logicalstructure</module>
     <module>../../../plugins/org.eclipse.emf.cdo.migrator</module>
     <module>../../../plugins/org.eclipse.emf.cdo.net4j</module>
     <module>../../../plugins/org.eclipse.emf.cdo.sdk</module>

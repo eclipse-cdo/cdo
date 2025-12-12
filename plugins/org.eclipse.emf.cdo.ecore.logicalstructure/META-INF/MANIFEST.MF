@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.eclipse.emf.cdo.ecore.logicalstructure;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Localization: plugin
+Bundle-Name: %pluginName
+Bundle-Vendor: %providerName
+Bundle-Activator: org.eclipse.emf.cdo.ecore.logicalstructure.Activator
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-21
+Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
+ org.eclipse.debug.core;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
+ org.eclipse.jdt.core;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
+ org.eclipse.jdt.debug;bundle-version="[3.5.0,4.0.0)";resolution:=optional
+Export-Package: org.eclipse.emf.cdo.ecore.logicalstructure;version="1.0.0",
+ org.eclipse.emf.cdo.ecore.logicalstructure.util;version="1.0.0"
+Automatic-Module-Name: org.eclipse.emf.cdo.ecore.logicalstructure

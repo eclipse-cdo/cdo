@@ -33,13 +33,11 @@ Eike Stepper - initial API and implementation
     <module>../../../features/org.eclipse.emf.cdo.compare-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.dawn-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.doc-feature</module>
-    <module>../../../features/org.eclipse.emf.cdo.ecore.dependencies-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.examples-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.examples.installer-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.license-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.lm-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.lm.reviews-feature</module>
-    <module>../../../features/org.eclipse.emf.cdo.migrator-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.sdk-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server.db-feature</module>
@@ -47,6 +45,7 @@ Eike Stepper - initial API and implementation
     <module>../../../features/org.eclipse.emf.cdo.server.lissome-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server.mongodb-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.tests-feature</module>
+    <module>../../../features/org.eclipse.emf.cdo.tools-feature</module>
     <module>../../../features/org.eclipse.net4j-feature</module>
     <module>../../../features/org.eclipse.net4j.db-feature</module>
     <module>../../../features/org.eclipse.net4j.db.derby-feature</module>

@@ -55,13 +55,12 @@
         <setEntry value="org.eclipse.e4.rcp:default"/>
         <setEntry value="org.eclipse.emf.cdo.compare:default"/>
         <setEntry value="org.eclipse.emf.cdo.doc:default"/>
-        <setEntry value="org.eclipse.emf.cdo.ecore.dependencies:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples.installer:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples:default"/>
         <setEntry value="org.eclipse.emf.cdo.license:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm.reviews:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm:default"/>
-        <setEntry value="org.eclipse.emf.cdo.migrator:default"/>
+        <setEntry value="org.eclipse.emf.cdo.tools:default"/>
         <setEntry value="org.eclipse.emf.cdo.server.db:default"/>
         <setEntry value="org.eclipse.emf.cdo.server:default"/>
         <setEntry value="org.eclipse.emf.cdo:default"/>

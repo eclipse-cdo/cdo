@@ -48,7 +48,7 @@ public interface CDOSession extends CDONet4jSession
   {
     /**
      * Returns the Net4j {@link CDOSessionProtocol protocol} instance that represents the underlying
-     * <em>signalling connection</em> to the repository of this session.
+     * <em>signaling connection</em> to the repository of this session.
      *
      * @see #getNet4jProtocol()
      * @deprecated Kept for 4.0 compatibility. Newer code should call {@link #getNet4jProtocol()}.

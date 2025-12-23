@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;</code></dd>
+<dd><code><a href="../util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
@@ -97,7 +97,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOPackageUnit</span><span class="extends-implements">
-extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;, <a href="../util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></span></div>
+extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;, <a href="../util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></span></div>
 <div class="block">Represents a tree structure of nested <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>packages</code></a> that are registered with a <a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a> and that can only be serialized as a whole.
  <p>
  A package unit is the granule of committing or lazy loading packages. It contains some overall information like
@@ -155,7 +155,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.
 <div class="block">Returns all <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>packages</code></a> of the nested package tree structure described by this package unit in
  depth-first traversal order.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getID()" class="member-name-link">getID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the ID of this package unit.</div>
@@ -166,7 +166,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.
 <div class="block">Returns the type of this package unit as it was at the time it was originally committed by a client.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPackageInfo(java.lang.String)" class="member-name-link">getPackageInfo</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;packageURI)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPackageInfo(java.lang.String)" class="member-name-link">getPackageInfo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;packageURI)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <a href="CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>package</code></a> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
@@ -218,8 +218,8 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Comparable">Methods inherited from interface&nbsp;java.lang.<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a></h3>
-<code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.html#compareTo-T-" title="class or interface in java.lang" class="external-link">compareTo</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Comparable">Methods inherited from interface&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html#compareTo(T)" title="class or interface in java.lang" class="external-link">compareTo</a></code></div>
 </section>
 </li>
 </ul>
@@ -241,7 +241,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.
 <li>
 <section class="detail" id="getID()">
 <h3>getID</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getID</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getID</span>()</div>
 <div class="block">Returns the ID of this package unit.
  <p>
  Same as <a href="#getTopLevelPackageInfo()"><code>getTopLevelPackageInfo()</code></a>. <a href="CDOPackageInfo.html#getPackageURI()"><code>CDOPackageInfo.getPackageURI()</code></a>.</div>
@@ -290,7 +290,7 @@ extends <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Comparable.
 <li>
 <section class="detail" id="getPackageInfo(java.lang.String)">
 <h3>getPackageInfo</h3>
-<div class="member-signature"><span class="return-type"><a href="CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></span>&nbsp;<span class="element-name">getPackageInfo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;packageURI)</span></div>
+<div class="member-signature"><span class="return-type"><a href="CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></span>&nbsp;<span class="element-name">getPackageInfo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;packageURI)</span></div>
 <div class="block">Returns the <a href="CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package info</code></a> object that describes the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>package</code></a> with the given
  namespace URI, or <code>null</code> if this package unit does not contain a package with this URI.</div>
 </section>

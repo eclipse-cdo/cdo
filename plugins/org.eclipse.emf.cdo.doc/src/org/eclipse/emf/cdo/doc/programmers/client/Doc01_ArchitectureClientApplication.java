@@ -119,7 +119,7 @@ public class Doc01_ArchitectureClientApplication
   /**
    * Net4j Core
    * <p>
-   * The <i>Net4j Signalling Platform</i> is an extensible client/server communications framework. Net4j eases the
+   * The <i>Net4j Signaling Platform</i> is an extensible client/server communications framework. Net4j eases the
    * development of fast and maintainable application {@link ISignalProtocol protocols} that are independent of the
    * physical {@link IConnector transport} medium. Transport protocols are pluggable and Net4j ships with support for
    * {@link ITCPConnector TCP}, {@link SSLUtil SSL}, {@link IWSConnector WS} and {@link IJVMConnector JVM}

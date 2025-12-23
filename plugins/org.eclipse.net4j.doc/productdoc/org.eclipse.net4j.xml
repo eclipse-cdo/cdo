@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="org.eclipse.net4j" label="Net4j Signalling Platform">
+<plugin id="org.eclipse.net4j" label="Net4j Signaling Platform">
 	<productGroup id="org.eclipse.net4j.acceptorDescriptionParsers" name="Net4j Acceptor Description Parsers" description="" deprecated="false">
 		<factory type="jvm" class="org.eclipse.net4j.internal.jvm.JVMAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.jvm"/>
 		<factory type="ssl" class="org.eclipse.net4j.internal.tcp.ssl.SSLAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.tcp"/>

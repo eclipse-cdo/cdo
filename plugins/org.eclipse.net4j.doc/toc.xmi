@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ASCII"?>
 <xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:article="http://www.eclipse.org/ARTICLE/1.0">
-  <article:Plugin name="org.eclipse.net4j" label="Net4j Signalling Platform">
+  <article:Plugin name="org.eclipse.net4j" label="Net4j Signaling Platform">
     <packages name="org.eclipse.net4j"/>
     <packages name="org.eclipse.net4j.acceptor"/>
     <packages name="org.eclipse.net4j.buffer"/>
@@ -21,17 +21,17 @@
     <productGroups id="org.eclipse.net4j.selectors" name="Net4j Selectors" description=""/>
     <productGroups id="org.eclipse.net4j.serverProtocols" name="Net4j Server Protocols" description=""/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.jvm" label="Net4j Signalling Platform JVM Transport">
+  <article:Plugin name="org.eclipse.net4j.jvm" label="Net4j Signaling Platform JVM Transport">
     <packages name="org.eclipse.net4j.jvm"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.tcp" label="Net4j Signalling Platform TCP Transport">
+  <article:Plugin name="org.eclipse.net4j.tcp" label="Net4j Signaling Platform TCP Transport">
     <packages name="org.eclipse.net4j.tcp"/>
     <packages name="org.eclipse.net4j.tcp.ssl"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.ui" label="Net4j Signalling Platform UI">
+  <article:Plugin name="org.eclipse.net4j.ui" label="Net4j Signaling Platform UI">
     <packages name="org.eclipse.net4j.ui"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.ws" label="Net4j Signalling Platform Websocket Transport">
+  <article:Plugin name="org.eclipse.net4j.ws" label="Net4j Signaling Platform Websocket Transport">
     <packages name="org.eclipse.net4j.ws"/>
     <packages name="org.eclipse.net4j.ws.jetty"/>
     <packages name="org.eclipse.net4j.wss"/>

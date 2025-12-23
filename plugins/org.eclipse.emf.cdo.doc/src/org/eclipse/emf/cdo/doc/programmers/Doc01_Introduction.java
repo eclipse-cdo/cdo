@@ -23,7 +23,7 @@ package org.eclipse.emf.cdo.doc.programmers;
  * <ul>
  * <li>The <a href="https://help.eclipse.org/latest/topic/org.eclipse.pde.doc.user/guide/intro/pde_overview.htm">Plug-in Development Environment Guide</a> provides information about developing Eclipse plug-ins.
  * <li>The <a href="https://eclipse.dev/emf/docs.html">EMF Documentation</a> provides comprehensive information about EMF concepts and APIs.
- * <li>The {@link org.eclipse.net4j.doc.Overview Net4j Signalling Platform Documentation} explains the underlying communication framework used by CDO.
+ * <li>The {@link org.eclipse.net4j.doc.Overview Net4j Signaling Platform Documentation} explains the underlying communication framework used by CDO.
  * <li>The {@link org.eclipse.net4j.db.doc.Overview Net4j DB Framework Documentation} explains the database access framework used by CDO.
  * <li>The {@link org.eclipse.net4j.util.doc.Overview Net4j Utilities Documentation} explains various utility classes used by CDO.
  * </ul>

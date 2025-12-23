@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.debug; singleton:=true
-Bundle-Version: 3.2.0.qualifier
+Bundle-Version: 3.2.1.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Activator: org.eclipse.net4j.internal.debug.bundle.OM$Activator
@@ -11,8 +11,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.util.ui;bundle-version="[3.0.0,4.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.net4j.internal.debug;version="3.2.0";x-internal:=true,
- org.eclipse.net4j.internal.debug.bundle;version="3.2.0";x-internal:=true,
- org.eclipse.net4j.internal.debug.messages;version="3.2.0";x-internal:=true,
- org.eclipse.net4j.internal.debug.views;version="3.2.0";x-internal:=true
+Export-Package: org.eclipse.net4j.internal.debug;version="3.2.1";x-internal:=true,
+ org.eclipse.net4j.internal.debug.bundle;version="3.2.1";x-internal:=true,
+ org.eclipse.net4j.internal.debug.messages;version="3.2.1";x-internal:=true,
+ org.eclipse.net4j.internal.debug.views;version="3.2.1";x-internal:=true
 Automatic-Module-Name: org.eclipse.net4j.debug

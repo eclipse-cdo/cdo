@@ -176,7 +176,7 @@ extends <a href="IRepository.Handler.html" title="interface in org.eclipse.emf.c
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">handleTransactionBeforeCommitting</span><wbr><span class="parameters">(<a href="ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction,
  <a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span>
-                                throws <span class="exceptions"><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></span></div>
+                                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></span></div>
 <div class="block">Provides a way to handle transactions that are to be committed to the backend store.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -190,7 +190,7 @@ extends <a href="IRepository.Handler.html" title="interface in org.eclipse.emf.c
 <dd><code><a href="IRepository.WriteAccessHandler.TransactionValidationException.html" title="class in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler.TransactionValidationException</a></code> - to indicate that the commit operation must not be executed against the backend store because some
            semantic validation checks failed. The message should describe the validation failure and will be
            passed through to the client</dd>
-<dd><code><a href="https://docs.oracle.com/javase/8/docs/api/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></code> - to indicate that the commit operation must not be executed against the backend store. This exception
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></code> - to indicate that the commit operation must not be executed against the backend store. This exception
            will be visible at the client side!</dd>
 </dl>
 </section>

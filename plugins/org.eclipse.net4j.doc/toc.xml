@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?NLS TYPE="org.eclipse.help.toc"?>
 
-<toc label="Net4j Signalling Platform Documentation" topic="html/Overview.html">
+<toc label="Net4j Signaling Platform Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" icon="article" />
   <topic label="API Reference" href="javadoc/overview-summary.html">
-    <topic label="Net4j Signalling Platform" href="javadoc/org/eclipse/net4j/package-summary.html" icon="plugin">
+    <topic label="Net4j Signaling Platform" href="javadoc/org/eclipse/net4j/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j" href="javadoc/org/eclipse/net4j/package-summary.html" icon="package">
         <topic label="ContainerProtocolProvider" href="javadoc/org/eclipse/net4j/ContainerProtocolProvider.html" icon="class" />
         <topic label="ContainerProtocolProvider.Client" href="javadoc/org/eclipse/net4j/ContainerProtocolProvider.Client.html" icon="class" />
@@ -133,7 +133,7 @@
         <topic label="ServerProtocolFactory" href="javadoc/org/eclipse/spi/net4j/ServerProtocolFactory.html" icon="class" />
       </topic>
     </topic>
-    <topic label="Net4j Signalling Platform JVM Transport" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="plugin">
+    <topic label="Net4j Signaling Platform JVM Transport" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.jvm" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="package">
         <topic label="IJVMAcceptor" href="javadoc/org/eclipse/net4j/jvm/IJVMAcceptor.html" icon="interface" />
         <topic label="IJVMAcceptorManager" href="javadoc/org/eclipse/net4j/jvm/IJVMAcceptorManager.html" icon="interface" />
@@ -142,7 +142,7 @@
         <topic label="JVMUtil" href="javadoc/org/eclipse/net4j/jvm/JVMUtil.html" icon="class" />
       </topic>
     </topic>
-    <topic label="Net4j Signalling Platform TCP Transport" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="plugin">
+    <topic label="Net4j Signaling Platform TCP Transport" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.tcp" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="package">
         <topic label="ITCPAcceptor" href="javadoc/org/eclipse/net4j/tcp/ITCPAcceptor.html" icon="interface" />
         <topic label="ITCPActiveSelectorListener" href="javadoc/org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" icon="interface" />
@@ -158,7 +158,7 @@
         <topic label="SSLUtil" href="javadoc/org/eclipse/net4j/tcp/ssl/SSLUtil.html" icon="class" />
       </topic>
     </topic>
-    <topic label="Net4j Signalling Platform UI" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="plugin">
+    <topic label="Net4j Signaling Platform UI" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.ui" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="package">
         <topic label="AcceptorContentProvider" href="javadoc/org/eclipse/net4j/ui/AcceptorContentProvider.html" icon="class" />
         <topic label="ConnectorContentProvider" href="javadoc/org/eclipse/net4j/ui/ConnectorContentProvider.html" icon="class" />
@@ -167,7 +167,7 @@
         <topic label="Net4jItemProvider.RemoveAction" href="javadoc/org/eclipse/net4j/ui/Net4jItemProvider.RemoveAction.html" icon="class" />
       </topic>
     </topic>
-    <topic label="Net4j Signalling Platform Websocket Transport" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="plugin">
+    <topic label="Net4j Signaling Platform Websocket Transport" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.ws" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="package">
         <topic label="IWSAcceptor" href="javadoc/org/eclipse/net4j/ws/IWSAcceptor.html" icon="interface" />
         <topic label="IWSAcceptorManager" href="javadoc/org/eclipse/net4j/ws/IWSAcceptorManager.html" icon="interface" />
@@ -185,7 +185,7 @@
     </topic>
   </topic>
   <topic label="Product Group Reference" href="html/product/index.html">
-    <topic label="Net4j Signalling Platform" href="productdoc/org.eclipse.net4j.acceptorDescriptionParsers.html" icon="plugin">
+    <topic label="Net4j Signaling Platform" href="productdoc/org.eclipse.net4j.acceptorDescriptionParsers.html" icon="plugin">
       <topic label="Net4j Acceptor Description Parsers" href="productdoc/org.eclipse.net4j.acceptorDescriptionParsers.html" icon="productgroup" />
       <topic label="Net4j Acceptors" href="productdoc/org.eclipse.net4j.acceptors.html" icon="productgroup" />
       <topic label="Net4j Buffer Providers" href="productdoc/org.eclipse.net4j.bufferProviders.html" icon="productgroup" />

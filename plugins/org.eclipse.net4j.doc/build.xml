@@ -120,7 +120,7 @@
 				<include name="org.eclipse.net4j/src/org/eclipse/spi/net4j/*.java" />
       </fileset>
 
-			<group title="Net4j Signalling Platform">
+			<group title="Net4j Signaling Platform">
 				<package name="org.eclipse.net4j" />
 				<package name="org.eclipse.net4j.acceptor" />
 				<package name="org.eclipse.net4j.buffer" />
@@ -134,17 +134,17 @@
 				<package name="org.eclipse.net4j.signal.wrapping" />
 				<package name="org.eclipse.spi.net4j" />
 			</group>
-			<group title="Net4j Signalling Platform JVM Transport">
+			<group title="Net4j Signaling Platform JVM Transport">
 				<package name="org.eclipse.net4j.jvm" />
 			</group>
-			<group title="Net4j Signalling Platform TCP Transport">
+			<group title="Net4j Signaling Platform TCP Transport">
 				<package name="org.eclipse.net4j.tcp" />
 				<package name="org.eclipse.net4j.tcp.ssl" />
 			</group>
-			<group title="Net4j Signalling Platform UI">
+			<group title="Net4j Signaling Platform UI">
 				<package name="org.eclipse.net4j.ui" />
 			</group>
-			<group title="Net4j Signalling Platform Websocket Transport">
+			<group title="Net4j Signaling Platform Websocket Transport">
 				<package name="org.eclipse.net4j.ws" />
 				<package name="org.eclipse.net4j.ws.jetty" />
 				<package name="org.eclipse.net4j.wss" />

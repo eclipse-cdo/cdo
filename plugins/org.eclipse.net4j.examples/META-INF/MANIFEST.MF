@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.examples;singleton:=true
-Bundle-Version: 4.1.6.qualifier
+Bundle-Version: 4.1.7.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Activator: org.eclipse.net4j.internal.examples.bundle.OM$Activator
@@ -13,9 +13,9 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resoluti
  org.eclipse.net4j.tcp;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.jvm;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.net4j.examples.echo;version="4.1.6",
- org.eclipse.net4j.examples.echo.client;version="4.1.6",
- org.eclipse.net4j.examples.echo.server;version="4.1.6",
- org.eclipse.net4j.examples.transfer;version="4.1.6",
- org.eclipse.net4j.internal.examples.bundle;version="4.1.6"
+Export-Package: org.eclipse.net4j.examples.echo;version="4.1.7",
+ org.eclipse.net4j.examples.echo.client;version="4.1.7",
+ org.eclipse.net4j.examples.echo.server;version="4.1.7",
+ org.eclipse.net4j.examples.transfer;version="4.1.7",
+ org.eclipse.net4j.internal.examples.bundle;version="4.1.7"
 Automatic-Module-Name: org.eclipse.net4j.examples

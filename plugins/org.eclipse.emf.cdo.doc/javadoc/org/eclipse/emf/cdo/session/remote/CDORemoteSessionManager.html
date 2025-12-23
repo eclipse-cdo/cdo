@@ -189,13 +189,13 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
  <a href="#getLocalSession()"><code>local session</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRemoteSessions(java.lang.String)" class="member-name-link">getRemoteSessions</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRemoteSessions(java.lang.String)" class="member-name-link">getRemoteSessions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the set of <a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a> that are connected to the same repository as the
  <a href="#getLocalSession()"><code>local session</code></a> and have the given <code>userID</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSubscribedTopic(java.lang.String)" class="member-name-link">getSubscribedTopic</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSubscribedTopic(java.lang.String)" class="member-name-link">getSubscribedTopic</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>topic</code></a> with the given <a href="CDORemoteTopic.html#getID()"><code>id</code></a>,
  if it is currently subscribed, <code>null</code> otherwise.</div>
@@ -218,13 +218,13 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
 <div class="block">Returns <code>true</code> if this CDORemoteSessionManager is subscribed to changes in the set of remote sessions
  and delivers <a href="CDORemoteSessionEvent.MessageReceived.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>custom data events</code></a>, <code>false</code> otherwise.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,java.util.Collection)" class="member-name-link">sendMessage</a><wbr>(<a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;&nbsp;recipients)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;&nbsp;recipients)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Same as <a href="#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession...)"><code>sendMessage(CDORemoteSessionMessage, CDORemoteSession...)</code></a> but with a recipients <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link"><code>collection</code></a>.</div>
+<div class="block">Same as <a href="#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession...)"><code>sendMessage(CDORemoteSessionMessage, CDORemoteSession...)</code></a> but with a recipients <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link"><code>collection</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession...)" class="member-name-link">sendMessage</a><wbr>(<a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
  <a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>...&nbsp;recipients)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -237,7 +237,7 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
  registered and no <a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>topic</code></a> is subscribed.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#subscribeTopic(java.lang.String)" class="member-name-link">subscribeTopic</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#subscribeTopic(java.lang.String)" class="member-name-link">subscribeTopic</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Subscribes to the topic identified by the given <code>id</code>.</div>
 </div>
@@ -280,7 +280,7 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
 <li>
 <section class="detail" id="getRemoteSessions(java.lang.String)">
 <h3>getRemoteSessions</h3>
-<div class="member-signature"><span class="return-type"><a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</span>&nbsp;<span class="element-name">getRemoteSessions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</span></div>
+<div class="member-signature"><span class="return-type"><a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</span>&nbsp;<span class="element-name">getRemoteSessions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</span></div>
 <div class="block">Returns the set of <a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a> that are connected to the same repository as the
  <a href="#getLocalSession()"><code>local session</code></a> and have the given <code>userID</code>. If this
  CDORemoteSessionManager itself is <a href="#isSubscribed()"><code>subscribed</code></a> the result is returned from a local
@@ -370,7 +370,7 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
 <li>
 <section class="detail" id="sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession...)">
 <h3>sendMessage</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</span>&nbsp;<span class="element-name">sendMessage</span><wbr><span class="parameters">(<a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</span>&nbsp;<span class="element-name">sendMessage</span><wbr><span class="parameters">(<a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
  <a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>...&nbsp;recipients)</span></div>
 <div class="block">Sends a multicast message to the subscribed recipients.</div>
 <dl class="notes">
@@ -386,9 +386,9 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
 <li>
 <section class="detail" id="sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,java.util.Collection)">
 <h3>sendMessage</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</span>&nbsp;<span class="element-name">sendMessage</span><wbr><span class="parameters">(<a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
- <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;&nbsp;recipients)</span></div>
-<div class="block">Same as <a href="#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession...)"><code>sendMessage(CDORemoteSessionMessage, CDORemoteSession...)</code></a> but with a recipients <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Collection.html" title="class or interface in java.util" class="external-link"><code>collection</code></a>.</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;</span>&nbsp;<span class="element-name">sendMessage</span><wbr><span class="parameters">(<a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;&nbsp;recipients)</span></div>
+<div class="block">Same as <a href="#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession...)"><code>sendMessage(CDORemoteSessionMessage, CDORemoteSession...)</code></a> but with a recipients <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link"><code>collection</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
@@ -398,7 +398,7 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
 <li>
 <section class="detail" id="subscribeTopic(java.lang.String)">
 <h3>subscribeTopic</h3>
-<div class="member-signature"><span class="return-type"><a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a></span>&nbsp;<span class="element-name">subscribeTopic</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="return-type"><a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a></span>&nbsp;<span class="element-name">subscribeTopic</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
 <div class="block">Subscribes to the topic identified by the given <code>id</code>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -411,7 +411,7 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
 <li>
 <section class="detail" id="getSubscribedTopic(java.lang.String)">
 <h3>getSubscribedTopic</h3>
-<div class="member-signature"><span class="return-type"><a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a></span>&nbsp;<span class="element-name">getSubscribedTopic</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
+<div class="member-signature"><span class="return-type"><a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a></span>&nbsp;<span class="element-name">getSubscribedTopic</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id)</span></div>
 <div class="block">Returns the <a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>topic</code></a> with the given <a href="CDORemoteTopic.html#getID()"><code>id</code></a>,
  if it is currently subscribed, <code>null</code> otherwise.</div>
 <dl class="notes">

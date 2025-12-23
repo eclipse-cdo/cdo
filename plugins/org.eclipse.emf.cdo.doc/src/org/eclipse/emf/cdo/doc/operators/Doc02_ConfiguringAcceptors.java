@@ -41,7 +41,7 @@ public class Doc02_ConfiguringAcceptors
    * Element acceptor
    * <p>
    * Defines an {@link IAcceptor} instance.
-   * Please refer to the Net4j Signalling Platform documentation for details about acceptors and connectors.
+   * Please refer to the Net4j Signaling Platform documentation for details about acceptors and connectors.
    * <p>
    * The <code>type</code> attribute corresponds to the type of an acceptor factory that is contributed via the
    * <code>org.eclipse.net4j.util.factories</code> extension point with a product group of
@@ -71,7 +71,7 @@ public class Doc02_ConfiguringAcceptors
    * Element negotiator
    * <p>
    * Defines an {@link INegotiator} instance to be used by the enclosing {@link Element_acceptor acceptor} element.
-   * Please refer to the Net4j Signalling Platform documentation for details about negotiators and the pluggable security concept
+   * Please refer to the Net4j Signaling Platform documentation for details about negotiators and the pluggable security concept
    * that can be used for authentication and authorization on the transport-level.
    * <p>
    * The <code>type</code> attribute corresponds to the type of a negotiator factory that is contributed via the

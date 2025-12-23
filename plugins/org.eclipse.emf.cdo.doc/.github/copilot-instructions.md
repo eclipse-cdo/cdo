@@ -35,7 +35,7 @@ Here are some general rules for writing the documentation:
 * The @snip block tag comes last in a Java code example method.
   It's usually the only tag on a snippet.
 
-#Meta tags for Copilot#
+# Meta tags for Copilot
 
 * The JavaDoc tag @explain is a hint for Copilot. The paragraph following @explain is an instruction for Copilot
   to write one or more sections for the topics listed in the instruction. The written sections fully replace

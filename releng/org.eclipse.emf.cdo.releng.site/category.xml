@@ -26,8 +26,8 @@
   <category-def name="org.eclipse.emf.cdo.tools.category" label="CDO Tools"/>
   <feature id="org.eclipse.emf.cdo.tools" version="0.0.0"><category name="org.eclipse.emf.cdo.tools.category"/></feature>
 
-  <!-- Net4j Signalling Platform -->
-  <category-def name="org.eclipse.net4j.category" label="Net4j Signalling Platform"/>
+  <!-- Net4j Signaling Platform -->
+  <category-def name="org.eclipse.net4j.category" label="Net4j Signaling Platform"/>
   <feature id="org.eclipse.net4j" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>
   <feature id="org.eclipse.net4j.ws" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>
   <feature id="org.eclipse.net4j.doc" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>

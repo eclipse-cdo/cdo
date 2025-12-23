@@ -55,6 +55,7 @@ loadScripts(document, 'script');</script>
 <ul class="contents-list">
 <li id="contents-class"><a href="#class">Classes</a></li>
 <li id="contents-method"><a href="#method">Methods</a></li>
+<li id="contents-constructor"><a href="#constructor">Constructors</a></li>
 </ul>
 <ul class="block-list">
 <li>
@@ -165,6 +166,87 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">As of 4.13 no longer supported. Use <a href="org/eclipse/net4j/spi/db/DBAdapter.html#getIndexInfos(java.sql.DatabaseMetaData,java.lang.String,java.lang.String,java.util.function.Consumer)"><code>DBAdapter.getIndexInfos(DatabaseMetaData, String, String, Consumer)</code></a> instead.</div>
 </div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#addListener(org.eclipse.net4j.util.event.IListener)">org.eclipse.net4j.spi.db.DBSchema.addListener<wbr>(IListener)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#addTable(java.lang.String)">org.eclipse.net4j.spi.db.DBSchema.addTable<wbr>(String)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#assertUnlocked()">org.eclipse.net4j.spi.db.DBSchema.assertUnlocked()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection)">org.eclipse.net4j.spi.db.DBSchema.create<wbr>(IDBAdapter, Connection)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,javax.sql.DataSource)">org.eclipse.net4j.spi.db.DBSchema.create<wbr>(IDBAdapter, DataSource)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider)">org.eclipse.net4j.spi.db.DBSchema.create<wbr>(IDBAdapter, IDBConnectionProvider)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection)">org.eclipse.net4j.spi.db.DBSchema.drop<wbr>(IDBAdapter, Connection)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,javax.sql.DataSource)">org.eclipse.net4j.spi.db.DBSchema.drop<wbr>(IDBAdapter, DataSource)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#drop(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider)">org.eclipse.net4j.spi.db.DBSchema.drop<wbr>(IDBAdapter, IDBConnectionProvider)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#export(java.sql.Connection,java.io.PrintStream)">org.eclipse.net4j.spi.db.DBSchema.export<wbr>(Connection, PrintStream)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#export(javax.sql.DataSource,java.io.PrintStream)">org.eclipse.net4j.spi.db.DBSchema.export<wbr>(DataSource, PrintStream)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#export(org.eclipse.net4j.db.IDBConnectionProvider,java.io.PrintStream)">org.eclipse.net4j.spi.db.DBSchema.export<wbr>(IDBConnectionProvider, PrintStream)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#finalize()">org.eclipse.net4j.spi.db.DBSchema.finalize()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#fireEvent()">org.eclipse.net4j.spi.db.DBSchema.fireEvent()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">org.eclipse.net4j.spi.db.DBSchema.fireEvent<wbr>(IEvent)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)">org.eclipse.net4j.spi.db.DBSchema.fireEvent<wbr>(IEvent, IListener[])</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#fireThrowable(java.lang.Throwable)">org.eclipse.net4j.spi.db.DBSchema.fireThrowable<wbr>(Throwable)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#firstListenerAdded()">org.eclipse.net4j.spi.db.DBSchema.firstListenerAdded()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#getFullName()">org.eclipse.net4j.spi.db.DBSchema.getFullName()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#getListeners()">org.eclipse.net4j.spi.db.DBSchema.getListeners()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#getName()">org.eclipse.net4j.spi.db.DBSchema.getName()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#getNotificationService()">org.eclipse.net4j.spi.db.DBSchema.getNotificationService()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#getSchema()">org.eclipse.net4j.spi.db.DBSchema.getSchema()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#getTable(java.lang.String)">org.eclipse.net4j.spi.db.DBSchema.getTable<wbr>(String)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#getTables()">org.eclipse.net4j.spi.db.DBSchema.getTables()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#hasListeners()">org.eclipse.net4j.spi.db.DBSchema.hasListeners()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#isLocked()">org.eclipse.net4j.spi.db.DBSchema.isLocked()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#lastListenerRemoved()">org.eclipse.net4j.spi.db.DBSchema.lastListenerRemoved()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#lock()">org.eclipse.net4j.spi.db.DBSchema.lock()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#removeListener(org.eclipse.net4j.util.event.IListener)">org.eclipse.net4j.spi.db.DBSchema.removeListener<wbr>(IListener)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#removeTable(java.lang.String)">org.eclipse.net4j.spi.db.DBSchema.removeTable<wbr>(String)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#toString()">org.eclipse.net4j.spi.db.DBSchema.toString()</a></div>
+<div class="col-last even-row-color"></div>
+</div>
+</div>
+</li>
+</ul>
+<ul class="block-list">
+<li>
+<div id="constructor">
+<div class="caption"><span>Deprecated Constructors</span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#%3Cinit%3E()">org.eclipse.net4j.spi.db.DBSchema()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#%3Cinit%3E(java.lang.String)">org.eclipse.net4j.spi.db.DBSchema<wbr>(String)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBSchema.html#%3Cinit%3E(org.eclipse.net4j.db.ddl.IDBSchema)">org.eclipse.net4j.spi.db.DBSchema<wbr>(IDBSchema)</a></div>
+<div class="col-last even-row-color"></div>
 </div>
 </div>
 </li>

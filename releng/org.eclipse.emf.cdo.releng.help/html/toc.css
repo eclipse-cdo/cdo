@@ -17,7 +17,13 @@ a:active {
   font-weight: bold;
 }
 
+a.highlight {
+  color: HighlightText;
+  background: Highlight;
+  font-weight: bold;
+}
+
 .te {
-	margin-bottom: 2px;
-	white-space: nowrap;
+  margin-bottom: 2px;
+  white-space: nowrap;
 }

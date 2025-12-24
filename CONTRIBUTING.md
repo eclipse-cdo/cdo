@@ -1,6 +1,7 @@
-# Contributing to CDO
+# Contributing to CDO and Net4j
 
 Thanks for your interest in this project.
+
 
 ## Project description
 
@@ -10,11 +11,15 @@ runtime environment with a focus on orthogonal aspects like model scalability,
 transactionality, persistence, distribution, queries and more. CDO has a 3-tier
 architecture supporting EMF-based client applications, featuring a central model
 repository server and leveraging different types of pluggable data storage
-back-ends like relational databases, object databases and file systems. The
-default client/server communication protocol is implemented with the Net4j
-Signalling Platform.
+back-ends like relational databases, object databases and file systems.
 
-* https://projects.eclipse.org/projects/modeling.emf.cdo
+* https://eclipse.dev/cdo
+
+The default client/server communication protocol is implemented with the
+Net4j Signaling Platform.
+
+* https://eclipse.dev/cdo/net4j
+
 
 ## Creating an Eclipse Development Environment
 
@@ -25,24 +30,25 @@ You can set up a pre-configured IDE for the development of CDO using the followi
 
 ## Developer resources
 
-Information regarding source code management, builds, coding standards, and
-more.
+The project maintains the following source code repositories:
 
-* https://projects.eclipse.org/projects/modeling.emf.cdo/developer
+* https://github.com/eclipse-cdo/cdo
+* https://github.com/eclipse-cdo/cdo.incubator
+* https://github.com/eclipse-cdo/cdo.infrastructure
+* https://github.com/eclipse-cdo/cdo.old
+* https://github.com/eclipse-cdo/cdo.www
+* https://github.com/eclipse-cdo/.eclipsefdn
+* https://github.com/eclipse-cdo/.github
 
-The project maintains the following source code repositories
+This project uses GitHub Issues to track ongoing development and issues.
 
-* http://git.eclipse.org/c/cdo/cdo.git
-* http://git.eclipse.org/c/cdo/cdo.incubator.git
-* http://git.eclipse.org/c/cdo/cdo.infrastructure.git
-
-This project uses Bugzilla to track ongoing development and issues.
-
-* Search for issues: https://eclipse.org/bugs/buglist.cgi?product=EMF
-* Create a new report: https://eclipse.org/bugs/enter_bug.cgi?product=EMF
+* Search for issues: https://github.com/eclipse-cdo/cdo/issues
+* Create a new bug report: https://github.com/eclipse-cdo/cdo/issues/new?labels=bug
+* Create a new feature request: https://github.com/eclipse-cdo/cdo/issues/new?labels=enhancement
 
 Be sure to search for existing bugs before you create another one. Remember that
 contributions are always welcome!
+
 
 ## Eclipse Contributor Agreement
 
@@ -59,6 +65,7 @@ Contributor Agreement (ECA) on file.
 
 For more information, please see the Eclipse Committer Handbook:
 https://www.eclipse.org/projects/handbook/#resources-commit
+
 
 ## Contact
 

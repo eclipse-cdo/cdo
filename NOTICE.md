@@ -1,12 +1,12 @@
-# Notices for CDO
+# Notices for Eclipse CDO and Net4j
 
 This content is produced and maintained by the Eclipse CDO project.
 
-* Project home: https://projects.eclipse.org/projects/modeling.emf.cdo
+* Project home: https://eclipse.dev/cdo
 
 ## Trademarks
 
-Eclipse CDO, and CDO are trademarks of the Eclipse Foundation.
+Eclipse CDO is a trademark of the Eclipse Foundation.
 
 ## Copyright
 
@@ -17,18 +17,22 @@ source code repository logs.
 ## Declared Project Licenses
 
 This program and the accompanying materials are made available under the terms
-of the Eclipse Public License v. 1.0 which is available at
-http://www.eclipse.org/legal/epl-v10.html.
+of the Eclipse Public License v. 2.0 which is available at
+https://www.eclipse.org/legal/epl-2.0.
 
-SPDX-License-Identifier: EPL-1.0
+SPDX-License-Identifier: EPL-2.0
 
 ## Source Code
 
 The project maintains the following source code repositories:
 
-* http://git.eclipse.org/c/cdo/cdo.git
-* http://git.eclipse.org/c/cdo/cdo.incubator.git
-* http://git.eclipse.org/c/cdo/cdo.infrastructure.git
+* https://github.com/eclipse-cdo/cdo
+* https://github.com/eclipse-cdo/cdo.incubator
+* https://github.com/eclipse-cdo/cdo.infrastructure
+* https://github.com/eclipse-cdo/cdo.old
+* https://github.com/eclipse-cdo/cdo.www
+* https://github.com/eclipse-cdo/.eclipsefdn
+* https://github.com/eclipse-cdo/.github
 
 ## Third-party Content
 

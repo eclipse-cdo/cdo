@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.buddies.server;singleton:=true
-Bundle-Version: 4.1.0.qualifier
+Bundle-Version: 4.1.1.qualifier
 Bundle-Vendor: %providerName
 Bundle-Activator: org.eclipse.net4j.buddies.internal.server.bundle.OM$Activator
 Bundle-ClassPath: .
@@ -10,10 +10,10 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resolution:=optional,
  org.eclipse.net4j.buddies.common;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.net4j.buddies.internal.server;version="4.1.0";x-internal:=true,
- org.eclipse.net4j.buddies.internal.server.bundle;version="4.1.0";x-internal:=true,
- org.eclipse.net4j.buddies.internal.server.messages;version="4.1.0";x-internal:=true,
- org.eclipse.net4j.buddies.internal.server.protocol;version="4.1.0";x-internal:=true,
- org.eclipse.net4j.buddies.server;version="4.1.0"
+Export-Package: org.eclipse.net4j.buddies.internal.server;version="4.1.1";x-internal:=true,
+ org.eclipse.net4j.buddies.internal.server.bundle;version="4.1.1";x-internal:=true,
+ org.eclipse.net4j.buddies.internal.server.messages;version="4.1.1";x-internal:=true,
+ org.eclipse.net4j.buddies.internal.server.protocol;version="4.1.1";x-internal:=true,
+ org.eclipse.net4j.buddies.server;version="4.1.1"
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.net4j.buddies.server

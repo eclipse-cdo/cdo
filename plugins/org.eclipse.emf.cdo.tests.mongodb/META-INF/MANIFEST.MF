@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.mongodb;singleton:=true
-Bundle-Version: 4.3.1.qualifier
+Bundle-Version: 4.3.2.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -19,6 +19,6 @@ Import-Package: com.mongodb;version="[3.0.0,4.0.0)",
  org.bson.io;version="[3.0.0,4.0.0)",
  org.bson.types;version="[3.0.0,4.0.0)",
  org.bson.util;version="[3.0.0,4.0.0)"
-Export-Package: org.eclipse.emf.cdo.tests.mongodb;version="4.3.1";x-internal:=true,
- org.eclipse.emf.cdo.tests.mongodb.bundle;version="4.3.1";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.tests.mongodb;version="4.3.2";x-internal:=true,
+ org.eclipse.emf.cdo.tests.mongodb.bundle;version="4.3.2";x-internal:=true
 Automatic-Module-Name: org.eclipse.emf.cdo.tests.mongodb

@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.ui;singleton:=true
-Bundle-Version: 2.3.0.qualifier
+Bundle-Version: 2.3.1.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.dawn.internal.ui.bundle.OM$Activator
 Require-Bundle: org.eclipse.ui;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.4.0,4.0.0)",
@@ -14,15 +14,15 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: org.eclipse.emf.cdo.dawn.internal.ui.bundle;version="2.3.0";x-internal:=true,
- org.eclipse.emf.cdo.dawn.ui;version="2.3.0",
- org.eclipse.emf.cdo.dawn.ui.composites;version="2.3.0",
- org.eclipse.emf.cdo.dawn.ui.handlers;version="2.3.0";x-internal:=true,
- org.eclipse.emf.cdo.dawn.ui.helper;version="2.3.0",
- org.eclipse.emf.cdo.dawn.ui.icons;version="2.3.0",
- org.eclipse.emf.cdo.dawn.ui.messages;version="2.3.0",
- org.eclipse.emf.cdo.dawn.ui.stylizer;version="2.3.0",
- org.eclipse.emf.cdo.dawn.ui.views;version="2.3.0",
- org.eclipse.emf.cdo.dawn.ui.wizards;version="2.3.0",
- org.eclipse.emf.cdo.dawn.ui.wizards.dialogs;version="2.3.0"
+Export-Package: org.eclipse.emf.cdo.dawn.internal.ui.bundle;version="2.3.1";x-internal:=true,
+ org.eclipse.emf.cdo.dawn.ui;version="2.3.1",
+ org.eclipse.emf.cdo.dawn.ui.composites;version="2.3.1",
+ org.eclipse.emf.cdo.dawn.ui.handlers;version="2.3.1";x-internal:=true,
+ org.eclipse.emf.cdo.dawn.ui.helper;version="2.3.1",
+ org.eclipse.emf.cdo.dawn.ui.icons;version="2.3.1",
+ org.eclipse.emf.cdo.dawn.ui.messages;version="2.3.1",
+ org.eclipse.emf.cdo.dawn.ui.stylizer;version="2.3.1",
+ org.eclipse.emf.cdo.dawn.ui.views;version="2.3.1",
+ org.eclipse.emf.cdo.dawn.ui.wizards;version="2.3.1",
+ org.eclipse.emf.cdo.dawn.ui.wizards.dialogs;version="2.3.1"
 Automatic-Module-Name: org.eclipse.emf.cdo.dawn.ui

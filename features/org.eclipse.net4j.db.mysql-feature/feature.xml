@@ -2,9 +2,10 @@
 <!--
 	Copyright (c) 2009-2012, 2015-2017, 2019-2021, 2023, 2025 Eike Stepper (Loehne, Germany) and others.
 	All rights reserved. This program and the accompanying materials
-	are made available under the terms of the Eclipse Public License v1.0
-	which accompanies this distribution, and is available at
-	http://www.eclipse.org/legal/epl-v10.html
+	are made available under the terms of the Eclipse Public License 2.0
+	which is available at https://www.eclipse.org/legal/epl-2.0
+	
+	SPDX-License-Identifier: EPL-2.0
 
 	Contributors:
 	  Eike Stepper - initial API and implementation
@@ -12,7 +13,7 @@
 <feature
       id="org.eclipse.net4j.db.mysql"
       label="%featureName"
-      version="4.4.8.qualifier"
+      version="4.4.9.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.cdo.license"
       license-feature-version="0.0.0">

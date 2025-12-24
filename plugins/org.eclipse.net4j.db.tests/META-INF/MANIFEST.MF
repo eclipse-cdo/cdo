@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.db.tests
-Bundle-Version: 4.1.1.qualifier
+Bundle-Version: 4.1.2.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -24,6 +24,6 @@ Import-Package: com.mysql.jdbc;version="[5.1.0,6.0.0)";resolution:=optional,
  org.h2.util;version="[2.0.0,3.0.0)";resolution:=optional,
  org.h2.value;version="[2.0.0,3.0.0)";resolution:=optional,
  org.hsqldb.jdbc;version="[2.0.0,3.0.0)";resolution:=optional
-Export-Package: org.eclipse.net4j.db.tests;version="4.1.1";x-internal:=true,
- org.eclipse.net4j.db.tests.bundle;version="4.1.1";x-internal:=true
+Export-Package: org.eclipse.net4j.db.tests;version="4.1.2";x-internal:=true,
+ org.eclipse.net4j.db.tests.bundle;version="4.1.2";x-internal:=true
 Automatic-Module-Name: org.eclipse.net4j.db.tests

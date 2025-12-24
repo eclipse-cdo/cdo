@@ -2,15 +2,15 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.transfer.repository;singleton:=true
-Bundle-Version: 4.3.6.qualifier
+Bundle-Version: 4.3.7.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.emf.cdo.transfer;bundle-version="[4.2.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo;bundle-version="[4.2.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.transfer.internal.repository.bundle;version="4.3.6";x-internal:=true,
- org.eclipse.emf.cdo.transfer.spi.repository;version="4.3.6"
+Export-Package: org.eclipse.emf.cdo.transfer.internal.repository.bundle;version="4.3.7";x-internal:=true,
+ org.eclipse.emf.cdo.transfer.spi.repository;version="4.3.7"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.transfer.internal.repository.bundle.OM$Activator
 Automatic-Module-Name: org.eclipse.emf.cdo.transfer.repository

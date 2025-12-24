@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.all;singleton:=true
-Bundle-Version: 4.4.1.qualifier
+Bundle-Version: 4.4.2.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -12,6 +12,6 @@ Bundle-ClassPath: .
 Require-Bundle: org.eclipse.net4j.tests;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.tests;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.tests.db;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.tests.all;version="4.4.1";x-internal:=true,
- org.eclipse.emf.cdo.tests.all.bundle;version="4.4.1";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.tests.all;version="4.4.2";x-internal:=true,
+ org.eclipse.emf.cdo.tests.all.bundle;version="4.4.2";x-internal:=true
 Automatic-Module-Name: org.eclipse.emf.cdo.tests.all

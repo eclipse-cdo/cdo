@@ -1,9 +1,10 @@
 /*
  * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
@@ -39,9 +40,9 @@ public final class HugeData
     return "/**" + NL //$NON-NLS-1$
         + " * COPYRIGHT (C) 2004 - 2008 EIKE STEPPER, GERMANY." + NL //$NON-NLS-1$
         + " * ALL RIGHTS RESERVED. THIS PROGRAM AND THE ACCOMPANYING MATERIALS" + NL //$NON-NLS-1$
-        + " * ARE MADE AVAILABLE UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE V1.0" + NL //$NON-NLS-1$
+        + " * ARE MADE AVAILABLE UNDER THE TERMS OF THE ECLIPSE PUBLIC LICENSE 2.0" + NL //$NON-NLS-1$
         + " * WHICH ACCOMPANIES THIS DISTRIBUTION, AND IS AVAILABLE AT" + NL //$NON-NLS-1$
-        + " * HTTP://WWW.ECLIPSE.ORG/LEGAL/EPL-V10.HTML" + NL + " * " + NL + " * CONTRIBUTORS:" + NL //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        + " * HTTPS://WWW.ECLIPSE.ORG/LEGAL/EPL-2.0" + NL + " * " + NL + " * CONTRIBUTORS:" + NL //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         + " *    EIKE STEPPER - INITIAL API AND IMPLEMENTATION" + NL //$NON-NLS-1$
         + " */" + NL //$NON-NLS-1$
         + "PACKAGE ORG.ECLIPSE.INTERNAL.NET4J.TRANSPORT.CONNECTOR;" + NL + "" + NL //$NON-NLS-1$ //$NON-NLS-2$

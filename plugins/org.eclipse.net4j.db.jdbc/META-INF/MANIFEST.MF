@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.db.jdbc;singleton:=true
-Bundle-Version: 4.4.0.qualifier
+Bundle-Version: 4.4.1.qualifier
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Export-Package: org.eclipse.net4j.db.jdbc;version="4.4.0"
+Export-Package: org.eclipse.net4j.db.jdbc;version="4.4.1"
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.net4j.util;bundle-version="[3.4.0,4.0.0)"
 Automatic-Module-Name: org.eclipse.net4j.db.jdbc

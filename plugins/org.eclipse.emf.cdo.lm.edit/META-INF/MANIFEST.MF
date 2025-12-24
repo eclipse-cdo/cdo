@@ -3,13 +3,13 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.lm.edit;singleton:=true
 Automatic-Module-Name: org.eclipse.emf.cdo.lm.edit
-Bundle-Version: 1.1.2.qualifier
+Bundle-Version: 1.1.3.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.cdo.lm.provider.LMEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: org.eclipse.emf.cdo.lm.provider;version="1.1.2"
+Export-Package: org.eclipse.emf.cdo.lm.provider;version="1.1.3"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.edit;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.lm;bundle-version="[1.0.0,2.0.0)";visibility:=reexport,

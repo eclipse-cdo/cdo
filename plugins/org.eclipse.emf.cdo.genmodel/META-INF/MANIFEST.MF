@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.genmodel;singleton:=true
-Bundle-Version: 1.0.1.qualifier
+Bundle-Version: 1.0.2.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.emf.codegen.ecore;bundle-version="[2.13.0,3.0.0)",
  org.eclipse.emf.ecore;bundle-version="[2.13.0,3.0.0)",
  org.eclipse.emf.cdo.ecore;bundle-version="[1.0.0,2.0.0)";resolution:=optional
-Export-Package: org.eclipse.emf.cdo.genmodel.impl;version="1.0.1"
+Export-Package: org.eclipse.emf.cdo.genmodel.impl;version="1.0.2"
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Automatic-Module-Name: org.eclipse.emf.cdo.genmodel

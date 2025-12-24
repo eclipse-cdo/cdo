@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.dawn.graphiti;singleton:=true
-Bundle-Version: 2.3.2.qualifier
+Bundle-Version: 2.3.3.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.dawn.graphiti.DawnGraphitiUIPlugin
 Require-Bundle: org.eclipse.ui;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
@@ -21,10 +21,10 @@ Require-Bundle: org.eclipse.ui;bundle-version="[3.6.0,4.0.0)",
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: %providerName
-Export-Package: org.eclipse.emf.cdo.dawn.graphiti;version="2.3.2",
- org.eclipse.emf.cdo.dawn.graphiti.editors;version="2.3.2",
- org.eclipse.emf.cdo.dawn.graphiti.notifications;version="2.3.2",
- org.eclipse.emf.cdo.dawn.graphiti.util;version="2.3.2",
- org.eclipse.emf.cdo.dawn.graphiti.wizards;version="2.3.2"
+Export-Package: org.eclipse.emf.cdo.dawn.graphiti;version="2.3.3",
+ org.eclipse.emf.cdo.dawn.graphiti.editors;version="2.3.3",
+ org.eclipse.emf.cdo.dawn.graphiti.notifications;version="2.3.3",
+ org.eclipse.emf.cdo.dawn.graphiti.util;version="2.3.3",
+ org.eclipse.emf.cdo.dawn.graphiti.wizards;version="2.3.3"
 Bundle-Localization: plugin
 Automatic-Module-Name: org.eclipse.emf.cdo.dawn.graphiti

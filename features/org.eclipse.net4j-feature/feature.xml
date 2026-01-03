@@ -61,20 +61,4 @@
          version="0.0.0"
          unpack="false"/>
 
-<!-- The following plugins are probably not needed anymore because of the net4j.http.* removal:
-   <plugin
-         id="org.apache.commons.codec"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.apache.commons.httpclient"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
--->
-
 </feature>

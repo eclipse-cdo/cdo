@@ -846,240 +846,240 @@
       <repositoryList
           name="2021-09">
         <repository
-            url="http://download.eclipse.org/releases/2021-09"/>
+            url="https://download.eclipse.org/releases/2021-09"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
-            url="http://download.eclipse.org/nebula/snapshot"/>
+            url="https://download.eclipse.org/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="2021-06">
         <repository
-            url="http://download.eclipse.org/releases/2021-09"/>
+            url="https://download.eclipse.org/releases/2021-09"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.20"/>
+            url="https://download.eclipse.org/eclipse/updates/4.20"/>
         <repository
             url="https://download.eclipse.org/tools/orbit/downloads/drops/R20210602031627/repository"/>
         <repository
-            url="http://download.eclipse.org/nebula/snapshot"/>
+            url="https://download.eclipse.org/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="2021-03">
         <repository
-            url="http://download.eclipse.org/releases/2021-03"/>
+            url="https://download.eclipse.org/releases/2021-03"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/latest"/>
+            url="https://download.eclipse.org/eclipse/updates/latest"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
-            url="http://download.eclipse.org/nebula/snapshot"/>
+            url="https://download.eclipse.org/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="2020-12">
         <repository
-            url="http://download.eclipse.org/releases/2020-12"/>
+            url="https://download.eclipse.org/releases/2020-12"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/latest"/>
+            url="https://download.eclipse.org/eclipse/updates/latest"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
-            url="http://download.eclipse.org/nebula/snapshot"/>
+            url="https://download.eclipse.org/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="2020-09">
         <repository
-            url="http://download.eclipse.org/releases/2020-09"/>
+            url="https://download.eclipse.org/releases/2020-09"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/latest"/>
+            url="https://download.eclipse.org/eclipse/updates/latest"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
-            url="http://download.eclipse.org/nebula/snapshot"/>
+            url="https://download.eclipse.org/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/development"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="2020-06">
         <repository
-            url="http://download.eclipse.org/releases/2020-06"/>
+            url="https://download.eclipse.org/releases/2020-06"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/latest"/>
+            url="https://download.eclipse.org/eclipse/updates/latest"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
-            url="http://download.eclipse.org/nebula/snapshot"/>
+            url="https://download.eclipse.org/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.29.v20200521"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.29.v20200521"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="2020-03">
         <repository
-            url="http://download.eclipse.org/releases/2020-03"/>
+            url="https://download.eclipse.org/releases/2020-03"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/I-builds"/>
+            url="https://download.eclipse.org/eclipse/updates/I-builds"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-I"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-I"/>
         <repository
-            url="http://download.eclipse.org/nebula/snapshot"/>
+            url="https://download.eclipse.org/nebula/snapshot"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="2019-12">
         <repository
-            url="http://download.eclipse.org/releases/2019-12"/>
+            url="https://download.eclipse.org/releases/2019-12"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.14"/>
+            url="https://download.eclipse.org/eclipse/updates/4.14"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/R20191126223242"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/R20191126223242"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/2.2.0"/>
+            url="https://download.eclipse.org/nebula/releases/2.2.0"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="2018-09">
         <repository
-            url="http://download.eclipse.org/releases/photon/201806271001"/>
+            url="https://download.eclipse.org/releases/photon/201806271001"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.8"/>
+            url="https://download.eclipse.org/eclipse/updates/4.8"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/latest"/>
+            url="https://download.eclipse.org/nebula/releases/latest"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="Photon">
         <repository
-            url="http://download.eclipse.org/releases/photon"/>
+            url="https://download.eclipse.org/releases/photon"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/latest"/>
+            url="https://download.eclipse.org/nebula/releases/latest"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
         <repository
             url="${aspectj.repository}"/>
       </repositoryList>
       <repositoryList
           name="Oxygen">
         <repository
-            url="http://download.eclipse.org/releases/oxygen"/>
+            url="https://download.eclipse.org/releases/oxygen"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.7-I-builds"/>
+            url="https://download.eclipse.org/eclipse/updates/4.7-I-builds"/>
         <repository
-            url="http://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
         <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.3milestones"/>
+            url="https://download.eclipse.org/modeling/mdt/uml2/updates/5.3milestones"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/1.1.0"/>
+            url="https://download.eclipse.org/nebula/releases/1.1.0"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="Neon">
         <repository
-            url="http://download.eclipse.org/releases/neon"/>
+            url="https://download.eclipse.org/releases/neon"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.6"/>
+            url="https://download.eclipse.org/eclipse/updates/4.6"/>
         <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
+            url="https://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
+            url="https://download.eclipse.org/nebula/releases/1.0.0"/>
         <repository
-            url="http://download.eclipse.org/tools/buckminster/updates-4.5"/>
+            url="https://download.eclipse.org/tools/buckminster/updates-4.5"/>
         <repository
-            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
+            url="https://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
     </targlet>
   </setupTask>
@@ -1498,180 +1498,180 @@
       <repositoryList
           name="4.14">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20210826-0457/"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20210826-0457/"/>
         <repository
-            url="http://download.eclipse.org/releases/2021-06/202106161001"/>
+            url="https://download.eclipse.org/releases/2021-06/202106161001"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/2.5.0"/>
+            url="https://download.eclipse.org/nebula/releases/2.5.0"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.42.v20210604"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.42.v20210604"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.13">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20210308-1312/"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20210308-1312/"/>
         <repository
-            url="http://download.eclipse.org/releases/2021-03/202103171000"/>
+            url="https://download.eclipse.org/releases/2021-03/202103171000"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/2.4.3"/>
+            url="https://download.eclipse.org/nebula/releases/2.4.3"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.37.v20210219"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.37.v20210219"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.12">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20201209-0330"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20201209-0330"/>
         <repository
-            url="http://download.eclipse.org/releases/2020-12/202012161000"/>
+            url="https://download.eclipse.org/releases/2020-12/202012161000"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/2.4.3"/>
+            url="https://download.eclipse.org/nebula/releases/2.4.3"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.34.v20201102"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.34.v20201102"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.11">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20200902-0430"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20200902-0430"/>
         <repository
-            url="http://download.eclipse.org/releases/2020-09/202009161000"/>
+            url="https://download.eclipse.org/releases/2020-09/202009161000"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/2.4.2"/>
+            url="https://download.eclipse.org/nebula/releases/2.4.2"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.31.v20200723"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.31.v20200723"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.10">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20200610-0035"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20200610-0035"/>
         <repository
-            url="http://download.eclipse.org/releases/2020-06/202006171000"/>
+            url="https://download.eclipse.org/releases/2020-06/202006171000"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/2.4.0"/>
+            url="https://download.eclipse.org/nebula/releases/2.4.0"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.29.v20200521"/>
+            url="https://download.eclipse.org/jetty/updates/jetty-bundles-9.x/9.4.29.v20200521"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.9">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20200311-1513"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20200311-1513"/>
         <repository
-            url="http://download.eclipse.org/releases/2020-03/202003181000"/>
+            url="https://download.eclipse.org/releases/2020-03/202003181000"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/2.3.0"/>
+            url="https://download.eclipse.org/nebula/releases/2.3.0"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.8">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20191211-0144"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20191211-0144"/>
         <repository
-            url="http://download.eclipse.org/releases/2019-12"/>
+            url="https://download.eclipse.org/releases/2019-12"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/2.2.0"/>
+            url="https://download.eclipse.org/nebula/releases/2.2.0"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.7">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20180613-0111"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20180613-0111"/>
         <repository
-            url="http://download.eclipse.org/releases/photon/201806271001"/>
+            url="https://download.eclipse.org/releases/photon/201806271001"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.8"/>
+            url="https://download.eclipse.org/eclipse/updates/4.8"/>
         <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.4"/>
+            url="https://download.eclipse.org/modeling/mdt/uml2/updates/5.4"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/1.4.0"/>
+            url="https://download.eclipse.org/nebula/releases/1.4.0"/>
         <repository
-            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
+            url="https://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.6">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20170614-0227"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20170614-0227"/>
         <repository
-            url="http://download.eclipse.org/releases/oxygen/201706281000"/>
+            url="https://download.eclipse.org/releases/oxygen/201706281000"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.7"/>
+            url="https://download.eclipse.org/eclipse/updates/4.7"/>
         <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.3"/>
+            url="https://download.eclipse.org/modeling/mdt/uml2/updates/5.3"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/1.3.0"/>
+            url="https://download.eclipse.org/nebula/releases/1.3.0"/>
         <repository
-            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
+            url="https://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
       <repositoryList
           name="4.5">
         <repository
-            url="http://download.eclipse.org/modeling/emf/cdo/drops/R20160607-1209"/>
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20160607-1209"/>
         <repository
-            url="http://download.eclipse.org/releases/neon/201606221000"/>
+            url="https://download.eclipse.org/releases/neon/201606221000"/>
         <repository
-            url="http://download.eclipse.org/eclipse/updates/4.6"/>
+            url="https://download.eclipse.org/eclipse/updates/4.6"/>
         <repository
-            url="http://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
+            url="https://download.eclipse.org/modeling/mdt/uml2/updates/5.2"/>
         <repository
-            url="http://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
         <repository
-            url="http://download.eclipse.org/nebula/releases/1.0.0"/>
+            url="https://download.eclipse.org/nebula/releases/1.0.0"/>
         <repository
-            url="http://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
+            url="https://download.eclipse.org/ecoretools/updates/1.2/201306071421"/>
         <repository
-            url="http://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
         <repository
-            url="http://www.springsite.com/eclipse/2.1.0/update"/>
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
       </repositoryList>
     </targlet>
   </setupTask>

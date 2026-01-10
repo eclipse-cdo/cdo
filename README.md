@@ -6,4 +6,4 @@ CDO offers transactions with save points, explicit locking, change notification,
 
 The storage back-end is pluggable and migrations between direct JDBC, Hibernate, Objectivity/DB, MongoDB or DB4O are seamless for CDO applications.
 
-For more information please visit https://wiki.eclipse.org/CDO
+For more information please visit https://eclipse.dev/cdo

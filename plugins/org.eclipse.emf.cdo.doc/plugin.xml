@@ -16,7 +16,6 @@
 
    <extension point="org.eclipse.help.toc">
       <toc file="toc.xml" primary="true"/>
-      <index path="index"/>
       <tocIcon id="plugin" altText="Plugin" openIcon="images/plugin.gif"/>
       <tocIcon id="package" altText="Package" openIcon="images/package.gif"/>
       <tocIcon id="interface" altText="Interface" openIcon="images/interface.png"/>

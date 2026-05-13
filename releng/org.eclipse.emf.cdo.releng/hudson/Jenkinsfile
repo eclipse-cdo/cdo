@@ -10,7 +10,7 @@ pipeline {
   }
 
   triggers {
-     cron('0 1 * * 5\n10 3 * * *')
+     cron('0 1 * * 5\n30 3 * * *')
   }
 
   tools {
@@ -46,7 +46,7 @@ pipeline {
       steps {
         script {
           def trigger = 'unknown'
-          for (cause in currentBuild.rawBuild.getCauses()) {
+          for (cause in currentBuild.getBuildCauses()) {
             if (cause.toString().contains('TimerTrigger')) {
               trigger = 'timer'
               break

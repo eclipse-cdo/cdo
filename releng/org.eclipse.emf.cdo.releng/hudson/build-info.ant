@@ -29,30 +29,6 @@
   </taskdef>
 
   <target name="build-info">
-    <!-- build.trigger 
-    <if>
-      <not>
-        <isset property="build.trigger" />
-      </not>
-      <then>
-      	<get src="${env.BUILD_URL}api/xml" dest="${env.WORKSPACE}/jenkins.xml" verbose="true" usetimestamp="true"/>
-        <xmlproperty keeproot="false">
-          <url url="${env.BUILD_URL}api/xml?tree=actions[causes[shortDescription]]" />
-        </xmlproperty>
-        <loadresource property="build.trigger">
-          <propertyresource name="action.cause.shortDescription" />
-          <filterchain>
-            <replaceregex pattern="^Triggered by an " replace="" />
-            <replaceregex pattern="^Triggered by " replace="" /> 
-            <replaceregex pattern="^Started by an " replace="" />
-            <replaceregex pattern="^Started by " replace="" />
-            <replaceregex pattern="^Gerrit: .*" replace="gerrit" />
-          </filterchain>
-        </loadresource>
-      </then>
-    </if>
-    -->
-
     <!-- build.type -->
     <if>
       <equals arg1="${env.BUILD_TYPE}" arg2="&lt;default&gt;" />

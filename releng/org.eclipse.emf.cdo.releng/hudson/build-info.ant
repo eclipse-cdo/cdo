@@ -29,15 +29,15 @@
   </taskdef>
 
   <target name="build-info">
-    <!-- build.trigger -->
+    <!-- build.trigger 
     <if>
       <not>
         <isset property="build.trigger" />
       </not>
       <then>
-      	<get src="${env.BUILD_URL}/api/xml" dest="${env.WORKSPACE}/jenkins.xml" verbose="true" usetimestamp="true"/>
+      	<get src="${env.BUILD_URL}api/xml" dest="${env.WORKSPACE}/jenkins.xml" verbose="true" usetimestamp="true"/>
         <xmlproperty keeproot="false">
-          <url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
+          <url url="${env.BUILD_URL}api/xml?tree=actions[causes[shortDescription]]" />
         </xmlproperty>
         <loadresource property="build.trigger">
           <propertyresource name="action.cause.shortDescription" />
@@ -51,6 +51,7 @@
         </loadresource>
       </then>
     </if>
+    -->
 
     <!-- build.type -->
     <if>

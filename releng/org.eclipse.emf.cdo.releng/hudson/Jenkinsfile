@@ -11,6 +11,7 @@ pipeline {
 
   triggers {
      cron('0 1 * * 5')
+     cron('0 3 * * *')
   }
 
   tools {
@@ -44,10 +45,25 @@ pipeline {
   stages {
     stage('Initialize Build Info') {
       steps {
+        script {
+          def trigger = 'unknown'
+          for (cause in currentBuild.rawBuild.getCauses()) {
+            if (cause.toString().contains('TimerTrigger')) {
+              trigger = 'timer'
+              break
+            }
+            if (cause.toString().contains('UserIdCause')) {
+              trigger = cause.getUserName()
+              break
+            }
+          }
+          env.BUILD_TRIGGER = trigger
+        }
+        
         withAnt {
-          sh '''
-            ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/build-info.ant
-          '''
+          sh """
+            ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/build-info.ant -Dbuild.trigger=${env.BUILD_TRIGGER}
+          """
         }
         
         script {

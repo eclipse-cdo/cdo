@@ -10,7 +10,7 @@ pipeline {
   }
 
   triggers {
-     cron('0 1 * * 5\n20 * * * *')
+     cron('0 1 * * 5')
   }
 
   tools {
@@ -48,7 +48,6 @@ pipeline {
           def trigger = 'unknown'
           try {
             for (cause in currentBuild.getBuildCauses()) {
-              echo "Cause: ${cause}"
               if (cause.toString().contains('BranchEventCause')) {
                 trigger = 'push'
                 break

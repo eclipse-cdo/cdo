@@ -49,6 +49,10 @@ pipeline {
           try {
             for (cause in currentBuild.getBuildCauses()) {
               echo "Cause: ${cause}"
+              if (cause.toString().contains('BranchEventCause')) {
+                trigger = 'push'
+                break
+              }
               if (cause.toString().contains('TimerTrigger')) {
                 trigger = 'timer'
                 break

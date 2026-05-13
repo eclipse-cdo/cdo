@@ -46,15 +46,20 @@ pipeline {
       steps {
         script {
           def trigger = 'unknown'
-          for (cause in currentBuild.getBuildCauses()) {
-            if (cause.toString().contains('TimerTrigger')) {
-              trigger = 'timer'
-              break
+          try {
+            for (cause in currentBuild.getBuildCauses()) {
+              echo "Cause: ${cause}"
+              if (cause.toString().contains('TimerTrigger')) {
+                trigger = 'timer'
+                break
+              }
+              if (cause.toString().contains('UserIdCause')) {
+                trigger = cause.getUserName()
+                break
+              }
             }
-            if (cause.toString().contains('UserIdCause')) {
-              trigger = cause.getUserName()
-              break
-            }
+          } catch (e) {
+            echo "getBuildCauses() not available: ${e}"
           }
           env.BUILD_TRIGGER = trigger
         }

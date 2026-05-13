@@ -35,6 +35,7 @@
         <isset property="build.trigger" />
       </not>
       <then>
+      	<get src="${env.BUILD_URL}/api/xml" dest="${env.WORKSPACE}/jenkins.xml" verbose="true" usetimestamp="true"/>
         <xmlproperty keeproot="false">
           <url url="${env.BUILD_URL}/api/xml?tree=actions[causes[shortDescription]]" />
         </xmlproperty>

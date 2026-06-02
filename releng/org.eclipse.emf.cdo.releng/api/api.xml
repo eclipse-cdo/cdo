@@ -2501,6 +2501,18 @@
             <message_argument value="getName()"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.editparts.HierarchicalGridLayer" kind="ADDED" message="The re-exported type org.eclipse.gef.editparts.HierarchicalGridLayer has been added to org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.gef.editparts.HierarchicalGridLayer">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.editparts.HierarchicalGridLayer"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.print.ImagePrintGraphicalViewerOperation" kind="ADDED" message="The re-exported type org.eclipse.gef.print.ImagePrintGraphicalViewerOperation has been added to org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.gef.print.ImagePrintGraphicalViewerOperation">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.print.ImagePrintGraphicalViewerOperation"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.util.IToolTipHelperFactory" kind="ADDED" message="The re-exported type org.eclipse.gef.util.IToolTipHelperFactory has been added to org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.gef.util.IToolTipHelperFactory">
         <message_arguments>
             <message_argument value="org.eclipse.gef.util.IToolTipHelperFactory"/>

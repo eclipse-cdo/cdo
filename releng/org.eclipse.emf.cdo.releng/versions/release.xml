@@ -26,7 +26,7 @@
 		<plugin name="org.eclipse.emf.cdo.explorer" version="4.15.3"/>
 		<plugin name="org.eclipse.emf.cdo.explorer.ui" version="4.7.17"/>
 	</feature>
-	<feature name="org.eclipse.emf.cdo.all" version="4.33.0">
+	<feature name="org.eclipse.emf.cdo.all" version="4.33.1">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
 		<feature name="org.eclipse.emf.cdo.dawn" version="2.5.8"/>
 		<feature name="org.eclipse.emf.cdo.examples" version="4.6.9"/>
@@ -41,7 +41,7 @@
 		<feature name="org.eclipse.net4j.db.postgresql" version="4.4.9"/>
 		<feature name="org.eclipse.net4j.ws" version="1.3.3"/>
 		<feature name="org.eclipse.net4j.examples" version="4.4.6"/>
-		<feature name="org.eclipse.net4j.sdk" version="4.31.1"/>
+		<feature name="org.eclipse.net4j.sdk" version="4.31.2"/>
 		<feature name="org.eclipse.net4j.util.ui.mylyn" version="1.0.3"/>
 		<feature name="org.eclipse.net4j.tests" version="4.3.18"/>
 		<plugin name="org.eclipse.emf.cdo.examples.server" version="4.1.2"/>
@@ -69,9 +69,9 @@
 		<plugin name="org.eclipse.emf.cdo.dawn.gmf" version="2.3.6"/>
 		<plugin name="org.eclipse.emf.cdo.dawn.graphiti" version="2.3.3"/>
 	</feature>
-	<feature name="org.eclipse.emf.cdo.doc" version="4.3.17">
+	<feature name="org.eclipse.emf.cdo.doc" version="4.3.18">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
-		<plugin name="org.eclipse.emf.cdo.doc" version="4.2.17"/>
+		<plugin name="org.eclipse.emf.cdo.doc" version="4.2.18"/>
 	</feature>
 	<feature name="org.eclipse.emf.cdo.examples" version="4.6.9">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
@@ -118,7 +118,7 @@
 	</feature>
 	<feature name="org.eclipse.emf.cdo.sdk" version="5.16.0">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
-		<feature name="org.eclipse.emf.cdo.doc" version="4.3.17"/>
+		<feature name="org.eclipse.emf.cdo.doc" version="4.3.18"/>
 		<feature name="org.eclipse.emf.cdo.compare" version="4.12.3"/>
 		<feature name="org.eclipse.emf.cdo.lm.reviews" version="2.1.2"/>
 		<feature name="org.eclipse.emf.cdo.server.embedded" version="4.30.1"/>
@@ -205,9 +205,9 @@
 		<plugin name="org.eclipse.net4j.db.derby" version="4.3.7"/>
 		<plugin name="org.apache.derby" version="10.16.1"/>
 	</feature>
-	<feature name="org.eclipse.net4j.db.doc" version="4.4.8">
+	<feature name="org.eclipse.net4j.db.doc" version="4.4.9">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
-		<plugin name="org.eclipse.net4j.db.doc" version="4.3.7"/>
+		<plugin name="org.eclipse.net4j.db.doc" version="4.3.8"/>
 	</feature>
 	<feature name="org.eclipse.net4j.db.h2" version="4.26.1">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
@@ -254,14 +254,14 @@
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
 		<plugin name="org.eclipse.net4j.examples.installer" version="4.3.6"/>
 	</feature>
-	<feature name="org.eclipse.net4j.sdk" version="4.31.1">
+	<feature name="org.eclipse.net4j.sdk" version="4.31.2">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
 		<feature name="org.eclipse.net4j" version="4.25.3"/>
 		<feature name="org.eclipse.net4j.db" version="4.29.1"/>
 		<feature name="org.eclipse.net4j.ui" version="4.9.3"/>
 		<feature name="org.eclipse.net4j.doc" version="4.3.14"/>
-		<feature name="org.eclipse.net4j.util.doc" version="4.3.15"/>
-		<feature name="org.eclipse.net4j.db.doc" version="4.4.8"/>
+		<feature name="org.eclipse.net4j.util.doc" version="4.3.16"/>
+		<feature name="org.eclipse.net4j.db.doc" version="4.4.9"/>
 		<feature name="org.eclipse.net4j.examples.installer" version="4.4.6"/>
 		<plugin name="org.eclipse.net4j.sdk" version="4.1.607"/>
 	</feature>
@@ -279,9 +279,9 @@
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
 		<plugin name="org.eclipse.net4j.util" version="3.29.1"/>
 	</feature>
-	<feature name="org.eclipse.net4j.util.doc" version="4.3.15">
+	<feature name="org.eclipse.net4j.util.doc" version="4.3.16">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
-		<plugin name="org.eclipse.net4j.util.doc" version="4.2.15"/>
+		<plugin name="org.eclipse.net4j.util.doc" version="4.2.16"/>
 	</feature>
 	<feature name="org.eclipse.net4j.util.ui" version="4.29.1">
 		<feature name="org.eclipse.emf.cdo.license" version="4.1.607" license="true"/>
@@ -312,7 +312,7 @@
 	<plugin name="org.eclipse.emf.cdo.dawn.graphiti" version="2.3.3"/>
 	<plugin name="org.eclipse.emf.cdo.dawn.ui" version="2.3.1"/>
 	<plugin name="org.eclipse.emf.cdo.dawn.util" version="2.2.2"/>
-	<plugin name="org.eclipse.emf.cdo.doc" version="4.2.17"/>
+	<plugin name="org.eclipse.emf.cdo.doc" version="4.2.18"/>
 	<plugin name="org.eclipse.emf.cdo.ecore" version="1.1.5"/>
 	<plugin name="org.eclipse.emf.cdo.ecore.dependencies" version="1.0.6"/>
 	<plugin name="org.eclipse.emf.cdo.ecore.logicalstructure" version="1.0.0"/>
@@ -402,7 +402,7 @@
 	<plugin name="org.eclipse.net4j.buddies.ui" version="4.2.2"/>
 	<plugin name="org.eclipse.net4j.db" version="4.13.1"/>
 	<plugin name="org.eclipse.net4j.db.derby" version="4.3.7"/>
-	<plugin name="org.eclipse.net4j.db.doc" version="4.3.7"/>
+	<plugin name="org.eclipse.net4j.db.doc" version="4.3.8"/>
 	<plugin name="org.eclipse.net4j.db.h2" version="4.5.8"/>
 	<plugin name="org.eclipse.net4j.db.hsqldb" version="4.4.7"/>
 	<plugin name="org.eclipse.net4j.db.jdbc" version="4.4.1"/>
@@ -429,7 +429,7 @@
 	<plugin name="org.eclipse.net4j.ui" version="4.4.7"/>
 	<plugin name="org.eclipse.net4j.ui.shared" version="4.9.1"/>
 	<plugin name="org.eclipse.net4j.util" version="3.29.1"/>
-	<plugin name="org.eclipse.net4j.util.doc" version="4.2.15"/>
+	<plugin name="org.eclipse.net4j.util.doc" version="4.2.16"/>
 	<plugin name="org.eclipse.net4j.util.ui" version="3.21.1"/>
 	<plugin name="org.eclipse.net4j.util.ui.mylyn" version="1.0.2"/>
 	<plugin name="org.eclipse.net4j.ws" version="1.3.3"/>

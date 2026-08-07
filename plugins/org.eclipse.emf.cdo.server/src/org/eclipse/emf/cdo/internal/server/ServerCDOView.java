@@ -198,7 +198,25 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   @Override
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
-    return (InternalCDORevision)revisionProvider.getRevision(id);
+    InternalCDORevision revision = (InternalCDORevision)revisionProvider.getRevision(id);
+
+    // A ServerCDOView can not resolve element proxies or load list chunks lazily; see resolveElementProxy() and
+    // ServerCDOSession.ensureChunks(), which both throw UnsupportedOperationException. Unlike ManagedRevisionProvider,
+    // a CommitContext used as the revision provider can return partially loaded (chunked) revisions for objects that
+    // are not part of the commit. Such revisions must be fully loaded here, or their lists would leak
+    // CDORevisionUtil.UNINITIALIZED placeholders into the EMF layer (e.g. ClassCastException during security realm
+    // validation, see RealmUtil.allUsers()).
+    //
+    // The isUnchunked() guard keeps the common case cheap: it is a single flag check (BaseCDORevision.UNCHUNKED_FLAG),
+    // and every revision loaded with referenceChunk == UNCHUNKED is flagged accordingly (see Repository.normalizeRevision).
+    // So all revisions from ManagedRevisionProvider, as well as the committed/dirty revisions of a CommitContext, short
+    // circuit immediately; only genuinely chunked revisions trigger a one-time store read that completes and flags them.
+    if (revision != null && !revision.isUnchunked())
+    {
+      session.getRepository().ensureChunks(revision);
+    }
+
+    return revision;
   }
 
   @Override

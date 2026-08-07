@@ -137,6 +137,13 @@
                 <message_argument value="ServerCDOView"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="ServerCDOView"/>
+                <message_argument value="Options"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/ServerCDOView.java" type="org.eclipse.emf.cdo.internal.server.ServerCDOView$ServerCDOSession">
         <filter id="574619656">
@@ -155,6 +162,27 @@
             <message_arguments>
                 <message_argument value="Options"/>
                 <message_argument value="ServerCDOSession"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDORepositoryInfo"/>
+                <message_argument value="ServerCDOSession"/>
+                <message_argument value="CDOCommonRepository"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalCDOSession"/>
+                <message_argument value="ServerCDOSession"/>
+                <message_argument value="CDOSession"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="Options"/>
+                <message_argument value="ServerCDOSession"/>
+                <message_argument value="Options"/>
             </message_arguments>
         </filter>
     </resource>
@@ -264,6 +292,13 @@
                 <message_argument value="CommitContextData"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDOCommitData"/>
+                <message_argument value="CommitContextData"/>
+                <message_argument value="CDOChangeSetData"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/syncing/SynchronizableRepository.java" type="org.eclipse.emf.cdo.internal.server.syncing.SynchronizableRepository$WriteThroughCommitContext">
         <filter id="574619656">
@@ -276,6 +311,13 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.internal.server.syncing.SynchronizableRepository.WriteThroughCommitContext.commit(OMMonitor)"/>
                 <message_argument value="InternalCDOCommitContext"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.internal.server.syncing.SynchronizableRepository.WriteThroughCommitContext.commit(OMMonitor)"/>
+                <message_argument value="InternalCDOCommitContext"/>
+                <message_argument value="CDOCommitContext"/>
             </message_arguments>
         </filter>
     </resource>
@@ -449,6 +491,13 @@
                 <message_argument value="DurableLockArea"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="LockArea"/>
+                <message_argument value="DurableLockArea"/>
+                <message_argument value="CDOBranchPoint"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/ISessionProtocol.java" type="org.eclipse.emf.cdo.spi.server.ISessionProtocol">
         <filter id="403804204">
@@ -562,6 +611,13 @@
                 <message_argument value="IRepository"/>
                 <message_argument value="InternalRepository"/>
                 <message_argument value="CDOCommonRepository"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="RevisionLoader3"/>
+                <message_argument value="InternalRepository"/>
+                <message_argument value="RevisionLoader2"/>
             </message_arguments>
         </filter>
     </resource>

@@ -399,10 +399,9 @@ public class CheckoutWorkingSetWizardPage extends WizardPage implements IWorking
     });
   }
 
-  @SuppressWarnings("unchecked")
   private void addTreeSelection()
   {
-    IStructuredSelection selection = (IStructuredSelection)treeViewer.getSelection();
+    IStructuredSelection selection = treeViewer.getStructuredSelection();
     selectedElements.addAll(selection.toList());
     Object[] selectedElements = selection.toArray();
     tableViewer.add(selectedElements);

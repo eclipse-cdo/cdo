@@ -18,6 +18,7 @@ import java.io.DataInput;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputFilter;
 
 /**
  * @author Eike Stepper
@@ -43,6 +44,14 @@ public interface ExtendedDataInput extends DataInput
   public Object readObject(ClassLoader classLoader) throws IOException;
 
   public Object readObject(ClassResolver classResolver) throws IOException;
+
+  /**
+   * @since 3.30
+   */
+  public default Object readObject(ClassResolver classResolver, ObjectInputFilter filter) throws IOException
+  {
+    return ExtendedIOUtil.readObject(this, classResolver, filter);
+  }
 
   public String readString() throws IOException;
 

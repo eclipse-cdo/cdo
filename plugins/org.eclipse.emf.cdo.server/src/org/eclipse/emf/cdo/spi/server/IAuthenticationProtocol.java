@@ -35,7 +35,7 @@ public interface IAuthenticationProtocol
 
   /**
    * Sends a challenge to the client to change the authenticated user's credentials.
-   * This is an optional operation; implementators may simply throw
+   * This is an optional operation; implementors may simply throw
    * {@link UnsupportedOperationException}.
    *
    * @since 4.3

@@ -159,6 +159,7 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.RemoteException;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.MonitorCanceledException;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -259,7 +260,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private final Object transactionHandlersLock = new Object();
 
-  private final ConcurrentArray<CDOTransactionHandler1> transactionHandlers1 = new ConcurrentArray<CDOTransactionHandler1>()
+  private final ConcurrentArray<CDOTransactionHandler1> transactionHandlers1 = new ConcurrentArray<>()
   {
     @Override
     protected CDOTransactionHandler1[] newArray(int length)
@@ -268,7 +269,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   };
 
-  private final ConcurrentArray<CDOTransactionHandler2> transactionHandlers2 = new ConcurrentArray<CDOTransactionHandler2>()
+  private final ConcurrentArray<CDOTransactionHandler2> transactionHandlers2 = new ConcurrentArray<>()
   {
     @Override
     protected CDOTransactionHandler2[] newArray(int length)
@@ -300,7 +301,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private CDOBranchPoint commitMergeSource;
 
   // Bug 283985 (Re-attachment)
-  private final ThreadLocal<Boolean> providingCDOID = new InheritableThreadLocal<Boolean>()
+  private final ThreadLocal<Boolean> providingCDOID = new InheritableThreadLocal<>()
   {
     @Override
     protected Boolean initialValue()
@@ -1633,12 +1634,25 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             }
           }
 
+          if (t instanceof RemoteException)
+          {
+            RemoteException remoteException = (RemoteException)t;
+            List<String> exceptionNames = remoteException.getExceptionNames();
+            if (exceptionNames.size() >= 1 && exceptionNames.get(0).equals(MonitorCanceledException.class.getName()))
+            {
+              if (exceptionNames.size() < 2 || !exceptionNames.get(1).equals(TimeoutRuntimeException.class.getName()))
+              {
+                throw new OperationCanceledException(Messages.getString("CDOTransactionImpl.7"));//$NON-NLS-1$
+              }
+            }
+          }
+
           Throwable cause = t.getCause();
           if (cause instanceof MonitorCanceledException)
           {
             if (!(cause.getCause() instanceof TimeoutRuntimeException))
             {
-              throw new OperationCanceledException("CDOTransactionImpl.7");//$NON-NLS-1$
+              throw new OperationCanceledException(Messages.getString("CDOTransactionImpl.7"));//$NON-NLS-1$
             }
           }
 
@@ -3035,7 +3049,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       final List<CDOResourceNode> finalAddedNodes = addedNodes;
       final CloseableIterator<CDOResourceNode> delegate = super.queryResourcesUnsynced(folder, name, exactMatch);
 
-      return new AbstractCloseableIterator<CDOResourceNode>()
+      return new AbstractCloseableIterator<>()
       {
         private Iterator<CDOResourceNode> addedNodesIterator = finalAddedNodes == null ? null : finalAddedNodes.iterator();
 
@@ -3106,7 +3120,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     final CDOList finalList = list;
 
-    return new AbstractCloseableIterator<CDOResourceNode>()
+    return new AbstractCloseableIterator<>()
     {
 
       private Iterator<Object> listIterator = finalList == null ? null : finalList.iterator();
@@ -3169,7 +3183,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     final Map<CDOID, CDOObject> newObjects = lastSavepoint.getAllNewObjects();
     final CloseableIterator<T> delegate = super.queryInstancesUnsynced(type, exact);
 
-    return new AbstractCloseableIterator<T>()
+    return new AbstractCloseableIterator<>()
     {
       private Iterator<CDOObject> newObjectsIterator = newObjects.isEmpty() ? null : newObjects.values().iterator();
 
@@ -3243,7 +3257,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       final List<CDOObjectReference> localXRefs = queryXRefsLocal(localIDs, targetIDs, relevantReferences);
       final CloseableIterator<CDOObjectReference> delegate = query.getResultAsync(CDOObjectReference.class);
 
-      return new AbstractCloseableIterator<CDOObjectReference>()
+      return new AbstractCloseableIterator<>()
       {
         private Iterator<CDOObjectReference> localXRefsIterator = localXRefs == null ? null : localXRefs.iterator();
 

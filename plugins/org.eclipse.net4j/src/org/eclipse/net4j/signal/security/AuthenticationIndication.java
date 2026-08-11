@@ -118,6 +118,8 @@ public class AuthenticationIndication extends IndicationWithMonitoring
       Response response = client.handleChallenge(challenge, clearText);
       out.writeBoolean(true);
       response.write(out);
+
+      getProtocol().setTrustingPeer(true);
     }
     catch (Throwable ex)
     {

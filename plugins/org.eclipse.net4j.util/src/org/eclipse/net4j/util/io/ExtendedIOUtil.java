@@ -26,6 +26,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
+import java.io.ObjectInputFilter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
@@ -224,33 +225,49 @@ public final class ExtendedIOUtil
     objectOutput.writeObject(object);
   }
 
-  public static Object readObject(final DataInput in) throws IOException
+  public static Object readObject(DataInput in) throws IOException
   {
     return readObject(in, (ClassResolver)null);
   }
 
-  public static Object readObject(final DataInput in, ClassLoader classLoader) throws IOException
+  public static Object readObject(DataInput in, ClassLoader classLoader) throws IOException
   {
     return readObject(in, new ClassLoaderClassResolver(classLoader));
   }
 
-  public static Object readObject(final DataInput in, final ClassResolver classResolver) throws IOException
+  public static Object readObject(DataInput in, ClassResolver classResolver) throws IOException
+  {
+    return readObject(in, classResolver, null);
+  }
+
+  /**
+   * @since 3.30
+   */
+  public static Object readObject(DataInput in, ClassResolver classResolver, ObjectInputFilter filter) throws IOException
   {
     ObjectInput objectInput = null;
+
     if (in instanceof ObjectInput)
     {
       objectInput = (ObjectInput)in;
+
+      if (filter != null)
+      {
+        throw new IOException("Cannot apply a per-object filter to an existing ObjectInput");
+      }
     }
     else
     {
-      ObjectInputStream wrapper = new ObjectInputStream(new InputStream()
+      InputStream inputStream = new InputStream()
       {
         @Override
         public int read() throws IOException
         {
           return in.readByte() - Byte.MIN_VALUE;
         }
-      })
+      };
+
+      ObjectInputStream wrapper = new ObjectInputStream(inputStream)
       {
         @Override
         protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException
@@ -262,16 +279,38 @@ public final class ExtendedIOUtil
               TRACER.format("Deserializing class {0}", desc.getName()); //$NON-NLS-1$
             }
 
-            Class<?> c = classResolver.resolveClass(desc);
-            if (c != null)
+            try
             {
-              return c;
+              Class<?> c = classResolver.resolveClass(desc);
+              if (c != null)
+              {
+                return c;
+              }
+            }
+            catch (WrappedException ex)
+            {
+              Exception exception = WrappedException.unwrap(ex);
+              if (!(exception instanceof ClassNotFoundException))
+              {
+                throw ex;
+              }
+
+              //$FALL-THROUGH$
+            }
+            catch (ClassNotFoundException ex)
+            {
+              //$FALL-THROUGH$
             }
           }
 
           return super.resolveClass(desc);
         }
       };
+
+      if (filter != null)
+      {
+        wrapper.setObjectInputFilter(filter);
+      }
 
       if (ObjectUtil.never())
       {

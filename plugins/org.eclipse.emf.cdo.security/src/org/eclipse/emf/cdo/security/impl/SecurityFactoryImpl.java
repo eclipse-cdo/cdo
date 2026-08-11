@@ -54,7 +54,6 @@ import java.util.Arrays;
  * <!-- end-user-doc -->
  * @generated
  */
-@SuppressWarnings("deprecation")
 public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
 {
   /**

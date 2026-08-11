@@ -66,6 +66,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   public static final long COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT = OMPlatform.INSTANCE
       .getProperty("org.eclipse.net4j.signal.COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT", 5000L);
 
+  private static final boolean DEFAULT_TRUSTING_PEER = OMPlatform.INSTANCE //
+      .isProperty("org.eclipse.net4j.signal.SignalProtocol.DEFAULT_TRUSTING_PEER");
+
   /**
    * @since 2.0
    */
@@ -117,6 +120,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   private static boolean testing;
 
   private long timeout = DEFAULT_TIMEOUT;
+
+  private boolean trustingPeer = DEFAULT_TRUSTING_PEER;
 
   private IStreamWrapper streamWrapper;
 
@@ -188,6 +193,22 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
     }
 
     return timeoutSent;
+  }
+
+  /**
+   * @since 4.22
+   */
+  public boolean isTrustingPeer()
+  {
+    return trustingPeer;
+  }
+
+  /**
+   * @since 4.22
+   */
+  public void setTrustingPeer(boolean trustingPeer)
+  {
+    this.trustingPeer = trustingPeer;
   }
 
   @Override

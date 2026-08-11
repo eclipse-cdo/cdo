@@ -14,6 +14,8 @@ package org.eclipse.net4j.signal;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.ExtendedIOUtil;
 
+import java.util.List;
+
 /**
  * @author Eike Stepper
  */
@@ -39,9 +41,19 @@ class RemoteExceptionRequest extends Request
   @Override
   protected void requesting(ExtendedDataOutputStream out) throws Exception
   {
-    out.writeInt(correlationID);
+    out.writeVarInt(correlationID);
     out.writeBoolean(responding);
+
+    List<String> exceptionNames = RemoteException.collectExceptionNames(t);
+    out.writeVarInt(exceptionNames.size());
+
+    for (String exceptionName : exceptionNames)
+    {
+      out.writeString(exceptionName);
+    }
+
     out.writeString(message);
+    out.writeString(RemoteException.formatStackTrace(t));
     out.writeByteArray(ExtendedIOUtil.serializeThrowable(t));
   }
 }

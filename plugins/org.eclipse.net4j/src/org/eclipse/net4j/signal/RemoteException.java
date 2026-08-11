@@ -11,6 +11,8 @@
  */
 package org.eclipse.net4j.signal;
 
+import java.util.List;
+
 /**
  * An exception that wraps an exception that has been thrown during the execution of a remote {@link SignalReactor signal}.
  *
@@ -39,7 +41,15 @@ public class RemoteException extends org.eclipse.net4j.util.io.RemoteException
 
   public RemoteException(String message, boolean whileResponding)
   {
-    super(message);
+    this(message, null, null, whileResponding);
+  }
+
+  /**
+   * @since 4.22
+   */
+  public RemoteException(String message, List<String> exceptionNames, String remoteStackTrace, boolean whileResponding)
+  {
+    super(message, exceptionNames, remoteStackTrace);
     this.whileResponding = whileResponding;
     localRequest = null;
   }

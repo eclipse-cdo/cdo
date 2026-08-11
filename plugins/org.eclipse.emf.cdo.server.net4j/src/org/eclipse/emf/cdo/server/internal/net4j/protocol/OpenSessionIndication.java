@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
@@ -40,6 +41,9 @@ import java.util.Set;
  */
 public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 {
+  private static final boolean BYPASS_AUTHORIZABLE_OPERATION_PARAMETER_FILTER = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.cdo.server.internal.net4j.protocol.OpenSessionIndication.BYPASS_AUTHORIZABLE_OPERATION_PARAMETER_FILTER");
+
   private String repositoryName;
 
   private int sessionID;
@@ -111,7 +115,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
     for (int i = 0; i < operations.length; i++)
     {
-      operations[i] = AuthorizableOperation.read(in);
+      operations[i] = AuthorizableOperation.read(in, !BYPASS_AUTHORIZABLE_OPERATION_PARAMETER_FILTER);
     }
   }
 
@@ -188,6 +192,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       }
 
       protocol.setInfraStructure(session);
+      protocol.setTrustingPeer(true);
 
       out.writeXInt(session.getSessionID());
       out.writeString(session.getUserID());

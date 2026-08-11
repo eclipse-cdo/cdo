@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
@@ -383,9 +384,9 @@ public class LockingManagerTest extends AbstractLockingTest
     try
     {
       lockRead(company2);
-      fail("IllegalArgumentException expected");
+      fail("IllegalArgumentException | RemoteException expected");
     }
-    catch (IllegalArgumentException expected)
+    catch (IllegalArgumentException | RemoteException expected)
     {
     }
 

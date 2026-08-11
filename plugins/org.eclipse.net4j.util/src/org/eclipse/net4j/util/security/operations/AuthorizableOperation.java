@@ -17,11 +17,17 @@ import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.IOException;
+import java.io.ObjectInputFilter;
 import java.lang.ref.WeakReference;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * @author Eike Stepper
@@ -29,7 +35,51 @@ import java.util.Objects;
  */
 public final class AuthorizableOperation
 {
-  private static final ClassLoader CLASS_LOADER = OM.BUNDLE.getClass().getClassLoader();
+  private static final Set<Class<?>> REJECTED_CLASSES = new HashSet<>();
+
+  private static final ObjectInputFilter PARAMETER_FILTER = info -> {
+    Class<?> type = info.serialClass();
+    if (type == null)
+    {
+      return ObjectInputFilter.Status.UNDECIDED;
+    }
+
+    if (type == Number.class // Serializable superclass of numeric wrapper classes.
+        || type == Boolean.class //
+        || type == Byte.class //
+        || type == Short.class //
+        || type == Integer.class //
+        || type == Long.class //
+        || type == Float.class //
+        || type == Double.class //
+        || type == Character.class //
+        || type == String.class //
+        || type == BigInteger.class //
+        || type == BigDecimal.class //
+        || type == UUID.class //
+        || type == boolean[].class //
+        || type == byte[].class //
+        || type == short[].class //
+        || type == int[].class //
+        || type == long[].class //
+        || type == float[].class //
+        || type == double[].class //
+        || type == char[].class //
+        || type == String[].class //
+        || type == BigInteger[].class //
+        || type == BigDecimal[].class //
+        || type == UUID[].class)
+    {
+      return ObjectInputFilter.Status.ALLOWED;
+    }
+
+    if (REJECTED_CLASSES.add(type))
+    {
+      OM.LOG.warn("Rejecting AuthorizableOperation parameter of type " + type.getName());
+    }
+
+    return ObjectInputFilter.Status.REJECTED;
+  };
 
   private final String id;
 
@@ -120,6 +170,22 @@ public final class AuthorizableOperation
 
   public static AuthorizableOperation read(ExtendedDataInput in) throws IOException
   {
+    return read(in, false);
+  }
+
+  /**
+   * @since 3.30
+   */
+  public static AuthorizableOperation read(ExtendedDataInput in, boolean useParameterFilter) throws IOException
+  {
+    return read(in, useParameterFilter ? PARAMETER_FILTER : null);
+  }
+
+  /**
+   * @since 3.30
+   */
+  public static AuthorizableOperation read(ExtendedDataInput in, ObjectInputFilter parameterFilter) throws IOException
+  {
     String id = in.readString();
     Builder builder = builder(id);
 
@@ -128,7 +194,7 @@ public final class AuthorizableOperation
     {
       String key = in.readString();
 
-      Object value = in.readObject(CLASS_LOADER);
+      Object value = in.readObject(OM.BUNDLE, parameterFilter);
       builder.parameter(key, value);
     }
 

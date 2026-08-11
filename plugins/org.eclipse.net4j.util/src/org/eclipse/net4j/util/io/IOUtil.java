@@ -41,6 +41,7 @@ import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputFilter;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
@@ -1090,12 +1091,20 @@ public final class IOUtil
   /**
    * @since 3.26
    */
+  public static <T> T readObject(File file, ClassResolver classResolver) throws Exception
+  {
+    return readObject(file, classResolver, null);
+  }
+
+  /**
+   * @since 3.30
+   */
   @SuppressWarnings("unchecked")
-  public static <T> T readObject(File file, final ClassResolver classResolver) throws Exception
+  public static <T> T readObject(File file, ClassResolver classResolver, ObjectInputFilter filter) throws Exception
   {
     try (ExtendedDataInputStream in = ExtendedDataInputStream.wrap(buffered(openInputStream(file))))
     {
-      return (T)ExtendedIOUtil.readObject(in, classResolver);
+      return (T)ExtendedIOUtil.readObject(in, classResolver, filter);
     }
   }
 

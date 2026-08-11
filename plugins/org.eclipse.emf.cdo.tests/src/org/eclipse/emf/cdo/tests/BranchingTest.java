@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.DanglingReferenceException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -142,9 +143,9 @@ public class BranchingTest extends AbstractCDOTest
       mainBranch.createBranch(branchName);
       fail("CDODuplicateBranchException expected");
     }
-    catch (CDODuplicateBranchException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(CDODuplicateBranchException.class, ex));
     }
   }
 
@@ -159,9 +160,9 @@ public class BranchingTest extends AbstractCDOTest
       subBranch.createBranch(null);
       fail("IllegalArgumentException expected");
     }
-    catch (IllegalArgumentException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(IllegalArgumentException.class, ex));
     }
 
     try
@@ -169,9 +170,9 @@ public class BranchingTest extends AbstractCDOTest
       subBranch.createBranch("");
       fail("IllegalArgumentException expected");
     }
-    catch (IllegalArgumentException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(IllegalArgumentException.class, ex));
     }
 
     try
@@ -179,9 +180,9 @@ public class BranchingTest extends AbstractCDOTest
       subBranch.createBranch("a/b/c/d");
       fail("IllegalArgumentException expected");
     }
-    catch (IllegalArgumentException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(IllegalArgumentException.class, ex));
     }
   }
 
@@ -232,9 +233,9 @@ public class BranchingTest extends AbstractCDOTest
       branch.setName(existingPath);
       fail("CDODuplicateBranchException expected");
     }
-    catch (CDODuplicateBranchException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(CDODuplicateBranchException.class, ex));
     }
   }
 
@@ -250,9 +251,9 @@ public class BranchingTest extends AbstractCDOTest
       mainBranch.setName("NOT_MAIN");
       fail("IllegalArgumentException expected");
     }
-    catch (IllegalArgumentException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(IllegalArgumentException.class, ex));
     }
 
     try
@@ -260,9 +261,9 @@ public class BranchingTest extends AbstractCDOTest
       subsubBranch.setName(null);
       fail("IllegalArgumentException expected");
     }
-    catch (IllegalArgumentException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(IllegalArgumentException.class, ex));
     }
 
     try
@@ -270,9 +271,9 @@ public class BranchingTest extends AbstractCDOTest
       subsubBranch.setName("");
       fail("IllegalArgumentException expected");
     }
-    catch (IllegalArgumentException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(IllegalArgumentException.class, ex));
     }
 
     try
@@ -280,9 +281,9 @@ public class BranchingTest extends AbstractCDOTest
       subsubBranch.setName("a/b/c/d");
       fail("IllegalArgumentException expected");
     }
-    catch (IllegalArgumentException expected)
+    catch (Exception ex)
     {
-      // SUCCESS
+      assertTrue(RemoteException.is(IllegalArgumentException.class, ex));
     }
   }
 

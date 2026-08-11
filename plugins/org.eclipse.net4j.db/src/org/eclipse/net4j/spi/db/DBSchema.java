@@ -281,7 +281,7 @@ public class DBSchema extends org.eclipse.net4j.internal.db.ddl.DBSchema
 
   @Override
   @Deprecated
-  @SuppressWarnings("removal")
+  @SuppressWarnings("all")
   protected void finalize() throws Throwable
   {
     super.finalize();

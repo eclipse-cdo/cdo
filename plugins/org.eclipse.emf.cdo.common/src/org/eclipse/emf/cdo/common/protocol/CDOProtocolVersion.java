@@ -20,8 +20,9 @@ class CDOProtocolVersion
 
   static
   {
-    VALUE = 54; // Provide administrative unlocking #124
+    VALUE = 55; // Restrict ObjectInputStream.readObject() when sender is not trusted #161
 
+    // VALUE = 54; // Provide administrative unlocking #124
     // VALUE = 53; // Make digest algorithm configurable for CDOLob IDs #106
     // VALUE = 52; // Provide an entity directory service and protocol #89
     // VALUE = 51; // Support login peeking

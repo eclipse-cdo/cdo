@@ -70,24 +70,26 @@ public class Bugzilla_377173_Test extends AbstractCDOTest
     {
       getRepository().removeHandler(commitWaiter);
     }
-
   }
 
+  /**
+   * @author Esteban Dugueperoux
+   */
   private static class ProgressMonitorAsserter extends NullProgressMonitor
   {
-
     @Override
     public void internalWorked(double work)
     {
       super.internalWorked(work);
       setCanceled(true);
     }
-
   }
 
+  /**
+   * @author Esteban Dugueperoux
+   */
   private static class CommitWaiter implements IRepository.WriteAccessHandler
   {
-
     @Override
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
@@ -98,7 +100,6 @@ public class Bugzilla_377173_Test extends AbstractCDOTest
     public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
     }
-
   }
 
   private Company initializeModel(CDOResource resource)

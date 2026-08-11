@@ -26,7 +26,7 @@
 
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.server</artifactId>
-  <version>4.25.2-SNAPSHOT</version>
+  <version>4.26.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

@@ -240,6 +240,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
         authorizationCache = new AuthorizationCache(getSessionProtocol(), operations, result.getAuthorizationResults());
       }
 
+      protocol.setTrustingPeer(true);
       return result;
     }
     catch (RemoteException ex)

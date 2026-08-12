@@ -92,7 +92,19 @@ public class CDOCompare
 
       try
       {
-        rcpRegistriesAvailable = CommonPlugin.loadClass("org.eclipse.emf.compare.rcp", "org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin") != null;
+        Class<?> clazz = CommonPlugin.loadClass("org.eclipse.emf.compare.rcp", "org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin");
+        if (clazz != null)
+        {
+          Method method = ReflectUtil.getMethod(clazz, "getDefault");
+          if (method != null)
+          {
+            Object plugin = method.invoke(null);
+            if (plugin != null)
+            {
+              rcpRegistriesAvailable = true;
+            }
+          }
+        }
       }
       catch (Throwable ex)
       {

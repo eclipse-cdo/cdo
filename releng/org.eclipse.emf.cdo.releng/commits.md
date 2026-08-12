@@ -4,3 +4,7 @@ This file lists artificial commits that were needed to get issues into the relea
 
 - 038e18b94aa1da4cfca2d9e87b6d3ca9abc9489d:
   [Releng] Upgrade remaining Java 8 projects to Java 11 #160
+
+- 3d02b5052f26521128002157bba6f1fd68553c4e:
+  Restrict ObjectInputStream.readObject() when sender is not trusted #161
+  

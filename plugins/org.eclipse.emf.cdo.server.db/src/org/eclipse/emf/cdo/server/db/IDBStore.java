@@ -207,5 +207,20 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
      * @since 4.14
      */
     public static final String ZIP_PACKAGE_BYTES = "zipPackageBytes"; //$NON-NLS-1$
+
+    /**
+     * Whether to disable the SQL query handler.
+     * <p>
+     * When set to <code>true</code>, the SQL query handler is disabled.
+     * This means that clients cannot execute arbitrary SQL queries against the database.
+     * <p>
+     * When set to <code>false</code> (the default), the SQL query handler is enabled.
+     * <p>
+     * The default value is determined by the "org.eclipse.emf.cdo.server.db.DEFAULT_DISABLE_SQL_QUERY_HANDLER"
+     * system property, which defaults to <code>false</code>.
+     *
+     * @since 4.15
+     */
+    public static final String DISABLE_SQL_QUERY_HANDLER = "disableSqlQueryHandler"; //$NON-NLS-1$
   }
 }

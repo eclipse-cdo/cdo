@@ -131,19 +131,26 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
 
   private static final String PROP_LAST_NONLOCAL_COMMITTIME = "org.eclipse.emf.cdo.server.db.lastNonLocalCommitTime"; //$NON-NLS-1$
 
-  private static final int DEFAULT_CONNECTION_RETRY_COUNT = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CONNECTION_RETRY_COUNT", 0);
+  private static final int DEFAULT_CONNECTION_RETRY_COUNT = OMPlatform.INSTANCE //
+      .getProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CONNECTION_RETRY_COUNT", 0);
 
-  private static final int DEFAULT_CONNECTION_RETRY_SECONDS = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CONNECTION_RETRY_SECONDS",
-      30);
+  private static final int DEFAULT_CONNECTION_RETRY_SECONDS = OMPlatform.INSTANCE //
+      .getProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CONNECTION_RETRY_SECONDS", 30);
 
-  private static final boolean DEFAULT_PREPEND_SCHEMA_NAME = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.DEFAULT_PREPEND_SCHEMA_NAME");
+  private static final boolean DEFAULT_PREPEND_SCHEMA_NAME = OMPlatform.INSTANCE //
+      .isProperty("org.eclipse.emf.cdo.server.db.DEFAULT_PREPEND_SCHEMA_NAME");
 
-  private static final boolean DEFAULT_CREATE_SCHEMA_IF_NEEDED = OMPlatform.INSTANCE
+  private static final boolean DEFAULT_CREATE_SCHEMA_IF_NEEDED = OMPlatform.INSTANCE //
       .isProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CREATE_SCHEMA_IF_NEEDED");
 
-  private static final boolean SHOW_SCHEMA_CREATION_EXCEPTION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.SHOW_SCHEMA_CREATION_EXCEPTION");
+  private static final boolean SHOW_SCHEMA_CREATION_EXCEPTION = OMPlatform.INSTANCE //
+      .isProperty("org.eclipse.emf.cdo.server.db.SHOW_SCHEMA_CREATION_EXCEPTION");
 
-  private static final boolean DISABLE_LOG_OTHER_SCHEMA_INFO = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.DISABLE_LOG_OTHER_SCHEMA_INFO");
+  private static final boolean DISABLE_LOG_OTHER_SCHEMA_INFO = OMPlatform.INSTANCE //
+      .isProperty("org.eclipse.emf.cdo.server.db.DISABLE_LOG_OTHER_SCHEMA_INFO");
+
+  private static final boolean DEFAULT_DISABLE_SQL_QUERY_HANDLER = OMPlatform.INSTANCE //
+      .isProperty("org.eclipse.emf.cdo.server.db.DEFAULT_DISABLE_SQL_QUERY_HANDLER");
 
   private long creationTime;
 
@@ -154,6 +161,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   private int idColumnLength = IDBField.DEFAULT;
 
   private int jdbcFetchSize = 100000;
+
+  private boolean disableSQLQueryHandler = DEFAULT_DISABLE_SQL_QUERY_HANDLER;
 
   private IIDHandler idHandler;
 
@@ -296,6 +305,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   public int getJDBCFetchSize()
   {
     return jdbcFetchSize;
+  }
+
+  public boolean isDisableSQLQueryHandler()
+  {
+    return disableSQLQueryHandler;
   }
 
   @Override
@@ -781,6 +795,23 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
 
       setDropAllDataOnActivate(getProperty(Props.DROP_ALL_DATA_ON_ACTIVATE, false));
       jdbcFetchSize = getProperty(Props.JDBC_FETCH_SIZE, jdbcFetchSize);
+
+      disableSQLQueryHandler = getProperty(Props.DISABLE_SQL_QUERY_HANDLER, disableSQLQueryHandler);
+      if (!disableSQLQueryHandler)
+      {
+        if (repository.getSessionManager().getPermissionManager() != null)
+        {
+          // Warn about potential security problem because a permission manager is configured
+          // and the SQL query handler is enabled and bypasses the permission manager.
+          OM.LOG.warn("SQL query handler is enabled for repository " + repository.getName() //
+              + ". This may be a security problem because a permission manager is configured " //
+              + "and the SQL query handler bypasses the permission manager.");
+        }
+        else
+        {
+          OM.LOG.info("SQL query handler is enabled for repository " + repository.getName() + ".");
+        }
+      }
     }
 
     Connection connection = getConnectionOrRetry();

@@ -219,6 +219,9 @@
       <!-- Whether to compress the bytes of a package before storing them in the database. -->
       <property name="zipPackageBytes" value="true"/>
       
+      <!-- Whether to disable the SQL query handler. If true, the server will not execute SQL queries. -->
+      <property name="disableSqlQueryHandler" value="false"/>
+      
       <!-- Example for Mysql with 4 bytes per char: 
         <property name="externalRefsURIColumnType" value="VARCHAR"/>
         <property name="externalRefsURIColumnLength" value="768"/>

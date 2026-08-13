@@ -11,8 +11,10 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter;
 import org.eclipse.emf.cdo.server.db.evolution.phased.FolderContextManager;
 import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport;
@@ -40,6 +42,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.Map;
 
 /**
@@ -140,7 +143,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
     // Remove the 'sub_a' reference from class A.
     v2A.getEStructuralFeatures().remove(0);
 
-    // Add 'name' attributes to class A.
+    // Add 'name' attribute to class A.
     EAttribute v2Aname = EcoreFactory.eINSTANCE.createEAttribute();
     v2Aname.setName("name");
     v2Aname.setEType(EcorePackage.Literals.ESTRING);
@@ -154,7 +157,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
     v2Anew_children.setContainment(true);
     v2A.getEStructuralFeatures().add(v2Anew_children);
 
-    // Add 'name' attributes to class B.
+    // Add 'name' attribute to class B.
     EAttribute v2Bname = EcoreFactory.eINSTANCE.createEAttribute();
     v2Bname.setName("name");
     v2Bname.setEType(EcorePackage.Literals.ESTRING);
@@ -175,7 +178,52 @@ public class ModelEvolutionTest extends AbstractCDOTest
     list(a, "new_children").add(b3);
 
     transaction.commit();
-    System.out.println();
+  }
+
+  public void testAddStringAfterBlob() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("test"));
+
+      EObject c = create(V1, "C");
+      resource.getContents().add(c);
+
+      try (InputStream inputStream = org.eclipse.emf.cdo.tests.bundle.OM.BUNDLE.getInputStream("backup-tests/Ecore.uml"))
+      {
+        CDOBlob blob = new CDOBlob(inputStream);
+        c.eSet(c.eClass().getEStructuralFeature("blob"), blob);
+
+        transaction.commit();
+      }
+    }
+
+    // InternalRepository repository = getRepository();
+    // DBStore store = (DBStore)repository.getStore();
+    // Map<EClass, IClassMapping> classMappings = store.getMappingStrategy().getClassMappings();
+
+    EPackage v2 = registerPackage(EcoreUtil.copy(V1));
+    EClass v2C = (EClass)v2.getEClassifier("C");
+
+    // Add 'name' attribute to class C.
+    EAttribute v2Cname = EcoreFactory.eINSTANCE.createEAttribute();
+    v2Cname.setName("name");
+    v2Cname.setEType(EcorePackage.Literals.ESTRING);
+    v2C.getEStructuralFeatures().add(v2Cname);
+
+    restartRepository();
+
+    CDOSession session = openSession();
+    msg(EMFUtil.getXMI(session.getPackageRegistry().getEPackage(NS_URI)));
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource(getResourcePath("test"));
+
+    EObject c = resource.getContents().get(0);
+    c.eSet(v2Cname, "Eike Stepper");
+
+    transaction.commit();
   }
 
   private static EObject create(EPackage ePackage, EClass eClass)
@@ -227,6 +275,9 @@ public class ModelEvolutionTest extends AbstractCDOTest
     // Class B
     EClass B = EMFUtil.createEClass(model, "B");
 
+    // Class C
+    EClass C = EMFUtil.createEClass(model, "C");
+
     // Containment reference A.children
     EReference A_sub_a = EMFUtil.createEReference(A, "sub_a", A);
     A_sub_a.setContainment(true);
@@ -243,8 +294,11 @@ public class ModelEvolutionTest extends AbstractCDOTest
     EReference B_parent = EMFUtil.createEReference(B, "parent", A);
     linkOpposites(A_children_bidi, B_parent);
 
-    // EAttribute B_shape =
+    // Attribute B.shape
     EMFUtil.createEAttribute(B, "shape", Shape);
+
+    // Attribute C.blob
+    EMFUtil.createEAttribute(C, "blob", EtypesPackage.Literals.BLOB);
 
     return registerPackage(model);
   }

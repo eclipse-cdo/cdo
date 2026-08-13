@@ -178,7 +178,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   {
     DBType fieldType = getDBType();
     int fieldLength = getDBLength(fieldType);
-    field = table.addField(fieldName, fieldType, fieldLength);
+    field = table.ensureField(fieldName, fieldType, fieldLength, IDBField.DEFAULT, false);
   }
 
   @Override

@@ -1193,7 +1193,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         if (mapping != null)
         {
           // Add field for list sizes.
-          table.addField(fieldName, DBType.INTEGER);
+          table.ensureField(fieldName, DBType.INTEGER, IDBField.DEFAULT, IDBField.DEFAULT, false);
         }
       }
       else
@@ -1224,7 +1224,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     for (EStructuralFeature feature : unsettableFeatures)
     {
       String fieldName = mappingStrategy.getUnsettableFieldName(feature);
-      table.addField(fieldName, DBType.BOOLEAN);
+      table.ensureField(fieldName, DBType.BOOLEAN, IDBField.DEFAULT, IDBField.DEFAULT, false);
     }
 
     // Create optional feature indices.

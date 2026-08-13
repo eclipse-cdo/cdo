@@ -26,6 +26,9 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
+import org.eclipse.net4j.util.event.LogListener;
+import org.eclipse.net4j.util.io.IOUtil;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
@@ -54,6 +57,10 @@ import java.util.Map;
 @CleanRepositoriesAfter(reason = "Model evolution")
 public class ModelEvolutionTest extends AbstractCDOTest
 {
+  private static final boolean LOG = true;
+
+  private static final String FIXED_ROOT_FOLDER = null; // "C:\\develop\\temp\\model-evolution";
+
   private static final EPackage.Registry PACKAGE_REGISTRY = EPackage.Registry.INSTANCE;
 
   private static final ResourceSet RESOURCE_SET = EMFUtil.newEcoreResourceSet(PACKAGE_REGISTRY);
@@ -62,41 +69,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
 
   private static final EPackage V1 = createModelV1();
 
-  private PhasedModelEvolutionSupport support;
-
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    super.doSetUp();
-    RESOURCE_SET.getResources().clear();
-  }
-
-  @Override
-  protected void doTearDown() throws Exception
-  {
-    RESOURCE_SET.getResources().clear();
-    super.doTearDown();
-  }
-
-  @Override
-  protected void initTestProperties(Map<String, Object> properties)
-  {
-    File rootFolder = createTempFolder();
-
-    FolderContextManager contextManager = new FolderContextManager();
-    contextManager.setSaveNewModels(true);
-
-    support = new PhasedModelEvolutionSupport();
-    support.setRootFolder(rootFolder);
-    support.setContextManager(contextManager);
-    support.setMode(Mode.Migrate);
-    support.setRepositoryExporter(new DefaultRepositoryExporter());
-    // support.addListener(new LogListener());
-
-    super.initTestProperties(properties);
-    properties.put(RepositoryConfig.PROP_TEST_INITIAL_PACKAGES, new EPackage[] { V1 });
-    properties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, support);
-  }
+  private File rootFolder;
 
   public void testFeatureAddition() throws Exception
   {
@@ -163,7 +136,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
     v2Bname.setEType(EcorePackage.Literals.ESTRING);
     v2B.getEStructuralFeatures().add(0, v2Bname);
 
-    restartRepository();
+    restartWithEvolution(v2);
 
     CDOSession session = openSession();
     msg(EMFUtil.getXMI(session.getPackageRegistry().getEPackage(NS_URI)));
@@ -212,7 +185,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
     v2Cname.setEType(EcorePackage.Literals.ESTRING);
     v2C.getEStructuralFeatures().add(v2Cname);
 
-    restartRepository();
+    restartWithEvolution(v2);
 
     CDOSession session = openSession();
     msg(EMFUtil.getXMI(session.getPackageRegistry().getEPackage(NS_URI)));
@@ -224,6 +197,142 @@ public class ModelEvolutionTest extends AbstractCDOTest
     c.eSet(v2Cname, "Eike Stepper");
 
     transaction.commit();
+  }
+
+  public void testRemoveAndAddFeature() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("test"));
+
+      EObject b = create(V1, "B");
+      b.eSet(b.eClass().getEStructuralFeature("shape"), ((EEnum)V1.getEClassifier("Shape")).getEEnumLiteral("TRIANGLE"));
+      resource.getContents().add(b);
+
+      transaction.commit();
+    }
+
+    EPackage v2 = registerPackage(EcoreUtil.copy(V1));
+    EClass v2B = (EClass)v2.getEClassifier("B");
+
+    // Remove the 'shape' attribute from class B.
+    EList<EStructuralFeature> v2BFeatures = v2B.getEStructuralFeatures();
+    v2BFeatures.remove(1);
+
+    // Trigger evolution ID 1.
+    restartWithEvolution(v2);
+
+    // {
+    // InternalRepository repository = getRepository();
+    // DBStore store = (DBStore)repository.getStore();
+    //
+    // serverRun(() -> {
+    // Map<EClass, IClassMapping> classMappings = store.getMappingStrategy().getClassMappings();
+    // IClassMapping bMapping = classMappings.get(v2B);
+    //
+    // EStructuralFeature shapeFeature = v2B.getEStructuralFeature("shape");
+    // IFeatureMapping shapeMapping = bMapping.getFeatureMapping(shapeFeature);
+    // System.out.println(shapeMapping);
+    // });
+    // }
+
+    EPackage v3 = registerPackage(EcoreUtil.copy(v2));
+    EClass v3B = (EClass)v3.getEClassifier("B");
+    EEnum Shape = (EEnum)v3.getEClassifier("Shape");
+
+    // Re-add the 'shape' attribute to class B.
+    EMFUtil.createEAttribute(v3B, "shape", Shape);
+
+    // Trigger evolution ID 2.
+    restartWithEvolution(v3);
+
+    // {
+    // InternalRepository repository = getRepository();
+    // DBStore store = (DBStore)repository.getStore();
+    //
+    // serverRun(() -> {
+    // Map<EClass, IClassMapping> classMappings = store.getMappingStrategy().getClassMappings();
+    // IClassMapping bMapping = classMappings.get(v3B);
+    // IFeatureMapping shapeMapping = bMapping.getFeatureMapping(v3B.getEStructuralFeature("shape"));
+    // System.out.println(shapeMapping);
+    // });
+    // }
+
+    CDOSession session = openSession();
+    msg(EMFUtil.getXMI(session.getPackageRegistry().getEPackage(NS_URI)));
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource(getResourcePath("test"));
+
+    EObject b = resource.getContents().get(0);
+    b.eSet(b.eClass().getEStructuralFeature("shape"), Shape.getEEnumLiteral("RECTANGLE"));
+
+    transaction.commit();
+    System.out.println();
+  }
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    super.doSetUp();
+    RESOURCE_SET.getResources().clear();
+
+    rootFolder = initRootFolder();
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    RESOURCE_SET.getResources().clear();
+    super.doTearDown();
+  }
+
+  @Override
+  protected void initTestProperties(Map<String, Object> properties)
+  {
+    super.initTestProperties(properties);
+    initTestProperties(properties, V1);
+  }
+
+  private void initTestProperties(Map<String, Object> properties, EPackage initialPackage)
+  {
+    FolderContextManager contextManager = new FolderContextManager();
+    contextManager.setSaveNewModels(true);
+
+    PhasedModelEvolutionSupport support = new PhasedModelEvolutionSupport();
+    support.setRootFolder(rootFolder);
+    support.setContextManager(contextManager);
+    support.setMode(Mode.Migrate);
+    support.setRepositoryExporter(new DefaultRepositoryExporter());
+
+    if (LOG)
+    {
+      support.addListener(new LogListener());
+    }
+
+    properties.put(RepositoryConfig.PROP_TEST_INITIAL_PACKAGES, new EPackage[] { initialPackage });
+    properties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, support);
+  }
+
+  private File initRootFolder()
+  {
+    if (FIXED_ROOT_FOLDER != null)
+    {
+      File rootFolder = new File(FIXED_ROOT_FOLDER, getTestMethodName());
+      IOUtil.delete(rootFolder);
+      return rootFolder;
+    }
+
+    return createTempFolder();
+  }
+
+  private void restartWithEvolution(EPackage initialPackage)
+  {
+    Map<String, Object> properties = getTestProperties();
+    initTestProperties(properties, initialPackage);
+
+    restartRepository();
   }
 
   private static EObject create(EPackage ePackage, EClass eClass)
@@ -256,7 +365,11 @@ public class ModelEvolutionTest extends AbstractCDOTest
   private static EPackage registerPackage(EPackage ePackage)
   {
     String nsURI = ePackage.getNsURI();
-    RESOURCE_SET.createResource(URI.createURI(nsURI)).getContents().add(ePackage);
+    URI uri = URI.createURI(nsURI);
+
+    RESOURCE_SET.getResources().removeIf(resource -> uri.equals(resource.getURI()));
+    RESOURCE_SET.createResource(uri).getContents().add(ePackage);
+
     PACKAGE_REGISTRY.put(nsURI, ePackage);
     return ePackage;
   }

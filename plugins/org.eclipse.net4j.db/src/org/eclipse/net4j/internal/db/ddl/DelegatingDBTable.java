@@ -84,21 +84,9 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
   }
 
   @Override
-  public void removeField(IDBField fieldToRemove)
-  {
-    getDelegate().removeField(unwrap(fieldToRemove));
-  }
-
-  @Override
   public IDBField addField(String name, DBType type, int precision)
   {
     return wrap(getDelegate().addField(name, type, precision));
-  }
-
-  @Override
-  public void removeIndex(IDBIndex indexToRemove)
-  {
-    getDelegate().removeIndex(unwrap(indexToRemove));
   }
 
   @Override
@@ -117,6 +105,12 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
   public IDBField addField(String name, DBType type, int precision, int scale, boolean notNull)
   {
     return wrap(getDelegate().addField(name, type, precision, scale, notNull));
+  }
+
+  @Override
+  public IDBField ensureField(String name, DBType type, int precision, int scale, boolean notNull)
+  {
+    return wrap(getDelegate().ensureField(name, type, precision, scale, notNull));
   }
 
   @Override
@@ -153,6 +147,12 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
   public IDBField[] getFields(String... fieldNames) throws SchemaElementNotFoundException
   {
     return wrap(getDelegate().getFields(fieldNames), IDBField.class);
+  }
+
+  @Override
+  public void removeField(IDBField fieldToRemove)
+  {
+    getDelegate().removeField(unwrap(fieldToRemove));
   }
 
   @Override
@@ -231,6 +231,12 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
   public IDBIndex getPrimaryKeyIndex()
   {
     return wrap(getDelegate().getPrimaryKeyIndex());
+  }
+
+  @Override
+  public void removeIndex(IDBIndex indexToRemove)
+  {
+    getDelegate().removeIndex(unwrap(indexToRemove));
   }
 
   @Override

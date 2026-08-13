@@ -26,7 +26,9 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
@@ -177,6 +179,20 @@ public abstract class AbstractCDOTest extends ConfigTest
     }
 
     return lockTarget;
+  }
+
+  public void serverRun(Runnable runnable)
+  {
+    serverRun(null, runnable);
+  }
+
+  public void serverRun(String repositoryName, Runnable runnable)
+  {
+    try (CDOSession clientSession = repositoryName == null ? openSession() : openSession(repositoryName))
+    {
+      ISession serverSession = serverSession(clientSession);
+      StoreThreadLocal.wrap(serverSession, runnable).run();
+    }
   }
 
   public int createModel(Category parent, int levels, int categories, int products)

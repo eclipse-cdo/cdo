@@ -127,6 +127,38 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
   }
 
   @Override
+  public IDBField ensureField(String name, DBType type, int precision, int scale, boolean notNull)
+  {
+    IDBField field = getField(name);
+    if (field != null)
+    {
+      if (field.getType() != type)
+      {
+        throw new DBException("Field exists with different type: " + name);
+      }
+
+      if (precision != IDBField.DEFAULT && field.getPrecision() != precision)
+      {
+        throw new DBException("Field exists with different precision: " + name);
+      }
+
+      if (scale != IDBField.DEFAULT && field.getScale() != scale)
+      {
+        throw new DBException("Field exists with different scale: " + name);
+      }
+
+      if (field.isNotNull() != notNull)
+      {
+        throw new DBException("Field exists with different nullability: " + name);
+      }
+
+      return field;
+    }
+
+    return addField(name, type, precision, scale, notNull);
+  }
+
+  @Override
   public void removeField(IDBField fieldToRemove)
   {
     assertUnlocked();

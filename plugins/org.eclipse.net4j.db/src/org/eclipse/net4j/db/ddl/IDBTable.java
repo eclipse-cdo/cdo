@@ -41,6 +41,11 @@ public interface IDBTable extends IDBSchemaElement
   public IDBField addField(String name, DBType type, int precision, int scale, boolean notNull);
 
   /**
+   * @since 4.14
+   */
+  public IDBField ensureField(String name, DBType type, int precision, int scale, boolean notNull);
+
+  /**
    * @since 4.2
    */
   public IDBField getFieldSafe(String name) throws SchemaElementNotFoundException;

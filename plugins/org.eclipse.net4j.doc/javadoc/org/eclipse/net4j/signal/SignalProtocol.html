@@ -274,26 +274,32 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns <code>true</code> by default, override to change this behavior.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(org.eclipse.net4j.connector.IConnector)" class="member-name-link">open</a><wbr>(<a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTrustingPeer()" class="member-name-link">isTrustingPeer</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#provideSignalReactor(short)" class="member-name-link">provideSignalReactor</a><wbr>(short&nbsp;signalID)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(org.eclipse.net4j.connector.IConnector)" class="member-name-link">open</a><wbr>(<a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)" class="member-name-link">setStreamWrapper</a><wbr>(org.eclipse.net4j.util.io.IStreamWrapper&nbsp;streamWrapper)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#provideSignalReactor(short)" class="member-name-link">provideSignalReactor</a><wbr>(short&nbsp;signalID)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeout(long)" class="member-name-link">setTimeout</a><wbr>(long&nbsp;timeout)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)" class="member-name-link">setStreamWrapper</a><wbr>(org.eclipse.net4j.util.io.IStreamWrapper&nbsp;streamWrapper)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeout(long)" class="member-name-link">setTimeout</a><wbr>(long&nbsp;timeout)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Equivalent to calling SignalProtocol.setTimeout(timeout, false).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeout(long,boolean)" class="member-name-link">setTimeout</a><wbr>(long&nbsp;timeout,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeout(long,boolean)" class="member-name-link">setTimeout</a><wbr>(long&nbsp;timeout,
  boolean&nbsp;useOldTimeoutToSendNewOne)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Update the timeout used for signal end of stream waiting time.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTrustingPeer(boolean)" class="member-name-link">setTrustingPeer</a><wbr>(boolean&nbsp;trustingPeer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -514,6 +520,26 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
  NOTE: this second parameter is useful mostly for test to be able to set a to small timeout</dd>
 <dt>Since:</dt>
 <dd>4.4</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isTrustingPeer()">
+<h3>isTrustingPeer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTrustingPeer</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.22</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setTrustingPeer(boolean)">
+<h3>setTrustingPeer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setTrustingPeer</span><wbr><span class="parameters">(boolean&nbsp;trustingPeer)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.22</dd>
 </dl>
 </section>
 </li>

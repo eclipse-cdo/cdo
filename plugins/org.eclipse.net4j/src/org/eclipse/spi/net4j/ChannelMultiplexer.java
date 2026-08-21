@@ -463,14 +463,41 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       throw new ChannelException("Invalid channel ID: " + channelID); //$NON-NLS-1$
     }
 
-    IChannel oldChannel = channels.putIfAbsent(channelID, channel);
-    if (oldChannel != null)
+    try
     {
-      throw new ChannelException("Channel ID already in use: " + channelID); //$NON-NLS-1$
-    }
+      IChannel oldChannel = channels.putIfAbsent(channelID, channel);
+      if (oldChannel != null)
+      {
+        throw new ChannelException("Channel ID already in use: " + channelID); //$NON-NLS-1$
+      }
 
-    LifecycleUtil.activate(channel);
-    fireElementAddedEvent(channel);
+      LifecycleUtil.activate(channel);
+      fireElementAddedEvent(channel);
+    }
+    catch (RuntimeException | Error ex)
+    {
+      rollbackChannelAddition(channel);
+      throw ex;
+    }
+  }
+
+  /**
+   * Releases a locally reserved channel ID if adding its channel failed. If a
+   * different channel owns the ID, retain the reservation so that the ID is
+   * not allocated again while it remains in use.
+   */
+  private void rollbackChannelAddition(InternalChannel channel)
+  {
+    short channelID = channel.getID();
+    
+    synchronized (channelIDs)
+    {
+      channels.remove(channelID, channel);
+      if (!channels.containsKey(channelID))
+      {
+        channelIDs.remove(channelID);
+      }
+    }
   }
 
   private void removeChannel(InternalChannel channel)

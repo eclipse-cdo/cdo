@@ -194,8 +194,20 @@ public class BufferOutputStream extends OutputStream
     }
     finally
     {
+      IBuffer buffer = currentBuffer;
       currentBuffer = null;
-      super.close();
+
+      try
+      {
+        if (buffer != null)
+        {
+          buffer.release();
+        }
+      }
+      finally
+      {
+        super.close();
+      }
     }
   }
 

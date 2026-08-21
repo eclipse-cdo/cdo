@@ -66,6 +66,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   public static final long COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT = OMPlatform.INSTANCE
       .getProperty("org.eclipse.net4j.signal.COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT", 5000L);
 
+  private static final long DEFAULT_DEACTIVATION_TIMEOUT = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.net4j.signal.SignalProtocol.DEFAULT_DEACTIVATION_TIMEOUT", 0L);
+
   private static final boolean DEFAULT_TRUSTING_PEER = OMPlatform.INSTANCE //
       .isProperty("org.eclipse.net4j.signal.SignalProtocol.DEFAULT_TRUSTING_PEER");
 
@@ -278,13 +281,42 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
 
   public boolean waitForSignals(long timeout)
   {
+    if (timeout < NO_TIMEOUT)
+    {
+      timeout = NO_TIMEOUT;
+    }
+
     synchronized (signals)
     {
+      if (timeout == NO_TIMEOUT)
+      {
+        while (!signals.isEmpty())
+        {
+          try
+          {
+            signals.wait();
+          }
+          catch (InterruptedException ex)
+          {
+            return false;
+          }
+        }
+
+        return true;
+      }
+
+      long stop = System.currentTimeMillis() + timeout;
       while (!signals.isEmpty())
       {
+        long remaining = stop - System.currentTimeMillis();
+        if (remaining <= 0)
+        {
+          return false;
+        }
+
         try
         {
-          signals.wait(timeout);
+          signals.wait(remaining);
         }
         catch (InterruptedException ex)
         {
@@ -406,15 +438,10 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   {
     if (!testing)
     {
-      synchronized (signals)
+      long deactivationTimeout = getDeactivationTimeout();
+      if (deactivationTimeout > 0)
       {
-        // Wait at most 10 seconds for running signals to finish
-        int waitMillis = 10 * 1000;
-        long stop = System.currentTimeMillis() + waitMillis;
-        while (!signals.isEmpty() && System.currentTimeMillis() < stop)
-        {
-          signals.wait(1000L);
-        }
+        waitForSignals(deactivationTimeout);
       }
     }
 
@@ -521,6 +548,14 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   protected StringCompressor getStringCompressor()
   {
     return null;
+  }
+
+  /**
+   * @since 4.22
+   */
+  protected long getDeactivationTimeout()
+  {
+    return DEFAULT_DEACTIVATION_TIMEOUT;
   }
 
   synchronized int getNextCorrelationID()

@@ -149,6 +149,9 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   private static final boolean DISABLE_LOG_OTHER_SCHEMA_INFO = OMPlatform.INSTANCE //
       .isProperty("org.eclipse.emf.cdo.server.db.DISABLE_LOG_OTHER_SCHEMA_INFO");
 
+  private static final boolean IGNORE_NEWER_SCHEMA_VERSION = OMPlatform.INSTANCE //
+      .isProperty("org.eclipse.emf.cdo.server.db.IGNORE_NEWER_SCHEMA_VERSION");
+
   private static final boolean DEFAULT_DISABLE_SQL_QUERY_HANDLER = OMPlatform.INSTANCE //
       .isProperty("org.eclipse.emf.cdo.server.db.DEFAULT_DISABLE_SQL_QUERY_HANDLER");
 
@@ -844,7 +847,19 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       }
 
       schemaVersion = selectSchemaVersion(connection, prependSchemaName ? schemaName : null);
-      if (0 <= schemaVersion && schemaVersion < SCHEMA_VERSION)
+      if (schemaVersion > SCHEMA_VERSION)
+      {
+        String message = "The database schema version (" + schemaVersion + ") is newer than the supported version (" + SCHEMA_VERSION + ").";
+        if (IGNORE_NEWER_SCHEMA_VERSION)
+        {
+          OM.LOG.warn(message + " Continuing because org.eclipse.emf.cdo.server.db.IGNORE_NEWER_SCHEMA_VERSION is enabled."); //$NON-NLS-1$
+        }
+        else
+        {
+          throw new DBException(message);
+        }
+      }
+      else if (0 <= schemaVersion && schemaVersion < SCHEMA_VERSION)
       {
         migrateSchema(schemaVersion);
       }
@@ -892,7 +907,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     }
 
     Map<String, String> map = new HashMap<>();
-    map.put(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
+    if (schemaVersion <= SCHEMA_VERSION)
+    {
+      map.put(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
+    }
+
     map.put(PROP_REPOSITORY_STARTED, Long.toString(getRepository().getTimeStamp()));
     setPersistentProperties(map);
   }

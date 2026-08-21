@@ -242,18 +242,38 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
     CONTEXT_MULTIPLEXER.set(this);
 
+    IProtocol<?> protocol = null;
+    InternalChannel channel = null;
+    boolean channelAdded = false;
+
     try
     {
-      IProtocol<?> protocol = createProtocol(protocolID, null);
+      validateInverseChannelID(channelID);
+
+      protocol = createProtocol(protocolID, null);
       ProtocolVersionException.checkVersion(protocol, protocolVersion);
 
-      InternalChannel channel = createChannel();
+      channel = createChannel();
       initChannel(channel, protocol);
       channel.setID(channelID);
 
       addChannel(channel);
+      channelAdded = true;
       protocolConnected(protocol);
       return channel;
+    }
+    catch (RuntimeException | Error ex)
+    {
+      if (channelAdded)
+      {
+        deactivateInverseChannel(channel);
+      }
+      else if (protocol != null)
+      {
+        LifecycleUtil.deactivate(protocol);
+      }
+
+      throw ex;
     }
     finally
     {
@@ -443,7 +463,12 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       throw new ChannelException("Invalid channel ID: " + channelID); //$NON-NLS-1$
     }
 
-    channels.put(channelID, channel);
+    IChannel oldChannel = channels.putIfAbsent(channelID, channel);
+    if (oldChannel != null)
+    {
+      throw new ChannelException("Channel ID already in use: " + channelID); //$NON-NLS-1$
+    }
+
     LifecycleUtil.activate(channel);
     fireElementAddedEvent(channel);
   }
@@ -456,7 +481,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       boolean removed;
       synchronized (channelIDs)
       {
-        removed = channels.remove(channelID) != null;
+        removed = channels.remove(channelID, channel);
         if (removed)
         {
           channelIDs.remove(channelID);
@@ -472,6 +497,42 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     {
       ExceptionHandler.Factory.handle(channel, ex, "MonitorProgressRequest failed", OM.LOG);
       throw ex;
+    }
+  }
+
+  private void validateInverseChannelID(short channelID)
+  {
+    if (channelID == RESERVED_CHANNEL || channelID == IBuffer.NO_CHANNEL)
+    {
+      throw new ChannelException("Invalid channel ID: " + channelID); //$NON-NLS-1$
+    }
+
+    boolean localChannelID = isClient() ? channelID > 0 : channelID < 0;
+    if (localChannelID)
+    {
+      throw new ChannelException("Invalid inverse channel ID: " + channelID); //$NON-NLS-1$
+    }
+  }
+
+  private void deactivateInverseChannel(InternalChannel channel)
+  {
+    Boolean inverseClosing = INVERSE_CLOSING.get();
+    INVERSE_CLOSING.set(Boolean.TRUE);
+
+    try
+    {
+      LifecycleUtil.deactivate(channel);
+    }
+    finally
+    {
+      if (inverseClosing == null)
+      {
+        INVERSE_CLOSING.remove();
+      }
+      else
+      {
+        INVERSE_CLOSING.set(inverseClosing);
+      }
     }
   }
 

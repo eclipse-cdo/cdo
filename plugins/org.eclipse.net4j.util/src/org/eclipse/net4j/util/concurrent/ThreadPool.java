@@ -18,14 +18,13 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.AbstractQueue;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.RejectedExecutionHandler;
-import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +40,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
   public static final int DEFAULT_CORE_POOL_SIZE = 10;
 
-  public static final int DEFAULT_MAXIMUM_POOL_SIZE = Integer.MAX_VALUE;
+  public static final int DEFAULT_MAXIMUM_POOL_SIZE = Math.max(DEFAULT_CORE_POOL_SIZE, Runtime.getRuntime().availableProcessors() * 4);
 
   public static final long DEFAULT_KEEP_ALIVE_SECONDS = 60;
 
@@ -60,7 +59,9 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
   private int lastRunTasks = -1;
 
-  private RejectedExecutionHandler userHandler;
+  private boolean potentialDeadlockReported;
+
+  private volatile RejectedExecutionHandler userHandler;
 
   public ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveSeconds, ThreadFactory threadFactory)
   {
@@ -70,7 +71,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     // Call super setter because the setter in this class is overridden to set the userHandler field.
     super.setRejectedExecutionHandler(this);
 
-    if (deadlockDetectionInterval != NO_DEADLOCK_DETECTION)
+    if (deadlockDetectionInterval > NO_DEADLOCK_DETECTION)
     {
       DeadlockDetector.INSTANCE.register(this);
     }
@@ -91,17 +92,16 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   @Override
   public void rejectedExecution(Runnable task, ThreadPoolExecutor executor)
   {
+    if (executor.isShutdown())
+    {
+      rejectTask(task);
+      return;
+    }
+
     WorkQueue queue = (WorkQueue)getQueue();
     if (!queue.offerLast(task))
     {
-      if (userHandler != null)
-      {
-        userHandler.rejectedExecution(task, this);
-      }
-      else
-      {
-        OM.LOG.error("Thread pool has rejected the task " + task);
-      }
+      rejectTask(task);
     }
   }
 
@@ -124,43 +124,26 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     runningTasks.decrementAndGet();
   }
 
+  @Override
+  protected void terminated()
+  {
+    if (deadlockDetectionInterval > NO_DEADLOCK_DETECTION)
+    {
+      DeadlockDetector.INSTANCE.unregister(this);
+    }
+
+    super.terminated();
+  }
+
   /**
    * @since 3.9
    */
   protected void potentialDeadlockDetected()
   {
-    BlockingQueue<Runnable> queue = getQueue();
-    int size = queue.size();
+    int size = getQueue().size();
     if (size > 0)
     {
-      String poolName = toString();
-      ExecutorService executor = null;
-
-      try
-      {
-        executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 100L, TimeUnit.MICROSECONDS, new SynchronousQueue<>());
-        Runnable task;
-        boolean first = true;
-
-        while ((task = queue.poll()) != null)
-        {
-          if (first)
-          {
-            OM.LOG.warn("Potential deadlock detected in " + poolName + ". Executing " + size + " tasks...");
-            first = false;
-          }
-
-          incrementRunTasks();
-          executor.execute(task);
-        }
-      }
-      finally
-      {
-        if (executor != null)
-        {
-          executor.shutdown();
-        }
-      }
+      OM.LOG.warn("Potential deadlock detected in " + this + ". " + size + " tasks are queued."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
   }
 
@@ -207,6 +190,19 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
     // A new worker should be created.
     return false;
+  }
+
+  private void rejectTask(Runnable task)
+  {
+    RejectedExecutionHandler handler = userHandler;
+    if (handler != null)
+    {
+      handler.rejectedExecution(task, this);
+    }
+    else
+    {
+      throw new RejectedExecutionException("Thread pool has rejected the task " + task); //$NON-NLS-1$
+    }
   }
 
   public static ThreadPool create()
@@ -520,7 +516,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   {
     public static final DeadlockDetector INSTANCE = new DeadlockDetector();
 
-    private volatile ArrayList<ThreadPool> pools = new ArrayList<>();
+    private final CopyOnWriteArrayList<ThreadPool> pools = new CopyOnWriteArrayList<>();
 
     private DeadlockDetector()
     {
@@ -530,16 +526,12 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
     public void register(ThreadPool pool)
     {
-      ArrayList<ThreadPool> newList = new ArrayList<>(pools);
-      newList.add(pool);
-      pools = newList;
+      pools.addIfAbsent(pool);
     }
 
     private void unregister(ThreadPool pool)
     {
-      ArrayList<ThreadPool> newList = new ArrayList<>(pools);
-      newList.remove(pool);
-      pools = newList;
+      pools.remove(pool);
     }
 
     @Override
@@ -551,12 +543,8 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     @Override
     protected void work(WorkContext context) throws Exception
     {
-      ArrayList<ThreadPool> list = pools;
-      int size = list.size();
-
-      for (int i = 0; i < size; i++)
+      for (ThreadPool pool : pools)
       {
-        ThreadPool pool = list.get(i);
         if (pool.isShutdown())
         {
           unregister(pool);
@@ -575,11 +563,15 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
       if (lastRunTasks != pool.lastRunTasks)
       {
         pool.lastRunTasks = lastRunTasks;
+        pool.potentialDeadlockReported = false;
       }
       else
       {
-        if (pool.getPoolSize() == pool.getMaximumPoolSize())
+        if (!pool.potentialDeadlockReported //
+            && pool.getPoolSize() == pool.getMaximumPoolSize() //
+            && pool.getActiveCount() == pool.getPoolSize())
         {
+          pool.potentialDeadlockReported = true;
           pool.potentialDeadlockDetected();
         }
       }

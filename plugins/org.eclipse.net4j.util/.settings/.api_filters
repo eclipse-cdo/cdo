@@ -139,6 +139,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/concurrent/ThreadPool.java" type="org.eclipse.net4j.util.concurrent.ThreadPool">
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.concurrent.ThreadPool"/>
+                <message_argument value="DEFAULT_MAXIMUM_POOL_SIZE"/>
+                <message_argument value="2147483647"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/container/ContainerEvent.java" type="org.eclipse.net4j.util.container.ContainerEvent">
         <filter id="576725006">
             <message_arguments>

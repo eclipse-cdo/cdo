@@ -413,6 +413,25 @@ public class Net4jWebSocket implements WebSocketListener
       return;
     }
 
+    int bufferCapacity = connector.getConfig().getBufferProvider().getBufferCapacity();
+    if (len > bufferCapacity)
+    {
+      rejectFrame("Frame length exceeds buffer capacity: " + len); //$NON-NLS-1$
+      return;
+    }
+
+    ByteBuffer header = ByteBuffer.wrap(payload, offset, len);
+    header.position(offset + IBuffer.PAYLOAD_SIZE_POS);
+
+    short payloadSize = header.getShort();
+    int declaredPayloadSize = payloadSize < 0 ? -(int)payloadSize : payloadSize;
+    int actualPayloadSize = len - IBuffer.HEADER_SIZE;
+    if (declaredPayloadSize != actualPayloadSize)
+    {
+      rejectFrame("Payload length mismatch: declared " + declaredPayloadSize + ", actual " + actualPayloadSize); //$NON-NLS-1$ //$NON-NLS-2$
+      return;
+    }
+
     IBuffer buffer = provideBuffer();
     ByteBuffer byteBuffer = buffer.getByteBuffer();
     byteBuffer.put(payload, offset, len);
@@ -487,14 +506,13 @@ public class Net4jWebSocket implements WebSocketListener
       return;
     }
 
-    short payloadSize = byteBuffer.getShort();
     if (payloadSize < 0)
     {
       buffer.setEOS(true);
     }
 
     ((org.eclipse.internal.net4j.buffer.Buffer)buffer).setChannelID(channelID);
-    ((org.eclipse.internal.net4j.buffer.Buffer)buffer).setState(org.eclipse.net4j.buffer.BufferState.PUTTING);
+    ((org.eclipse.internal.net4j.buffer.Buffer)buffer).setState(org.eclipse.net4j.buffer.BufferState.GETTING);
     byteBuffer.position(IBuffer.HEADER_SIZE);
 
     InternalChannel channel = connector.getChannel(channelID);
@@ -552,6 +570,21 @@ public class Net4jWebSocket implements WebSocketListener
     if (channelID < 1)
     {
       throw new IllegalArgumentException("Bad channelID " + channelID);
+    }
+  }
+
+  private void rejectFrame(String message)
+  {
+    OM.LOG.warn(message);
+
+    Session session = this.session;
+    if (session != null)
+    {
+      session.close(1002, message);
+    }
+    else if (connector != null)
+    {
+      connector.deactivate();
     }
   }
 

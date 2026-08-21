@@ -41,7 +41,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
 
   private static final boolean DISABLE_BULK_READ = Boolean.getBoolean("org.eclipse.net4j.buffer.BufferInputStream.disableBulkRead");
 
-  private BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue<>();
+  private volatile BlockingQueue<IBuffer> buffers = new LinkedBlockingQueue<>();
 
   private IBuffer currentBuffer;
 
@@ -111,15 +111,17 @@ public class BufferInputStream extends InputStream implements IBufferHandler
   @Override
   public void handleBuffer(IBuffer buffer)
   {
-    // If stream has been closed - ignore the new buffer.
-    if (buffers != null)
+    synchronized (this)
     {
-      buffers.add(buffer);
+      // If stream has been closed - ignore the new buffer.
+      if (buffers != null)
+      {
+        buffers.add(buffer);
+        return;
+      }
     }
-    else
-    {
-      buffer.release();
-    }
+
+    buffer.release();
   }
 
   @Override
@@ -258,13 +260,28 @@ public class BufferInputStream extends InputStream implements IBufferHandler
   @Override
   public void close() throws IOException
   {
+    BlockingQueue<IBuffer> bufferQueue;
+    synchronized (this)
+    {
+      bufferQueue = buffers;
+      buffers = null;
+    }
+
     if (currentBuffer != null)
     {
       currentBuffer.release();
       currentBuffer = null;
     }
 
-    buffers = null;
+    if (bufferQueue != null)
+    {
+      IBuffer buffer;
+      while ((buffer = bufferQueue.poll()) != null)
+      {
+        buffer.release();
+      }
+    }
+
     super.close();
 
     if (ccam)

@@ -45,19 +45,19 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
   private String userID;
 
-  private transient ConnectorState connectorState = ConnectorState.DISCONNECTED;
+  private transient volatile ConnectorState connectorState = ConnectorState.DISCONNECTED;
 
   @ExcludeFromDump
-  private transient CountDownLatch finishedConnecting;
+  private transient volatile CountDownLatch finishedConnecting;
 
   @ExcludeFromDump
-  private transient CountDownLatch finishedNegotiating;
+  private transient volatile CountDownLatch finishedNegotiating;
 
   @ExcludeFromDump
-  private transient INegotiationContext negotiationContext;
+  private transient volatile INegotiationContext negotiationContext;
 
   @ExcludeFromDump
-  private transient NegotiationException negotiationException;
+  private transient volatile NegotiationException negotiationException;
 
   public Connector()
   {
@@ -117,54 +117,89 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
 
   public void setState(ConnectorState newState) throws ConnectorException
   {
-    ConnectorState oldState = getState();
-    if (newState != oldState)
+    ConnectorState oldState;
+    CountDownLatch connectingLatch = null;
+    CountDownLatch negotiatingLatch = null;
+    INegotiationContext context = null;
+
+    synchronized (this)
     {
-      if (TRACER.isEnabled())
+      oldState = connectorState;
+      if (newState == oldState)
       {
-        TRACER.format("Setting state {0} (was {1}) for {2}", newState, oldState.toString().toLowerCase(), this); //$NON-NLS-1$
+        return;
       }
 
-      connectorState = newState;
+      if (!isValidTransition(oldState, newState))
+      {
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("Ignoring invalid state transition from {0} to {1} for {2}", oldState, newState, this); //$NON-NLS-1$
+        }
+
+        return;
+      }
+
       switch (newState)
       {
       case DISCONNECTED:
-        if (finishedConnecting != null)
-        {
-          finishedConnecting.countDown();
-          finishedConnecting = null;
-        }
-
-        if (finishedNegotiating != null)
-        {
-          finishedNegotiating.countDown();
-          finishedNegotiating = null;
-        }
-
+        connectingLatch = finishedConnecting;
+        negotiatingLatch = finishedNegotiating;
+        finishedConnecting = null;
+        finishedNegotiating = null;
         break;
 
       case CONNECTING:
         finishedConnecting = new CountDownLatch(1);
         finishedNegotiating = new CountDownLatch(1);
+        negotiationException = null;
         // The concrete implementation must advance state to NEGOTIATING or CONNECTED
         break;
 
       case NEGOTIATING:
-        negotiationContext = createNegotiationContext();
-        finishedConnecting.countDown();
-        getNegotiator().negotiate(negotiationContext);
+        context = createNegotiationContext();
+        negotiationContext = context;
+        connectingLatch = finishedConnecting;
         break;
 
       case CONNECTED:
         negotiationContext = null;
-        deferredActivate(true);
-        finishedConnecting.countDown();
-        finishedNegotiating.countDown();
+        connectingLatch = finishedConnecting;
+        negotiatingLatch = finishedNegotiating;
         break;
       }
 
-      fireEvent(new ConnectorStateEvent(this, oldState, newState));
+      connectorState = newState;
     }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Setting state {0} (was {1}) for {2}", newState, oldState.toString().toLowerCase(), this); //$NON-NLS-1$
+    }
+
+    switch (newState)
+    {
+    case DISCONNECTED:
+      countDown(connectingLatch);
+      countDown(negotiatingLatch);
+      break;
+
+    case NEGOTIATING:
+      countDown(connectingLatch);
+      getNegotiator().negotiate(context);
+      break;
+
+    case CONNECTED:
+      deferredActivate(true);
+      countDown(connectingLatch);
+      countDown(negotiatingLatch);
+      break;
+
+    default:
+      break;
+    }
+
+    fireEvent(new ConnectorStateEvent(this, oldState, newState));
   }
 
   public boolean isDisconnected()
@@ -241,12 +276,13 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
           break;
         }
 
-        if (finishedNegotiating == null)
+        CountDownLatch negotiatingLatch = finishedNegotiating;
+        if (negotiatingLatch == null)
         {
           break;
         }
 
-        if (finishedNegotiating.await(t, TimeUnit.MILLISECONDS))
+        if (negotiatingLatch.await(t, TimeUnit.MILLISECONDS))
         {
           break;
         }
@@ -412,6 +448,35 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   {
     setState(ConnectorState.DISCONNECTED);
     super.doDeactivate();
+  }
+
+  private static void countDown(CountDownLatch latch)
+  {
+    if (latch != null)
+    {
+      latch.countDown();
+    }
+  }
+
+  private static boolean isValidTransition(ConnectorState oldState, ConnectorState newState)
+  {
+    switch (newState)
+    {
+    case DISCONNECTED:
+      return true;
+  
+    case CONNECTING:
+      return oldState == ConnectorState.DISCONNECTED;
+  
+    case NEGOTIATING:
+      return oldState == ConnectorState.CONNECTING;
+  
+    case CONNECTED:
+      return oldState == ConnectorState.CONNECTING || oldState == ConnectorState.NEGOTIATING;
+  
+    default:
+      throw new AssertionError(newState);
+    }
   }
 
   /**

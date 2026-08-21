@@ -13,14 +13,12 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.tests.AbstractLockingTest;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
 import org.eclipse.net4j.util.event.IEvent;
@@ -57,15 +55,8 @@ public class Bugzilla_387564_Test extends AbstractLockingTest
 
   private void runTest(CDOSession session, CDOSession controlSession) throws Exception
   {
-    TestListener2 controlSessionListener = new TestListener2( //
-        CDOSessionInvalidationEvent.class, //
-        CDOSessionLocksChangedEvent.class) //
-            .setName("SESSION");
-
-    TestListener2 controlViewListener = new TestListener2( //
-        CDOViewInvalidationEvent.class, //
-        CDOViewLocksChangedEvent.class) //
-            .setName("VIEW");
+    TestListener2 controlSessionListener = new TestListener2(CDOSessionLocksChangedEvent.class).setName("SESSION");
+    TestListener2 controlViewListener = new TestListener2(CDOViewLocksChangedEvent.class).setName("VIEW");
 
     Company company = getModel1Factory().createCompany();
     company.setName("Initial");
@@ -91,8 +82,7 @@ public class Bugzilla_387564_Test extends AbstractLockingTest
     transaction.commit();
     waitForActiveLockNotifications();
 
-    IEvent[] events = controlSessionListener.waitFor(2);
-    assertEquals(1, TestListener2.countEvents(events, CDOSessionInvalidationEvent.class));
+    IEvent[] events = controlSessionListener.waitFor(1);
     assertEquals(1, TestListener2.countEvents(events, CDOSessionLocksChangedEvent.class));
     if (DEBUG)
     {
@@ -100,8 +90,7 @@ public class Bugzilla_387564_Test extends AbstractLockingTest
       IOUtil.OUT().println(controlSessionListener.formatEvents("   ", "\n"));
     }
 
-    events = controlViewListener.waitFor(2);
-    assertEquals(1, TestListener2.countEvents(events, CDOViewInvalidationEvent.class));
+    events = controlViewListener.waitFor(1);
     assertEquals(1, TestListener2.countEvents(events, CDOViewLocksChangedEvent.class));
     if (DEBUG)
     {

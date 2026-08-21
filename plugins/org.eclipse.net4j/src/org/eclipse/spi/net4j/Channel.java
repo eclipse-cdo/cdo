@@ -63,7 +63,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
    */
   private IBufferHandler receiveHandler;
 
-  private transient Queue<IBuffer> sendQueue;
+  private transient volatile Queue<IBuffer> sendQueue;
 
   private transient long sentBuffers;
 
@@ -292,10 +292,32 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
       OM.LOG.warn(ex);
     }
 
-    if (sendQueue != null)
+    Queue<IBuffer> queue = sendQueue;
+    if (queue != null)
     {
-      sendQueue.add(buffer);
-      channelMultiplexer.multiplexChannel(this);
+      boolean enqueued = false;
+      
+      synchronized (queue)
+      {
+        if (sendQueue == queue && !isClosed())
+        {
+          queue.add(buffer);
+          enqueued = true;
+        }
+      }
+
+      if (enqueued)
+      {
+        channelMultiplexer.multiplexChannel(this);
+      }
+      else
+      {
+        buffer.release();
+      }
+    }
+    else if (isClosed())
+    {
+      buffer.release();
     }
     else
     {
@@ -405,10 +427,22 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   {
     unregisterFromMultiplexer();
 
-    if (sendQueue != null)
+    Queue<IBuffer> queue = sendQueue;
+    if (queue != null)
     {
-      sendQueue.clear();
-      sendQueue = null;
+      synchronized (queue)
+      {
+        if (sendQueue == queue)
+        {
+          sendQueue = null;
+
+          IBuffer buffer;
+          while ((buffer = queue.poll()) != null)
+          {
+            buffer.release();
+          }
+        }
+      }
     }
 
     super.doDeactivate();

@@ -324,24 +324,37 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
           Queue<IBuffer> channelSendQueue = channel.getSendQueue();
           if (channelSendQueue != null)
           {
-            IBuffer buffer = channelSendQueue.peek();
-            if (buffer != null)
+            synchronized (channelSendQueue)
             {
-              // The CCAM flag must be remembered *before* the buffer.write() call below!
-              boolean closeChannelAfterMe = buffer.isCCAM();
-
-              if (buffer.write(socketChannel))
+              IBuffer buffer = channelSendQueue.peek();
+              if (buffer != null)
               {
-                writeQueue.poll();
-                channelSendQueue.poll();
-                buffer.release();
+                // The CCAM flag must be remembered *before* the buffer.write() call below!
+                boolean closeChannelAfterMe = buffer.isCCAM();
 
-                if (closeChannelAfterMe)
+                if (buffer.write(socketChannel))
                 {
-                  channel.close();
+                  writeQueue.poll();
+                  channelSendQueue.poll();
+                  buffer.release();
+
+                  if (closeChannelAfterMe)
+                  {
+                    channel.close();
+                  }
                 }
               }
+              else
+              {
+                // The channel was deactivated after it had been queued for writing.
+                writeQueue.poll();
+              }
             }
+          }
+          else
+          {
+            // The channel was deactivated after it had been queued for writing.
+            writeQueue.poll();
           }
         }
 

@@ -26,7 +26,7 @@
 
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.net4j.debug</artifactId>
-  <version>3.2.1-SNAPSHOT</version>
+  <version>3.2.2-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

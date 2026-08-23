@@ -25,7 +25,7 @@ import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 
 /**
- * The <em>Operations & Maintenance</em> class of this bundle.
+* The <em>Operations &amp; Maintenance</em> class of this bundle.
  *
  * @author Eike Stepper
  */

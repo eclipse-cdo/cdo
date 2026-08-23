@@ -27,7 +27,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 /**
- * The <em>Operations & Maintenance</em> class of this bundle.
+* The <em>Operations &amp; Maintenance</em> class of this bundle.
  *
  * @author Eike Stepper
  */

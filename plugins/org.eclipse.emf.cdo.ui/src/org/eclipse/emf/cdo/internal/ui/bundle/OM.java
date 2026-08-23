@@ -33,7 +33,7 @@ import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Image;
 
 /**
- * The <em>Operations & Maintenance</em> class of this bundle.
+* The <em>Operations &amp; Maintenance</em> class of this bundle.
  *
  * @author Eike Stepper
  */

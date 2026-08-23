@@ -34,7 +34,7 @@ import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
 
 /**
- * The <em>Operations & Maintenance</em> class of this bundle.
+* The <em>Operations &amp; Maintenance</em> class of this bundle.
  *
  * @author Eike Stepper
  */

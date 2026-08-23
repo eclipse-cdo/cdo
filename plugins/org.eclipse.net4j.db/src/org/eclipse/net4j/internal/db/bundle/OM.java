@@ -26,7 +26,7 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 
 /**
- * The <em>Operations & Maintenance</em> class of this bundle.
+* The <em>Operations &amp; Maintenance</em> class of this bundle.
  *
  * @author Eike Stepper
  */

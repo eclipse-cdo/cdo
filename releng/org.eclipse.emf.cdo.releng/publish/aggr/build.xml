@@ -20,8 +20,7 @@
 	     Jenkins uses an isolated workspace-local directory; the system-temporary
 	     location is the fallback for local invocations without WORKSPACE. -->
 	<property environment="env" />
-	<condition property="default.work.dir" value="${env.WORKSPACE}/.cdo-maven-publishing/${env.BUILD_TAG}"
-		else="${java.io.tmpdir}/cdo-maven-aggregation/${run.id}">
+	<condition property="default.work.dir" value="${env.WORKSPACE}/.cdo-maven-publishing/${env.BUILD_TAG}" else="${java.io.tmpdir}/cdo-maven-aggregation/${run.id}">
 		<and>
 			<isset property="env.WORKSPACE" />
 			<isset property="env.BUILD_TAG" />
@@ -209,6 +208,16 @@
 			<arg value="${maven.uploader}" />
 		</java>
 		<echo message="Validated Maven Central staging package: ${staging.dir}" />
+	</target>
+
+	<target name="drop-info" depends="compile-helper">
+		<fail unless="cdo.drop.dir" message="Required property cdo.drop.dir was not supplied." />
+		<fail unless="cdo.drop.id" message="Required property cdo.drop.id was not supplied." />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="drop-info" />
+			<arg value="${cdo.drop.dir}" />
+			<arg value="${cdo.drop.id}" />
+		</java>
 	</target>
 
 	<target name="publish-policy" depends="staging-validate,compile-helper">

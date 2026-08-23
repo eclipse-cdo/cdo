@@ -66,8 +66,22 @@ its network operation.
 ## Jenkins and future publishing
 
 `Jenkinsfile` is a separate declarative entry point for the same Ant workflow.
-It accepts only `PUBLISHING_MODE` and `CDO_DROP_DIR`; the drop must contain
-`build-info.xml` and `tp-macro.setup`.
+It accepts only `PUBLISHING_MODE` and `CDO_DROP_ID`. Jenkins constructs
+`https://download.eclipse.org/modeling/emf/cdo/drops/<CDO_DROP_ID>/`, discovers
+the single `*-Site.zip` in its `zips/` directory, and extracts that archive as
+the local p2 repository. It downloads only the small root metadata files needed
+by the build (`build-info.xml`, `build-info.properties`, `tp-macro.setup`,
+`web.properties`, `bookmarks.xml`, and `p2.index`) in addition to the Site ZIP;
+individual bundle downloads and recursive directory mirroring are avoided. The
+archive is checked for path traversal and for the required `content.jar`,
+`artifacts.jar`, and `plugins` directory before Ant is invoked. The downloaded
+drop is stored at
+`$WORKSPACE/maven-publishing/drop`; the Ant work directory is the sibling
+`$WORKSPACE/maven-publishing/work` directory. The drop ID is retained in
+generated metadata and reports, but is not part of the path because Eclipse CI
+deletes the workspace after each build and concurrent builds are disabled. The
+drop must contain
+`build-info.xml`, `tp-macro.setup`, and the P2 metadata/artifacts.
 `VALIDATE_ONLY` and `DRY_RUN` require no publishing credentials. The job runs
 aggregation, CBI validation/CLEAN_BUILD, source and Javadoc generation,
 checksums, the readiness audit, staging validation, the consumer test, and the
@@ -97,15 +111,16 @@ unhide job. S- and I-builds remain blocked at this boundary.
 The pipeline deliberately uses `agent any` because this repository cannot
 derive a stable Eclipse CI label. The selected agent must nevertheless be a
 Linux/POSIX node with the configured Jenkins tools `temurin-jdk21-latest`,
-`apache-ant-latest`, and `apache-maven-latest`, plus `sh` and standard Jenkins
-Pipeline credentials support. An Eclipse CI administrator can constrain the
+`apache-ant-latest`, and `apache-maven-latest`, plus `sh`, `curl`, `unzip`, and
+standard Jenkins Pipeline credentials support. An Eclipse CI administrator can constrain the
 job to its approved Linux/Kubernetes label without changing this repository.
 No Windows paths, PowerShell, or globally installed CBI binary are assumed by
 the workflow.
 
-The default Jenkins work directory is
-`$WORKSPACE/maven-publishing`. Eclipse CI deletes the complete workspace
-after every build, so no cross-build cache is needed. The CBI archive is
+The Jenkins work directory is
+`$WORKSPACE/maven-publishing/work`.
+Eclipse CI deletes the complete workspace after every build, so no cross-build
+cache is needed. The CBI archive is
 downloaded and verified into `$WORKSPACE/cbi` for the current build only;
 it is separate from Ant's cleaned work directory. The
 Ant fallback remains a unique system temporary directory for local invocations
@@ -120,10 +135,11 @@ with SHA-256
 It caches the verified archive below the workspace and extracts either
 `cbiAggr` (the Linux archive name) or `cbiAggrc`. No `latest` URL is used.
 The Jenkinsfile has only two job parameters: `PUBLISHING_MODE` and
-`CDO_DROP_DIR`. The CBI URL, version, checksum, workspace layout, tool names,
+`CDO_DROP_ID`. The CBI URL, version, checksum, workspace layout, tool names,
 credential IDs, and uploader setting are deliberately global constants in the
-Jenkinsfile. Local manual runs continue to use `-Dcbi.aggregator=...` through
-Ant; that override is not exposed as a Jenkins parameter.
+Jenkinsfile. Local manual runs continue to use
+`-Dcdo.drop.dir=<local-drop>` and `-Dcbi.aggregator=...` through Ant; neither
+local override is exposed as a Jenkins parameter.
 
 The generated CBI model enables the native Maven checks
 `validateNexusPublishingRequirements="true"` and

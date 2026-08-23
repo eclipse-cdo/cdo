@@ -22,17 +22,96 @@ pipeline {
   parameters {
     choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PUBLISH'],
       description: 'Technical validation/staging mode. PUBLISH is R-only and remains uploader-gated.')
-    string(name: 'CDO_DROP_DIR', defaultValue: '', description: 'Directory containing build-info.xml and tp-macro.setup')
+    string(name: 'CDO_DROP_ID', defaultValue: '', description: 'Promoted CDO drop qualifier, for example R20260823-1230')
   }
 
   stages {
+    stage('Download and verify drop') {
+      steps {
+        script {
+          if (!params.CDO_DROP_ID?.trim()) {
+            error('CDO_DROP_ID is required')
+          }
+          def dropId = params.CDO_DROP_ID.trim()
+          if (!(dropId ==~ /[A-Za-z][A-Za-z0-9._-]*/)) {
+            error("Invalid CDO_DROP_ID: ${dropId}")
+          }
+          // Eclipse CI discards the complete workspace after each build and
+          // disableConcurrentBuilds() prevents overlap. The drop ID remains
+          // metadata, not a path key.
+          def root = "${env.WORKSPACE}/maven-publishing"
+          def dropDir = "${root}/drop"
+          def workDir = "${root}/work"
+          def dropUrl = "https://download.eclipse.org/modeling/emf/cdo/drops/${dropId}/"
+            withEnv(["DROP_ID=${dropId}", "DROP_URL=${dropUrl}", "DROP_PARENT=${root}"]) {
+            sh '''
+              set -eu
+              mkdir -p "$DROP_PARENT"
+              rm -rf "$DROP_PARENT/drop"
+              rm -rf "$DROP_PARENT/unpack"
+              mkdir -p "$DROP_PARENT/drop"
+              mkdir -p "$DROP_PARENT/unpack"
+
+              # A promoted drop contains one complete p2 repository in zips/*-Site.zip.
+              # Download that archive instead of recursively mirroring the generated
+              # directory listing (which would also fetch every individual bundle).
+              listing=$(curl --fail --location --retry 3 --silent --show-error \
+                "${DROP_URL}zips/")
+              site_names=$(printf '%s' "$listing" | sed -nE \
+                "s#.*href=['\"][^'\"]*/([^/'\"]+-[Ss]ite\\.zip)['\"].*#\\1#p" | sort -u)
+              site_count=$(printf '%s\n' "$site_names" | sed '/^$/d' | wc -l)
+              if [ "$site_count" -ne 1 ]; then
+                echo "Expected exactly one site ZIP in ${DROP_URL}zips/, found $site_count" >&2
+                printf '%s\n' "$site_names" >&2
+                exit 2
+              fi
+              site_name=$(printf '%s\n' "$site_names" | sed -n '1p')
+              site_zip="$DROP_PARENT/site.zip"
+              curl --fail --location --retry 3 --silent --show-error \
+                "${DROP_URL}zips/${site_name}" -o "$site_zip"
+              # Do not allow archive entries to escape the workspace extraction directory.
+              if unzip -Z1 "$site_zip" | grep -E '(^/|(^|/)\.\.(\/|$))' >/dev/null; then
+                echo "Unsafe path in site ZIP: $site_name" >&2
+                exit 3
+              fi
+              unzip -q "$site_zip" -d "$DROP_PARENT/unpack"
+              site_root=$(find "$DROP_PARENT/unpack" -type f -name content.jar -print -quit | sed 's#[\\/]content\.jar$##')
+              if [ -z "$site_root" ] || [ ! -f "$site_root/artifacts.jar" ] || [ ! -d "$site_root/plugins" ]; then
+                echo "Site ZIP does not contain a complete p2 repository: $site_name" >&2
+                exit 4
+              fi
+              cp -a "$site_root"/. "$DROP_PARENT/drop"/
+
+              # These small files carry the promoted build identity and target setup.
+              for metadata in build-info.xml build-info.properties tp-macro.setup web.properties bookmarks.xml p2.index; do
+                curl --fail --location --retry 3 --silent --show-error \
+                  "${DROP_URL}${metadata}" -o "$DROP_PARENT/drop/$metadata"
+              done
+              test -f "$DROP_PARENT/drop/build-info.xml"
+              test -f "$DROP_PARENT/drop/tp-macro.setup"
+              test -f "$DROP_PARENT/drop/content.jar"
+              test -f "$DROP_PARENT/drop/artifacts.jar"
+              test -d "$DROP_PARENT/drop/plugins"
+            '''
+          }
+          env.CDO_DOWNLOADED_DROP = dropDir
+          env.CDO_AGGR_WORK_DIR = workDir
+          withEnv(["DROP_ID=${dropId}", "CDO_DOWNLOADED_DROP=${dropDir}", "CDO_AGGR_WORK_DIR=${workDir}"]) {
+          withAnt(installation: 'apache-ant-latest') {
+            sh '''
+              set -eu
+              ant -Dcdo.drop.dir="$CDO_DOWNLOADED_DROP" -Dcdo.drop.id="$DROP_ID" \
+                -Dwork.dir="$CDO_AGGR_WORK_DIR" -f releng/org.eclipse.emf.cdo.releng/publish/aggr/build.xml drop-info
+            '''
+          }
+          }
+        }
+      }
+    }
+
     stage('Aggregate and validate') {
       steps {
         script {
-          if (!params.CDO_DROP_DIR?.trim()) {
-            error('CDO_DROP_DIR is required')
-          }
-          def workDir = "${env.WORKSPACE}/maven-publishing"
           def aggregator
           def cbiDir = "${env.WORKSPACE}/cbi"
           withEnv(["CBI_URL=${CBI_AGGREGATOR_URL}", "CBI_SHA256=${CBI_AGGREGATOR_SHA256}", "CBI_DIR=${cbiDir}"]) {
@@ -58,13 +137,13 @@ pipeline {
               ''').trim()
             }
           }
-          withEnv(["CDO_DROP_DIR=${params.CDO_DROP_DIR}", "AGGR_WORK_DIR=${workDir}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}"]) {
+          withEnv(["CDO_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}"]) {
           withAnt(installation: 'apache-ant-latest') {
             sh '''
               set -eu
               ant -Dcdo.drop.dir="$CDO_DROP_DIR" -Dwork.dir="$AGGR_WORK_DIR" \
                 -Dcbi.aggregator="$CBI_AGGREGATOR" -Dpublishing.mode="$PUBLISHING_MODE" \
-                -f publish/aggr/build.xml clean-build consumer-dependency-tree
+                -f releng/org.eclipse.emf.cdo.releng/publish/aggr/build.xml clean-build consumer-dependency-tree
             '''
           }
           }
@@ -78,8 +157,7 @@ pipeline {
       }
       steps {
         script {
-          def workDir = "${env.WORKSPACE}/maven-publishing"
-          withEnv(["CDO_DROP_DIR=${params.CDO_DROP_DIR}", "AGGR_WORK_DIR=${workDir}", "MAVEN_UPLOADER=${MAVEN_UPLOADER}"]) {
+          withEnv(["CDO_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "MAVEN_UPLOADER=${MAVEN_UPLOADER}"]) {
           withCredentials([
             usernamePassword(credentialsId: PUBLISH_CREDENTIALS_ID,
               usernameVariable: 'MAVEN_CENTRAL_USERNAME', passwordVariable: 'MAVEN_CENTRAL_PASSWORD'),
@@ -90,7 +168,7 @@ pipeline {
                 set -eu
                 ant -Dpublishing.mode=PUBLISH -Dcdo.drop.dir="$CDO_DROP_DIR" \
                   -Dwork.dir="$AGGR_WORK_DIR" \
-                  -Dmaven.uploader="$MAVEN_UPLOADER" -f publish/aggr/build.xml publish
+                  -Dmaven.uploader="$MAVEN_UPLOADER" -f releng/org.eclipse.emf.cdo.releng/publish/aggr/build.xml publish
               '''
             }
           }
@@ -102,7 +180,7 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts artifacts: 'maven-publishing/**/maven-publishing-summary.properties',
+      archiveArtifacts artifacts: 'maven-publishing/work/**/maven-publishing-summary.properties',
         allowEmptyArchive: true
     }
   }

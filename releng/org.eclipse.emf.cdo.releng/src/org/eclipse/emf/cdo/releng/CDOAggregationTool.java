@@ -466,6 +466,20 @@ public final class CDOAggregationTool
    */
   private static final class SourcesJavadocCommand
   {
+    private static final Set<String> REQUIRED = Set.of( //
+        "org.eclipse.core.expressions", //
+        "org.eclipse.core.jobs", //
+        "org.eclipse.core.runtime", //
+        "org.eclipse.equinox.app", //
+        "org.eclipse.equinox.common", //
+        "org.eclipse.equinox.preferences", //
+        "org.eclipse.equinox.registry", //
+        "org.eclipse.osgi", //
+        "org.eclipse.osgi.services", //
+        "org.osgi.service.component", //
+        "org.osgi.service.log", //
+        "org.osgi.service.prefs");
+
     public static void execute(String[] args) throws Exception
     {
       if (args.length != 5)
@@ -541,10 +555,7 @@ public final class CDOAggregationTool
       {
         stream.filter(Files::isDirectory).forEach(bundleDirectory -> {
           String bsn = bundleDirectory.getFileName().toString();
-          Set<String> required = Set.of("org.eclipse.equinox.common", "org.eclipse.osgi", "org.eclipse.core.runtime", "org.eclipse.core.jobs",
-              "org.eclipse.core.expressions", "org.eclipse.equinox.registry", "org.eclipse.equinox.preferences", "org.eclipse.equinox.app",
-              "org.eclipse.osgi.services", "org.osgi.service.log", "org.osgi.service.component", "org.osgi.service.prefs");
-          if (!required.contains(bsn))
+          if (!REQUIRED.contains(bsn))
           {
             return;
           }

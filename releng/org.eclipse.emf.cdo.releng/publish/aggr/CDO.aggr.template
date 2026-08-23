@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Local CBI p2repo-aggregator model for a single promoted CDO R-build.
+  This file is a template: build.xml resolves the various
+  @...@ tokens only after it has verified the supplied drop.
+-->
+<aggregator:Aggregation xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:aggregator="http://www.eclipse.org/cbi/p2repo/2011/aggregator/1.1.0"
+    label="CDO Maven aggregation @CDO_DROP_ID@"
+    buildRoot="@BUILD_ROOT@"
+    packedStrategy="SKIP"
+    type="R"
+    mavenResult="true"
+    includeSources="true"
+    validateNexusPublishingRequirements="true"
+    validatePOMDependencies="true"
+    excludeFeatures="true"
+    includedIUPattern="^(?:org\.eclipse\.net4j(?:\.util|\.tcp|\.db(?:\.(?:jdbc|h2))?)?|org\.eclipse\.emf\.cdo(?:\.(?:common|net4j|server(?:\.(?:net4j|db))?))?)(?:\.source)?$"
+    versionFormat="MavenRelease">
+  <validationSets label="CDO @CDO_DROP_ID@">
+    <contributions label="Promoted CDO drop @CDO_DROP_ID@">
+      <repositories location="@CDO_DROP_DIRECTORY@">
+        <bundles name="org.eclipse.net4j.util"/>
+        <bundles name="org.eclipse.net4j"/>
+        <bundles name="org.eclipse.net4j.tcp"/>
+        <bundles name="org.eclipse.net4j.db"/>
+        <bundles name="org.eclipse.net4j.db.jdbc"/>
+        <bundles name="org.eclipse.net4j.db.h2"/>
+        <bundles name="org.eclipse.emf.cdo.common"/>
+        <bundles name="org.eclipse.emf.cdo"/>
+        <bundles name="org.eclipse.emf.cdo.net4j"/>
+        <bundles name="org.eclipse.emf.cdo.server"/>
+        <bundles name="org.eclipse.emf.cdo.server.net4j"/>
+        <bundles name="org.eclipse.emf.cdo.server.db"/>
+@SOURCE_BUNDLES@      
+      </repositories>
+      <!-- Keep every published artifactId equal to its Bundle-SymbolicName. -->
+      <mavenMappings
+          namePattern="(org\.eclipse\.(?:net4j(?:\.(?:util|tcp|db(?:\.(?:jdbc|h2))?))?|emf\.cdo(?:\.(?:common|net4j|server(?:\.(?:net4j|db))?))?))"
+          groupId="org.eclipse.cdo"
+          artifactId="$1"/>
+      <!-- Matches the EMF publication mapping for current Eclipse Platform bundles. -->
+      <mavenMappings
+          namePattern="org\.eclipse\.core\.(.*)"
+          groupId="org.eclipse.platform"
+          artifactId="org.eclipse.core.$1"/>
+      <!--
+        External EMF/Platform/Orbit providers are resolved by the aggregator's
+        established Maven mappings and remain external dependencies. They are
+        deliberately not selected for redistribution by this CDO repository.
+      -->
+    </contributions>
+    <!-- Generated from the supplied drop's tp-macro.setup for every run. -->
+@VALIDATION_REPOSITORIES@  
+  </validationSets>
+  <configurations architecture="x86_64"/>
+</aggregator:Aggregation>

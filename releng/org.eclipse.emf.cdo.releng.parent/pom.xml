@@ -23,11 +23,26 @@ Eike Stepper - initial API and implementation
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <tycho.scmUrl>scm:git:https://git.eclipse.org/r/p/cdo/cdo.git</tycho.scmUrl>
+    <tycho.scmUrl>scm:git:https://github.com/eclipse-cdo/cdo.git</tycho.scmUrl>
     <tycho-version>4.0.8</tycho-version>
     <jarsigner-version>1.5.0</jarsigner-version>
     <os-jvm-flags/>
   </properties>
+
+  <url>https://eclipse.dev/cdo/</url>
+  
+  <organization>
+    <name>Eclipse Foundation</name>
+    <url>https://www.eclipse.org/</url>
+  </organization>
+  
+  <licenses>
+    <license>
+      <name>EPL-2.0</name>
+      <url>https://www.eclipse.org/legal/epl-2.0/</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
   <pluginRepositories>
     <!-- Eclipse Maven -->
@@ -118,6 +133,7 @@ Eike Stepper - initial API and implementation
           <version>${tycho-version}</version>
           <configuration>
             <skipPomGeneration>true</skipPomGeneration>
+            <deriveHeaderFromProject>true</deriveHeaderFromProject>
             <format>'v'yyyyMMdd-HHmm</format>
             <sourceReferences>
               <generate>true</generate>

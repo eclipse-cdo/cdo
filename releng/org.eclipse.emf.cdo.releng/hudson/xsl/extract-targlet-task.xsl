@@ -55,7 +55,7 @@
 						</xsl:if>
 					</xsl:for-each>
 			
-      		<!-- Add a placeholder repository element for CDO itself -->
+					<!-- Add a fixed token; the promoter replaces it with the promoted drop URL. -->
 					<repository url="https://download.eclipse.org/modeling/emf/cdo/updates"/>
 			
       		<!-- Copy filtered repositories, only attributes, no children -->

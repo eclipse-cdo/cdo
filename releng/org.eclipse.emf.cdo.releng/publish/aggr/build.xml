@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="cdo-maven-aggregation" default="validate" basedir=".">
+	<description>Portable local CDO p2repo-aggregator workflow.</description>
+
+	<!-- Override with -Dcbi.aggregator=<path-to-cbiAggrc.exe>. -->
+	<property name="cbi.aggregator" value="cbiAggrc.exe" />
+	<property name="maven.executable" value="mvn" />
+	<!-- VALIDATE_ONLY and DRY_RUN are allowed for every supported build type;
+	     PUBLISH is checked against build-info.xml immediately before upload. -->
+	<property name="publishing.mode" value="VALIDATE_ONLY" />
+	<!-- Read-only source cache for Javadoc's Eclipse/EMF classpath. -->
+	<property name="maven.local.repository" location="${user.home}/.m2/repository" />
+	<tstamp>
+		<format property="run.id" pattern="yyyyMMdd-HHmmss-SSS" />
+	</tstamp>
+	<!-- Pass -Dwork.dir=<directory> to retain all generated state there. The
+	     system-temporary location is only the fallback when it is omitted. -->
+	<property name="work.dir" location="${java.io.tmpdir}/cdo-maven-aggregation/${run.id}" />
+	<!-- Isolated Maven cache copied from the source cache before consumer runs. -->
+	<property name="maven.consumer.repository" location="${work.dir}/maven-local" />
+	<property name="classes.dir" location="${work.dir}/classes" />
+	<property name="model.dir" location="${work.dir}/model" />
+	<property name="build.root" location="${work.dir}/repository" />
+	<property name="cdo.maven.repository" location="${build.root}/final" />
+	<property name="configuration.dir" location="${work.dir}/configuration" />
+	<property name="workspace.dir" location="${work.dir}/workspace" />
+	<property name="metadata.file" location="${work.dir}/cdo-build-metadata.properties" />
+	<property name="publishing.metadata.file" location="${basedir}/publishing.properties" />
+	<property name="repositories.file" location="${work.dir}/cdo-validation-repositories.txt" />
+	<property name="model.file" location="${model.dir}/CDO.aggr" />
+	<property name="consumer.work.dir" location="${work.dir}/consumer-test" />
+	<property name="consumer.versions.file" location="${consumer.work.dir}/cdo-consumer-versions.properties" />
+	<property name="consumer.project.dir" location="${basedir}/consumer-test" />
+	<property name="sources.javadoc.dir" location="${work.dir}/sources-javadoc" />
+	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
+	<property name="staging.dir" location="${work.dir}/staging" />
+
+	<path id="helper.classpath">
+		<pathelement location="${classes.dir}" />
+	</path>
+
+	<!-- The consumer test and dependency-tree invocation differ only in their
+	     Maven goals. Keep the repository/version arguments in one portable
+	     macro so both checks use exactly the same resolved coordinates. -->
+	<macrodef name="run-consumer-maven">
+		<attribute name="goals" />
+		<sequential>
+			<exec executable="${maven.executable}" dir="${consumer.project.dir}" failifexecutionfails="true" failonerror="true">
+				<arg value="-Dmaven.repo.local=${maven.consumer.repository}" />
+				<arg value="-Dcdo.maven.repository=${cdo.maven.repository}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.util=${cdo.version.org.eclipse.net4j.util}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j=${cdo.version.org.eclipse.net4j}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.tcp=${cdo.version.org.eclipse.net4j.tcp}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.db=${cdo.version.org.eclipse.net4j.db}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.db.jdbc=${cdo.version.org.eclipse.net4j.db.jdbc}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.db.h2=${cdo.version.org.eclipse.net4j.db.h2}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.common=${cdo.version.org.eclipse.emf.cdo.common}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo=${cdo.version.org.eclipse.emf.cdo}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.net4j=${cdo.version.org.eclipse.emf.cdo.net4j}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.server=${cdo.version.org.eclipse.emf.cdo.server}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.net4j=${cdo.version.org.eclipse.emf.cdo.server.net4j}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.db=${cdo.version.org.eclipse.emf.cdo.server.db}" />
+				<arg line="@{goals}" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<target name="compile-helper">
+		<mkdir dir="${classes.dir}" />
+		<javac srcdir="${basedir}/../../src" destdir="${classes.dir}" includeantruntime="false" source="11" target="11" encoding="UTF-8">
+			<include name="org/eclipse/emf/cdo/releng/CDOAggregationTool.java" />
+		</javac>
+	</target>
+
+	<target name="prepare" depends="compile-helper">
+		<echo message="Aggregation work directory: ${work.dir}" />
+		<mkdir dir="${model.dir}" />
+		<mkdir dir="${configuration.dir}" />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="prepare" />
+			<arg value="${cdo.drop.dir}" />
+			<arg value="${basedir}/CDO.aggr.template" />
+			<arg value="${model.file}" />
+			<arg value="${metadata.file}" />
+			<arg value="${repositories.file}" />
+			<arg value="${build.root}" />
+		</java>
+		<echo message="CDO drop: ${cdo.drop.dir}" />
+		<echo message="Generated model: ${model.file}" />
+		<echo message="Generated metadata: ${metadata.file}" />
+		<echo message="Resolved validation repositories: ${repositories.file}" />
+	</target>
+
+	<target name="check-drop">
+		<fail unless="cdo.drop.dir" message="Required property cdo.drop.dir was not supplied. Use -Dcdo.drop.dir=&lt;promoted-drop-directory&gt;." />
+		<available file="${cdo.drop.dir}" type="dir" property="cdo.drop.available" />
+		<fail unless="cdo.drop.available" message="cdo.drop.dir is not a valid directory: ${cdo.drop.dir}" />
+	</target>
+
+	<target name="check-console">
+		<available file="${cbi.aggregator}" property="cbi.console.available" />
+		<fail unless="cbi.console.available" message="Synchronous CBI console executable does not exist: ${cbi.aggregator}" />
+	</target>
+
+	<target name="execute-validate" depends="check-drop,check-console,prepare">
+		<exec executable="${cbi.aggregator}" failifexecutionfails="true" failonerror="true">
+			<arg value="-configuration" />
+			<arg value="${configuration.dir}" />
+			<arg value="-data" />
+			<arg value="${workspace.dir}" />
+			<arg value="aggregate" />
+			<arg value="--buildModel" />
+			<arg value="${model.file}" />
+			<arg value="--action" />
+			<arg value="VALIDATE" />
+		</exec>
+	</target>
+
+	<target name="execute-clean-build" depends="check-drop,check-console,prepare">
+		<exec executable="${cbi.aggregator}" failifexecutionfails="true" failonerror="true">
+			<arg value="-configuration" />
+			<arg value="${configuration.dir}" />
+			<arg value="-data" />
+			<arg value="${workspace.dir}" />
+			<arg value="aggregate" />
+			<arg value="--buildModel" />
+			<arg value="${model.file}" />
+			<arg value="--action" />
+			<arg value="CLEAN_BUILD" />
+		</exec>
+	</target>
+
+	<target name="overlay" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="overlay" />
+			<arg value="${build.root}/final" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.metadata.file}" />
+		</java>
+	</target>
+
+	<target name="verify" depends="overlay">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="verify" />
+			<arg value="${build.root}/final" />
+			<arg value="${metadata.file}" />
+		</java>
+	</target>
+
+	<target name="sources-javadoc" depends="check-drop,verify,compile-helper">
+		<available file="${cdo.maven.repository}" type="dir" property="sources.repository.available" />
+		<fail unless="sources.repository.available" message="Final Maven repository does not exist: ${cdo.maven.repository}" />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="sources-javadoc" />
+			<arg value="${cdo.drop.dir}" />
+			<arg value="${cdo.maven.repository}" />
+			<arg value="${sources.javadoc.dir}" />
+			<arg value="${maven.local.repository}" />
+		</java>
+		<echo message="Generated source and Javadoc classifiers in ${cdo.maven.repository}" />
+	</target>
+
+	<target name="checksums" depends="sources-javadoc">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="checksums" />
+			<arg value="${cdo.maven.repository}" />
+		</java>
+		<echo message="Generated and validated classifier checksums in ${cdo.maven.repository}" />
+	</target>
+
+	<target name="prepare-maven-local">
+		<available file="${maven.local.repository}" type="dir" property="maven.cache.available" />
+		<fail unless="maven.cache.available" message="maven.local.repository is not a valid directory: ${maven.local.repository}" />
+		<copy todir="${maven.consumer.repository}" overwrite="false" includeEmptyDirs="false">
+			<fileset dir="${maven.local.repository}" />
+		</copy>
+	</target>
+
+	<target name="audit" depends="checksums">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="audit" />
+			<arg value="${cdo.maven.repository}" />
+			<arg value="${metadata.file}" />
+			<arg value="${audit.report}" />
+			<arg value="${staging.dir}" />
+		</java>
+		<copy file="${publishing.metadata.file}" todir="${staging.dir}" overwrite="true" />
+		<echo message="Maven Central readiness audit passed; staging is ${staging.dir}" />
+	</target>
+
+	<target name="publish-policy" depends="audit,compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="publish-policy" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.mode}" />
+		</java>
+	</target>
+
+	<!-- The upload implementation is intentionally not part of this portable
+	     prototype. This target places the policy check at its future entry point
+	     and refuses to imply that a local staging run published anything. -->
+	<target name="publish" depends="publish-policy">
+		<fail message="Maven Central upload is not configured; publish-policy passed, but no upload was performed." />
+	</target>
+
+	<target name="policy-test" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="policy-test" />
+		</java>
+	</target>
+
+	<target name="consumer-test" depends="verify,compile-helper,prepare-maven-local">
+		<available file="${cdo.maven.repository}" type="dir" property="consumer.repository.available" />
+		<fail unless="consumer.repository.available" message="Final Maven repository does not exist: ${cdo.maven.repository}" />
+		<mkdir dir="${consumer.work.dir}" />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="consumer-versions" />
+			<arg value="${cdo.maven.repository}" />
+			<arg value="${consumer.versions.file}" />
+			<arg value="${metadata.file}" />
+		</java>
+		<property file="${consumer.versions.file}" />
+		<run-consumer-maven goals="clean test" />
+		<echo message="Consumer test succeeded using ${consumer.versions.file}" />
+	</target>
+
+	<target name="consumer-dependency-tree" depends="consumer-test">
+		<run-consumer-maven goals="dependency:tree" />
+	</target>
+
+	<target name="validate" depends="execute-validate">
+		<echo message="CDO aggregation validation succeeded." />
+	</target>
+
+	<target name="build" depends="execute-validate,execute-clean-build,verify,checksums,consumer-test,audit">
+		<echo message="CDO aggregation build and POM verification succeeded." />
+	</target>
+
+	<target name="clean-build" depends="clean,build" />
+
+	<target name="clean">
+		<delete dir="${work.dir}" failonerror="false" />
+		<!-- Remove the workspace left by older runs before -data was isolated. -->
+		<delete dir="${basedir}/workspace" failonerror="false" />
+		<delete dir="${basedir}/../../workspace" failonerror="false" />
+		<echo message="Removed temporary aggregation directory ${work.dir}" />
+	</target>
+</project>

@@ -17,8 +17,17 @@
 		<format property="run.id" pattern="yyyyMMdd-HHmmss-SSS" />
 	</tstamp>
 	<!-- Pass -Dwork.dir=<directory> to retain all generated state there. The
-	     system-temporary location is only the fallback when it is omitted. -->
-	<property name="work.dir" location="${java.io.tmpdir}/cdo-maven-aggregation/${run.id}" />
+	     Jenkins uses an isolated workspace-local directory; the system-temporary
+	     location is the fallback for local invocations without WORKSPACE. -->
+	<property environment="env" />
+	<condition property="default.work.dir" value="${env.WORKSPACE}/.cdo-maven-publishing/${env.BUILD_TAG}"
+		else="${java.io.tmpdir}/cdo-maven-aggregation/${run.id}">
+		<and>
+			<isset property="env.WORKSPACE" />
+			<isset property="env.BUILD_TAG" />
+		</and>
+	</condition>
+	<property name="work.dir" location="${default.work.dir}" />
 	<!-- Isolated Maven cache copied from the source cache before consumer runs. -->
 	<property name="maven.consumer.repository" location="${work.dir}/maven-local" />
 	<property name="classes.dir" location="${work.dir}/classes" />

@@ -1,3 +1,10 @@
+final String CBI_AGGREGATOR_URL = 'https://download.eclipse.org/cbi/updates/p2-aggregator/products/milestone/S202311221637/org.eclipse.cbi.p2repo.cli.product-linux.gtk.x86_64.tar.gz'
+final String CBI_AGGREGATOR_SHA256 = 'CF641C257B800018372A057DE0961C3824322527D2A245C26BC16B9DF9F17454'
+final String PUBLISH_CREDENTIALS_ID = 'cdo-maven-central-publish'
+final String GPG_KEY_CREDENTIALS_ID = 'cdo-maven-central-gpg-key-id'
+final String GPG_PASSPHRASE_CREDENTIALS_ID = 'cdo-maven-central-gpg-passphrase'
+final String MAVEN_UPLOADER = 'disabled-until-approved'
+
 pipeline {
   agent any
 
@@ -16,11 +23,6 @@ pipeline {
     choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PUBLISH'],
       description: 'Technical validation/staging mode. PUBLISH is R-only and remains uploader-gated.')
     string(name: 'CDO_DROP_DIR', defaultValue: '', description: 'Directory containing build-info.xml and tp-macro.setup')
-    string(name: 'WORK_DIR', defaultValue: '', description: 'Optional persistent Ant work directory')
-    string(name: 'CBI_AGGREGATOR', defaultValue: 'cbiAggrc', description: 'CBI console executable')
-    string(name: 'PUBLISH_CREDENTIALS_ID', defaultValue: '', description: 'Jenkins username/password credential ID, required only for a future PUBLISH')
-    string(name: 'GPG_KEY_CREDENTIALS_ID', defaultValue: '', description: 'Jenkins secret-text credential ID for the signing key identifier')
-    string(name: 'GPG_PASSPHRASE_CREDENTIALS_ID', defaultValue: '', description: 'Jenkins secret-text credential ID for the signing passphrase')
   }
 
   stages {
@@ -30,12 +32,41 @@ pipeline {
           if (!params.CDO_DROP_DIR?.trim()) {
             error('CDO_DROP_DIR is required')
           }
-          def common = "-Dcdo.drop.dir=${params.CDO_DROP_DIR} -Dcbi.aggregator=${params.CBI_AGGREGATOR} -Dpublishing.mode=${params.PUBLISHING_MODE}"
-          if (params.WORK_DIR?.trim()) {
-            common += " -Dwork.dir=${params.WORK_DIR}"
+          def workDir = "${env.WORKSPACE}/maven-publishing"
+          def aggregator
+          def cbiDir = "${env.WORKSPACE}/cbi"
+          withEnv(["CBI_URL=${CBI_AGGREGATOR_URL}", "CBI_SHA256=${CBI_AGGREGATOR_SHA256}", "CBI_DIR=${cbiDir}"]) {
+              aggregator = sh(returnStdout: true, script: '''
+                set -eu
+                mkdir -p "$CBI_DIR/image"
+                archive="$CBI_DIR/distribution"
+                curl --fail --location --retry 3 --silent --show-error "$CBI_URL" -o "$archive"
+                printf '%s  %s\\n' "$CBI_SHA256" "$archive" | sha256sum --check --status -
+                case "$CBI_URL" in
+                  *.zip) unzip -q "$archive" -d "$CBI_DIR/image" ;;
+                  *.tar.gz|*.tgz) tar -xzf "$archive" -C "$CBI_DIR/image" ;;
+                  *.tar.xz) tar -xJf "$archive" -C "$CBI_DIR/image" ;;
+                  *) echo "Unsupported CBI archive format; use .zip, .tar.gz, .tgz, or .tar.xz" >&2; exit 2 ;;
+                esac
+                candidate=$(find "$CBI_DIR/image" -type f \( -name cbiAggrc -o -name cbiAggr \) -print -quit)
+                if [ -z "$candidate" ]; then
+                  echo "Pinned CBI archive does not contain cbiAggr or cbiAggrc" >&2
+                  exit 3
+                fi
+                chmod +x "$candidate"
+                printf '%s\\n' "$candidate"
+              ''').trim()
+            }
           }
+          withEnv(["CDO_DROP_DIR=${params.CDO_DROP_DIR}", "AGGR_WORK_DIR=${workDir}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}"]) {
           withAnt(installation: 'apache-ant-latest') {
-            sh "ant ${common} -f publish/aggr/build.xml clean-build consumer-dependency-tree"
+            sh '''
+              set -eu
+              ant -Dcdo.drop.dir="$CDO_DROP_DIR" -Dwork.dir="$AGGR_WORK_DIR" \
+                -Dcbi.aggregator="$CBI_AGGREGATOR" -Dpublishing.mode="$PUBLISHING_MODE" \
+                -f publish/aggr/build.xml clean-build consumer-dependency-tree
+            '''
+          }
           }
         }
       }
@@ -47,17 +78,22 @@ pipeline {
       }
       steps {
         script {
-          if (!params.PUBLISH_CREDENTIALS_ID?.trim() || !params.GPG_KEY_CREDENTIALS_ID?.trim() || !params.GPG_PASSPHRASE_CREDENTIALS_ID?.trim()) {
-            error('PUBLISH requires approved upload and GPG credential IDs; no upload was attempted')
-          }
+          def workDir = "${env.WORKSPACE}/maven-publishing"
+          withEnv(["CDO_DROP_DIR=${params.CDO_DROP_DIR}", "AGGR_WORK_DIR=${workDir}", "MAVEN_UPLOADER=${MAVEN_UPLOADER}"]) {
           withCredentials([
-            usernamePassword(credentialsId: params.PUBLISH_CREDENTIALS_ID,
+            usernamePassword(credentialsId: PUBLISH_CREDENTIALS_ID,
               usernameVariable: 'MAVEN_CENTRAL_USERNAME', passwordVariable: 'MAVEN_CENTRAL_PASSWORD'),
-            string(credentialsId: params.GPG_KEY_CREDENTIALS_ID, variable: 'MAVEN_GPG_KEY_ID'),
-            string(credentialsId: params.GPG_PASSPHRASE_CREDENTIALS_ID, variable: 'MAVEN_GPG_PASSPHRASE')]) {
+            string(credentialsId: GPG_KEY_CREDENTIALS_ID, variable: 'MAVEN_GPG_KEY_ID'),
+            string(credentialsId: GPG_PASSPHRASE_CREDENTIALS_ID, variable: 'MAVEN_GPG_PASSPHRASE')]) {
             withAnt(installation: 'apache-ant-latest') {
-              sh "ant -Dpublishing.mode=PUBLISH -Dcdo.drop.dir=${params.CDO_DROP_DIR} -f publish/aggr/build.xml publish"
+              sh '''
+                set -eu
+                ant -Dpublishing.mode=PUBLISH -Dcdo.drop.dir="$CDO_DROP_DIR" \
+                  -Dwork.dir="$AGGR_WORK_DIR" \
+                  -Dmaven.uploader="$MAVEN_UPLOADER" -f publish/aggr/build.xml publish
+              '''
             }
+          }
           }
         }
       }
@@ -66,7 +102,7 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts artifacts: 'releng/org.eclipse.emf.cdo.releng/publish/aggr/work/**/maven-publishing-summary.properties',
+      archiveArtifacts artifacts: 'maven-publishing/**/maven-publishing-summary.properties',
         allowEmptyArchive: true
     }
   }

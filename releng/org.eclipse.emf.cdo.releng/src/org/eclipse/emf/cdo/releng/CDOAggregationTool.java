@@ -92,7 +92,8 @@ public final class CDOAggregationTool
   {
     if (args.length == 0)
     {
-      throw new IllegalArgumentException("Usage: prepare|overlay|verify|consumer-versions|sources-javadoc|checksums|audit|publish-policy|policy-test ...");
+      throw new IllegalArgumentException(
+          "Usage: prepare|overlay|verify|consumer-versions|sources-javadoc|checksums|audit|publish-check|publish-policy|policy-test ...");
     }
 
     switch (args[0])
@@ -123,6 +124,10 @@ public final class CDOAggregationTool
 
     case "audit":
       AuditCommand.execute(args);
+      break;
+
+    case "publish-check":
+      PublishCheckCommand.execute(args);
       break;
 
     case "publish-policy":
@@ -1174,7 +1179,7 @@ public final class CDOAggregationTool
 
       File staging = new File(args[4]);
       SourcesJavadocCommand.delete(staging);
-      copyTree(repository, staging);
+      copyMavenStaging(repository, staging);
       Files.copy(metadataFile.toPath(), new File(staging, "cdo-build-metadata.properties").toPath());
 
       String status = findings.isEmpty() ? "READY_WITHOUT_SIGNATURES" : "NOT_READY";
@@ -1244,24 +1249,27 @@ public final class CDOAggregationTool
       }
     }
 
-    private static void copyTree(File source, File target) throws IOException
+    /** Copies only Maven publication files; p2 content/artifacts indexes are
+     * intentionally excluded from the Central upload candidate. */
+    private static void copyMavenStaging(File source, File target) throws IOException
     {
       try (Stream<Path> stream = Files.walk(source.toPath()))
       {
-        stream.forEach(path -> {
+        stream.filter(Files::isRegularFile).filter(path -> {
+          String name = path.getFileName().toString();
+          if (name.startsWith("artifacts.jar") || name.startsWith("content.jar") || name.startsWith("aggregate.jar"))
+          {
+            return false;
+          }
+
+          return name.endsWith(".jar") || name.endsWith(".pom") || name.endsWith(".md5") || name.endsWith(".sha1") || name.endsWith(".sha256")
+              || name.endsWith(".sha512") || "maven-metadata.xml".equals(name);
+        }).forEach(path -> {
           try
           {
             Path destination = target.toPath().resolve(source.toPath().relativize(path));
-
-            if (Files.isDirectory(path))
-            {
-              Files.createDirectories(destination);
-            }
-            else
-            {
-              Files.createDirectories(destination.getParent());
-              Files.copy(path, destination);
-            }
+            Files.createDirectories(destination.getParent());
+            Files.copy(path, destination);
           }
           catch (IOException e)
           {
@@ -1354,6 +1362,120 @@ public final class CDOAggregationTool
       catch (IllegalArgumentException expected)
       {
         // Expected policy rejection.
+      }
+    }
+  }
+
+  /**
+   * Validates a local Maven staging directory and applies the publishing
+   * boundary checks. Args are command, staging directory, build metadata,
+   * mode, and optional uploader identifier. No network operation is performed.
+   *
+   * @author Eike Stepper
+   */
+  private static final class PublishCheckCommand
+  {
+    private static final String[] CHECKSUMS = { ".md5", ".sha1", ".sha256", ".sha512" };
+
+    static void execute(String[] args) throws Exception
+    {
+      if (args.length != 5)
+      {
+        throw new IllegalArgumentException("publish-check requires staging, metadata, mode, and uploader identifier");
+      }
+
+      File staging = requireDirectory(args[1], "staging directory");
+      Map<String, String> metadata = readProperties(requireFile(new File(args[2]), "metadata properties"));
+      String mode = args[3];
+      String buildType = metadata.get("cdo.build.type");
+      PublishPolicyCommand.enforce(buildType, mode);
+
+      int artifacts = validateStaging(staging, false);
+      File summary = new File(staging, "maven-publishing-summary.properties");
+
+      try (PrintWriter out = new PrintWriter(summary, StandardCharsets.UTF_8.name()))
+      {
+        out.println("cdo.build.type=" + value(metadata, "cdo.build.type"));
+        out.println("cdo.build.drop=" + value(metadata, "cdo.build.drop"));
+        out.println("cdo.git.commit=" + value(metadata, "cdo.git.commit"));
+        out.println("publishing.mode=" + mode);
+        out.println("staging.artifacts=" + artifacts);
+        out.println("upload.performed=false");
+      }
+
+      if (PublishPolicyCommand.PUBLISH.equals(mode))
+      {
+        if (args[4].isBlank())
+        {
+          throw new IllegalArgumentException("PUBLISH requires an explicitly configured uploader; none is configured");
+        }
+
+        requireEnvironment("MAVEN_CENTRAL_USERNAME");
+        requireEnvironment("MAVEN_CENTRAL_PASSWORD");
+        requireEnvironment("MAVEN_GPG_KEY_ID");
+        requireEnvironment("MAVEN_GPG_PASSPHRASE");
+        validateStaging(staging, true);
+
+        throw new IllegalArgumentException("PGP/upload execution is not enabled in this prototype; no upload was performed");
+      }
+
+      System.out.println("Validated " + artifacts + " staging artifacts for " + mode + " (upload disabled). Summary: " + summary);
+    }
+
+    private static int validateStaging(File staging, boolean signaturesRequired) throws Exception
+    {
+      List<File> artifacts = new ArrayList<>();
+      try (Stream<Path> files = Files.walk(staging.toPath()))
+      {
+        files.filter(Files::isRegularFile).map(Path::toFile).filter(file -> file.getName().endsWith(".jar") || file.getName().endsWith(".pom"))
+            .forEach(artifacts::add);
+      }
+
+      if (artifacts.isEmpty())
+      {
+        throw new IllegalArgumentException("Staging directory contains no Maven JAR or POM artifacts: " + staging);
+      }
+
+      for (File artifact : artifacts)
+      {
+        if (artifact.length() == 0)
+        {
+          throw new IllegalArgumentException("Empty staging artifact: " + artifact);
+        }
+
+        for (String checksum : CHECKSUMS)
+        {
+          File sidecar = new File(artifact.getPath() + checksum);
+          if (!sidecar.isFile() || sidecar.length() == 0)
+          {
+            throw new IllegalArgumentException("Missing or empty checksum for staging artifact: " + sidecar);
+          }
+        }
+
+        if (signaturesRequired)
+        {
+          File signature = new File(artifact.getPath() + ".asc");
+          if (!signature.isFile() || signature.length() == 0)
+          {
+            throw new IllegalArgumentException("PUBLISH requires a non-empty PGP signature: " + signature);
+          }
+        }
+      }
+
+      return artifacts.size();
+    }
+
+    private static String value(Map<String, String> metadata, String key)
+    {
+      String value = metadata.get(key);
+      return value == null ? "" : value;
+    }
+
+    private static void requireEnvironment(String name)
+    {
+      if (System.getenv(name) == null || System.getenv(name).isBlank())
+      {
+        throw new IllegalArgumentException("Missing Jenkins credential environment variable: " + name);
       }
     }
   }

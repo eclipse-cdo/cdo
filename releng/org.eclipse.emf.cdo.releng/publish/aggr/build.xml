@@ -8,6 +8,9 @@
 	<!-- VALIDATE_ONLY and DRY_RUN are allowed for every supported build type;
 	     PUBLISH is checked against build-info.xml immediately before upload. -->
 	<property name="publishing.mode" value="VALIDATE_ONLY" />
+	<!-- Identifier of a future Jenkins uploader; empty until Eclipse publishing
+	     infrastructure and credentials are approved. -->
+	<property name="maven.uploader" value="" />
 	<!-- Read-only source cache for Javadoc's Eclipse/EMF classpath. -->
 	<property name="maven.local.repository" location="${user.home}/.m2/repository" />
 	<tstamp>
@@ -188,7 +191,18 @@
 		<echo message="Maven Central readiness audit passed; staging is ${staging.dir}" />
 	</target>
 
-	<target name="publish-policy" depends="audit,compile-helper">
+	<target name="staging-validate" depends="audit,compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="publish-check" />
+			<arg value="${staging.dir}" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.mode}" />
+			<arg value="${maven.uploader}" />
+		</java>
+		<echo message="Validated Maven Central staging package: ${staging.dir}" />
+	</target>
+
+	<target name="publish-policy" depends="staging-validate,compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="publish-policy" />
 			<arg value="${metadata.file}" />
@@ -197,10 +211,16 @@
 	</target>
 
 	<!-- The upload implementation is intentionally not part of this portable
-	     prototype. This target places the policy check at its future entry point
-	     and refuses to imply that a local staging run published anything. -->
+	     prototype. This target places policy, signature, and credential checks at
+	     its future entry point and refuses to imply that anything was uploaded. -->
 	<target name="publish" depends="publish-policy">
-		<fail message="Maven Central upload is not configured; publish-policy passed, but no upload was performed." />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="publish-check" />
+			<arg value="${staging.dir}" />
+			<arg value="${metadata.file}" />
+			<arg value="PUBLISH" />
+			<arg value="${maven.uploader}" />
+		</java>
 	</target>
 
 	<target name="policy-test" depends="compile-helper">
@@ -232,7 +252,7 @@
 		<echo message="CDO aggregation validation succeeded." />
 	</target>
 
-	<target name="build" depends="execute-validate,execute-clean-build,verify,checksums,consumer-test,audit">
+	<target name="build" depends="execute-validate,execute-clean-build,verify,checksums,consumer-test,audit,staging-validate">
 		<echo message="CDO aggregation build and POM verification succeeded." />
 	</target>
 

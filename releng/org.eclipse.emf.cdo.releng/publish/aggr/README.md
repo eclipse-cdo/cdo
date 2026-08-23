@@ -63,6 +63,37 @@ configured. Consequently, no target uploads artifacts or creates PGP
 signatures. A later uploader must call the same policy gate immediately before
 its network operation.
 
+## Jenkins and future publishing
+
+`Jenkinsfile` is a separate declarative entry point for the same Ant workflow.
+It accepts `PUBLISHING_MODE`, `CDO_DROP_DIR`, `WORK_DIR`, and
+`CBI_AGGREGATOR`; the drop must contain `build-info.xml` and `tp-macro.setup`.
+`VALIDATE_ONLY` and `DRY_RUN` require no publishing credentials. The job runs
+aggregation, CBI validation/CLEAN_BUILD, source and Javadoc generation,
+checksums, the readiness audit, staging validation, the consumer test, and the
+dependency tree.
+
+The audit creates the upload candidate below the work directory. It preserves
+the normal Maven path layout and includes each main, POM, source, and Javadoc
+artifact together with its `.md5`, `.sha1`, `.sha256`, and `.sha512` sidecars.
+`staging-validate` checks every JAR and POM and writes
+`maven-publishing-summary.properties` with the drop, commit, build type,
+artifact count, selected mode, and `upload.performed=false`. PGP `.asc` files
+are deliberately not generated yet.
+
+The reserved `publish` target is the future upload boundary. It rechecks the
+R-only policy, requires an explicitly configured uploader and these Jenkins
+environment variables: `MAVEN_CENTRAL_USERNAME`,
+`MAVEN_CENTRAL_PASSWORD`, `MAVEN_GPG_KEY_ID`, and
+`MAVEN_GPG_PASSPHRASE`. It also requires a non-empty `.asc` signature for every
+artifact. Since no signer or uploader is enabled in this repository, `PUBLISH`
+currently fails with a non-zero exit code and performs no network operation.
+The Jenkinsfile exposes credential IDs for these values without storing any
+secret in the repository. After Eclipse Foundation approval, the remaining
+configuration is the approved Jenkins credentials, the portable signing
+implementation, the Maven Central uploader/namespace, and the promotion or
+unhide job. S- and I-builds remain blocked at this boundary.
+
 The generated CBI model enables the native Maven checks
 `validateNexusPublishingRequirements="true"` and
 `validatePOMDependencies="true"` on the root `aggregator:Aggregation` element.

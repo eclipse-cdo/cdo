@@ -1,0 +1,73 @@
+pipeline {
+  agent any
+
+  options {
+    timeout(time: 120, unit: 'MINUTES')
+    disableConcurrentBuilds()
+  }
+
+  tools {
+    ant 'apache-ant-latest'
+    jdk 'temurin-jdk21-latest'
+    maven 'apache-maven-latest'
+  }
+
+  parameters {
+    choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PUBLISH'],
+      description: 'Technical validation/staging mode. PUBLISH is R-only and remains uploader-gated.')
+    string(name: 'CDO_DROP_DIR', defaultValue: '', description: 'Directory containing build-info.xml and tp-macro.setup')
+    string(name: 'WORK_DIR', defaultValue: '', description: 'Optional persistent Ant work directory')
+    string(name: 'CBI_AGGREGATOR', defaultValue: 'cbiAggrc', description: 'CBI console executable')
+    string(name: 'PUBLISH_CREDENTIALS_ID', defaultValue: '', description: 'Jenkins username/password credential ID, required only for a future PUBLISH')
+    string(name: 'GPG_KEY_CREDENTIALS_ID', defaultValue: '', description: 'Jenkins secret-text credential ID for the signing key identifier')
+    string(name: 'GPG_PASSPHRASE_CREDENTIALS_ID', defaultValue: '', description: 'Jenkins secret-text credential ID for the signing passphrase')
+  }
+
+  stages {
+    stage('Aggregate and validate') {
+      steps {
+        script {
+          if (!params.CDO_DROP_DIR?.trim()) {
+            error('CDO_DROP_DIR is required')
+          }
+          def common = "-Dcdo.drop.dir=${params.CDO_DROP_DIR} -Dcbi.aggregator=${params.CBI_AGGREGATOR} -Dpublishing.mode=${params.PUBLISHING_MODE}"
+          if (params.WORK_DIR?.trim()) {
+            common += " -Dwork.dir=${params.WORK_DIR}"
+          }
+          withAnt(installation: 'apache-ant-latest') {
+            sh "ant ${common} -f publish/aggr/build.xml clean-build consumer-dependency-tree"
+          }
+        }
+      }
+    }
+
+    stage('Publishing boundary') {
+      when {
+        expression { params.PUBLISHING_MODE == 'PUBLISH' }
+      }
+      steps {
+        script {
+          if (!params.PUBLISH_CREDENTIALS_ID?.trim() || !params.GPG_KEY_CREDENTIALS_ID?.trim() || !params.GPG_PASSPHRASE_CREDENTIALS_ID?.trim()) {
+            error('PUBLISH requires approved upload and GPG credential IDs; no upload was attempted')
+          }
+          withCredentials([
+            usernamePassword(credentialsId: params.PUBLISH_CREDENTIALS_ID,
+              usernameVariable: 'MAVEN_CENTRAL_USERNAME', passwordVariable: 'MAVEN_CENTRAL_PASSWORD'),
+            string(credentialsId: params.GPG_KEY_CREDENTIALS_ID, variable: 'MAVEN_GPG_KEY_ID'),
+            string(credentialsId: params.GPG_PASSPHRASE_CREDENTIALS_ID, variable: 'MAVEN_GPG_PASSPHRASE')]) {
+            withAnt(installation: 'apache-ant-latest') {
+              sh "ant -Dpublishing.mode=PUBLISH -Dcdo.drop.dir=${params.CDO_DROP_DIR} -f publish/aggr/build.xml publish"
+            }
+          }
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      archiveArtifacts artifacts: 'releng/org.eclipse.emf.cdo.releng/publish/aggr/work/**/maven-publishing-summary.properties',
+        allowEmptyArchive: true
+    }
+  }
+}

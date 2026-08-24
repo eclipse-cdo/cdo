@@ -16,6 +16,7 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBAdapterID;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
@@ -30,6 +31,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
+import org.eclipse.net4j.internal.db.DBAdapterID;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
@@ -63,6 +65,18 @@ import java.util.function.Consumer;
 
 /**
  * A useful base class for implementing custom {@link IDBAdapter DB adapters}.
+ *
+ * <p>Service providers should subclass this type rather than implement
+ * {@link IDBAdapter} directly. The subclass must provide a stable name and version
+ * that identify the adapter's database system and behavior. The registry compares
+ * names case-insensitively and compares dot-separated numeric version components;
+ * trailing zero components do not create a distinct registration.</p>
+ *
+ * <p>Providers contributing an adapter through the database adapter extension point
+ * should ensure that the descriptor's name and version agree with the adapter
+ * created by the provider. The descriptor identity is used for registration and
+ * lookup, and remains authoritative if the created adapter reports different
+ * metadata.</p>
  *
  * @author Eike Stepper
  */
@@ -106,11 +120,11 @@ public abstract class DBAdapter implements IDBAdapter
 
   private static final String NULLABLE_DEFAULT = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.spi.db.DBAdapter.NO_NULLABLE_DEFAULT") ? "" : "NULL";
 
-  private String name;
+  private final String name;
 
-  private String version;
+  private final String version;
 
-  private Set<String> reservedWords;
+  private volatile Set<String> reservedWords;
 
   public DBAdapter(String name, String version)
   {
@@ -128,6 +142,28 @@ public abstract class DBAdapter implements IDBAdapter
   public String getVersion()
   {
     return version;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return DBAdapterID.copy(this).hashCode();
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+
+    if (!(obj instanceof IDBAdapterID))
+    {
+      return false;
+    }
+
+    return DBAdapterID.copy(this).equals(DBAdapterID.copy((IDBAdapterID)obj));
   }
 
   @Override
@@ -169,6 +205,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.9
    */
+  @Override
   public IDBSchemaTransaction openSchemaTransaction(IDBDatabase database, IDBConnection currentConnection)
   {
     return database.openSchemaTransaction(currentConnection);
@@ -778,6 +815,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.3
    */
+  @Override
   public String convertString(PreparedStatement preparedStatement, int parameterIndex, String value)
   {
     return value;
@@ -786,6 +824,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.3
    */
+  @Override
   public String convertString(ResultSet resultSet, int columnIndex, String value)
   {
     return value;
@@ -794,6 +833,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.3
    */
+  @Override
   public String convertString(ResultSet resultSet, String columnLabel, String value)
   {
     return value;
@@ -952,6 +992,7 @@ public abstract class DBAdapter implements IDBAdapter
     throw new IllegalArgumentException("Unknown type: " + type); //$NON-NLS-1$
   }
 
+  @Override
   public String[] getSQL92ReservedWords()
   {
     return SQL92_RESERVED_WORDS;
@@ -960,17 +1001,21 @@ public abstract class DBAdapter implements IDBAdapter
   @Override
   public boolean isReservedWord(String word)
   {
-    if (reservedWords == null)
+    Set<String> set = reservedWords;
+    if (set == null)
     {
-      reservedWords = new HashSet<>();
+      set = new HashSet<>();
+
       for (String reservedWord : getReservedWords())
       {
-        reservedWords.add(reservedWord.toUpperCase());
+        set.add(reservedWord.toUpperCase());
       }
+
+      reservedWords = set;
     }
 
     word = word.toUpperCase();
-    return reservedWords.contains(word);
+    return set.contains(word);
   }
 
   /**
@@ -1054,6 +1099,7 @@ public abstract class DBAdapter implements IDBAdapter
     return result;
   }
 
+  @Override
   public void appendFieldNames(Appendable appendable, IDBTable table)
   {
     try
@@ -1240,6 +1286,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public String format(PreparedStatement stmt)
   {
     return stmt.toString();
@@ -1248,6 +1295,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.2
    */
+  @Override
   public String format(ResultSet resultSet)
   {
     try
@@ -1278,6 +1326,7 @@ public abstract class DBAdapter implements IDBAdapter
   /**
    * @since 4.9
    */
+  @Override
   public Object convertToSQL(Object value)
   {
     return value;

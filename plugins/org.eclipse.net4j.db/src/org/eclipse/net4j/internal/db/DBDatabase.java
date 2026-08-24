@@ -14,6 +14,7 @@ package org.eclipse.net4j.internal.db;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.RunnableWithConnection;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
@@ -49,7 +50,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private static final boolean TRACK_SCHEMA_ACCESS = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.internal.db.DBDatabase.TRACK_SCHEMA_ACCESS");
 
-  private DBAdapter adapter;
+  private IDBAdapter adapter;
 
   private IDBConnectionProvider connectionProvider;
 
@@ -61,7 +62,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private int waitingSchemaWriters;
 
-  public DBDatabase(DBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns,
+  public DBDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns,
       boolean qualifiedTableNames)
   {
     super(IDBConnection.class);
@@ -81,6 +82,18 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     activate();
   }
 
+  /**
+   * Compatibility constructor for existing internal callers.
+   *
+   * @deprecated Use {@link #DBDatabase(IDBAdapter, IDBConnectionProvider, String, boolean, boolean)} instead.
+   */
+  @Deprecated
+  public DBDatabase(DBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns,
+      boolean qualifiedTableNames)
+  {
+    this((IDBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns, qualifiedTableNames);
+  }
+
   @Override
   public String getUserID()
   {
@@ -93,7 +106,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
   }
 
   @Override
-  public DBAdapter getAdapter()
+  public IDBAdapter getAdapter()
   {
     return adapter;
   }

@@ -248,7 +248,7 @@ public class LocalCDORepository extends CDORepositoryImpl
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(supportingAudits, supportingBranches, false);
     mappingStrategy.setProperties(mappingStrategyProperties);
 
-    IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
+    IDBAdapter dbAdapter = IDBAdapter.Registry.INSTANCE.getAdapter("h2");
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
     IDBStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
 

@@ -124,7 +124,7 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
 
     Element dbAdapterConfig = (Element)dbAdapterConfigs.item(0);
     String dbAdapterName = getAttribute(dbAdapterConfig, "name"); //$NON-NLS-1$
-    IDBAdapter dbAdapter = DBUtil.getDBAdapter(dbAdapterName);
+    IDBAdapter dbAdapter = IDBAdapter.Registry.INSTANCE.getAdapter(dbAdapterName);
     if (dbAdapter == null)
     {
       throw new IllegalArgumentException("Unknown DB adapter: " + dbAdapterName); //$NON-NLS-1$

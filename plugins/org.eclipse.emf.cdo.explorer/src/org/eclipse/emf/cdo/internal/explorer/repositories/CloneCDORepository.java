@@ -161,7 +161,7 @@ public class CloneCDORepository extends CDORepositoryImpl
     dataSource.setURL("jdbc:h2:" + folder);
 
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true, false);
-    IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
+    IDBAdapter dbAdapter = IDBAdapter.Registry.INSTANCE.getAdapter("h2");
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
 

@@ -21,7 +21,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.DelegatingDBSchema;
 import org.eclipse.net4j.internal.db.ddl.DelegatingDBSchemaElement;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
-import org.eclipse.net4j.spi.db.DBAdapter;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 
 import java.sql.Connection;
@@ -140,7 +140,7 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
       {
         ((InternalDBSchema)oldSchema).unlock();
 
-        DBAdapter adapter = database.getAdapter();
+        IDBAdapter adapter = database.getAdapter();
         adapter.updateSchema(connection, oldSchema, delta);
 
         ((DelegatingDBSchema)workingCopy).setDelegate(oldSchema);

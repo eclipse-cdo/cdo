@@ -922,4 +922,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/spi/db/DelegatingDBAdapter.java" type="org.eclipse.net4j.spi.db.DelegatingDBAdapter">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IDBAdapter"/>
+                <message_argument value="DelegatingDBAdapter"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

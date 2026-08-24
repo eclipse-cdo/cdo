@@ -23,7 +23,6 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -198,12 +197,7 @@ public class Index implements IDBConnectionProvider
 
   private String format(PreparedStatement stmt)
   {
-    if (adapter instanceof DBAdapter)
-    {
-      return ((DBAdapter)adapter).format(stmt);
-    }
-
-    return stmt.toString();
+    return adapter.format(stmt);
   }
 
   public void trace(ContextTracer tracer, ResultSet resultSet)
@@ -220,12 +214,7 @@ public class Index implements IDBConnectionProvider
 
   private String format(ResultSet resultSet)
   {
-    if (adapter instanceof DBAdapter)
-    {
-      return INDENT + ((DBAdapter)adapter).format(resultSet);
-    }
-
-    return INDENT + resultSet;
+    return INDENT + adapter.format(resultSet);
   }
 
   public static DataSource createDataSource(File folder, String dbName, String schemaName)

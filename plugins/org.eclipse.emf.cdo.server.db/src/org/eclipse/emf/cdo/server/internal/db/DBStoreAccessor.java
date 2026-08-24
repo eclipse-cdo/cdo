@@ -72,12 +72,12 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.ddl.DBField;
-import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -164,7 +164,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public IDBSchemaTransaction openSchemaTransaction()
   {
     DBStore store = getStore();
-    DBAdapter dbAdapter = (DBAdapter)store.getDBAdapter();
+    IDBAdapter dbAdapter = store.getDBAdapter();
     IDBDatabase database = store.getDatabase();
 
     return dbAdapter.openSchemaTransaction(database, connection);

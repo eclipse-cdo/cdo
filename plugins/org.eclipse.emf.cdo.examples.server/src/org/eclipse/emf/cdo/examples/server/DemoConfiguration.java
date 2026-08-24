@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.signal.ISignalProtocol;
@@ -179,7 +178,7 @@ public class DemoConfiguration extends Lifecycle
   protected IDBStore createStore()
   {
     IMappingStrategy mappingStrategy = createMappingStrategy();
-    IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
+    IDBAdapter dbAdapter = IDBAdapter.Registry.INSTANCE.getAdapter("h2");
     IDBConnectionProvider dbConnectionProvider = dbAdapter.createConnectionProvider(createDataSource());
     IDBStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, dbConnectionProvider);
     return store;

@@ -242,7 +242,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true, false);
     mappingStrategy.setProperties(props);
 
-    IDBAdapter dbAdapter = DBUtil.getDBAdapter("h2");
+    IDBAdapter dbAdapter = IDBAdapter.Registry.INSTANCE.getAdapter("h2");
     IDBConnectionProvider connectionProvider = DBUtil.createConnectionProvider(dataSource);
     IStore store = CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider);
 

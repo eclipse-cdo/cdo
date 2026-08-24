@@ -22,9 +22,9 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
-import org.eclipse.net4j.spi.db.DBAdapter;
 
 import java.sql.Clob;
 import java.sql.ResultSet;
@@ -267,7 +267,7 @@ public class SQLQueryHandler implements IQueryHandler
 
   protected Object convertToSQL(Object value)
   {
-    DBAdapter dbAdapter = (DBAdapter)accessor.getStore().getDBAdapter();
+    IDBAdapter dbAdapter = accessor.getStore().getDBAdapter();
     return dbAdapter.convertToSQL(value);
   }
 

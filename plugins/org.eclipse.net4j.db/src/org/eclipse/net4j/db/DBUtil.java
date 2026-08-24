@@ -23,7 +23,6 @@ import org.eclipse.net4j.internal.db.DataSourceConnectionProvider;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
-import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.ConsumerWithException;
 import org.eclipse.net4j.util.ReflectUtil;
@@ -149,7 +148,7 @@ public final class DBUtil
   public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns,
       boolean qualifiedTableNames)
   {
-    return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns, qualifiedTableNames);
+    return new DBDatabase(adapter, connectionProvider, schemaName, fixNullableIndexColumns, qualifiedTableNames);
   }
 
   /**
@@ -326,7 +325,47 @@ public final class DBUtil
    */
   public static IDBAdapter getDBAdapter(String adapterName)
   {
-    return IDBAdapter.REGISTRY.get(adapterName);
+    return IDBAdapter.Registry.INSTANCE.get(adapterName);
+  }
+
+  /**
+   * Returns all registered adapters, sorted by name and numeric version.
+   *
+   * @since 4.14
+   */
+  public static IDBAdapter[] getDBAdapters()
+  {
+    return IDBAdapter.Registry.INSTANCE.getAdapters();
+  }
+
+  /**
+   * Returns all registered variants for an adapter name, sorted by numeric version.
+   *
+   * @since 4.14
+   */
+  public static IDBAdapter[] getDBAdapters(String adapterName)
+  {
+    return IDBAdapter.Registry.INSTANCE.getAdapters(adapterName);
+  }
+
+  /**
+   * Returns adapter metadata without instantiating lazy extension descriptors.
+   *
+   * @since 4.14
+   */
+  public static IDBAdapterID[] getDBAdapterIDs()
+  {
+    return IDBAdapter.Registry.INSTANCE.getAdapterIDs();
+  }
+
+  /**
+   * Returns adapter metadata for a name without instantiating lazy extension descriptors.
+   *
+   * @since 4.14
+   */
+  public static IDBAdapterID[] getDBAdapterIDs(String adapterName)
+  {
+    return IDBAdapter.Registry.INSTANCE.getAdapterIDs(adapterName);
   }
 
   /**

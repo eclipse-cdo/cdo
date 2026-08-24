@@ -64,11 +64,15 @@ public abstract class OM
     {
       IExtensionRegistry registry = Platform.getExtensionRegistry();
       IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);
+
       for (final IConfigurationElement element : elements)
       {
         if ("dbAdapter".equals(element.getName())) //$NON-NLS-1$
         {
-          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(element.getAttribute("name")) //$NON-NLS-1$
+          String name = element.getAttribute("name");
+          String version = element.getAttribute("version");
+
+          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(name, version)
           {
             @Override
             public IDBAdapter createDBAdapter()

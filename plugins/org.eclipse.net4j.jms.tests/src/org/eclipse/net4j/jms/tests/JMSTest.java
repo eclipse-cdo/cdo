@@ -84,7 +84,7 @@ public class JMSTest
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.setDebugging(true);
 
-    IDBAdapter.REGISTRY.put(EmbeddedDerbyAdapter.NAME, new EmbeddedDerbyAdapter());
+    IDBAdapter.Registry.INSTANCE.put(EmbeddedDerbyAdapter.NAME, new EmbeddedDerbyAdapter());
     IStore store = JDBCUtil.getStore();
     Server.INSTANCE.setStore(store);
     Server.INSTANCE.activate();

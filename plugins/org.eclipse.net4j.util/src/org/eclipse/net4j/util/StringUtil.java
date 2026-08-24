@@ -928,13 +928,17 @@ public final class StringUtil
 
     for (;;)
     {
+      // Check for the end of the pattern before reading its next character.
+      // A complete match (especially one ending in '*') must succeed instead
+      // of attempting to read past the end of the pattern.
+      if (patternIndex >= patternLength)
+      {
+        return stringIndex == stringLength;
+      }
+
       char patternChar = pattern.charAt(patternIndex);
       boolean endReached = stringIndex == stringLength;
-      if (patternIndex == patternLength)
-      {
-        return endReached;
-      }
-      else if (endReached && patternChar != '*')
+      if (endReached && patternChar != '*')
       {
         return false;
       }

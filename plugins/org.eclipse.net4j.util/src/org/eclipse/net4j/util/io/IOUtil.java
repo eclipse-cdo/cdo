@@ -57,8 +57,10 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -1394,32 +1396,54 @@ public final class IOUtil
   public static List<File> glob(String pattern, File folder)
   {
     List<File> result = new ArrayList<>();
+
     pattern = normalizeSeparator(pattern);
     if (pattern.endsWith(File.separator))
     {
       pattern += WILDCARD_MULTI_DIRS;
     }
 
-    globRecurse(pattern, folder, result);
+    globRecurse(pattern, folder, result, new HashSet<>());
     return result;
   }
 
-  private static void globRecurse(String pattern, File folder, List<File> result)
+  private static void globRecurse(String pattern, File folder, List<File> result, Set<String> visited)
   {
+    if (folder == null || !folder.isDirectory())
+    {
+      return;
+    }
+
+    String visitKey;
+    try
+    {
+      visitKey = folder.getCanonicalPath() + '\0' + pattern;
+    }
+    catch (IOException ex)
+    {
+      visitKey = folder.getAbsolutePath() + '\0' + pattern;
+    }
+
+    if (!visited.add(visitKey))
+    {
+      return;
+    }
+
     int sep = pattern.indexOf(SEP);
     if (sep != -1)
     {
-      globSegment(pattern.substring(0, sep), pattern.substring(sep + 1), folder, result);
+      globSegment(pattern.substring(0, sep), pattern.substring(sep + 1), folder, result, visited);
     }
     else
     {
-      globSegment(pattern, null, folder, result);
+      globSegment(pattern, null, folder, result, visited);
     }
   }
 
-  private static void globSegment(String segment, String pattern, File folder, List<File> result)
+  private static void globSegment(String segment, String pattern, File folder, List<File> result, Set<String> visited)
   {
     boolean multiDirs = false;
+
     if (segment.contains(WILDCARD_MULTI_DIRS))
     {
       if (!segment.equals(WILDCARD_MULTI_DIRS))
@@ -1430,12 +1454,19 @@ public final class IOUtil
       multiDirs = true;
     }
 
-    for (File file : folder.listFiles())
+    File[] files = folder.listFiles();
+    if (files == null)
+    {
+      return;
+    }
+
+    for (File file : files)
     {
       String tmp = segment;
+
       if (multiDirs && file.isDirectory())
       {
-        globRecurse(WILDCARD_MULTI_DIRS + File.separator + pattern, file, result);
+        globRecurse(WILDCARD_MULTI_DIRS + File.separator + pattern, file, result, visited);
         tmp = WILDCARD_MULTI_CHARS;
       }
 
@@ -1449,7 +1480,7 @@ public final class IOUtil
         else if (file.isDirectory())
         {
           // Recurse
-          globRecurse(pattern, file, result);
+          globRecurse(pattern, file, result, visited);
         }
       }
     }

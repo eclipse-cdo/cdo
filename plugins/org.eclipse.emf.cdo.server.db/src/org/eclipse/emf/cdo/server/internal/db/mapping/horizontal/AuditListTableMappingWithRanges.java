@@ -23,8 +23,14 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
@@ -66,6 +72,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -126,11 +133,17 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
   private String sqlInsertEntry;
 
+  private String sqlCopyOriginalEntry;
+
   private String sqlDeleteEntry;
 
   private String sqlRemoveEntry;
 
   private String sqlUpdateIndex;
+
+  private String sqlCopyShiftedEntry;
+
+  private String sqlCloseShiftedEntry;
 
   private String sqlGetValue;
 
@@ -242,6 +255,36 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     builder.append(") VALUES (?, ?, NULL, ?, ?)"); //$NON-NLS-1$
     sqlInsertEntry = builder.toString();
 
+    // ----------------- copy original entry for move -----------------
+    builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append("("); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append(","); //$NON-NLS-1$
+    builder.append(versionAddedField);
+    builder.append(","); //$NON-NLS-1$
+    builder.append(versionRemovedField);
+    builder.append(","); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append(","); //$NON-NLS-1$
+    builder.append(valueField);
+    builder.append(") SELECT "); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append(", ?, NULL, ?, "); //$NON-NLS-1$
+    builder.append(valueField);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(versionAddedField);
+    builder.append("<>? AND "); //$NON-NLS-1$
+    builder.append(versionRemovedField);
+    builder.append("=?"); //$NON-NLS-1$
+    sqlCopyOriginalEntry = builder.toString();
+
     // ----------------- remove current entry -----------------
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
@@ -254,7 +297,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     builder.append(indexField);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(versionRemovedField);
-    builder.append(" IS NULL"); //$NON-NLS-1$
+    builder.append(" IS NULL AND "); //$NON-NLS-1$
+    builder.append(versionAddedField);
+    builder.append("<>?"); //$NON-NLS-1$
     sqlRemoveEntry = builder.toString();
 
     // ----------------- delete temporary entry -----------------
@@ -283,6 +328,52 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
+    // ----------------- copy older entry for index shift -----------------
+    builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append("("); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append(","); //$NON-NLS-1$
+    builder.append(versionAddedField);
+    builder.append(","); //$NON-NLS-1$
+    builder.append(versionRemovedField);
+    builder.append(","); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append(","); //$NON-NLS-1$
+    builder.append(valueField);
+    builder.append(") SELECT "); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append(", ?, NULL, ?, "); //$NON-NLS-1$
+    builder.append(valueField);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(versionRemovedField);
+    builder.append(" IS NULL AND "); //$NON-NLS-1$
+    builder.append(versionAddedField);
+    builder.append("<>?"); //$NON-NLS-1$
+    sqlCopyShiftedEntry = builder.toString();
+
+    // ----------------- close older entry for index shift -----------------
+    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" SET "); //$NON-NLS-1$
+    builder.append(versionRemovedField);
+    builder.append("=? WHERE "); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(versionRemovedField);
+    builder.append(" IS NULL AND "); //$NON-NLS-1$
+    builder.append(versionAddedField);
+    builder.append("<>?"); //$NON-NLS-1$
+    sqlCloseShiftedEntry = builder.toString();
+
     // ----------------- get current value -----------------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
     builder.append(valueField);
@@ -307,7 +398,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(versionRemovedField);
-    builder.append(" IS NULL"); //$NON-NLS-1$
+    builder.append(" IS NULL AND "); //$NON-NLS-1$
+    builder.append(versionAddedField);
+    builder.append("<>?"); //$NON-NLS-1$
     sqlClearList = builder.toString();
 
     // ----------- delete temporary list items -------------------------
@@ -595,20 +688,21 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       idHandler.setCDOID(stmtDeleteTemp, 1, id);
       stmtDeleteTemp.setInt(2, newVersion);
 
-      int result = DBUtil.update(stmtDeleteTemp, false);
+      int deleteResult = DBUtil.update(stmtDeleteTemp, false);
       if (TRACER.isEnabled())
       {
-        TRACER.format("DeleteList result: {0}", result); //$NON-NLS-1$
+        TRACER.format("DeleteList result: {0}", deleteResult); //$NON-NLS-1$
       }
 
       // clear rest of the list
       stmtClear.setInt(1, newVersion);
       idHandler.setCDOID(stmtClear, 2, id);
+      stmtClear.setInt(3, newVersion);
 
-      result = DBUtil.update(stmtClear, false);
+      int clearResult = DBUtil.update(stmtClear, false);
       if (TRACER.isEnabled())
       {
-        TRACER.format("ClearList result: {0}", result); //$NON-NLS-1$
+        TRACER.format("ClearList result: {0}", clearResult); //$NON-NLS-1$
       }
     }
     catch (SQLException e)
@@ -738,6 +832,33 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
   }
 
+  private void addEntryFromOriginal(IDBStoreAccessor accessor, CDOID id, int newVersion, int originalIndex, int targetIndex)
+  {
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlCopyOriginalEntry, ReuseProbability.HIGH);
+
+    try
+    {
+      int column = 1;
+      stmt.setInt(column++, newVersion);
+      stmt.setInt(column++, targetIndex);
+      idHandler.setCDOID(stmt, column++, id);
+      stmt.setInt(column++, originalIndex);
+      stmt.setInt(column++, newVersion);
+      stmt.setInt(column++, newVersion);
+
+      DBUtil.update(stmt, true);
+    }
+    catch (SQLException e)
+    {
+      throw new DBException(e);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
   private void removeEntry(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int index)
   {
     if (TRACER.isEnabled())
@@ -757,35 +878,36 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       stmt.setInt(column++, index);
       stmt.setInt(column++, newVersion);
 
-      int result = DBUtil.update(stmt, false);
-      if (result == 1)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("removeEntry deleted: {0}", index); //$NON-NLS-1$
-        }
-      }
-      else if (result > 1)
-      {
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("removeEntry Too many results: {0}: {1}", index, result); //$NON-NLS-1$
-        }
+      int deleteResult = DBUtil.update(stmt, false);
 
-        throw new DBException("Too many results"); //$NON-NLS-1$
-      }
-      else
+      IDBPreparedStatement removeStmt = accessor.getDBConnection().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
+      try
       {
-        // no temporary entry found, so mark the entry as removed
-        DBUtil.close(stmt);
-        stmt = accessor.getDBConnection().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
-
         column = 1;
-        stmt.setInt(column++, newVersion);
-        idHandler.setCDOID(stmt, column++, id);
-        stmt.setInt(column++, index);
+        removeStmt.setInt(column++, newVersion);
+        idHandler.setCDOID(removeStmt, column++, id);
+        removeStmt.setInt(column++, index);
+        removeStmt.setInt(column++, newVersion);
 
-        DBUtil.update(stmt, true);
+        int removeResult = DBUtil.update(removeStmt, false);
+        if (deleteResult > 1)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("removeEntry Too many results: {0}: {1}", index, deleteResult); //$NON-NLS-1$
+          }
+
+          throw new DBException("Too many results"); //$NON-NLS-1$
+        }
+
+        if (removeResult > 1 || deleteResult == 0 && removeResult == 0)
+        {
+          throw new DBException("Unexpected remove result"); //$NON-NLS-1$
+        }
+      }
+      finally
+      {
+        DBUtil.close(removeStmt);
       }
     }
     catch (SQLException e)
@@ -979,13 +1101,392 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   }
 
   /**
+   * A compact, value-independent representation of the logical list state while a delta sequence is processed.
+   * Unchanged original elements remain grouped in ranges; only added, set, or moved elements are represented
+   * individually.
+   *
+   * @author Eike Stepper
+   */
+  static final class LogicalListPlan
+  {
+    private final List<Segment> segments = new ArrayList<>();
+
+    private int size;
+
+    private long nextAddedID;
+
+    LogicalListPlan(int originalSize)
+    {
+      if (originalSize < 0)
+      {
+        throw new IllegalArgumentException("Negative original size: " + originalSize); //$NON-NLS-1$
+      }
+
+      size = originalSize;
+      if (originalSize != 0)
+      {
+        segments.add(new OriginalRange(0, originalSize));
+      }
+    }
+
+    public int size()
+    {
+      return size;
+    }
+
+    public int getSegmentCount()
+    {
+      return segments.size();
+    }
+
+    public PlanElement get(int index)
+    {
+      Location location = locate(index, false);
+      return location.segment.get(location.offset);
+    }
+
+    public PlanElement add(int index, Object value)
+    {
+      PlanElement element = PlanElement.added(++nextAddedID, value);
+      insert(index, element);
+      return element;
+    }
+
+    public PlanElement remove(int index)
+    {
+      Location location = locate(index, false);
+      PlanElement element = location.segment.get(location.offset);
+      removeAt(location);
+      --size;
+      return element;
+    }
+
+    public PlanElement set(int index, Object value)
+    {
+      Location location = locate(index, false);
+      PlanElement element = location.segment.get(location.offset);
+      if (element.isOriginal())
+      {
+        element = PlanElement.original(element.getOriginalIndex(), value);
+        replaceAt(location, element);
+      }
+      else
+      {
+        element.setValue(value);
+      }
+
+      return element;
+    }
+
+    public PlanElement move(int sourceIndex, int targetIndex)
+    {
+      if (sourceIndex == targetIndex)
+      {
+        return get(sourceIndex);
+      }
+
+      PlanElement element = remove(sourceIndex);
+      insert(targetIndex, element);
+      return element;
+    }
+
+    public void clear()
+    {
+      segments.clear();
+      size = 0;
+    }
+
+    private void insert(int index, PlanElement element)
+    {
+      Location location = locate(index, true);
+      if (location == null)
+      {
+        segments.add(new ExplicitElement(element));
+      }
+      else if (location.offset == 0)
+      {
+        segments.add(location.segmentIndex, new ExplicitElement(element));
+      }
+      else
+      {
+        OriginalRange range = (OriginalRange)location.segment;
+        segments.set(location.segmentIndex, new OriginalRange(range.originalStart, location.offset));
+        segments.add(location.segmentIndex + 1, new ExplicitElement(element));
+        segments.add(location.segmentIndex + 2, new OriginalRange(range.originalStart + location.offset, range.length - location.offset));
+      }
+
+      ++size;
+      mergeOriginalRanges();
+    }
+
+    private void removeAt(Location location)
+    {
+      if (location.segment instanceof ExplicitElement)
+      {
+        segments.remove(location.segmentIndex);
+      }
+      else
+      {
+        OriginalRange range = (OriginalRange)location.segment;
+        segments.remove(location.segmentIndex);
+        if (location.offset != 0)
+        {
+          segments.add(location.segmentIndex++, new OriginalRange(range.originalStart, location.offset));
+        }
+
+        int remainingLength = range.length - location.offset - 1;
+        if (remainingLength != 0)
+        {
+          segments.add(location.segmentIndex, new OriginalRange(range.originalStart + location.offset + 1, remainingLength));
+        }
+      }
+
+      mergeOriginalRanges();
+    }
+
+    private void replaceAt(Location location, PlanElement element)
+    {
+      if (location.segment instanceof ExplicitElement)
+      {
+        segments.set(location.segmentIndex, new ExplicitElement(element));
+      }
+      else
+      {
+        OriginalRange range = (OriginalRange)location.segment;
+        segments.remove(location.segmentIndex);
+        if (location.offset != 0)
+        {
+          segments.add(location.segmentIndex++, new OriginalRange(range.originalStart, location.offset));
+        }
+
+        segments.add(location.segmentIndex++, new ExplicitElement(element));
+        int remainingLength = range.length - location.offset - 1;
+        if (remainingLength != 0)
+        {
+          segments.add(location.segmentIndex, new OriginalRange(range.originalStart + location.offset + 1, remainingLength));
+        }
+      }
+
+      mergeOriginalRanges();
+    }
+
+    private Location locate(int index, boolean allowEnd)
+    {
+      if (index < 0 || index > size || !allowEnd && index == size)
+      {
+        throw new IndexOutOfBoundsException("Index: " + index + ", size: " + size); //$NON-NLS-1$ //$NON-NLS-2$
+      }
+
+      if (index == size)
+      {
+        return null;
+      }
+
+      int currentIndex = 0;
+      for (int i = 0; i < segments.size(); i++)
+      {
+        Segment segment = segments.get(i);
+        int nextIndex = currentIndex + segment.length();
+        if (index < nextIndex)
+        {
+          return new Location(i, segment, index - currentIndex);
+        }
+
+        currentIndex = nextIndex;
+      }
+
+      throw new IllegalStateException("No segment for index " + index); //$NON-NLS-1$
+    }
+
+    private void mergeOriginalRanges()
+    {
+      for (int i = 1; i < segments.size();)
+      {
+        Segment previous = segments.get(i - 1);
+        Segment current = segments.get(i);
+        if (previous instanceof OriginalRange && current instanceof OriginalRange)
+        {
+          OriginalRange previousRange = (OriginalRange)previous;
+          OriginalRange currentRange = (OriginalRange)current;
+          if (previousRange.originalStart + previousRange.length == currentRange.originalStart)
+          {
+            previousRange.length += currentRange.length;
+            segments.remove(i);
+            continue;
+          }
+        }
+
+        ++i;
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    static final class PlanElement
+    {
+      private final int originalIndex;
+
+      private final long addedID;
+
+      private Object value;
+
+      private boolean hasValue;
+
+      private PlanElement(int originalIndex, long addedID, Object value, boolean hasValue)
+      {
+        this.originalIndex = originalIndex;
+        this.addedID = addedID;
+        this.value = value;
+        this.hasValue = hasValue;
+      }
+
+      static PlanElement original(int originalIndex)
+      {
+        return new PlanElement(originalIndex, 0, null, false);
+      }
+
+      static PlanElement original(int originalIndex, Object value)
+      {
+        return new PlanElement(originalIndex, 0, value, true);
+      }
+
+      static PlanElement added(long addedID, Object value)
+      {
+        return new PlanElement(-1, addedID, value, true);
+      }
+
+      boolean isOriginal()
+      {
+        return originalIndex != -1;
+      }
+
+      int getOriginalIndex()
+      {
+        return originalIndex;
+      }
+
+      long getAddedID()
+      {
+        return addedID;
+      }
+
+      boolean hasValue()
+      {
+        return hasValue;
+      }
+
+      Object getValue()
+      {
+        return value;
+      }
+
+      void setValue(Object value)
+      {
+        this.value = value;
+        hasValue = true;
+      }
+
+      String getIdentity()
+      {
+        return isOriginal() ? "O" + originalIndex : "A" + addedID; //$NON-NLS-1$ //$NON-NLS-2$
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private abstract static class Segment
+    {
+      public abstract int length();
+
+      public abstract PlanElement get(int offset);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class OriginalRange extends Segment
+    {
+      private final int originalStart;
+
+      private int length;
+
+      public OriginalRange(int originalStart, int length)
+      {
+        this.originalStart = originalStart;
+        this.length = length;
+      }
+
+      @Override
+      public int length()
+      {
+        return length;
+      }
+
+      @Override
+      public PlanElement get(int offset)
+      {
+        return PlanElement.original(originalStart + offset);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class ExplicitElement extends Segment
+    {
+      private final PlanElement element;
+
+      public ExplicitElement(PlanElement element)
+      {
+        this.element = element;
+      }
+
+      @Override
+      public int length()
+      {
+        return 1;
+      }
+
+      @Override
+      public PlanElement get(int offset)
+      {
+        return element;
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class Location
+    {
+      private int segmentIndex;
+
+      private final Segment segment;
+
+      private final int offset;
+
+      public Location(int segmentIndex, Segment segment, int offset)
+      {
+        this.segmentIndex = segmentIndex;
+        this.segment = segment;
+        this.offset = offset;
+      }
+    }
+  }
+
+  /**
    * @author Stefan Winkler
    */
   private class ListDeltaWriter extends AbstractRangeListDeltaWriter
   {
+    private final LogicalListPlan logicalListPlan;
+
     public ListDeltaWriter(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion)
     {
       super(accessor, originalRevision, oldVersion, newVersion, TRACER);
+      logicalListPlan = new LogicalListPlan(originalRevision.size(getFeature()));
     }
 
     @Override
@@ -1001,6 +1502,39 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
 
     @Override
+    protected Object getMoveValue(CDOMoveFeatureDelta delta, int sourceIndex)
+    {
+      return new MovePayload(logicalListPlan.move(delta.getOldPosition(), delta.getNewPosition()));
+    }
+
+    @Override
+    protected void updateLogicalList(CDOFeatureDelta delta)
+    {
+      if (delta instanceof CDOAddFeatureDelta)
+      {
+        CDOAddFeatureDelta addDelta = (CDOAddFeatureDelta)delta;
+        logicalListPlan.add(addDelta.getIndex(), addDelta.getValue());
+      }
+      else if (delta instanceof CDORemoveFeatureDelta)
+      {
+        logicalListPlan.remove(((CDORemoveFeatureDelta)delta).getIndex());
+      }
+      else if (delta instanceof CDOSetFeatureDelta)
+      {
+        CDOSetFeatureDelta setDelta = (CDOSetFeatureDelta)delta;
+        logicalListPlan.set(setDelta.getIndex(), setDelta.getValue());
+      }
+      else if (delta instanceof CDOClearFeatureDelta || delta instanceof CDOUnsetFeatureDelta)
+      {
+        logicalListPlan.clear();
+      }
+      else
+      {
+        throw new IllegalArgumentException("Unsupported list delta: " + delta); //$NON-NLS-1$
+      }
+    }
+
+    @Override
     protected void removeEntry(int index)
     {
       AuditListTableMappingWithRanges.this.removeEntry(accessor, id, oldVersion, newVersion, index);
@@ -1009,6 +1543,18 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     @Override
     protected void addEntry(int index, Object value)
     {
+      if (value instanceof MovePayload)
+      {
+        LogicalListPlan.PlanElement element = ((MovePayload)value).element;
+        if (element.isOriginal() && !element.hasValue())
+        {
+          addEntryFromOriginal(accessor, id, newVersion, element.getOriginalIndex(), index);
+          return;
+        }
+
+        value = element.getValue();
+      }
+
       AuditListTableMappingWithRanges.this.addEntry(accessor, id, newVersion, index, value);
     }
 
@@ -1030,10 +1576,22 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       moveOneDown(accessor, id, oldVersion, newVersion, startIndex, endIndex);
     }
 
+    private final class MovePayload
+    {
+      private final LogicalListPlan.PlanElement element;
+
+      public MovePayload(LogicalListPlan.PlanElement element)
+      {
+        this.element = element;
+      }
+    }
+
     private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+      IDBPreparedStatement moveStmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+      IDBPreparedStatement copyStmt = accessor.getDBConnection().prepareStatement(sqlCopyShiftedEntry, ReuseProbability.HIGH);
+      IDBPreparedStatement closeStmt = accessor.getDBConnection().prepareStatement(sqlCloseShiftedEntry, ReuseProbability.HIGH);
 
       try
       {
@@ -1044,47 +1602,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
             TRACER.format("moveOneUp moving: {0} -> {1}", index, index - 1); //$NON-NLS-1$
           }
 
-          int column = 1;
-          stmt.setInt(column++, index - 1);
-          idHandler.setCDOID(stmt, column++, id);
-          stmt.setInt(column++, newVersion);
-          stmt.setInt(column++, index);
-
-          int result = DBUtil.update(stmt, false);
-          switch (result)
-          {
-          case 0:
-            Object value = AuditListTableMappingWithRanges.this.getValue(accessor, id, index);
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneUp remove: {0}", index); //$NON-NLS-1$
-            }
-
-            AuditListTableMappingWithRanges.this.removeEntry(accessor, id, oldVersion, newVersion, index);
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneUp add: {0}", index - 1); //$NON-NLS-1$
-            }
-
-            AuditListTableMappingWithRanges.this.addEntry(accessor, id, newVersion, index - 1, value);
-            break;
-
-          case 1:
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneUp updated: {0} -> {1}", index, index - 1); //$NON-NLS-1$
-            }
-
-            break;
-
-          default:
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneUp Too many results: {0} -> {1}: {2}", index, index + 1, result); //$NON-NLS-1$
-            }
-
-            throw new DBException("Too many results"); //$NON-NLS-1$
-          }
+          shiftIndex(idHandler, moveStmt, copyStmt, closeStmt, index, index - 1);
         }
       }
       catch (SQLException e)
@@ -1093,14 +1611,18 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       }
       finally
       {
-        DBUtil.close(stmt);
+        DBUtil.close(closeStmt);
+        DBUtil.close(copyStmt);
+        DBUtil.close(moveStmt);
       }
     }
 
     private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
     {
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+      IDBPreparedStatement moveStmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+      IDBPreparedStatement copyStmt = accessor.getDBConnection().prepareStatement(sqlCopyShiftedEntry, ReuseProbability.HIGH);
+      IDBPreparedStatement closeStmt = accessor.getDBConnection().prepareStatement(sqlCloseShiftedEntry, ReuseProbability.HIGH);
 
       try
       {
@@ -1111,47 +1633,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
             TRACER.format("moveOneDown moving: {0} -> {1}", index, index + 1); //$NON-NLS-1$
           }
 
-          int column = 1;
-          stmt.setInt(column++, index + 1);
-          idHandler.setCDOID(stmt, column++, id);
-          stmt.setInt(column++, newVersion);
-          stmt.setInt(column++, index);
-
-          int result = DBUtil.update(stmt, false);
-          switch (result)
-          {
-          case 0:
-            Object value = AuditListTableMappingWithRanges.this.getValue(accessor, id, index);
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneDown remove: {0}", index); //$NON-NLS-1$
-            }
-
-            AuditListTableMappingWithRanges.this.removeEntry(accessor, id, oldVersion, newVersion, index);
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneDown add: {0}", index + 1); //$NON-NLS-1$
-            }
-
-            AuditListTableMappingWithRanges.this.addEntry(accessor, id, newVersion, index + 1, value);
-            break;
-
-          case 1:
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneDown updated: {0} -> {1}", index, index + 1); //$NON-NLS-1$
-            }
-
-            break;
-
-          default:
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneDown Too many results: {0} -> {1}: {2}", index, index + 1, result); //$NON-NLS-1$
-            }
-
-            throw new DBException("Too many results"); //$NON-NLS-1$
-          }
+          shiftIndex(idHandler, moveStmt, copyStmt, closeStmt, index, index + 1);
         }
       }
       catch (SQLException e)
@@ -1160,7 +1642,40 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       }
       finally
       {
-        DBUtil.close(stmt);
+        DBUtil.close(closeStmt);
+        DBUtil.close(copyStmt);
+        DBUtil.close(moveStmt);
+      }
+    }
+
+    private void shiftIndex(IIDHandler idHandler, IDBPreparedStatement moveStmt, IDBPreparedStatement copyStmt, IDBPreparedStatement closeStmt, int sourceIndex,
+        int targetIndex) throws SQLException
+    {
+      int column = 1;
+      copyStmt.setInt(column++, newVersion);
+      copyStmt.setInt(column++, targetIndex);
+      idHandler.setCDOID(copyStmt, column++, id);
+      copyStmt.setInt(column++, sourceIndex);
+      copyStmt.setInt(column++, newVersion);
+      int copyResult = DBUtil.update(copyStmt, false);
+
+      column = 1;
+      closeStmt.setInt(column++, newVersion);
+      idHandler.setCDOID(closeStmt, column++, id);
+      closeStmt.setInt(column++, sourceIndex);
+      closeStmt.setInt(column++, newVersion);
+      int closeResult = DBUtil.update(closeStmt, false);
+
+      column = 1;
+      moveStmt.setInt(column++, targetIndex);
+      idHandler.setCDOID(moveStmt, column++, id);
+      moveStmt.setInt(column++, newVersion);
+      moveStmt.setInt(column++, sourceIndex);
+      int moveResult = DBUtil.update(moveStmt, false);
+
+      if (copyResult > 1 || closeResult > 1 || moveResult > 1 || copyResult != closeResult || copyResult + moveResult != 1)
+      {
+        throw new DBException("Unexpected index shift result"); //$NON-NLS-1$
       }
     }
   }

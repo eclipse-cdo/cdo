@@ -39,6 +39,7 @@ public abstract class DBConfigs extends AllConfigs
   {
     List<Class<? extends ConfigTest>> tests = super.getBugzillaTests();
     tests.addAll(getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.db.bugzilla"));
+    tests.addAll(getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.db.issues"));
     return tests;
   }
 

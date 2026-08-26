@@ -178,13 +178,17 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
 
     private boolean clearFirst;
 
-    private int currentIndexOffset;
+    private int relativeTargetIndexOffset;
 
     /**
      * Start of a range [tempIndex, tempIndex-1, ...] which lies outside of the normal list indexes and which serve as
      * temporary space to move items temporarily to get them out of the way of other operations.
      */
-    private int temporaryIndex = -1;
+    private int temporaryRelativeIndex = -1;
+
+    private int temporaryIndex;
+
+    private boolean physicalOffsetOptimization;
 
     private int newListSize;
 
@@ -464,6 +468,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
      */
     private void optimizeListIndexes()
     {
+      physicalOffsetOptimization = true;
       /*
        * This is an optimization which reduces the amount of modifications on the database to maintain list indexes. For
        * the optimization, we let go of the assumption that indexes are zero-based. Instead, we work with an offset at
@@ -473,39 +478,21 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
        * Manipulations, which can be seen as the database modification plan.
        */
 
-      // First, get the current offset.
-      currentIndexOffset = getCurrentIndexOffset();
       if (TRACER.isEnabled())
       {
         TRACER.trace("Offset optimization."); //$NON-NLS-1$
-        TRACER.trace("Current offset = " + currentIndexOffset); //$NON-NLS-1$
       }
 
-      applyOffsetToSourceIndexes(currentIndexOffset);
-
-      int targetOffset;
-
-      if ((long)Math.abs(currentIndexOffset) + (long)manipulations.size() > Integer.MAX_VALUE)
-      {
-        // Safety belt for really huge collections or for collections that have been manipulated lots of times
-        // -> Do not optimize after this border is crossed. Instead, reset offset for the whole list to a zero-based
-        // index.
-        targetOffset = 0;
-      }
-      else
-      {
-        targetOffset = calculateOptimalOffset();
-      }
+      relativeTargetIndexOffset = calculateOptimalOffset();
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace("New offset = " + targetOffset); //$NON-NLS-1$
+        TRACER.trace("Relative target offset = " + relativeTargetIndexOffset); //$NON-NLS-1$
       }
 
-      applyOffsetToTargetIndexes(targetOffset);
+      applyOffsetToTargetIndexes(relativeTargetIndexOffset);
 
-      // Make sure temporary indexes do not get in the way of the other operations.
-      temporaryIndex = Math.min(currentIndexOffset, targetOffset) - 1;
+      temporaryRelativeIndex = Math.min(0, relativeTargetIndexOffset) - 1;
     }
 
     /**
@@ -556,20 +543,6 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
       return -bestOffset;
     }
 
-    private void applyOffsetToSourceIndexes(int currentOffset)
-    {
-      if (currentOffset != 0)
-      {
-        for (Manipulation manipulation : manipulations)
-        {
-          if (manipulation.sourceIndex != NO_INDEX)
-          {
-            manipulation.sourceIndex += currentOffset;
-          }
-        }
-      }
-    }
-
     private void applyOffsetToTargetIndexes(int targetOffset)
     {
       if (targetOffset != 0)
@@ -585,9 +558,38 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
       }
     }
 
-    protected final int getOffsetBefore()
+    private void materializePhysicalIndexes()
     {
-      return currentIndexOffset;
+      if (!physicalOffsetOptimization)
+      {
+        temporaryIndex = -1;
+        return;
+      }
+
+      int currentIndexOffset = getCurrentIndexOffset();
+      boolean normalizeToZero = (long)Math.abs(currentIndexOffset) + (long)manipulations.size() > Integer.MAX_VALUE;
+      int targetIndexOffset = normalizeToZero ? -relativeTargetIndexOffset : currentIndexOffset;
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Current offset = " + currentIndexOffset); //$NON-NLS-1$
+        TRACER.trace("Target offset = " + (normalizeToZero ? 0 : currentIndexOffset + relativeTargetIndexOffset)); //$NON-NLS-1$
+      }
+
+      for (Manipulation manipulation : manipulations)
+      {
+        if (manipulation.sourceIndex != NO_INDEX)
+        {
+          manipulation.sourceIndex += currentIndexOffset;
+        }
+
+        if (manipulation.targetIndex != NO_INDEX)
+        {
+          manipulation.targetIndex += targetIndexOffset;
+        }
+      }
+
+      temporaryIndex = normalizeToZero ? Math.min(currentIndexOffset, 0) - 1 : currentIndexOffset + temporaryRelativeIndex;
     }
 
     protected final int getNextTmpIndex()
@@ -600,6 +602,8 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
      */
     protected void writeResultToDatabase() throws SQLException
     {
+      materializePhysicalIndexes();
+
       IIDHandler idHandler = accessor.getStore().getIDHandler();
       if (TRACER.isEnabled())
       {
@@ -1082,7 +1086,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
         finishPendingRemove();
       }
 
-      Object value = getValue(sourceIndex);
+      Object value = getMoveValue(delta, sourceIndex);
       removeEntry(sourceIndex);
 
       if (!optimizeMove)
@@ -1109,6 +1113,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
     public final void visit(CDOAddFeatureDelta delta)
     {
       finishPendingRemove();
+      updateLogicalList(delta);
       int index = delta.getIndex();
       if (tracer.isEnabled())
       {
@@ -1128,6 +1133,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
     public final void visit(CDORemoveFeatureDelta delta)
     {
       finishPendingRemove();
+      updateLogicalList(delta);
       pendingRemovedIndex = delta.getIndex();
 
       if (tracer.isEnabled())
@@ -1142,6 +1148,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
     public final void visit(CDOSetFeatureDelta delta)
     {
       finishPendingRemove();
+      updateLogicalList(delta);
       int index = delta.getIndex();
 
       if (tracer.isEnabled())
@@ -1161,6 +1168,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
         tracer.format("Delta Unsetting"); //$NON-NLS-1$
       }
 
+      updateLogicalList(delta);
       clearList();
       resetIndexes();
     }
@@ -1173,6 +1181,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
         tracer.format("Delta Clearing"); //$NON-NLS-1$
       }
 
+      updateLogicalList(delta);
       clearList();
       resetIndexes();
     }
@@ -1200,6 +1209,22 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
     }
 
     protected abstract Object getValue(int index);
+
+    /**
+     * Resolves the value that is reinserted for a move. Subclasses that can track logical element identities can
+     * override this without changing the shared physical range sequencing.
+     */
+    protected Object getMoveValue(CDOMoveFeatureDelta delta, int sourceIndex)
+    {
+      return getValue(sourceIndex);
+    }
+
+    /**
+     * Updates an optional logical-list representation before the corresponding persistence operation is performed.
+     */
+    protected void updateLogicalList(CDOFeatureDelta delta)
+    {
+    }
 
     protected abstract int getOldListSize(InternalCDORevision originalRevision);
 

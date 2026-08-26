@@ -32,11 +32,13 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,6 +48,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class LobTest extends AbstractCDOTest
 {
+  private static final boolean OUTPUT_TO_CONSOLE = false;
+
   @Override
   protected void doSetUp() throws Exception
   {
@@ -96,7 +100,7 @@ public class LobTest extends AbstractCDOTest
 
     try (InputStream inputStream = blob.getContents())
     {
-      IOUtil.copyBinary(inputStream, System.out);
+      IOUtil.copyBinary(inputStream, getPrintStream());
     }
   }
 
@@ -141,7 +145,7 @@ public class LobTest extends AbstractCDOTest
 
     try (Reader reader = clob.getContents())
     {
-      IOUtil.copyCharacter(reader, new OutputStreamWriter(System.out));
+      IOUtil.copyCharacter(reader, new OutputStreamWriter(getPrintStream()));
     }
   }
 
@@ -313,5 +317,10 @@ public class LobTest extends AbstractCDOTest
 
       return count.get();
     }).call();
+  }
+
+  private static PrintStream getPrintStream()
+  {
+    return OUTPUT_TO_CONSOLE ? System.out : new PrintStream(new ByteArrayOutputStream());
   }
 }

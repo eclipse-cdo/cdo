@@ -63,9 +63,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
   private String sqlShiftDownIndex;
 
+  private String sqlShiftDownFinalIndex;
+
   private String sqlReadCurrentIndexOffset;
 
   private String sqlShiftUpIndex;
+
+  private String sqlShiftUpFinalIndex;
 
   public NonAuditListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -148,13 +152,25 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(indexField);
     builder.append(" BETWEEN ? AND ?"); //$NON-NLS-1$
 
-    // needed because of MySQL:
-    builder.append(" /*! ORDER BY "); //$NON-NLS-1$
-    builder.append(indexField);
-    sqlShiftDownIndex = builder.toString() + " */"; //$NON-NLS-1$
+    // Move the affected indexes to a disjoint temporary range first. This avoids transient unique-key
+    // violations on databases that don't support ordered UPDATEs (for example PostgreSQL).
+    sqlShiftDownIndex = builder.toString();
+    sqlShiftUpIndex = sqlShiftDownIndex;
 
-    builder.append(" DESC"); //$NON-NLS-1$
-    sqlShiftUpIndex = builder.toString() + " */"; //$NON-NLS-1$
+    builder = new StringBuilder();
+    builder.append("UPDATE "); //$NON-NLS-1$
+    builder.append(getTable());
+    builder.append(" SET "); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append("="); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append("-?+? WHERE "); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append("=? AND "); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append(" BETWEEN ? AND ?"); //$NON-NLS-1$
+    sqlShiftDownFinalIndex = builder.toString();
+    sqlShiftUpFinalIndex = sqlShiftDownFinalIndex;
 
     // ----------- read current index offset --------------
     builder = new StringBuilder();
@@ -312,7 +328,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     private IDBPreparedStatement stmtShiftDown;
 
+    private IDBPreparedStatement stmtShiftDownFinal;
+
     private IDBPreparedStatement stmtShiftUp;
+
+    private IDBPreparedStatement stmtShiftUpFinal;
 
     private int countDelete;
 
@@ -321,10 +341,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     private int countSet;
 
     private int countInsert;
-
-    private int countShiftDown;
-
-    private int countShiftUp;
 
     public ListDeltaWriter(IDBStoreAccessor accessor, CDOID id, List<CDOFeatureDelta> listChanges, int oldListSize)
     {
@@ -431,15 +447,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       try
       {
         super.writeShiftsDown(idHandler, operationIt);
-
-        if (countShiftDown > 0)
-        {
-          DBUtil.executeBatch(stmtShiftDown, countShiftDown, false);
-        }
       }
       finally
       {
-        close(stmtShiftDown);
+        close(stmtShiftDown, stmtShiftDownFinal);
       }
     }
 
@@ -449,15 +460,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       try
       {
         super.writeShiftsUp(idHandler, operationIt);
-
-        if (countShiftUp > 0)
-        {
-          DBUtil.executeBatch(stmtShiftUp, countShiftUp, false);
-        }
       }
       finally
       {
-        close(stmtShiftUp);
+        close(stmtShiftUp, stmtShiftUpFinal);
       }
     }
 
@@ -527,13 +533,22 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         stmtShiftDown = accessor.getDBConnection().prepareStatement(sqlShiftDownIndex, ReuseProbability.HIGH);
         idHandler.setCDOID(stmtShiftDown, 2, id);
+
+        stmtShiftDownFinal = accessor.getDBConnection().prepareStatement(sqlShiftDownFinalIndex, ReuseProbability.HIGH);
+        idHandler.setCDOID(stmtShiftDownFinal, 3, id);
       }
 
-      stmtShiftDown.setInt(1, offset);
+      int temporaryOffset = getTemporaryOffset(startIndex, endIndex);
+      stmtShiftDown.setInt(1, temporaryOffset);
       stmtShiftDown.setInt(3, startIndex);
       stmtShiftDown.setInt(4, endIndex);
-      stmtShiftDown.addBatch();
-      ++countShiftDown;
+
+      stmtShiftDownFinal.setInt(1, temporaryOffset);
+      stmtShiftDownFinal.setInt(2, offset);
+      stmtShiftDownFinal.setInt(4, (int)((long)startIndex + temporaryOffset));
+      stmtShiftDownFinal.setInt(5, (int)((long)endIndex + temporaryOffset));
+      stmtShiftDown.executeUpdate();
+      stmtShiftDownFinal.executeUpdate();
     }
 
     @Override
@@ -543,13 +558,35 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         stmtShiftUp = accessor.getDBConnection().prepareStatement(sqlShiftUpIndex, ReuseProbability.HIGH);
         idHandler.setCDOID(stmtShiftUp, 2, id);
+
+        stmtShiftUpFinal = accessor.getDBConnection().prepareStatement(sqlShiftUpFinalIndex, ReuseProbability.HIGH);
+        idHandler.setCDOID(stmtShiftUpFinal, 3, id);
       }
 
-      stmtShiftUp.setInt(1, offset);
+      int temporaryOffset = getTemporaryOffset(startIndex, endIndex);
+      stmtShiftUp.setInt(1, temporaryOffset);
       stmtShiftUp.setInt(3, startIndex);
       stmtShiftUp.setInt(4, endIndex);
-      stmtShiftUp.addBatch();
-      ++countShiftUp;
+
+      stmtShiftUpFinal.setInt(1, temporaryOffset);
+      stmtShiftUpFinal.setInt(2, offset);
+      stmtShiftUpFinal.setInt(4, (int)((long)startIndex + temporaryOffset));
+      stmtShiftUpFinal.setInt(5, (int)((long)endIndex + temporaryOffset));
+      stmtShiftUp.executeUpdate();
+      stmtShiftUpFinal.executeUpdate();
+    }
+
+    private int getTemporaryOffset(int startIndex, int endIndex)
+    {
+      long offset = startIndex <= 0 ? (long)Integer.MIN_VALUE - startIndex : (long)Integer.MAX_VALUE - endIndex;
+      long temporaryStart = startIndex + offset;
+      long temporaryEnd = endIndex + offset;
+      if (temporaryStart < Integer.MIN_VALUE || temporaryEnd > Integer.MAX_VALUE)
+      {
+        throw new IllegalArgumentException("List index range cannot be shifted to a temporary range: " + startIndex + ".." + endIndex);
+      }
+
+      return (int)offset;
     }
   }
 }

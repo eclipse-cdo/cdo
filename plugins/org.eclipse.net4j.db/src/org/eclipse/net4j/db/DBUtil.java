@@ -711,6 +711,7 @@ public final class DBUtil
     {
       DatabaseMetaData metaData = connection.getMetaData();
       String catalog = connection.getCatalog();
+
       tables = metaData.getTables(catalog, null, null, ALL_TABLE_NAME_TYPES);
 
       while (tables.next())

@@ -142,8 +142,6 @@ public class XATransactionTest extends AbstractCDOTest
     xaTransaction.commit();
   }
 
-  // XXX disabled because of Bug 290097
-  @Skips("Postgresql")
   @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void testCommitFromTransactionDisabled() throws Exception
   {
@@ -235,8 +233,6 @@ public class XATransactionTest extends AbstractCDOTest
     }
   }
 
-  // XXX disabled because of Bug 290097
-  @Skips("Postgresql")
   @Requires(IRepositoryConfig.CAPABILITY_EXTERNAL_REFS)
   public void test_ExceptionInReadingStream() throws Exception
   {

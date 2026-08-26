@@ -201,6 +201,13 @@ public interface IDBAdapter extends IDBAdapterID
   public DBType adaptType(DBType type);
 
   /**
+   * Returns the JDBC type to use when binding a null value for the given database type.
+   *
+   * @since 4.14
+   */
+  public int getJDBCTypeForNull(DBType type);
+
+  /**
    * Check if a character is valid as first character. (e.g., underscores are forbidden as first character in Derby
    * elements.
    *

@@ -137,7 +137,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
         TRACER.format("TypeMapping for {0}: converting Revision.NIL to DB-null", feature.getName()); //$NON-NLS-1$
       }
 
-      stmt.setNull(index, getSqlType());
+      stmt.setNull(index, getSqlTypeForNull());
     }
     else if (value == null)
     {
@@ -148,7 +148,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
           TRACER.format("TypeMapping for {0}: writing Revision.null as DB.null", feature.getName()); //$NON-NLS-1$
         }
 
-        stmt.setNull(index, getSqlType());
+        stmt.setNull(index, getSqlTypeForNull());
       }
       else
       {
@@ -285,6 +285,17 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   protected int getSqlType()
   {
     return getDBType().getCode();
+  }
+
+  /**
+   * Returns the JDBC type to use when binding a null value. Subclasses may override if null binding differs from the
+   * logical database type.
+   *
+   * @since 4.15
+   */
+  protected int getSqlTypeForNull()
+  {
+    return getSqlType();
   }
 
   protected int getDBLength(DBType type)

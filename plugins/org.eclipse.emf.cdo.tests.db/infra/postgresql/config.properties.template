@@ -1,0 +1,15 @@
+# PostgreSQL test infrastructure defaults.
+# The local config.properties file is generated from this template and ignored by Git.
+# Command-line -Dpsql.* properties override these values.
+
+psql.host=localhost
+psql.port=5432
+psql.user=postgres
+psql.password=postgres
+psql.version=18
+
+# Optional PostgreSQL installation root. If omitted, psql is resolved through PATH.
+# psql.home=C:/Program Files/PostgreSQL/18
+
+# Optional PostgreSQL data directory. Defaults to ${psql.home}/data.
+# psql.data=C:/path/to/postgresql-data

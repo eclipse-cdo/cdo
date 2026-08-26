@@ -305,7 +305,7 @@ public class SQLQueryTest extends AbstractCDOTest
     // Query many times to see whether we run out of store accessors.
     for (int i = 0; i < loops; i++)
     {
-      CDOQuery query = view.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
+      CDOQuery query = view.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_Product1);
       query.getResultAsync(Product1.class).close();
     }
   }

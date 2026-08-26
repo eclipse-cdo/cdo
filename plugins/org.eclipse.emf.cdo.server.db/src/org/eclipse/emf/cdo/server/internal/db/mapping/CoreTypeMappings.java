@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.LobsTable;
 import org.eclipse.emf.cdo.server.internal.db.LobRefHandler;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.Enumerator;
@@ -722,19 +723,35 @@ public class CoreTypeMappings
     }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static class TMBytes extends AbstractTypeMapping
+  private abstract static class ByteArrayTypeMapping extends AbstractTypeMapping
   {
-    public static final Factory FACTORY = new Factory(
-        TypeMappingUtil.createDescriptor(ID_PREFIX + ".ByteArray", EcorePackage.eINSTANCE.getEByteArray(), DBType.BLOB));
-
     @Override
     public Object getResultSetValue(ResultSet resultSet) throws SQLException
     {
       return resultSet.getBytes(getField().getName());
     }
+
+    @Override
+    protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
+    {
+      stmt.setBytes(index, (byte[])value);
+    }
+
+    @Override
+    protected int getSqlTypeForNull()
+    {
+      IDBAdapter adapter = getMappingStrategy().getStore().getDBAdapter();
+      return adapter.getJDBCTypeForNull(getDBType());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class TMBytes extends ByteArrayTypeMapping
+  {
+    public static final Factory FACTORY = new Factory(
+        TypeMappingUtil.createDescriptor(ID_PREFIX + ".ByteArray", EcorePackage.eINSTANCE.getEByteArray(), DBType.BLOB));
 
     /**
      * @author Eike Stepper
@@ -958,16 +975,10 @@ public class CoreTypeMappings
   /**
    * @author Eike Stepper
    */
-  public static class TMJavaObject extends AbstractTypeMapping
+  public static class TMJavaObject extends ByteArrayTypeMapping
   {
     public static final Factory FACTORY = new Factory(
         TypeMappingUtil.createDescriptor(ID_PREFIX + ".JavaObjectBlob", EcorePackage.eINSTANCE.getEJavaObject(), DBType.BLOB));
-
-    @Override
-    public Object getResultSetValue(ResultSet resultSet) throws SQLException
-    {
-      return resultSet.getBytes(getField().getName());
-    }
 
     /**
      * @author Eike Stepper

@@ -210,6 +210,12 @@ public class DelegatingDBAdapter implements IDBAdapter
   }
 
   @Override
+  public int getJDBCTypeForNull(DBType type)
+  {
+    return delegate.getJDBCTypeForNull(type);
+  }
+
+  @Override
   public boolean isValidFirstChar(char ch)
   {
     return delegate.isValidFirstChar(ch);

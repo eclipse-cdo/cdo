@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.view.CDOUnit;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
@@ -757,7 +758,23 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
   }
 
-  private class AsnychronousListFiller implements Runnable
+  /**
+   * Asynchronous filler for list values of revisions read in
+   * {@link #readUnitRevisions(IDBStoreAccessor, CDOBranchPoint, CDOID, CDORevisionHandler)}.
+   * <p>
+   * The filler is executed in a separate thread and reads the list values for each revision read from the database.
+   * The revisions are passed to the filler via a blocking queue.
+   * The filler reads the list values and then passes the revision to the provided {@link CDORevisionHandler}.
+   * <p>
+   * The filler is used to avoid blocking the reading of revisions while the list values are read, which can be time-consuming.
+   * The filler is also used to avoid blocking the reading of revisions while the list values are read, which can be time-consuming.
+   * <p>
+   * The filler is only used when reading revisions for a {@link CDOUnit unit},
+   * which is why the list mappings can be safely cast to {@link IListMappingUnitSupport}.
+   *
+   * @author Eike Stepper
+   */
+  private final class AsnychronousListFiller implements Runnable
   {
     private final BlockingQueue<InternalCDORevision> queue = new LinkedBlockingQueue<>();
 
@@ -800,6 +817,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       int i = 0;
       for (IListMapping listMapping : tmp)
       {
+        // The filler is only used when reading revisions for a {@link CDOUnit unit},
+        // which is why the list mappings can be safely cast to {@link IListMappingUnitSupport}.
         listMappings[i++] = (IListMappingUnitSupport)listMapping;
       }
     }

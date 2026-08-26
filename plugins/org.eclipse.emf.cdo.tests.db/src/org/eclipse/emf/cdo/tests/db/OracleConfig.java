@@ -157,6 +157,13 @@ public abstract class OracleConfig extends AbstractSetupDBConfig
     }
 
     @Override
+    protected int getErrorCodeDatabaseDoesNotExist()
+    {
+      // ORA-01918: user '...' does not exist.
+      return 1918;
+    }
+
+    @Override
     protected String getUserName(String dbName)
     {
       if (dbName == null)

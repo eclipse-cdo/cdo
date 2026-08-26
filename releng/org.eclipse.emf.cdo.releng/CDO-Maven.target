@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?>
+<target name="CDO-Maven">
+  <locations>
+    <location includeDependencyDepth="none" includeDependencyScopes="compile"
+      includeSource="true" missingManifest="generate" type="Maven">
+      <dependencies>
+        <dependency>
+          <groupId>org.postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+          <version>42.7.13</version>
+        </dependency>
+      </dependencies>
+    </location>
+  </locations>
+</target>

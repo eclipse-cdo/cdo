@@ -191,8 +191,6 @@ public class ExternalReferenceTest extends AbstractCDOTest
     }
   }
 
-  // XXX disabled because of Bug 290097
-  @Skips("Postgresql")
   public void testOneXMIResourceManyViewsOnOneResourceSet() throws Exception
   {
     byte[] dataOfresD = null;
@@ -300,8 +298,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
   }
 
   // Skip this test until the problems with XATransactions are solved.
-  // XXX disabled because of Bug 290097
-  @Skips({ IModelConfig.CAPABILITY_LEGACY, "Postgresql" })
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testManyViewsOnOneResourceSet() throws Exception
   {
     getRepository(REPOSITORY_B_NAME);

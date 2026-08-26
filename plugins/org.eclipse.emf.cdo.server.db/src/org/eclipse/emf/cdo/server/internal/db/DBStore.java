@@ -155,6 +155,9 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   private static final boolean DEFAULT_DISABLE_SQL_QUERY_HANDLER = OMPlatform.INSTANCE //
       .isProperty("org.eclipse.emf.cdo.server.db.DEFAULT_DISABLE_SQL_QUERY_HANDLER");
 
+  private static final boolean DISABLE_LOG_SQL_QUERY_HANDLER = OMPlatform.INSTANCE //
+      .isProperty("org.eclipse.emf.cdo.server.db.DISABLE_LOG_SQL_QUERY_HANDLER");
+
   private long creationTime;
 
   private boolean firstTime;
@@ -812,7 +815,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
         }
         else
         {
-          OM.LOG.info("SQL query handler is enabled for repository " + repository.getName() + ".");
+          if (!DISABLE_LOG_SQL_QUERY_HANDLER)
+          {
+            OM.LOG.info("SQL query handler is enabled for repository " + repository.getName() + ".");
+          }
         }
       }
     }
@@ -919,43 +925,51 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   @Override
   protected void doDeactivate() throws Exception
   {
-    LifecycleUtil.deactivate(unitMappingTable);
-    LifecycleUtil.deactivate(commitInfoTable);
-    LifecycleUtil.deactivate(mappingStrategy);
-    LifecycleUtil.deactivate(durableLockingManager);
-    LifecycleUtil.deactivate(metaDataManager);
-    LifecycleUtil.deactivate(idHandler);
-
-    Map<String, String> map = new HashMap<>();
-    map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
-    map.put(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
-
-    if (getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+    try
     {
-      map.put(PROP_NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
-      map.put(PROP_LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
+      LifecycleUtil.deactivate(unitMappingTable);
+      LifecycleUtil.deactivate(commitInfoTable);
+      LifecycleUtil.deactivate(mappingStrategy);
+      LifecycleUtil.deactivate(durableLockingManager);
+      LifecycleUtil.deactivate(metaDataManager);
+      LifecycleUtil.deactivate(idHandler);
+
+      Map<String, String> map = new HashMap<>();
+      map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
+      map.put(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
+
+      if (getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
+      {
+        map.put(PROP_NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
+        map.put(PROP_LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));
+      }
+
+      map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
+      map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
+      map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
+      map.put(PROP_LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
+      setPersistentProperties(map);
+
+      if (readerPool != null)
+      {
+        readerPool.dispose();
+      }
+
+      if (writerPool != null)
+      {
+        writerPool.dispose();
+      }
+
+      connectionKeepAliveTimer.cancel();
+      connectionKeepAliveTimer = null;
+
+      super.doDeactivate();
     }
-
-    map.put(PROP_LAST_BRANCHID, Integer.toString(getLastBranchID()));
-    map.put(PROP_LAST_LOCAL_BRANCHID, Integer.toString(getLastLocalBranchID()));
-    map.put(PROP_LAST_COMMITTIME, Long.toString(getLastCommitTime()));
-    map.put(PROP_LAST_NONLOCAL_COMMITTIME, Long.toString(getLastNonLocalCommitTime()));
-    setPersistentProperties(map);
-
-    if (readerPool != null)
+    finally
     {
-      readerPool.dispose();
+      LifecycleUtil.deactivate(database);
+      database = null;
     }
-
-    if (writerPool != null)
-    {
-      writerPool.dispose();
-    }
-
-    connectionKeepAliveTimer.cancel();
-    connectionKeepAliveTimer = null;
-
-    super.doDeactivate();
   }
 
   protected boolean isFirstStart(Set<IDBTable> createdTables)

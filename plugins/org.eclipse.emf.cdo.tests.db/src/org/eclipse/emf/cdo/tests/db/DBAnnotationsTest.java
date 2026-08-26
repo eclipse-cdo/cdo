@@ -16,7 +16,6 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.db.verifier.DBStoreVerifier;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -39,8 +38,6 @@ import java.sql.ResultSet;
  *
  * @author Kai Schlamp
  */
-// XXX PSQL fails, too - need to investigate
-@Skips("Postgresql")
 public class DBAnnotationsTest extends AbstractCDOTest
 {
   private static int modelCounter;
@@ -455,6 +452,11 @@ public class DBAnnotationsTest extends AbstractCDOTest
     if (db.startsWith("h2"))
     {
       return "CHARACTER LARGE OBJECT"; // com.h2database
+    }
+
+    if (db.startsWith("postgresql"))
+    {
+      return "text";
     }
 
     return "CLOB";

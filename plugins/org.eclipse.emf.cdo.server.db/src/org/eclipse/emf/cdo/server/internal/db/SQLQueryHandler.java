@@ -27,8 +27,12 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 
 import java.sql.Clob;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -189,7 +193,7 @@ public class SQLQueryHandler implements IQueryHandler
           {
             Object parameter = info.getParameters().get(key);
             parameter = convertToSQL(parameter);
-            stmt.setObject(indexes[i], parameter);
+            setParameter(stmt, indexes[i], parameter);
           }
         }
       }
@@ -262,6 +266,30 @@ public class SQLQueryHandler implements IQueryHandler
     {
       DBUtil.close(resultSet);
       DBUtil.close(stmt);
+    }
+  }
+
+  private static void setParameter(PreparedStatement stmt, int index, Object parameter) throws SQLException
+  {
+    if (parameter instanceof Timestamp)
+    {
+      stmt.setTimestamp(index, (Timestamp)parameter);
+    }
+    else if (parameter instanceof Date)
+    {
+      stmt.setDate(index, (Date)parameter);
+    }
+    else if (parameter instanceof Time)
+    {
+      stmt.setTime(index, (Time)parameter);
+    }
+    else if (parameter instanceof java.util.Date)
+    {
+      stmt.setTimestamp(index, new Timestamp(((java.util.Date)parameter).getTime()));
+    }
+    else
+    {
+      stmt.setObject(index, parameter);
     }
   }
 

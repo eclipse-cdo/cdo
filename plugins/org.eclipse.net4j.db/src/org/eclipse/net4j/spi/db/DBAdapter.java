@@ -36,6 +36,7 @@ import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ConsumerWithException;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -235,7 +236,7 @@ public abstract class DBAdapter implements IDBAdapter
       String schemaName = schema.getName();
       boolean caseSensitive = schema.isCaseSensitive();
 
-      DBUtil.forEachTable(connection, schemaName, caseSensitive, tableName -> {
+      forEachTable(connection, schemaName, caseSensitive, tableName -> {
         IDBTable table = schema.addTable(tableName);
         readFields(connection, table);
         readIndices(connection, metaData, table, schemaName);
@@ -249,6 +250,16 @@ public abstract class DBAdapter implements IDBAdapter
     {
       DBField.trackConstruction(wasTrackConstruction);
     }
+  }
+
+  /**
+   * Enumerates the tables that belong to a schema while reading a database schema.
+   *
+   * @since 4.14
+   */
+  protected void forEachTable(Connection connection, String schemaName, boolean caseSensitive, ConsumerWithException<String, SQLException> tableNameConsumer)
+  {
+    DBUtil.forEachTable(connection, schemaName, caseSensitive, tableNameConsumer);
   }
 
   /**
@@ -1155,6 +1166,15 @@ public abstract class DBAdapter implements IDBAdapter
   public DBType adaptType(DBType type)
   {
     return type;
+  }
+
+  /**
+   * @since 4.14
+   */
+  @Override
+  public int getJDBCTypeForNull(DBType type)
+  {
+    return type.getCode();
   }
 
   /**

@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
+  All rights reserved. This program and the accompanying materials
+  are made available under the terms of the Eclipse Public License 2.0
+  which is available at https://www.eclipse.org/legal/epl-2.0
+
+  SPDX-License-Identifier: EPL-2.0
+-->
+<project name="org.eclipse.emf.cdo.tests.db.postgresql" default="check" basedir=".">
+
+	<!--
+    The psql.* properties are deliberately loaded after command-line
+    properties. Ant user properties are immutable, so -Dpsql.* wins over
+    both the local file and these defaults.
+  -->
+	<property name="psql.default.host" value="localhost" />
+	<property name="psql.default.port" value="5432" />
+	<property name="psql.default.user" value="postgres" />
+	<property name="psql.default.password" value="postgres" />
+	<property name="psql.default.version" value="18" />
+	<property name="psql.default.max.connections" value="300" />
+
+	<macrodef name="run-psql-query">
+		<attribute name="command" />
+		<attribute name="outputproperty" />
+		<attribute name="resultproperty" default="psql.unused.result" />
+		<attribute name="errorproperty" default="psql.unused.error" />
+		<attribute name="host" />
+		<attribute name="port" />
+		<attribute name="username" />
+		<attribute name="database" />
+		<attribute name="password" />
+		<attribute name="failureproperty" />
+		<attribute name="failuremessage" />
+		<attribute name="abortonfailure" default="true" />
+		<sequential>
+			<exec executable="${psql.executable}" failifexecutionfails="false" failonerror="false" outputproperty="@{outputproperty}" errorproperty="@{errorproperty}" resultproperty="@{resultproperty}">
+				<env key="PGPASSWORD" value="@{password}" />
+				<arg value="--no-psqlrc" />
+				<arg value="--no-password" />
+				<arg value="--host=@{host}" />
+				<arg value="--port=@{port}" />
+				<arg value="--username=@{username}" />
+				<arg value="--dbname=@{database}" />
+				<arg value="--tuples-only" />
+				<arg value="--no-align" />
+				<arg value="--quiet" />
+				<arg value="--command=@{command}" />
+			</exec>
+			<condition property="@{failureproperty}">
+				<or>
+					<not>
+						<isset property="@{resultproperty}" />
+					</not>
+					<not>
+						<equals arg1="${@{resultproperty}}" arg2="0" />
+					</not>
+				</or>
+			</condition>
+			<condition property="@{failureproperty}.continue">
+				<equals arg1="@{abortonfailure}" arg2="false" />
+			</condition>
+			<echo level="verbose" message="Underlying psql error for @{database}@{host}: ${@{errorproperty}}" />
+			<fail if="@{failureproperty}" unless="@{failureproperty}.continue" message="@{failuremessage}&#10;SERVER INIT COMMAND (once, if the data directory is not initialized): ${psql.server.init.command}&#10;SERVER COMMAND (if PostgreSQL is stopped): ${psql.server.start.command}&#10;PSQL COMMAND: ${psql.executable} --no-psqlrc --no-password --host=@{host} --port=@{port} --username=@{username} --dbname=@{database} --tuples-only --no-align --quiet --command=&quot;@{command}&quot;&#10;PASSWORD: supplied through PGPASSWORD (not printed)." />
+		</sequential>
+	</macrodef>
+
+	<target name="prepare-properties">
+		<condition property="psql.properties.explicit">
+			<isset property="psql.properties" />
+		</condition>
+
+		<condition property="psql.config.file" value="${psql.properties}">
+			<isset property="psql.properties.explicit" />
+		</condition>
+		<property name="psql.config.file" location="${basedir}/config.properties" />
+
+		<available file="${psql.config.file}" property="psql.config.exists" />
+		<condition property="psql.explicit.config.missing">
+			<and>
+				<isset property="psql.properties.explicit" />
+				<not>
+					<isset property="psql.config.exists" />
+				</not>
+			</and>
+		</condition>
+		<fail if="psql.explicit.config.missing" message="The explicitly configured PostgreSQL properties file does not exist: ${psql.config.file}" />
+
+		<condition property="psql.create.local.config">
+			<and>
+				<not>
+					<isset property="psql.properties.explicit" />
+				</not>
+				<not>
+					<isset property="psql.config.exists" />
+				</not>
+			</and>
+		</condition>
+	</target>
+
+	<target name="create-local-config" depends="prepare-properties" if="psql.create.local.config">
+		<copy file="${basedir}/config.properties.template" tofile="${psql.config.file}" failonerror="true" />
+		<echo message="Created ${psql.config.file} from config.properties.template" />
+	</target>
+
+	<target name="load-properties" depends="create-local-config">
+		<property file="${psql.config.file}" />
+
+		<property name="psql.host" value="${psql.default.host}" />
+		<property name="psql.port" value="${psql.default.port}" />
+		<property name="psql.user" value="${psql.default.user}" />
+		<property name="psql.password" value="${psql.default.password}" />
+		<property name="psql.version" value="${psql.default.version}" />
+
+		<condition property="psql.default.data.dir" value="${psql.home}/data">
+			<isset property="psql.home" />
+		</condition>
+		<property name="psql.data" value="${psql.default.data.dir}" />
+
+		<condition property="psql.is.local">
+			<or>
+				<equals arg1="${psql.host}" arg2="localhost" casesensitive="false" />
+				<equals arg1="${psql.host}" arg2="127.0.0.1" />
+				<equals arg1="${psql.host}" arg2="::1" />
+			</or>
+		</condition>
+
+		<condition property="psql.path.lookup">
+			<not>
+				<isset property="psql.home" />
+			</not>
+		</condition>
+		<condition property="psql.path.lookup.windows">
+			<and>
+				<isset property="psql.path.lookup" />
+				<os family="windows" />
+			</and>
+		</condition>
+		<condition property="psql.path.lookup.unix">
+			<and>
+				<isset property="psql.path.lookup" />
+				<not>
+					<os family="windows" />
+				</not>
+			</and>
+		</condition>
+	</target>
+
+	<target name="resolve-psql" depends="load-properties">
+		<condition property="psql.executable" value="${psql.home}/bin/psql.exe">
+			<and>
+				<isset property="psql.home" />
+				<os family="windows" />
+			</and>
+		</condition>
+		<condition property="psql.executable" value="${psql.home}/bin/psql">
+			<and>
+				<isset property="psql.home" />
+				<not>
+					<os family="windows" />
+				</not>
+			</and>
+		</condition>
+		<property name="psql.executable" value="psql" />
+
+		<condition property="psql.server.start.command" value="&quot;${psql.home}/bin/pg_ctl.exe&quot; -D &quot;${psql.data}&quot; -o &quot;-p ${psql.port}&quot; -w start">
+			<and>
+				<isset property="psql.home" />
+				<os family="windows" />
+			</and>
+		</condition>
+		<condition property="psql.server.start.command" value="&quot;${psql.home}/bin/pg_ctl&quot; -D &quot;${psql.data}&quot; -o &quot;-p ${psql.port}&quot; -w start">
+			<and>
+				<isset property="psql.home" />
+				<not>
+					<os family="windows" />
+				</not>
+			</and>
+		</condition>
+		<property name="psql.server.start.command" value="pg_ctl -D &quot;&lt;PostgreSQL data directory&gt;&quot; -o &quot;-p ${psql.port}&quot; -w start" />
+		<condition property="psql.server.init.command" value="&quot;${psql.home}/bin/initdb.exe&quot; -D &quot;${psql.data}&quot; -U postgres --auth=trust --encoding=UTF8">
+			<and>
+				<isset property="psql.home" />
+				<os family="windows" />
+			</and>
+		</condition>
+		<condition property="psql.server.init.command" value="&quot;${psql.home}/bin/initdb&quot; -D &quot;${psql.data}&quot; -U postgres --auth=trust --encoding=UTF8">
+			<and>
+				<isset property="psql.home" />
+				<not>
+					<os family="windows" />
+				</not>
+			</and>
+		</condition>
+		<property name="psql.server.init.command" value="initdb -D &quot;&lt;PostgreSQL data directory&gt;&quot; -U postgres --auth=trust --encoding=UTF8" />
+
+		<condition property="psql.initdb.executable" value="${psql.home}/bin/initdb.exe">
+			<and>
+				<isset property="psql.home" />
+				<os family="windows" />
+			</and>
+		</condition>
+		<condition property="psql.initdb.executable" value="${psql.home}/bin/initdb">
+			<and>
+				<isset property="psql.home" />
+				<not>
+					<os family="windows" />
+				</not>
+			</and>
+		</condition>
+		<condition property="psql.pgctl.executable" value="${psql.home}/bin/pg_ctl.exe">
+			<and>
+				<isset property="psql.home" />
+				<os family="windows" />
+			</and>
+		</condition>
+		<condition property="psql.pgctl.executable" value="${psql.home}/bin/pg_ctl">
+			<and>
+				<isset property="psql.home" />
+				<not>
+					<os family="windows" />
+				</not>
+			</and>
+		</condition>
+
+		<condition property="psql.home.executable.missing">
+			<and>
+				<isset property="psql.home" />
+				<not>
+					<available file="${psql.executable}" />
+				</not>
+			</and>
+		</condition>
+		<fail if="psql.home.executable.missing" message="WHAT: PostgreSQL/psql could not be found below psql.home (${psql.executable}).&#10;EXPECTED: a working PostgreSQL ${psql.version} client; PostgreSQL 18 is the current default expected version.&#10;HOW: set psql.home to the PostgreSQL installation root or put its bin directory on PATH.&#10;COMMAND: ant -Dpsql.home=&quot;C:/Program Files/PostgreSQL/18&quot; check&#10;CONFIG: persist psql.home in local infra/postgresql/config.properties.&#10;DOWNLOAD: https://www.postgresql.org/download/" />
+	</target>
+
+	<target name="resolve-psql-path-windows" depends="resolve-psql" if="psql.path.lookup.windows">
+		<exec executable="cmd.exe" failifexecutionfails="true" failonerror="true" outputproperty="psql.path.output">
+			<arg value="/c" />
+			<arg value="where psql 2&gt;nul || echo __PSQL_MISSING__" />
+		</exec>
+		<condition property="psql.path.missing">
+			<or>
+				<not>
+					<isset property="psql.path.output" />
+				</not>
+				<contains string="${psql.path.output}" substring="__PSQL_MISSING__" />
+			</or>
+		</condition>
+	</target>
+
+	<target name="resolve-psql-path-unix" depends="resolve-psql" if="psql.path.lookup.unix">
+		<exec executable="sh" failifexecutionfails="true" failonerror="true" outputproperty="psql.path.output">
+			<arg value="-c" />
+			<arg value="command -v psql || printf '__PSQL_MISSING__'" />
+		</exec>
+		<condition property="psql.path.missing">
+			<or>
+				<not>
+					<isset property="psql.path.output" />
+				</not>
+				<contains string="${psql.path.output}" substring="__PSQL_MISSING__" />
+			</or>
+		</condition>
+	</target>
+
+	<target name="resolve-psql-path" depends="resolve-psql-path-windows,resolve-psql-path-unix">
+		<fail if="psql.path.missing" message="WHAT: PostgreSQL/psql could not be found on PATH.&#10;EXPECTED: a working PostgreSQL ${psql.version} client; PostgreSQL 18 is the current default expected version.&#10;HOW: put PostgreSQL's bin directory on PATH or set psql.home to the PostgreSQL installation root.&#10;COMMAND: ant -Dpsql.home=&quot;C:/Program Files/PostgreSQL/18&quot; check&#10;CONFIG: persist psql.home in local infra/postgresql/config.properties.&#10;DOWNLOAD: https://www.postgresql.org/download/" />
+	</target>
+
+	<target name="show-effective" depends="load-properties">
+		<echo message="PostgreSQL effective configuration: host=${psql.host} port=${psql.port} user=${psql.user} expected-major=${psql.version}" />
+		<echo message="The PostgreSQL password is intentionally not displayed." />
+	</target>
+
+	<target name="check" depends="resolve-psql-path">
+		<exec executable="${psql.executable}" failifexecutionfails="false" failonerror="false" outputproperty="psql.client.version" errorproperty="psql.client.error" resultproperty="psql.client.result">
+			<arg value="--version" />
+		</exec>
+		<condition property="psql.client.unavailable">
+			<or>
+				<not>
+					<isset property="psql.client.result" />
+				</not>
+				<not>
+					<equals arg1="${psql.client.result}" arg2="0" />
+				</not>
+			</or>
+		</condition>
+		<echo level="verbose" message="Underlying psql launch error: ${psql.client.error}" />
+		<fail if="psql.client.unavailable" message="WHAT: PostgreSQL/psql could not be found or started (${psql.executable}).&#10;EXPECTED: a working PostgreSQL ${psql.version} client; PostgreSQL 18 is the current default expected version.&#10;HOW: put PostgreSQL's bin directory on PATH or set psql.home to the installation root.&#10;COMMAND: ant -Dpsql.home=&quot;C:/Program Files/PostgreSQL/18&quot; check&#10;CONFIG: persist psql.home in local infra/postgresql/config.properties.&#10;DOWNLOAD: https://www.postgresql.org/download/" />
+
+		<run-psql-query command="SELECT current_setting('server_version_num')::integer / 10000;" outputproperty="psql.actual.major.raw" resultproperty="psql.check.connection.result" errorproperty="psql.check.connection.error" failureproperty="psql.check.connection.failed" failuremessage="WHAT: PostgreSQL check could not reach or authenticate to ${psql.host}:${psql.port} as ${psql.user}.&#10;EXPECTED: a reachable PostgreSQL ${psql.version} server with valid credentials.&#10;HOW: verify the server is running and listening, check psql.host/psql.port and psql.user/psql.password, then rerun check." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+		<run-psql-query command="SELECT current_setting('server_version');" outputproperty="psql.actual.server.version.raw" resultproperty="psql.check.server.version.result" errorproperty="psql.check.server.version.error" failureproperty="psql.check.server.version.failed" failuremessage="WHAT: PostgreSQL check could not read the server version from the postgres database.&#10;EXPECTED: the configured user can query the setup database.&#10;HOW: verify authentication and access to database postgres, then rerun check." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+		<run-psql-query command="SELECT current_user;" outputproperty="psql.actual.user.raw" resultproperty="psql.check.user.result" errorproperty="psql.check.user.error" failureproperty="psql.check.user.failed" failuremessage="WHAT: PostgreSQL check could not identify the authenticated user.&#10;EXPECTED: a working authenticated connection to the postgres database.&#10;HOW: verify psql.user/psql.password and the server's authentication rules, then rerun check." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+		<run-psql-query command="SELECT CASE WHEN rolcreatedb THEN 'true' ELSE 'false' END FROM pg_roles WHERE rolname = current_user;" outputproperty="psql.createdb.raw" resultproperty="psql.check.createdb.result" errorproperty="psql.check.createdb.error" failureproperty="psql.check.createdb.failed" failuremessage="WHAT: PostgreSQL check could not inspect CREATEDB for the authenticated user.&#10;EXPECTED: the user can query pg_roles in database postgres.&#10;HOW: verify the account and permissions, or use setup with local administrator access, then rerun check." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+		<run-psql-query command="SELECT current_setting('server_encoding');" outputproperty="psql.actual.encoding.raw" resultproperty="psql.check.encoding.result" errorproperty="psql.check.encoding.error" failureproperty="psql.check.encoding.failed" failuremessage="WHAT: PostgreSQL server encoding could not be read.&#10;EXPECTED: the server reports UTF8.&#10;HOW: inspect the cluster encoding and initialize a new cluster with --encoding=UTF8 if necessary, then rerun setup." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+		<run-psql-query command="SELECT current_setting('max_connections');" outputproperty="psql.actual.max.connections.raw" resultproperty="psql.check.max.connections.result" errorproperty="psql.check.max.connections.error" failureproperty="psql.check.max.connections.failed" failuremessage="WHAT: PostgreSQL max_connections could not be read.&#10;EXPECTED: max_connections is at least ${psql.default.max.connections}.&#10;HOW: inspect postgresql.conf, set max_connections to at least ${psql.default.max.connections}, restart PostgreSQL, and rerun check." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+
+		<loadresource property="psql.actual.major">
+			<string value="${psql.actual.major.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+		<loadresource property="psql.actual.server.version">
+			<string value="${psql.actual.server.version.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+		<loadresource property="psql.actual.user">
+			<string value="${psql.actual.user.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+		<loadresource property="psql.createdb">
+			<string value="${psql.createdb.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+		<loadresource property="psql.actual.encoding">
+			<string value="${psql.actual.encoding.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+		<loadresource property="psql.actual.max.connections">
+			<string value="${psql.actual.max.connections.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+
+		<echo message="PostgreSQL check: host=${psql.host} port=${psql.port}" />
+		<echo message="  psql=${psql.executable}" />
+		<echo message="  actual server version=${psql.actual.server.version} (major ${psql.actual.major}), expected major=${psql.version}" />
+		<echo message="  authenticated user=${psql.actual.user}" />
+		<echo message="  CREATEDB=${psql.createdb}" />
+		<echo message="  server encoding=${psql.actual.encoding}" />
+		<echo message="  max connections=${psql.actual.max.connections} (required &gt;= ${psql.default.max.connections})" />
+
+		<fail message="WHAT: PostgreSQL server major version is ${psql.actual.major}, not ${psql.version}.&#10;EXPECTED: PostgreSQL major ${psql.version}; PostgreSQL 18 is the current default.&#10;HOW: point psql.host/psql.port at the intended server or set psql.version explicitly when another supported major is intentional, then rerun check.">
+			<condition>
+				<not>
+					<equals arg1="${psql.actual.major}" arg2="${psql.version}" />
+				</not>
+			</condition>
+		</fail>
+		<fail message="WHAT: authenticated PostgreSQL user ${psql.actual.user} does not have CREATEDB.&#10;EXPECTED: CREATEDB=true for the configured test account.&#10;HOW: grant CREATEDB to that role using an administrator, or run setup against a local server with bootstrap authentication, then rerun check.">
+			<condition>
+				<not>
+					<equals arg1="${psql.createdb}" arg2="true" casesensitive="false" />
+				</not>
+			</condition>
+		</fail>
+		<fail message="WHAT: PostgreSQL server encoding is ${psql.actual.encoding}, not UTF8.&#10;EXPECTED: server_encoding=UTF8.&#10;HOW: initialize a new cluster with --encoding=UTF8, or use a cluster with UTF8 encoding, then rerun check.">
+			<condition>
+				<not>
+					<equals arg1="${psql.actual.encoding}" arg2="UTF8" casesensitive="false" />
+				</not>
+			</condition>
+		</fail>
+		<fail message="WHAT: PostgreSQL max_connections is ${psql.actual.max.connections}, below the required minimum of ${psql.default.max.connections}.&#10;EXPECTED: max_connections &gt;= ${psql.default.max.connections}.&#10;HOW: set max_connections to at least ${psql.default.max.connections} in postgresql.conf, restart PostgreSQL, and rerun check.">
+			<condition>
+				<not>
+					<matches string="${psql.actual.max.connections}" pattern="^(3[0-9][0-9]|[4-9][0-9][0-9]|[1-9][0-9]{3,})$" />
+				</not>
+			</condition>
+		</fail>
+	</target>
+
+	<target name="validate-cluster-directory" depends="resolve-psql">
+		<fail message="WHAT: PostgreSQL cluster initialization needs psql.home.&#10;EXPECTED: psql.home points to the PostgreSQL installation root containing bin/initdb and bin/pg_ctl.&#10;HOW: run ant -Dpsql.home=&quot;C:/Program Files/PostgreSQL/18&quot; setup or persist psql.home in local infra/postgresql/config.properties.">
+			<condition>
+				<not>
+					<isset property="psql.home" />
+				</not>
+			</condition>
+		</fail>
+		<fail message="WHAT: PostgreSQL initdb was not found: ${psql.initdb.executable}.&#10;EXPECTED: a complete PostgreSQL installation under psql.home.&#10;HOW: install PostgreSQL ${psql.version} or correct psql.home, then rerun setup.">
+			<condition>
+				<not>
+					<available file="${psql.initdb.executable}" />
+				</not>
+			</condition>
+		</fail>
+		<available file="${psql.data}/PG_VERSION" property="psql.cluster.initialized" />
+		<available file="${psql.data}" type="dir" property="psql.data.exists" />
+		<fail message="WHAT: PostgreSQL data directory exists but is not an initialized cluster: ${psql.data}.&#10;EXPECTED: the directory is absent or contains PG_VERSION.&#10;HOW: choose an empty/configured psql.data, or remove this non-cluster directory manually before rerunning setup; existing data is never deleted automatically.">
+			<condition>
+				<and>
+					<isset property="psql.data.exists" />
+					<not>
+						<isset property="psql.cluster.initialized" />
+					</not>
+				</and>
+			</condition>
+		</fail>
+		<condition property="psql.cluster.needs.init">
+			<not>
+				<isset property="psql.cluster.initialized" />
+			</not>
+		</condition>
+	</target>
+
+	<target name="init-cluster-new" depends="validate-cluster-directory" if="psql.cluster.needs.init">
+		<exec executable="${psql.initdb.executable}" failifexecutionfails="true" failonerror="true" outputproperty="psql.initdb.output">
+			<arg value="-D" />
+			<arg value="${psql.data}" />
+			<arg value="-U" />
+			<arg value="postgres" />
+			<arg value="--auth=trust" />
+			<arg value="--encoding=UTF8" />
+		</exec>
+	</target>
+
+	<target name="configure-cluster-new" depends="validate-cluster-directory" if="psql.cluster.needs.init">
+		<echo file="${psql.data}/postgresql.conf" append="true">
+
+# CDO PostgreSQL test infrastructure minimum.
+max_connections = ${psql.default.max.connections}
+    </echo>
+	</target>
+
+	<target name="initialize-cluster" depends="validate-cluster-directory,init-cluster-new,configure-cluster-new" />
+
+	<target name="probe-server-status" depends="initialize-cluster">
+		<exec executable="${psql.pgctl.executable}" failifexecutionfails="true" failonerror="false" resultproperty="psql.pgctl.status.result">
+			<arg value="-D" />
+			<arg value="${psql.data}" />
+			<arg value="status" />
+		</exec>
+		<condition property="psql.server.running">
+			<equals arg1="${psql.pgctl.status.result}" arg2="0" />
+		</condition>
+	</target>
+
+	<target name="start-server-if-needed" depends="probe-server-status" unless="psql.server.running">
+		<exec executable="${psql.pgctl.executable}" failifexecutionfails="true" failonerror="true">
+			<arg value="-D" />
+			<arg value="${psql.data}" />
+			<arg value="-o" />
+			<arg value="-p ${psql.port}" />
+			<arg value="-w" />
+			<arg value="start" />
+		</exec>
+	</target>
+
+	<target name="start-server" depends="probe-server-status,start-server-if-needed" />
+
+	<target name="probe-configured" depends="resolve-psql-path">
+		<run-psql-query command="SELECT current_setting('server_version_num')::integer / 10000;" outputproperty="psql.probe.major.raw" resultproperty="psql.probe.major.result" failureproperty="psql.probe.major.failed" failuremessage="WHAT: setup could not probe PostgreSQL server version with the configured credentials.&#10;EXPECTED: the configured account can connect to database postgres.&#10;HOW: setup will try local administrator bootstrap; if that fails, verify the server and credentials and rerun check." abortonfailure="false" host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+		<run-psql-query command="SELECT CASE WHEN rolcreatedb THEN 'true' ELSE 'false' END FROM pg_roles WHERE rolname = current_user;" outputproperty="psql.probe.createdb.raw" resultproperty="psql.probe.createdb.result" failureproperty="psql.probe.createdb.failed" failuremessage="WHAT: setup could not probe CREATEDB with the configured credentials.&#10;EXPECTED: the configured account can connect to database postgres.&#10;HOW: setup will try local administrator bootstrap; if that fails, verify the server and credentials and rerun check." abortonfailure="false" host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+
+		<loadresource property="psql.probe.major">
+			<string value="${psql.probe.major.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+		<loadresource property="psql.probe.createdb">
+			<string value="${psql.probe.createdb.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+
+		<condition property="psql.configured.ok">
+			<and>
+				<equals arg1="${psql.probe.major.result}" arg2="0" />
+				<equals arg1="${psql.probe.createdb.result}" arg2="0" />
+				<equals arg1="${psql.probe.major}" arg2="${psql.version}" />
+				<equals arg1="${psql.probe.createdb}" arg2="true" casesensitive="false" />
+			</and>
+		</condition>
+
+		<condition property="psql.bootstrap.remote">
+			<and>
+				<not>
+					<isset property="psql.configured.ok" />
+				</not>
+				<not>
+					<isset property="psql.is.local" />
+				</not>
+			</and>
+		</condition>
+	</target>
+
+	<target name="bootstrap-admin-unsupported" depends="probe-configured" if="psql.bootstrap.remote">
+		<fail message="WHAT: setup could not validate the remote PostgreSQL server with the configured credentials.&#10;EXPECTED: ${psql.host}:${psql.port} is PostgreSQL ${psql.version} and the configured user has CREATEDB.&#10;HOW: provision credentials and CREATEDB externally for a remote server, then rerun check; local administrator bootstrap is intentionally not attempted remotely." />
+	</target>
+
+	<target name="bootstrap-admin-host" depends="probe-configured" if="psql.is.local" unless="psql.configured.ok">
+		<run-psql-query command="SELECT current_setting('server_version_num')::integer / 10000;" outputproperty="psql.bootstrap.host.major.raw" resultproperty="psql.bootstrap.host.result" failureproperty="psql.bootstrap.host.failed" failuremessage="WHAT: setup could not obtain local PostgreSQL administrator access over ${psql.host}:${psql.port}.&#10;EXPECTED: local administrator authentication without a password on PostgreSQL ${psql.version}.&#10;HOW: configure local authentication for postgres without changing pg_hba.conf automatically, or configure the test account externally, then rerun check." abortonfailure="false" host="${psql.host}" port="${psql.port}" username="postgres" database="postgres" password="" />
+		<loadresource property="psql.bootstrap.host.major">
+			<string value="${psql.bootstrap.host.major.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+		<fail message="WHAT: local PostgreSQL administrator access reached server major ${psql.bootstrap.host.major}, not ${psql.version}.&#10;EXPECTED: the configured ${psql.host}:${psql.port} server is PostgreSQL ${psql.version}; no credentials or privileges were changed.&#10;HOW: correct psql.host/psql.port or set psql.version intentionally, then rerun setup.">
+			<condition>
+				<and>
+					<equals arg1="${psql.bootstrap.host.result}" arg2="0" />
+					<not>
+						<equals arg1="${psql.bootstrap.host.major}" arg2="${psql.version}" />
+					</not>
+				</and>
+			</condition>
+		</fail>
+		<condition property="psql.bootstrap.host.ok">
+			<and>
+				<equals arg1="${psql.bootstrap.host.result}" arg2="0" />
+				<equals arg1="${psql.bootstrap.host.major}" arg2="${psql.version}" />
+			</and>
+		</condition>
+		<condition property="psql.bootstrap.try.socket">
+			<not>
+				<isset property="psql.bootstrap.host.ok" />
+			</not>
+		</condition>
+	</target>
+
+	<target name="bootstrap-admin-socket" depends="bootstrap-admin-host" if="psql.bootstrap.try.socket">
+		<run-psql-query command="SELECT current_setting('server_version_num')::integer / 10000;" outputproperty="psql.bootstrap.socket.major.raw" resultproperty="psql.bootstrap.socket.result" failureproperty="psql.bootstrap.socket.failed" failuremessage="WHAT: setup could not obtain local PostgreSQL administrator access through the local socket.&#10;EXPECTED: local administrator authentication without a password on PostgreSQL ${psql.version}.&#10;HOW: configure local authentication for postgres without changing pg_hba.conf automatically, or configure the test account externally, then rerun check." abortonfailure="false" host="" port="${psql.port}" username="postgres" database="postgres" password="" />
+		<loadresource property="psql.bootstrap.socket.major">
+			<string value="${psql.bootstrap.socket.major.raw}" />
+			<filterchain>
+				<striplinebreaks />
+			</filterchain>
+		</loadresource>
+		<fail message="WHAT: local PostgreSQL administrator access through the socket reached server major ${psql.bootstrap.socket.major}, not ${psql.version}.&#10;EXPECTED: the configured local server is PostgreSQL ${psql.version}; no credentials or privileges were changed.&#10;HOW: correct the local server/port or set psql.version intentionally, then rerun setup.">
+			<condition>
+				<and>
+					<equals arg1="${psql.bootstrap.socket.result}" arg2="0" />
+					<not>
+						<equals arg1="${psql.bootstrap.socket.major}" arg2="${psql.version}" />
+					</not>
+				</and>
+			</condition>
+		</fail>
+		<condition property="psql.bootstrap.socket.ok">
+			<and>
+				<equals arg1="${psql.bootstrap.socket.result}" arg2="0" />
+				<equals arg1="${psql.bootstrap.socket.major}" arg2="${psql.version}" />
+			</and>
+		</condition>
+	</target>
+
+	<target name="bootstrap-admin-failure" depends="bootstrap-admin-unsupported,bootstrap-admin-host,bootstrap-admin-socket" unless="psql.configured.ok">
+		<fail message="WHAT: setup could not obtain local PostgreSQL administrator access without a password.&#10;EXPECTED: local postgres administrator authentication reaches PostgreSQL ${psql.version} so setup can establish the configured credentials and CREATEDB.&#10;HOW: configure local authentication for postgres without changing pg_hba.conf automatically, or set the configured user/password and CREATEDB externally, then rerun check." if="psql.is.local" />
+	</target>
+
+	<target name="bootstrap-role-host" depends="bootstrap-admin-failure" if="psql.bootstrap.host.ok">
+		<exec executable="${psql.executable}" failifexecutionfails="true" failonerror="true" inputstring="\set target_user :ENV.PSQL_TARGET_USER&#10;\set target_password :ENV.PSQL_TARGET_PASSWORD&#10;DO $do$&#10;BEGIN&#10;  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = :'target_user') THEN&#10;    EXECUTE format('CREATE ROLE %I LOGIN', :'target_user');&#10;  END IF;&#10;END&#10;$do$;&#10;ALTER ROLE :&quot;target_user&quot; LOGIN PASSWORD :'target_password' CREATEDB;&#10;">
+			<env key="PGPASSWORD" value="" />
+			<env key="PSQL_TARGET_USER" value="${psql.user}" />
+			<env key="PSQL_TARGET_PASSWORD" value="${psql.password}" />
+			<arg value="--no-psqlrc" />
+			<arg value="--no-password" />
+			<arg value="--host=${psql.host}" />
+			<arg value="--port=${psql.port}" />
+			<arg value="--username=postgres" />
+			<arg value="--dbname=postgres" />
+			<arg value="--quiet" />
+		</exec>
+	</target>
+
+	<target name="bootstrap-role-socket" depends="bootstrap-admin-failure" if="psql.bootstrap.socket.ok">
+		<exec executable="${psql.executable}" failifexecutionfails="true" failonerror="true" inputstring="\set target_user :ENV.PSQL_TARGET_USER&#10;\set target_password :ENV.PSQL_TARGET_PASSWORD&#10;DO $do$&#10;BEGIN&#10;  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = :'target_user') THEN&#10;    EXECUTE format('CREATE ROLE %I LOGIN', :'target_user');&#10;  END IF;&#10;END&#10;$do$;&#10;ALTER ROLE :&quot;target_user&quot; LOGIN PASSWORD :'target_password' CREATEDB;&#10;">
+			<env key="PGPASSWORD" value="" />
+			<env key="PSQL_TARGET_USER" value="${psql.user}" />
+			<env key="PSQL_TARGET_PASSWORD" value="${psql.password}" />
+			<arg value="--no-psqlrc" />
+			<arg value="--no-password" />
+			<arg value="--host=" />
+			<arg value="--port=${psql.port}" />
+			<arg value="--username=postgres" />
+			<arg value="--dbname=postgres" />
+			<arg value="--quiet" />
+		</exec>
+	</target>
+
+	<target name="setup" depends="start-server,bootstrap-role-host,bootstrap-role-socket,check">
+		<echo message="PostgreSQL setup completed and the final read-only check passed." />
+	</target>
+
+	<target name="smoke-drop-stale" depends="check">
+		<run-psql-query command="DROP DATABASE IF EXISTS cdo_smoke WITH (FORCE);" outputproperty="psql.smoke.drop.stale.output" resultproperty="psql.smoke.drop.stale.result" failureproperty="psql.smoke.drop.stale.failed" failuremessage="WHAT: smoke cleanup could not remove stale database cdo_smoke.&#10;EXPECTED: the configured user can drop the fixed smoke database.&#10;HOW: close active sessions, verify CREATEDB/database ownership, or remove cdo_smoke manually, then rerun smoke." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+	</target>
+
+	<target name="smoke-create" depends="smoke-drop-stale">
+		<run-psql-query command="CREATE DATABASE cdo_smoke;" outputproperty="psql.smoke.create.output" resultproperty="psql.smoke.create.result" failureproperty="psql.smoke.create.failed" failuremessage="WHAT: smoke could not create database cdo_smoke.&#10;EXPECTED: the configured PostgreSQL user has CREATEDB and can create databases in the setup database.&#10;HOW: verify CREATEDB with check, remove any stale cdo_smoke, then rerun smoke." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+	</target>
+
+	<target name="smoke-connect" depends="smoke-create">
+		<run-psql-query command="SELECT current_database();" outputproperty="psql.smoke.connect.output" resultproperty="psql.smoke.connect.result" failureproperty="psql.smoke.connect.failed" failuremessage="WHAT: smoke could not connect to database cdo_smoke.&#10;EXPECTED: the newly created database accepts the configured user/password.&#10;HOW: verify host/port, credentials, database privileges, and server logs, then rerun smoke." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="cdo_smoke" password="${psql.password}" />
+	</target>
+
+	<target name="smoke" depends="smoke-connect">
+		<run-psql-query command="DROP DATABASE IF EXISTS cdo_smoke WITH (FORCE);" outputproperty="psql.smoke.drop.output" resultproperty="psql.smoke.drop.result" failureproperty="psql.smoke.drop.failed" failuremessage="WHAT: smoke could not remove database cdo_smoke after the connection test.&#10;EXPECTED: the configured PostgreSQL user can drop the smoke database.&#10;HOW: close active sessions, verify database ownership/privileges, or remove cdo_smoke manually, then rerun smoke." host="${psql.host}" port="${psql.port}" username="${psql.user}" database="postgres" password="${psql.password}" />
+		<echo message="PostgreSQL smoke test created, connected to, and removed cdo_smoke." />
+	</target>
+</project>

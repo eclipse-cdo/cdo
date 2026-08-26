@@ -72,8 +72,9 @@ public abstract class AbstractSetupDBConfig extends DBConfig
       stmt = connection.createStatement();
       initDatabase(connection, stmt, dbName);
     }
-    catch (SQLException ignore)
+    catch (SQLException ex)
     {
+      throw new DBException(ex, "CREATE DATABASE " + dbName);
     }
     finally
     {
@@ -100,10 +101,12 @@ public abstract class AbstractSetupDBConfig extends DBConfig
     }
     catch (SQLException ex)
     {
-      if (ex.getErrorCode() != getErrorCodeDatabaseDoesNotExist())
+      if (ex.getErrorCode() == getErrorCodeDatabaseDoesNotExist())
       {
-        ex.printStackTrace();
+        return;
       }
+
+      throw new DBException(ex, "DROP DATABASE " + dbName);
     }
     finally
     {

@@ -14,16 +14,26 @@
  */
 package org.eclipse.net4j.db.postgresql;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.internal.postgresql.bundle.OM;
 import org.eclipse.net4j.spi.db.DBAdapter;
+import org.eclipse.net4j.util.ConsumerWithException;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.sql.Types;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A {@link IDBAdapter DB adapter} for <a href="http://www.postgresql.org/">PostgreSQL</a> databases.
@@ -70,6 +80,115 @@ public class PostgreSQLAdapter extends DBAdapter
     return true;
   }
 
+  @Override
+  protected void forEachTable(Connection connection, String schemaName, boolean caseSensitive, ConsumerWithException<String, SQLException> tableNameConsumer)
+  {
+    if (schemaName == null)
+    {
+      super.forEachTable(connection, schemaName, caseSensitive, tableNameConsumer);
+      return;
+    }
+
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      statement = connection.prepareStatement("SELECT c.relname FROM pg_catalog.pg_class c " + "JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace "
+          + "WHERE n.nspname = ? AND c.relkind IN ('r', 'p', 'v', 'm', 'f')");
+      statement.setString(1, schemaName);
+      resultSet = statement.executeQuery();
+
+      while (resultSet.next())
+      {
+        tableNameConsumer.accept(resultSet.getString(1));
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(statement);
+    }
+  }
+
+  @Override
+  protected void readIndices(Connection connection, java.sql.DatabaseMetaData metaData, IDBTable table, String schemaName) throws SQLException
+  {
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+    Map<String, IndexInfo> indexInfos = new HashMap<>();
+
+    try
+    {
+      statement = connection.prepareStatement("SELECT i.relname, ix.indisprimary, ix.indisunique, a.attname, s.n " + "FROM pg_catalog.pg_index ix "
+          + "JOIN pg_catalog.pg_class t ON t.oid = ix.indrelid " + "JOIN pg_catalog.pg_namespace n ON n.oid = t.relnamespace "
+          + "JOIN pg_catalog.pg_class i ON i.oid = ix.indexrelid " + "JOIN LATERAL generate_subscripts(ix.indkey, 1) s(n) ON true "
+          + "JOIN pg_catalog.pg_attribute a ON a.attrelid = t.oid AND a.attnum = ix.indkey[s.n] "
+          + "WHERE n.nspname = ? AND t.relname = ? ORDER BY i.relname, s.n");
+      statement.setString(1, schemaName);
+      statement.setString(2, table.getName());
+      resultSet = statement.executeQuery();
+
+      while (resultSet.next())
+      {
+        String name = resultSet.getString(1);
+        IndexInfo indexInfo = indexInfos.computeIfAbsent(name, key -> new IndexInfo());
+        indexInfo.name = name;
+        indexInfo.type = resultSet.getBoolean(2) ? IDBIndex.Type.PRIMARY_KEY : resultSet.getBoolean(3) ? IDBIndex.Type.UNIQUE : IDBIndex.Type.NON_UNIQUE;
+
+        FieldInfo fieldInfo = new FieldInfo();
+        fieldInfo.name = resultSet.getString(4);
+        fieldInfo.position = resultSet.getInt(5);
+        indexInfo.fieldInfos.add(fieldInfo);
+      }
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(statement);
+    }
+
+    indexInfos.values().forEach(indexInfo -> addIndex(connection, table, indexInfo.name, indexInfo.type, indexInfo.fieldInfos));
+  }
+
+  @Override
+  public String getDefaultSchemaName(Connection connection)
+  {
+    Statement statement = null;
+    ResultSet resultSet = null;
+
+    try
+    {
+      statement = connection.createStatement();
+      resultSet = statement.executeQuery("SELECT current_schema()");
+      if (!resultSet.next())
+      {
+        throw new DBException("PostgreSQL did not return an effective schema for the connection");
+      }
+
+      String schemaName = resultSet.getString(1);
+      if (schemaName == null)
+      {
+        throw new DBException("PostgreSQL returned a null effective schema for the connection");
+      }
+
+      return schemaName;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(statement);
+    }
+  }
+
   /**
    * @since 2.0
    */
@@ -91,6 +210,17 @@ public class PostgreSQLAdapter extends DBAdapter
   }
 
   @Override
+  public int getJDBCTypeForNull(DBType type)
+  {
+    if (type == DBType.BLOB)
+    {
+      return Types.VARBINARY;
+    }
+
+    return super.getJDBCTypeForNull(type);
+  }
+
+  @Override
   protected String getTypeName(IDBField field)
   {
     // http://www.postgresql.org/docs/9.2/static/datatype.html
@@ -104,6 +234,13 @@ public class PostgreSQLAdapter extends DBAdapter
       return DBType.SMALLINT.toString();
 
     case VARCHAR:
+      if (field.getPrecision() != getDefaultDBLength(DBType.VARCHAR))
+      {
+        return DBType.VARCHAR.toString() + field.formatPrecision();
+      }
+
+      return "text"; //$NON-NLS-1$
+
     case LONGVARCHAR:
     case CLOB:
       return "text"; //$NON-NLS-1$

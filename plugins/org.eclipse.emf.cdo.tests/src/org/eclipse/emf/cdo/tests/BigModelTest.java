@@ -94,17 +94,4 @@ public class BigModelTest extends AbstractCDOTest
   {
     IOUtil.OUT().println(message);
   }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class WarmUp extends BigModelTest
-  {
-
-    @Override
-    protected void log(String message)
-    {
-      // Do nothing.
-    }
-  }
 }

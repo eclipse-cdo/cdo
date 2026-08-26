@@ -1196,6 +1196,12 @@ public abstract class DBAdapter implements IDBAdapter
     return "23001".equals(sqlState);
   }
 
+  @Override
+  public boolean isDuplicateKeyTransactionAbort()
+  {
+    return false;
+  }
+
   /**
    * @since 4.2
    */

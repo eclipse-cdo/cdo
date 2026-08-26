@@ -265,6 +265,16 @@ public class PostgreSQLAdapter extends DBAdapter
   }
 
   /**
+   * PostgreSQL marks the current transaction as aborted after a duplicate-key violation. A savepoint is therefore
+   * required when the violation is an expected outcome.
+   */
+  @Override
+  public boolean isDuplicateKeyTransactionAbort()
+  {
+    return true;
+  }
+
+  /**
    * See <a href="http://www.postgresql.org/docs/9.0/static/errcodes-appendix.html">Appendix A. PostgreSQL Error Codes</a>.
    */
   @Override

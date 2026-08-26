@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
@@ -41,6 +42,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 import java.sql.Statement;
 
 /**
@@ -122,13 +124,17 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   @Override
   public final boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
-    CDOID metaID = store().getMetaDataManager().getMetaID(type, timeStamp);
+    IDBStore store = store();
+    IIDHandler idHandler = store.getIDHandler();
+    IDBAdapter dbAdapter = store.getDBAdapter();
 
-    IIDHandler idHandler = store().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MAX);
+    Savepoint savepoint = null;
 
     try
     {
+      CDOID metaID = store.getMetaDataManager().getMetaID(type, timeStamp);
+
       idHandler.setCDOID(stmt, 1, id);
       idHandler.setCDOID(stmt, 2, metaID);
       stmt.setLong(3, timeStamp);
@@ -138,7 +144,16 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
         DBUtil.trace(stmt.toString());
       }
 
+      if (dbAdapter.isDuplicateKeyTransactionAbort())
+      {
+        savepoint = stmt.getConnection().setSavepoint();
+      }
+
       int result = stmt.executeUpdate();
+      if (savepoint != null)
+      {
+        stmt.getConnection().releaseSavepoint(savepoint);
+      }
       if (result != 1)
       {
         throw new DBException("Object type could not be inserted: " + id); //$NON-NLS-1$
@@ -148,9 +163,23 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     }
     catch (SQLException ex)
     {
-      if (store().getDBAdapter().isDuplicateKeyException(ex))
+      if (dbAdapter.isDuplicateKeyException(ex))
       {
         // Unique key violation can occur in rare cases (merging new objects from other branches)
+        if (savepoint != null)
+        {
+          try
+          {
+            stmt.getConnection().rollback(savepoint);
+            stmt.getConnection().releaseSavepoint(savepoint);
+          }
+          catch (SQLException rollbackException)
+          {
+            ex.addSuppressed(rollbackException);
+            throw new DBException(ex);
+          }
+        }
+
         return false;
       }
 

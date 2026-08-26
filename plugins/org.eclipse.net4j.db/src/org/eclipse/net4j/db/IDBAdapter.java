@@ -216,6 +216,14 @@ public interface IDBAdapter extends IDBAdapterID
   public boolean isValidFirstChar(char ch);
 
   /**
+   * Returns whether a duplicate-key exception aborts the current JDBC transaction and
+   * therefore requires a savepoint to recover from it.
+   *
+   * @since 4.14
+   */
+  public boolean isDuplicateKeyTransactionAbort();
+
+  /**
    * Check if an exception indicates a constraint violation (duplicate key)
    *
    * @since 4.0

@@ -228,6 +228,12 @@ public class DelegatingDBAdapter implements IDBAdapter
   }
 
   @Override
+  public boolean isDuplicateKeyTransactionAbort()
+  {
+    return delegate.isDuplicateKeyTransactionAbort();
+  }
+
+  @Override
   public boolean isTableNotFoundException(SQLException ex)
   {
     return delegate.isTableNotFoundException(ex);

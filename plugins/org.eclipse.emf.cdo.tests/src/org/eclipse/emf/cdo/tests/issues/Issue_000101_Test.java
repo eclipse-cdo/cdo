@@ -36,7 +36,7 @@ import java.util.Map;
  *
  * @author Eike Stepper
  */
-@Requires({ IRepositoryConfig.CAPABILITY_AUDITING, IRepositoryConfig.CAPABILITY_RESTARTABLE })
+@Requires({ IRepositoryConfig.CAPABILITY_AUDITING, IRepositoryConfig.CAPABILITY_RESTARTABLE, "DB.ranges" })
 @Skips(IRepositoryConfig.CAPABILITY_BRANCHING)
 @CleanRepositoriesBefore(reason = "Instrumented repository")
 @CleanRepositoriesAfter(reason = "Instrumented repository")

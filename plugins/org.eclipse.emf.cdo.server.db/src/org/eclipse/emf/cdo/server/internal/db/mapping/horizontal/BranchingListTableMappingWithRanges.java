@@ -760,17 +760,17 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
    *          the accessor to use
    * @param id
    *          the id of the revision from which to remove all items
-   * @param lastIndex
+   * @param lastListIndex
    */
-  public void clearList(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int lastIndex)
+  public void clearList(IDBStoreAccessor accessor, CDOID id, int branchID, int oldVersion, int newVersion, int lastListIndex)
   {
     // check for each index if the value exists in the current branch
-    for (int i = 0; i <= lastIndex; i++)
+    for (int i = 0; i <= lastListIndex; i++)
     {
-      if (getValue(accessor, id, branchId, i, false) == null)
+      if (getValue(accessor, id, branchID, i, false) == null)
       {
         // if not, add a historic entry for missing ones.
-        addHistoricEntry(accessor, id, branchId, 0, newVersion, i, getValueFromBase(accessor, id, branchId, i));
+        addHistoricEntry(accessor, id, branchID, 0, newVersion, i, getValueFromBase(accessor, id, branchID, i));
       }
     }
 
@@ -781,7 +781,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       // clear rest of the list
       stmt.setInt(1, newVersion);
       getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 2, id);
-      stmt.setInt(3, branchId);
+      stmt.setInt(3, branchID);
 
       int result = DBUtil.update(stmt, false);
       if (TRACER.isEnabled())
@@ -822,9 +822,9 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
     int branchID = transaction.getBranch().getID();
     int version = revision.getVersion();
-    int lastIndex = revision.size(getFeature()) - 1;
+    int lastListIndex = revision.size(getFeature()) - 1;
 
-    clearList(accessor, id, branchID, version, FINAL_VERSION, lastIndex);
+    clearList(accessor, id, branchID, version, FINAL_VERSION, lastListIndex);
   }
 
   @Override
@@ -834,7 +834,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   }
 
   @Override
-  public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, long created, CDOListFeatureDelta delta)
+  public void processDelta(IDBStoreAccessor accessor, CDOID id, int branchID, int oldVersion, int newVersion, long created, CDOListFeatureDelta delta)
   {
     List<CDOFeatureDelta> listChanges = delta.getListChanges();
     if (listChanges.size() == 0)
@@ -844,10 +844,10 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
 
     InternalCDORevision originalRevision = (InternalCDORevision)accessor.getTransaction().getRevision(id);
-    processDelta(accessor, originalRevision, branchId, oldVersion, newVersion, listChanges);
+    processDelta(accessor, originalRevision, branchID, oldVersion, newVersion, listChanges);
   }
 
-  private void processDelta(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int branchId, int oldVersion, int newVersion,
+  private void processDelta(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int branchID, int oldVersion, int newVersion,
       List<CDOFeatureDelta> listChanges)
   {
     if (TRACER.isEnabled())
@@ -863,7 +863,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
 
     // let the visitor collect the changes
-    ListDeltaVisitor visitor = new ListDeltaVisitor(accessor, originalRevision, branchId, oldVersion, newVersion);
+    ListDeltaWriter visitor = new ListDeltaWriter(accessor, originalRevision, branchID, oldVersion, newVersion);
 
     if (TRACER.isEnabled())
     {
@@ -892,376 +892,12 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     visitor.finishPendingRemove();
   }
 
-  /**
-   * @author Stefan Winkler
-   * @author Andras Peteri
-   */
-  private class ListDeltaVisitor implements CDOFeatureDeltaVisitor
-  {
-    private IDBStoreAccessor accessor;
-
-    private CDOID id;
-
-    private int branchID;
-
-    private int oldVersion;
-
-    private int newVersion;
-
-    private int lastIndex;
-
-    private int lastRemovedIndex;
-
-    public ListDeltaVisitor(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int targetBranchID, int oldVersion, int newVersion)
-    {
-      this.accessor = accessor;
-      id = originalRevision.getID();
-      branchID = targetBranchID;
-      this.oldVersion = oldVersion;
-      this.newVersion = newVersion;
-      lastIndex = originalRevision.size(getFeature()) - 1;
-      lastRemovedIndex = -1;
-    }
-
-    @Override
-    public void visit(CDOAddFeatureDelta delta)
-    {
-      finishPendingRemove();
-      int startIndex = delta.getIndex();
-      int endIndex = lastIndex;
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Adding at: {0}", startIndex); //$NON-NLS-1$
-      }
-
-      if (startIndex <= endIndex)
-      {
-        // make room for the new item
-        moveOneDown(accessor, id, branchID, oldVersion, newVersion, startIndex, endIndex);
-      }
-
-      // create the item
-      addEntry(accessor, id, branchID, newVersion, startIndex, delta.getValue());
-
-      ++lastIndex;
-    }
-
-    @Override
-    public void visit(CDORemoveFeatureDelta delta)
-    {
-      finishPendingRemove();
-      lastRemovedIndex = delta.getIndex();
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Removing at: {0}", lastRemovedIndex); //$NON-NLS-1$
-      }
-
-      // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, lastRemovedIndex);
-    }
-
-    @Override
-    public void visit(CDOSetFeatureDelta delta)
-    {
-      finishPendingRemove();
-      int index = delta.getIndex();
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Setting at: {0}", index); //$NON-NLS-1$
-      }
-
-      // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
-
-      // create the item
-      addEntry(accessor, id, branchID, newVersion, index, delta.getValue());
-    }
-
-    @Override
-    public void visit(CDOUnsetFeatureDelta delta)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Unsetting"); //$NON-NLS-1$
-      }
-
-      clearList(accessor, id, branchID, oldVersion, newVersion, lastIndex);
-      lastIndex = -1;
-      lastRemovedIndex = -1;
-    }
-
-    @Override
-    public void visit(CDOClearFeatureDelta delta)
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Clearing"); //$NON-NLS-1$
-      }
-
-      clearList(accessor, id, branchID, oldVersion, newVersion, lastIndex);
-      lastIndex = -1;
-      lastRemovedIndex = -1;
-    }
-
-    @Override
-    public void visit(CDOMoveFeatureDelta delta)
-    {
-      int fromIdx = delta.getOldPosition();
-      int toIdx = delta.getNewPosition();
-
-      // optimization: a move from the end of the list to an index that was just removed requires no shifting
-      boolean optimizeMove = lastRemovedIndex != -1 && fromIdx == lastIndex - 1 && toIdx == lastRemovedIndex;
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Moving: {0} to {1}", fromIdx, toIdx); //$NON-NLS-1$
-      }
-
-      // items after a pending remove have an index offset by one
-      if (optimizeMove)
-      {
-        fromIdx++;
-      }
-      else
-      {
-        finishPendingRemove();
-      }
-
-      Object value = getValue(accessor, id, branchID, fromIdx, true);
-
-      // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, fromIdx);
-
-      // adjust indexes and shift either up or down for regular moves
-      if (!optimizeMove)
-      {
-        if (fromIdx < toIdx)
-        {
-          moveOneUp(accessor, id, branchID, oldVersion, newVersion, fromIdx + 1, toIdx);
-        }
-        else
-        { // fromIdx > toIdx here
-          moveOneDown(accessor, id, branchID, oldVersion, newVersion, toIdx, fromIdx - 1);
-        }
-      }
-      else
-      {
-        // finish the optimized move by resetting lastRemovedIndex
-        lastRemovedIndex = -1;
-        --lastIndex;
-      }
-
-      // create the item
-      addEntry(accessor, id, branchID, newVersion, toIdx, value);
-    }
-
-    @Override
-    public void visit(CDOListFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    @Override
-    public void visit(CDOContainerFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    public void finishPendingRemove()
-    {
-      if (lastRemovedIndex != -1)
-      {
-        int startIndex = lastRemovedIndex;
-        int endIndex = lastIndex;
-
-        // make room for the new item
-        moveOneUp(accessor, id, branchID, oldVersion, newVersion, startIndex + 1, endIndex);
-
-        --lastIndex;
-        lastRemovedIndex = -1;
-      }
-    }
-
-    private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int startIndex, int endIndex)
-    {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-
-      try
-      {
-        for (int index = startIndex; index <= endIndex; ++index)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("moveOneUp moving: {0} -> {1}", index, index - 1); //$NON-NLS-1$
-          }
-
-          int column = 1;
-          stmt.setInt(column++, index - 1);
-          idHandler.setCDOID(stmt, column++, id);
-          stmt.setInt(column++, branchId);
-          stmt.setInt(column++, newVersion);
-          stmt.setInt(column++, index);
-
-          int result = DBUtil.update(stmt, false);
-          switch (result)
-          {
-          case 1:
-            // entry for current revision was already present.
-            // index update succeeded.
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneUp updated: {0} -> {1}", index, index - 1); //$NON-NLS-1$
-            }
-
-            break;
-          // no entry for current revision there.
-          case 0:
-            Object value = getValue(accessor, id, branchId, index, false);
-
-            if (value != null)
-            {
-              if (TRACER.isEnabled())
-              {
-                TRACER.format("moveOneUp remove: {0}", index); //$NON-NLS-1$
-              }
-
-              removeEntry(accessor, id, branchId, oldVersion, newVersion, index);
-            }
-            else
-            {
-              value = getValueFromBase(accessor, id, branchId, index);
-
-              if (TRACER.isEnabled())
-              {
-                TRACER.format("moveOneUp add historic entry at: {0}", index); //$NON-NLS-1$
-              }
-
-              addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value);
-            }
-
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneUp add: {0}", index - 1); //$NON-NLS-1$
-            }
-
-            addEntry(accessor, id, branchId, newVersion, index - 1, value);
-            break;
-          default:
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneUp Too many results: {0} -> {1}: {2}", index, index + 1, result); //$NON-NLS-1$
-            }
-
-            throw new DBException("Too many results"); //$NON-NLS-1$
-          }
-        }
-      }
-      catch (SQLException e)
-      {
-        throw new DBException(e);
-      }
-      finally
-      {
-        DBUtil.close(stmt);
-      }
-    }
-
-    private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int startIndex, int endIndex)
-    {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-
-      try
-      {
-        for (int index = endIndex; index >= startIndex; --index)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("moveOneDown moving: {0} -> {1}", index, index + 1); //$NON-NLS-1$
-          }
-
-          int column = 1;
-          stmt.setInt(column++, index + 1);
-          idHandler.setCDOID(stmt, column++, id);
-          stmt.setInt(column++, branchId);
-          stmt.setInt(column++, newVersion);
-          stmt.setInt(column++, index);
-
-          int result = DBUtil.update(stmt, false);
-          switch (result)
-          {
-          case 1:
-            // entry for current revision was already present.
-            // index update succeeded.
-
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneDown updated: {0} -> {1}", index, index + 1); //$NON-NLS-1$
-            }
-
-            break;
-          case 0:
-            Object value = getValue(accessor, id, branchId, index, false);
-
-            if (value != null)
-            {
-              if (TRACER.isEnabled())
-              {
-                TRACER.format("moveOneDown remove: {0}", index); //$NON-NLS-1$
-              }
-
-              removeEntry(accessor, id, branchId, oldVersion, newVersion, index);
-            }
-            else
-            {
-              value = getValueFromBase(accessor, id, branchId, index);
-
-              if (TRACER.isEnabled())
-              {
-                TRACER.format("moveOneDown add historic entry at: {0}", index); //$NON-NLS-1$
-              }
-
-              addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value);
-            }
-
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneDown add: {0}", index + 1); //$NON-NLS-1$
-            }
-
-            addEntry(accessor, id, branchId, newVersion, index + 1, value);
-            break;
-          default:
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("moveOneDown Too many results: {0} -> {1}: {2}", index, index + 1, result); //$NON-NLS-1$
-            }
-
-            throw new DBException("Too many results"); //$NON-NLS-1$
-          }
-        }
-      }
-      catch (SQLException e)
-      {
-        throw new DBException(e);
-      }
-      finally
-      {
-        DBUtil.close(stmt);
-      }
-    }
-  }
-
-  private void addEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int version, int index, Object value)
+  private void addEntry(IDBStoreAccessor accessor, CDOID id, int branchID, int version, int index, Object value)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Adding value for feature {0}.{1} index {2} of {3}:{4}v{5} : {6}", //$NON-NLS-1$
-          getContainingClass().getName(), getFeature().getName(), index, id, branchId, version, value);
+          getContainingClass().getName(), getFeature().getName(), index, id, branchID, version, value);
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -1271,7 +907,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     {
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, branchId);
+      stmt.setInt(column++, branchID);
       stmt.setInt(column++, version); // versionAdded
       stmt.setNull(column++, DBType.INTEGER.getCode()); // versionRemoved
       stmt.setInt(column++, index);
@@ -1293,12 +929,12 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
-  private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int versionAdded, int versionRemoved, int index, Object value)
+  private void addHistoricEntry(IDBStoreAccessor accessor, CDOID id, int branchID, int versionAdded, int versionRemoved, int index, Object value)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Adding historic value for feature {0}.{1} index {2} of {3}:{4}v{5}-v{6} : {7}", //$NON-NLS-1$
-          getContainingClass().getName(), getFeature().getName(), index, id, branchId, versionAdded, versionRemoved, value);
+          getContainingClass().getName(), getFeature().getName(), index, id, branchID, versionAdded, versionRemoved, value);
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -1308,7 +944,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     {
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, branchId);
+      stmt.setInt(column++, branchID);
       stmt.setInt(column++, versionAdded); // versionAdded
       stmt.setInt(column++, versionRemoved); // versionRemoved
       stmt.setInt(column++, index);
@@ -1330,12 +966,12 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
-  private void removeEntry(IDBStoreAccessor accessor, CDOID id, int branchId, int oldVersion, int newVersion, int index)
+  private void removeEntry(IDBStoreAccessor accessor, CDOID id, int branchID, int oldVersion, int newVersion, int index)
   {
     if (TRACER.isEnabled())
     {
       TRACER.format("Removing value for feature {0}.{1} index {2} of {3}:{4}v{5}", //$NON-NLS-1$
-          getContainingClass().getName(), getFeature().getName(), index, id, branchId, newVersion);
+          getContainingClass().getName(), getFeature().getName(), index, id, branchID, newVersion);
     }
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -1346,7 +982,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       // Try to delete a temporary entry first
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, branchId);
+      stmt.setInt(column++, branchID);
       stmt.setInt(column++, index);
       stmt.setInt(column++, newVersion);
 
@@ -1376,7 +1012,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         column = 1;
         stmt.setInt(column++, newVersion);
         idHandler.setCDOID(stmt, column++, id);
-        stmt.setInt(column++, branchId);
+        stmt.setInt(column++, branchID);
         stmt.setInt(column++, index);
 
         result = DBUtil.update(stmt, false);
@@ -1386,8 +1022,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           // no entry removed -> this means that we are in a branch and
           // the entry has not been modified since the branch fork.
           // therefore, we have to copy the base value and mark it as removed
-          Object value = getValueFromBase(accessor, id, branchId, index);
-          addHistoricEntry(accessor, id, branchId, 0, newVersion, index, value);
+          Object value = getValueFromBase(accessor, id, branchID, index);
+          addHistoricEntry(accessor, id, branchID, 0, newVersion, index, value);
         }
       }
     }
@@ -1396,7 +1032,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       if (TRACER.isEnabled())
       {
         TRACER.format("Removing value for feature {0}.{1} index {2} of {3}:{4}v{5} FAILED {6}", //$NON-NLS-1$
-            getContainingClass().getName(), getFeature().getName(), index, id, branchId, newVersion, e.getMessage());
+            getContainingClass().getName(), getFeature().getName(), index, id, branchID, newVersion, e.getMessage());
       }
 
       throw new DBException(e);
@@ -1406,7 +1042,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       if (TRACER.isEnabled())
       {
         TRACER.format("Removing value for feature {0}.{1} index {2} of {3}:{4}v{5} FAILED {6}", //$NON-NLS-1$
-            getContainingClass().getName(), getFeature().getName(), index, id, branchId, newVersion, e.getMessage());
+            getContainingClass().getName(), getFeature().getName(), index, id, branchID, newVersion, e.getMessage());
       }
 
       throw new DBException(e);
@@ -1424,7 +1060,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
    *          the store accessor
    * @param id
    *          the revision's ID
-   * @param branchId
+   * @param branchID
    *          the revision's branch ID
    * @param index
    *          the index from which to get the value
@@ -1433,7 +1069,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
    *          present in the current branch (because it has not been changed since the branch fork). If
    *          <code>false</code>, <code>null</code> is returned in the former case.
    */
-  private Object getValue(IDBStoreAccessor accessor, CDOID id, int branchId, int index, boolean getFromBase)
+  private Object getValue(IDBStoreAccessor accessor, CDOID id, int branchID, int index, boolean getFromBase)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
@@ -1443,7 +1079,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     {
       int column = 1;
       idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, branchId);
+      stmt.setInt(column++, branchID);
       stmt.setInt(column++, index);
 
       ResultSet resultSet = stmt.executeQuery();
@@ -1461,7 +1097,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         // -> read from base revision
         if (getFromBase)
         {
-          result = getValueFromBase(accessor, id, branchId, index);
+          result = getValueFromBase(accessor, id, branchID, index);
         } // else: result remains null
       }
     }
@@ -1593,6 +1229,370 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     {
       DBUtil.close(resultSet);
       DBUtil.close(stmt);
+    }
+  }
+
+  /**
+   * @author Stefan Winkler
+   * @author Andras Peteri
+   */
+  private class ListDeltaWriter implements CDOFeatureDeltaVisitor
+  {
+    private IDBStoreAccessor accessor;
+
+    private CDOID id;
+
+    private int branchID;
+
+    private int oldVersion;
+
+    private int newVersion;
+
+    private int lastListIndex;
+
+    private int pendingRemovedIndex;
+
+    public ListDeltaWriter(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int targetBranchID, int oldVersion, int newVersion)
+    {
+      this.accessor = accessor;
+      id = originalRevision.getID();
+      branchID = targetBranchID;
+      this.oldVersion = oldVersion;
+      this.newVersion = newVersion;
+      lastListIndex = originalRevision.size(getFeature()) - 1;
+      pendingRemovedIndex = -1;
+    }
+
+    @Override
+    public void visit(CDOAddFeatureDelta delta)
+    {
+      finishPendingRemove();
+      int startIndex = delta.getIndex();
+      int endIndex = lastListIndex;
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Delta Adding at: {0}", startIndex); //$NON-NLS-1$
+      }
+
+      if (startIndex <= endIndex)
+      {
+        // make room for the new item
+        moveOneDown(oldVersion, newVersion, startIndex, endIndex);
+      }
+
+      // create the item
+      addEntry(accessor, id, branchID, newVersion, startIndex, delta.getValue());
+
+      ++lastListIndex;
+    }
+
+    @Override
+    public void visit(CDORemoveFeatureDelta delta)
+    {
+      finishPendingRemove();
+      pendingRemovedIndex = delta.getIndex();
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Delta Removing at: {0}", pendingRemovedIndex); //$NON-NLS-1$
+      }
+
+      // remove the item
+      removeEntry(accessor, id, branchID, oldVersion, newVersion, pendingRemovedIndex);
+    }
+
+    @Override
+    public void visit(CDOSetFeatureDelta delta)
+    {
+      finishPendingRemove();
+      int index = delta.getIndex();
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Delta Setting at: {0}", index); //$NON-NLS-1$
+      }
+
+      // remove the item
+      removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
+
+      // create the item
+      addEntry(accessor, id, branchID, newVersion, index, delta.getValue());
+    }
+
+    @Override
+    public void visit(CDOUnsetFeatureDelta delta)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Delta Unsetting"); //$NON-NLS-1$
+      }
+
+      clearList(accessor, id, branchID, oldVersion, newVersion, lastListIndex);
+      lastListIndex = -1;
+      pendingRemovedIndex = -1;
+    }
+
+    @Override
+    public void visit(CDOClearFeatureDelta delta)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Delta Clearing"); //$NON-NLS-1$
+      }
+
+      clearList(accessor, id, branchID, oldVersion, newVersion, lastListIndex);
+      lastListIndex = -1;
+      pendingRemovedIndex = -1;
+    }
+
+    @Override
+    public void visit(CDOMoveFeatureDelta delta)
+    {
+      int sourceIndex = delta.getOldPosition();
+      int targetIndex = delta.getNewPosition();
+
+      // optimization: a move from the end of the list to an index that was just removed requires no shifting
+      boolean optimizeMove = pendingRemovedIndex != -1 && sourceIndex == lastListIndex - 1 && targetIndex == pendingRemovedIndex;
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Delta Moving: {0} to {1}", sourceIndex, targetIndex); //$NON-NLS-1$
+      }
+
+      // items after a pending remove have an index offset by one
+      if (optimizeMove)
+      {
+        sourceIndex++;
+      }
+      else
+      {
+        finishPendingRemove();
+      }
+
+      Object value = getValue(accessor, id, branchID, sourceIndex, true);
+
+      // remove the item
+      removeEntry(accessor, id, branchID, oldVersion, newVersion, sourceIndex);
+
+      // adjust indexes and shift either up or down for regular moves
+      if (!optimizeMove)
+      {
+        if (sourceIndex < targetIndex)
+        {
+          moveOneUp(oldVersion, newVersion, sourceIndex + 1, targetIndex);
+        }
+        else
+        { // sourceIndex > targetIndex here
+          moveOneDown(oldVersion, newVersion, targetIndex, sourceIndex - 1);
+        }
+      }
+      else
+      {
+        // finish the optimized move by resetting pendingRemovedIndex
+        pendingRemovedIndex = -1;
+        --lastListIndex;
+      }
+
+      // create the item
+      addEntry(accessor, id, branchID, newVersion, targetIndex, value);
+    }
+
+    @Override
+    public void visit(CDOListFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    @Override
+    public void visit(CDOContainerFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    public void finishPendingRemove()
+    {
+      if (pendingRemovedIndex != -1)
+      {
+        int startIndex = pendingRemovedIndex;
+        int endIndex = lastListIndex;
+
+        // make room for the new item
+        moveOneUp(oldVersion, newVersion, startIndex + 1, endIndex);
+
+        --lastListIndex;
+        pendingRemovedIndex = -1;
+      }
+    }
+
+    private void moveOneUp(int oldVersion, int newVersion, int startIndex, int endIndex)
+    {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+
+      try
+      {
+        for (int index = startIndex; index <= endIndex; ++index)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("moveOneUp moving: {0} -> {1}", index, index - 1); //$NON-NLS-1$
+          }
+
+          int column = 1;
+          stmt.setInt(column++, index - 1);
+          idHandler.setCDOID(stmt, column++, id);
+          stmt.setInt(column++, branchID);
+          stmt.setInt(column++, newVersion);
+          stmt.setInt(column++, index);
+
+          int result = DBUtil.update(stmt, false);
+          switch (result)
+          {
+          case 1:
+            // entry for current revision was already present.
+            // index update succeeded.
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("moveOneUp updated: {0} -> {1}", index, index - 1); //$NON-NLS-1$
+            }
+
+            break;
+          // no entry for current revision there.
+          case 0:
+            Object value = getValue(accessor, id, branchID, index, false);
+
+            if (value != null)
+            {
+              if (TRACER.isEnabled())
+              {
+                TRACER.format("moveOneUp remove: {0}", index); //$NON-NLS-1$
+              }
+
+              removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
+            }
+            else
+            {
+              value = getValueFromBase(accessor, id, branchID, index);
+
+              if (TRACER.isEnabled())
+              {
+                TRACER.format("moveOneUp add historic entry at: {0}", index); //$NON-NLS-1$
+              }
+
+              addHistoricEntry(accessor, id, branchID, 0, newVersion, index, value);
+            }
+
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("moveOneUp add: {0}", index - 1); //$NON-NLS-1$
+            }
+
+            addEntry(accessor, id, branchID, newVersion, index - 1, value);
+            break;
+          default:
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("moveOneUp Too many results: {0} -> {1}: {2}", index, index + 1, result); //$NON-NLS-1$
+            }
+
+            throw new DBException("Too many results"); //$NON-NLS-1$
+          }
+        }
+      }
+      catch (SQLException e)
+      {
+        throw new DBException(e);
+      }
+      finally
+      {
+        DBUtil.close(stmt);
+      }
+    }
+
+    private void moveOneDown(int oldVersion, int newVersion, int startIndex, int endIndex)
+    {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
+
+      try
+      {
+        for (int index = endIndex; index >= startIndex; --index)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("moveOneDown moving: {0} -> {1}", index, index + 1); //$NON-NLS-1$
+          }
+
+          int column = 1;
+          stmt.setInt(column++, index + 1);
+          idHandler.setCDOID(stmt, column++, id);
+          stmt.setInt(column++, branchID);
+          stmt.setInt(column++, newVersion);
+          stmt.setInt(column++, index);
+
+          int result = DBUtil.update(stmt, false);
+          switch (result)
+          {
+          case 1:
+            // entry for current revision was already present.
+            // index update succeeded.
+
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("moveOneDown updated: {0} -> {1}", index, index + 1); //$NON-NLS-1$
+            }
+
+            break;
+          case 0:
+            Object value = getValue(accessor, id, branchID, index, false);
+
+            if (value != null)
+            {
+              if (TRACER.isEnabled())
+              {
+                TRACER.format("moveOneDown remove: {0}", index); //$NON-NLS-1$
+              }
+
+              removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
+            }
+            else
+            {
+              value = getValueFromBase(accessor, id, branchID, index);
+
+              if (TRACER.isEnabled())
+              {
+                TRACER.format("moveOneDown add historic entry at: {0}", index); //$NON-NLS-1$
+              }
+
+              addHistoricEntry(accessor, id, branchID, 0, newVersion, index, value);
+            }
+
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("moveOneDown add: {0}", index + 1); //$NON-NLS-1$
+            }
+
+            addEntry(accessor, id, branchID, newVersion, index + 1, value);
+            break;
+          default:
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("moveOneDown Too many results: {0} -> {1}: {2}", index, index + 1, result); //$NON-NLS-1$
+            }
+
+            throw new DBException("Too many results"); //$NON-NLS-1$
+          }
+        }
+      }
+      catch (SQLException e)
+      {
+        throw new DBException(e);
+      }
+      finally
+      {
+        DBUtil.close(stmt);
+      }
     }
   }
 }

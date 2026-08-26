@@ -972,7 +972,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
 
     // let the visitor collect the changes
-    ListDeltaVisitor visitor = new ListDeltaVisitor(accessor, originalRevision, oldVersion, newVersion);
+    ListDeltaWriter visitor = new ListDeltaWriter(accessor, originalRevision, oldVersion, newVersion);
 
     if (TRACER.isEnabled())
     {
@@ -990,7 +990,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   /**
    * @author Stefan Winkler
    */
-  private class ListDeltaVisitor implements CDOFeatureDeltaVisitor
+  private class ListDeltaWriter implements CDOFeatureDeltaVisitor
   {
     private IDBStoreAccessor accessor;
 
@@ -1000,70 +1000,70 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
     private int newVersion;
 
-    private int lastIndex;
+    private int lastListIndex;
 
-    private int lastRemovedIndex;
+    private int pendingRemovedIndex;
 
-    public ListDeltaVisitor(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion)
+    public ListDeltaWriter(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion)
     {
       this.accessor = accessor;
       id = originalRevision.getID();
       this.oldVersion = oldVersion;
       this.newVersion = newVersion;
-      lastIndex = originalRevision.size(getFeature()) - 1;
-      lastRemovedIndex = -1;
+      lastListIndex = originalRevision.size(getFeature()) - 1;
+      pendingRemovedIndex = -1;
     }
 
     @Override
     public void visit(CDOMoveFeatureDelta delta)
     {
-      int fromIdx = delta.getOldPosition();
-      int toIdx = delta.getNewPosition();
+      int sourceIndex = delta.getOldPosition();
+      int targetIndex = delta.getNewPosition();
 
       // optimization: a move from the end of the list to an index that was just removed requires no shifting
-      boolean optimizeMove = lastRemovedIndex != -1 && fromIdx == lastIndex - 1 && toIdx == lastRemovedIndex;
+      boolean optimizeMove = pendingRemovedIndex != -1 && sourceIndex == lastListIndex - 1 && targetIndex == pendingRemovedIndex;
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Delta Moving: {0} to {1}", fromIdx, toIdx); //$NON-NLS-1$
+        TRACER.format("Delta Moving: {0} to {1}", sourceIndex, targetIndex); //$NON-NLS-1$
       }
 
       // items after a pending remove have an index offset by one
       if (optimizeMove)
       {
-        fromIdx++;
+        sourceIndex++;
       }
       else
       {
         finishPendingRemove();
       }
 
-      Object value = getValue(accessor, id, fromIdx);
+      Object value = getValue(accessor, id, sourceIndex);
 
       // remove the item
-      removeEntry(accessor, id, oldVersion, newVersion, fromIdx);
+      removeEntry(accessor, id, oldVersion, newVersion, sourceIndex);
 
       // adjust indexes and shift either up or down
       if (!optimizeMove)
       {
-        if (fromIdx < toIdx)
+        if (sourceIndex < targetIndex)
         {
-          moveOneUp(accessor, id, oldVersion, newVersion, fromIdx + 1, toIdx);
+          moveOneUp(accessor, id, oldVersion, newVersion, sourceIndex + 1, targetIndex);
         }
         else
-        { // fromIdx > toIdx here
-          moveOneDown(accessor, id, oldVersion, newVersion, toIdx, fromIdx - 1);
+        { // sourceIndex > targetIndex here
+          moveOneDown(accessor, id, oldVersion, newVersion, targetIndex, sourceIndex - 1);
         }
       }
       else
       {
-        // finish the optimized move by resetting lastRemovedIndex
-        lastRemovedIndex = -1;
-        --lastIndex;
+        // finish the optimized move by resetting pendingRemovedIndex
+        pendingRemovedIndex = -1;
+        --lastListIndex;
       }
 
       // create the item
-      addEntry(accessor, id, newVersion, toIdx, value);
+      addEntry(accessor, id, newVersion, targetIndex, value);
     }
 
     @Override
@@ -1071,7 +1071,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       finishPendingRemove();
       int startIndex = delta.getIndex();
-      int endIndex = lastIndex;
+      int endIndex = lastListIndex;
 
       if (TRACER.isEnabled())
       {
@@ -1087,22 +1087,22 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       // create the item
       addEntry(accessor, id, newVersion, startIndex, delta.getValue());
 
-      ++lastIndex;
+      ++lastListIndex;
     }
 
     @Override
     public void visit(CDORemoveFeatureDelta delta)
     {
       finishPendingRemove();
-      lastRemovedIndex = delta.getIndex();
+      pendingRemovedIndex = delta.getIndex();
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Delta Removing at: {0}", lastRemovedIndex); //$NON-NLS-1$
+        TRACER.format("Delta Removing at: {0}", pendingRemovedIndex); //$NON-NLS-1$
       }
 
       // remove the item
-      removeEntry(accessor, id, oldVersion, newVersion, lastRemovedIndex);
+      removeEntry(accessor, id, oldVersion, newVersion, pendingRemovedIndex);
     }
 
     @Override
@@ -1132,8 +1132,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       }
 
       clearList(accessor, id, oldVersion, newVersion);
-      lastIndex = -1;
-      lastRemovedIndex = -1;
+      lastListIndex = -1;
+      pendingRemovedIndex = -1;
     }
 
     @Override
@@ -1151,8 +1151,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       }
 
       clearList(accessor, id, oldVersion, newVersion);
-      lastIndex = -1;
-      lastRemovedIndex = -1;
+      lastListIndex = -1;
+      pendingRemovedIndex = -1;
     }
 
     @Override
@@ -1163,16 +1163,16 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
     public void finishPendingRemove()
     {
-      if (lastRemovedIndex != -1)
+      if (pendingRemovedIndex != -1)
       {
-        int startIndex = lastRemovedIndex;
-        int endIndex = lastIndex;
+        int startIndex = pendingRemovedIndex;
+        int endIndex = lastListIndex;
 
         // make room for the new item
         moveOneUp(accessor, id, oldVersion, newVersion, startIndex + 1, endIndex);
 
-        --lastIndex;
-        lastRemovedIndex = -1;
+        --lastListIndex;
+        pendingRemovedIndex = -1;
       }
     }
 

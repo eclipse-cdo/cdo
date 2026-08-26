@@ -176,13 +176,13 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
 
     private boolean clearFirst;
 
-    private int offsetBefore;
+    private int currentIndexOffset;
 
     /**
      * Start of a range [tempIndex, tempIndex-1, ...] which lies outside of the normal list indexes and which serve as
      * temporary space to move items temporarily to get them out of the way of other operations.
      */
-    private int tmpIndex = -1;
+    private int temporaryIndex = -1;
 
     private int newListSize;
 
@@ -336,35 +336,35 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
     @Override
     public void visit(CDOMoveFeatureDelta delta)
     {
-      int fromIdx = delta.getOldPosition();
-      int toIdx = delta.getNewPosition();
+      int sourceIndex = delta.getOldPosition();
+      int targetIndex = delta.getNewPosition();
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("  - move {0} -> {1}", fromIdx, toIdx); //$NON-NLS-1$
+        TRACER.format("  - move {0} -> {1}", sourceIndex, targetIndex); //$NON-NLS-1$
       }
 
       // Ignore the trivial case
-      if (fromIdx == toIdx)
+      if (sourceIndex == targetIndex)
       {
         return;
       }
 
-      Manipulation manipulation = findManipulation(fromIdx);
+      Manipulation manipulation = findManipulation(sourceIndex);
 
       // Adjust indexes and shift either up or down
-      if (fromIdx < toIdx)
+      if (sourceIndex < targetIndex)
       {
-        shiftIndexes(fromIdx + 1, toIdx, -1);
+        shiftIndexes(sourceIndex + 1, targetIndex, -1);
       }
       else
       {
-        // fromIdx > toIdx here
-        shiftIndexes(toIdx, fromIdx - 1, +1);
+        // sourceIndex > targetIndex here
+        shiftIndexes(targetIndex, sourceIndex - 1, +1);
       }
 
       // Set the new index
-      manipulation.dstIndex = toIdx;
+      manipulation.targetIndex = targetIndex;
 
       // If it is a new element, no MOVE mark needed, because we insert it at the new position
       if (!manipulation.is(INSERT))
@@ -407,28 +407,28 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
     }
 
     /**
-     * Helper method: shift all (destination) indexes in the interval [from,to] (inclusive at both ends) by offset
+     * Helper method: shift all target indexes in the interval [source,target] (inclusive at both ends) by offset
      * (positive or negative).
      */
-    private void shiftIndexes(int from, int to, int offset)
+    private void shiftIndexes(int source, int target, int offset)
     {
       for (Manipulation manipulation : manipulations)
       {
-        if (manipulation.dstIndex >= from && (to == UNBOUNDED_SHIFT || manipulation.dstIndex <= to))
+        if (manipulation.targetIndex >= source && (target == UNBOUNDED_SHIFT || manipulation.targetIndex <= target))
         {
-          manipulation.dstIndex += offset;
+          manipulation.targetIndex += offset;
         }
       }
     }
 
     /**
-     * Find a manipulation item by destination index).
+     * Find a manipulation item by target index).
      */
     private Manipulation findManipulation(int index)
     {
       for (Manipulation manipulation : manipulations)
       {
-        if (manipulation.dstIndex == index)
+        if (manipulation.targetIndex == index)
         {
           return manipulation;
         }
@@ -452,7 +452,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
         // Mark the existing item as to be deleted.
         // Previous MOVE and SET conditions are overridden by setting the exclusive DELETE type.
         manipulation.types = DELETE;
-        manipulation.dstIndex = NO_INDEX;
+        manipulation.targetIndex = NO_INDEX;
       }
     }
 
@@ -472,38 +472,38 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
        */
 
       // First, get the current offset.
-      offsetBefore = getCurrentIndexOffset();
+      currentIndexOffset = getCurrentIndexOffset();
       if (TRACER.isEnabled())
       {
         TRACER.trace("Offset optimization."); //$NON-NLS-1$
-        TRACER.trace("Current offset = " + offsetBefore); //$NON-NLS-1$
+        TRACER.trace("Current offset = " + currentIndexOffset); //$NON-NLS-1$
       }
 
-      applyOffsetToSourceIndexes(offsetBefore);
+      applyOffsetToSourceIndexes(currentIndexOffset);
 
-      int offsetAfter;
+      int targetOffset;
 
-      if ((long)Math.abs(offsetBefore) + (long)manipulations.size() > Integer.MAX_VALUE)
+      if ((long)Math.abs(currentIndexOffset) + (long)manipulations.size() > Integer.MAX_VALUE)
       {
         // Safety belt for really huge collections or for collections that have been manipulated lots of times
         // -> Do not optimize after this border is crossed. Instead, reset offset for the whole list to a zero-based
         // index.
-        offsetAfter = 0;
+        targetOffset = 0;
       }
       else
       {
-        offsetAfter = calculateOptimalOffset();
+        targetOffset = calculateOptimalOffset();
       }
 
       if (TRACER.isEnabled())
       {
-        TRACER.trace("New offset = " + offsetAfter); //$NON-NLS-1$
+        TRACER.trace("New offset = " + targetOffset); //$NON-NLS-1$
       }
 
-      applyOffsetToDestinationIndexes(offsetAfter);
+      applyOffsetToTargetIndexes(targetOffset);
 
       // Make sure temporary indexes do not get in the way of the other operations.
-      tmpIndex = Math.min(offsetBefore, offsetAfter) - 1;
+      temporaryIndex = Math.min(currentIndexOffset, targetOffset) - 1;
     }
 
     /**
@@ -520,12 +520,12 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
 
       for (Manipulation manipulation : manipulations)
       {
-        int srcIndex = manipulation.srcIndex;
-        int dstIndex = manipulation.dstIndex;
+        int sourceIndex = manipulation.sourceIndex;
+        int targetIndex = manipulation.targetIndex;
 
-        if (srcIndex != NO_INDEX && dstIndex != NO_INDEX)
+        if (sourceIndex != NO_INDEX && targetIndex != NO_INDEX)
         {
-          int offset = dstIndex - srcIndex;
+          int offset = targetIndex - sourceIndex;
           Integer oldOccurrence = occurrences.get(offset);
 
           int newOccurrence;
@@ -554,30 +554,30 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
       return -bestOffset;
     }
 
-    private void applyOffsetToSourceIndexes(int offsetBefore)
+    private void applyOffsetToSourceIndexes(int currentOffset)
     {
-      if (offsetBefore != 0)
+      if (currentOffset != 0)
       {
         for (Manipulation manipulation : manipulations)
         {
-          if (manipulation.srcIndex != NO_INDEX)
+          if (manipulation.sourceIndex != NO_INDEX)
           {
-            manipulation.srcIndex += offsetBefore;
+            manipulation.sourceIndex += currentOffset;
           }
         }
       }
     }
 
-    private void applyOffsetToDestinationIndexes(int offsetAfter)
+    private void applyOffsetToTargetIndexes(int targetOffset)
     {
-      if (offsetAfter != 0)
+      if (targetOffset != 0)
       {
         for (Manipulation manipulation : manipulations)
         {
-          if (manipulation.dstIndex != NO_INDEX)
+          if (manipulation.targetIndex != NO_INDEX)
           {
             // Apply the offset to all indices to make them relative to the new offset
-            manipulation.dstIndex += offsetAfter;
+            manipulation.targetIndex += targetOffset;
           }
         }
       }
@@ -585,12 +585,12 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
 
     protected final int getOffsetBefore()
     {
-      return offsetBefore;
+      return currentIndexOffset;
     }
 
     protected final int getNextTmpIndex()
     {
-      return --tmpIndex;
+      return --temporaryIndex;
     }
 
     /**
@@ -621,11 +621,11 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
           /*
            * Step 1: DELETE all elements e which have e.is(DELETE) by e.srcIndex
            */
-          dbDelete(idHandler, manipulation.srcIndex);
+          dbDelete(idHandler, manipulation.sourceIndex);
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - delete at {0} ", manipulation.srcIndex); //$NON-NLS-1$
+            TRACER.format(" - delete at {0} ", manipulation.sourceIndex); //$NON-NLS-1$
           }
         }
 
@@ -635,12 +635,12 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
            * Step 2: MOVE all elements e (by e.srcIndex) which have e.is(MOVE) to tmpIndex (-1, -2, -3, -4, ...) and
            * store tmpIndex in e.tempIndex
            */
-          manipulation.tmpIndex = getNextTmpIndex();
-          dbMove(idHandler, manipulation.srcIndex, manipulation.tmpIndex, manipulation.srcIndex);
+          manipulation.temporaryIndex = getNextTmpIndex();
+          dbMove(idHandler, manipulation.sourceIndex, manipulation.temporaryIndex, manipulation.sourceIndex);
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - move {0} -> {1} ", manipulation.srcIndex, manipulation.tmpIndex); //$NON-NLS-1$
+            TRACER.format(" - move {0} -> {1} ", manipulation.sourceIndex, manipulation.temporaryIndex); //$NON-NLS-1$
           }
         }
       }
@@ -656,11 +656,11 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
            * Step 4: MOVE all elements e have e.is(MOVE) from e.tempIdx to e.dstIndex (because we have moved them
            * before, moveStmt is always initialized
            */
-          dbMove(idHandler, manipulation.tmpIndex, manipulation.dstIndex, manipulation.srcIndex);
+          dbMove(idHandler, manipulation.temporaryIndex, manipulation.targetIndex, manipulation.sourceIndex);
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - move {0} -> {1} ", manipulation.tmpIndex, manipulation.dstIndex); //$NON-NLS-1$
+            TRACER.format(" - move {0} -> {1} ", manipulation.temporaryIndex, manipulation.targetIndex); //$NON-NLS-1$
           }
         }
 
@@ -669,11 +669,11 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
           /*
            * Step 5: SET all elements which have e.type == SET by index == e.dstIndex
            */
-          dbSet(idHandler, typeMapping, manipulation.dstIndex, manipulation.value, manipulation.srcIndex);
+          dbSet(idHandler, typeMapping, manipulation.targetIndex, manipulation.value, manipulation.sourceIndex);
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - set value at {0} to {1} ", manipulation.dstIndex, manipulation.value); //$NON-NLS-1$
+            TRACER.format(" - set value at {0} to {1} ", manipulation.targetIndex, manipulation.value); //$NON-NLS-1$
           }
         }
 
@@ -682,11 +682,11 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
           /*
            * Step 6: INSERT all elements which have e.type == INSERT.
            */
-          dbInsert(idHandler, typeMapping, manipulation.dstIndex, manipulation.value);
+          dbInsert(idHandler, typeMapping, manipulation.targetIndex, manipulation.value);
 
           if (TRACER.isEnabled())
           {
-            TRACER.format(" - insert value at {0} : value {1} ", manipulation.dstIndex, manipulation.value); //$NON-NLS-1$
+            TRACER.format(" - insert value at {0} : value {1} ", manipulation.targetIndex, manipulation.value); //$NON-NLS-1$
           }
         }
       }
@@ -708,9 +708,9 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
       LinkedList<Shift> shiftOperations = new LinkedList<>();
 
       /*
-       * If a necessary shift is detected (source and destination indices differ), firstIndex is set to the current
-       * index and currentOffset is set to the offset of the shift operation. When a new offset is detected or the range
-       * is interrupted, we record the range and start a new one if needed.
+       * If a necessary shift is detected (source and target indices differ), firstIndex is set to the current index and
+       * currentOffset is set to the offset of the shift operation. When a new offset is detected or the range is
+       * interrupted, we record the range and start a new one if needed.
        */
       int rangeStartIndex = NO_INDEX;
       int rangeOffset = 0;
@@ -725,7 +725,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
          */
         if (manipulation.types == NONE || manipulation.types == SET)
         {
-          int elementOffset = manipulation.dstIndex - manipulation.srcIndex;
+          int elementOffset = manipulation.targetIndex - manipulation.sourceIndex;
 
           /*
            * First make sure if we have to close a previous range. This is the case, if the current element's offset
@@ -748,7 +748,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
            */
           if (elementOffset != 0 && rangeStartIndex == NO_INDEX)
           {
-            rangeStartIndex = manipulation.srcIndex;
+            rangeStartIndex = manipulation.sourceIndex;
             rangeOffset = elementOffset;
           }
         }
@@ -766,7 +766,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
           }
         }
 
-        lastElementIndex = manipulation.srcIndex;
+        lastElementIndex = manipulation.sourceIndex;
       }
 
       // After the iteration, we have to make sure that we remember the last open range, if it is there
@@ -819,9 +819,9 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
 
     protected abstract void dbDelete(IIDHandler idHandler, int index) throws SQLException;
 
-    protected abstract void dbMove(IIDHandler idHandler, int fromIndex, int toIndex, int srcIndex) throws SQLException;
+    protected abstract void dbMove(IIDHandler idHandler, int sourcePhysicalIndex, int targetPhysicalIndex, int sourceIndex) throws SQLException;
 
-    protected abstract void dbSet(IIDHandler idHandler, ITypeMapping typeMapping, int index, Object value, int srcIndex) throws SQLException;
+    protected abstract void dbSet(IIDHandler idHandler, ITypeMapping typeMapping, int targetPhysicalIndex, Object value, int sourceIndex) throws SQLException;
 
     protected abstract void dbInsert(IIDHandler idHandler, ITypeMapping typeMapping, int index, Object value) throws SQLException;
 
@@ -914,20 +914,20 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
 
       public int types;
 
-      public int srcIndex;
+      public int sourceIndex;
 
-      public int tmpIndex;
+      public int temporaryIndex;
 
-      public int dstIndex;
+      public int targetIndex;
 
       public Object value;
 
-      public Manipulation(int types, int srcIndex, int dstIndex, Object value)
+      public Manipulation(int types, int sourceIndex, int targetIndex, Object value)
       {
         this.types = types;
-        this.srcIndex = srcIndex;
-        tmpIndex = NO_INDEX;
-        this.dstIndex = dstIndex;
+        this.sourceIndex = sourceIndex;
+        temporaryIndex = NO_INDEX;
+        this.targetIndex = targetIndex;
         this.value = value;
       }
 
@@ -944,8 +944,8 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
       @Override
       public String toString()
       {
-        return MessageFormat.format("Manipulation[types={0}, srcIndex={1}, tmpIndex={2}, dstIndex={3}, value={4}]", formatTypes(types), formatIndex(srcIndex),
-            formatIndex(tmpIndex), formatIndex(dstIndex), String.valueOf(value));
+        return MessageFormat.format("Manipulation[types={0}, srcIndex={1}, tmpIndex={2}, dstIndex={3}, value={4}]", formatTypes(types),
+            formatIndex(sourceIndex), formatIndex(temporaryIndex), formatIndex(targetIndex), String.valueOf(value));
       }
 
       /**

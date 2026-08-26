@@ -334,13 +334,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     private IDBPreparedStatement stmtShiftUpFinal;
 
-    private int countDelete;
+    private int deleteCount;
 
-    private int countMove;
+    private int moveCount;
 
-    private int countSet;
+    private int setCount;
 
-    private int countInsert;
+    private int insertCount;
 
     public ListDeltaWriter(IDBStoreAccessor accessor, CDOID id, List<CDOFeatureDelta> listChanges, int oldListSize)
     {
@@ -378,34 +378,34 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         super.writeResultToDatabase();
 
-        if (countMove > 0)
+        if (moveCount > 0)
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Performing {0} move operations", countMove); //$NON-NLS-1$
+            TRACER.format("Performing {0} move operations", moveCount); //$NON-NLS-1$
           }
 
-          DBUtil.executeBatch(stmtMove, countMove);
+          DBUtil.executeBatch(stmtMove, moveCount);
         }
 
-        if (countInsert > 0)
+        if (insertCount > 0)
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Performing {0} insert operations", countInsert); //$NON-NLS-1$
+            TRACER.format("Performing {0} insert operations", insertCount); //$NON-NLS-1$
           }
 
-          DBUtil.executeBatch(stmtInsert, countInsert);
+          DBUtil.executeBatch(stmtInsert, insertCount);
         }
 
-        if (countSet > 0)
+        if (setCount > 0)
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Performing {0} set operations", countSet); //$NON-NLS-1$
+            TRACER.format("Performing {0} set operations", setCount); //$NON-NLS-1$
           }
 
-          DBUtil.executeBatch(stmtSet, countSet);
+          DBUtil.executeBatch(stmtSet, setCount);
         }
       }
       finally
@@ -417,25 +417,25 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     @Override
     protected void writeShifts(IIDHandler idHandler) throws SQLException
     {
-      if (countDelete > 0)
+      if (deleteCount > 0)
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} delete operations", countDelete); //$NON-NLS-1$
+          TRACER.format("Performing {0} delete operations", deleteCount); //$NON-NLS-1$
         }
 
-        DBUtil.executeBatch(stmtDelete, countDelete);
+        DBUtil.executeBatch(stmtDelete, deleteCount);
       }
 
-      if (countMove > 0)
+      if (moveCount > 0)
       {
         if (TRACER.isEnabled())
         {
-          TRACER.format("Performing {0} move operations", countMove); //$NON-NLS-1$
+          TRACER.format("Performing {0} move operations", moveCount); //$NON-NLS-1$
         }
 
-        DBUtil.executeBatch(stmtMove, countMove);
-        countMove = 0;
+        DBUtil.executeBatch(stmtMove, moveCount);
+        moveCount = 0;
       }
 
       super.writeShifts(idHandler);
@@ -478,11 +478,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       stmtDelete.setInt(2, index);
       stmtDelete.addBatch();
-      ++countDelete;
+      ++deleteCount;
     }
 
     @Override
-    protected void dbMove(IIDHandler idHandler, int fromIndex, int toIndex, int srcIndex) throws SQLException
+    protected void dbMove(IIDHandler idHandler, int sourcePhysicalIndex, int targetPhysicalIndex, int sourceIndex) throws SQLException
     {
       if (stmtMove == null)
       {
@@ -490,14 +490,14 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         idHandler.setCDOID(stmtMove, 2, id);
       }
 
-      stmtMove.setInt(3, fromIndex);
-      stmtMove.setInt(1, toIndex);
+      stmtMove.setInt(3, sourcePhysicalIndex);
+      stmtMove.setInt(1, targetPhysicalIndex);
       stmtMove.addBatch();
-      ++countMove;
+      ++moveCount;
     }
 
     @Override
-    protected void dbSet(IIDHandler idHandler, ITypeMapping typeMapping, int index, Object value, int srcIndex) throws SQLException
+    protected void dbSet(IIDHandler idHandler, ITypeMapping typeMapping, int targetPhysicalIndex, Object value, int sourceIndex) throws SQLException
     {
       if (stmtSet == null)
       {
@@ -505,10 +505,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         idHandler.setCDOID(stmtSet, 2, id);
       }
 
-      stmtSet.setInt(3, index);
+      stmtSet.setInt(3, targetPhysicalIndex);
       typeMapping.setValue(stmtSet, 1, value);
       stmtSet.addBatch();
-      ++countSet;
+      ++setCount;
     }
 
     @Override
@@ -523,11 +523,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       stmtInsert.setInt(2, index);
       typeMapping.setValue(stmtInsert, 3, value);
       stmtInsert.addBatch();
-      ++countInsert;
+      ++insertCount;
     }
 
     @Override
-    protected void dbShiftDown(IIDHandler idHandler, int offset, int startIndex, int endIndex) throws SQLException
+    protected void dbShiftDown(IIDHandler idHandler, int shiftOffset, int shiftStartPhysicalIndex, int shiftEndPhysicalIndex) throws SQLException
     {
       if (stmtShiftDown == null)
       {
@@ -538,21 +538,21 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         idHandler.setCDOID(stmtShiftDownFinal, 3, id);
       }
 
-      int temporaryOffset = getTemporaryOffset(startIndex, endIndex);
-      stmtShiftDown.setInt(1, temporaryOffset);
-      stmtShiftDown.setInt(3, startIndex);
-      stmtShiftDown.setInt(4, endIndex);
+      int temporaryIndexOffset = getTemporaryOffset(shiftStartPhysicalIndex, shiftEndPhysicalIndex);
+      stmtShiftDown.setInt(1, temporaryIndexOffset);
+      stmtShiftDown.setInt(3, shiftStartPhysicalIndex);
+      stmtShiftDown.setInt(4, shiftEndPhysicalIndex);
 
-      stmtShiftDownFinal.setInt(1, temporaryOffset);
-      stmtShiftDownFinal.setInt(2, offset);
-      stmtShiftDownFinal.setInt(4, (int)((long)startIndex + temporaryOffset));
-      stmtShiftDownFinal.setInt(5, (int)((long)endIndex + temporaryOffset));
+      stmtShiftDownFinal.setInt(1, temporaryIndexOffset);
+      stmtShiftDownFinal.setInt(2, shiftOffset);
+      stmtShiftDownFinal.setInt(4, (int)((long)shiftStartPhysicalIndex + temporaryIndexOffset));
+      stmtShiftDownFinal.setInt(5, (int)((long)shiftEndPhysicalIndex + temporaryIndexOffset));
       stmtShiftDown.executeUpdate();
       stmtShiftDownFinal.executeUpdate();
     }
 
     @Override
-    protected void dbShiftUp(IIDHandler idHandler, int offset, int startIndex, int endIndex) throws SQLException
+    protected void dbShiftUp(IIDHandler idHandler, int shiftOffset, int shiftStartPhysicalIndex, int shiftEndPhysicalIndex) throws SQLException
     {
       if (stmtShiftUp == null)
       {
@@ -563,15 +563,15 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         idHandler.setCDOID(stmtShiftUpFinal, 3, id);
       }
 
-      int temporaryOffset = getTemporaryOffset(startIndex, endIndex);
-      stmtShiftUp.setInt(1, temporaryOffset);
-      stmtShiftUp.setInt(3, startIndex);
-      stmtShiftUp.setInt(4, endIndex);
+      int temporaryIndexOffset = getTemporaryOffset(shiftStartPhysicalIndex, shiftEndPhysicalIndex);
+      stmtShiftUp.setInt(1, temporaryIndexOffset);
+      stmtShiftUp.setInt(3, shiftStartPhysicalIndex);
+      stmtShiftUp.setInt(4, shiftEndPhysicalIndex);
 
-      stmtShiftUpFinal.setInt(1, temporaryOffset);
-      stmtShiftUpFinal.setInt(2, offset);
-      stmtShiftUpFinal.setInt(4, (int)((long)startIndex + temporaryOffset));
-      stmtShiftUpFinal.setInt(5, (int)((long)endIndex + temporaryOffset));
+      stmtShiftUpFinal.setInt(1, temporaryIndexOffset);
+      stmtShiftUpFinal.setInt(2, shiftOffset);
+      stmtShiftUpFinal.setInt(4, (int)((long)shiftStartPhysicalIndex + temporaryIndexOffset));
+      stmtShiftUpFinal.setInt(5, (int)((long)shiftEndPhysicalIndex + temporaryIndexOffset));
       stmtShiftUp.executeUpdate();
       stmtShiftUpFinal.executeUpdate();
     }

@@ -290,6 +290,10 @@
             key="includeSource">
           <value>true</value>
         </detail>
+        <detail
+            key="includeMode">
+          <value>planner</value>
+        </detail>
       </annotation>
       <requirement
           name="org.eclipse.emf.cdo.all.feature.group"/>

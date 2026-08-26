@@ -21,15 +21,9 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
-import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -63,7 +57,6 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -1236,193 +1229,56 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
    * @author Stefan Winkler
    * @author Andras Peteri
    */
-  private class ListDeltaWriter implements CDOFeatureDeltaVisitor
+  private class ListDeltaWriter extends AbstractRangeListDeltaWriter
   {
-    private IDBStoreAccessor accessor;
-
-    private CDOID id;
-
     private int branchID;
-
-    private int oldVersion;
-
-    private int newVersion;
-
-    private int lastListIndex;
-
-    private int pendingRemovedIndex;
 
     public ListDeltaWriter(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int targetBranchID, int oldVersion, int newVersion)
     {
-      this.accessor = accessor;
-      id = originalRevision.getID();
+      super(accessor, originalRevision, oldVersion, newVersion, TRACER);
       branchID = targetBranchID;
-      this.oldVersion = oldVersion;
-      this.newVersion = newVersion;
-      lastListIndex = originalRevision.size(getFeature()) - 1;
-      pendingRemovedIndex = -1;
     }
 
     @Override
-    public void visit(CDOAddFeatureDelta delta)
+    protected int getOldListSize(InternalCDORevision originalRevision)
     {
-      finishPendingRemove();
-      int startIndex = delta.getIndex();
-      int endIndex = lastListIndex;
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Adding at: {0}", startIndex); //$NON-NLS-1$
-      }
-
-      if (startIndex <= endIndex)
-      {
-        // make room for the new item
-        moveOneDown(oldVersion, newVersion, startIndex, endIndex);
-      }
-
-      // create the item
-      addEntry(accessor, id, branchID, newVersion, startIndex, delta.getValue());
-
-      ++lastListIndex;
+      return originalRevision.size(getFeature());
     }
 
     @Override
-    public void visit(CDORemoveFeatureDelta delta)
+    protected Object getValue(int index)
     {
-      finishPendingRemove();
-      pendingRemovedIndex = delta.getIndex();
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Removing at: {0}", pendingRemovedIndex); //$NON-NLS-1$
-      }
-
-      // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, pendingRemovedIndex);
+      return BranchingListTableMappingWithRanges.this.getValue(accessor, id, branchID, index, true);
     }
 
     @Override
-    public void visit(CDOSetFeatureDelta delta)
+    protected void removeEntry(int index)
     {
-      finishPendingRemove();
-      int index = delta.getIndex();
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Setting at: {0}", index); //$NON-NLS-1$
-      }
-
-      // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
-
-      // create the item
-      addEntry(accessor, id, branchID, newVersion, index, delta.getValue());
+      BranchingListTableMappingWithRanges.this.removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
     }
 
     @Override
-    public void visit(CDOUnsetFeatureDelta delta)
+    protected void addEntry(int index, Object value)
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Unsetting"); //$NON-NLS-1$
-      }
-
-      clearList(accessor, id, branchID, oldVersion, newVersion, lastListIndex);
-      lastListIndex = -1;
-      pendingRemovedIndex = -1;
+      BranchingListTableMappingWithRanges.this.addEntry(accessor, id, branchID, newVersion, index, value);
     }
 
     @Override
-    public void visit(CDOClearFeatureDelta delta)
+    protected void clearList()
     {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Clearing"); //$NON-NLS-1$
-      }
-
-      clearList(accessor, id, branchID, oldVersion, newVersion, lastListIndex);
-      lastListIndex = -1;
-      pendingRemovedIndex = -1;
+      BranchingListTableMappingWithRanges.this.clearList(accessor, id, branchID, oldVersion, newVersion, getLastListIndex());
     }
 
     @Override
-    public void visit(CDOMoveFeatureDelta delta)
+    protected void moveOneUp(int startIndex, int endIndex)
     {
-      int sourceIndex = delta.getOldPosition();
-      int targetIndex = delta.getNewPosition();
-
-      // optimization: a move from the end of the list to an index that was just removed requires no shifting
-      boolean optimizeMove = pendingRemovedIndex != -1 && sourceIndex == lastListIndex - 1 && targetIndex == pendingRemovedIndex;
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Delta Moving: {0} to {1}", sourceIndex, targetIndex); //$NON-NLS-1$
-      }
-
-      // items after a pending remove have an index offset by one
-      if (optimizeMove)
-      {
-        sourceIndex++;
-      }
-      else
-      {
-        finishPendingRemove();
-      }
-
-      Object value = getValue(accessor, id, branchID, sourceIndex, true);
-
-      // remove the item
-      removeEntry(accessor, id, branchID, oldVersion, newVersion, sourceIndex);
-
-      // adjust indexes and shift either up or down for regular moves
-      if (!optimizeMove)
-      {
-        if (sourceIndex < targetIndex)
-        {
-          moveOneUp(oldVersion, newVersion, sourceIndex + 1, targetIndex);
-        }
-        else
-        { // sourceIndex > targetIndex here
-          moveOneDown(oldVersion, newVersion, targetIndex, sourceIndex - 1);
-        }
-      }
-      else
-      {
-        // finish the optimized move by resetting pendingRemovedIndex
-        pendingRemovedIndex = -1;
-        --lastListIndex;
-      }
-
-      // create the item
-      addEntry(accessor, id, branchID, newVersion, targetIndex, value);
+      moveOneUp(oldVersion, newVersion, startIndex, endIndex);
     }
 
     @Override
-    public void visit(CDOListFeatureDelta delta)
+    protected void moveOneDown(int startIndex, int endIndex)
     {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    @Override
-    public void visit(CDOContainerFeatureDelta delta)
-    {
-      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
-    }
-
-    public void finishPendingRemove()
-    {
-      if (pendingRemovedIndex != -1)
-      {
-        int startIndex = pendingRemovedIndex;
-        int endIndex = lastListIndex;
-
-        // make room for the new item
-        moveOneUp(oldVersion, newVersion, startIndex + 1, endIndex);
-
-        --lastListIndex;
-        pendingRemovedIndex = -1;
-      }
+      moveOneDown(oldVersion, newVersion, startIndex, endIndex);
     }
 
     private void moveOneUp(int oldVersion, int newVersion, int startIndex, int endIndex)
@@ -1460,7 +1316,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
             break;
           // no entry for current revision there.
           case 0:
-            Object value = getValue(accessor, id, branchID, index, false);
+            Object value = BranchingListTableMappingWithRanges.this.getValue(accessor, id, branchID, index, false);
 
             if (value != null)
             {
@@ -1469,7 +1325,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
                 TRACER.format("moveOneUp remove: {0}", index); //$NON-NLS-1$
               }
 
-              removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
+              BranchingListTableMappingWithRanges.this.removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
             }
             else
             {
@@ -1488,7 +1344,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
               TRACER.format("moveOneUp add: {0}", index - 1); //$NON-NLS-1$
             }
 
-            addEntry(accessor, id, branchID, newVersion, index - 1, value);
+            BranchingListTableMappingWithRanges.this.addEntry(accessor, id, branchID, newVersion, index - 1, value);
             break;
           default:
             if (TRACER.isEnabled())
@@ -1545,7 +1401,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
             break;
           case 0:
-            Object value = getValue(accessor, id, branchID, index, false);
+            Object value = BranchingListTableMappingWithRanges.this.getValue(accessor, id, branchID, index, false);
 
             if (value != null)
             {
@@ -1554,7 +1410,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
                 TRACER.format("moveOneDown remove: {0}", index); //$NON-NLS-1$
               }
 
-              removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
+              BranchingListTableMappingWithRanges.this.removeEntry(accessor, id, branchID, oldVersion, newVersion, index);
             }
             else
             {
@@ -1573,7 +1429,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
               TRACER.format("moveOneDown add: {0}", index + 1); //$NON-NLS-1$
             }
 
-            addEntry(accessor, id, branchID, newVersion, index + 1, value);
+            BranchingListTableMappingWithRanges.this.addEntry(accessor, id, branchID, newVersion, index + 1, value);
             break;
           default:
             if (TRACER.isEnabled())

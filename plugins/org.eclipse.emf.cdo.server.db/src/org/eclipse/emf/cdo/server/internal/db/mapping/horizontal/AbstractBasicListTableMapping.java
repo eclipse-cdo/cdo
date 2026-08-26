@@ -35,10 +35,12 @@ import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -148,7 +150,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
   /**
    * @author Eike Stepper
    */
-  public static abstract class AbstractListDeltaWriter implements CDOFeatureDeltaVisitor
+  protected static abstract class AbstractListDeltaWriter implements CDOFeatureDeltaVisitor
   {
     private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractListDeltaWriter.class);
 
@@ -1023,6 +1025,203 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
       {
         return "Shift[" + startIndex + ".." + endIndex + ", offset=" + offset + "]";
       }
+    }
+  }
+
+  /**
+   * Shared delta sequencing for the audit and branching range mappings.
+   * Persistence of a single list entry and a shifted range remains mapping-specific.
+   *
+   * @author Eike Stepper
+   */
+  protected static abstract class AbstractRangeListDeltaWriter implements CDOFeatureDeltaVisitor
+  {
+    protected final IDBStoreAccessor accessor;
+
+    protected final CDOID id;
+
+    protected final int oldVersion;
+
+    protected final int newVersion;
+
+    private final ContextTracer tracer;
+
+    private int lastListIndex;
+
+    private int pendingRemovedIndex = -1;
+
+    protected AbstractRangeListDeltaWriter(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion,
+        ContextTracer tracer)
+    {
+      this.accessor = accessor;
+      id = originalRevision.getID();
+      this.oldVersion = oldVersion;
+      this.newVersion = newVersion;
+      this.tracer = tracer;
+      lastListIndex = getOldListSize(originalRevision) - 1;
+    }
+
+    @Override
+    public final void visit(CDOMoveFeatureDelta delta)
+    {
+      int sourceIndex = delta.getOldPosition();
+      int targetIndex = delta.getNewPosition();
+      boolean optimizeMove = pendingRemovedIndex != -1 && sourceIndex == lastListIndex - 1 && targetIndex == pendingRemovedIndex;
+
+      if (tracer.isEnabled())
+      {
+        tracer.format("Delta Moving: {0} to {1}", sourceIndex, targetIndex); //$NON-NLS-1$
+      }
+
+      if (optimizeMove)
+      {
+        ++sourceIndex;
+      }
+      else
+      {
+        finishPendingRemove();
+      }
+
+      Object value = getValue(sourceIndex);
+      removeEntry(sourceIndex);
+
+      if (!optimizeMove)
+      {
+        if (sourceIndex < targetIndex)
+        {
+          moveOneUp(sourceIndex + 1, targetIndex);
+        }
+        else
+        {
+          moveOneDown(targetIndex, sourceIndex - 1);
+        }
+      }
+      else
+      {
+        pendingRemovedIndex = -1;
+        --lastListIndex;
+      }
+
+      addEntry(targetIndex, value);
+    }
+
+    @Override
+    public final void visit(CDOAddFeatureDelta delta)
+    {
+      finishPendingRemove();
+      int index = delta.getIndex();
+      if (tracer.isEnabled())
+      {
+        tracer.format("Delta Adding at: {0}", index); //$NON-NLS-1$
+      }
+
+      if (index <= lastListIndex)
+      {
+        moveOneDown(index, lastListIndex);
+      }
+
+      addEntry(index, delta.getValue());
+      ++lastListIndex;
+    }
+
+    @Override
+    public final void visit(CDORemoveFeatureDelta delta)
+    {
+      finishPendingRemove();
+      pendingRemovedIndex = delta.getIndex();
+
+      if (tracer.isEnabled())
+      {
+        tracer.format("Delta Removing at: {0}", pendingRemovedIndex); //$NON-NLS-1$
+      }
+
+      removeEntry(pendingRemovedIndex);
+    }
+
+    @Override
+    public final void visit(CDOSetFeatureDelta delta)
+    {
+      finishPendingRemove();
+      int index = delta.getIndex();
+
+      if (tracer.isEnabled())
+      {
+        tracer.format("Delta Setting at: {0}", index); //$NON-NLS-1$
+      }
+
+      removeEntry(index);
+      addEntry(index, delta.getValue());
+    }
+
+    @Override
+    public final void visit(CDOUnsetFeatureDelta delta)
+    {
+      if (tracer.isEnabled())
+      {
+        tracer.format("Delta Unsetting"); //$NON-NLS-1$
+      }
+
+      clearList();
+      resetIndexes();
+    }
+
+    @Override
+    public final void visit(CDOClearFeatureDelta delta)
+    {
+      if (tracer.isEnabled())
+      {
+        tracer.format("Delta Clearing"); //$NON-NLS-1$
+      }
+
+      clearList();
+      resetIndexes();
+    }
+
+    @Override
+    public final void visit(CDOListFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    @Override
+    public final void visit(CDOContainerFeatureDelta delta)
+    {
+      throw new ImplementationError("Should not be called"); //$NON-NLS-1$
+    }
+
+    protected final void finishPendingRemove()
+    {
+      if (pendingRemovedIndex != -1)
+      {
+        moveOneUp(pendingRemovedIndex + 1, lastListIndex);
+        --lastListIndex;
+        pendingRemovedIndex = -1;
+      }
+    }
+
+    protected abstract Object getValue(int index);
+
+    protected abstract int getOldListSize(InternalCDORevision originalRevision);
+
+    protected abstract void removeEntry(int index);
+
+    protected abstract void addEntry(int index, Object value);
+
+    protected abstract void clearList();
+
+    protected abstract void moveOneUp(int startIndex, int endIndex);
+
+    protected abstract void moveOneDown(int startIndex, int endIndex);
+
+    protected final int getLastListIndex()
+    {
+      return lastListIndex;
+    }
+
+    private void resetIndexes()
+    {
+      lastListIndex = -1;
+      pendingRemovedIndex = -1;
     }
   }
 

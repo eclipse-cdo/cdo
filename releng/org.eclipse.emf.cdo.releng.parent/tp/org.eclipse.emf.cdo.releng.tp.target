@@ -3,7 +3,7 @@
 <target name="Generated from CDO">
   <locations>
     <location type="Target" uri="file:${project_loc:/org.eclipse.emf.cdo.releng}/CDO-Maven.target"/>
-    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="slicer" includeSource="true" type="InstallableUnit">
+    <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="a.jre.javase" version="0.0.0"/>
       <unit id="aQute.libg" version="0.0.0"/>
       <unit id="bcpg" version="0.0.0"/>
@@ -114,7 +114,7 @@
       <unit id="org.osgi.service.http.whiteboard" version="0.0.0"/>
       <unit id="org.osgi.service.repository" version="0.0.0"/>
       <unit id="slf4j.api" version="0.0.0"/>
-      <unit id="slf4j.nop" version="0.0.0"/>
+      <unit id="slf4j.simple" version="0.0.0"/>
       <repository location="https://download.eclipse.org/releases/2026-09"/>
       <repository location="https://download.eclipse.org/eclipse/updates/latest"/>
       <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/nightly/latest"/>

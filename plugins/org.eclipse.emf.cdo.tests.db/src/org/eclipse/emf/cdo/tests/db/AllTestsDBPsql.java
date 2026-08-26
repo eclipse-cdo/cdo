@@ -36,8 +36,8 @@ public class AllTestsDBPsql extends DBConfigs
   @Override
   protected void initConfigSuites(TestSuite parent)
   {
-    // addScenario(parent, new PostgresqlConfig(), JVM, NATIVE);
-    // addScenario(parent, new PostgresqlConfig().supportingAudits(true).withRanges(true), JVM, NATIVE);
+    addScenario(parent, new PostgresqlConfig(), JVM, NATIVE);
+    addScenario(parent, new PostgresqlConfig().supportingAudits(true).withRanges(true), JVM, NATIVE);
     addScenario(parent, new PostgresqlConfig().supportingBranches(true).withRanges(true), JVM, NATIVE);
   }
 }

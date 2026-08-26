@@ -204,6 +204,25 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
 
     public void writeListDeltas()
     {
+      planListDeltas();
+
+      try
+      {
+        writeResultToDatabase();
+      }
+      catch (SQLException e)
+      {
+        throw new DBException(e);
+      }
+
+      throw new NewListSizeResult(newListSize);
+    }
+
+    /**
+     * Applies the semantic list deltas and returns the resulting logical list size without performing JDBC work.
+     */
+    public int planListDeltas()
+    {
       if (TRACER.isEnabled())
       {
         TRACER.trace("Processing list deltas..."); //$NON-NLS-1$
@@ -236,16 +255,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
         }
       }
 
-      try
-      {
-        writeResultToDatabase();
-      }
-      catch (SQLException e)
-      {
-        throw new DBException(e);
-      }
-
-      throw new NewListSizeResult(newListSize);
+      return newListSize;
     }
 
     @Override

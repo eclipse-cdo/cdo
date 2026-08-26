@@ -26,6 +26,7 @@ public class AllTests
     // $JUnit-BEGIN$
     suite.addTestSuite(H2Test.class);
     suite.addTestSuite(DBAdapterRegistryTest.class);
+    suite.addTestSuite(BatchedStatementTest.class);
     // $JUnit-END$
 
     return suite;

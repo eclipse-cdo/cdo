@@ -31,6 +31,12 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
 
   private int batchCount;
 
+  private int pendingCount;
+
+  private int executionCount;
+
+  private int unknownResultCount;
+
   private int totalResult;
 
   public BatchedStatementImpl(PreparedStatement delegate, int batchSize) throws DBException
@@ -58,12 +64,33 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
   }
 
   @Override
+  public int getPendingCount()
+  {
+    return pendingCount;
+  }
+
+  @Override
+  public int getExecutionCount()
+  {
+    return executionCount;
+  }
+
+  @Override
+  public int getUnknownResultCount()
+  {
+    return unknownResultCount;
+  }
+
+  @Override
   public int executeUpdate() throws SQLException
   {
     PreparedStatement delegate = getDelegate();
     delegate.addBatch();
 
-    if (++batchCount >= batchSize)
+    ++batchCount;
+    ++pendingCount;
+
+    if (batchSize > 0 && pendingCount >= batchSize)
     {
       return doExecuteBatch();
     }
@@ -74,7 +101,7 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
   @Override
   public void close() throws SQLException
   {
-    if (batchCount != 0)
+    if (pendingCount != 0)
     {
       doExecuteBatch();
     }
@@ -106,10 +133,15 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
     int sum = 0;
 
     int[] results = getDelegate().executeBatch();
+    ++executionCount;
     for (int i = 0; i < results.length; i++)
     {
       int result = results[i];
-      if (result != Statement.SUCCESS_NO_INFO)
+      if (result == Statement.SUCCESS_NO_INFO)
+      {
+        ++unknownResultCount;
+      }
+      else
       {
         if (result < 0)
         {
@@ -121,7 +153,60 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
     }
 
     totalResult += sum;
+    pendingCount = 0;
     return sum;
+  }
+
+  @Override
+  public int flush() throws SQLException
+  {
+    if (pendingCount == 0)
+    {
+      return 0;
+    }
+
+    return doExecuteBatch();
+  }
+
+  @Override
+  public int[] executeBatch() throws SQLException
+  {
+    int pending = pendingCount;
+    if (pending == 0)
+    {
+      return new int[0];
+    }
+
+    int[] results = getDelegate().executeBatch();
+    ++executionCount;
+    pendingCount = 0;
+
+    for (int i = 0; i < results.length; i++)
+    {
+      int result = results[i];
+      if (result == Statement.SUCCESS_NO_INFO)
+      {
+        ++unknownResultCount;
+      }
+      else
+      {
+        if (result < 0)
+        {
+          throw new DBException("Result " + i + " is not successful: " + result); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
+        totalResult += result;
+      }
+    }
+
+    return results;
+  }
+
+  @Override
+  public void clearBatch() throws SQLException
+  {
+    getDelegate().clearBatch();
+    pendingCount = 0;
   }
 
   private static Connection getConnection(PreparedStatement delegate) throws DBException

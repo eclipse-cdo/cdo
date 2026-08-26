@@ -39,9 +39,12 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBatchingSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -93,7 +96,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalClassMapping implements IClassMapping, IDeactivateable
+public abstract class AbstractHorizontalClassMapping implements IClassMapping, IClassMappingBatchingSupport, IDeactivateable
 {
   protected static final int UNSET_LIST = -1;
 
@@ -728,6 +731,167 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   }
 
   @Override
+  public void writeRevisions(IDBStoreAccessor accessor, InternalCDORevision[] revisions, boolean firstRevision, boolean revise, OMMonitor monitor)
+  {
+    if (table == null)
+    {
+      initTable(accessor);
+    }
+
+    for (InternalCDORevision revision : revisions)
+    {
+      if (revision instanceof DetachedCDORevision)
+      {
+        monitor.begin(revisions.length);
+        try
+        {
+          for (InternalCDORevision detached : revisions)
+          {
+            writeRevision(accessor, detached, firstRevision, revise, monitor.fork());
+          }
+        }
+        finally
+        {
+          monitor.done();
+        }
+
+        return;
+      }
+    }
+
+    for (IListMapping mapping : getListMappings())
+    {
+      if (!(mapping instanceof IListMappingBatchingSupport))
+      {
+        monitor.begin(revisions.length);
+        try
+        {
+          for (InternalCDORevision revision : revisions)
+          {
+            writeRevision(accessor, revision, firstRevision, revise, monitor.fork());
+          }
+        }
+        finally
+        {
+          monitor.done();
+        }
+
+        return;
+      }
+    }
+
+    List<IListMapping> mappings = getListMappings();
+    monitor.begin(1 + mappings.size());
+    try
+    {
+      OMMonitor classMonitor = monitor.fork();
+      classMonitor.begin(revisions.length);
+      try
+      {
+        for (InternalCDORevision revision : revisions)
+        {
+          writeRevisionClassSetup(accessor, revision, firstRevision, revise);
+          classMonitor.worked();
+        }
+
+        writeValues(accessor, revisions);
+      }
+      finally
+      {
+        classMonitor.done();
+      }
+
+      for (IListMapping mapping : mappings)
+      {
+        OMMonitor listMonitor = monitor.fork();
+        if (mapping instanceof IListMappingBatchingSupport)
+        {
+          ((IListMappingBatchingSupport)mapping).writeValues(accessor, revisions, firstRevision, !revise, listMonitor);
+        }
+        else
+        {
+          listMonitor.begin(revisions.length);
+          try
+          {
+            for (InternalCDORevision revision : revisions)
+            {
+              if (mapping instanceof IListMapping4)
+              {
+                ((IListMapping4)mapping).writeValues(accessor, revision, firstRevision, !revise);
+              }
+              else
+              {
+                mapping.writeValues(accessor, revision);
+              }
+
+              listMonitor.worked();
+            }
+          }
+          finally
+          {
+            listMonitor.done();
+          }
+        }
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void writeRevisionClassSetup(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean revise)
+  {
+    CDOID id = revision.getID();
+    InternalCDOBranch branch = revision.getBranch();
+    long timeStamp = revision.getTimeStamp();
+
+    if (firstRevision)
+    {
+      // Object type insertion has duplicate-key/savepoint semantics. Keep it outside JDBC batching.
+      mappingStrategy.putObjectType(accessor, timeStamp, id, eClass);
+    }
+    else if (revise)
+    {
+      long revised = timeStamp - 1;
+      reviseOldRevision(accessor, id, branch, revised);
+      for (IListMapping mapping : getListMappings())
+      {
+        mapping.objectDetached(accessor, id, revised);
+      }
+    }
+
+    boolean duplicateResourcesCheckNeeded = revision.isResourceNode() && mappingStrategy.getStore().getRepository().getRootResourceID() != null;
+    if (duplicateResourcesCheckNeeded)
+    {
+      checkDuplicateResources(accessor, revision);
+    }
+  }
+
+  @Override
+  public void writeRevisionDeltas(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
+  {
+    writeRevisionDeltasSingle(accessor, deltas, created, monitor);
+  }
+
+  protected void writeRevisionDeltasSingle(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
+  {
+    IClassMappingDeltaSupport deltaSupport = (IClassMappingDeltaSupport)this;
+    monitor.begin(deltas.length);
+    try
+    {
+      for (InternalCDORevisionDelta delta : deltas)
+      {
+        deltaSupport.writeRevisionDelta(accessor, delta, created, monitor.fork());
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  @Override
   public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
     if (table == null)
@@ -1119,6 +1283,14 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   protected abstract void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor fork);
 
   protected abstract void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp);
+
+  protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions)
+  {
+    for (InternalCDORevision revision : revisions)
+    {
+      writeValues(accessor, revision);
+    }
+  }
 
   protected abstract void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision);
 

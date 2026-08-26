@@ -29,14 +29,20 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
+import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.AbstractListDeltaWriter.NewListSizeResult;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
+import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBPreparedStatement;
@@ -51,9 +57,11 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -205,50 +213,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     try
     {
-      int column = 1;
-      idHandler.setCDOID(stmt, column++, revision.getID());
-      stmt.setInt(column++, revision.getVersion());
-      stmt.setLong(column++, revision.getTimeStamp());
-      stmt.setLong(column++, revision.getRevised());
-      idHandler.setCDOID(stmt, column++, revision.getResourceID());
-      idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
-      stmt.setInt(column++, revision.getContainerFeatureID());
-
-      int isSetCol = column + getValueMappings().size();
-
-      for (ITypeMapping mapping : getValueMappings())
-      {
-        EStructuralFeature feature = mapping.getFeature();
-        if (feature.isUnsettable())
-        {
-          if (revision.getValue(feature) == null)
-          {
-            stmt.setBoolean(isSetCol++, false);
-
-            // also set value column to default value
-            mapping.setDefaultValue(stmt, column++);
-            continue;
-          }
-
-          stmt.setBoolean(isSetCol++, true);
-        }
-
-        mapping.setValueFromRevision(stmt, column++, revision);
-      }
-
-      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
-      if (listSizeFields != null)
-      {
-        // isSetCol now points to the first listTableSize-column
-        column = isSetCol;
-
-        for (EStructuralFeature feature : listSizeFields.keySet())
-        {
-          CDOList list = revision.getListOrNull(feature);
-          int size = list == null ? UNSET_LIST : list.size();
-          stmt.setInt(column++, size);
-        }
-      }
+      setInsertValues(idHandler, stmt, revision);
 
       DBUtil.update(stmt, true);
     }
@@ -259,6 +224,100 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     finally
     {
       DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions)
+  {
+    if (revisions.length == 0)
+    {
+      return;
+    }
+
+    DBBatchingContext batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
+    BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH),
+        batchingContext.getStatementBatchSize());
+    batchingContext.manage(stmt);
+    boolean discarded = false;
+
+    try
+    {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      for (InternalCDORevision revision : revisions)
+      {
+        setInsertValues(idHandler, stmt, revision);
+        stmt.executeUpdate();
+        batchingContext.afterAdd(stmt);
+      }
+
+      batchingContext.flushPhase();
+      validateExactlyOne(stmt, revisions.length, "Unexpected attribute insert result"); //$NON-NLS-1$
+    }
+    catch (SQLException ex)
+    {
+      batchingContext.discard(stmt);
+      discarded = true;
+      throw new DBException(ex);
+    }
+    finally
+    {
+      if (!discarded)
+      {
+        batchingContext.release(stmt);
+      }
+    }
+  }
+
+  private void setInsertValues(IIDHandler idHandler, PreparedStatement stmt, InternalCDORevision revision) throws SQLException
+  {
+    int column = 1;
+    idHandler.setCDOID(stmt, column++, revision.getID());
+    stmt.setInt(column++, revision.getVersion());
+    stmt.setLong(column++, revision.getTimeStamp());
+    stmt.setLong(column++, revision.getRevised());
+    idHandler.setCDOID(stmt, column++, revision.getResourceID());
+    idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
+    stmt.setInt(column++, revision.getContainerFeatureID());
+
+    int isSetCol = column + getValueMappings().size();
+    for (ITypeMapping mapping : getValueMappings())
+    {
+      EStructuralFeature feature = mapping.getFeature();
+      if (feature.isUnsettable())
+      {
+        if (revision.getValue(feature) == null)
+        {
+          stmt.setBoolean(isSetCol++, false);
+          mapping.setDefaultValue(stmt, column++);
+          continue;
+        }
+
+        stmt.setBoolean(isSetCol++, true);
+      }
+
+      mapping.setValueFromRevision(stmt, column++, revision);
+    }
+
+    Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
+    if (listSizeFields != null)
+    {
+      column = isSetCol;
+      for (EStructuralFeature feature : listSizeFields.keySet())
+      {
+        CDOList list = revision.getListOrNull(feature);
+        stmt.setInt(column++, list == null ? UNSET_LIST : list.size());
+      }
+    }
+  }
+
+  private void validateExactlyOne(BatchedStatement stmt, int expectedCount, String message)
+  {
+    int knownResult = stmt.getTotalResult();
+    int unknownResultCount = stmt.getUnknownResultCount();
+    if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+    {
+      throw new DBException(message);
     }
   }
 
@@ -523,14 +582,204 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
   }
 
+  @Override
+  protected void writeRevisionDeltasSingle(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
+  {
+    for (IListMapping mapping : getListMappings())
+    {
+      if (!(mapping instanceof NonAuditListTableMapping))
+      {
+        super.writeRevisionDeltasSingle(accessor, deltas, created, monitor);
+        return;
+      }
+    }
+
+    List<FeatureDeltaWriter> writers = new ArrayList<>();
+    NonAuditAttributeDeltaBatch attributeBatch = new NonAuditAttributeDeltaBatch(accessor);
+    monitor.begin(1 + getListMappings().size());
+    try
+    {
+      OMMonitor revisionMonitor = monitor.fork();
+      revisionMonitor.begin(deltas.length);
+      try
+      {
+        for (InternalCDORevisionDelta delta : deltas)
+        {
+          FeatureDeltaWriter writer = new FeatureDeltaWriter(attributeBatch);
+          writer.deferListDeltas = true;
+          writer.process(accessor, delta, created);
+          writers.add(writer);
+          revisionMonitor.worked();
+        }
+      }
+      finally
+      {
+        revisionMonitor.done();
+      }
+
+      attributeBatch.flushPhase();
+
+      for (IListMapping mapping : getListMappings())
+      {
+        List<ListDeltaWork> work = new ArrayList<>();
+        for (FeatureDeltaWriter writer : writers)
+        {
+          for (ListDeltaWork item : writer.listDeltaWork)
+          {
+            if (item.getDelta().getFeature() == mapping.getFeature())
+            {
+              work.add(item);
+            }
+          }
+        }
+
+        OMMonitor listMonitor = monitor.fork();
+        if (work.isEmpty())
+        {
+          listMonitor.worked();
+        }
+        else
+        {
+          ListDeltaWork[] items = work.toArray(new ListDeltaWork[work.size()]);
+          if (mapping instanceof IListMappingBatchingSupport)
+          {
+            ((IListMappingBatchingSupport)mapping).processDeltas(accessor, items, listMonitor);
+          }
+          else
+          {
+            listMonitor.begin(items.length);
+            try
+            {
+              IListMappingDeltaSupport deltaSupport = (IListMappingDeltaSupport)mapping;
+              for (ListDeltaWork item : items)
+              {
+                deltaSupport.processDelta(accessor, item.getID(), item.getBranchId(), item.getOldVersion(), item.getNewVersion(), item.getCreated(),
+                    item.getDelta());
+                listMonitor.worked();
+              }
+            }
+            finally
+            {
+              listMonitor.done();
+            }
+          }
+        }
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      attributeBatch.discard();
+      throw ex;
+    }
+    finally
+    {
+      attributeBatch.release();
+      monitor.done();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class NonAuditAttributeDeltaBatch
+  {
+    private final IDBStoreAccessor accessor;
+
+    private final DBBatchingContext batchingContext;
+
+    private final Map<String, BatchedStatement> statements = new LinkedHashMap<>();
+
+    private final Map<BatchedStatement, Integer> counts = new LinkedHashMap<>();
+
+    private boolean discarded;
+
+    private NonAuditAttributeDeltaBatch(IDBStoreAccessor accessor)
+    {
+      this.accessor = accessor;
+      batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
+    }
+
+    public void update(String sql, FeatureDeltaWriter writer)
+    {
+      try
+      {
+        BatchedStatement stmt = statements.get(sql);
+        if (stmt == null)
+        {
+          stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM), batchingContext.getStatementBatchSize());
+          statements.put(sql, stmt);
+          counts.put(stmt, 0);
+          batchingContext.manage(stmt);
+        }
+
+        writer.setUpdateValues(stmt);
+        stmt.executeUpdate();
+        counts.put(stmt, counts.get(stmt) + 1);
+        batchingContext.afterAdd(stmt);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void flushPhase()
+    {
+      batchingContext.flushPhase();
+      for (Map.Entry<BatchedStatement, Integer> entry : counts.entrySet())
+      {
+        validateExactlyOne(entry.getKey(), entry.getValue());
+      }
+    }
+
+    public void release()
+    {
+      if (!discarded)
+      {
+        for (BatchedStatement stmt : statements.values())
+        {
+          batchingContext.release(stmt);
+        }
+      }
+    }
+
+    public void discard()
+    {
+      if (!discarded)
+      {
+        discarded = true;
+        for (BatchedStatement stmt : statements.values())
+        {
+          batchingContext.discard(stmt);
+        }
+      }
+    }
+
+    private void validateExactlyOne(BatchedStatement stmt, int expectedCount)
+    {
+      int knownResult = stmt.getTotalResult();
+      int unknownResultCount = stmt.getUnknownResultCount();
+      if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+      {
+        throw new DBException("Unexpected attribute update result"); //$NON-NLS-1$
+      }
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
   private final class FeatureDeltaWriter extends AbstractFeatureDeltaWriter
   {
+    private final NonAuditAttributeDeltaBatch attributeBatch;
+
     private final List<Pair<ITypeMapping, Object>> attributeChanges = new ArrayList<>();
 
     private final List<Pair<EStructuralFeature, Integer>> listSizeChanges = new ArrayList<>();
+
+    private final List<ListDeltaWork> listDeltaWork = new ArrayList<>();
+
+    private boolean deferListDeltas;
 
     private int oldVersion;
 
@@ -545,6 +794,16 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     private int branchId;
 
     private int newVersion;
+
+    public FeatureDeltaWriter()
+    {
+      this(null);
+    }
+
+    public FeatureDeltaWriter(NonAuditAttributeDeltaBatch attributeBatch)
+    {
+      this.attributeBatch = attributeBatch;
+    }
 
     @Override
     protected void doProcess(InternalCDORevisionDelta delta)
@@ -598,7 +857,16 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       try
       {
         IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(feature);
-        listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+        if (deferListDeltas)
+        {
+          int newListSize = ((NonAuditListTableMapping)listMapping).planDelta(accessor, id, delta);
+          listDeltaWork.add(new ListDeltaWork(id, branchId, oldVersion, oldVersion + 1, created, delta, newListSize));
+          newSize = newListSize;
+        }
+        else
+        {
+          listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+        }
       }
       catch (NewListSizeResult result)
       {
@@ -622,26 +890,18 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private void updateAttributes()
     {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
       String sql = buildUpdateSQL();
+      if (attributeBatch != null)
+      {
+        attributeBatch.update(sql, this);
+        return;
+      }
+
       IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
 
       try
       {
-        int column = 1;
-        stmt.setInt(column++, newVersion);
-        stmt.setLong(column++, created);
-        if (updateContainer)
-        {
-          idHandler.setCDOID(stmt, column++, newResourceID, created);
-          idHandler.setCDOID(stmt, column++, newContainerID, created);
-          stmt.setInt(column++, newContainingFeatureID);
-        }
-
-        column = setUpdateAttributeValues(attributeChanges, stmt, column);
-        column = setUpdateListSizeChanges(listSizeChanges, stmt, column);
-
-        idHandler.setCDOID(stmt, column++, id);
+        setUpdateValues(stmt);
 
         DBUtil.update(stmt, true);
       }
@@ -653,6 +913,24 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       {
         DBUtil.close(stmt);
       }
+    }
+
+    private void setUpdateValues(PreparedStatement stmt) throws SQLException
+    {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      int column = 1;
+      stmt.setInt(column++, newVersion);
+      stmt.setLong(column++, created);
+      if (updateContainer)
+      {
+        idHandler.setCDOID(stmt, column++, newResourceID, created);
+        idHandler.setCDOID(stmt, column++, newContainerID, created);
+        stmt.setInt(column++, newContainingFeatureID);
+      }
+
+      column = setUpdateAttributeValues(attributeChanges, stmt, column);
+      column = setUpdateListSizeChanges(listSizeChanges, stmt, column);
+      idHandler.setCDOID(stmt, column, id);
     }
 
     private String buildUpdateSQL()
@@ -690,7 +968,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       return builder.toString();
     }
 
-    private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, IDBPreparedStatement stmt, int col) throws SQLException
+    private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, PreparedStatement stmt, int col) throws SQLException
     {
       for (Pair<ITypeMapping, Object> change : attributeChanges)
       {
@@ -721,7 +999,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       return col;
     }
 
-    private int setUpdateListSizeChanges(List<Pair<EStructuralFeature, Integer>> attributeChanges, IDBPreparedStatement stmt, int col) throws SQLException
+    private int setUpdateListSizeChanges(List<Pair<EStructuralFeature, Integer>> attributeChanges, PreparedStatement stmt, int col) throws SQLException
     {
       for (Pair<EStructuralFeature, Integer> change : listSizeChanges)
       {

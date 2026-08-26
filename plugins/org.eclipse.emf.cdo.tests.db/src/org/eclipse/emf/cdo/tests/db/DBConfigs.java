@@ -46,6 +46,8 @@ public abstract class DBConfigs extends AllConfigs
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
+    testClasses.add(AuditListBatchingTest.class);
+    testClasses.add(NonAuditListBatchingTest.class);
     testClasses.add(ModelEvolutionTest.class);
 
     testClasses.add(Net4jDBTest.class);

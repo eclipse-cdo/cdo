@@ -148,6 +148,21 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
     public static final String CONNECTION_KEEPALIVE_PERIOD = "connectionKeepAlivePeriod"; //$NON-NLS-1$
 
     /**
+     * Maximum number of pending parameter sets per JDBC batch statement. If absent, the legacy
+     * {@code org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE} property is used as the default.
+     *
+     * @since 4.15
+     */
+    public static final String BATCH_STATEMENT_SIZE = "batchStatementSize"; //$NON-NLS-1$
+
+    /**
+     * Maximum number of pending parameter sets across the current DB commit write.
+     *
+     * @since 4.15
+     */
+    public static final String BATCH_COMMIT_SIZE = "batchCommitSize"; //$NON-NLS-1$
+
+    /**
      * Number of additional attempts to connect to the DB after initial connection failure.
      *
      * @since 4.12

@@ -51,6 +51,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy2;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategyBatchingSupport;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.BranchesTable;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
@@ -85,6 +86,7 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.TrackableTimerTask;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -124,6 +126,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   private InternalObjectAttacher objectAttacher;
 
+  private DBBatchingContext batchingContext;
+
   private List<IDBTable> createdTables;
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
@@ -152,6 +156,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public final Connection getConnection()
   {
     return connection;
+  }
+
+  public DBBatchingContext getBatchingContext()
+  {
+    if (batchingContext == null)
+    {
+      Map<String, String> properties = getStore().getProperties();
+
+      int legacyStatementBatchSize = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE", //$NON-NLS-1$
+          DBBatchingContext.DEFAULT_STATEMENT_BATCH_SIZE);
+      int statementBatchSize = getIntProperty(properties, IDBStore.Props.BATCH_STATEMENT_SIZE, legacyStatementBatchSize);
+      int commitBatchSize = getIntProperty(properties, IDBStore.Props.BATCH_COMMIT_SIZE, DBBatchingContext.DEFAULT_COMMIT_BATCH_SIZE);
+
+      batchingContext = new DBBatchingContext(statementBatchSize, commitBatchSize);
+    }
+
+    return batchingContext;
   }
 
   @Override
@@ -399,6 +420,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       throw new UnsupportedOperationException("Mapping strategy does not support revision deltas"); //$NON-NLS-1$
     }
 
+    if (mappingStrategy instanceof IMappingStrategyBatchingSupport)
+    {
+      ((IMappingStrategyBatchingSupport)mappingStrategy).writeRevisionDeltas(this, revisionDeltas, created, monitor);
+      return;
+    }
+
     monitor.begin(revisionDeltas.length);
     try
     {
@@ -438,9 +465,18 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     try
     {
       monitor.begin(revisions.length);
-      for (InternalCDORevision revision : revisions)
+
+      IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+      if (mappingStrategy instanceof IMappingStrategyBatchingSupport)
       {
-        writeRevision(revision, attachNewObjects, true, monitor.fork());
+        ((IMappingStrategyBatchingSupport)mappingStrategy).writeRevisions(this, revisions, attachNewObjects, true, monitor);
+      }
+      else
+      {
+        for (InternalCDORevision revision : revisions)
+        {
+          writeRevision(revision, attachNewObjects, true, monitor.fork());
+        }
       }
 
       if (attachNewObjects)
@@ -573,6 +609,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       try
       {
         async = monitor.forkAsync();
+        flushAndCloseBatchingContext();
         connection.commit();
 
         if (maxID != CDOID.NULL)
@@ -609,6 +646,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected final void doRollback(IStoreAccessor.CommitContext commitContext)
   {
+    discardBatchingContext();
+
     if (objectAttacher != null)
     {
       objectAttacher.finishedCommit(false);
@@ -665,6 +704,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void doDeactivate() throws Exception
   {
+    discardBatchingContext();
+
     connectionKeepAliveTask.cancel();
     connectionKeepAliveTask = null;
 
@@ -677,6 +718,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void doPassivate() throws Exception
   {
+    discardBatchingContext();
+
     // this is called when the accessor is put back into the pool
     // we want to make sure that no DB lock is held (see Bug 276926)
     connection.rollback();
@@ -692,6 +735,50 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected void doUnpassivate() throws Exception
   {
     // do nothing
+  }
+
+  private static int getIntProperty(Map<String, String> properties, String key, int defaultValue)
+  {
+    if (properties != null)
+    {
+      String value = properties.get(key);
+      if (value != null)
+      {
+        return Integer.parseInt(value);
+      }
+    }
+
+    return defaultValue;
+  }
+
+  private void flushAndCloseBatchingContext()
+  {
+    if (batchingContext != null)
+    {
+      try
+      {
+        batchingContext.close();
+      }
+      finally
+      {
+        batchingContext = null;
+      }
+    }
+  }
+
+  private void discardBatchingContext()
+  {
+    if (batchingContext != null)
+    {
+      try
+      {
+        batchingContext.discard();
+      }
+      finally
+      {
+        batchingContext = null;
+      }
+    }
   }
 
   @Override
@@ -712,6 +799,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
     boolean wasTrackConstruction = DBField.isTrackConstruction();
+
+    discardBatchingContext();
 
     try
     {

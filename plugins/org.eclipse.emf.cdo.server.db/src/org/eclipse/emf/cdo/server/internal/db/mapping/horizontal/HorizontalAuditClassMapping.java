@@ -35,10 +35,14 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
+import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -46,6 +50,7 @@ import org.eclipse.emf.cdo.spi.common.revision.StubCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.view.CDOUnit;
 
+import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBPreparedStatement;
@@ -64,9 +69,11 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.BlockingQueue;
@@ -475,51 +482,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     try
     {
-      int column = 1;
-      idHandler.setCDOID(stmt, column++, revision.getID());
-      stmt.setInt(column++, revision.getVersion());
-      stmt.setLong(column++, revision.getTimeStamp());
-      stmt.setLong(column++, revision.getRevised());
-      idHandler.setCDOID(stmt, column++, revision.getResourceID());
-      idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
-      stmt.setInt(column++, revision.getContainerFeatureID());
-
-      int isSetCol = column + getValueMappings().size();
-
-      for (ITypeMapping mapping : getValueMappings())
-      {
-        EStructuralFeature feature = mapping.getFeature();
-        if (feature.isUnsettable())
-        {
-          if (revision.getValue(feature) == null)
-          {
-            stmt.setBoolean(isSetCol++, false);
-
-            // also set value column to default value
-            mapping.setDefaultValue(stmt, column++);
-
-            continue;
-          }
-
-          stmt.setBoolean(isSetCol++, true);
-        }
-
-        mapping.setValueFromRevision(stmt, column++, revision);
-      }
-
-      Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
-      if (listSizeFields != null)
-      {
-        // isSetCol now points to the first listTableSize-column
-        column = isSetCol;
-
-        for (EStructuralFeature feature : listSizeFields.keySet())
-        {
-          CDOList list = revision.getListOrNull(feature);
-          int size = list == null ? UNSET_LIST : list.size();
-          stmt.setInt(column++, size);
-        }
-      }
+      setInsertValues(idHandler, stmt, revision);
 
       DBUtil.update(stmt, true);
     }
@@ -530,6 +493,101 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     finally
     {
       DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions)
+  {
+    if (revisions.length == 0)
+    {
+      return;
+    }
+
+    DBBatchingContext batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
+    BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH),
+        batchingContext.getStatementBatchSize());
+    batchingContext.manage(stmt);
+    boolean discarded = false;
+
+    try
+    {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      for (InternalCDORevision revision : revisions)
+      {
+        setInsertValues(idHandler, stmt, revision);
+        stmt.executeUpdate();
+        batchingContext.afterAdd(stmt);
+      }
+
+      batchingContext.flushPhase();
+      validateExactlyOne(stmt, revisions.length, "Unexpected attribute insert result"); //$NON-NLS-1$
+    }
+    catch (SQLException ex)
+    {
+      batchingContext.discard(stmt);
+      discarded = true;
+      throw new DBException(ex);
+    }
+    finally
+    {
+      if (!discarded)
+      {
+        batchingContext.release(stmt);
+      }
+    }
+  }
+
+  private void setInsertValues(IIDHandler idHandler, PreparedStatement stmt, InternalCDORevision revision) throws SQLException
+  {
+    int column = 1;
+    idHandler.setCDOID(stmt, column++, revision.getID());
+    stmt.setInt(column++, revision.getVersion());
+    stmt.setLong(column++, revision.getTimeStamp());
+    stmt.setLong(column++, revision.getRevised());
+    idHandler.setCDOID(stmt, column++, revision.getResourceID());
+    idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
+    stmt.setInt(column++, revision.getContainerFeatureID());
+
+    int isSetCol = column + getValueMappings().size();
+
+    for (ITypeMapping mapping : getValueMappings())
+    {
+      EStructuralFeature feature = mapping.getFeature();
+      if (feature.isUnsettable())
+      {
+        if (revision.getValue(feature) == null)
+        {
+          stmt.setBoolean(isSetCol++, false);
+          mapping.setDefaultValue(stmt, column++);
+          continue;
+        }
+
+        stmt.setBoolean(isSetCol++, true);
+      }
+
+      mapping.setValueFromRevision(stmt, column++, revision);
+    }
+
+    Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
+    if (listSizeFields != null)
+    {
+      column = isSetCol;
+      for (EStructuralFeature feature : listSizeFields.keySet())
+      {
+        CDOList list = revision.getListOrNull(feature);
+        stmt.setInt(column++, list == null ? UNSET_LIST : list.size());
+      }
+    }
+  }
+
+  private void validateExactlyOne(BatchedStatement stmt, int expectedCount, String message)
+  {
+    int knownResult = stmt.getTotalResult();
+    int unknownResultCount = stmt.getUnknownResultCount();
+    if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+    {
+      throw new DBException(message);
     }
   }
 
@@ -651,6 +709,78 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         if (async != null)
         {
           async.stop();
+        }
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  @Override
+  protected void writeRevisionDeltasSingle(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
+  {
+    List<FeatureDeltaWriter> writers = new ArrayList<>();
+    monitor.begin(1 + getListMappings().size());
+    try
+    {
+      OMMonitor revisionMonitor = monitor.fork();
+      revisionMonitor.begin(deltas.length);
+      for (InternalCDORevisionDelta delta : deltas)
+      {
+        FeatureDeltaWriter writer = new FeatureDeltaWriter();
+        writer.deferListDeltas = true;
+        writer.process(accessor, delta, created);
+        writers.add(writer);
+        revisionMonitor.worked();
+      }
+      revisionMonitor.done();
+
+      for (IListMapping mapping : getListMappings())
+      {
+        List<ListDeltaWork> work = new ArrayList<>();
+        for (FeatureDeltaWriter writer : writers)
+        {
+          for (ListDeltaWork item : writer.listDeltaWork)
+          {
+            if (item.getDelta().getFeature() == mapping.getFeature())
+            {
+              work.add(item);
+            }
+          }
+        }
+
+        OMMonitor listMonitor = monitor.fork();
+        if (!work.isEmpty())
+        {
+          ListDeltaWork[] items = work.toArray(new ListDeltaWork[work.size()]);
+          if (mapping instanceof IListMappingBatchingSupport)
+          {
+            ((IListMappingBatchingSupport)mapping).processDeltas(accessor, items, listMonitor);
+          }
+          else
+          {
+            listMonitor.begin(items.length);
+            try
+            {
+              IListMappingDeltaSupport deltaSupport = (IListMappingDeltaSupport)mapping;
+              for (ListDeltaWork item : items)
+              {
+                deltaSupport.processDelta(accessor, item.getID(), item.getBranchId(), item.getOldVersion(), item.getNewVersion(), item.getCreated(),
+                    item.getDelta());
+                listMonitor.worked();
+              }
+            }
+            finally
+            {
+              listMonitor.done();
+            }
+          }
+        }
+        else
+        {
+          listMonitor.worked();
         }
       }
     }
@@ -945,6 +1075,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
    */
   private final class FeatureDeltaWriter extends AbstractFeatureDeltaWriter
   {
+    private final List<ListDeltaWork> listDeltaWork = new ArrayList<>();
+
+    private boolean deferListDeltas;
+
     private int oldVersion;
 
     private InternalCDORevision newRevision;
@@ -997,7 +1131,14 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       delta.applyTo(newRevision);
 
       IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+      if (deferListDeltas)
+      {
+        listDeltaWork.add(new ListDeltaWork(id, branchId, oldVersion, oldVersion + 1, created, delta));
+      }
+      else
+      {
+        listMapping.processDelta(accessor, id, branchId, oldVersion, oldVersion + 1, created, delta);
+      }
     }
 
     @Override

@@ -29,9 +29,12 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategyBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.util.collection.CloseableIterator;
@@ -53,7 +56,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class HorizontalMappingStrategy extends Lifecycle implements ISchemaMigration, ILobRefsUpdater
+public class HorizontalMappingStrategy extends Lifecycle implements ISchemaMigration, ILobRefsUpdater, IMappingStrategyBatchingSupport
 {
   private Map<String, String> properties;
 
@@ -188,6 +191,18 @@ public class HorizontalMappingStrategy extends Lifecycle implements ISchemaMigra
   public boolean hasDeltaSupport()
   {
     return delegate.hasDeltaSupport();
+  }
+
+  @Override
+  public void writeRevisions(IDBStoreAccessor accessor, InternalCDORevision[] revisions, boolean firstRevision, boolean revise, OMMonitor monitor)
+  {
+    ((IMappingStrategyBatchingSupport)delegate).writeRevisions(accessor, revisions, firstRevision, revise, monitor);
+  }
+
+  @Override
+  public void writeRevisionDeltas(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
+  {
+    ((IMappingStrategyBatchingSupport)delegate).writeRevisionDeltas(accessor, deltas, created, monitor);
   }
 
   @Override

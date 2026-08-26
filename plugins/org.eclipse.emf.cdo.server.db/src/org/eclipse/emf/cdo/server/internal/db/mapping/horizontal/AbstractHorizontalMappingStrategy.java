@@ -31,11 +31,16 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.evolution.phased.Context;
 import org.eclipse.emf.cdo.server.db.evolution.phased.ISchemaMigration;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBatchingSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategyBatchingSupport;
 import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.net4j.db.BatchingIDChanger;
 import org.eclipse.net4j.db.DBException;
@@ -77,6 +82,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -96,7 +102,7 @@ import java.util.stream.Collectors;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy implements ISchemaMigration
+public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy implements ISchemaMigration, IMappingStrategyBatchingSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalMappingStrategy.class);
 
@@ -157,6 +163,66 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   public boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     return objectTypeMapper.removeObjectType(accessor, id);
+  }
+
+  @Override
+  public void writeRevisions(IDBStoreAccessor accessor, InternalCDORevision[] revisions, boolean firstRevision, boolean revise, OMMonitor monitor)
+  {
+    Map<IClassMapping, List<InternalCDORevision>> groups = new LinkedHashMap<>();
+    for (InternalCDORevision revision : revisions)
+    {
+      IClassMapping mapping = getClassMapping(revision.getEClass());
+      groups.computeIfAbsent(mapping, key -> new ArrayList<>()).add(revision);
+    }
+
+    for (Map.Entry<IClassMapping, List<InternalCDORevision>> entry : groups.entrySet())
+    {
+      IClassMapping mapping = entry.getKey();
+      List<InternalCDORevision> group = entry.getValue();
+      if (mapping instanceof IClassMappingBatchingSupport)
+      {
+        ((IClassMappingBatchingSupport)mapping).writeRevisions(accessor, group.toArray(new InternalCDORevision[group.size()]), firstRevision, revise,
+            monitor.fork(group.size()));
+      }
+      else
+      {
+        for (InternalCDORevision revision : group)
+        {
+          mapping.writeRevision(accessor, revision, firstRevision, revise, monitor.fork());
+        }
+      }
+    }
+  }
+
+  @Override
+  public void writeRevisionDeltas(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
+  {
+    Map<IClassMapping, List<InternalCDORevisionDelta>> groups = new LinkedHashMap<>();
+    for (InternalCDORevisionDelta delta : deltas)
+    {
+      EClass eClass = accessor.getObjectType(delta.getID());
+      IClassMapping mapping = getClassMapping(eClass);
+      groups.computeIfAbsent(mapping, key -> new ArrayList<>()).add(delta);
+    }
+
+    for (Map.Entry<IClassMapping, List<InternalCDORevisionDelta>> entry : groups.entrySet())
+    {
+      IClassMapping mapping = entry.getKey();
+      List<InternalCDORevisionDelta> group = entry.getValue();
+      if (mapping instanceof IClassMappingBatchingSupport)
+      {
+        ((IClassMappingBatchingSupport)mapping).writeRevisionDeltas(accessor, group.toArray(new InternalCDORevisionDelta[group.size()]), created,
+            monitor.fork(group.size()));
+      }
+      else
+      {
+        IClassMappingDeltaSupport deltaSupport = (IClassMappingDeltaSupport)mapping;
+        for (InternalCDORevisionDelta delta : group)
+        {
+          deltaSupport.writeRevisionDelta(accessor, delta, created, monitor.fork());
+        }
+      }
+    }
   }
 
   @Override

@@ -41,16 +41,21 @@ import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
+import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.ListLobRefsUpdater;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
+import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -64,6 +69,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -89,7 +95,7 @@ import java.util.List;
  * @author Lothar Werzinger
  */
 public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping
-    implements IListMappingDeltaSupport, IListMappingUnitSupport, IListMapping4, ListLobRefsUpdater
+    implements IListMappingBatchingSupport, IListMappingDeltaSupport, IListMappingUnitSupport, IListMapping4, ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditListTableMappingWithRanges.class);
 
@@ -634,6 +640,92 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   }
 
   @Override
+  public void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions, boolean firstRevision, boolean raw, OMMonitor monitor)
+  {
+    if (!firstRevision && raw)
+    {
+      monitor.begin(revisions.length);
+      try
+      {
+        for (InternalCDORevision revision : revisions)
+        {
+          writeValues(accessor, revision, firstRevision, raw);
+          monitor.worked();
+        }
+      }
+      finally
+      {
+        monitor.done();
+      }
+
+      return;
+    }
+
+    if (table == null)
+    {
+      initTable(accessor);
+    }
+
+    DBBatchingContext batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
+    BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH),
+        batchingContext.getStatementBatchSize());
+    batchingContext.manage(stmt);
+    monitor.begin(revisions.length);
+    boolean complete = false;
+
+    try
+    {
+      for (InternalCDORevision revision : revisions)
+      {
+        CDOList values = revision.getListOrNull(getFeature());
+        if (values != null)
+        {
+          int index = 0;
+
+          for (Object value : values)
+          {
+            int column = 1;
+
+            IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+            idHandler.setCDOID(stmt, column++, revision.getID());
+            stmt.setInt(column++, revision.getVersion());
+            stmt.setInt(column++, index++);
+            getTypeMapping().setValue(stmt, column, value);
+            stmt.executeUpdate();
+            batchingContext.afterAdd(stmt);
+          }
+        }
+
+        monitor.worked();
+      }
+
+      complete = true;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    catch (IllegalStateException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      if (complete)
+      {
+        batchingContext.flushPhase();
+        batchingContext.release(stmt);
+      }
+      else
+      {
+        batchingContext.discard(stmt);
+      }
+
+      monitor.done();
+    }
+  }
+
+  @Override
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     CDOList values = revision.getListOrNull(getFeature());
@@ -1070,6 +1162,88 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     processDelta(accessor, originalRevision, oldVersion, newVersion, listChanges);
   }
 
+  @Override
+  public void processDeltas(IDBStoreAccessor accessor, ListDeltaWork[] work, OMMonitor monitor)
+  {
+    monitor.begin(work.length);
+    AuditDeltaBatch batch = new AuditDeltaBatch(accessor);
+    List<ListDeltaWriter> writers = new ArrayList<>();
+    List<List<CDOFeatureDelta>> changes = new ArrayList<>();
+    boolean complete = false;
+    try
+    {
+      for (ListDeltaWork item : work)
+      {
+        List<CDOFeatureDelta> listChanges = item.getDelta().getListChanges();
+        if (listChanges.isEmpty())
+        {
+          monitor.worked();
+          continue;
+        }
+
+        IRepository repository = accessor.getStore().getRepository();
+        CDORevisionManager revisionManager = repository.getRevisionManager();
+        CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
+        InternalCDORevision originalRevision = (InternalCDORevision)revisionManager.getRevision(item.getID(), head,
+            /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+
+        if (table == null)
+        {
+          initTable(accessor);
+        }
+
+        writers.add(new ListDeltaWriter(accessor, originalRevision, item.getOldVersion(), item.getNewVersion(), batch));
+        changes.add(listChanges);
+      }
+
+      // Independent list works advance one semantic delta at a time. The phase boundary makes all writes from one
+      // logical step visible before the next step of the same list is processed, while equal SQL shapes from
+      // different works can share a JDBC batch.
+      for (int deltaIndex = 0;; ++deltaIndex)
+      {
+        boolean more = false;
+        for (int i = 0; i < writers.size(); i++)
+        {
+          List<CDOFeatureDelta> listChanges = changes.get(i);
+          if (deltaIndex < listChanges.size())
+          {
+            listChanges.get(deltaIndex).accept(writers.get(i));
+            more = true;
+          }
+        }
+
+        if (!more)
+        {
+          break;
+        }
+
+        batch.flushPhase();
+      }
+
+      for (ListDeltaWriter writer : writers)
+      {
+        writer.finishPendingRemove();
+        monitor.worked();
+      }
+
+      batch.flushPhase();
+      complete = true;
+    }
+    finally
+    {
+      if (complete)
+      {
+        batch.release();
+      }
+      else
+      {
+        batch.discard();
+      }
+
+      monitor.done();
+    }
+  }
+
   private void processDelta(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion, List<CDOFeatureDelta> listChanges)
   {
     if (TRACER.isEnabled())
@@ -1476,6 +1650,315 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
   }
 
+  private final class AuditDeltaBatch
+  {
+    private final IDBStoreAccessor accessor;
+
+    private final DBBatchingContext batchingContext;
+
+    private BatchedStatement insertEntryStmt;
+
+    private BatchedStatement copyOriginalEntryStmt;
+
+    private BatchedStatement deleteEntryStmt;
+
+    private BatchedStatement removeEntryStmt;
+
+    private BatchedStatement clearListStmt;
+
+    private BatchedStatement deleteListStmt;
+
+    private int explicitEntryCount;
+
+    private int originalEntryCount;
+
+    private int removalCount;
+
+    private AuditDeltaBatch(IDBStoreAccessor accessor)
+    {
+      this.accessor = accessor;
+      batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
+    }
+
+    public void addEntry(CDOID id, int version, int index, Object value)
+    {
+      try
+      {
+        BatchedStatement stmt = getInsertEntryStmt();
+        int column = 1;
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, id);
+        stmt.setInt(column++, version);
+        stmt.setInt(column++, index);
+        typeMapping.setValue(stmt, column, value);
+        add(stmt);
+        ++explicitEntryCount;
+      }
+      catch (SQLException | IllegalStateException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void addEntryFromOriginal(CDOID id, int newVersion, int originalIndex, int targetIndex)
+    {
+      flushRemovalsForOriginalCopy();
+
+      try
+      {
+        BatchedStatement stmt = getCopyOriginalEntryStmt();
+        int column = 1;
+        stmt.setInt(column++, newVersion);
+        stmt.setInt(column++, targetIndex);
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, id);
+        stmt.setInt(column++, originalIndex);
+        stmt.setInt(column++, newVersion);
+        stmt.setInt(column++, newVersion);
+        add(stmt);
+        ++originalEntryCount;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void removeEntry(CDOID id, int newVersion, int index)
+    {
+      try
+      {
+        int column = 1;
+        BatchedStatement deleteStmt = getDeleteEntryStmt();
+        getMappingStrategy().getStore().getIDHandler().setCDOID(deleteStmt, column++, id);
+        deleteStmt.setInt(column++, index);
+        deleteStmt.setInt(column++, newVersion);
+        add(deleteStmt);
+
+        column = 1;
+        BatchedStatement removeStmt = getRemoveEntryStmt();
+        removeStmt.setInt(column++, newVersion);
+        getMappingStrategy().getStore().getIDHandler().setCDOID(removeStmt, column++, id);
+        removeStmt.setInt(column++, index);
+        removeStmt.setInt(column++, newVersion);
+        add(removeStmt);
+        ++removalCount;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void clearList(CDOID id, int newVersion)
+    {
+      try
+      {
+        int column = 1;
+        BatchedStatement deleteStmt = getDeleteListStmt();
+        getMappingStrategy().getStore().getIDHandler().setCDOID(deleteStmt, column++, id);
+        deleteStmt.setInt(column++, newVersion);
+        add(deleteStmt);
+
+        column = 1;
+        BatchedStatement clearStmt = getClearListStmt();
+        clearStmt.setInt(column++, newVersion);
+        getMappingStrategy().getStore().getIDHandler().setCDOID(clearStmt, column++, id);
+        clearStmt.setInt(column++, newVersion);
+        add(clearStmt);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void flushForIndexShift()
+    {
+      flush(insertEntryStmt);
+      flush(copyOriginalEntryStmt);
+      flushRemovals();
+      flush(clearListStmt);
+      flush(deleteListStmt);
+      validateResults();
+    }
+
+    public void flushPhase()
+    {
+      batchingContext.flushPhase();
+      validateResults();
+    }
+
+    public void release()
+    {
+      release(insertEntryStmt);
+      release(copyOriginalEntryStmt);
+      release(deleteEntryStmt);
+      release(removeEntryStmt);
+      release(clearListStmt);
+      release(deleteListStmt);
+    }
+
+    public void discard()
+    {
+      discard(insertEntryStmt);
+      discard(copyOriginalEntryStmt);
+      discard(deleteEntryStmt);
+      discard(removeEntryStmt);
+      discard(clearListStmt);
+      discard(deleteListStmt);
+    }
+
+    private void flushRemovalsForOriginalCopy()
+    {
+      flushRemovals();
+      validateRemovals();
+    }
+
+    private void flushRemovals()
+    {
+      flush(deleteEntryStmt);
+      flush(removeEntryStmt);
+    }
+
+    private void validateRemovals()
+    {
+      int knownResult = getTotalResult(deleteEntryStmt) + getTotalResult(removeEntryStmt);
+      int unknownResultCount = getUnknownResultCount(deleteEntryStmt) + getUnknownResultCount(removeEntryStmt);
+      if (knownResult > 2 * removalCount || knownResult + unknownResultCount < removalCount)
+      {
+        throw new DBException("Unexpected remove result"); //$NON-NLS-1$
+      }
+    }
+
+    private void validateResults()
+    {
+      validateExactlyOne(insertEntryStmt, explicitEntryCount);
+      validateExactlyOne(copyOriginalEntryStmt, originalEntryCount);
+      validateRemovals();
+    }
+
+    private void validateExactlyOne(BatchedStatement stmt, int entryCount)
+    {
+      int knownResult = getTotalResult(stmt);
+      int unknownResultCount = getUnknownResultCount(stmt);
+      if (hasUnexpectedResult(knownResult, unknownResultCount, entryCount))
+      {
+        throw new DBException("Unexpected insert result"); //$NON-NLS-1$
+      }
+    }
+
+    private boolean hasUnexpectedResult(int knownResult, int unknownResultCount, int expectedCount)
+    {
+      return knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount;
+    }
+
+    private void add(BatchedStatement stmt) throws SQLException
+    {
+      stmt.executeUpdate();
+      batchingContext.afterAdd(stmt);
+    }
+
+    private void flush(BatchedStatement stmt)
+    {
+      if (stmt != null)
+      {
+        batchingContext.flush(stmt);
+      }
+    }
+
+    private void release(BatchedStatement stmt)
+    {
+      if (stmt != null)
+      {
+        batchingContext.release(stmt);
+      }
+    }
+
+    private void discard(BatchedStatement stmt)
+    {
+      if (stmt != null)
+      {
+        batchingContext.discard(stmt);
+      }
+    }
+
+    private int getTotalResult(BatchedStatement stmt)
+    {
+      return stmt == null ? 0 : stmt.getTotalResult();
+    }
+
+    private int getUnknownResultCount(BatchedStatement stmt)
+    {
+      return stmt == null ? 0 : stmt.getUnknownResultCount();
+    }
+
+    private BatchedStatement getInsertEntryStmt()
+    {
+      if (insertEntryStmt == null)
+      {
+        insertEntryStmt = createStatement(sqlInsertEntry);
+      }
+
+      return insertEntryStmt;
+    }
+
+    private BatchedStatement getCopyOriginalEntryStmt()
+    {
+      if (copyOriginalEntryStmt == null)
+      {
+        copyOriginalEntryStmt = createStatement(sqlCopyOriginalEntry);
+      }
+
+      return copyOriginalEntryStmt;
+    }
+
+    private BatchedStatement getDeleteEntryStmt()
+    {
+      if (deleteEntryStmt == null)
+      {
+        deleteEntryStmt = createStatement(sqlDeleteEntry);
+      }
+
+      return deleteEntryStmt;
+    }
+
+    private BatchedStatement getRemoveEntryStmt()
+    {
+      if (removeEntryStmt == null)
+      {
+        removeEntryStmt = createStatement(sqlRemoveEntry);
+      }
+
+      return removeEntryStmt;
+    }
+
+    private BatchedStatement getClearListStmt()
+    {
+      if (clearListStmt == null)
+      {
+        clearListStmt = createStatement(sqlClearList);
+      }
+
+      return clearListStmt;
+    }
+
+    private BatchedStatement getDeleteListStmt()
+    {
+      if (deleteListStmt == null)
+      {
+        deleteListStmt = createStatement(sqlDeleteList);
+      }
+
+      return deleteListStmt;
+    }
+
+    private BatchedStatement createStatement(String sql)
+    {
+      BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH), batchingContext.getStatementBatchSize());
+      batchingContext.manage(stmt);
+      return stmt;
+    }
+  }
+
   /**
    * @author Stefan Winkler
    */
@@ -1483,10 +1966,18 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   {
     private final LogicalListPlan logicalListPlan;
 
+    private final AuditDeltaBatch batch;
+
     public ListDeltaWriter(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion)
+    {
+      this(accessor, originalRevision, oldVersion, newVersion, null);
+    }
+
+    public ListDeltaWriter(IDBStoreAccessor accessor, InternalCDORevision originalRevision, int oldVersion, int newVersion, AuditDeltaBatch batch)
     {
       super(accessor, originalRevision, oldVersion, newVersion, TRACER);
       logicalListPlan = new LogicalListPlan(originalRevision.size(getFeature()));
+      this.batch = batch;
     }
 
     @Override
@@ -1537,7 +2028,14 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     @Override
     protected void removeEntry(int index)
     {
-      AuditListTableMappingWithRanges.this.removeEntry(accessor, id, oldVersion, newVersion, index);
+      if (batch == null)
+      {
+        AuditListTableMappingWithRanges.this.removeEntry(accessor, id, oldVersion, newVersion, index);
+      }
+      else
+      {
+        batch.removeEntry(id, newVersion, index);
+      }
     }
 
     @Override
@@ -1548,31 +2046,63 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
         LogicalListPlan.PlanElement element = ((MovePayload)value).element;
         if (element.isOriginal() && !element.hasValue())
         {
-          addEntryFromOriginal(accessor, id, newVersion, element.getOriginalIndex(), index);
+          if (batch == null)
+          {
+            addEntryFromOriginal(accessor, id, newVersion, element.getOriginalIndex(), index);
+          }
+          else
+          {
+            batch.addEntryFromOriginal(id, newVersion, element.getOriginalIndex(), index);
+          }
+
           return;
         }
 
         value = element.getValue();
       }
 
-      AuditListTableMappingWithRanges.this.addEntry(accessor, id, newVersion, index, value);
+      if (batch == null)
+      {
+        AuditListTableMappingWithRanges.this.addEntry(accessor, id, newVersion, index, value);
+      }
+      else
+      {
+        batch.addEntry(id, newVersion, index, value);
+      }
     }
 
     @Override
     protected void clearList()
     {
-      AuditListTableMappingWithRanges.this.clearList(accessor, id, oldVersion, newVersion);
+      if (batch == null)
+      {
+        AuditListTableMappingWithRanges.this.clearList(accessor, id, oldVersion, newVersion);
+      }
+      else
+      {
+        batch.clearList(id, newVersion);
+      }
     }
 
     @Override
     protected void moveOneUp(int startIndex, int endIndex)
     {
+      if (batch != null)
+      {
+        batch.flushForIndexShift();
+      }
+
       moveOneUp(accessor, id, oldVersion, newVersion, startIndex, endIndex);
     }
 
     @Override
     protected void moveOneDown(int startIndex, int endIndex)
     {
+      if (batch != null)
+      {
+        batch.flushForIndexShift();
+      }
+
       moveOneDown(accessor, id, oldVersion, newVersion, startIndex, endIndex);
     }
 

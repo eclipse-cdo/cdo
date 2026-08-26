@@ -30,4 +30,11 @@ public class IntegrationTestsAudit extends DBConfigs
   {
     addScenario(parent, new H2Config().supportingAudits(true).withRanges(true), JVM, NATIVE);
   }
+
+  @Override
+  protected void initTestClasses(java.util.List<Class<? extends org.eclipse.emf.cdo.tests.config.impl.ConfigTest>> testClasses,
+      org.eclipse.emf.cdo.tests.config.IScenario scenario)
+  {
+    super.initTestClasses(testClasses, scenario);
+  }
 }

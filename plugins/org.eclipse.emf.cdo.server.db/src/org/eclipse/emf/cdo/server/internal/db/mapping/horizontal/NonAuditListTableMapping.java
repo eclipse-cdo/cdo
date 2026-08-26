@@ -20,16 +20,24 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
+import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.AbstractListDeltaWriter.NewListSizeResult;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
@@ -47,7 +55,7 @@ import java.util.ListIterator;
  * @author Eike Stepper
  * @since 2.0
  */
-public class NonAuditListTableMapping extends AbstractListTableMapping implements IListMappingDeltaSupport
+public class NonAuditListTableMapping extends AbstractListTableMapping implements IListMappingDeltaSupport, IListMappingBatchingSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, NonAuditListTableMapping.class);
 
@@ -245,6 +253,82 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   }
 
   /**
+   * Plans a list delta without materializing physical indexes or executing JDBC statements.
+   */
+  public int planDelta(IDBStoreAccessor accessor, CDOID id, CDOListFeatureDelta delta)
+  {
+    if (getTable() == null)
+    {
+      initTable(accessor);
+    }
+
+    ListDeltaWriter writer = new ListDeltaWriter(accessor, id, delta.getListChanges(), delta.getOriginSize());
+    return writer.planListDeltas();
+  }
+
+  @Override
+  public void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions, boolean firstRevision, boolean raw, OMMonitor monitor)
+  {
+    monitor.begin(revisions.length);
+    try
+    {
+      for (InternalCDORevision revision : revisions)
+      {
+        writeValues(accessor, revision);
+        monitor.worked();
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  @Override
+  public void processDeltas(IDBStoreAccessor accessor, ListDeltaWork[] work, OMMonitor monitor)
+  {
+    if (getTable() == null)
+    {
+      initTable(accessor);
+    }
+
+    NonAuditDeltaBatch batch = new NonAuditDeltaBatch(accessor);
+    monitor.begin(work.length);
+    try
+    {
+      for (ListDeltaWork item : work)
+      {
+        ListDeltaWriter writer = new ListDeltaWriter(accessor, item.getID(), item.getDelta().getListChanges(), item.getDelta().getOriginSize(), batch);
+        try
+        {
+          writer.writeListDeltas();
+        }
+        catch (NewListSizeResult expected)
+        {
+          if (item.getNewListSize() != ListDeltaWork.UNSPECIFIED_LIST_SIZE && item.getNewListSize() != expected.getNewListSize())
+          {
+            throw new DBException("Inconsistent planned list size"); //$NON-NLS-1$
+          }
+        }
+
+        monitor.worked();
+      }
+
+      batch.flushPhase();
+    }
+    catch (RuntimeException ex)
+    {
+      batch.discard();
+      throw ex;
+    }
+    finally
+    {
+      batch.release();
+      monitor.done();
+    }
+  }
+
+  /**
    * Clear a list of a given revision.
    *
    * @param accessor
@@ -313,11 +397,285 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
   }
 
+  private final class NonAuditDeltaBatch
+  {
+    private final IDBStoreAccessor accessor;
+
+    private final DBBatchingContext batchingContext;
+
+    private BatchedStatement deleteStmt;
+
+    private BatchedStatement moveStmt;
+
+    private BatchedStatement setStmt;
+
+    private BatchedStatement insertStmt;
+
+    private BatchedStatement clearStmt;
+
+    private int deleteCount;
+
+    private int moveCount;
+
+    private int setCount;
+
+    private int insertCount;
+
+    private boolean discarded;
+
+    private NonAuditDeltaBatch(IDBStoreAccessor accessor)
+    {
+      this.accessor = accessor;
+      batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
+    }
+
+    public void delete(CDOID id, int index)
+    {
+      try
+      {
+        BatchedStatement stmt = getDeleteStmt();
+        int column = 1;
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, id);
+        stmt.setInt(column, index);
+        add(stmt);
+        ++deleteCount;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void move(CDOID id, int sourceIndex, int targetIndex)
+    {
+      try
+      {
+        BatchedStatement stmt = getMoveStmt();
+        int column = 1;
+        stmt.setInt(column++, targetIndex);
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, id);
+        stmt.setInt(column, sourceIndex);
+        add(stmt);
+        ++moveCount;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void set(CDOID id, int index, Object value)
+    {
+      try
+      {
+        BatchedStatement stmt = getSetStmt();
+        int column = 1;
+        getTypeMapping().setValue(stmt, column++, value);
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, id);
+        stmt.setInt(column, index);
+        add(stmt);
+        ++setCount;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void insert(CDOID id, int index, Object value)
+    {
+      try
+      {
+        BatchedStatement stmt = getInsertStmt();
+        int column = 1;
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, id);
+        stmt.setInt(column++, index);
+        getTypeMapping().setValue(stmt, column, value);
+        add(stmt);
+        ++insertCount;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void clearList(CDOID id)
+    {
+      try
+      {
+        BatchedStatement stmt = getClearStmt();
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 1, id);
+        add(stmt);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void flushClearList()
+    {
+      flush(clearStmt);
+    }
+
+    public void flushForIndexShift()
+    {
+      flush(deleteStmt);
+      flush(moveStmt);
+      validateExactlyOne(deleteStmt, deleteCount, "Unexpected delete result"); //$NON-NLS-1$
+      validateExactlyOne(moveStmt, moveCount, "Unexpected move result"); //$NON-NLS-1$
+    }
+
+    public void flushPhase()
+    {
+      batchingContext.flushPhase();
+      validateExactlyOne(deleteStmt, deleteCount, "Unexpected delete result"); //$NON-NLS-1$
+      validateExactlyOne(moveStmt, moveCount, "Unexpected move result"); //$NON-NLS-1$
+      validateExactlyOne(setStmt, setCount, "Unexpected set result"); //$NON-NLS-1$
+      validateExactlyOne(insertStmt, insertCount, "Unexpected insert result"); //$NON-NLS-1$
+    }
+
+    public void release()
+    {
+      if (!discarded)
+      {
+        release(deleteStmt);
+        release(moveStmt);
+        release(setStmt);
+        release(insertStmt);
+        release(clearStmt);
+      }
+    }
+
+    public void discard()
+    {
+      if (!discarded)
+      {
+        discarded = true;
+        discard(deleteStmt);
+        discard(moveStmt);
+        discard(setStmt);
+        discard(insertStmt);
+        discard(clearStmt);
+      }
+    }
+
+    private void add(BatchedStatement stmt) throws SQLException
+    {
+      stmt.executeUpdate();
+      batchingContext.afterAdd(stmt);
+    }
+
+    private void flush(BatchedStatement stmt)
+    {
+      if (stmt != null)
+      {
+        batchingContext.flush(stmt);
+      }
+    }
+
+    private void release(BatchedStatement stmt)
+    {
+      if (stmt != null)
+      {
+        batchingContext.release(stmt);
+      }
+    }
+
+    private void discard(BatchedStatement stmt)
+    {
+      if (stmt != null)
+      {
+        batchingContext.discard(stmt);
+      }
+    }
+
+    private void validateExactlyOne(BatchedStatement stmt, int expectedCount, String message)
+    {
+      if (stmt == null)
+      {
+        if (expectedCount != 0)
+        {
+          throw new DBException(message);
+        }
+
+        return;
+      }
+
+      int knownResult = stmt.getTotalResult();
+      int unknownResultCount = stmt.getUnknownResultCount();
+      if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+      {
+        throw new DBException(message);
+      }
+    }
+
+    private BatchedStatement getDeleteStmt()
+    {
+      if (deleteStmt == null)
+      {
+        deleteStmt = createStatement(sqlDeleteItem);
+      }
+
+      return deleteStmt;
+    }
+
+    private BatchedStatement getMoveStmt()
+    {
+      if (moveStmt == null)
+      {
+        moveStmt = createStatement(sqlUpdateIndex);
+      }
+
+      return moveStmt;
+    }
+
+    private BatchedStatement getSetStmt()
+    {
+      if (setStmt == null)
+      {
+        setStmt = createStatement(sqlUpdateValue);
+      }
+
+      return setStmt;
+    }
+
+    private BatchedStatement getInsertStmt()
+    {
+      if (insertStmt == null)
+      {
+        insertStmt = createStatement(sqlInsertValue);
+      }
+
+      return insertStmt;
+    }
+
+    private BatchedStatement getClearStmt()
+    {
+      if (clearStmt == null)
+      {
+        clearStmt = createStatement(sqlClear);
+      }
+
+      return clearStmt;
+    }
+
+    private BatchedStatement createStatement(String sql)
+    {
+      BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH), batchingContext.getStatementBatchSize());
+      batchingContext.manage(stmt);
+      return stmt;
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
   private final class ListDeltaWriter extends AbstractListDeltaWriter
   {
+    private final NonAuditDeltaBatch batch;
+
     private IDBPreparedStatement stmtDelete;
 
     private IDBPreparedStatement stmtMove;
@@ -344,7 +702,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
     public ListDeltaWriter(IDBStoreAccessor accessor, CDOID id, List<CDOFeatureDelta> listChanges, int oldListSize)
     {
+      this(accessor, id, listChanges, oldListSize, null);
+    }
+
+    public ListDeltaWriter(IDBStoreAccessor accessor, CDOID id, List<CDOFeatureDelta> listChanges, int oldListSize, NonAuditDeltaBatch batch)
+    {
       super(accessor, id, listChanges, oldListSize);
+      this.batch = batch;
     }
 
     @Override
@@ -368,12 +732,26 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     @Override
     protected void clearList()
     {
-      NonAuditListTableMapping.this.clearList(accessor, id);
+      if (batch == null)
+      {
+        NonAuditListTableMapping.this.clearList(accessor, id);
+      }
+      else
+      {
+        batch.clearList(id);
+        batch.flushClearList();
+      }
     }
 
     @Override
     protected void writeResultToDatabase() throws SQLException
     {
+      if (batch != null)
+      {
+        super.writeResultToDatabase();
+        return;
+      }
+
       try
       {
         super.writeResultToDatabase();
@@ -417,6 +795,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     @Override
     protected void writeShifts(IIDHandler idHandler) throws SQLException
     {
+      if (batch != null)
+      {
+        batch.flushForIndexShift();
+        super.writeShifts(idHandler);
+        return;
+      }
+
       if (deleteCount > 0)
       {
         if (TRACER.isEnabled())
@@ -470,6 +855,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     @Override
     protected void dbDelete(IIDHandler idHandler, int index) throws SQLException
     {
+      if (batch != null)
+      {
+        batch.delete(id, index);
+        return;
+      }
+
       if (stmtDelete == null)
       {
         stmtDelete = accessor.getDBConnection().prepareStatement(sqlDeleteItem, ReuseProbability.HIGH);
@@ -484,6 +875,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     @Override
     protected void dbMove(IIDHandler idHandler, int sourcePhysicalIndex, int targetPhysicalIndex, int sourceIndex) throws SQLException
     {
+      if (batch != null)
+      {
+        batch.move(id, sourcePhysicalIndex, targetPhysicalIndex);
+        return;
+      }
+
       if (stmtMove == null)
       {
         stmtMove = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
@@ -499,6 +896,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     @Override
     protected void dbSet(IIDHandler idHandler, ITypeMapping typeMapping, int targetPhysicalIndex, Object value, int sourceIndex) throws SQLException
     {
+      if (batch != null)
+      {
+        batch.set(id, targetPhysicalIndex, value);
+        return;
+      }
+
       if (stmtSet == null)
       {
         stmtSet = accessor.getDBConnection().prepareStatement(sqlUpdateValue, ReuseProbability.HIGH);
@@ -514,6 +917,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     @Override
     protected void dbInsert(IIDHandler idHandler, ITypeMapping typeMapping, int index, Object value) throws SQLException
     {
+      if (batch != null)
+      {
+        batch.insert(id, index, value);
+        return;
+      }
+
       if (stmtInsert == null)
       {
         stmtInsert = accessor.getDBConnection().prepareStatement(sqlInsertValue, ReuseProbability.HIGH);

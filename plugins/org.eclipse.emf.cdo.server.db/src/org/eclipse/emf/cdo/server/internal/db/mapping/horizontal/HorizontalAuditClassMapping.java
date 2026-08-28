@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.db.IBatchingContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
@@ -40,9 +41,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
-import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -107,6 +106,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   private String sqlReviseAttributes;
 
   private String sqlRawDeleteAttributes;
+
+  private BatchedStatement reviseAttributesBatch;
 
   public HorizontalAuditClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
@@ -504,10 +505,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       return;
     }
 
-    DBBatchingContext batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
-    BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH),
-        batchingContext.getStatementBatchSize());
-    batchingContext.manage(stmt);
+    IBatchingContext batchingContext = accessor.getBatchingContext();
+    BatchedStatement stmt = batchingContext.createStatement(sqlInsertAttributes, ReuseProbability.HIGH, "AuditClass.attribute"); //$NON-NLS-1$
+
     boolean discarded = false;
 
     try
@@ -517,7 +517,6 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       {
         setInsertValues(idHandler, stmt, revision);
         stmt.executeUpdate();
-        batchingContext.afterAdd(stmt);
       }
 
       batchingContext.flushPhase();
@@ -525,7 +524,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     }
     catch (SQLException ex)
     {
-      batchingContext.discard(stmt);
+      batchingContext.discardStatement(stmt);
       discarded = true;
       throw new DBException(ex);
     }
@@ -533,7 +532,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     {
       if (!discarded)
       {
-        batchingContext.release(stmt);
+        batchingContext.releaseStatement(stmt);
       }
     }
   }
@@ -670,6 +669,24 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long revised)
   {
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+
+    if (reviseAttributesBatch != null)
+    {
+      try
+      {
+        reviseAttributesBatch.setLong(1, revised);
+        idHandler.setCDOID(reviseAttributesBatch, 2, id);
+
+        reviseAttributesBatch.executeUpdate();
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+
+      return;
+    }
+
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReviseAttributes, ReuseProbability.HIGH);
 
     try
@@ -686,6 +703,49 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     finally
     {
       DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  protected void beginRevisionClassSetup(IDBStoreAccessor accessor, int revisionCount, boolean firstRevision, boolean revise)
+  {
+    if (firstRevision || !revise || revisionCount == 0)
+    {
+      return;
+    }
+
+    reviseAttributesBatch = accessor.getBatchingContext().createStatement(sqlReviseAttributes, ReuseProbability.HIGH, "AuditClass.revise"); //$NON-NLS-1$
+  }
+
+  @Override
+  protected void finishRevisionClassSetup(IDBStoreAccessor accessor, int revisionCount, boolean firstRevision, boolean revise)
+  {
+    if (reviseAttributesBatch == null)
+    {
+      return;
+    }
+
+    IBatchingContext batchingContext = accessor.getBatchingContext();
+
+    try
+    {
+      batchingContext.flushStatement(reviseAttributesBatch);
+      validateExactlyOne(reviseAttributesBatch, revisionCount, "Unexpected revision update result"); //$NON-NLS-1$
+    }
+    finally
+    {
+      batchingContext.releaseStatement(reviseAttributesBatch);
+      reviseAttributesBatch = null;
+    }
+  }
+
+  @Override
+  protected void abortRevisionClassSetup(IDBStoreAccessor accessor)
+  {
+    if (reviseAttributesBatch != null)
+    {
+      accessor.getBatchingContext().discardStatement(reviseAttributesBatch);
+      reviseAttributesBatch = null;
     }
   }
 
@@ -721,25 +781,47 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   @Override
   protected void writeRevisionDeltasSingle(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
   {
+    for (IListMapping mapping : getListMappings())
+    {
+      if (mapping instanceof AuditListTableMappingWithRanges)
+      {
+        ((AuditListTableMappingWithRanges)mapping).prepareForDeltaBatching(accessor);
+      }
+    }
+
+    IBatchingContext batchingContext = accessor.getBatchingContext();
+    BatchedStatement reviseBatch = batchingContext.createStatement(sqlReviseAttributes, ReuseProbability.HIGH, "AuditClass.reviseDelta"); //$NON-NLS-1$
+    BatchedStatement insertBatch = batchingContext.createStatement(sqlInsertAttributes, ReuseProbability.HIGH, "AuditClass.attributeDelta"); //$NON-NLS-1$
+
+    boolean discarded = false;
+
     List<FeatureDeltaWriter> writers = new ArrayList<>();
     monitor.begin(1 + getListMappings().size());
+
     try
     {
       OMMonitor revisionMonitor = monitor.fork();
       revisionMonitor.begin(deltas.length);
+
       for (InternalCDORevisionDelta delta : deltas)
       {
-        FeatureDeltaWriter writer = new FeatureDeltaWriter();
+        FeatureDeltaWriter writer = new FeatureDeltaWriter(reviseBatch, insertBatch);
         writer.deferListDeltas = true;
         writer.process(accessor, delta, created);
         writers.add(writer);
         revisionMonitor.worked();
       }
+
       revisionMonitor.done();
+
+      batchingContext.flushPhase();
+      validateExactlyOne(reviseBatch, deltas.length, "Unexpected revision update result"); //$NON-NLS-1$
+      validateExactlyOne(insertBatch, deltas.length, "Unexpected attribute insert result"); //$NON-NLS-1$
 
       for (IListMapping mapping : getListMappings())
       {
         List<ListDeltaWork> work = new ArrayList<>();
+
         for (FeatureDeltaWriter writer : writers)
         {
           for (ListDeltaWork item : writer.listDeltaWork)
@@ -752,6 +834,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         }
 
         OMMonitor listMonitor = monitor.fork();
+
         if (!work.isEmpty())
         {
           ListDeltaWork[] items = work.toArray(new ListDeltaWork[work.size()]);
@@ -762,9 +845,11 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
           else
           {
             listMonitor.begin(items.length);
+
             try
             {
               IListMappingDeltaSupport deltaSupport = (IListMappingDeltaSupport)mapping;
+
               for (ListDeltaWork item : items)
               {
                 deltaSupport.processDelta(accessor, item.getID(), item.getBranchId(), item.getOldVersion(), item.getNewVersion(), item.getCreated(),
@@ -784,8 +869,21 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         }
       }
     }
+    catch (RuntimeException | Error ex)
+    {
+      batchingContext.discardStatement(reviseBatch);
+      batchingContext.discardStatement(insertBatch);
+      discarded = true;
+      throw ex;
+    }
     finally
     {
+      if (!discarded)
+      {
+        batchingContext.releaseStatement(reviseBatch);
+        batchingContext.releaseStatement(insertBatch);
+      }
+
       monitor.done();
     }
   }
@@ -1085,6 +1183,21 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     private int branchId;
 
+    private final BatchedStatement reviseBatch;
+
+    private final BatchedStatement insertBatch;
+
+    private FeatureDeltaWriter()
+    {
+      this(null, null);
+    }
+
+    private FeatureDeltaWriter(BatchedStatement reviseBatch, BatchedStatement insertBatch)
+    {
+      this.reviseBatch = reviseBatch;
+      this.insertBatch = insertBatch;
+    }
+
     @Override
     protected void doProcess(InternalCDORevisionDelta delta)
     {
@@ -1108,9 +1221,27 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       delta.accept(this);
 
       long revised = newRevision.getTimeStamp() - 1;
-      reviseOldRevision(accessor, id, delta.getBranch(), revised);
+      if (reviseBatch == null)
+      {
+        reviseOldRevision(accessor, id, delta.getBranch(), revised);
+        writeValues(accessor, newRevision);
+      }
+      else
+      {
+        try
+        {
+          reviseBatch.setLong(1, revised);
+          getMappingStrategy().getStore().getIDHandler().setCDOID(reviseBatch, 2, id);
+          reviseBatch.executeUpdate();
 
-      writeValues(accessor, newRevision);
+          setInsertValues(getMappingStrategy().getStore().getIDHandler(), insertBatch, newRevision);
+          insertBatch.executeUpdate();
+        }
+        catch (SQLException ex)
+        {
+          throw new DBException(ex);
+        }
+      }
     }
 
     @Override

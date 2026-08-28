@@ -156,6 +156,15 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
     public static final String BATCH_STATEMENT_SIZE = "batchStatementSize"; //$NON-NLS-1$
 
     /**
+     * Maximum number of ObjectType rows considered by one prequery and ObjectType insert batch.
+     * <p>
+     * If omitted, {@link #BATCH_STATEMENT_SIZE} and its legacy fallback behavior determine the size.
+     *
+     * @since 4.15
+     */
+    public static final String OBJECT_TYPE_BATCH_SIZE = "objectTypeBatchSize"; //$NON-NLS-1$
+
+    /**
      * Maximum number of pending parameter sets across the current DB commit write.
      *
      * @since 4.15

@@ -20,6 +20,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Objects;
 
 /**
  * @author Eike Stepper
@@ -27,6 +28,8 @@ import java.sql.Statement;
  */
 public final class BatchedStatementImpl extends DelegatingPreparedStatement implements BatchedStatement
 {
+  private final Context context;
+
   private final int batchSize;
 
   private int batchCount;
@@ -41,8 +44,25 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
 
   public BatchedStatementImpl(PreparedStatement delegate, int batchSize) throws DBException
   {
+    this(delegate, batchSize, null);
+  }
+
+  public BatchedStatementImpl(PreparedStatement delegate, int batchSize, Context context) throws DBException
+  {
+    this(delegate, batchSize, context, null);
+  }
+
+  public BatchedStatementImpl(PreparedStatement delegate, int batchSize, Context context, String diagnosticName) throws DBException
+  {
     super(delegate, getConnection(delegate));
+    this.context = Objects.requireNonNullElseGet(context, NOOPContext::new);
+    this.context.manageStatement(this, diagnosticName);
     this.batchSize = batchSize;
+  }
+
+  public Context getContext()
+  {
+    return context;
   }
 
   @Override
@@ -90,12 +110,15 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
     ++batchCount;
     ++pendingCount;
 
+    int result = 0;
+
     if (batchSize > 0 && pendingCount >= batchSize)
     {
-      return doExecuteBatch();
+      result = doExecuteBatch();
     }
 
-    return 0;
+    context.afterExecuteUpdate(this);
+    return result;
   }
 
   @Override
@@ -134,9 +157,11 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
 
     int[] results = getDelegate().executeBatch();
     ++executionCount;
+
     for (int i = 0; i < results.length; i++)
     {
       int result = results[i];
+
       if (result == Statement.SUCCESS_NO_INFO)
       {
         ++unknownResultCount;
@@ -218,6 +243,34 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
     catch (SQLException ex)
     {
       throw new DBException(ex);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class NOOPContext implements Context
+  {
+    public NOOPContext()
+    {
+    }
+
+    @Override
+    public void manageStatement(BatchedStatement statement)
+    {
+      // Do nothing.
+    }
+
+    @Override
+    public void manageStatement(BatchedStatement statement, String diagnosticName)
+    {
+      // Do nothing.
+    }
+
+    @Override
+    public void afterExecuteUpdate(BatchedStatement statement)
+    {
+      // Do nothing.
     }
   }
 }

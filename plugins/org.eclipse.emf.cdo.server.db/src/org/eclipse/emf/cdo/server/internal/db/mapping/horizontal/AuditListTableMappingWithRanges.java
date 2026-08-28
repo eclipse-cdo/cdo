@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.db.IBatchingContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
@@ -47,9 +48,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
-import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.ListLobRefsUpdater;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -223,6 +222,14 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       valueField = table.getField(MappingNames.LIST_VALUE);
 
       initSQLStrings();
+    }
+  }
+
+  void prepareForDeltaBatching(IDBStoreAccessor accessor)
+  {
+    if (table == null)
+    {
+      initTable(accessor);
     }
   }
 
@@ -666,10 +673,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       initTable(accessor);
     }
 
-    DBBatchingContext batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
-    BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH),
-        batchingContext.getStatementBatchSize());
-    batchingContext.manage(stmt);
+    IBatchingContext batchingContext = accessor.getBatchingContext();
+    BatchedStatement stmt = batchingContext.createStatement(sqlInsertEntry, ReuseProbability.HIGH, "AuditList.insert"); //$NON-NLS-1$
+
     monitor.begin(revisions.length);
     boolean complete = false;
 
@@ -692,7 +698,6 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
             stmt.setInt(column++, index++);
             getTypeMapping().setValue(stmt, column, value);
             stmt.executeUpdate();
-            batchingContext.afterAdd(stmt);
           }
         }
 
@@ -714,11 +719,11 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       if (complete)
       {
         batchingContext.flushPhase();
-        batchingContext.release(stmt);
+        batchingContext.releaseStatement(stmt);
       }
       else
       {
-        batchingContext.discard(stmt);
+        batchingContext.discardStatement(stmt);
       }
 
       monitor.done();
@@ -1650,11 +1655,12 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private final class AuditDeltaBatch
   {
     private final IDBStoreAccessor accessor;
-
-    private final DBBatchingContext batchingContext;
 
     private BatchedStatement insertEntryStmt;
 
@@ -1677,7 +1683,6 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     private AuditDeltaBatch(IDBStoreAccessor accessor)
     {
       this.accessor = accessor;
-      batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
     }
 
     public void addEntry(CDOID id, int version, int index, Object value)
@@ -1783,7 +1788,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
     public void flushPhase()
     {
-      batchingContext.flushPhase();
+      accessor.getBatchingContext().flushPhase();
       validateResults();
     }
 
@@ -1854,14 +1859,13 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     private void add(BatchedStatement stmt) throws SQLException
     {
       stmt.executeUpdate();
-      batchingContext.afterAdd(stmt);
     }
 
     private void flush(BatchedStatement stmt)
     {
       if (stmt != null)
       {
-        batchingContext.flush(stmt);
+        accessor.getBatchingContext().flushStatement(stmt);
       }
     }
 
@@ -1869,7 +1873,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (stmt != null)
       {
-        batchingContext.release(stmt);
+        accessor.getBatchingContext().releaseStatement(stmt);
       }
     }
 
@@ -1877,7 +1881,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (stmt != null)
       {
-        batchingContext.discard(stmt);
+        accessor.getBatchingContext().discardStatement(stmt);
       }
     }
 
@@ -1895,7 +1899,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (insertEntryStmt == null)
       {
-        insertEntryStmt = createStatement(sqlInsertEntry);
+        insertEntryStmt = createStatement(sqlInsertEntry, "AuditList.insert"); //$NON-NLS-1$
       }
 
       return insertEntryStmt;
@@ -1905,7 +1909,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (copyOriginalEntryStmt == null)
       {
-        copyOriginalEntryStmt = createStatement(sqlCopyOriginalEntry);
+        copyOriginalEntryStmt = createStatement(sqlCopyOriginalEntry, "AuditList.copyOriginal"); //$NON-NLS-1$
       }
 
       return copyOriginalEntryStmt;
@@ -1915,7 +1919,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (deleteEntryStmt == null)
       {
-        deleteEntryStmt = createStatement(sqlDeleteEntry);
+        deleteEntryStmt = createStatement(sqlDeleteEntry, "AuditList.deleteEntry"); //$NON-NLS-1$
       }
 
       return deleteEntryStmt;
@@ -1925,7 +1929,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (removeEntryStmt == null)
       {
-        removeEntryStmt = createStatement(sqlRemoveEntry);
+        removeEntryStmt = createStatement(sqlRemoveEntry, "AuditList.removeEntry"); //$NON-NLS-1$
       }
 
       return removeEntryStmt;
@@ -1935,7 +1939,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (clearListStmt == null)
       {
-        clearListStmt = createStatement(sqlClearList);
+        clearListStmt = createStatement(sqlClearList, "AuditList.clear"); //$NON-NLS-1$
       }
 
       return clearListStmt;
@@ -1945,17 +1949,15 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       if (deleteListStmt == null)
       {
-        deleteListStmt = createStatement(sqlDeleteList);
+        deleteListStmt = createStatement(sqlDeleteList, "AuditList.deleteList"); //$NON-NLS-1$
       }
 
       return deleteListStmt;
     }
 
-    private BatchedStatement createStatement(String sql)
+    private BatchedStatement createStatement(String sql, String diagnosticName)
     {
-      BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH), batchingContext.getStatementBatchSize());
-      batchingContext.manage(stmt);
-      return stmt;
+      return accessor.getBatchingContext().createStatement(sql, ReuseProbability.HIGH, diagnosticName);
     }
   }
 

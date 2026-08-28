@@ -43,6 +43,11 @@ public interface IDBStoreAccessor extends IStoreAccessor.Raw2, UnitSupport
   public Connection getConnection();
 
   /**
+   * @since 4.15
+   */
+  public IBatchingContext getBatchingContext();
+
+  /**
    * @since 4.5
    */
   public EClass getObjectType(CDOID id);

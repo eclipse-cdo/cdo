@@ -8,7 +8,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
+import org.eclipse.emf.cdo.server.internal.db.BatchingContext;
 
 import org.eclipse.net4j.db.BatchedStatement;
 
@@ -27,10 +27,10 @@ public class DBBatchingContextTest extends TestCase
 {
   public void testPhaseFlushClearsPendingWork()
   {
-    DBBatchingContext context = new DBBatchingContext(3, 100);
+    BatchingContext context = new BatchingContext(null, 3, 100);
     State state = new State();
     BatchedStatement statement = createStatement(state);
-    context.manage(statement);
+    context.manageStatement(statement);
 
     add(context, statement, 2);
     assertEquals(2, context.getPendingCount());
@@ -43,13 +43,13 @@ public class DBBatchingContextTest extends TestCase
 
   public void testLargestStatementIsFlushedAtGlobalLimit()
   {
-    DBBatchingContext context = new DBBatchingContext(10, 4);
+    BatchingContext context = new BatchingContext(null, 10, 4);
     State first = new State();
     State second = new State();
     BatchedStatement firstStatement = createStatement(first);
     BatchedStatement secondStatement = createStatement(second);
-    context.manage(firstStatement);
-    context.manage(secondStatement);
+    context.manageStatement(firstStatement);
+    context.manageStatement(secondStatement);
 
     add(context, firstStatement, 3);
     add(context, secondStatement, 3);
@@ -62,13 +62,13 @@ public class DBBatchingContextTest extends TestCase
 
   public void testEqualCapacityUsesRegistrationOrder()
   {
-    DBBatchingContext context = new DBBatchingContext(10, 4);
+    BatchingContext context = new BatchingContext(null, 10, 4);
     State first = new State();
     State second = new State();
     BatchedStatement firstStatement = createStatement(first);
     BatchedStatement secondStatement = createStatement(second);
-    context.manage(firstStatement);
-    context.manage(secondStatement);
+    context.manageStatement(firstStatement);
+    context.manageStatement(secondStatement);
 
     add(context, firstStatement, 2);
     add(context, secondStatement, 2);
@@ -78,10 +78,10 @@ public class DBBatchingContextTest extends TestCase
 
   public void testFinalFlushAndDiscard()
   {
-    DBBatchingContext context = new DBBatchingContext(10, 100);
+    BatchingContext context = new BatchingContext(null, 10, 100);
     State state = new State();
     BatchedStatement statement = createStatement(state);
-    context.manage(statement);
+    context.manageStatement(statement);
     add(context, statement, 1);
 
     context.flushFinal();
@@ -94,7 +94,7 @@ public class DBBatchingContextTest extends TestCase
     assertEquals(0, context.getPendingCount());
   }
 
-  private static void add(DBBatchingContext context, BatchedStatement statement, int count)
+  private static void add(BatchingContext context, BatchedStatement statement, int count)
   {
     for (int i = 0; i < count; i++)
     {
@@ -107,7 +107,7 @@ public class DBBatchingContextTest extends TestCase
         throw new AssertionError(ex);
       }
 
-      context.afterAdd(statement);
+      context.afterExecuteUpdate(statement);
     }
   }
 

@@ -376,6 +376,17 @@ public final class DBUtil
     return new BatchedStatementImpl(delegate, batchSize);
   }
 
+  /**
+   * Creates a batched statement associated with a batching context.
+   *
+   * @since 4.14
+   */
+  public static BatchedStatement batched(PreparedStatement delegate, int batchSize, BatchedStatement.Context context, String diagnosticName)
+      throws DBException
+  {
+    return new BatchedStatementImpl(delegate, batchSize, context, diagnosticName);
+  }
+
   public static Exception close(ResultSet resultSet)
   {
     if (resultSet != null)

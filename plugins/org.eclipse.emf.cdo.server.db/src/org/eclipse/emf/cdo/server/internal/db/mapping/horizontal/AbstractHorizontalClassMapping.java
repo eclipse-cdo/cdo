@@ -784,21 +784,42 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     monitor.begin(1 + mappings.size());
     try
     {
+      beginRevisionClassSetup(accessor, revisions.length, firstRevision, revise);
+      boolean classSetupComplete = false;
       OMMonitor classMonitor = monitor.fork();
-      classMonitor.begin(revisions.length);
       try
       {
-        for (InternalCDORevision revision : revisions)
+        boolean objectTypesWritten = firstRevision && !mappingStrategy.hasBranchingSupport() && revisions.length > 1;
+        if (objectTypesWritten)
         {
-          writeRevisionClassSetup(accessor, revision, firstRevision, revise);
-          classMonitor.worked();
+          mappingStrategy.objects().putObjectTypes(accessor, revisions, eClass);
+        }
+
+        classMonitor.begin(revisions.length);
+        try
+        {
+          for (InternalCDORevision revision : revisions)
+          {
+            writeRevisionClassSetup(accessor, revision, firstRevision, revise, objectTypesWritten);
+            classMonitor.worked();
+          }
+
+          finishRevisionClassSetup(accessor, revisions.length, firstRevision, revise);
+          classSetupComplete = true;
+        }
+        finally
+        {
+          classMonitor.done();
         }
 
         writeValues(accessor, revisions);
       }
       finally
       {
-        classMonitor.done();
+        if (!classSetupComplete)
+        {
+          abortRevisionClassSetup(accessor);
+        }
       }
 
       for (IListMapping mapping : mappings)
@@ -840,7 +861,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  private void writeRevisionClassSetup(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean revise)
+  private void writeRevisionClassSetup(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean revise,
+      boolean objectTypesWritten)
   {
     CDOID id = revision.getID();
     InternalCDOBranch branch = revision.getBranch();
@@ -848,8 +870,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
     if (firstRevision)
     {
-      // Object type insertion has duplicate-key/savepoint semantics. Keep it outside JDBC batching.
-      mappingStrategy.putObjectType(accessor, timeStamp, id, eClass);
+      if (!objectTypesWritten)
+      {
+        // Single revisions and Branching retain the established duplicate-key/savepoint path.
+        mappingStrategy.putObjectType(accessor, timeStamp, id, eClass);
+      }
     }
     else if (revise)
     {
@@ -1283,6 +1308,18 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   protected abstract void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor fork);
 
   protected abstract void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp);
+
+  protected void beginRevisionClassSetup(IDBStoreAccessor accessor, int revisionCount, boolean firstRevision, boolean revise)
+  {
+  }
+
+  protected void finishRevisionClassSetup(IDBStoreAccessor accessor, int revisionCount, boolean firstRevision, boolean revise)
+  {
+  }
+
+  protected void abortRevisionClassSetup(IDBStoreAccessor accessor)
+  {
+  }
 
   protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions)
   {

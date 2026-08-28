@@ -15,9 +15,11 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.server.db.IBatchingContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
@@ -25,7 +27,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
-import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.AbstractListDeltaWriter.NewListSizeResult;
@@ -46,8 +47,11 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Set;
 
 /**
  * This is a list-to-table mapping optimized for non-audit-mode. It doesn't care about version and has delta support.
@@ -269,18 +273,70 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   @Override
   public void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions, boolean firstRevision, boolean raw, OMMonitor monitor)
   {
+    if (getTable() == null)
+    {
+      initTable(accessor);
+    }
+
+    IBatchingContext batchingContext = accessor.getBatchingContext();
+    BatchedStatement stmt = batchingContext.createStatement(sqlInsertValue, ReuseProbability.HIGH, "NonAuditList.insert"); //$NON-NLS-1$
+
     monitor.begin(revisions.length);
+    boolean complete = false;
+    int entryCount = 0;
+
     try
     {
       for (InternalCDORevision revision : revisions)
       {
-        writeValues(accessor, revision);
+        CDOList values = revision.getListOrNull(getFeature());
+        if (values != null)
+        {
+          int index = 0;
+          for (Object value : values)
+          {
+            int column = 1;
+            getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, revision.getID());
+            stmt.setInt(column++, index++);
+            getTypeMapping().setValue(stmt, column, value);
+            stmt.executeUpdate();
+            ++entryCount;
+          }
+        }
+
         monitor.worked();
       }
+
+      complete = true;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
     }
     finally
     {
+      if (complete)
+      {
+        batchingContext.flushPhase();
+        validateExactlyOne(stmt, entryCount, "Unexpected list insert result"); //$NON-NLS-1$
+        batchingContext.releaseStatement(stmt);
+      }
+      else
+      {
+        batchingContext.discardStatement(stmt);
+      }
+
       monitor.done();
+    }
+  }
+
+  private static void validateExactlyOne(BatchedStatement stmt, int expectedCount, String message)
+  {
+    int knownResult = stmt.getTotalResult();
+    int unknownResultCount = stmt.getUnknownResultCount();
+    if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+    {
+      throw new DBException(message);
     }
   }
 
@@ -292,6 +348,120 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       initTable(accessor);
     }
 
+    if (!hasUniqueSources(accessor, work))
+    {
+      processDeltasSequentially(accessor, work, monitor);
+      return;
+    }
+
+    NonAuditDeltaBatch batch = new NonAuditDeltaBatch(accessor);
+    monitor.begin(work.length);
+    try
+    {
+      List<ListDeltaWriter> writers = new ArrayList<>(work.length);
+      for (ListDeltaWork item : work)
+      {
+        ListDeltaWriter writer = new ListDeltaWriter(accessor, item.getID(), item.getDelta().getListChanges(), item.getDelta().getOriginSize(), batch);
+        int newListSize = writer.planListDeltas();
+        if (item.getNewListSize() != ListDeltaWork.UNSPECIFIED_LIST_SIZE && item.getNewListSize() != newListSize)
+        {
+          throw new DBException("Inconsistent planned list size"); //$NON-NLS-1$
+        }
+
+        writers.add(writer);
+      }
+
+      for (ListDeltaWriter writer : writers)
+      {
+        writer.prepareResultToDatabase();
+      }
+
+      // Temporary moves and deletes must be visible before a shift of the same list. The batch contains only this
+      // mapping's homogeneous statements, so independent source IDs are flushed together.
+      batch.flushForIndexShift();
+
+      int maximumShiftCount = 0;
+      for (ListDeltaWriter writer : writers)
+      {
+        maximumShiftCount = Math.max(maximumShiftCount, writer.getPlannedShiftOperations().size());
+        if (writer.getPlannedShiftOperations().size() > 1)
+        {
+          batch.recordDiagnosticCounter("NonAuditList.sameListDependencyFallback"); //$NON-NLS-1$
+        }
+      }
+
+      // One round contains at most one shift per list. This preserves same-list ordering while batching each phase
+      // across all independent source IDs.
+      for (int shiftIndex = 0; shiftIndex < maximumShiftCount; shiftIndex++)
+      {
+        for (ListDeltaWriter writer : writers)
+        {
+          List<AbstractListDeltaWriter.Shift> shifts = writer.getPlannedShiftOperations();
+          if (shiftIndex < shifts.size())
+          {
+            writer.writeShiftTemporary(shifts.get(shiftIndex));
+          }
+        }
+
+        batch.flushShiftTemporary();
+
+        for (ListDeltaWriter writer : writers)
+        {
+          List<AbstractListDeltaWriter.Shift> shifts = writer.getPlannedShiftOperations();
+          if (shiftIndex < shifts.size())
+          {
+            writer.writeShiftFinal(shifts.get(shiftIndex));
+          }
+        }
+
+        batch.flushShiftFinal();
+      }
+
+      // A clear may precede added elements of the same list, but does not constrain independent shift work.
+      batch.flushClearList();
+
+      for (ListDeltaWriter writer : writers)
+      {
+        writer.finishResultToDatabase();
+        monitor.worked();
+      }
+
+      batch.flushPhase();
+    }
+    catch (SQLException ex)
+    {
+      batch.discard();
+      throw new DBException(ex);
+    }
+    catch (RuntimeException ex)
+    {
+      batch.discard();
+      throw ex;
+    }
+    finally
+    {
+      batch.release();
+      monitor.done();
+    }
+  }
+
+  private boolean hasUniqueSources(IDBStoreAccessor accessor, ListDeltaWork[] work)
+  {
+    Set<CDOID> ids = new HashSet<>();
+    for (ListDeltaWork item : work)
+    {
+      if (!ids.add(item.getID()))
+      {
+        ((DBStoreAccessor)accessor).getBatchingContext().recordDiagnosticCounter("NonAuditList.identicalSourceIDFallback"); //$NON-NLS-1$
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  private void processDeltasSequentially(IDBStoreAccessor accessor, ListDeltaWork[] work, OMMonitor monitor)
+  {
     NonAuditDeltaBatch batch = new NonAuditDeltaBatch(accessor);
     monitor.begin(work.length);
     try
@@ -401,8 +571,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   {
     private final IDBStoreAccessor accessor;
 
-    private final DBBatchingContext batchingContext;
-
     private BatchedStatement deleteStmt;
 
     private BatchedStatement moveStmt;
@@ -412,6 +580,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     private BatchedStatement insertStmt;
 
     private BatchedStatement clearStmt;
+
+    private BatchedStatement shiftTemporaryStmt;
+
+    private BatchedStatement shiftFinalStmt;
 
     private int deleteCount;
 
@@ -426,7 +598,6 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     private NonAuditDeltaBatch(IDBStoreAccessor accessor)
     {
       this.accessor = accessor;
-      batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
     }
 
     public void delete(CDOID id, int index)
@@ -527,9 +698,61 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       validateExactlyOne(moveStmt, moveCount, "Unexpected move result"); //$NON-NLS-1$
     }
 
+    public void shiftTemporary(CDOID id, int temporaryIndexOffset, int startIndex, int endIndex)
+    {
+      try
+      {
+        BatchedStatement stmt = getShiftTemporaryStmt();
+        int column = 1;
+        stmt.setInt(column++, temporaryIndexOffset);
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, id);
+        stmt.setInt(column++, startIndex);
+        stmt.setInt(column, endIndex);
+        add(stmt);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void shiftFinal(CDOID id, int temporaryIndexOffset, int shiftOffset, int temporaryStartIndex, int temporaryEndIndex)
+    {
+      try
+      {
+        BatchedStatement stmt = getShiftFinalStmt();
+        int column = 1;
+        stmt.setInt(column++, temporaryIndexOffset);
+        stmt.setInt(column++, shiftOffset);
+        getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, column++, id);
+        stmt.setInt(column++, temporaryStartIndex);
+        stmt.setInt(column, temporaryEndIndex);
+        add(stmt);
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void flushShiftTemporary()
+    {
+      flush(shiftTemporaryStmt);
+    }
+
+    public void flushShiftFinal()
+    {
+      flush(shiftFinalStmt);
+    }
+
+    public void recordDiagnosticCounter(String name)
+    {
+      accessor.getBatchingContext().recordDiagnosticCounter(name);
+    }
+
     public void flushPhase()
     {
-      batchingContext.flushPhase();
+      accessor.getBatchingContext().flushPhase();
       validateExactlyOne(deleteStmt, deleteCount, "Unexpected delete result"); //$NON-NLS-1$
       validateExactlyOne(moveStmt, moveCount, "Unexpected move result"); //$NON-NLS-1$
       validateExactlyOne(setStmt, setCount, "Unexpected set result"); //$NON-NLS-1$
@@ -545,6 +768,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         release(setStmt);
         release(insertStmt);
         release(clearStmt);
+        release(shiftTemporaryStmt);
+        release(shiftFinalStmt);
       }
     }
 
@@ -558,20 +783,21 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         discard(setStmt);
         discard(insertStmt);
         discard(clearStmt);
+        discard(shiftTemporaryStmt);
+        discard(shiftFinalStmt);
       }
     }
 
     private void add(BatchedStatement stmt) throws SQLException
     {
       stmt.executeUpdate();
-      batchingContext.afterAdd(stmt);
     }
 
     private void flush(BatchedStatement stmt)
     {
       if (stmt != null)
       {
-        batchingContext.flush(stmt);
+        accessor.getBatchingContext().flushStatement(stmt);
       }
     }
 
@@ -579,7 +805,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (stmt != null)
       {
-        batchingContext.release(stmt);
+        accessor.getBatchingContext().releaseStatement(stmt);
       }
     }
 
@@ -587,7 +813,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (stmt != null)
       {
-        batchingContext.discard(stmt);
+        accessor.getBatchingContext().discardStatement(stmt);
       }
     }
 
@@ -615,7 +841,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (deleteStmt == null)
       {
-        deleteStmt = createStatement(sqlDeleteItem);
+        deleteStmt = createStatement(sqlDeleteItem, "NonAuditList.delete"); //$NON-NLS-1$
       }
 
       return deleteStmt;
@@ -625,7 +851,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (moveStmt == null)
       {
-        moveStmt = createStatement(sqlUpdateIndex);
+        moveStmt = createStatement(sqlUpdateIndex, "NonAuditList.move"); //$NON-NLS-1$
       }
 
       return moveStmt;
@@ -635,7 +861,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (setStmt == null)
       {
-        setStmt = createStatement(sqlUpdateValue);
+        setStmt = createStatement(sqlUpdateValue, "NonAuditList.set"); //$NON-NLS-1$
       }
 
       return setStmt;
@@ -645,7 +871,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (insertStmt == null)
       {
-        insertStmt = createStatement(sqlInsertValue);
+        insertStmt = createStatement(sqlInsertValue, "NonAuditList.insert"); //$NON-NLS-1$
       }
 
       return insertStmt;
@@ -655,17 +881,36 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (clearStmt == null)
       {
-        clearStmt = createStatement(sqlClear);
+        clearStmt = createStatement(sqlClear, "NonAuditList.clear"); //$NON-NLS-1$
       }
 
       return clearStmt;
     }
 
-    private BatchedStatement createStatement(String sql)
+    private BatchedStatement getShiftTemporaryStmt()
     {
-      BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH), batchingContext.getStatementBatchSize());
-      batchingContext.manage(stmt);
-      return stmt;
+      if (shiftTemporaryStmt == null)
+      {
+        shiftTemporaryStmt = createStatement(sqlShiftDownIndex, "NonAuditList.shiftTemporary"); //$NON-NLS-1$
+      }
+
+      return shiftTemporaryStmt;
+    }
+
+    private BatchedStatement getShiftFinalStmt()
+    {
+      if (shiftFinalStmt == null)
+      {
+        shiftFinalStmt = createStatement(sqlShiftDownFinalIndex, "NonAuditList.shiftFinal"); //$NON-NLS-1$
+      }
+
+      return shiftFinalStmt;
+    }
+
+    private BatchedStatement createStatement(String sql, String diagnosticName)
+    {
+      IBatchingContext batchingContext = accessor.getBatchingContext();
+      return batchingContext.createStatement(sql, ReuseProbability.HIGH, diagnosticName);
     }
   }
 
@@ -691,6 +936,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     private IDBPreparedStatement stmtShiftUp;
 
     private IDBPreparedStatement stmtShiftUpFinal;
+
+    private List<Shift> plannedShiftOperations;
 
     private int deleteCount;
 
@@ -739,8 +986,18 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       else
       {
         batch.clearList(id);
+      }
+    }
+
+    @Override
+    protected void finishResultToDatabase() throws SQLException
+    {
+      if (batch != null)
+      {
         batch.flushClearList();
       }
+
+      super.finishResultToDatabase();
     }
 
     @Override
@@ -933,6 +1190,30 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       typeMapping.setValue(stmtInsert, 3, value);
       stmtInsert.addBatch();
       ++insertCount;
+    }
+
+    private List<Shift> getPlannedShiftOperations()
+    {
+      if (plannedShiftOperations == null)
+      {
+        plannedShiftOperations = getShiftOperations();
+      }
+
+      return plannedShiftOperations;
+    }
+
+    private void writeShiftTemporary(Shift shift)
+    {
+      int temporaryIndexOffset = getTemporaryOffset(shift.startIndex, shift.endIndex);
+      batch.shiftTemporary(id, temporaryIndexOffset, shift.startIndex, shift.endIndex);
+    }
+
+    private void writeShiftFinal(Shift shift)
+    {
+      int temporaryIndexOffset = getTemporaryOffset(shift.startIndex, shift.endIndex);
+      int temporaryStartIndex = (int)((long)shift.startIndex + temporaryIndexOffset);
+      int temporaryEndIndex = (int)((long)shift.endIndex + temporaryIndexOffset);
+      batch.shiftFinal(id, temporaryIndexOffset, shift.offset, temporaryStartIndex, temporaryEndIndex);
     }
 
     @Override

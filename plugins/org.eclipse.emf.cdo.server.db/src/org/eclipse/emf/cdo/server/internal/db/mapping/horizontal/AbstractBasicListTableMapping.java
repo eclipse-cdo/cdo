@@ -612,6 +612,18 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
      */
     protected void writeResultToDatabase() throws SQLException
     {
+      prepareResultToDatabase();
+
+      IIDHandler idHandler = accessor.getStore().getIDHandler();
+      writeShifts(idHandler);
+      finishResultToDatabase();
+    }
+
+    /**
+     * Materializes physical indexes and writes the operations that must precede index shifts.
+     */
+    protected void prepareResultToDatabase() throws SQLException
+    {
       materializePhysicalIndexes();
 
       IIDHandler idHandler = accessor.getStore().getIDHandler();
@@ -660,9 +672,14 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
           }
         }
       }
+    }
 
-      writeShifts(idHandler);
-
+    /**
+     * Writes the operations that must follow completed index shifts.
+     */
+    protected void finishResultToDatabase() throws SQLException
+    {
+      IIDHandler idHandler = accessor.getStore().getIDHandler();
       ITypeMapping typeMapping = getTypeMapping();
       for (Manipulation manipulation : manipulations)
       {
@@ -716,12 +733,28 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
      */
     protected void writeShifts(IIDHandler idHandler) throws SQLException
     {
+      List<Shift> shiftOperations = getShiftOperations();
+
+      /*
+       * Now process the operations. Move down operations can be performed directly, move up operations need to be
+       * performed later in the reverse direction
+       */
+      ListIterator<Shift> operationIt = shiftOperations.listIterator();
+      writeShiftsDown(idHandler, operationIt);
+      writeShiftsUp(idHandler, operationIt);
+    }
+
+    /**
+     * Calculates the ordered shift operations without executing JDBC work.
+     */
+    protected List<Shift> getShiftOperations()
+    {
       /*
        * Step 3: shift all elements which have to be shifted up or down because of add, remove or move of other elements
        * to their proper position. This has to be done in two phases to avoid collisions, as the index has to be unique
        * and shift up operations have to be executed in top to bottom order.
        */
-      LinkedList<Shift> shiftOperations = new LinkedList<>();
+      List<Shift> shiftOperations = new LinkedList<>();
 
       /*
        * If a necessary shift is detected (source and target indices differ), firstIndex is set to the current index and
@@ -791,13 +824,26 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
         shiftOperations.add(new Shift(rangeStartIndex, lastElementIndex, rangeOffset));
       }
 
-      /*
-       * Now process the operations. Move down operations can be performed directly, move up operations need to be
-       * performed later in the reverse direction
-       */
-      ListIterator<Shift> operationIt = shiftOperations.listIterator();
-      writeShiftsDown(idHandler, operationIt);
-      writeShiftsUp(idHandler, operationIt);
+      List<Shift> orderedOperations = new ArrayList<>(shiftOperations.size());
+      for (Shift operation : shiftOperations)
+      {
+        if (operation.offset < 0)
+        {
+          orderedOperations.add(operation);
+        }
+      }
+
+      ListIterator<Shift> operationIt = shiftOperations.listIterator(shiftOperations.size());
+      while (operationIt.hasPrevious())
+      {
+        Shift operation = operationIt.previous();
+        if (operation.offset >= 0)
+        {
+          orderedOperations.add(operation);
+        }
+      }
+
+      return orderedOperations;
     }
 
     protected void writeShiftsDown(IIDHandler idHandler, ListIterator<Shift> operationIt) throws SQLException

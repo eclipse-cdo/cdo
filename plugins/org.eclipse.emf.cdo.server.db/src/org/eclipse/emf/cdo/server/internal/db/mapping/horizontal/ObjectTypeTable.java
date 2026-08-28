@@ -21,9 +21,12 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.internal.db.BatchingContext;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTable;
 import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -44,6 +47,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -189,6 +197,254 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     {
       DBUtil.close(stmt);
     }
+  }
+
+  /**
+   * Inserts the object types of a homogeneous new-revision group.
+   * <p>
+   * Each bounded chunk is first classified with one portable {@code IN} query. Known IDs retain the existing
+   * synchronous insertion path. IDs that are absent at query time are inserted through one batch protected by a
+   * savepoint. A concurrent insert or any other batch failure rolls the complete chunk back and replays all of its
+   * candidate entries through {@link #putObjectType(IDBStoreAccessor, long, CDOID, EClass)}.
+   *
+   * @param accessor
+   *          the store accessor that owns the current transaction
+   * @param revisions
+   *          the homogeneous new-revision group
+   * @param type
+   *          the EClass shared by the revisions
+   */
+  public final void putObjectTypes(IDBStoreAccessor accessor, InternalCDORevision[] revisions, EClass type)
+  {
+    int batchSize = getObjectTypeBatchSize();
+    if (batchSize <= 0 || revisions.length <= 1)
+    {
+      for (InternalCDORevision revision : revisions)
+      {
+        putObjectType(accessor, revision.getTimeStamp(), revision.getID(), type);
+      }
+
+      return;
+    }
+
+    for (int start = 0; start < revisions.length; start += batchSize)
+    {
+      int end = Math.min(start + batchSize, revisions.length);
+      putObjectTypeChunk(accessor, revisions, start, end, type, batchSize);
+    }
+  }
+
+  private void putObjectTypeChunk(IDBStoreAccessor accessor, InternalCDORevision[] revisions, int start, int end, EClass type, int batchSize)
+  {
+    recordDiagnosticCounter(accessor, "ObjectType.prequeryChunk", 1); //$NON-NLS-1$
+
+    Set<CDOID> existingIDs = queryExistingIDs(accessor, revisions, start, end);
+    List<InternalCDORevision> candidates = new ArrayList<>(end - start);
+
+    for (int i = start; i < end; i++)
+    {
+      InternalCDORevision revision = revisions[i];
+
+      if (existingIDs.contains(revision.getID()))
+      {
+        putObjectType(accessor, revision.getTimeStamp(), revision.getID(), type);
+      }
+      else
+      {
+        candidates.add(revision);
+      }
+    }
+
+    if (!candidates.isEmpty())
+    {
+      insertObjectTypeBatch(accessor, candidates, type, batchSize);
+    }
+  }
+
+  private Set<CDOID> queryExistingIDs(IDBStoreAccessor accessor, InternalCDORevision[] revisions, int start, int end)
+  {
+    StringBuilder builder = new StringBuilder("SELECT "); //$NON-NLS-1$
+    builder.append(id);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(table());
+    builder.append(" WHERE "); //$NON-NLS-1$
+    builder.append(id);
+    builder.append(" IN ("); //$NON-NLS-1$
+
+    for (int i = start; i < end; i++)
+    {
+      if (i != start)
+      {
+        builder.append(", "); //$NON-NLS-1$
+      }
+
+      builder.append('?');
+    }
+
+    builder.append(')');
+
+    IIDHandler idHandler = store().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.HIGH);
+    ResultSet resultSet = null;
+
+    try
+    {
+      int column = 1;
+
+      for (int i = start; i < end; i++)
+      {
+        idHandler.setCDOID(stmt, column++, revisions[i].getID());
+      }
+
+      resultSet = stmt.executeQuery();
+      Set<CDOID> result = new HashSet<>();
+
+      while (resultSet.next())
+      {
+        result.add(idHandler.getCDOID(resultSet, 1));
+      }
+
+      return result;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(stmt);
+    }
+  }
+
+  private void insertObjectTypeBatch(IDBStoreAccessor accessor, List<InternalCDORevision> candidates, EClass type, int batchSize)
+  {
+    Connection connection = accessor.getConnection();
+    Savepoint savepoint;
+
+    try
+    {
+      savepoint = connection.setSavepoint();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+
+    IDBPreparedStatement preparedStatement = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MAX);
+    BatchedStatement stmt = DBUtil.batched(preparedStatement, batchSize);
+
+    try
+    {
+      IIDHandler idHandler = store().getIDHandler();
+
+      for (InternalCDORevision revision : candidates)
+      {
+        int column = 1;
+        idHandler.setCDOID(stmt, column++, revision.getID());
+        CDOID metaID = store().getMetaDataManager().getMetaID(type, revision.getTimeStamp());
+        idHandler.setCDOID(stmt, column++, metaID);
+        stmt.setLong(column, revision.getTimeStamp());
+        stmt.executeUpdate();
+      }
+
+      stmt.flush();
+      validateBatchResult(stmt, candidates.size());
+      connection.releaseSavepoint(savepoint);
+
+      recordDiagnosticCounter(accessor, "ObjectType.insertEntries", candidates.size()); //$NON-NLS-1$
+      recordDiagnosticCounter(accessor, "ObjectType.insertExecutions", stmt.getExecutionCount()); //$NON-NLS-1$
+    }
+    catch (SQLException | DBException ex)
+    {
+      try
+      {
+        rollbackBatch(connection, savepoint, ex);
+      }
+      finally
+      {
+        discardBatch(stmt);
+      }
+
+      recordDiagnosticCounter(accessor, "ObjectType.batchRollbackReplay", 1); //$NON-NLS-1$
+
+      for (InternalCDORevision revision : candidates)
+      {
+        putObjectType(accessor, revision.getTimeStamp(), revision.getID(), type);
+      }
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+    }
+  }
+
+  private static void discardBatch(BatchedStatement stmt)
+  {
+    try
+    {
+      stmt.clearBatch();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  private static void recordDiagnosticCounter(IDBStoreAccessor accessor, String name, long value)
+  {
+    if (BatchingContext.STATISTICS_ENABLED)
+    {
+      accessor.getBatchingContext().recordDiagnosticCounter(name, value);
+    }
+  }
+
+  private static void validateBatchResult(BatchedStatement stmt, int expectedCount)
+  {
+    int knownResult = stmt.getTotalResult();
+    int unknownResultCount = stmt.getUnknownResultCount();
+
+    if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+    {
+      throw new DBException("Object type batch did not insert all entries"); //$NON-NLS-1$
+    }
+  }
+
+  private static void rollbackBatch(Connection connection, Savepoint savepoint, Exception failure)
+  {
+    try
+    {
+      connection.rollback(savepoint);
+      connection.releaseSavepoint(savepoint);
+    }
+    catch (SQLException ex)
+    {
+      failure.addSuppressed(ex);
+      throw new DBException(failure);
+    }
+  }
+
+  private int getObjectTypeBatchSize()
+  {
+    Map<String, String> properties = store().getProperties();
+    int legacyDefault = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE", //$NON-NLS-1$
+        BatchingContext.DEFAULT_STATEMENT_BATCH_SIZE);
+    int statementBatchSize = getIntProperty(properties, IDBStore.Props.BATCH_STATEMENT_SIZE, legacyDefault);
+    return getIntProperty(properties, IDBStore.Props.OBJECT_TYPE_BATCH_SIZE, statementBatchSize);
+  }
+
+  private static int getIntProperty(Map<String, String> properties, String key, int defaultValue)
+  {
+    if (properties != null)
+    {
+      String value = properties.get(key);
+      if (value != null)
+      {
+        return Integer.parseInt(value);
+      }
+    }
+
+    return defaultValue;
   }
 
   @Override

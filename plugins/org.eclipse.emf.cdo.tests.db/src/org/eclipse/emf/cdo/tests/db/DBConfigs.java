@@ -48,6 +48,7 @@ public abstract class DBConfigs extends AllConfigs
   {
     testClasses.add(AuditListBatchingTest.class);
     testClasses.add(NonAuditListBatchingTest.class);
+    testClasses.add(ObjectTypeBatchingTest.class);
     testClasses.add(ModelEvolutionTest.class);
 
     testClasses.add(Net4jDBTest.class);

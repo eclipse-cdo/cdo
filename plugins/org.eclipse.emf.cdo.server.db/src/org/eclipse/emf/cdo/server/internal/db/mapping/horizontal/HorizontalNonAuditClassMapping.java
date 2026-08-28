@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
+import org.eclipse.emf.cdo.server.db.IBatchingContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
@@ -34,9 +35,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
-import org.eclipse.emf.cdo.server.internal.db.DBBatchingContext;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.AbstractListDeltaWriter.NewListSizeResult;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -235,10 +234,9 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       return;
     }
 
-    DBBatchingContext batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
-    BatchedStatement stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH),
-        batchingContext.getStatementBatchSize());
-    batchingContext.manage(stmt);
+    IBatchingContext batchingContext = accessor.getBatchingContext();
+    BatchedStatement stmt = batchingContext.createStatement(sqlInsertAttributes, ReuseProbability.HIGH, "NonAuditClass.attribute"); //$NON-NLS-1$
+
     boolean discarded = false;
 
     try
@@ -248,7 +246,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       {
         setInsertValues(idHandler, stmt, revision);
         stmt.executeUpdate();
-        batchingContext.afterAdd(stmt);
       }
 
       batchingContext.flushPhase();
@@ -256,7 +253,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     }
     catch (SQLException ex)
     {
-      batchingContext.discard(stmt);
+      batchingContext.discardStatement(stmt);
       discarded = true;
       throw new DBException(ex);
     }
@@ -264,7 +261,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       if (!discarded)
       {
-        batchingContext.release(stmt);
+        batchingContext.releaseStatement(stmt);
       }
     }
   }
@@ -685,8 +682,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   {
     private final IDBStoreAccessor accessor;
 
-    private final DBBatchingContext batchingContext;
-
     private final Map<String, BatchedStatement> statements = new LinkedHashMap<>();
 
     private final Map<BatchedStatement, Integer> counts = new LinkedHashMap<>();
@@ -696,7 +691,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     private NonAuditAttributeDeltaBatch(IDBStoreAccessor accessor)
     {
       this.accessor = accessor;
-      batchingContext = ((DBStoreAccessor)accessor).getBatchingContext();
     }
 
     public void update(String sql, FeatureDeltaWriter writer)
@@ -706,16 +700,14 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
         BatchedStatement stmt = statements.get(sql);
         if (stmt == null)
         {
-          stmt = DBUtil.batched(accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM), batchingContext.getStatementBatchSize());
+          stmt = accessor.getBatchingContext().createStatement(sql, ReuseProbability.MEDIUM, "NonAuditClass.attributeDelta"); //$NON-NLS-1$
           statements.put(sql, stmt);
           counts.put(stmt, 0);
-          batchingContext.manage(stmt);
         }
 
         writer.setUpdateValues(stmt);
         stmt.executeUpdate();
         counts.put(stmt, counts.get(stmt) + 1);
-        batchingContext.afterAdd(stmt);
       }
       catch (SQLException ex)
       {
@@ -725,7 +717,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     public void flushPhase()
     {
-      batchingContext.flushPhase();
+      accessor.getBatchingContext().flushPhase();
       for (Map.Entry<BatchedStatement, Integer> entry : counts.entrySet())
       {
         validateExactlyOne(entry.getKey(), entry.getValue());
@@ -738,7 +730,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       {
         for (BatchedStatement stmt : statements.values())
         {
-          batchingContext.release(stmt);
+          accessor.getBatchingContext().releaseStatement(stmt);
         }
       }
     }
@@ -750,7 +742,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
         discarded = true;
         for (BatchedStatement stmt : statements.values())
         {
-          batchingContext.discard(stmt);
+          accessor.getBatchingContext().discardStatement(stmt);
         }
       }
     }

@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.DurableLocking2;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.db.IBatchingContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
@@ -126,7 +127,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   private InternalObjectAttacher objectAttacher;
 
-  private DBBatchingContext batchingContext;
+  private BatchingContext batchingContext;
 
   private List<IDBTable> createdTables;
 
@@ -158,18 +159,19 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     return connection;
   }
 
-  public DBBatchingContext getBatchingContext()
+  @Override
+  public final IBatchingContext getBatchingContext()
   {
     if (batchingContext == null)
     {
       Map<String, String> properties = getStore().getProperties();
 
       int legacyStatementBatchSize = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE", //$NON-NLS-1$
-          DBBatchingContext.DEFAULT_STATEMENT_BATCH_SIZE);
+          BatchingContext.DEFAULT_STATEMENT_BATCH_SIZE);
       int statementBatchSize = getIntProperty(properties, IDBStore.Props.BATCH_STATEMENT_SIZE, legacyStatementBatchSize);
-      int commitBatchSize = getIntProperty(properties, IDBStore.Props.BATCH_COMMIT_SIZE, DBBatchingContext.DEFAULT_COMMIT_BATCH_SIZE);
+      int commitBatchSize = getIntProperty(properties, IDBStore.Props.BATCH_COMMIT_SIZE, BatchingContext.DEFAULT_COMMIT_BATCH_SIZE);
 
-      batchingContext = new DBBatchingContext(statementBatchSize, commitBatchSize);
+      batchingContext = new BatchingContext(connection, statementBatchSize, commitBatchSize);
     }
 
     return batchingContext;

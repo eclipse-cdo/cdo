@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.resource.Resource;
  * <li>{@code cdo.listTableBenchmark.listCount}
  * <li>{@code cdo.listTableBenchmark.listSize}
  * <li>{@code cdo.listTableBenchmark.changesPerList}
+ * <li>{@code cdo.listTableBenchmark.warmupChangesPerList}
  * </ul>
  *
  * @author Eike Stepper
@@ -43,6 +44,9 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
   private static final int LIST_SIZE = Integer.getInteger("cdo.listTableBenchmark.listSize", 1000);
 
   private static final int CHANGES_PER_LIST = Integer.getInteger("cdo.listTableBenchmark.changesPerList", 100);
+
+  private static final int WARMUP_CHANGES_PER_LIST = Integer.getInteger("cdo.listTableBenchmark.warmupChangesPerList",
+      Math.min(CHANGES_PER_LIST, 10));
 
   private CDOTransaction transaction;
 
@@ -71,6 +75,15 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
 
     measure("  Commit took:      ", () -> transaction.commit());
     log("");
+
+    if (WARMUP_CHANGES_PER_LIST > 0)
+    {
+      log("Warming up list-delta persistence:");
+      log("  Changes/list:     " + WARMUP_CHANGES_PER_LIST);
+      applyListChanges(WARMUP_CHANGES_PER_LIST);
+      transaction.commit();
+      log("");
+    }
   }
 
   public void testManyListChanges() throws Exception
@@ -80,11 +93,28 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
       fail("cdo.listTableBenchmark.listSize must be at least 2");
     }
 
+    applyListChanges(CHANGES_PER_LIST);
+
+    long changeCount = (long)LIST_COUNT * CHANGES_PER_LIST;
+    log("Created list changes:");
+    log("  Changes/list:     " + CHANGES_PER_LIST);
+    log("  Total changes:    " + changeCount);
+
+    double commitSeconds = measure("  Commit took:      ", () -> transaction.commit());
+    if (commitSeconds > 0.0)
+    {
+      log("");
+      log("Changes/second:     " + Math.round(changeCount / commitSeconds));
+    }
+  }
+
+  private void applyListChanges(int changesPerList)
+  {
     for (Category category : root.getCategories())
     {
       EList<Product1> products = category.getProducts();
 
-      for (int change = 0; change < CHANGES_PER_LIST; change++)
+      for (int change = 0; change < changesPerList; change++)
       {
         // Move an element over a large part of the list. This deliberately creates
         // index shifts and exercises the ListTable delta persistence code.
@@ -98,18 +128,6 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
 
         products.move(toIndex, fromIndex);
       }
-    }
-
-    long changeCount = (long)LIST_COUNT * CHANGES_PER_LIST;
-    log("Created list changes:");
-    log("  Changes/list:     " + CHANGES_PER_LIST);
-    log("  Total changes:    " + changeCount);
-
-    double commitSeconds = measure("  Commit took:      ", () -> transaction.commit());
-    if (commitSeconds > 0.0)
-    {
-      log("");
-      log("Changes/second:     " + Math.round(changeCount / commitSeconds));
     }
   }
 

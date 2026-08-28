@@ -48,13 +48,6 @@ public interface BatchedStatement extends PreparedStatement
   public int getTotalResult();
 
   /**
-   * Executes all currently pending parameter sets.
-   *
-   * @since 4.14
-   */
-  public int flush() throws SQLException;
-
-  /**
    * Returns the number of parameter sets that have not yet been executed.
    *
    * @since 4.14
@@ -74,4 +67,27 @@ public interface BatchedStatement extends PreparedStatement
    * @since 4.14
    */
   public int getUnknownResultCount();
+
+  /**
+   * Executes all currently pending parameter sets.
+   *
+   * @since 4.14
+   */
+  public int flush() throws SQLException;
+
+  /**
+   * @author Eike Stepper
+   * @since 4.14
+   */
+  public interface Context
+  {
+    public default void manageStatement(BatchedStatement statement)
+    {
+      manageStatement(statement, null);
+    }
+
+    public void manageStatement(BatchedStatement statement, String diagnosticName);
+
+    public void afterExecuteUpdate(BatchedStatement statement);
+  }
 }

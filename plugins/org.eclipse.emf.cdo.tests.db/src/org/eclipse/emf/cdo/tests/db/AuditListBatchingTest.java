@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.resource.Resource;
 
@@ -49,6 +50,7 @@ public class AuditListBatchingTest extends AuditTest
     third.setName("replacement"); //$NON-NLS-1$
 
     List<Category> categories = new ArrayList<>();
+
     for (int i = 0; i < 4; i++)
     {
       Category category = getModel1Factory().createCategory();
@@ -60,6 +62,7 @@ public class AuditListBatchingTest extends AuditTest
     categories.get(0).getProducts().add(first);
     categories.get(0).getProducts().add(second);
     categories.get(0).getProducts().add(third);
+
     for (Category category : categories)
     {
       category.getTopProducts().add(first);
@@ -74,10 +77,12 @@ public class AuditListBatchingTest extends AuditTest
     }
 
     CDOCommitInfo batched = transaction.commit();
+
     for (Category category : categories)
     {
       category.getTopProducts().set(1, third);
     }
+
     categories.get(1).getTopProducts().remove(0);
     categories.get(2).getTopProducts().move(0, 1);
     categories.get(3).getTopProducts().clear();
@@ -91,22 +96,42 @@ public class AuditListBatchingTest extends AuditTest
     closeSession1();
     session = openSession2();
 
-    assertTopProductSizes(session, initial.getTimeStamp(), 1, 1, 1, 1);
-    assertTopProductSizes(session, batched.getTimeStamp(), 2, 2, 2, 2);
-    assertTopProductSizes(session, changed.getTimeStamp(), 2, 1, 2, 0);
-    session.close();
+    try
+    {
+      assertTopProductNames(session, initial.getTimeStamp(), new String[] { "duplicate" }, new String[] { "duplicate" }, //$NON-NLS-1$ //$NON-NLS-2$
+          new String[] { "duplicate" }, new String[] { "duplicate" }); //$NON-NLS-1$ //$NON-NLS-2$
+
+      assertTopProductNames(session, batched.getTimeStamp(), new String[] { "duplicate", "duplicate" }, //$NON-NLS-1$ //$NON-NLS-2$
+          new String[] { "duplicate", "duplicate" }, new String[] { "duplicate", "duplicate" }, //$NON-NLS-1$ //$NON-NLS-2$
+          new String[] { "duplicate", "duplicate" }); //$NON-NLS-1$ //$NON-NLS-2$
+
+      assertTopProductNames(session, changed.getTimeStamp(), new String[] { "duplicate", "replacement" }, //$NON-NLS-1$ //$NON-NLS-2$
+          new String[] { "replacement" }, new String[] { "replacement", "duplicate" }, new String[0]); //$NON-NLS-1$
+    }
+    finally
+    {
+      session.close();
+    }
   }
 
-  private void assertTopProductSizes(CDOSession session, long timeStamp, int... expectedSizes)
+  private void assertTopProductNames(CDOSession session, long timeStamp, String[]... expectedNames)
   {
-    org.eclipse.emf.cdo.view.CDOView view = session.openView(timeStamp);
+    CDOView view = session.openView(timeStamp);
+
     try
     {
       CDOResource resource = view.getResource(getResourcePath("/res1")); //$NON-NLS-1$
       Company company = (Company)resource.getContents().get(0);
-      for (int i = 0; i < expectedSizes.length; i++)
+
+      for (int i = 0; i < expectedNames.length; i++)
       {
-        assertEquals(expectedSizes[i], company.getCategories().get(i).getTopProducts().size());
+        List<Product1> products = company.getCategories().get(i).getTopProducts();
+        assertEquals(expectedNames[i].length, products.size());
+
+        for (int j = 0; j < products.size(); j++)
+        {
+          assertEquals(expectedNames[i][j], products.get(j).getName());
+        }
       }
     }
     finally

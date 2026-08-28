@@ -193,6 +193,129 @@ public class NonAuditListBatchingTest extends AbstractCDOTest
     }
   }
 
+  public void testRepeatedBidirectionalShiftsWithDuplicates() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res-repeated-shifts")); //$NON-NLS-1$
+
+    PolygonWithDuplicates polygon = getModel3Factory().createPolygonWithDuplicates();
+    List<Point> expected = new ArrayList<>();
+
+    for (int i = 0; i < 24; i++)
+    {
+      Point point = new Point(i % 3, i % 2);
+      polygon.getPoints().add(point);
+      expected.add(point);
+    }
+
+    resource.getContents().add(polygon);
+    transaction.commit();
+
+    move(polygon.getPoints(), expected, 18, 2);
+    move(polygon.getPoints(), expected, 4, 20);
+    move(polygon.getPoints(), expected, 17, 5);
+    move(polygon.getPoints(), expected, 1, 19);
+    move(polygon.getPoints(), expected, 21, 3);
+    move(polygon.getPoints(), expected, 2, 22);
+    transaction.commit();
+
+    session.close();
+    session = openSession();
+    CDOView view = session.openView();
+
+    try
+    {
+      CDOResource persisted = view.getResource(getResourcePath("/res-repeated-shifts")); //$NON-NLS-1$
+      assertEquals(expected, ((PolygonWithDuplicates)persisted.getContents().get(0)).getPoints());
+    }
+    finally
+    {
+      view.close();
+      session.close();
+    }
+  }
+
+  public void testCommitWideCrossListDeltas() throws Exception
+  {
+    final int polygonCount = 6;
+    final int initialSize = 80;
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res-cross-list")); //$NON-NLS-1$
+
+    List<PolygonWithDuplicates> polygons = new ArrayList<>();
+    List<List<Point>> expected = new ArrayList<>();
+
+    for (int polygonIndex = 0; polygonIndex < polygonCount; polygonIndex++)
+    {
+      PolygonWithDuplicates polygon = getModel3Factory().createPolygonWithDuplicates();
+      List<Point> points = new ArrayList<>();
+
+      for (int pointIndex = 0; pointIndex < initialSize; pointIndex++)
+      {
+        Point point = new Point(pointIndex % 4, pointIndex % 3);
+        polygon.getPoints().add(point);
+        points.add(point);
+      }
+
+      resource.getContents().add(polygon);
+      polygons.add(polygon);
+      expected.add(points);
+    }
+
+    transaction.commit();
+
+    for (int polygonIndex = 0; polygonIndex < polygonCount; polygonIndex++)
+    {
+      EList<Point> actual = polygons.get(polygonIndex).getPoints();
+      List<Point> points = expected.get(polygonIndex);
+
+      for (int change = 0; change < 32; change++)
+      {
+        Point point = new Point(polygonIndex, change % 3);
+        int index = change * 3 % (points.size() + 1);
+        actual.add(index, point);
+        points.add(index, point);
+      }
+
+      for (int change = 0; change < 16; change++)
+      {
+        int index = change * 5 % points.size();
+        actual.remove(index);
+        points.remove(index);
+      }
+
+      move(actual, points, 60, 7);
+      move(actual, points, 12, 65);
+      move(actual, points, 70, 15);
+    }
+
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    CDOView view = session.openView();
+
+    try
+    {
+      CDOResource persisted = view.getResource(getResourcePath("/res-cross-list")); //$NON-NLS-1$
+      assertEquals(polygonCount, persisted.getContents().size());
+
+      for (int polygonIndex = 0; polygonIndex < polygonCount; polygonIndex++)
+      {
+        PolygonWithDuplicates polygon = (PolygonWithDuplicates)persisted.getContents().get(polygonIndex);
+        assertEquals(expected.get(polygonIndex), polygon.getPoints());
+      }
+    }
+    finally
+    {
+      view.close();
+      session.close();
+    }
+  }
+
   private void move(EList<Point> actual, List<Point> expected, int targetIndex, int sourceIndex)
   {
     actual.move(targetIndex, sourceIndex);

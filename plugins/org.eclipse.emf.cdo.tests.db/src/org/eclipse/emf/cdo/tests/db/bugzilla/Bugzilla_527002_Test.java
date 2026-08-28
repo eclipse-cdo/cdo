@@ -18,7 +18,11 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.db.DBConfig;
+import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import java.util.Map;
 
@@ -42,7 +46,34 @@ public class Bugzilla_527002_Test extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath("res"));
-    resource.getContents().add(getModel1Factory().createProduct1());
+
+    Company company = getModel1Factory().createCompany();
+    Category category = getModel1Factory().createCategory();
+    Product1 first = getModel1Factory().createProduct1();
+    Product1 second = getModel1Factory().createProduct1();
+    category.getProducts().add(first);
+    category.getProducts().add(second);
+    category.getTopProducts().add(second);
+    company.getCategories().add(category);
+    resource.getContents().add(company);
     transaction.commit();
+
+    session.close();
+    session = openSession();
+    CDOView view = session.openView();
+
+    try
+    {
+      CDOResource persisted = view.getResource(getResourcePath("res"));
+      Company persistedCompany = (Company)persisted.getContents().get(0);
+      Category persistedCategory = persistedCompany.getCategories().get(0);
+      assertEquals(2, persistedCategory.getProducts().size());
+      assertEquals(persistedCategory.getProducts().get(1), persistedCategory.getTopProducts().get(0));
+    }
+    finally
+    {
+      view.close();
+      session.close();
+    }
   }
 }

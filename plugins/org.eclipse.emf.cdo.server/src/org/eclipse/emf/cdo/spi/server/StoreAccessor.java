@@ -80,21 +80,18 @@ public abstract class StoreAccessor extends StoreAccessorBase
 
     try
     {
-      monitor.begin(4 + newPackageUnits.length + newObjects.length + detachedObjects.length + dirtyCount + postProcessCount);
-
-      writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, mergeSource, monitor.fork());
-      writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
+      monitor.begin(5 + newPackageUnits.length + newObjects.length + detachedObjects.length + dirtyCount + postProcessCount);
 
       IDGenerationLocation idGenerationLocation = store.getRepository().getIDGenerationLocation();
       if (idGenerationLocation == IDGenerationLocation.STORE)
       {
-        addIDMappings(context, monitor.fork());
+        addIDMappings(context, monitor.fork()); // Fork-1
       }
 
       // At the end of the ID mapping process the attached write access handler are given a chance to modify the
       // committed change set via CommitContext.modify(). If that happens the various CangeSet variables need to be
       // re-initialized. See below...
-      applyIDMappings(context, monitor);
+      applyIDMappings(context, monitor.fork()); // Fork-2
 
       if (context.getOriginalCommmitData() != null)
       {
@@ -108,6 +105,11 @@ public abstract class StoreAccessor extends StoreAccessorBase
         dirtyCount = deltas ? dirtyObjectDeltas.length : dirtyObjects.length;
         postProcessCount = needsRevisionPostProcessing() ? newObjects.length + detachedObjects.length + dirtyCount : 0;
       }
+
+      prepareSchema(context, monitor.fork()); // Fork-3
+
+      writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, mergeSource, monitor.fork()); // Fork-4
+      writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
 
       if (detachedObjects.length != 0)
       {
@@ -139,7 +141,7 @@ public abstract class StoreAccessor extends StoreAccessorBase
       ExtendedDataInputStream in = context.getLobs();
       if (in != null)
       {
-        Async async = monitor.forkAsync();
+        Async async = monitor.forkAsync(); // Fork-5
 
         try
         {
@@ -204,7 +206,21 @@ public abstract class StoreAccessor extends StoreAccessorBase
    */
   protected void applyIDMappings(InternalCommitContext context, OMMonitor monitor)
   {
-    context.applyIDMappings(monitor.fork());
+    context.applyIDMappings(monitor);
+  }
+
+  /**
+   * Prepares store-specific schema objects before this commit starts to write transactional data.
+   * <p>
+   * Implementations that create schema objects with a JDBC schema transaction must do so here because several
+   * databases commit the JDBC connection as part of DDL processing.
+   *
+   * @since 4.26
+   */
+  protected void prepareSchema(InternalCommitContext context, OMMonitor monitor)
+  {
+    monitor.begin();
+    monitor.done();
   }
 
   /**

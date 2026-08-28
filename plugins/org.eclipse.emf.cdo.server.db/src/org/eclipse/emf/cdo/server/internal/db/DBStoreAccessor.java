@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -53,6 +54,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy2;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategyBatchingSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategySchemaPreflight;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.BranchesTable;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
@@ -129,6 +131,23 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
   private BatchingContext batchingContext;
 
+  /**
+   * Indicates that the schema-preparation phase of the current commit has completed successfully.
+   * <p>
+   * The DB store deliberately separates schema changes from transactional CDO data changes. During schema preparation,
+   * mapping construction and the mapping-specific {@code prepareSchema(...)} callbacks may create missing tables and
+   * indexes. Those operations are allowed to commit their DDL because no commit data has been written to this accessor
+   * at that point. Once this flag is set, the transactional data phase has started and {@link #openSchemaTransaction()}
+   * rejects any further schema transaction. This turns an otherwise dangerous {@code DML -> DDL -> DML} sequence into
+   * an explicit failure instead of allowing a schema transaction to commit a prefix of the CDO transaction.
+   * <p>
+   * The flag is scoped to one invocation of {@code doWrite(...)}. It is set only after all applicable preparation steps
+   * return successfully and is cleared both before the write starts and when the write finishes, including exceptional
+   * and cancellation paths. It is an accessor-local guard; it does not coordinate accessors or serialize independent
+   * commits. The flag is accessed by the commit thread that owns this accessor.
+   */
+  private boolean schemaPreparationComplete;
+
   private List<IDBTable> createdTables;
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
@@ -186,6 +205,11 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   public IDBSchemaTransaction openSchemaTransaction()
   {
+    if (schemaPreparationComplete)
+    {
+      throw new IllegalStateException("Transactional data phase active: schema transaction requested after preparation"); //$NON-NLS-1$
+    }
+
     DBStore store = getStore();
     IDBAdapter dbAdapter = store.getDBAdapter();
     IDBDatabase database = store.getDatabase();
@@ -398,6 +422,41 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       {
         maxID = id;
       }
+    }
+  }
+
+  @Override
+  protected void prepareSchema(InternalCommitContext context, OMMonitor monitor)
+  {
+    IMappingStrategy mappingStrategy = getStore().getMappingStrategy();
+    monitor.begin(2);
+
+    try
+    {
+      // With eager table creation, mapping construction itself can execute DDL. Do it before any CDO data is written.
+      mappingStrategy.createMapping(connection, context.getNewPackageUnits(), monitor.fork()); // Fork-1
+
+      IMappingStrategy effectiveMappingStrategy = IMappingStrategy.getEffectiveMappingStrategy(mappingStrategy);
+      if (effectiveMappingStrategy instanceof IMappingStrategySchemaPreflight)
+      {
+        IMappingStrategySchemaPreflight schemaPreflight = (IMappingStrategySchemaPreflight)effectiveMappingStrategy;
+
+        CDORevision[] newObjects = context.getNewObjects();
+        CDORevision[] dirtyObjects = context.getDirtyObjects();
+        CDORevisionDelta[] dirtyObjectDeltas = context.getDirtyObjectDeltas();
+
+        schemaPreflight.prepareSchema(this, newObjects, dirtyObjects, dirtyObjectDeltas, monitor.fork()); // Fork-2
+      }
+      else
+      {
+        monitor.worked();
+      }
+
+      schemaPreparationComplete = true;
+    }
+    finally
+    {
+      monitor.done();
     }
   }
 
@@ -803,6 +862,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     boolean wasTrackConstruction = DBField.isTrackConstruction();
 
     discardBatchingContext();
+    schemaPreparationComplete = false;
 
     try
     {
@@ -820,6 +880,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
     finally
     {
+      schemaPreparationComplete = false;
       DBField.trackConstruction(wasTrackConstruction);
     }
   }

@@ -62,7 +62,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractListTableMapping extends AbstractBasicListTableMapping implements ListLobRefsUpdater
+public abstract class AbstractListTableMapping extends AbstractBasicListTableMapping implements ListLobRefsUpdater, ISchemaPreparable
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractListTableMapping.class);
 
@@ -168,6 +168,18 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
       valueField = table.getField(MappingNames.LIST_VALUE);
 
       initSQLStrings();
+    }
+  }
+
+  /**
+   * Creates this list table before the commit's transactional data-write phase begins.
+   */
+  @Override
+  public synchronized void prepareSchema(IDBStoreAccessor accessor)
+  {
+    if (table == null)
+    {
+      initTable(accessor);
     }
   }
 

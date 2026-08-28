@@ -328,7 +328,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       // Read multival tables only if revision exists
       if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
       {
-        readLists(accessor, revision, listChunk);
+        if (!readLists(accessor, revision, listChunk))
+        {
+          throw new DBException(new IllegalStateException("Incomplete list values in a fully loaded revision")); //$NON-NLS-1$
+        }
       }
 
       return success;
@@ -360,7 +363,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       // Read multival tables only if revision exists
       if (success)
       {
-        readLists(accessor, revision, listChunk);
+        if (!readLists(accessor, revision, listChunk))
+        {
+          throw new DBException(new IllegalStateException("Incomplete list values in a fully loaded revision")); //$NON-NLS-1$
+        }
       }
 
       return success;

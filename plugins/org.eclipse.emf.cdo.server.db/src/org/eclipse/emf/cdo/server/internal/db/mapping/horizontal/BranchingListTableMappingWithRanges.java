@@ -85,7 +85,7 @@ import java.util.List;
  * @author Lothar Werzinger
  */
 public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping
-    implements IListMappingDeltaSupport, IListMapping4, IBranchDeletionSupport, ListLobRefsUpdater
+    implements ISchemaPreparable, IListMappingDeltaSupport, IListMapping4, IBranchDeletionSupport, ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
 
@@ -198,6 +198,18 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       valueField = table.getField(MappingNames.LIST_VALUE);
 
       initSQLStrings();
+    }
+  }
+
+  /**
+   * Creates this ranged list table before the commit's transactional data-write phase begins.
+   */
+  @Override
+  public synchronized void prepareSchema(IDBStoreAccessor accessor)
+  {
+    if (table == null)
+    {
+      initTable(accessor);
     }
   }
 

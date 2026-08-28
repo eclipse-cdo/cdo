@@ -199,7 +199,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private CDOID rootResourceID;
 
-  private final ConcurrentArray<CDOObjectHandler> objectHandlers = new ConcurrentArray<CDOObjectHandler>()
+  private final ConcurrentArray<CDOObjectHandler> objectHandlers = new ConcurrentArray<>()
   {
     @Override
     protected CDOObjectHandler[] newArray(int length)
@@ -208,7 +208,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     }
   };
 
-  private final ConcurrentArray<CDORegistrationHandler> registrationHandlers = new ConcurrentArray<CDORegistrationHandler>()
+  private final ConcurrentArray<CDORegistrationHandler> registrationHandlers = new ConcurrentArray<>()
   {
     @Override
     protected CDORegistrationHandler[] newArray(int length)
@@ -358,7 +358,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
 
       Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-      newObjects = new ReferenceValueMap2.Strong<CDOID, InternalCDOObject>(map)
+      newObjects = new ReferenceValueMap2.Strong<>(map)
       {
         @Override
         protected void purged(CDOID id)
@@ -378,7 +378,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
 
       Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-      newObjects = new ReferenceValueMap2.Soft<CDOID, InternalCDOObject>(map)
+      newObjects = new ReferenceValueMap2.Soft<>(map)
       {
         @Override
         protected void purged(CDOID id)
@@ -398,7 +398,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
 
       Map<CDOID, KeyedReference<CDOID, InternalCDOObject>> map = CDOIDUtil.createMap();
-      newObjects = new ReferenceValueMap2.Weak<CDOID, InternalCDOObject>(map)
+      newObjects = new ReferenceValueMap2.Weak<>(map)
       {
         @Override
         protected void purged(CDOID id)

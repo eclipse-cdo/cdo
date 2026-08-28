@@ -94,7 +94,7 @@ import java.util.List;
  * @author Lothar Werzinger
  */
 public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping
-    implements IListMappingBatchingSupport, IListMappingDeltaSupport, IListMappingUnitSupport, IListMapping4, ListLobRefsUpdater
+    implements ISchemaPreparable, IListMappingBatchingSupport, IListMappingDeltaSupport, IListMappingUnitSupport, IListMapping4, ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditListTableMappingWithRanges.class);
 
@@ -222,6 +222,18 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       valueField = table.getField(MappingNames.LIST_VALUE);
 
       initSQLStrings();
+    }
+  }
+
+  /**
+   * Creates this ranged list table before the commit's transactional data-write phase begins.
+   */
+  @Override
+  public synchronized void prepareSchema(IDBStoreAccessor accessor)
+  {
+    if (table == null)
+    {
+      initTable(accessor);
     }
   }
 

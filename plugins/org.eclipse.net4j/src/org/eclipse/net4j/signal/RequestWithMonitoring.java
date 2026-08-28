@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -40,17 +41,20 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
   /**
    * @since 2.0
    */
-  public static final long DEFAULT_CANCELATION_POLL_INTERVAL = 100;
+  public static final long DEFAULT_CANCELATION_POLL_INTERVAL = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.net4j.signal.RequestWithMonitoring.DEFAULT_CANCELATION_POLL_INTERVAL", 100L);
 
   /**
    * @since 2.0
    */
-  public static final int DEFAULT_MONITOR_PROGRESS_SECONDS = 1;
+  public static final int DEFAULT_MONITOR_PROGRESS_SECONDS = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.net4j.signal.RequestWithMonitoring.DEFAULT_MONITOR_PROGRESS_SECONDS", 1);
 
   /**
    * @since 2.0
    */
-  public static final int DEFAULT_MONITOR_TIMEOUT_SECONDS = 10;
+  public static final int DEFAULT_MONITOR_TIMEOUT_SECONDS = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.net4j.signal.RequestWithMonitoring.DEFAULT_MONITOR_TIMEOUT_SECONDS", 10);
 
   private volatile OMMonitor mainMonitor;
 

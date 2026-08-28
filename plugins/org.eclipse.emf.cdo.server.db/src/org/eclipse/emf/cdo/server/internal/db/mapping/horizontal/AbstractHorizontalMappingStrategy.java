@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -36,9 +37,11 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategyBatchingSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategySchemaPreflight;
 import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
+import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
@@ -102,7 +105,8 @@ import java.util.stream.Collectors;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy implements ISchemaMigration, IMappingStrategyBatchingSupport
+public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy
+    implements ISchemaMigration, IMappingStrategyBatchingSupport, IMappingStrategySchemaPreflight
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalMappingStrategy.class);
 
@@ -163,6 +167,76 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   public boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     return objectTypeMapper.removeObjectType(accessor, id);
+  }
+
+  /**
+   * Ensures that all class and list tables needed by the given write set exist before transactional data is written.
+   * <p>
+   * The method covers revision and delta mappings. It deliberately runs before the first transactional CDO data
+   * operation because schema creation may commit the JDBC connection on databases with implicit DDL commits.
+   *
+   * @param accessor
+   *          the writer accessor that performs schema creation.
+   * @param newObjects
+   *          revisions that will be attached by the commit.
+   * @param dirtyObjects
+   *          complete revisions that will be revised by the commit.
+   * @param dirtyObjectDeltas
+   *          deltas that will be written by a delta-capable mapping strategy.
+   * @param monitor
+   *          the monitor to report schema-preparation progress to.
+   */
+  @Override
+  public void prepareSchema(IDBStoreAccessor accessor, CDORevision[] newObjects, CDORevision[] dirtyObjects, CDORevisionDelta[] dirtyObjectDeltas,
+      OMMonitor monitor)
+  {
+    Set<ISchemaPreparable> classMappings = new HashSet<>();
+
+    addClassMappings(classMappings, newObjects);
+    addClassMappings(classMappings, dirtyObjects);
+
+    for (CDORevisionDelta delta : dirtyObjectDeltas)
+    {
+      EClass eClass = accessor.getObjectType(delta.getID());
+      addClassMapping(classMappings, eClass);
+    }
+
+    monitor.begin(classMappings.size());
+
+    try
+    {
+      for (ISchemaPreparable classMapping : classMappings)
+      {
+        classMapping.prepareSchema(accessor);
+        monitor.worked();
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void addClassMappings(Set<ISchemaPreparable> classMappings, CDORevision[] revisions)
+  {
+    for (CDORevision revision : revisions)
+    {
+      if (!(revision instanceof DetachedCDORevision))
+      {
+        addClassMapping(classMappings, revision.getEClass());
+      }
+    }
+  }
+
+  private void addClassMapping(Set<ISchemaPreparable> classMappings, EClass eClass)
+  {
+    IClassMapping mapping = getClassMapping(eClass);
+    if (!(mapping instanceof ISchemaPreparable))
+    {
+      throw new IllegalStateException("Unsupported horizontal class mapping: " + mapping); //$NON-NLS-1$
+    }
+
+    classMappings.add((ISchemaPreparable)mapping);
   }
 
   @Override

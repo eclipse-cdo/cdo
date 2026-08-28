@@ -77,6 +77,29 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/signal/RequestWithMonitoring.java" type="org.eclipse.net4j.signal.RequestWithMonitoring">
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.signal.RequestWithMonitoring"/>
+                <message_argument value="DEFAULT_CANCELATION_POLL_INTERVAL"/>
+                <message_argument value="100"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.signal.RequestWithMonitoring"/>
+                <message_argument value="DEFAULT_MONITOR_PROGRESS_SECONDS"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.signal.RequestWithMonitoring"/>
+                <message_argument value="DEFAULT_MONITOR_TIMEOUT_SECONDS"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/signal/SignalProtocol.java" type="org.eclipse.net4j.signal.SignalProtocol">
         <filter id="336658481">
             <message_arguments>

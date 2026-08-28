@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
@@ -83,7 +84,7 @@ public abstract class CDOClientRequestWithMonitoring<RESULT> extends RequestWith
   @Override
   protected int getMonitorProgressSeconds()
   {
-    org.eclipse.emf.cdo.net4j.CDONet4jSession session = (org.eclipse.emf.cdo.net4j.CDONet4jSession)getSession();
+    CDONet4jSession session = (CDONet4jSession)getSession();
     return session.options().getProgressInterval();
   }
 

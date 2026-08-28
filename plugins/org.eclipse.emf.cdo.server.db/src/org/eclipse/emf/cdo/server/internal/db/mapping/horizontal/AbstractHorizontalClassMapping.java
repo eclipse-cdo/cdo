@@ -96,7 +96,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalClassMapping implements IClassMapping, IClassMappingBatchingSupport, IDeactivateable
+public abstract class AbstractHorizontalClassMapping implements IClassMapping, IClassMappingBatchingSupport, ISchemaPreparable, IDeactivateable
 {
   protected static final int UNSET_LIST = -1;
 
@@ -187,6 +187,34 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     else
     {
       initExistingTable();
+    }
+  }
+
+  /**
+   * Creates the attribute and list tables required by this mapping before a commit starts to write transactional data.
+   * <p>
+   * Schema transactions can commit the JDBC connection on databases with implicit DDL commits. Calling this method
+   * before the data-write phase ensures that such a commit cannot persist a prefix of the CDO transaction.
+   *
+   * @param accessor
+   *          the writer accessor whose connection is used for schema creation.
+   */
+  @Override
+  public final synchronized void prepareSchema(IDBStoreAccessor accessor)
+  {
+    if (table == null)
+    {
+      initTable(accessor);
+    }
+
+    for (IListMapping listMapping : listMappings)
+    {
+      if (!(listMapping instanceof ISchemaPreparable))
+      {
+        throw new IllegalStateException("List mapping does not support schema preparation: " + listMapping); //$NON-NLS-1$
+      }
+
+      ((ISchemaPreparable)listMapping).prepareSchema(accessor);
     }
   }
 
@@ -482,12 +510,39 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  protected final void readLists(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
+  protected final boolean readLists(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     for (IListMapping listMapping : listMappings)
     {
       listMapping.readValues(accessor, revision, listChunk);
     }
+
+    return !hasUninitializedListValues(revision, listChunk);
+  }
+
+  private boolean hasUninitializedListValues(InternalCDORevision revision, int listChunk)
+  {
+    if (listChunk != CDORevision.UNCHUNKED)
+    {
+      return false;
+    }
+
+    for (IListMapping listMapping : listMappings)
+    {
+      CDOList list = revision.getListOrNull(listMapping.getFeature());
+      if (list != null)
+      {
+        for (int i = 0; i < list.size(); i++)
+        {
+          if (list.get(i) == InternalCDOList.UNINITIALIZED)
+          {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
   }
 
   protected final AbstractHorizontalMappingStrategy getMappingStrategy()

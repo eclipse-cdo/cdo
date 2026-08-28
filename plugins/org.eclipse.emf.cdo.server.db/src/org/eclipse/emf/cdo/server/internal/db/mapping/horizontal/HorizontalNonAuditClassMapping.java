@@ -441,16 +441,23 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
           {
             int currentVersion;
 
+            boolean complete;
             try
             {
-              readLists(accessor, revision, listChunk);
+              complete = readLists(accessor, revision, listChunk);
               currentVersion = readVersion(stmtVersion);
             }
             catch (IndexOutOfBoundsException ex)
             {
               // A commit has appended list rows after the list size has been read in readValuesFromStatement().
               // Trigger start from scratch below.
-              currentVersion = CDOBranchVersion.UNSPECIFIED_VERSION;
+              revision.clearValues(); // Make sure that lists are recreated
+              continue;
+            }
+
+            if (!complete)
+            {
+              throw new DBException(new IllegalStateException("Incomplete list values in a fully loaded revision")); //$NON-NLS-1$
             }
 
             if (currentVersion != revision.getVersion())

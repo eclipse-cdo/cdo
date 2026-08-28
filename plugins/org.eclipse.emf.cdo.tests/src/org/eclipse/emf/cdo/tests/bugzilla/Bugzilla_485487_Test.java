@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
@@ -20,12 +21,18 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.InvalidURIException;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.OperationCanceledException;
+
 import java.util.Map;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Bug 485487.
@@ -38,7 +45,9 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
 
   private Repository repository;
 
-  private boolean forceTimeout;
+  private CountDownLatch writeAccessorEntered;
+
+  private volatile boolean cancelCommit;
 
   @Override
   protected void doSetUp() throws Exception
@@ -49,6 +58,8 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
 
   private void createRepository()
   {
+    writeAccessorEntered = new CountDownLatch(1);
+
     repository = new Repository.Default()
     {
       @Override
@@ -60,10 +71,16 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
           protected void writeAccessor(OMMonitor monitor)
           {
             super.writeAccessor(monitor);
-
-            if (forceTimeout)
+            if (cancelCommit)
             {
-              ConcurrencyUtil.sleep(2000);
+              writeAccessorEntered.countDown();
+
+              while (!monitor.isCanceled())
+              {
+                ConcurrencyUtil.sleep(10);
+              }
+
+              monitor.checkCanceled();
             }
           }
         };
@@ -83,12 +100,12 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
   @Skips(IConfig.CAPABILITY_SANITIZE_TIMEOUT)
   @CleanRepositoriesBefore(reason = "Isolated repository needed")
   @CleanRepositoriesAfter(reason = "Isolated repository needed")
-  public void testTimeoutDuringCommit() throws Exception
+  public void testCancellationDuringCommit() throws Exception
   {
     disableConsole();
 
     CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
-    session.options().setCommitTimeout(1);
+    session.options().setCommitTimeout(60);
 
     CDOTransaction transaction = session.openTransaction();
     transaction.options().setCommitInfoTimeout(1000);
@@ -98,19 +115,36 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
 
     try
     {
-      forceTimeout = true;
+      NullProgressMonitor monitor = new NullProgressMonitor();
+      cancelCommit = true;
+      Thread canceller = new Thread(() -> {
+        try
+        {
+          writeAccessorEntered.await(10, TimeUnit.SECONDS);
+          monitor.setCanceled(true);
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+        }
+      }, "Bugzilla_485487_Test-Canceller");
+      canceller.start();
+
       transaction.setCommitComment("test1");
-      transaction.commit();
-      fail("CommitException expected");
+      transaction.commit(monitor);
+      fail("OperationCanceledException expected");
     }
-    catch (CommitException expected)
+    catch (OperationCanceledException expected)
     {
-      assertEquals(true, expected.getMessage().contains("Timeout after"));
+      // Expected.
+    }
+    finally
+    {
+      cancelCommit = false;
     }
 
     msg("--> Rollback");
 
-    forceTimeout = false;
     transaction.rollback();
 
     transaction.createResource(getResourcePath("/test2"));
@@ -118,5 +152,26 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
     msg("--> Commit-2");
     transaction.setCommitComment("test2");
     transaction.commit();
+
+    CDOView view = session.openView();
+
+    try
+    {
+      assertNotNull(view.getResource(getResourcePath("/test2")));
+
+      try
+      {
+        view.getResource(getResourcePath("/test1"));
+        fail("Cancelled resource must not exist");
+      }
+      catch (CDOResourceNodeNotFoundException | InvalidURIException expected)
+      {
+        // Expected.
+      }
+    }
+    finally
+    {
+      view.close();
+    }
   }
 }

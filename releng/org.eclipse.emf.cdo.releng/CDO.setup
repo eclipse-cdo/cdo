@@ -8,12 +8,13 @@
     xmlns:mylyn="http://www.eclipse.org/oomph/setup/mylyn/1.0"
     xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0"
     xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0"
+    xmlns:projects="http://www.eclipse.org/oomph/setup/projects/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
     xmlns:workingsets="http://www.eclipse.org/oomph/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/setup/pde/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupWorkingSets.ecore http://www.eclipse.org/oomph/workingsets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/WorkingSets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/setup/pde/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/projects/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Projects.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupWorkingSets.ecore http://www.eclipse.org/oomph/workingsets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/WorkingSets.ecore"
     name="cdo"
     label="CDO Model Repository">
   <annotation
@@ -219,6 +220,13 @@
       xsi:type="setup:StringSubstitutionTask"
       name="git.clone.cdo"
       value="${cdo.github.clone.location}"/>
+  <setupTask
+      xsi:type="projects:ProjectsImportTask"
+      label="Import org.eclipse.emf.cdo.releng">
+    <sourceLocator
+        rootFolder="${cdo.github.clone.location/releng/org.eclipse.emf.cdo.releng}"/>
+    <description>The composed Maven target requires to exist in the local workspace before the Modular Targlet task runs</description>
+  </setupTask>
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
@@ -1802,7 +1810,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.20/@workingSets[name='CDO%20Tests'] //@setupTasks.20/@workingSets[name='CDO%20Examples'] //@setupTasks.20/@workingSets[name='CDO%20Dawn'] //@setupTasks.20/@workingSets[name='CDO%20Tools'] //@setupTasks.20/@workingSets[name='CDO%20Features'] //@setupTasks.20/@workingSets[name='CDO%20Releng']"/>
+            excludedWorkingSet="//@setupTasks.21/@workingSets[name='CDO%20Tests'] //@setupTasks.21/@workingSets[name='CDO%20Examples'] //@setupTasks.21/@workingSets[name='CDO%20Dawn'] //@setupTasks.21/@workingSets[name='CDO%20Tools'] //@setupTasks.21/@workingSets[name='CDO%20Features'] //@setupTasks.21/@workingSets[name='CDO%20Releng']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1815,7 +1823,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.20/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.21/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1834,7 +1842,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.20/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.21/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1847,7 +1855,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.20/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.21/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1892,7 +1900,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.20/@workingSets[name='CDO%20Features'] //@setupTasks.20/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.21/@workingSets[name='CDO%20Features'] //@setupTasks.21/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1905,7 +1913,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.20/@workingSets[name='Net4j%20DB'] //@setupTasks.20/@workingSets[name='Net4j%20Examples'] //@setupTasks.20/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.21/@workingSets[name='Net4j%20DB'] //@setupTasks.21/@workingSets[name='Net4j%20Examples'] //@setupTasks.21/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1918,7 +1926,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.20/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.21/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1940,7 +1948,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.20/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.21/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet

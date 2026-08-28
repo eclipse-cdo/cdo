@@ -138,7 +138,6 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
     assertEquals(expected, count);
   }
 
-  @Skips("H2")
   public void testLongCommitWithParallelCreateUnit() throws Exception
   {
     longCommit = true;
@@ -208,19 +207,11 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
                 if (longCommit)
                 {
                   initializeFinished = new CountDownLatch(1);
+                  // Signal that initialization has started before super.initialize() waits for the commit.
+                  initializeFinished.countDown();
                 }
 
-                try
-                {
-                  return super.initialize(monitor);
-                }
-                finally
-                {
-                  if (initializeFinished != null)
-                  {
-                    initializeFinished.countDown();
-                  }
-                }
+                return super.initialize(monitor);
               }
             };
           }

@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.tests.ExpectedIOTest;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.RWOLockManagerTest;
+import org.eclipse.net4j.util.tests.ReflectUtilTest;
 import org.eclipse.net4j.util.tests.RollingLogTest;
 import org.eclipse.net4j.util.tests.RoundRobinBlockingQueueTest;
 import org.eclipse.net4j.util.tests.SecurityTest;
@@ -66,6 +67,7 @@ public class AllTests
     suite.addTestSuite(RWOLockManagerTest.class);
     suite.addTestSuite(ExpectedIOTest.class);
     suite.addTestSuite(RollingLogTest.class);
+    suite.addTestSuite(ReflectUtilTest.class);
     suite.addTestSuite(Bugzilla_262875_Test.class);
 
     // Config tests

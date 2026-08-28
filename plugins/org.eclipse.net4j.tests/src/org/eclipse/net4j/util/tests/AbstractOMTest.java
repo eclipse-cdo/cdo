@@ -290,7 +290,7 @@ public abstract class AbstractOMTest extends TestCase
           continue;
         }
 
-        ReflectUtil.makeAccessible(field);
+        ReflectUtil.makeAccessibleNormally(field);
         ReflectUtil.setValue(field, this, null);
       }
 

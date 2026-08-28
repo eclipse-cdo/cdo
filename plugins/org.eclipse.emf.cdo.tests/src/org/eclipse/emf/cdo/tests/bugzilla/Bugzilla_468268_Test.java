@@ -68,7 +68,7 @@ public class Bugzilla_468268_Test extends AbstractCDOTest
 
   private Object getValue(Field field, EObject eObject) throws Exception
   {
-    ReflectUtil.makeAccessible(field);
+    ReflectUtil.makeAccessibleNormally(field);
     return field.get(eObject);
   }
 

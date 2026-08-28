@@ -74,31 +74,28 @@ public final class ReflectUtil
 
   /**
    * @since 3.12
+   * @deprecated This method performs only ordinary Java reflection accessibility handling. It does not bypass Java
+   *             module-access checks, and callers must not rely on access to members rejected by normal Java access
+   *             or module rules. Use {@link #makeAccessibleNormally(AccessibleObject)}.
    */
-  @SuppressWarnings("all")
+  @Deprecated
   public static <T> void makeAccessible(AccessibleObject accessibleObject)
   {
-    try
+    makeAccessibleNormally(accessibleObject);
+  }
+
+  /**
+   * Makes a reflective object accessible using only the supported Java reflection API.
+   *
+   * @param accessibleObject the field, method, or constructor to make accessible.
+   * @since 3.30
+   */
+  @SuppressWarnings("deprecation")
+  public static void makeAccessibleNormally(AccessibleObject accessibleObject)
+  {
+    if (!accessibleObject.isAccessible())
     {
-      if (!accessibleObject.isAccessible())
-      {
-        accessibleObject.setAccessible(true);
-      }
-    }
-    catch (Throwable ex)
-    {
-      if (accessibleObject instanceof Field)
-      {
-        AccessUtil.setAccessible((Field)accessibleObject);
-      }
-      else if (accessibleObject instanceof Method)
-      {
-        AccessUtil.setAccessible((Method)accessibleObject);
-      }
-      else if (accessibleObject instanceof Constructor)
-      {
-        AccessUtil.setAccessible((Constructor)accessibleObject);
-      }
+      accessibleObject.setAccessible(true);
     }
   }
 
@@ -157,7 +154,7 @@ public final class ReflectUtil
       Method method = c.getDeclaredMethod(methodName, parameterTypes);
       if (method != null)
       {
-        makeAccessible(method);
+        makeAccessibleNormally(method);
       }
 
       return method;
@@ -170,7 +167,7 @@ public final class ReflectUtil
         Method method = doGetMethod(superclass, methodName, parameterTypes);
         if (method != null)
         {
-          makeAccessible(method);
+          makeAccessibleNormally(method);
         }
 
         return method;
@@ -261,7 +258,7 @@ public final class ReflectUtil
       Field field = c.getDeclaredField(fieldName);
       if (field != null)
       {
-        makeAccessible(field);
+        makeAccessibleNormally(field);
       }
 
       return field;
@@ -274,7 +271,7 @@ public final class ReflectUtil
         Field field = getField(superclass, fieldName);
         if (field != null)
         {
-          makeAccessible(field);
+          makeAccessibleNormally(field);
         }
 
         return field;
@@ -326,7 +323,7 @@ public final class ReflectUtil
 
         try
         {
-          makeAccessible(field);
+          makeAccessibleNormally(field);
           fields.add(field);
         }
         catch (Exception ex)
@@ -381,27 +378,25 @@ public final class ReflectUtil
 
   public static void setValue(Field field, Object target, Object value)
   {
-    setValue(field, target, value, false);
-  }
-
-  /**
-   * @since 3.14
-   */
-  public static void setValue(Field field, Object target, Object value, boolean force)
-  {
     try
     {
-      if (force && (field.getModifiers() & Modifier.FINAL) != 0)
-      {
-        AccessUtil.setNonFinal(field);
-      }
-
       field.set(target, value);
     }
     catch (Exception ex)
     {
       throw ReflectionException.wrap(ex);
     }
+  }
+
+  /**
+   * @since 3.14
+   * @deprecated The {@code force} parameter is retained only for API compatibility and is ignored. Use
+   *             {@link #setValue(Field, Object, Object)}.
+   */
+  @Deprecated
+  public static void setValue(Field field, Object target, Object value, boolean force)
+  {
+    setValue(field, target, value);
   }
 
   /**
@@ -631,7 +626,7 @@ public final class ReflectUtil
 
         try
         {
-          makeAccessible(field);
+          makeAccessibleNormally(field);
           if (!consumer.test(new Setting(object, field)))
           {
             return false;
@@ -896,7 +891,7 @@ public final class ReflectUtil
       builder.append(field.getName());
       builder.append(" = "); //$NON-NLS-1$
 
-      makeAccessible(field);
+      makeAccessibleNormally(field);
 
       Object value = getValue(field, object);
       if (value instanceof Map<?, ?>)
@@ -938,7 +933,7 @@ public final class ReflectUtil
       throw new AssertionError(ex);
     }
 
-    makeAccessible(method);
+    makeAccessibleNormally(method);
     return method;
   }
 

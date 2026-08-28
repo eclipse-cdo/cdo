@@ -85,7 +85,7 @@ public abstract class OM
           defaultHandlers.add(4, URIHandlerRegistryImpl.INSTANCE); // Add our registry before EMF's catch-all handler.
 
           Field field = ReflectUtil.getField(URIHandler.class, "DEFAULT_HANDLERS");
-          ReflectUtil.setValue(field, null, Collections.unmodifiableList(defaultHandlers), true);
+          ReflectUtil.setValue(field, null, Collections.unmodifiableList(defaultHandlers));
         }
         catch (Throwable t)
         {

@@ -718,14 +718,16 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
     try
     {
       Method method = accessor.getDeclaredMethod(name, ReflectUtil.NO_PARAMETERS);
-      ReflectUtil.makeAccessible(method);
+      ReflectUtil.makeAccessibleNormally(method);
       method.invoke(null, ReflectUtil.NO_ARGUMENTS);
     }
     catch (NoSuchMethodException ignore)
     {
+      //$FALL-THROUGH$
     }
     catch (IllegalAccessException ignore)
     {
+      //$FALL-THROUGH$
     }
     catch (InvocationTargetException ex)
     {
@@ -734,14 +736,13 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
       {
         throw (Exception)targetException;
       }
-      else if (targetException instanceof Error)
+
+      if (targetException instanceof Error)
       {
         throw (Error)targetException;
       }
-      else
-      {
-        OM.LOG.error(targetException);
-      }
+
+      OM.LOG.error(targetException);
     }
   }
 }

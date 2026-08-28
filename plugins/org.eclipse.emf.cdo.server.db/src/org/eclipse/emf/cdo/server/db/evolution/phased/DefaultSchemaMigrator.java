@@ -19,9 +19,9 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.evolution.phased.Context.Model;
 import org.eclipse.emf.cdo.server.db.evolution.phased.ISchemaMigration.SchemaMigrationNotSupportedException;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.MetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageInfosTable;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageUnitsTable;
+import org.eclipse.emf.cdo.server.internal.db.MetaDataManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.net4j.db.IDBConnection;

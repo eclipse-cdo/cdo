@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
+import org.eclipse.emf.cdo.transaction.CDOMergerBaseAware;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.Pair;
@@ -77,7 +78,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 3.0
  */
-public class DefaultCDOMerger implements CDOMerger
+public class DefaultCDOMerger implements CDOMergerBaseAware
 {
   private final ResolutionPreference resolutionPreference;
 
@@ -176,6 +177,7 @@ public class DefaultCDOMerger implements CDOMerger
    * @throws ConflictException if the configured merger semantics cannot resolve all conflicts.
    * @since 4.30
    */
+  @Override
   public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source, CDORevisionProvider targetBaseProvider,
       CDORevisionProvider sourceBaseProvider, CDORevisionProvider resultBaseProvider) throws ConflictException
   {

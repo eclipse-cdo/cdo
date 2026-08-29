@@ -103,6 +103,7 @@ import org.eclipse.emf.cdo.transaction.CDOConflictResolver2;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver3;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
+import org.eclipse.emf.cdo.transaction.CDOMergerBaseAware;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -185,7 +186,6 @@ import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
-import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
@@ -659,37 +659,35 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       InternalCDOSession session = getSession();
       MergeData mergeData = session.getMergeData(target, effectiveSource, targetBase, sourceBase, true);
 
-      CDOChangeSet targetChanges = mergeData.getTargetChanges();
       CDOChangeSet sourceChanges = mergeData.getSourceChanges();
+      CDOChangeSet targetChanges = mergeData.getTargetChanges();
 
+      CDORevisionProvider resultBaseProvider = mergeData.getTargetBaseInfo();
       CDORevisionProvider targetProvider = mergeData.getTargetInfo();
-      CDORevisionProvider targetBaseProvider = mergeData.getTargetBaseInfo();
-      CDORevisionProvider sourceBaseProvider = mergeData.getSourceBaseInfo();
-      CDORevisionProvider resultBaseProvider;
+      boolean asymmetricBases = !mergeData.getTargetBase().equals(mergeData.getSourceBase());
 
       CDOBranchPoint resultBase = mergeData.getResultBase();
-      if (resultBase != null)
-      {
-        CDORevisionManager revisionManager = session.getRevisionManager();
-        resultBaseProvider = new ManagedRevisionProvider(revisionManager, resultBase);
-      }
-      else
-      {
-        resultBaseProvider = targetBaseProvider;
-      }
-
       CDOChangeSetData result;
-      if (merger instanceof DefaultCDOMerger)
+
+      if (asymmetricBases && merger instanceof CDOMergerBaseAware)
       {
         // Automatic remerge can select different source and target bases. Preserve the original causal change sets and
-        // supply all three base states so the semantic list merger can distinguish unobserved occurrences from
-        // removals.
-        result = ((DefaultCDOMerger)merger).merge(targetChanges, sourceChanges, targetBaseProvider, sourceBaseProvider, resultBaseProvider);
+        // supply the exact causal base states retained by MergeData so the semantic list merger can distinguish
+        // unobserved occurrences from removals without losing the delta histories' original coordinate systems.
+        CDORevisionProvider targetBaseProvider = mergeData.getTargetBaseInfo();
+        CDORevisionProvider sourceBaseProvider = mergeData.getSourceBaseInfo();
+        if (resultBase != null)
+        {
+          CDORevisionManager revisionManager = session.getRevisionManager();
+          resultBaseProvider = new ManagedRevisionProvider(revisionManager, resultBase).withSynthetics();
+        }
+
+        result = ((CDOMergerBaseAware)merger).merge(targetChanges, sourceChanges, targetBaseProvider, sourceBaseProvider, resultBaseProvider);
       }
       else
       {
-        // Preserve the established CDOMerger contract for custom implementations that do not opt into the richer
-        // result-base-aware DefaultCDOMerger path.
+        // Preserve the established common-base CDOMerger contract. In particular, this keeps common-base per-feature
+        // dispatch on the historic three-parameter ancestor hook.
         result = merger.merge(targetChanges, sourceChanges);
       }
 
@@ -841,14 +839,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   /**
-   * Normalizes a complete goal revision for attachment as a target-relative NEW object.
+   * Normalizes a complete goal revision for attachment through the target-relative NEW lifecycle. If the CDOID was
+   * detached on the actual target branch, its synthetic marker supplies the predecessor version so the commit creates
+   * the next revision instead of colliding with the detached one.
    */
   private void prepareNewGoalRevision(InternalCDORevision revision, CDORevisionProvider resultBaseProvider)
   {
     revision.setBranchPoint(getBranchPoint());
 
     int version = 0;
-    if (resultBaseProvider instanceof CDORevisionProviderWithSynthetics)
+    CDORevision detachedRevision = getDetachedRevision(this, revision.getID());
+    if (detachedRevision != null)
+    {
+      // Resurrection continues the version lineage on the actual target branch. The result base can be on another
+      // branch and therefore cannot supply the version that adjustForCommit() must increment for this transaction.
+      version = detachedRevision.getVersion();
+    }
+    else if (resultBaseProvider instanceof CDORevisionProviderWithSynthetics)
     {
       SyntheticCDORevision synthetic = ((CDORevisionProviderWithSynthetics)resultBaseProvider).getSynthetic(revision.getID());
       if (synthetic != null)

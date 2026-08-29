@@ -225,11 +225,12 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
 
     CDOID customer2 = leftAdd(getModel1Package().getCustomer());
     CDOID customer2b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1b, customer2b, customer1, customer2);
+    // Stable ordering retains the established first merge before the two genuinely concurrent fresh additions.
+    assertIDs(leftMerge(), customer1b, customer1, customer2b, customer2);
 
     CDOID customer3 = leftAdd(getModel1Package().getCustomer());
     CDOID customer3b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1b, customer2b, customer3b, customer1, customer2, customer3);
+    assertIDs(leftMerge(), customer1b, customer1, customer2b, customer2, customer3b, customer3);
   }
 
   public void testCrossMerge() throws Exception
@@ -347,7 +348,9 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
 
     CDOID customer3 = leftAdd(getModel1Package().getCustomer());
     CDOID customer3b = rightAdd(getModel1Package().getCustomer());
-    assertIDs(leftMerge(), customer1b, customer1, customer2b, customer3b, customer2, customer3);
+    // customer2 is already established in the result base. The other side cannot order its fresh customer3b
+    // relative to that unobserved landmark, so STABLE preserves customer2 before the new concurrent additions.
+    assertIDs(leftMerge(), customer1b, customer1, customer2b, customer2, customer3b, customer3);
   }
 
   /**
@@ -378,8 +381,8 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
   }
 
   /**
-   * A CHANGED goal relative to the result base can target an object that is currently absent because the target side
-   * detached it. Preferring the source change must materialize that present goal again.
+   * A present goal relative to the result base can target an object that is currently absent because the target side
+   * detached it. Preferring the source change must resurrect the goal under its original persistent CDOID.
    */
   public void testChangedGoalRecreatesDetachedTarget() throws Exception
   {
@@ -399,9 +402,9 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
     leftTransaction.merge(rightTransaction.getBranch(), merger);
     lastCommit = null;
 
-    assertFalse("A restored persistent goal must be committed as a revision delta, not as a new object",
-        leftTransaction.getNewObjects().containsKey(customerID));
-    assertTrue("A restored persistent goal must have a target-relative revision delta", leftTransaction.getRevisionDeltas().containsKey(customerID));
+    // CDO's established resurrection lifecycle deliberately registers a NEW revision under the old persistent ID;
+    // its detached synthetic version tells the store that this is a resurrection rather than a new object identity.
+    assertTrue("A restored persistent goal must use CDO's NEW-revision resurrection lifecycle", leftTransaction.getNewObjects().containsKey(customerID));
     assertIDs(leftCommit(), customerID);
     Customer mergedCustomer = (Customer)leftTransaction.getObject(customerID);
     assertEquals("source-name", mergedCustomer.getName());

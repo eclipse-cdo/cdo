@@ -1289,6 +1289,10 @@ public class DefaultCDOMerger implements CDOMergerBaseAware
      * presence/content/placement merging, uniqueness resolution, and deterministic linearization reason about stable
      * occurrences and ordering constraints. A fresh engine contains all mutable state for each invocation, so merger
      * instances remain safely reusable under {@link DefaultCDOMerger#merge(CDOChangeSet, CDOChangeSet)} synchronization.
+     * Semantic variability is intentionally confined to five independent policy domains: occurrence conflicts,
+     * topological ordering ambiguity, uniqueness/duplicate resolution, CLEAR semantics, and UNSET semantics. Policies
+     * choose only alternatives validated by the semantic engine; they cannot mutate decoded histories or weaken hard
+     * identity, ordering, uniqueness, set-state, or determinism invariants.
      *
      * @author Eike Stepper
      */

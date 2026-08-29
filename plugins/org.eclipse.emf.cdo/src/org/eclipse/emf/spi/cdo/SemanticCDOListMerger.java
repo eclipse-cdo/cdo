@@ -180,6 +180,11 @@ final class SemanticCDOListMerger
   private final List<MergedOccurrence> mergedOccurrences = new ArrayList<>();
 
   /**
+   * Deterministic records of topological choice points; single-candidate steps are intentionally omitted.
+   */
+  private final List<String> orderingDecisions = new ArrayList<>();
+
+  /**
    * Redirects created by SET replacement and uniqueness coalescing.
    */
   private final Map<Occurrence, Redirect> redirects = new IdentityHashMap<>();
@@ -1372,6 +1377,7 @@ final class SemanticCDOListMerger
         chosen = policies.chooseOrdering(new OrderingContext(result, eligible));
         if (chosen == null)
         {
+          orderingDecisions.add("eligible=" + occurrenceIDs(eligible) + " chosen=<rejected>");
           conflict = "Ordering policy rejected ambiguity among " + occurrenceIDs(eligible);
           return null;
         }
@@ -1380,6 +1386,8 @@ final class SemanticCDOListMerger
         {
           throw invariant("Ordering policy selected a non-eligible occurrence");
         }
+
+        orderingDecisions.add("eligible=" + occurrenceIDs(eligible) + " chosen=" + chosen.occurrence.id);
       }
 
       result.add(chosen);
@@ -1856,7 +1864,7 @@ final class SemanticCDOListMerger
     builder.append(feature.getEContainingClass().getName()).append('.').append(feature.getName());
     builder.append(" unique=").append(feature.isUnique());
     builder.append(" unsettable=").append(feature.isUnsettable());
-    builder.append(" resultBaseSetState=").append(initialSetState()).append('\n');
+    builder.append(" resultBaseSetState=").append(resultBaseRevision == null ? "<unavailable>" : initialSetState()).append('\n');
   }
 
   /**
@@ -1864,7 +1872,7 @@ final class SemanticCDOListMerger
    */
   private void appendAncestorDump(StringBuilder builder)
   {
-    builder.append("\n=== ANCESTOR ===\n");
+    builder.append("\n=== RESULT BASE ===\n");
 
     for (int i = 0; i < ancestorLineages.size(); i++)
     {
@@ -1897,7 +1905,9 @@ final class SemanticCDOListMerger
 
     for (SideLineage lineage : state.lineages.values())
     {
-      builder.append(lineage.lineage.id).append(" observed=").append(lineage.observed);
+      builder.append(lineage.lineage.id).append(" origin=").append(lineage.lineage.origin);
+      builder.append(" addCreated=").append(lineage.lineage.addCreated);
+      builder.append(" observed=").append(lineage.observed);
       builder.append(" present=").append(lineage.present);
 
       if (!lineage.observed)
@@ -1941,7 +1951,7 @@ final class SemanticCDOListMerger
     builder.append("source=").append(source == null ? "not decoded" : source.setState);
     builder.append(" target=").append(target == null ? "not decoded" : target.setState).append('\n');
 
-    builder.append("\n=== UNIQUENESS ===\n");
+    builder.append("\n=== REDIRECTS ===\n");
 
     if (redirects.isEmpty())
     {
@@ -1983,6 +1993,15 @@ final class SemanticCDOListMerger
     {
       builder.append(constraint.before.id).append(" < ").append(constraint.after.id);
       builder.append(" [").append(constraint.provenance).append("]\n");
+    }
+
+    if (!orderingDecisions.isEmpty())
+    {
+      builder.append("choice points:\n");
+      for (String decision : orderingDecisions)
+      {
+        builder.append("  ").append(decision).append('\n');
+      }
     }
   }
 
@@ -2097,12 +2116,12 @@ final class SemanticCDOListMerger
      * Replay has not started because encoding or an earlier phase stopped first.
      */
     NOT_STARTED,
-  
+
     /**
      * Replay is executing; a failure dump must not claim validation succeeded.
      */
     IN_PROGRESS,
-  
+
     /**
      * Replay completed and matched the semantic result.
      */
@@ -2117,7 +2136,7 @@ final class SemanticCDOListMerger
   public enum Origin
   {
     /**
-     * Shared common-ancestor identity.
+     * Canonical result/application-base identity. It is a literal common ancestor only for common-base merges.
      */
     ANCESTOR,
 
@@ -2371,7 +2390,9 @@ final class SemanticCDOListMerger
   }
 
   /**
-   * Immutable context for a genuine concurrent conflict on one ancestor-rooted lineage.
+   * Immutable context for a genuine concurrent conflict on one result-base-rooted lineage. The retained
+   * ancestor-rooted terminology is an internal compatibility convention, not a claim that asymmetric bases share a
+   * literal common ancestor.
    *
    * @author Eike Stepper
    */
@@ -2383,7 +2404,7 @@ final class SemanticCDOListMerger
     public final OccurrenceConflictKind kind;
 
     /**
-     * Stable common-ancestor lineage affected by the conflict.
+     * Stable canonical result-base lineage affected by the conflict.
      */
     public final Lineage lineage;
 
@@ -2464,7 +2485,7 @@ final class SemanticCDOListMerger
   }
 
   /**
-   * Immutable context for CLEAR interaction with an observed concurrently mutated lineage.
+   * Immutable context for CLEAR interaction with an observed concurrently mutated result-base lineage.
    *
    * @author Eike Stepper
    */
@@ -2476,7 +2497,7 @@ final class SemanticCDOListMerger
     public final Origin clearingSide;
 
     /**
-     * Stable ancestor lineage affected by CLEAR.
+     * Stable result-base lineage affected by CLEAR.
      */
     public final Lineage lineage;
 
@@ -2530,7 +2551,9 @@ final class SemanticCDOListMerger
   }
 
   /**
-   * Stable lineage shared by source and target for an ancestor occurrence, or owned by one side for a new occurrence.
+   * Stable lineage shared by source and target for a result-base occurrence, or owned by one side for a new occurrence.
+   * Fields retain the historical {@code ancestor} names because the ordinary merge contract uses a common ancestor;
+   * in asymmetric remerge they refer to the canonical result-base root instead.
    *
    * @author Eike Stepper
    */
@@ -2871,12 +2894,12 @@ final class SemanticCDOListMerger
     public final Position position;
 
     /**
-     * Whether final representative value differs semantically from the ancestor.
+     * Whether final representative value differs semantically from the canonical result-base representative.
      */
     public final boolean contentChanged;
 
     /**
-     * Whether final placement relations differ semantically from the ancestor placement.
+     * Whether final placement relations differ semantically from the canonical result-base placement.
      */
     public final boolean placementChanged;
 

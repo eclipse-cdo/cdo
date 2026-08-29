@@ -4124,6 +4124,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return useEquals ? ObjectUtil.equals(nodeName, name) : nodeName.startsWith(name);
   }
 
+  /**
+   * Remaps a newly materialized object to an existing persistent identity for CDO resurrection. The object must be in
+   * {@link CDOState#NEW}; its temporary identity is replaced with {@code id} and it intentionally remains in the
+   * transaction's NEW-object lifecycle. When the target branch has a detached synthetic revision, commit uses that
+   * revision's version as predecessor and creates the next revision for the persistent identity. This is resurrection,
+   * not conversion into an ordinary CHANGED/revision-delta object.
+   *
+   * @param object the new transaction object to remap
+   * @param id the persistent identity being resurrected
+   */
   public static void resurrectObject(CDOObject object, CDOID id)
   {
     if (object.cdoState() != CDOState.NEW)

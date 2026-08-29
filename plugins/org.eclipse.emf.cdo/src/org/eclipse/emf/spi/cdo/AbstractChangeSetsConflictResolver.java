@@ -16,16 +16,23 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
-import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver.NonConflictAware;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -248,7 +255,17 @@ public abstract class AbstractChangeSetsConflictResolver extends AbstractConflic
   private CDOChangeSet createChangeSet(CDOChangeSetData changeSetData)
   {
     CDOTransaction transaction = getTransaction();
-    return CDORevisionUtil.createChangeSet(transaction, transaction, changeSetData);
+    Map<CDOID, CDORevision> ancestorRevisions = new HashMap<>();
+
+    // A dirty transaction's branch point resolves to the repository head after remote invalidation. Its clean-revision
+    // map, in contrast, contains the exact common state from which both the local and queued remote histories start.
+    for (Map.Entry<InternalCDOObject, InternalCDORevision> entry : ((InternalCDOTransaction)transaction).getCleanRevisions().entrySet())
+    {
+      ancestorRevisions.put(entry.getKey().cdoID(), entry.getValue());
+    }
+
+    CDORevisionProvider ancestorProvider = ancestorRevisions::get;
+    return new CDOChangeSetImpl(transaction, transaction, changeSetData, ancestorProvider);
   }
 
   /**

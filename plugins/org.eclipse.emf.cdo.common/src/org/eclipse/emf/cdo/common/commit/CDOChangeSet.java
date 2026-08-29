@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 /**
  * The {@link CDOChangeSetData change set data} between two {@link CDOBranchPointRange branch points} with a common
@@ -26,4 +27,9 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 public interface CDOChangeSet extends CDOBranchPointRange, CDOChangeSetData
 {
   public CDOBranchPoint getAncestorPoint();
+
+  /**
+   * @since 4.28
+   */
+  public CDORevisionProvider getStartRevisionProvider();
 }

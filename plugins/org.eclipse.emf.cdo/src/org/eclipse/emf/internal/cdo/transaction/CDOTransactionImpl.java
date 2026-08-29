@@ -185,6 +185,7 @@ import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
@@ -660,24 +661,41 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       CDOChangeSet targetChanges = mergeData.getTargetChanges();
       CDOChangeSet sourceChanges = mergeData.getSourceChanges();
-      CDOChangeSetData result = merger.merge(targetChanges, sourceChanges);
-      if (result == null)
-      {
-        return null;
-      }
 
       CDORevisionProvider targetProvider = mergeData.getTargetInfo();
+      CDORevisionProvider targetBaseProvider = mergeData.getTargetBaseInfo();
+      CDORevisionProvider sourceBaseProvider = mergeData.getSourceBaseInfo();
       CDORevisionProvider resultBaseProvider;
 
-      CDORevisionManager revisionManager = session.getRevisionManager();
       CDOBranchPoint resultBase = mergeData.getResultBase();
       if (resultBase != null)
       {
+        CDORevisionManager revisionManager = session.getRevisionManager();
         resultBaseProvider = new ManagedRevisionProvider(revisionManager, resultBase);
       }
       else
       {
-        resultBaseProvider = mergeData.getTargetBaseInfo();
+        resultBaseProvider = targetBaseProvider;
+      }
+
+      CDOChangeSetData result;
+      if (merger instanceof DefaultCDOMerger)
+      {
+        // Automatic remerge can select different source and target bases. Preserve the original causal change sets and
+        // supply all three base states so the semantic list merger can distinguish unobserved occurrences from
+        // removals.
+        result = ((DefaultCDOMerger)merger).merge(targetChanges, sourceChanges, targetBaseProvider, sourceBaseProvider, resultBaseProvider);
+      }
+      else
+      {
+        // Preserve the established CDOMerger contract for custom implementations that do not opt into the richer
+        // result-base-aware DefaultCDOMerger path.
+        result = merger.merge(targetChanges, sourceChanges);
+      }
+
+      if (result == null)
+      {
+        return null;
       }
 
       ApplyChangeSetResult changeSetResult = applyChangeSet(result, resultBaseProvider, targetProvider, effectiveSource, false);
@@ -693,12 +711,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   @Override
   @Deprecated
-  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider targetBaseProvider,
+  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider resultBaseProvider,
       CDORevisionProvider targetProvider, CDOBranchPoint source)
   {
     throw new UnsupportedOperationException();
   }
 
+  /**
+   * Applies a goal change set whose NEW/CHANGED/DETACHED classifications are relative to {@code resultBaseProvider}
+   * and returns the actual changes relative to this transaction's current target state.
+   * <p>
+   * Local-branch ID remapping and delta normalization may adjust {@code changeSetData} in place.
+   */
   @Override
   public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider resultBaseProvider, CDORevisionProvider targetProvider,
       CDOBranchPoint source, boolean keepVersions) throws ChangeSetOutdatedException
@@ -714,24 +738,28 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
 
       CDOChangeSetData resultData = result.getChangeSetData();
+      Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
+      List<InternalCDOObject> newGoalObjects = new ArrayList<>();
 
-      // New objects
+      // NEW/CHANGED/DETACHED in changeSetData describe the goal relative to resultBaseProvider. Reconcile that goal
+      // with the actual target so the returned change set is classified relative to the current transaction state.
       applyNewObjects( //
           changeSetData.getNewObjects(), //
-          resultBaseProvider, //
-          resultData.getNewObjects());
+          resultBaseProvider, targetProvider, keepVersions, //
+          resultData, oldRevisions, newGoalObjects);
 
-      // Detached objects
       Set<CDOObject> detachedSet = applyDetachedObjects( //
           changeSetData.getDetachedObjects(), //
           resultData.getDetachedObjects());
 
-      // Changed objects
-      Map<CDOID, InternalCDORevision> oldRevisions = applyChangedObjects( //
+      applyChangedObjects( //
           changeSetData.getChangedObjects(), //
-          resultBaseProvider, //
-          targetProvider, keepVersions, //
-          resultData.getChangedObjects());
+          resultBaseProvider, targetProvider, keepVersions, //
+          resultData, oldRevisions, newGoalObjects);
+
+      // Register every target-relative NEW object before post-loading any of them so mutually referring goal revisions
+      // can resolve each other's IDs exactly as in the historic batched NEW-object path.
+      finalizeNewGoalObjects(newGoalObjects);
 
       // Delta notifications
       Collection<CDORevisionDelta> notificationDeltas = lastSavepoint.getRevisionDeltas2().values();
@@ -786,49 +814,103 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  private void applyNewObjects(List<CDOIDAndVersion> newObjects, CDORevisionProvider resultBaseProvider, List<CDOIDAndVersion> result)
+  /**
+   * Applies complete present-object goals that are NEW relative to the result base. The actual target may already
+   * contain the same CDOID after an earlier merge; in that case reconcile the full goal revision as CHANGED instead of
+   * silently ignoring it.
+   */
+  private void applyNewObjects(List<CDOIDAndVersion> newObjects, CDORevisionProvider resultBaseProvider, CDORevisionProvider targetProvider,
+      boolean keepVersions, CDOChangeSetData result, Map<CDOID, InternalCDORevision> oldRevisions, List<InternalCDOObject> newGoalObjects)
   {
-    List<InternalCDOObject> objects = new ArrayList<>();
-
     for (CDOIDAndVersion key : newObjects)
     {
-      InternalCDORevision revision = (InternalCDORevision)key;
-      CDOID id = revision.getID();
-      if (getObjectIfExists(id) == null)
+      InternalCDORevision goalRevision = ((InternalCDORevision)key).copy();
+      CDOID id = goalRevision.getID();
+      InternalCDOObject object = getObjectIfExists(id);
+
+      if (object == null)
       {
-        revision = revision.copy();
-        revision.setBranchPoint(getBranchPoint());
+        prepareNewGoalRevision(goalRevision, resultBaseProvider);
+        prepareNewGoalObject(goalRevision, result.getNewObjects(), newGoalObjects);
+      }
+      else
+      {
+        applyGoalRevision(object, goalRevision, null, targetProvider, keepVersions, result.getChangedObjects(), oldRevisions);
+      }
+    }
+  }
 
-        int version = 0;
-        if (resultBaseProvider instanceof CDORevisionProviderWithSynthetics)
-        {
-          SyntheticCDORevision synthetic = ((CDORevisionProviderWithSynthetics)resultBaseProvider).getSynthetic(id);
-          if (synthetic != null)
-          {
-            version = synthetic.getVersion();
-          }
-        }
+  /**
+   * Normalizes a complete goal revision for attachment as a target-relative NEW object.
+   */
+  private void prepareNewGoalRevision(InternalCDORevision revision, CDORevisionProvider resultBaseProvider)
+  {
+    revision.setBranchPoint(getBranchPoint());
 
-        revision.setVersion(version);
-
-        InternalCDOObject object = newInstance(revision.getEClass());
-        object.cdoInternalSetView(this);
-        object.cdoInternalSetRevision(revision);
-        object.cdoInternalSetState(CDOState.NEW);
-        objects.add(object);
-
-        registerObject(object);
-        result.add(revision);
+    int version = 0;
+    if (resultBaseProvider instanceof CDORevisionProviderWithSynthetics)
+    {
+      SyntheticCDORevision synthetic = ((CDORevisionProviderWithSynthetics)resultBaseProvider).getSynthetic(revision.getID());
+      if (synthetic != null)
+      {
+        version = synthetic.getVersion();
       }
     }
 
-    if (!objects.isEmpty())
+    revision.setVersion(version);
+    revision.setRevised(UNSPECIFIED_DATE);
+  }
+
+  /**
+   * Prepares one complete present-object goal as NEW relative to the actual target. Registration happens immediately so
+   * references among multiple new goal revisions can resolve; post-load/attachment callbacks are deferred until every
+   * target-relative NEW object has been registered.
+   */
+  private void prepareNewGoalObject(InternalCDORevision revision, List<CDOIDAndVersion> result, List<InternalCDOObject> newGoalObjects)
+  {
+    InternalCDOObject object = newInstance(revision.getEClass());
+    object.cdoInternalSetView(this);
+    object.cdoInternalSetRevision(revision);
+    object.cdoInternalSetState(CDOState.NEW);
+
+    registerObject(object);
+    newGoalObjects.add(object);
+    result.add(revision);
+  }
+
+  /**
+   * Completes the batched target-relative NEW-object phase after all new goal objects have been registered.
+   */
+  private void finalizeNewGoalObjects(List<InternalCDOObject> newGoalObjects)
+  {
+    for (InternalCDOObject object : newGoalObjects)
     {
-      for (InternalCDOObject object : objects)
-      {
-        object.cdoInternalPostLoad();
-        registerAttached(object, true); // Also marks the transaction dirty.
-      }
+      object.cdoInternalPostLoad();
+      registerAttached(object, true); // Also marks the transaction dirty.
+    }
+  }
+
+  /**
+   * Materializes a result-base-relative CHANGED goal as a genuine CDO reattachment. The state machine computes the
+   * complete delta against the historical clean revision and records the object in the savepoint's reattached set.
+   */
+  private void reattachGoalObject(InternalCDORevision goalRevision, InternalCDORevision cleanRevision, CDOChangeSetData result)
+  {
+    InternalCDOObject object = newInstance(goalRevision);
+    registerObject(object);
+
+    // Prefer the current branch's detached marker when available. It carries the exact version/branch identity that
+    // the store expects for reattachment; the result-base revision is only the semantic clean fallback.
+    SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
+    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
+    revisionManager.getRevision(goalRevision.getID(), this, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+    cleanRevisions.put(object, synthetics[0] != null ? synthetics[0] : cleanRevision);
+    CDOStateMachine.INSTANCE.internalReattach(object, this);
+
+    CDORevisionDelta delta = lastSavepoint.getRevisionDeltas2().get(goalRevision.getID());
+    if (delta != null && !delta.isEmpty())
+    {
+      result.getChangedObjects().add(delta);
     }
   }
 
@@ -851,79 +933,111 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return detachedSet;
   }
 
-  private Map<CDOID, InternalCDORevision> applyChangedObjects(List<CDORevisionKey> changedObjects, CDORevisionProvider resultBaseProvider,
-      CDORevisionProvider targetProvider, boolean keepVersions, List<CDORevisionKey> result) throws ChangeSetOutdatedException
+  /**
+   * Applies present-object goals expressed as deltas from {@code resultBaseProvider}. If the actual target does not
+   * contain an affected object, materialize the goal as target-relative NEW instead of assuming a target revision exists.
+   */
+  private void applyChangedObjects(List<CDORevisionKey> changedObjects, CDORevisionProvider resultBaseProvider, CDORevisionProvider targetProvider,
+      boolean keepVersions, CDOChangeSetData result, Map<CDOID, InternalCDORevision> oldRevisions, List<InternalCDOObject> newGoalObjects)
+      throws ChangeSetOutdatedException
   {
-    Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
-
-    Map<CDOID, CDOObject> detachedObjects = lastSavepoint.getDetachedObjects();
-    Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
-    Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
-
     for (CDORevisionKey key : changedObjects)
     {
       InternalCDORevisionDelta resultBaseGoalDelta = (InternalCDORevisionDelta)key;
       resultBaseGoalDelta.setTarget(null);
       CDOID id = resultBaseGoalDelta.getID();
       InternalCDORevision resultBaseRevision = (InternalCDORevision)resultBaseProvider.getRevision(id);
-
-      InternalCDOObject object = getObject(id);
-      boolean revisionChanged = false;
-
-      InternalCDORevision targetRevision = object.cdoRevision();
-      if (targetRevision == null)
+      if (resultBaseRevision == null)
       {
-        targetRevision = (InternalCDORevision)targetProvider.getRevision(id);
-        object.cdoInternalSetRevision(targetRevision);
-        revisionChanged = true;
+        throw new IllegalStateException("CHANGED goal has no result-base revision: " + id);
       }
-
-      oldRevisions.put(id, targetRevision);
 
       InternalCDORevision goalRevision = resultBaseRevision.copy();
       goalRevision.setBranchPoint(this);
-      if (!keepVersions)
-      {
-        goalRevision.setVersion(targetRevision.getVersion());
-      }
-
       goalRevision.setRevised(UNSPECIFIED_DATE);
       resultBaseGoalDelta.applyTo(goalRevision);
 
-      InternalCDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
-      targetGoalDelta.setTarget(null);
-
-      if (!targetGoalDelta.isEmpty())
+      InternalCDOObject object = getObjectIfExists(id);
+      if (object == null)
       {
-        if (keepVersions && targetGoalDelta.getVersion() != resultBaseRevision.getVersion())
-        {
-          throw new ChangeSetOutdatedException();
-        }
-
-        revisionDeltas.put(id, targetGoalDelta);
-        result.add(targetGoalDelta);
-
-        // handle reattached objects.
-        if (detachedObjects.containsKey(id))
-        {
-          CDOStateMachine.INSTANCE.internalReattach(object, this);
-        }
-
-        object.cdoInternalSetRevision(goalRevision);
-        object.cdoInternalSetState(CDOState.DIRTY);
-        revisionChanged = true;
-
-        dirtyObjects.put(id, object);
-        setDirty(true);
+        // The merger result is CHANGED relative to resultBase, but the current target is detached. Reattach against the
+        // result-base lineage so the store writes a delta instead of inserting a duplicate persistent revision.
+        reattachGoalObject(goalRevision, resultBaseRevision, result);
+        continue;
       }
 
-      if (revisionChanged)
+      applyGoalRevision(object, goalRevision, resultBaseRevision, targetProvider, keepVersions, result.getChangedObjects(), oldRevisions);
+    }
+  }
+
+  /**
+   * Reconciles one complete present goal with an already present target object and records a target-relative CHANGED
+   * delta only when the target actually differs.
+   */
+  private void applyGoalRevision(InternalCDOObject object, InternalCDORevision goalRevision, InternalCDORevision resultBaseRevision,
+      CDORevisionProvider targetProvider, boolean keepVersions, List<CDORevisionKey> result, Map<CDOID, InternalCDORevision> oldRevisions)
+      throws ChangeSetOutdatedException
+  {
+    CDOID id = goalRevision.getID();
+    boolean revisionChanged = false;
+
+    InternalCDORevision targetRevision = object.cdoRevision();
+    if (targetRevision == null)
+    {
+      targetRevision = (InternalCDORevision)targetProvider.getRevision(id);
+      if (targetRevision == null)
       {
-        object.cdoInternalPostLoad();
+        throw new IllegalStateException("Present target object has no target revision: " + id);
       }
+
+      object.cdoInternalSetRevision(targetRevision);
+      revisionChanged = true;
     }
 
-    return oldRevisions;
+    oldRevisions.put(id, targetRevision);
+
+    goalRevision.setBranchPoint(this);
+    if (!keepVersions)
+    {
+      goalRevision.setVersion(targetRevision.getVersion());
+    }
+
+    goalRevision.setRevised(UNSPECIFIED_DATE);
+
+    InternalCDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
+    targetGoalDelta.setTarget(null);
+
+    if (!targetGoalDelta.isEmpty())
+    {
+      if (keepVersions && resultBaseRevision != null && targetGoalDelta.getVersion() != resultBaseRevision.getVersion())
+      {
+        throw new ChangeSetOutdatedException();
+      }
+
+      Map<CDOID, CDOObject> detachedObjects = lastSavepoint.getDetachedObjects();
+      Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getDirtyObjects();
+      Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
+
+      revisionDeltas.put(id, targetGoalDelta);
+      result.add(targetGoalDelta);
+
+      if (detachedObjects.containsKey(id))
+      {
+        CDOStateMachine.INSTANCE.internalReattach(object, this);
+      }
+
+      object.cdoInternalSetRevision(goalRevision);
+      object.cdoInternalSetState(CDOState.DIRTY);
+      revisionChanged = true;
+
+      dirtyObjects.put(id, object);
+      setDirty(true);
+    }
+
+    if (revisionChanged)
+    {
+      object.cdoInternalPostLoad();
+    }
   }
 
   private InternalCDOObject getObjectIfExists(CDOID id)

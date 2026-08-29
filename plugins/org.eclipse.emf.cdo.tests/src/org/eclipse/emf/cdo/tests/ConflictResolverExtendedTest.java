@@ -2227,10 +2227,12 @@ public class ConflictResolverExtendedTest extends AbstractCDOTest
 
     if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
     {
-      assertEquals(thisTransaction.getObject(thatObject), thisList.get(4));
-      assertEquals(thatObject, thatList.get(4));
-      assertEquals(thisAfterMoveObject, thisList.get(0));
-      assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatList.get(0));
+      // The concurrent head ADD keeps its historical head placement. Moving the original head to the tail changes
+      // only that occurrence's placement; it does not drag an independently inserted element along with it.
+      assertEquals(thisTransaction.getObject(thatObject), thisList.get(0));
+      assertEquals(thatObject, thatList.get(0));
+      assertEquals(thisAfterMoveObject, thisList.get(1));
+      assertEquals(thatTransaction.getObject(thisAfterMoveObject), thatList.get(1));
       assertEquals(thisMoveObject, thisList.get(size - 1));
       assertEquals(thatTransaction.getObject(thisMoveObject), thatList.get(size - 1));
     }

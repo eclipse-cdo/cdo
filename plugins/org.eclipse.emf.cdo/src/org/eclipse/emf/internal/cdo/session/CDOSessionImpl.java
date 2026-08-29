@@ -62,6 +62,7 @@ import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSingleValueFeatureDeltaImpl;
@@ -1787,7 +1788,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo, CDORevisionAvailabilityInfo endInfo)
   {
     CDOChangeSetData data = CDORevisionUtil.createChangeSetData(ids, startInfo, endInfo);
-    return CDORevisionUtil.createChangeSet(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data);
+    return new CDOChangeSetImpl(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data, startInfo);
   }
 
   @Override
@@ -2489,7 +2490,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   private final class SessionOperationAuthorizerRegistry extends ContainerElementList<CDOOperationAuthorizer>
   {
-    private final Supplier<Entity> userInfoSupplier = new Supplier<Entity>()
+    private final Supplier<Entity> userInfoSupplier = new Supplier<>()
     {
       private final Entity NO_USER_INFO = Entity.builder(SessionOperationAuthorizerRegistry.class.getSimpleName(), "NO_USER_INFO").build();
 

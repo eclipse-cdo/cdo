@@ -18,8 +18,10 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta.Type;
@@ -34,10 +36,8 @@ import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImp
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORemoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
-import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSingleValueFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.ListIndexAffecting;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta.WithIndex;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 
@@ -57,7 +57,22 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Default three-way merger for CDO change sets.
+ * <p>
+ * The first ({@code target}) change set describes the current branch or transaction into which the result will be
+ * applied. In {@link CDOMergingConflictResolver} this is the local transaction history. The second ({@code source})
+ * change set describes the branch or repository history being merged.
+ * <p>
+ * Ordinary conflict-resolution histories share one start state. Automatic branch remerge can instead select different
+ * source and target bases. The branch transaction path therefore supplies both original base providers plus the actual
+ * result base. The semantic many-valued merger preserves that causal asymmetry so occurrences absent from one side's
+ * base are treated as unobserved rather than synthesized as removals. The richer branch/remerge entry point also
+ * normalizes every returned NEW, CHANGED, and DETACHED goal to the selected result base;
+ * {@code CDOTransactionImpl.applyChangeSet()} subsequently reconciles that goal with the actual target state.
+ * <p>
+ * CDO's internal producers retain the revision providers needed by the semantic many-valued merger. That richer
+ * call-local context provides full base values to distinguish equal list occurrences and the base set-state of
+ * unsettable features without storing repository/session state on this reusable merger instance.
  *
  * @author Eike Stepper
  * @since 3.0
@@ -138,20 +153,81 @@ public class DefaultCDOMerger implements CDOMerger
   @Override
   public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws ConflictException
   {
+    return merge(target, source, target.getStartRevisionProvider(), source.getStartRevisionProvider(), null, false);
+  }
+
+  /**
+   * Merges branch/remerge change sets while preserving their independently selected source and target bases.
+   * <p>
+   * Automatic remerge can legitimately produce list histories with different origin sizes because each history starts
+   * at the base that side actually observed. Reconstructing endpoint snapshots relative to the result base would turn
+   * an occurrence that one side never observed into a synthetic REMOVE. Instead the original executable histories are
+   * retained and the three base providers are propagated to the semantic many-valued merger.
+   * <p>
+   * The ordinary two-argument {@link #merge(CDOChangeSet, CDOChangeSet)} contract is retained for callers whose two
+   * change sets already share their merge base.
+   *
+   * @param target the target change set selected by the branch merge calculation.
+   * @param source the source change set selected by the branch merge calculation.
+   * @param targetBaseProvider the revision state from which {@code target} starts.
+   * @param sourceBaseProvider the revision state from which {@code source} starts.
+   * @param resultBaseProvider the revision state relative to which every returned NEW, CHANGED, or DETACHED goal is defined.
+   * @return the merged change-set data relative to {@code resultBaseProvider}.
+   * @throws ConflictException if the configured merger semantics cannot resolve all conflicts.
+   * @since 4.30
+   */
+  public synchronized CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source, CDORevisionProvider targetBaseProvider,
+      CDORevisionProvider sourceBaseProvider, CDORevisionProvider resultBaseProvider) throws ConflictException
+  {
+    CheckUtil.checkArg(targetBaseProvider, "targetBaseProvider"); //$NON-NLS-1$
+    CheckUtil.checkArg(sourceBaseProvider, "sourceBaseProvider"); //$NON-NLS-1$
+    CheckUtil.checkArg(resultBaseProvider, "resultBaseProvider"); //$NON-NLS-1$
+
+    return merge(target, source, targetBaseProvider, sourceBaseProvider, resultBaseProvider, true);
+  }
+
+  /**
+   * Executes one merge with either a common retained start state or explicit asymmetric branch/remerge bases. This
+   * method is called only while the public synchronized merge entry point owns the merger monitor.
+   */
+  private CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source, CDORevisionProvider targetBaseProvider, CDORevisionProvider sourceBaseProvider,
+      CDORevisionProvider resultBaseProvider, boolean asymmetricBases) throws ConflictException
+  {
     result = new CDOChangeSetDataImpl();
     conflicts = CDOIDUtil.createMap();
 
     targetMap = createMap(target);
     sourceMap = createMap(source);
 
+    // The public merger contract is delta-only, but CDO's own call paths retain the revision providers needed to
+    // distinguish stable occurrences and SET [] from UNSET []. Keep this richer context local to the current call.
+    CDORevisionProvider effectiveTargetBaseProvider = targetBaseProvider != null ? targetBaseProvider : target.getStartRevisionProvider();
+    CDORevisionProvider effectiveSourceBaseProvider = sourceBaseProvider != null ? sourceBaseProvider : source.getStartRevisionProvider();
+
     Set<CDOID> taken = new HashSet<>();
     for (Map.Entry<CDOID, Object> entry : targetMap.entrySet())
     {
       CDOID id = entry.getKey();
+
       Object targetData = entry.getValue();
       Object sourceData = sourceMap.get(id);
+      CDORevision resultBaseRevision = asymmetricBases ? getRevision(id, resultBaseProvider)
+          : getAncestorRevision(id, effectiveTargetBaseProvider, effectiveSourceBaseProvider);
+      boolean merged;
 
-      if (merge(targetData, sourceData))
+      if (asymmetricBases)
+      {
+        CDORevision targetBaseRevision = getRevision(id, effectiveTargetBaseProvider);
+        CDORevision sourceBaseRevision = getRevision(id, effectiveSourceBaseProvider);
+        merged = merge(targetData, sourceData, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+      }
+      else
+      {
+        // Preserve the established delta-only/common-base behavior, including callers that cannot provide a revision.
+        merged = merge(targetData, sourceData, resultBaseRevision);
+      }
+
+      if (merged)
       {
         taken.add(id);
       }
@@ -164,7 +240,19 @@ public class DefaultCDOMerger implements CDOMerger
       {
         Object sourceData = entry.getValue();
         Object targetData = targetMap.get(id);
-        merge(targetData, sourceData);
+        CDORevision resultBaseRevision = asymmetricBases ? getRevision(id, resultBaseProvider)
+            : getAncestorRevision(id, effectiveTargetBaseProvider, effectiveSourceBaseProvider);
+
+        if (asymmetricBases)
+        {
+          CDORevision targetBaseRevision = getRevision(id, effectiveTargetBaseProvider);
+          CDORevision sourceBaseRevision = getRevision(id, effectiveSourceBaseProvider);
+          merge(targetData, sourceData, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+        }
+        else
+        {
+          merge(targetData, sourceData, resultBaseRevision);
+        }
       }
     }
 
@@ -177,6 +265,17 @@ public class DefaultCDOMerger implements CDOMerger
   }
 
   protected boolean merge(Object targetData, Object sourceData)
+  {
+    return merge(targetData, sourceData, (CDORevision)null);
+  }
+
+  /**
+   * Merges the data for one object with the full common-ancestor revision when the producing call path retained it.
+   * The extra revision is an internal execution context; it does not widen the public {@link CDOMerger} contract.
+   *
+   * @since 4.30
+   */
+  protected boolean merge(Object targetData, Object sourceData, CDORevision ancestorRevision)
   {
     Object data = null;
     if (sourceData == null)
@@ -215,7 +314,7 @@ public class DefaultCDOMerger implements CDOMerger
     }
     else if (sourceData instanceof CDORevisionDelta && targetData instanceof CDORevisionDelta)
     {
-      data = changedInSourceAndTarget((CDORevisionDelta)targetData, (CDORevisionDelta)sourceData);
+      data = changedInSourceAndTarget((CDORevisionDelta)targetData, (CDORevisionDelta)sourceData, ancestorRevision);
     }
     else if (sourceData instanceof CDORevision && targetData instanceof CDORevision)
     {
@@ -231,6 +330,138 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     return take(data);
+  }
+
+  /**
+   * Merges one object's data with the result, target, and source base revisions needed by asymmetric branch remerge.
+   * Existing extenders remain on the common-ancestor overload unless they explicitly consume the richer context.
+   *
+   * @since 4.30
+   */
+  protected boolean merge(Object targetData, Object sourceData, CDORevision resultBaseRevision, CDORevision targetBaseRevision, CDORevision sourceBaseRevision)
+  {
+    CDORevision targetEndRevision = getEndRevision(targetData, targetBaseRevision);
+    CDORevision sourceEndRevision = getEndRevision(sourceData, sourceBaseRevision);
+    return merge(targetData, sourceData, resultBaseRevision, targetBaseRevision, sourceBaseRevision, targetEndRevision, sourceEndRevision);
+  }
+
+  /**
+   * Merges one object's data while keeping every returned goal relative to {@code resultBaseRevision}. NEW and DETACHED
+   * classifications are first normalized to that base. CHANGED histories keep their own causal bases so semantic list
+   * merging does not lose unobserved-occurrence information.
+   *
+   * @since 4.30
+   */
+  protected boolean merge(Object targetData, Object sourceData, CDORevision resultBaseRevision, CDORevision targetBaseRevision, CDORevision sourceBaseRevision,
+      CDORevision targetEndRevision, CDORevision sourceEndRevision)
+  {
+    if (resultBaseRevision == null)
+    {
+      // With an absent result base every present endpoint is NEW. Converting CHANGED to its complete endpoint also
+      // normalizes otherwise impossible NEW-vs-CHANGED classification combinations caused by asymmetric side bases.
+      if (targetData instanceof CDORevisionDelta)
+      {
+        targetData = targetEndRevision;
+        targetBaseRevision = null;
+      }
+      else if (targetData instanceof CDOID)
+      {
+        targetData = null;
+      }
+
+      if (sourceData instanceof CDORevisionDelta)
+      {
+        sourceData = sourceEndRevision;
+        sourceBaseRevision = null;
+      }
+      else if (sourceData instanceof CDOID)
+      {
+        sourceData = null;
+      }
+    }
+    else
+    {
+      // A side-local NEW is a complete goal. Relative to an already present result base it is therefore a CHANGED
+      // history starting exactly at that result base. Ordinary CHANGED histories retain their original causal bases.
+      if (targetData instanceof CDORevision)
+      {
+        targetData = toResultBaseChange(resultBaseRevision, (CDORevision)targetData);
+        targetBaseRevision = resultBaseRevision;
+      }
+
+      if (sourceData instanceof CDORevision)
+      {
+        sourceData = toResultBaseChange(resultBaseRevision, (CDORevision)sourceData);
+        sourceBaseRevision = resultBaseRevision;
+      }
+    }
+
+    Object data = null;
+    if (sourceData == null)
+    {
+      if (targetData instanceof CDORevision)
+      {
+        data = addedInTarget((CDORevision)targetData);
+      }
+      else if (targetData instanceof CDORevisionDelta)
+      {
+        data = changedInTarget((CDORevisionDelta)targetData, resultBaseRevision, targetBaseRevision, sourceBaseRevision, targetEndRevision);
+      }
+      else if (targetData instanceof CDOID)
+      {
+        data = detachedInTarget((CDOID)targetData);
+      }
+    }
+    else if (targetData == null)
+    {
+      if (sourceData instanceof CDORevision)
+      {
+        data = addedInSource((CDORevision)sourceData);
+      }
+      else if (sourceData instanceof CDORevisionDelta)
+      {
+        data = changedInSource((CDORevisionDelta)sourceData, resultBaseRevision, targetBaseRevision, sourceBaseRevision, sourceEndRevision);
+      }
+      else if (sourceData instanceof CDOID)
+      {
+        data = detachedInSource((CDOID)sourceData);
+      }
+    }
+    else if (sourceData instanceof CDOID && targetData instanceof CDOID)
+    {
+      data = detachedInSourceAndTarget((CDOID)sourceData);
+    }
+    else if (sourceData instanceof CDORevisionDelta && targetData instanceof CDORevisionDelta)
+    {
+      data = changedInSourceAndTarget((CDORevisionDelta)targetData, (CDORevisionDelta)sourceData, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+    }
+    else if (sourceData instanceof CDORevision && targetData instanceof CDORevision)
+    {
+      data = addedInSourceAndTarget((CDORevision)targetData, (CDORevision)sourceData);
+    }
+    else if (sourceData instanceof CDORevisionDelta && targetData instanceof CDOID)
+    {
+      data = changedInSourceAndDetachedInTarget((CDORevisionDelta)sourceData, resultBaseRevision, sourceBaseRevision, sourceEndRevision);
+    }
+    else if (targetData instanceof CDORevisionDelta && sourceData instanceof CDOID)
+    {
+      data = changedInTargetAndDetachedInSource((CDORevisionDelta)targetData, resultBaseRevision, targetBaseRevision, targetEndRevision);
+    }
+    else
+    {
+      throw new IllegalStateException(
+          "Unsupported normalized merge classifications: target=" + classification(targetData) + ", source=" + classification(sourceData));
+    }
+
+    return take(data);
+  }
+
+  /**
+   * Returns a stable classification name for invariant diagnostics.
+   */
+  private static String classification(Object data)
+  {
+    return data == null ? "UNCHANGED" : data.getClass().getSimpleName();
   }
 
   protected Object addedInTarget(CDORevision revision)
@@ -258,9 +489,69 @@ public class DefaultCDOMerger implements CDOMerger
     return id;
   }
 
+  /**
+   * Resolves a one-sided target change as a goal relative to the actual result base.
+   * <p>
+   * The base implementation treats the selected target endpoint as the complete object-level goal. {@link PerFeature}
+   * refines this behavior so unchanged features stay unobserved and many-valued changes retain occurrence semantics.
+   * @since 4.30
+   */
+  protected Object changedInTarget(CDORevisionDelta delta, CDORevision resultBaseRevision, CDORevision targetBaseRevision, CDORevision sourceBaseRevision,
+      CDORevision targetEndRevision)
+  {
+    Object selected = changedInTarget(delta);
+    if (selected instanceof CDORevisionDelta)
+    {
+      CDORevision selectedEndRevision = selected == delta ? targetEndRevision : getEndRevision(selected, targetBaseRevision);
+      return toResultBaseChange(resultBaseRevision, selectedEndRevision);
+    }
+
+    if (selected instanceof CDORevision)
+    {
+      return toResultBaseChange(resultBaseRevision, (CDORevision)selected);
+    }
+
+    if (selected instanceof CDOID && resultBaseRevision == null)
+    {
+      return null;
+    }
+
+    return selected;
+  }
+
   protected Object changedInSource(CDORevisionDelta delta)
   {
     return delta;
+  }
+
+  /**
+   * Resolves a one-sided source change as a goal relative to the actual result base.
+   * <p>
+   * The base implementation treats the selected source endpoint as the complete object-level goal. {@link PerFeature}
+   * refines this behavior so unchanged features stay unobserved and many-valued changes retain occurrence semantics.
+   * @since 4.30
+   */
+  protected Object changedInSource(CDORevisionDelta delta, CDORevision resultBaseRevision, CDORevision targetBaseRevision, CDORevision sourceBaseRevision,
+      CDORevision sourceEndRevision)
+  {
+    Object selected = changedInSource(delta);
+    if (selected instanceof CDORevisionDelta)
+    {
+      CDORevision selectedEndRevision = selected == delta ? sourceEndRevision : getEndRevision(selected, sourceBaseRevision);
+      return toResultBaseChange(resultBaseRevision, selectedEndRevision);
+    }
+
+    if (selected instanceof CDORevision)
+    {
+      return toResultBaseChange(resultBaseRevision, (CDORevision)selected);
+    }
+
+    if (selected instanceof CDOID && resultBaseRevision == null)
+    {
+      return null;
+    }
+
+    return selected;
   }
 
   protected Object detachedInSource(CDOID id)
@@ -289,6 +580,39 @@ public class DefaultCDOMerger implements CDOMerger
     default:
       throw new IllegalStateException("Illegal resolution preference: " + resolutionPreference);
     }
+  }
+
+  /**
+   * Resolves concurrent revision changes with an optional full common-ancestor revision. Subclasses that need only
+   * deltas retain the established two-argument hook; semantic many-valued merging overrides this overload.
+   *
+   * @since 4.30
+   */
+  protected Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta, CDORevision ancestorRevision)
+  {
+    return changedInSourceAndTarget(targetDelta, sourceDelta);
+  }
+
+  /**
+   * Resolves concurrent revision changes with explicit asymmetric branch/remerge base revisions.
+   *
+   * @since 4.30
+   */
+  protected Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta, CDORevision resultBaseRevision,
+      CDORevision targetBaseRevision, CDORevision sourceBaseRevision)
+  {
+    Object selected = changedInSourceAndTarget(targetDelta, sourceDelta, resultBaseRevision);
+    if (selected == targetDelta)
+    {
+      return toResultBaseChange(resultBaseRevision, getEndRevision(targetDelta, targetBaseRevision));
+    }
+
+    if (selected == sourceDelta)
+    {
+      return toResultBaseChange(resultBaseRevision, getEndRevision(sourceDelta, sourceBaseRevision));
+    }
+
+    return selected;
   }
 
   protected Object changedInSourceAndDetachedInTarget(CDORevisionDelta sourceDelta)
@@ -327,6 +651,112 @@ public class DefaultCDOMerger implements CDOMerger
     }
   }
 
+  /**
+   * Resolves source-change versus target-detach as a result-base-relative goal.
+   * @since 4.30
+   */
+  protected Object changedInSourceAndDetachedInTarget(CDORevisionDelta sourceDelta, CDORevision resultBaseRevision, CDORevision sourceBaseRevision,
+      CDORevision sourceEndRevision)
+  {
+    Object selected = changedInSourceAndDetachedInTarget(sourceDelta);
+    if (selected instanceof CDORevisionDelta)
+    {
+      CDORevision selectedEndRevision = selected == sourceDelta ? sourceEndRevision : getEndRevision(selected, sourceBaseRevision);
+      return toResultBaseChange(resultBaseRevision, selectedEndRevision);
+    }
+
+    if (selected instanceof CDORevision)
+    {
+      return toResultBaseChange(resultBaseRevision, (CDORevision)selected);
+    }
+
+    if (selected instanceof CDOID && resultBaseRevision == null)
+    {
+      return null;
+    }
+
+    return selected;
+  }
+
+  /**
+   * Resolves target-change versus source-detach as a result-base-relative goal.
+   *
+   * @since 4.30
+   */
+  protected Object changedInTargetAndDetachedInSource(CDORevisionDelta targetDelta, CDORevision resultBaseRevision, CDORevision targetBaseRevision,
+      CDORevision targetEndRevision)
+  {
+    Object selected = changedInTargetAndDetachedInSource(targetDelta);
+    if (selected instanceof CDORevisionDelta)
+    {
+      CDORevision selectedEndRevision = selected == targetDelta ? targetEndRevision : getEndRevision(selected, targetBaseRevision);
+      return toResultBaseChange(resultBaseRevision, selectedEndRevision);
+    }
+
+    if (selected instanceof CDORevision)
+    {
+      return toResultBaseChange(resultBaseRevision, (CDORevision)selected);
+    }
+
+    if (selected instanceof CDOID && resultBaseRevision == null)
+    {
+      return null;
+    }
+
+    return selected;
+  }
+
+  /**
+   * Converts a complete goal revision into the change-kind representation expected relative to the result base.
+   */
+  private static Object toResultBaseChange(CDORevision resultBaseRevision, CDORevision goalRevision)
+  {
+    if (goalRevision == null)
+    {
+      return resultBaseRevision == null ? null : resultBaseRevision.getID();
+    }
+
+    if (resultBaseRevision == null)
+    {
+      return goalRevision;
+    }
+
+    InternalCDORevisionDelta delta = (InternalCDORevisionDelta)goalRevision.compare(resultBaseRevision);
+    delta.setTarget(null);
+    return delta.isEmpty() ? null : delta;
+  }
+
+  /**
+   * Reconstructs one side's complete endpoint revision from its causal base and change classification. A CHANGED
+   * classification necessarily has a present side base, so no additional endpoint provider is required.
+   */
+  private static CDORevision getEndRevision(Object sideData, CDORevision baseRevision)
+  {
+    if (sideData instanceof CDORevision)
+    {
+      return (CDORevision)sideData;
+    }
+
+    if (sideData instanceof CDOID)
+    {
+      return null;
+    }
+
+    if (sideData instanceof CDORevisionDelta)
+    {
+      if (baseRevision == null)
+      {
+        throw new IllegalStateException("CHANGED side data has no causal base revision: " + ((CDORevisionDelta)sideData).getID());
+      }
+
+      InternalCDORevision endRevision = (InternalCDORevision)baseRevision.copy();
+      ((CDORevisionDelta)sideData).applyTo(endRevision);
+      return endRevision;
+    }
+
+    return baseRevision;
+  }
+
   protected Map<CDOID, Object> getTargetMap()
   {
     return targetMap;
@@ -356,6 +786,25 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     return map;
+  }
+
+  /**
+   * Obtains one revision from an optional provider without retaining provider state on this reusable merger instance.
+   */
+  private static CDORevision getRevision(CDOID id, CDORevisionProvider provider)
+  {
+    return provider == null ? null : provider.getRevision(id);
+  }
+
+  private static CDORevision getAncestorRevision(CDOID id, CDORevisionProvider targetStartProvider, CDORevisionProvider sourceStartProvider)
+  {
+    CDORevision revision = targetStartProvider == null ? null : targetStartProvider.getRevision(id);
+    if (revision == null && sourceStartProvider != null)
+    {
+      revision = sourceStartProvider.getRevision(id);
+    }
+
+    return revision;
   }
 
   private boolean take(Object data)
@@ -412,10 +861,8 @@ public class DefaultCDOMerger implements CDOMerger
   {
     NONE,
 
-    @Deprecated
     SOURCE_OVER_TARGET,
 
-    @Deprecated
     TARGET_OVER_SOURCE,
 
     @Deprecated
@@ -563,9 +1010,80 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     @Override
+    protected Object changedInTarget(CDORevisionDelta delta, CDORevision resultBaseRevision, CDORevision targetBaseRevision, CDORevision sourceBaseRevision,
+        CDORevision targetEndRevision)
+    {
+      if (resultBaseRevision == null)
+      {
+        return targetEndRevision;
+      }
+
+      return rebaseOneSidedRevisionDelta(delta, true, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+    }
+
+    @Override
+    protected Object changedInSource(CDORevisionDelta delta, CDORevision resultBaseRevision, CDORevision targetBaseRevision, CDORevision sourceBaseRevision,
+        CDORevision sourceEndRevision)
+    {
+      if (resultBaseRevision == null)
+      {
+        return sourceEndRevision;
+      }
+
+      return rebaseOneSidedRevisionDelta(delta, false, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+    }
+
+    /**
+     * Re-encodes only the features actually changed by one side so features absent from that causal history remain
+     * unobserved instead of being synthesized from endpoint snapshot differences.
+     */
+    private CDORevisionDelta rebaseOneSidedRevisionDelta(CDORevisionDelta delta, boolean targetSide, CDORevision resultBaseRevision,
+        CDORevision targetBaseRevision, CDORevision sourceBaseRevision)
+    {
+      InternalCDORevisionDelta result = new CDORevisionDeltaImpl(resultBaseRevision);
+
+      for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+      {
+        CDOFeatureDelta rebased = targetSide ? changedInTarget(featureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision)
+            : changedInSource(featureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+
+        if (rebased != null)
+        {
+          result.addFeatureDelta(rebased, null);
+        }
+      }
+
+      return result.isEmpty() ? null : result;
+    }
+
+    @Override
     protected Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta)
     {
-      InternalCDORevisionDelta result = new CDORevisionDeltaImpl(targetDelta, false);
+      return changedInSourceAndTarget(targetDelta, sourceDelta, null);
+    }
+
+    @Override
+    protected Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta, CDORevision ancestorRevision)
+    {
+      return changedInSourceAndTarget(targetDelta, sourceDelta, ancestorRevision, ancestorRevision, ancestorRevision, false);
+    }
+
+    @Override
+    protected Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta, CDORevision resultBaseRevision,
+        CDORevision targetBaseRevision, CDORevision sourceBaseRevision)
+    {
+      return changedInSourceAndTarget(targetDelta, sourceDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision, true);
+    }
+
+    /**
+     * Merges per-feature revision deltas while rebasing one-sided feature histories only for the asymmetric branch/remerge
+     * path. Ordinary common-base conflict resolution retains its established delta representation and dispatch behavior.
+     */
+    private Object changedInSourceAndTarget(CDORevisionDelta targetDelta, CDORevisionDelta sourceDelta, CDORevision resultBaseRevision,
+        CDORevision targetBaseRevision, CDORevision sourceBaseRevision, boolean rebaseOneSidedFeatures)
+    {
+      InternalCDORevisionDelta result = rebaseOneSidedFeatures && resultBaseRevision != null ? new CDORevisionDeltaImpl(resultBaseRevision)
+          : new CDORevisionDeltaImpl(targetDelta, false);
       ChangedInSourceAndTargetConflict conflict = null;
 
       Map<EStructuralFeature, CDOFeatureDelta> targetMap = ((InternalCDORevisionDelta)targetDelta).getFeatureDeltaMap();
@@ -578,7 +1096,9 @@ public class DefaultCDOMerger implements CDOMerger
 
         if (sourceFeatureDelta == null)
         {
-          CDOFeatureDelta featureDelta = changedInTarget(targetFeatureDelta);
+          CDOFeatureDelta featureDelta = rebaseOneSidedFeatures
+              ? changedInTarget(targetFeatureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision)
+              : changedInTarget(targetFeatureDelta);
           if (featureDelta != null)
           {
             result.addFeatureDelta(featureDelta, null);
@@ -586,7 +1106,11 @@ public class DefaultCDOMerger implements CDOMerger
         }
         else
         {
-          CDOFeatureDelta featureDelta = changedInSourceAndTarget(targetFeatureDelta, sourceFeatureDelta);
+          // A common-base merge deliberately keeps the established feature-hook contract. Only an asymmetric remerge
+          // needs the three distinct bases for result-relative rebasing and unobserved-occurrence handling.
+          CDOFeatureDelta featureDelta = rebaseOneSidedFeatures
+              ? changedInSourceAndTarget(targetFeatureDelta, sourceFeatureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision)
+              : changedInSourceAndTarget(targetFeatureDelta, sourceFeatureDelta, resultBaseRevision);
           if (featureDelta != null)
           {
             result.addFeatureDelta(featureDelta, null);
@@ -628,7 +1152,9 @@ public class DefaultCDOMerger implements CDOMerger
 
         if (targetFeatureDelta == null)
         {
-          CDOFeatureDelta featureDelta = changedInSource(sourceFeatureDelta);
+          CDOFeatureDelta featureDelta = rebaseOneSidedFeatures
+              ? changedInSource(sourceFeatureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision)
+              : changedInSource(sourceFeatureDelta);
           if (featureDelta != null)
           {
             result.addFeatureDelta(featureDelta, null);
@@ -666,6 +1192,28 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     /**
+     * Re-encodes a target-only feature change relative to the actual result base. Single-valued deltas are absolute and
+     * therefore already base-independent; many-valued subclasses override this hook.
+     * @since 4.30
+     */
+    protected CDOFeatureDelta changedInTarget(CDOFeatureDelta featureDelta, CDORevision resultBaseRevision, CDORevision targetBaseRevision,
+        CDORevision sourceBaseRevision)
+    {
+      return changedInTarget(featureDelta);
+    }
+
+    /**
+     * Re-encodes a source-only feature change relative to the actual result base. Single-valued deltas are absolute and
+     * therefore already base-independent; many-valued subclasses override this hook.
+     * @since 4.30
+     */
+    protected CDOFeatureDelta changedInSource(CDOFeatureDelta featureDelta, CDORevision resultBaseRevision, CDORevision targetBaseRevision,
+        CDORevision sourceBaseRevision)
+    {
+      return changedInSource(featureDelta);
+    }
+
+    /**
      * @return the result feature delta, or <code>null</code> to indicate an unresolved conflict.
      */
     protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta)
@@ -677,6 +1225,29 @@ public class DefaultCDOMerger implements CDOMerger
       }
 
       return changedInSourceAndTargetSingleValued(feature, targetFeatureDelta, sourceFeatureDelta);
+    }
+
+    /**
+     * Resolves concurrent changes of one feature with an optional full common-ancestor revision. The default delegates
+     * to the established delta-only hook so existing extenders retain their behavior.
+     *
+     * @since 4.30
+     */
+    protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta, CDORevision ancestorRevision)
+    {
+      return changedInSourceAndTarget(targetFeatureDelta, sourceFeatureDelta);
+    }
+
+    /**
+     * Resolves concurrent feature changes with explicit result/target/source base revisions. The default preserves the
+     * existing common-ancestor hook for extenders that do not need asymmetric list visibility.
+     *
+     * @since 4.30
+     */
+    protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta, CDORevision resultBaseRevision,
+        CDORevision targetBaseRevision, CDORevision sourceBaseRevision)
+    {
+      return changedInSourceAndTarget(targetFeatureDelta, sourceFeatureDelta, resultBaseRevision);
     }
 
     /**
@@ -703,14 +1274,55 @@ public class DefaultCDOMerger implements CDOMerger
     }
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Per-feature merger whose many-valued path performs a semantic three-way list merge.
+     * <p>
+     * Incoming numeric CDO histories are decoded independently against result-base occurrence identities plus each
+     * side's own causal base visibility. ADD
+     * creates a side-local occurrence, SET creates a replacement in the addressed lineage, MOVE preserves occurrence
+     * identity and creates a historical placement landmark, and REMOVE/CLEAR/UNSET address the occurrences visible at
+     * that point in the causal history. Historical positions and their partial order remain available after an
+     * occurrence moves or disappears.
+     * <p>
+     * Numeric indexes are intentionally confined to decoding and final delta encoding. Normalization, dimension-wise
+     * presence/content/placement merging, uniqueness resolution, and deterministic linearization reason about stable
+     * occurrences and ordering constraints. A fresh engine contains all mutable state for each invocation, so merger
+     * instances remain safely reusable under {@link DefaultCDOMerger#merge(CDOChangeSet, CDOChangeSet)} synchronization.
      *
      * @author Eike Stepper
      */
     public static class ManyValued extends PerFeature
     {
+      /**
+       * Policy for genuine conflicts on one occurrence lineage.
+       */
+      private final OccurrenceConflictPolicy occurrenceConflictPolicy;
+
+      /**
+       * Policy for genuinely underdetermined topological choices.
+       */
+      private final OrderingPolicy orderingPolicy;
+
+      /**
+       * Policy enforcing hard feature uniqueness.
+       */
+      private final DuplicateResolutionPolicy duplicateResolutionPolicy;
+
+      /**
+       * Policy defining CLEAR's concurrent semantic scope.
+       */
+      private final ClearSemanticPolicy clearSemanticPolicy;
+
+      /**
+       * Policy defining incompatible UNSET behavior.
+       */
+      private final UnsetSemanticPolicy unsetSemanticPolicy;
+
+      /**
+       * Creates a merger with the documented semantic defaults.
+       */
       public ManyValued()
       {
+        this(ResolutionPreference.NONE);
       }
 
       /**
@@ -718,7 +1330,36 @@ public class DefaultCDOMerger implements CDOMerger
        */
       public ManyValued(ResolutionPreference resolutionPreference)
       {
+        this(resolutionPreference, policyFor(resolutionPreference), OrderingPolicy.STABLE, DuplicateResolutionPolicy.COALESCE,
+            ClearSemanticPolicy.OBSERVED_REMOVE, UnsetSemanticPolicy.FAIL_ON_CONCURRENT_MUTATION);
+      }
+
+      /**
+       * Creates an immutable semantic-policy profile for an extender without adding mutable global configuration.
+       * Policy outputs remain centrally validated by the engine and cannot relax occurrence, ordering, uniqueness, or
+       * set-state invariants.
+       *
+       * @since 4.30
+       */
+      protected ManyValued(ResolutionPreference resolutionPreference, OccurrenceConflictPolicy occurrenceConflictPolicy, OrderingPolicy orderingPolicy,
+          DuplicateResolutionPolicy duplicateResolutionPolicy, ClearSemanticPolicy clearSemanticPolicy, UnsetSemanticPolicy unsetSemanticPolicy)
+      {
         super(resolutionPreference);
+
+        CheckUtil.checkArg(occurrenceConflictPolicy, "occurrenceConflictPolicy"); //$NON-NLS-1$
+        this.occurrenceConflictPolicy = occurrenceConflictPolicy;
+
+        CheckUtil.checkArg(orderingPolicy, "orderingPolicy"); //$NON-NLS-1$
+        this.orderingPolicy = orderingPolicy;
+
+        CheckUtil.checkArg(duplicateResolutionPolicy, "duplicateResolutionPolicy"); //$NON-NLS-1$
+        this.duplicateResolutionPolicy = duplicateResolutionPolicy;
+
+        CheckUtil.checkArg(clearSemanticPolicy, "clearSemanticPolicy"); //$NON-NLS-1$
+        this.clearSemanticPolicy = clearSemanticPolicy;
+
+        CheckUtil.checkArg(unsetSemanticPolicy, "unsetSemanticPolicy"); //$NON-NLS-1$
+        this.unsetSemanticPolicy = unsetSemanticPolicy;
       }
 
       /**
@@ -730,407 +1371,540 @@ public class DefaultCDOMerger implements CDOMerger
       }
 
       @Override
-      protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature, CDOFeatureDelta targetFeatureDelta,
-          CDOFeatureDelta sourceFeatureDelta)
+      protected CDOFeatureDelta changedInTarget(CDOFeatureDelta featureDelta, CDORevision resultBaseRevision, CDORevision targetBaseRevision,
+          CDORevision sourceBaseRevision)
+      {
+        if (featureDelta instanceof CDOListFeatureDelta)
+        {
+          CDOListFeatureDelta sourceFeatureDelta = createEmptyListDelta(featureDelta.getFeature(), sourceBaseRevision);
+          return mergeSemanticList((CDOListFeatureDelta)featureDelta, sourceFeatureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+        }
+
+        return super.changedInTarget(featureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+      }
+
+      @Override
+      protected CDOFeatureDelta changedInSource(CDOFeatureDelta featureDelta, CDORevision resultBaseRevision, CDORevision targetBaseRevision,
+          CDORevision sourceBaseRevision)
+      {
+        if (featureDelta instanceof CDOListFeatureDelta)
+        {
+          CDOListFeatureDelta targetFeatureDelta = createEmptyListDelta(featureDelta.getFeature(), targetBaseRevision);
+          return mergeSemanticList(targetFeatureDelta, (CDOListFeatureDelta)featureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+        }
+
+        return super.changedInSource(featureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+      }
+
+      /**
+       * Resolves two concurrent list histories that start from one common ancestor.
+       * <p>
+       * The ordinary {@link DefaultCDOMerger#merge(CDOChangeSet, CDOChangeSet)} path reaches this overload. It must
+       * therefore enter the semantic list merger with the same revision in all three base roles. The five-argument
+       * overload below is deliberately reserved for the branch/remerge path, where the two histories can have
+       * different causal bases and the result is encoded relative to a third revision.
+       */
+      @Override
+      protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta, CDORevision ancestorRevision)
       {
         if (targetFeatureDelta instanceof CDOListFeatureDelta && sourceFeatureDelta instanceof CDOListFeatureDelta)
         {
-          List<CDOFeatureDelta> originalSourceDeltas = ((CDOListFeatureDelta)sourceFeatureDelta).getListChanges();
-          List<CDOFeatureDelta> originalTargetDeltas = ((CDOListFeatureDelta)targetFeatureDelta).getListChanges();
-          int originSize = ((CDOListFeatureDelta)targetFeatureDelta).getOriginSize();
-          boolean treatAsUnique = treatAsUnique(feature);
+          // A normal conflict resolution has one shared origin, so all semantic coordinate systems use that revision.
+          return mergeSemanticList((CDOListFeatureDelta)targetFeatureDelta, (CDOListFeatureDelta)sourceFeatureDelta, ancestorRevision, ancestorRevision,
+              ancestorRevision);
+        }
 
-          // Copy the target deltas and build a map from original indices to the relevant target deltas.
-          List<CDOFeatureDelta> targetDeltas = new ArrayList<>();
-          TargetCopyProcessor targetProcessor = new TargetCopyProcessor(treatAsUnique);
-          copy(originalTargetDeltas, originSize, targetDeltas, targetProcessor);
+        return super.changedInSourceAndTarget(targetFeatureDelta, sourceFeatureDelta, ancestorRevision);
+      }
 
-          // Copy the source deltas and eliminate/convert the corresponding target deltas.
-          CDOListFeatureDelta result = new CDOListFeatureDeltaImpl(feature, originSize);
-          List<CDOFeatureDelta> sourceDeltas = result.getListChanges();
-          Map<Object, Object> targetMap = targetProcessor.getTargetMap();
-          SourceCopyProcessor sourceProcessor = new SourceCopyProcessor(targetDeltas, targetMap, targetProcessor.getTargetAdditions());
-          copy(originalSourceDeltas, originSize, sourceDeltas, sourceProcessor);
+      @Override
+      protected CDOFeatureDelta changedInSourceAndTarget(CDOFeatureDelta targetFeatureDelta, CDOFeatureDelta sourceFeatureDelta, CDORevision resultBaseRevision,
+          CDORevision targetBaseRevision, CDORevision sourceBaseRevision)
+      {
+        if (targetFeatureDelta instanceof CDOListFeatureDelta && sourceFeatureDelta instanceof CDOListFeatureDelta)
+        {
+          return mergeSemanticList((CDOListFeatureDelta)targetFeatureDelta, (CDOListFeatureDelta)sourceFeatureDelta, resultBaseRevision, targetBaseRevision,
+              sourceBaseRevision);
+        }
 
-          // Move the remaining target deltas to the end of the source delta list and adjust their indices accordingly.
-          for (CDOFeatureDelta targetDelta : targetDeltas)
+        return super.changedInSourceAndTarget(targetFeatureDelta, sourceFeatureDelta, resultBaseRevision, targetBaseRevision, sourceBaseRevision);
+      }
+
+      /**
+       * Executes semantic list merging for concurrent and one-sided list histories alike.
+       */
+      private CDOFeatureDelta mergeSemanticList(CDOListFeatureDelta targetFeatureDelta, CDOListFeatureDelta sourceFeatureDelta, CDORevision resultBaseRevision,
+          CDORevision targetBaseRevision, CDORevision sourceBaseRevision)
+      {
+        EStructuralFeature feature = targetFeatureDelta.getFeature();
+        SemanticCDOListMerger engine = new SemanticCDOListMerger(feature, targetFeatureDelta, sourceFeatureDelta, resultBaseRevision, targetBaseRevision,
+            sourceBaseRevision, new SemanticPolicies(this));
+        return engine.merge();
+      }
+
+      /**
+       * Creates an explicit no-op history in the coordinate system of one causal side base.
+       */
+      private static CDOListFeatureDelta createEmptyListDelta(EStructuralFeature feature, CDORevision baseRevision)
+      {
+        int originSize = 0;
+        if (baseRevision != null)
+        {
+          CDOList list = ((InternalCDORevision)baseRevision).getListOrNull(feature);
+          originSize = list == null ? 0 : list.size();
+        }
+
+        return new CDOListFeatureDeltaImpl(feature, originSize);
+      }
+
+      /**
+       * Maps the established source/target preference onto the focused occurrence domain.
+       */
+      private static OccurrenceConflictPolicy policyFor(ResolutionPreference resolutionPreference)
+      {
+        if (resolutionPreference == ResolutionPreference.SOURCE_OVER_TARGET)
+        {
+          return OccurrenceConflictPolicy.PREFER_SOURCE;
+        }
+
+        if (resolutionPreference == ResolutionPreference.TARGET_OVER_SOURCE)
+        {
+          return OccurrenceConflictPolicy.PREFER_TARGET;
+        }
+
+        return OccurrenceConflictPolicy.DEFAULT;
+      }
+
+      /**
+       * Immutable adapter from the established merger preferences to the semantic engine's focused policy domains.
+       * The default combines every compatible intent, gives replacement content precedence over removal of the old
+       * occurrence, gives removal precedence over placement-only mutation, uses target/local intent for genuinely
+       * incompatible concurrent replacement or placement, coalesces uniqueness collisions, applies observed-remove
+       * CLEAR semantics, and fails on incompatible UNSET.
+       *
+       * @author Eike Stepper
+       */
+      private static final class SemanticPolicies implements SemanticCDOListMerger.Policies
+      {
+        /**
+         * Owning merger whose immutable construction preferences guide genuine conflict choices.
+         */
+        private final ManyValued merger;
+
+        /**
+         * Creates an immutable policy adapter for one merger instance.
+         */
+        public SemanticPolicies(ManyValued merger)
+        {
+          this.merger = merger;
+        }
+
+        /**
+         * Resolves only genuine same-lineage semantic conflicts.
+         */
+        @Override
+        public SemanticCDOListMerger.OccurrenceResolution resolveOccurrence(SemanticCDOListMerger.OccurrenceConflictContext context)
+        {
+          OccurrenceConflictPolicy policy = merger.occurrenceConflictPolicy;
+          if (policy == OccurrenceConflictPolicy.FAIL)
           {
-            if (targetDelta != null)
+            return SemanticCDOListMerger.OccurrenceResolution.FAIL;
+          }
+
+          if (context.kind == SemanticCDOListMerger.OccurrenceConflictKind.REMOVE_VS_MUTATION)
+          {
+            if (policy == OccurrenceConflictPolicy.PREFER_SOURCE)
             {
-              int projectedIndex = (Integer)targetMap.get(targetDelta);
+              return context.source.present ? SemanticCDOListMerger.OccurrenceResolution.KEEP_MUTATION : SemanticCDOListMerger.OccurrenceResolution.REMOVE;
+            }
 
-              if (targetDelta instanceof CDOSingleValueFeatureDeltaImpl)
-              {
-                CDOSingleValueFeatureDeltaImpl impl = (CDOSingleValueFeatureDeltaImpl)targetDelta;
-                impl.setIndex(projectedIndex);
-              }
-              else
-              {
-                CDOMoveFeatureDeltaImpl impl = (CDOMoveFeatureDeltaImpl)targetDelta;
-                int moveOffset = impl.getNewPosition() - impl.getOldPosition();
-                impl.setNewPosition(projectedIndex + moveOffset);
-                impl.setOldPosition(projectedIndex);
-              }
+            if (policy == OccurrenceConflictPolicy.PREFER_TARGET)
+            {
+              return context.target.present ? SemanticCDOListMerger.OccurrenceResolution.KEEP_MUTATION : SemanticCDOListMerger.OccurrenceResolution.REMOVE;
+            }
 
-              WithIndex targetDeltaWithIndex = (WithIndex)targetDelta;
-              int sourceCount = sourceDeltas.size();
+            SemanticCDOListMerger.SideLineage present = context.source.present ? context.source : context.target;
 
-              for (int sourcePosition = 0; sourcePosition < sourceCount; sourcePosition++)
-              {
-                CDOFeatureDelta sourceDelta = sourceDeltas.get(sourcePosition);
-                int sourceIndex = ((WithIndex)sourceDelta).getIndex();
-                Type sourceType = sourceDelta.getType();
+            // SET replaces the removed occurrence and therefore survives; a MOVE of the removed occurrence does not.
+            return present.contentChanged ? SemanticCDOListMerger.OccurrenceResolution.KEEP_MUTATION : SemanticCDOListMerger.OccurrenceResolution.REMOVE;
+          }
 
-                switch (sourceType)
-                {
-                case ADD:
-                  targetDeltaWithIndex.adjustAfterAddition(sourceIndex);
-                  break;
+          if (policy == OccurrenceConflictPolicy.PREFER_SOURCE)
+          {
+            return SemanticCDOListMerger.OccurrenceResolution.SOURCE;
+          }
 
-                case REMOVE:
-                  targetDeltaWithIndex.adjustAfterRemoval(sourceIndex);
-                  break;
+          // Target is the local/current side in the conflict-resolver path and the transaction branch in branch merge.
+          return SemanticCDOListMerger.OccurrenceResolution.TARGET;
+        }
 
-                case SET:
-                  // Neutral; do nothing.
-                  break;
+        /**
+         * Chooses the deterministic stable candidate while preserving hard partial-order constraints.
+         */
+        @Override
+        public SemanticCDOListMerger.MergedOccurrence chooseOrdering(SemanticCDOListMerger.OrderingContext context)
+        {
+          if (merger.orderingPolicy == OrderingPolicy.FAIL_ON_AMBIGUITY)
+          {
+            return null;
+          }
 
-                case MOVE:
-                  targetDeltaWithIndex.adjustAfterMove(sourceIndex, ((CDOMoveFeatureDelta)sourceDelta).getNewPosition());
-                  break;
-
-                default:
-                  throw new IllegalStateException("Illegal source type: " + sourceType);
-                }
-              }
-
-              sourceDeltas.add(targetDelta);
+          SemanticCDOListMerger.MergedOccurrence result = null;
+          for (SemanticCDOListMerger.MergedOccurrence candidate : context.eligible)
+          {
+            if (result == null || compareStable(candidate, result, merger.orderingPolicy) < 0)
+            {
+              result = candidate;
             }
           }
 
           return result;
         }
 
-        return super.changedInSourceAndTargetManyValued(feature, targetFeatureDelta, sourceFeatureDelta);
-      }
-
-      private static int projectIndex(List<CDOFeatureDelta> changes, int count, int index)
-      {
-        for (int i = count - 1; i >= 0; --i)
-        {
-          CDOFeatureDelta projectingDelta = changes.get(i);
-          if (projectingDelta instanceof ListIndexAffecting)
-          {
-            index = ((ListIndexAffecting)projectingDelta).projectIndex(index);
-          }
-        }
-
-        return index;
-      }
-
-      private static void copy(List<CDOFeatureDelta> featureDeltas, int originSize, List<CDOFeatureDelta> copyDeltas, CopyProcessor processor)
-      {
-        boolean first = true;
-
-        for (CDOFeatureDelta featureDelta : featureDeltas)
-        {
-          if (first)
-          {
-            first = false;
-
-            Type type = featureDelta.getType();
-            if (type == Type.CLEAR || type == Type.UNSET)
-            {
-              EStructuralFeature feature = featureDelta.getFeature();
-              for (int deltaPosition = 0; deltaPosition < originSize; deltaPosition++)
-              {
-                CDORemoveFeatureDelta copyDelta = new CDORemoveFeatureDeltaImpl(feature, 0);
-                copyDeltas.add(copyDelta);
-
-                processor.processRemoveExpansion(copyDeltas, copyDelta, deltaPosition);
-              }
-
-              continue;
-            }
-          }
-
-          CDOFeatureDelta copyDelta = featureDelta.copy();
-          copyDeltas.add(copyDelta);
-
-          int deltaPosition = copyDeltas.size() - 1;
-          processor.processDeltaCopy(copyDeltas, copyDelta, deltaPosition);
-        }
-      }
-
-      /**
-       * @author Eike Stepper
-       */
-      private interface CopyProcessor
-      {
-        public void processRemoveExpansion(List<CDOFeatureDelta> deltas, CDORemoveFeatureDelta delta, int deltaPosition);
-
-        public void processDeltaCopy(List<CDOFeatureDelta> deltas, CDOFeatureDelta delta, int deltaPosition);
-      }
-
-      /**
-       * @author Eike Stepper
-       */
-      private static final class TargetCopyProcessor implements CopyProcessor
-      {
-        private final Map<Object, Object> targetMap = new HashMap<>();
-
-        private final Map<Object, Integer> targetAdditions;
-
-        public TargetCopyProcessor(boolean treatAsUnique)
-        {
-          targetAdditions = treatAsUnique ? new HashMap<>() : null;
-        }
-
-        public Map<Object, Object> getTargetMap()
-        {
-          return targetMap;
-        }
-
-        public Map<Object, Integer> getTargetAdditions()
-        {
-          return targetAdditions;
-        }
-
+        /**
+         * Coalesces equal-valued occurrences while preserving compatible effective intents.
+         */
         @Override
-        public void processRemoveExpansion(List<CDOFeatureDelta> targetDeltas, CDORemoveFeatureDelta targetDelta, int deltaPosition)
+        public SemanticCDOListMerger.DuplicateResolution resolveDuplicate(SemanticCDOListMerger.DuplicateContext context)
         {
-          int projectedIndex = deltaPosition;
-          targetMap.put(targetDelta, projectedIndex);
-          targetMap.put(deltaPosition, projectedIndex);
-        }
-
-        @Override
-        public void processDeltaCopy(List<CDOFeatureDelta> targetDeltas, CDOFeatureDelta targetDelta, int deltaPosition)
-        {
-          int deltaIndex = ((WithIndex)targetDelta).getIndex();
-          int projectedIndex = projectIndex(targetDeltas, deltaPosition, deltaIndex);
-
-          targetMap.put(targetDelta, projectedIndex);
-
-          Object positions = targetMap.get(projectedIndex);
-          if (positions == null)
+          switch (merger.duplicateResolutionPolicy)
           {
-            targetMap.put(projectedIndex, deltaPosition);
-          }
-          else if (positions instanceof Integer)
-          {
-            List<Integer> list = new ArrayList<>(2);
-            list.add((Integer)positions);
-            list.add(deltaPosition);
-            targetMap.put(projectedIndex, list);
-          }
-          else
-          {
-            @SuppressWarnings("unchecked")
-            List<Integer> list = (List<Integer>)positions;
-            list.add(deltaPosition);
-          }
+          case COALESCE:
+            return SemanticCDOListMerger.DuplicateResolution.COALESCE;
 
-          if (targetAdditions != null)
-          {
-            Type targetType = targetDelta.getType();
-            switch (targetType)
-            {
-            case ADD:
-            case SET:
-              targetAdditions.put(((CDOSingleValueFeatureDeltaImpl)targetDelta).getValue(), deltaPosition);
-              break;
+          case PREFER_SOURCE:
+            return preferDuplicate(context, SemanticCDOListMerger.Origin.SOURCE);
 
-            default:
-              break;
-            }
-          }
-        }
-      }
+          case PREFER_TARGET:
+            return preferDuplicate(context, SemanticCDOListMerger.Origin.TARGET);
 
-      /**
-       * @author Eike Stepper
-       */
-      private static final class SourceCopyProcessor implements CopyProcessor
-      {
-        private final List<CDOFeatureDelta> targetDeltas;
-
-        private final Map<Object, Object> targetMap;
-
-        private final Map<Object, Integer> targetAdditions;
-
-        public SourceCopyProcessor(List<CDOFeatureDelta> targetDeltas, Map<Object, Object> targetMap, Map<Object, Integer> targetAdditions)
-        {
-          this.targetDeltas = targetDeltas;
-          this.targetMap = targetMap;
-          this.targetAdditions = targetAdditions;
-        }
-
-        @Override
-        public void processRemoveExpansion(List<CDOFeatureDelta> sourceDeltas, CDORemoveFeatureDelta sourceDelta, int deltaPosition)
-        {
-          processDeltaCopy(sourceDeltas, sourceDelta, deltaPosition);
-        }
-
-        @Override
-        public void processDeltaCopy(List<CDOFeatureDelta> sourceDeltas, CDOFeatureDelta sourceDelta, int deltaPosition)
-        {
-          Type sourceType = sourceDelta.getType();
-
-          switch (sourceType)
-          {
-          case ADD:
-            processDuplicateValues(sourceDelta);
-            break;
-
-          case REMOVE:
-            processSourceRemove(sourceDeltas, sourceDelta, deltaPosition);
-            break;
-
-          case SET:
-            processSourceRemove(sourceDeltas, sourceDelta, deltaPosition);
-            processDuplicateValues(sourceDelta);
-            break;
-
-          case MOVE:
-            // Neutral; do nothing.
-            break;
+          case FAIL:
+            return SemanticCDOListMerger.DuplicateResolution.FAIL;
 
           default:
-            throw new IllegalStateException("Illegal source type: " + sourceType);
+            throw new IllegalStateException("Unknown duplicate policy " + merger.duplicateResolutionPolicy);
           }
         }
 
-        private void processSourceRemove(List<CDOFeatureDelta> sourceDeltas, CDOFeatureDelta sourceDelta, int deltaPosition)
+        /**
+         * Removes exactly the occurrences observed by CLEAR.
+         */
+        @Override
+        public SemanticCDOListMerger.ClearResolution resolveClear(SemanticCDOListMerger.ClearContext context)
         {
-          int projectedIndex = projectIndex(sourceDeltas, deltaPosition, ((WithIndex)sourceDelta).getIndex());
-          Object targetPositions = targetMap.get(projectedIndex);
-          if (targetPositions != null)
-          {
-            if (targetPositions instanceof Integer)
-            {
-              Integer targetPosition = (Integer)targetPositions;
-              processSourceRemove(targetPosition);
-            }
-            else
-            {
-              @SuppressWarnings("unchecked")
-              List<Integer> list = (List<Integer>)targetPositions;
-              for (Integer targetPosition : list)
-              {
-                processSourceRemove(targetPosition);
-              }
-            }
-          }
+          return clearResolution(merger.clearSemanticPolicy);
         }
 
-        private void processSourceRemove(Integer targetPosition)
+        /**
+         * Returns the default observed-remove CLEAR mode.
+         */
+        @Override
+        public SemanticCDOListMerger.ClearResolution getClearMode()
         {
-          CDOFeatureDelta targetDelta = targetDeltas.get(targetPosition);
-          Type targetType = targetDelta.getType();
+          return clearResolution(merger.clearSemanticPolicy);
+        }
 
-          switch (targetType)
+        /**
+         * Rejects an effective UNSET that cannot coexist with effective concurrent mutation.
+         */
+        @Override
+        public SemanticCDOListMerger.UnsetResolution resolveUnset(SemanticCDOListMerger.UnsetContext context)
+        {
+          switch (merger.unsetSemanticPolicy)
           {
-          case ADD:
-            // Neutral; do nothing.
-            break;
+          case FAIL_ON_CONCURRENT_MUTATION:
+            return SemanticCDOListMerger.UnsetResolution.FAIL;
 
-          case REMOVE:
-          {
-            CDORemoveFeatureDelta targetRemoveDelta = (CDORemoveFeatureDelta)targetDelta;
-            int removedIndex = targetRemoveDelta.getIndex();
+          case UNSET_WINS:
+            return SemanticCDOListMerger.UnsetResolution.UNSET_WINS;
 
-            targetDeltas.set(targetPosition, null);
-            adjustRemainingDeltas(targetPosition, removedIndex, CDOFeatureDelta.NO_INDEX);
-            break;
-          }
-
-          case SET:
-          {
-            CDOSetFeatureDelta targetSetDelta = (CDOSetFeatureDelta)targetDelta;
-            int removedIndex = targetSetDelta.getIndex();
-
-            targetDelta = new CDOAddFeatureDeltaImpl(targetSetDelta.getFeature(), removedIndex, targetSetDelta.getValue());
-            targetDeltas.set(targetPosition, targetDelta);
-            adjustRemainingDeltas(targetPosition, removedIndex, CDOFeatureDelta.NO_INDEX);
-            break;
-          }
-
-          case MOVE:
-          {
-            CDOMoveFeatureDelta targetMoveDelta = (CDOMoveFeatureDelta)targetDelta;
-            int removedIndex = targetMoveDelta.getOldPosition();
-            int addedIndex = targetMoveDelta.getNewPosition();
-
-            targetDeltas.set(targetPosition, null);
-            adjustRemainingDeltas(targetPosition, removedIndex, addedIndex);
-            break;
-          }
+          case MERGE_AS_CLEAR:
+            return SemanticCDOListMerger.UnsetResolution.MERGE_AS_CLEAR;
 
           default:
-            throw new IllegalStateException("Illegal source type: " + targetType);
+            throw new IllegalStateException("Unknown UNSET policy " + merger.unsetSemanticPolicy);
           }
         }
 
-        private void processDuplicateValues(CDOFeatureDelta sourceDelta)
+        /**
+         * Applies the stable source-before-target/creation-order ranking only where the DAG leaves order unknown.
+         */
+        private static int compareStable(SemanticCDOListMerger.MergedOccurrence first, SemanticCDOListMerger.MergedOccurrence second, OrderingPolicy policy)
         {
-          if (targetAdditions != null)
+          boolean firstFreshAddition = isFreshAddition(first);
+          boolean secondFreshAddition = isFreshAddition(second);
+          if (firstFreshAddition != secondFreshAddition)
           {
-            Object sourceValue = ((CDOSingleValueFeatureDeltaImpl)sourceDelta).getValue();
-            Integer targetPosition = targetAdditions.get(sourceValue);
-            if (targetPosition != null)
+            // A result-base or side-base occurrence is an established historical landmark. A fresh ADD that merely
+            // falls into an unobserved gap must not displace it solely because its newly allocated Position has a
+            // smaller ordinal.
+            return firstFreshAddition ? 1 : -1;
+          }
+
+          // Source/target preference only resolves a genuine tie between two fresh concurrent ADD occurrences.
+          if (firstFreshAddition)
+          {
+            int firstRank = originRank(first.origin, policy);
+            int secondRank = originRank(second.origin, policy);
+            if (first.origin != SemanticCDOListMerger.Origin.ANCESTOR && second.origin != SemanticCDOListMerger.Origin.ANCESTOR && firstRank != secondRank)
             {
-              WithIndex targetDelta = (WithIndex)targetDeltas.set(targetPosition, null);
-              Object oldMapping = targetMap.remove(targetDelta);
-
-              int addedIndex = targetDelta.getIndex();
-
-              if (targetDelta instanceof CDOSetFeatureDelta)
-              {
-                CDOSetFeatureDelta targetSetDelta = (CDOSetFeatureDelta)targetDelta;
-
-                CDORemoveFeatureDelta targetRemoveDelta = new CDORemoveFeatureDeltaImpl(targetSetDelta.getFeature(), addedIndex);
-                targetDeltas.set(targetPosition, targetRemoveDelta);
-                targetMap.put(targetRemoveDelta, oldMapping);
-              }
-
-              adjustRemainingDeltas(targetPosition, CDOFeatureDelta.NO_INDEX, addedIndex);
+              return Integer.compare(firstRank, secondRank);
             }
           }
+
+          int ordinal = Integer.compare(first.position.ordinal, second.position.ordinal);
+          if (ordinal != 0)
+          {
+            return ordinal;
+          }
+
+          int firstRank = originRank(first.origin, policy);
+          int secondRank = originRank(second.origin, policy);
+          if (firstRank != secondRank)
+          {
+            return Integer.compare(firstRank, secondRank);
+          }
+
+          return Integer.compare(first.occurrence.ordinal, second.occurrence.ordinal);
         }
 
-        private void adjustRemainingDeltas(int targetPosition, int removedIndex, int addedIndex)
+        /**
+         * Returns whether the occurrence was created by a decoded ADD operation, rather than being established in
+         * either causal base. Replacements deliberately do not count as fresh placement additions.
+         */
+        private static boolean isFreshAddition(SemanticCDOListMerger.MergedOccurrence occurrence)
         {
-          for (int i = targetPosition + 1; i < targetDeltas.size(); i++)
+          return occurrence.lineage != null && occurrence.lineage.addCreated;
+        }
+
+        /**
+         * Returns a deterministic semantic origin rank independent of hash iteration order.
+         */
+        private static int originRank(SemanticCDOListMerger.Origin origin, OrderingPolicy policy)
+        {
+          if (policy == OrderingPolicy.PREFER_SOURCE)
           {
-            CDOFeatureDelta remainingDelta = targetDeltas.get(i);
-            if (remainingDelta != null)
-            {
-              WithIndex remainingWithIndex = (WithIndex)remainingDelta;
+            return origin == SemanticCDOListMerger.Origin.SOURCE ? 0
+                : origin == SemanticCDOListMerger.Origin.ANCESTOR ? 1 : origin == SemanticCDOListMerger.Origin.TARGET ? 2 : 3;
+          }
 
-              if (removedIndex != CDOFeatureDelta.NO_INDEX)
-              {
-                remainingWithIndex.adjustAfterAddition(removedIndex); // Undo the target REMOVE.
-              }
+          if (policy == OrderingPolicy.PREFER_TARGET)
+          {
+            return origin == SemanticCDOListMerger.Origin.TARGET ? 0
+                : origin == SemanticCDOListMerger.Origin.ANCESTOR ? 1 : origin == SemanticCDOListMerger.Origin.SOURCE ? 2 : 3;
+          }
 
-              if (addedIndex != CDOFeatureDelta.NO_INDEX)
-              {
-                remainingWithIndex.adjustAfterRemoval(addedIndex); // Undo the target ADD.
-              }
-            }
+          switch (origin)
+          {
+          case ANCESTOR:
+            return 0;
+
+          case SOURCE:
+            return 1;
+
+          case TARGET:
+            return 2;
+
+          case MERGED:
+            return 3;
+
+          default:
+            throw new IllegalStateException("Unknown semantic origin " + origin);
           }
         }
+
+        /**
+         * Selects a side-origin duplicate when present and otherwise retains deterministic coalescing.
+         */
+        private static SemanticCDOListMerger.DuplicateResolution preferDuplicate(SemanticCDOListMerger.DuplicateContext context,
+            SemanticCDOListMerger.Origin preferred)
+        {
+          if (context.first.origin == preferred)
+          {
+            return SemanticCDOListMerger.DuplicateResolution.FIRST;
+          }
+
+          if (context.second.origin == preferred)
+          {
+            return SemanticCDOListMerger.DuplicateResolution.SECOND;
+          }
+
+          return SemanticCDOListMerger.DuplicateResolution.COALESCE;
+        }
+
+        /**
+         * Maps the protected SPI policy to the engine's validated internal resolution.
+         */
+        private static SemanticCDOListMerger.ClearResolution clearResolution(ClearSemanticPolicy policy)
+        {
+          switch (policy)
+          {
+          case OBSERVED_REMOVE:
+            return SemanticCDOListMerger.ClearResolution.OBSERVED_REMOVE;
+
+          case CLEAR_WINS:
+            return SemanticCDOListMerger.ClearResolution.CLEAR_WINS;
+
+          case FAIL_ON_CONCURRENT_MUTATION:
+            return SemanticCDOListMerger.ClearResolution.FAIL;
+
+          default:
+            throw new IllegalStateException("Unknown CLEAR policy " + policy);
+          }
+        }
+      }
+
+      /**
+       * Immutable policy for genuinely incompatible changes to one ancestor occurrence lineage.
+       *
+       * @author Eike Stepper
+       * @since 4.30
+       */
+      public enum OccurrenceConflictPolicy
+      {
+        /**
+         * Keep replacement content against removal, remove placement-only mutations, and prefer target otherwise.
+         */
+        DEFAULT,
+
+        /**
+         * Select source for genuine replacement/placement conflicts and source's presence choice against removal.
+         */
+        PREFER_SOURCE,
+
+        /**
+         * Select target for genuine replacement/placement conflicts and target's presence choice against removal.
+         */
+        PREFER_TARGET,
+
+        /**
+         * Report every genuine incompatible occurrence change as a merge conflict.
+         */
+        FAIL
+      }
+
+      /**
+       * Immutable policy used only when the final position DAG has multiple simultaneously eligible occurrences.
+       *
+       * @author Eike Stepper
+       * @since 4.30
+       */
+      public enum OrderingPolicy
+      {
+        /**
+         * Preserve ancestor stability, then source creation order, then target creation order.
+         */
+        STABLE,
+
+        /**
+         * Prefer a source-origin candidate at an otherwise unconstrained choice point.
+         */
+        PREFER_SOURCE,
+
+        /**
+         * Prefer a target-origin candidate at an otherwise unconstrained choice point.
+         */
+        PREFER_TARGET,
+
+        /**
+         * Report genuinely underdetermined ordering instead of selecting a linear extension.
+         */
+        FAIL_ON_AMBIGUITY
+      }
+
+      /**
+       * Immutable policy for hard uniqueness collisions between distinct surviving occurrences.
+       *
+       * @author Eike Stepper
+       * @since 4.30
+       */
+      public enum DuplicateResolutionPolicy
+      {
+        /**
+         * Coalesce values while combining every compatible effective semantic intent.
+         */
+        COALESCE,
+
+        /**
+         * Prefer a source-origin occurrence when one is available in the duplicate class.
+         */
+        PREFER_SOURCE,
+
+        /**
+         * Prefer a target-origin occurrence when one is available in the duplicate class.
+         */
+        PREFER_TARGET,
+
+        /**
+         * Report the uniqueness collision as a merge conflict.
+         */
+        FAIL
+      }
+
+      /**
+       * Immutable policy for the semantic scope of an effective CLEAR operation.
+       *
+       * @author Eike Stepper
+       * @since 4.30
+       */
+      public enum ClearSemanticPolicy
+      {
+        /**
+         * Remove exactly occurrences observed by CLEAR and retain unobserved concurrent additions.
+         */
+        OBSERVED_REMOVE,
+
+        /**
+         * Remove all merged contents, including concurrent occurrences the clearing side could not observe.
+         */
+        CLEAR_WINS,
+
+        /**
+         * Report an observed occurrence's effective concurrent mutation as a merge conflict.
+         */
+        FAIL_ON_CONCURRENT_MUTATION
+      }
+
+      /**
+       * Immutable policy for an effective UNSET that cannot coexist with concurrent effective mutation.
+       *
+       * @author Eike Stepper
+       * @since 4.30
+       */
+      public enum UnsetSemanticPolicy
+      {
+        /**
+         * Report the incompatible set-state/content intents as a merge conflict.
+         */
+        FAIL_ON_CONCURRENT_MUTATION,
+
+        /**
+         * Select UNSET and therefore remove every merged occurrence.
+         */
+        UNSET_WINS,
+
+        /**
+         * Apply observed-remove content semantics and return SET if concurrent content survives.
+         */
+        MERGE_AS_CLEAR
       }
     }
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Compatibility name for the former virtual-element implementation.
+     * <p>
+     * Normal merger dispatch is inherited from {@link ManyValued} and therefore uses the semantic occurrence/position
+     * engine. The legacy protected implementation remains source-compatible during the SPI transition but is no
+     * longer selected by the merger call path.
      *
      * @author Eike Stepper
      * @since 4.6
+     * @deprecated Instantiate {@link ManyValued}. The old numeric/offset implementation is not correctness-preserving.
      */
-    public static class ManyValuedOld extends PerFeature
+    @Deprecated
+    public static class ManyValuedOld extends ManyValued
     {
+      @Deprecated
       public ManyValuedOld()
       {
       }
@@ -1138,6 +1912,7 @@ public class DefaultCDOMerger implements CDOMerger
       /**
        * @since 4.2
        */
+      @Deprecated
       public ManyValuedOld(ResolutionPreference resolutionPreference)
       {
         super(resolutionPreference);
@@ -1146,11 +1921,14 @@ public class DefaultCDOMerger implements CDOMerger
       /**
        * @since 4.2
        */
+      @Deprecated
+      @Override
       protected boolean treatAsUnique(EStructuralFeature feature)
       {
         return feature.isUnique();
       }
 
+      @Deprecated
       @Override
       protected CDOFeatureDelta changedInSourceAndTargetManyValued(EStructuralFeature feature, CDOFeatureDelta targetFeatureDelta,
           CDOFeatureDelta sourceFeatureDelta)
@@ -1566,6 +2344,7 @@ public class DefaultCDOMerger implements CDOMerger
       /**
        * @since 4.2
        */
+      @Deprecated
       protected static Side other(Side side)
       {
         if (side == Side.SOURCE)
@@ -1581,10 +2360,16 @@ public class DefaultCDOMerger implements CDOMerger
        *
        * @author Eike Stepper
        * @since 4.2
+       * @deprecated Instantiate {@link ManyValued}. The old numeric/offset implementation is not correctness-preserving.
        */
+      @Deprecated
       public static enum Side
       {
-        SOURCE, TARGET
+        @Deprecated
+        SOURCE,
+
+        @Deprecated
+        TARGET
       }
 
       /**
@@ -1593,22 +2378,26 @@ public class DefaultCDOMerger implements CDOMerger
        * @author Eike Stepper
        * @since 4.2
        */
+      @Deprecated
       public static class PerSide<T>
       {
         private T source;
 
         private T target;
 
+        @Deprecated
         public PerSide()
         {
         }
 
+        @Deprecated
         public PerSide(T source, T target)
         {
           this.source = source;
           this.target = target;
         }
 
+        @Deprecated
         public final T get(Side side)
         {
           if (side == Side.SOURCE)
@@ -1619,6 +2408,7 @@ public class DefaultCDOMerger implements CDOMerger
           return target;
         }
 
+        @Deprecated
         public final void set(Side side, T value)
         {
           if (side == Side.SOURCE)
@@ -1631,6 +2421,7 @@ public class DefaultCDOMerger implements CDOMerger
           }
         }
 
+        @Deprecated
         @Override
         public String toString()
         {
@@ -1644,20 +2435,24 @@ public class DefaultCDOMerger implements CDOMerger
        * @author Eike Stepper
        * @since 4.2
        */
+      @Deprecated
       public static final class Element extends PerSide<CDOFeatureDelta>
       {
         private final int ancestorIndex;
 
+        @Deprecated
         public Element(int ancestorIndex)
         {
           this.ancestorIndex = ancestorIndex;
         }
 
+        @Deprecated
         public int getAncestorIndex()
         {
           return ancestorIndex;
         }
 
+        @Deprecated
         @Override
         public String toString()
         {

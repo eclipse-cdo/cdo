@@ -172,17 +172,25 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    *             {@link #applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)}
    */
   @Deprecated
-  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider targetBaseProvider,
+  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider resultBaseProvider,
       CDORevisionProvider targetProvider, CDOBranchPoint source);
 
   /**
+   * Applies a goal change set whose NEW, CHANGED, and DETACHED classifications are defined relative to
+   * {@code resultBaseProvider}. The returned change set describes the changes actually made relative to the current
+   * transaction target. Implementations may normalize local IDs and delta metadata in {@code changeSetData} in place.
+   *
+   * @param changeSetData the goal change set relative to {@code resultBaseProvider}.
+   * @param resultBaseProvider the revision state against which {@code changeSetData} is defined.
+   * @param targetProvider the current target revision state used to reconcile the goal.
    * @param source
    *          May be <code>null</code> if changeSetData does not result from a
    *          {@link #merge(CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger) merge} or if the merge was not in
    *          a {@link CDOBranch#isLocal() local} branch.
+   * @param keepVersions whether target reconciliation must preserve and validate revision versions.
    * @since 4.1
    */
-  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider targetBaseProvider, CDORevisionProvider targetProvider,
+  public ApplyChangeSetResult applyChangeSet(CDOChangeSetData changeSetData, CDORevisionProvider resultBaseProvider, CDORevisionProvider targetProvider,
       CDOBranchPoint source, boolean keepVersions) throws ChangeSetOutdatedException;
 
   /**

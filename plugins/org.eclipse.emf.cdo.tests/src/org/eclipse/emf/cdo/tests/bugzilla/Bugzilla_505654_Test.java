@@ -12,15 +12,21 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig.CountedTime;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -32,9 +38,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction.ApplyChangeSetResult;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -339,4 +349,101 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
     CDOID customer3b = rightAdd(getModel1Package().getCustomer());
     assertIDs(leftMerge(), customer1b, customer1, customer2b, customer3b, customer2, customer3);
   }
+
+  /**
+   * Verifies that a source-only list history is decoded against its own older base instead of being applied numerically
+   * to the newer result base.
+   */
+  public void testOneSidedRemerge_SameList() throws Exception
+  {
+    CDOID customer1 = leftAdd(getModel1Package().getCustomer());
+    CDOID customer1b = rightAdd(getModel1Package().getCustomer());
+    assertIDs(leftMerge(), customer1b, customer1);
+
+    CDOID customer2b = rightAdd(getModel1Package().getCustomer());
+    assertIDs(leftMerge(), customer1b, customer1, customer2b);
+  }
+
+  /**
+   * Mirrors {@link #testOneSidedRemerge_SameList()} with the other branch as merge target.
+   */
+  public void testOneSidedRemerge_SameList_Reverse() throws Exception
+  {
+    CDOID customer1 = leftAdd(getModel1Package().getCustomer());
+    CDOID customer1b = rightAdd(getModel1Package().getCustomer());
+    assertIDs(rightMerge(), customer1, customer1b);
+
+    CDOID customer2 = leftAdd(getModel1Package().getCustomer());
+    assertIDs(rightMerge(), customer1, customer1b, customer2);
+  }
+
+  /**
+   * A CHANGED goal relative to the result base can target an object that is currently absent because the target side
+   * detached it. Preferring the source change must materialize that present goal again.
+   */
+  public void testChangedGoalRecreatesDetachedTarget() throws Exception
+  {
+    CDOID customerID = leftAdd(getModel1Package().getCustomer());
+    assertIDs(rightMerge(), customerID);
+
+    Customer leftCustomer = (Customer)leftTransaction.getObject(customerID);
+    Customer rightCustomer = (Customer)rightTransaction.getObject(customerID);
+
+    leftCompany.getCustomers().remove(leftCustomer);
+    assertIDs(leftCommit());
+
+    rightCustomer.setName("source-name");
+    rightCommit();
+
+    CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued(DefaultCDOMerger.ResolutionPreference.SOURCE_OVER_TARGET);
+    leftTransaction.merge(rightTransaction.getBranch(), merger);
+    lastCommit = null;
+
+    assertFalse("A restored persistent goal must be committed as a revision delta, not as a new object",
+        leftTransaction.getNewObjects().containsKey(customerID));
+    assertTrue("A restored persistent goal must have a target-relative revision delta", leftTransaction.getRevisionDeltas().containsKey(customerID));
+    assertIDs(leftCommit(), customerID);
+    Customer mergedCustomer = (Customer)leftTransaction.getObject(customerID);
+    assertEquals("source-name", mergedCustomer.getName());
+  }
+
+  /**
+   * NEW is a goal classification relative to the supplied result base, not necessarily relative to the current target.
+   * If the target already contains the CDOID, applyChangeSet() must reconcile the complete goal as CHANGED.
+   */
+  public void testApplyNewGoalToExistingTarget() throws Exception
+  {
+    CDOID customerID = leftAdd(getModel1Package().getCustomer());
+    assertIDs(rightMerge(), customerID);
+
+    Customer leftCustomer = (Customer)leftTransaction.getObject(customerID);
+    Customer rightCustomer = (Customer)rightTransaction.getObject(customerID);
+
+    leftCustomer.setName("target-name");
+    leftCommit();
+
+    rightCustomer.setName("goal-name");
+    rightCommit();
+
+    InternalCDOObject leftInternal = (InternalCDOObject)leftCustomer;
+    InternalCDOObject rightInternal = (InternalCDOObject)rightCustomer;
+
+    InternalCDORevision targetRevision = leftInternal.cdoRevision();
+    InternalCDORevision goalRevision = rightInternal.cdoRevision().copy();
+
+    CDOChangeSetData goal = CDORevisionUtil.createChangeSetData( //
+        Collections.<CDOIDAndVersion> singletonList(goalRevision), //
+        Collections.emptyList(), //
+        Collections.emptyList());
+
+    CDORevisionProvider resultBaseProvider = id -> null;
+    CDORevisionProvider targetProvider = id -> customerID.equals(id) ? targetRevision : null;
+
+    ApplyChangeSetResult applyResult = ((InternalCDOTransaction)leftTransaction).applyChangeSet(goal, resultBaseProvider, targetProvider, null, false);
+
+    assertEquals("goal-name", leftCustomer.getName());
+    assertEquals(0, applyResult.getChangeSetData().getNewObjects().size());
+    assertEquals(1, applyResult.getChangeSetData().getChangedObjects().size());
+  }
+
 }

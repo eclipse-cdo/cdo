@@ -1787,6 +1787,9 @@ public class DefaultCDOMerger implements CDOMergerBaseAware
 
       /**
        * Immutable policy used only when the final position DAG has multiple simultaneously eligible occurrences.
+       * Hard DAG constraints are always applied first. STABLE keeps established result-base and side-base occurrences
+       * ahead of genuinely ADD-created occurrences when their relation is unknown; source/target preference is only a
+       * tie-break between fresh concurrent additions. Numeric ordinals are deterministic fallbacks, never causal facts.
        *
        * @author Eike Stepper
        * @since 4.30
@@ -1794,7 +1797,7 @@ public class DefaultCDOMerger implements CDOMergerBaseAware
       public enum OrderingPolicy
       {
         /**
-         * Preserve ancestor stability, then source creation order, then target creation order.
+         * Preserve historical stability, then deterministic fresh-addition preference and ordinals.
          */
         STABLE,
 

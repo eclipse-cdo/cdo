@@ -679,6 +679,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (resultBase != null)
         {
           CDORevisionManager revisionManager = session.getRevisionManager();
+
+          // Use a full result-base provider: a partial MergeData map may omit an affected ID needed to establish
+          // semantic list identity or to classify a result-base-relative goal.
           resultBaseProvider = new ManagedRevisionProvider(revisionManager, resultBase).withSynthetics();
         }
 

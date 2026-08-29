@@ -17,12 +17,13 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 /**
  * Extends {@link CDOMerger} with support for merge operations whose target and source change sets may have
- * different base revisions.
+ * different causal base revisions.
  * <p>
  * A base-aware merger receives separate revision providers for the target and source bases from which the
  * respective change sets were produced, as well as a result base against which the merged change set is to be
- * expressed. This is particularly important for re-merge scenarios where a revision or feature value may have
- * been visible to one side but not to the other.
+ * expressed. The causal providers define delta decoding, while the result provider defines the identity and
+ * coordinate system of returned goals. This is particularly important for re-merge scenarios where a revision or
+ * feature value may have been visible to one side but not to the other.
  *
  * @author Eike Stepper
  * @since 4.30
@@ -36,8 +37,9 @@ public interface CDOMergerBaseAware extends CDOMerger
    * systems the target and source changes must be interpreted. They may represent different branch points.
    * {@code resultBaseProvider} defines the state against which the returned {@link CDOChangeSetData} is expressed.
    * <p>
-   * In particular, the absence of an object or feature value from one side's base does not by itself imply that
-   * the side removed it; the side may simply never have observed it.
+   * In particular, the absence of an object or feature value from one side's causal base does not by itself imply
+   * that the side removed it; the side may simply never have observed it. Implementations must not first rebase an
+   * endpoint snapshot to the result base if that would manufacture such a removal.
    *
    * @param target
    *          the target change set.

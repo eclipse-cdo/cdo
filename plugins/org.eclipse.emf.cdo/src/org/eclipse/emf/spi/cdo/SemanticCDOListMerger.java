@@ -63,6 +63,28 @@ import java.util.Set;
  * <li>encode and replay-validate a fresh executable {@link CDOListFeatureDelta}.</li>
  * </ol>
  * All mutable state belongs to one instance and therefore to one merge invocation.
+ * <p>
+ * The three revisions have deliberately different roles. {@code resultBaseRevision} is the canonical identity and
+ * application baseline for the encoded result. {@code targetBaseRevision} and {@code sourceBaseRevision} are the
+ * causal start states in which the respective executable histories are interpreted. They are identical in an ordinary
+ * common-base merge, but can differ during a branch remerge. A result-base occurrence missing from a side causal base
+ * is therefore {@code UNOBSERVED}, not removed by that side. Internal names such as {@code ancestorLineages} and
+ * {@link Origin#ANCESTOR} refer to the canonical result-base identity domain; in an asymmetric merge that domain is
+ * not necessarily a shared historical ancestor.
+ * <p>
+ * A {@link Lineage} is stable identity across SET replacements; an {@link Occurrence} is one concrete value-bearing
+ * representative. MOVE preserves an occurrence, SET replaces it in the same lineage, and ADD creates a fresh
+ * lineage. A {@link Position} is an immutable historical landmark, while {@link PositionOrder} records only hard DAG
+ * constraints. In particular, after removing B from {@code [A,B,C]}, adding X between visible A and C establishes
+ * A &lt; X &lt; C but deliberately says nothing about X versus B. Numeric indexes are thus confined to decode and encode
+ * boundaries; they are never semantic identity or placement.
+ * <p>
+ * Set-state is orthogonal to contents: {@code SET []} differs from {@code UNSET []}, and UNSET always has empty
+ * contents. The engine treats uniqueness, acyclic redirects and ordering, one representative per lineage, deterministic
+ * output, and uniqueness of every intermediate encoded state as hard invariants. Policy callbacks select only among
+ * validated alternatives. An ordinary unresolved semantic conflict returns {@code null} and records a conflict;
+ * malformed executable history or an internal invariant violation throws an {@link IllegalStateException} with the
+ * available semantic dump.
  */
 final class SemanticCDOListMerger
 {
@@ -171,6 +193,12 @@ final class SemanticCDOListMerger
    * The encoded result delta, retained for lazy diagnostics after validation.
    */
   private CDOListFeatureDelta encodedDelta;
+
+  /**
+   * Diagnostic-only replay lifecycle. It prevents a failure during replay from being reported as successfully
+   * validated while the semantic model is still being checked.
+   */
+  private ReplayStatus replayStatus = ReplayStatus.NOT_STARTED;
 
   /**
    * Semantic occurrences corresponding to emitted ADD deltas in executable order. The replay validator uses this
@@ -389,7 +417,9 @@ final class SemanticCDOListMerger
   /**
    * Initializes one decoder's visible list by correlating its causal base occurrences with result-base identities.
    * Matching is value/ID based and consumes equal result-base occurrences in stable side-base order, which preserves
-   * multiplicity for non-unique features. A side-base occurrence that is absent from the result base is represented as
+   * multiplicity for non-unique features. This is exact when the causal-base construction preserves occurrence
+   * identity; if two equal duplicate occurrences are indistinguishable in the supplied revisions, the chosen match is
+   * necessarily deterministic rather than provably historical. A side-base occurrence that is absent from the result base is represented as
    * a side-local base occurrence: it was already visible before this side's executable history, but from the encoder's
    * result-base perspective it is content that must be materialized if it survives the semantic merge.
    */
@@ -1660,6 +1690,7 @@ final class SemanticCDOListMerger
    */
   private void validateReplay(CDOListFeatureDelta delta, SemanticResult expected)
   {
+    replayStatus = ReplayStatus.IN_PROGRESS;
     List<ReplayEntry> replay = new ArrayList<>();
 
     for (Lineage lineage : ancestorLineages)
@@ -1739,6 +1770,8 @@ final class SemanticCDOListMerger
         throw invariant("Replay differs from semantic result at index " + i);
       }
     }
+
+    replayStatus = ReplayStatus.VALIDATED;
   }
 
   /**
@@ -1988,7 +2021,28 @@ final class SemanticCDOListMerger
       }
     }
 
-    builder.append("\n=== REPLAY ===\nvalidated\n");
+    builder.append("\n=== REPLAY ===\n").append(replayStatus).append('\n');
+  }
+
+  /**
+   * States of the independent encoder replay check used solely for truthful diagnostics.
+   */
+  private enum ReplayStatus
+  {
+    /**
+     * Replay has not started because encoding or an earlier phase stopped first.
+     */
+    NOT_STARTED,
+
+    /**
+     * Replay is executing; a failure dump must not claim validation succeeded.
+     */
+    IN_PROGRESS,
+
+    /**
+     * Replay completed and matched the semantic result.
+     */
+    VALIDATED
   }
 
   /**

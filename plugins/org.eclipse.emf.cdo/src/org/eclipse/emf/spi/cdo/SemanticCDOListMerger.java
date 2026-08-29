@@ -2025,27 +2025,6 @@ final class SemanticCDOListMerger
   }
 
   /**
-   * States of the independent encoder replay check used solely for truthful diagnostics.
-   */
-  private enum ReplayStatus
-  {
-    /**
-     * Replay has not started because encoding or an earlier phase stopped first.
-     */
-    NOT_STARTED,
-
-    /**
-     * Replay is executing; a failure dump must not claim validation succeeded.
-     */
-    IN_PROGRESS,
-
-    /**
-     * Replay completed and matched the semantic result.
-     */
-    VALIDATED
-  }
-
-  /**
    * Creates an invariant exception enriched with the semantic model dump available at the failure point.
    */
   private IllegalStateException invariant(String message)
@@ -2107,6 +2086,27 @@ final class SemanticCDOListMerger
     }
 
     return result;
+  }
+
+  /**
+   * States of the independent encoder replay check used solely for truthful diagnostics.
+   */
+  private enum ReplayStatus
+  {
+    /**
+     * Replay has not started because encoding or an earlier phase stopped first.
+     */
+    NOT_STARTED,
+  
+    /**
+     * Replay is executing; a failure dump must not claim validation succeeded.
+     */
+    IN_PROGRESS,
+  
+    /**
+     * Replay completed and matched the semantic result.
+     */
+    VALIDATED
   }
 
   /**

@@ -187,31 +187,33 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertEquals(false, schema.isEmpty());
     assertEquals(2, schema.getTables().length);
 
-    assertEquals(table1, schema.getTables()[0]);
-    assertEquals(table1.getFieldCount(), schema.getTables()[0].getFieldCount());
-    assertEquals(field11, schema.getTables()[0].getField(0));
-    assertEquals(field12, schema.getTables()[0].getField(1));
-    assertEquals(field13, schema.getTables()[0].getField(2));
-    assertEquals(table1.getIndexCount(), schema.getTables()[0].getIndexCount());
-    assertEquals(index11, schema.getTables()[0].getIndex(0));
-    assertEquals(index11.getType(), schema.getTables()[0].getIndex(0).getType());
-    assertEquals(index12, schema.getTables()[0].getIndex(1));
-    assertEquals(index12.getType(), schema.getTables()[0].getIndex(1).getType());
-    assertEquals(index13, schema.getTables()[0].getIndex(2));
-    assertEquals(index13.getType(), schema.getTables()[0].getIndex(2).getType());
+    IDBTable table1Schema = schema.getTable("table1");
+    IDBTable table2Schema = schema.getTable("table2");
+    assertEquals(table1, table1Schema);
+    assertEquals(table1.getFieldCount(), table1Schema.getFieldCount());
+    assertEquals(field11, table1Schema.getField(0));
+    assertEquals(field12, table1Schema.getField(1));
+    assertEquals(field13, table1Schema.getField(2));
+    assertEquals(table1.getIndexCount(), table1Schema.getIndexCount());
+    assertEquals(index11, table1Schema.getIndex("index11"));
+    assertEquals(index11.getType(), table1Schema.getIndex("index11").getType());
+    assertEquals(index12, table1Schema.getIndex("index12"));
+    assertEquals(index12.getType(), table1Schema.getIndex("index12").getType());
+    assertEquals(index13, table1Schema.getIndex("index13"));
+    assertEquals(index13.getType(), table1Schema.getIndex("index13").getType());
 
-    assertEquals(table2, schema.getTables()[1]);
-    assertEquals(table2.getFieldCount(), schema.getTables()[1].getFieldCount());
-    assertEquals(field21, schema.getTables()[1].getField(0));
-    assertEquals(field22, schema.getTables()[1].getField(1));
-    assertEquals(field23, schema.getTables()[1].getField(2));
-    assertEquals(table2.getIndexCount(), schema.getTables()[1].getIndexCount());
-    assertEquals(index21, schema.getTables()[1].getIndex(0));
-    assertEquals(index21.getType(), schema.getTables()[1].getIndex(0).getType());
-    assertEquals(index22, schema.getTables()[1].getIndex(1));
-    assertEquals(index22.getType(), schema.getTables()[1].getIndex(1).getType());
-    assertEquals(index23, schema.getTables()[1].getIndex(2));
-    assertEquals(index23.getType(), schema.getTables()[1].getIndex(2).getType());
+    assertEquals(table2, table2Schema);
+    assertEquals(table2.getFieldCount(), table2Schema.getFieldCount());
+    assertEquals(field21, table2Schema.getField(0));
+    assertEquals(field22, table2Schema.getField(1));
+    assertEquals(field23, table2Schema.getField(2));
+    assertEquals(table2.getIndexCount(), table2Schema.getIndexCount());
+    assertEquals(index21, table2Schema.getIndex("index21"));
+    assertEquals(index21.getType(), table2Schema.getIndex("index21").getType());
+    assertEquals(index22, table2Schema.getIndex("index22"));
+    assertEquals(index22.getType(), table2Schema.getIndex("index22").getType());
+    assertEquals(index23, table2Schema.getIndex("index23"));
+    assertEquals(index23.getType(), table2Schema.getIndex("index23").getType());
   }
 
   public void testChangeSchema() throws Exception
@@ -269,18 +271,20 @@ public abstract class AbstractDBTest extends AbstractOMTest
     IDBIndex index21 = table2.addIndex("index21", IDBIndex.Type.PRIMARY_KEY, field21, field22);
     IDBIndex index22 = table2.addIndex("index22", IDBIndex.Type.UNIQUE, field21, field22);
     IDBIndex index23 = table2.addIndex("index23", IDBIndex.Type.NON_UNIQUE, field22);
-    assertEquals(table1, schema2.getTables()[0]);
-    assertEquals(table1.getFieldCount(), schema2.getTables()[0].getFieldCount());
-    assertEquals(field11, schema2.getTables()[0].getField(0));
-    assertEquals(field12, schema2.getTables()[0].getField(1));
-    assertEquals(field13, schema2.getTables()[0].getField(2));
-    assertEquals(table1.getIndexCount(), schema2.getTables()[0].getIndexCount());
-    assertEquals(index11, schema2.getTables()[0].getIndex(0));
-    assertEquals(index11.getType(), schema2.getTables()[0].getIndex(0).getType());
-    assertEquals(index12, schema2.getTables()[0].getIndex(1));
-    assertEquals(index12.getType(), schema2.getTables()[0].getIndex(1).getType());
-    assertEquals(index13, schema2.getTables()[0].getIndex(2));
-    assertEquals(index13.getType(), schema2.getTables()[0].getIndex(2).getType());
+    IDBTable table1Reload = schema2.getTable("table1");
+    IDBTable table2Reload;
+    assertEquals(table1, table1Reload);
+    assertEquals(table1.getFieldCount(), table1Reload.getFieldCount());
+    assertEquals(field11, table1Reload.getField(0));
+    assertEquals(field12, table1Reload.getField(1));
+    assertEquals(field13, table1Reload.getField(2));
+    assertEquals(table1.getIndexCount(), table1Reload.getIndexCount());
+    assertEquals(index11, table1Reload.getIndex("index11"));
+    assertEquals(index11.getType(), table1Reload.getIndex("index11").getType());
+    assertEquals(index12, table1Reload.getIndex("index12"));
+    assertEquals(index12.getType(), table1Reload.getIndex("index12").getType());
+    assertEquals(index13, table1Reload.getIndex("index13"));
+    assertEquals(index13.getType(), table1Reload.getIndex("index13").getType());
 
     IDBSchemaDelta delta = schemaTransaction.commit();
     DBUtil.dump(delta);
@@ -288,31 +292,33 @@ public abstract class AbstractDBTest extends AbstractOMTest
     assertEquals(false, schema2.isEmpty());
     assertEquals(2, schema2.getTables().length);
 
-    assertEquals(table1, schema2.getTables()[0]);
-    assertEquals(table1.getFieldCount(), schema2.getTables()[0].getFieldCount());
-    assertEquals(field11, schema2.getTables()[0].getField(0));
-    assertEquals(field12, schema2.getTables()[0].getField(1));
-    assertEquals(field13, schema2.getTables()[0].getField(2));
-    assertEquals(table1.getIndexCount(), schema2.getTables()[0].getIndexCount());
-    assertEquals(index11, schema2.getTables()[0].getIndex(0));
-    assertEquals(index11.getType(), schema2.getTables()[0].getIndex(0).getType());
-    assertEquals(index12, schema2.getTables()[0].getIndex(1));
-    assertEquals(index12.getType(), schema2.getTables()[0].getIndex(1).getType());
-    assertEquals(index13, schema2.getTables()[0].getIndex(2));
-    assertEquals(index13.getType(), schema2.getTables()[0].getIndex(2).getType());
+    table2Reload = schema2.getTable("table2");
 
-    assertEquals(table2, schema2.getTables()[1]);
-    assertEquals(table2.getFieldCount(), schema2.getTables()[1].getFieldCount());
-    assertEquals(field21, schema2.getTables()[1].getField(0));
-    assertEquals(field22, schema2.getTables()[1].getField(1));
-    assertEquals(field23, schema2.getTables()[1].getField(2));
-    assertEquals(table2.getIndexCount(), schema2.getTables()[1].getIndexCount());
-    assertEquals(index21, schema2.getTables()[1].getIndex(0));
-    assertEquals(index21.getType(), schema2.getTables()[1].getIndex(0).getType());
-    assertEquals(index22, schema2.getTables()[1].getIndex(1));
-    assertEquals(index22.getType(), schema2.getTables()[1].getIndex(1).getType());
-    assertEquals(index23, schema2.getTables()[1].getIndex(2));
-    assertEquals(index23.getType(), schema2.getTables()[1].getIndex(2).getType());
+    assertEquals(table1, table1Reload);
+    assertEquals(table1.getFieldCount(), table1Reload.getFieldCount());
+    assertEquals(field11, table1Reload.getField(0));
+    assertEquals(field12, table1Reload.getField(1));
+    assertEquals(field13, table1Reload.getField(2));
+    assertEquals(table1.getIndexCount(), table1Reload.getIndexCount());
+    assertEquals(index11, table1Reload.getIndex("index11"));
+    assertEquals(index11.getType(), table1Reload.getIndex("index11").getType());
+    assertEquals(index12, table1Reload.getIndex("index12"));
+    assertEquals(index12.getType(), table1Reload.getIndex("index12").getType());
+    assertEquals(index13, table1Reload.getIndex("index13"));
+    assertEquals(index13.getType(), table1Reload.getIndex("index13").getType());
+
+    assertEquals(table2, table2Reload);
+    assertEquals(table2.getFieldCount(), table2Reload.getFieldCount());
+    assertEquals(field21, table2Reload.getField(0));
+    assertEquals(field22, table2Reload.getField(1));
+    assertEquals(field23, table2Reload.getField(2));
+    assertEquals(table2.getIndexCount(), table2Reload.getIndexCount());
+    assertEquals(index21, table2Reload.getIndex("index21"));
+    assertEquals(index21.getType(), table2Reload.getIndex("index21").getType());
+    assertEquals(index22, table2Reload.getIndex("index22"));
+    assertEquals(index22.getType(), table2Reload.getIndex("index22").getType());
+    assertEquals(index23, table2Reload.getIndex("index23"));
+    assertEquals(index23.getType(), table2Reload.getIndex("index23").getType());
   }
 
   public void testEnsureSchema() throws Exception

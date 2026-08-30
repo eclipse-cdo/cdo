@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.io.IORuntimeException;
 import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.Objects;
 
 /**
  * @since 4.2
@@ -65,7 +66,7 @@ public abstract class DBNamedElement extends DBElement implements InternalDBName
     if (obj instanceof IDBNamedElement)
     {
       IDBNamedElement that = (IDBNamedElement)obj;
-      return name == that.getName();
+      return Objects.equals(name, that.getName());
     }
 
     return false;
@@ -74,7 +75,7 @@ public abstract class DBNamedElement extends DBElement implements InternalDBName
   @Override
   public int hashCode()
   {
-    return name.hashCode();
+    return Objects.hashCode(name);
   }
 
   @Override

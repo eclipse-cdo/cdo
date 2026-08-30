@@ -12,13 +12,20 @@
 package org.eclipse.emf.spi.cdo;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Adds transaction-internal access to the mutable segment owned by a savepoint. The public
+ * {@link CDOSavepoint} aggregate methods expose only the fixed boundary represented by a returned
+ * savepoint. Transaction internals use the {@code IncludingCurrent} methods when they need the
+ * active transaction state, including the mutable segment after that boundary.
  *
  * @author Eike Stepper
  * @since 3.0
@@ -61,4 +68,52 @@ public interface InternalCDOSavepoint extends CDOSavepoint, InternalCDOUserSavep
    * @since 4.6
    */
   public CDOObject getDetachedObject(CDOID id);
+
+  /**
+   * Returns the aggregate through this savepoint, including its mutable current segment.
+   * This method is for transaction internals; clients must use the fixed-boundary public API.
+   *
+   * @since 4.30
+   */
+  public Map<CDOID, CDOObject> getAllNewObjectsIncludingCurrent();
+
+  /**
+   * Returns the aggregate through this savepoint, including its mutable current segment.
+   * This method is for transaction internals; clients must use the fixed-boundary public API.
+   *
+   * @since 4.30
+   */
+  public Map<CDOID, CDOObject> getAllDirtyObjectsIncludingCurrent();
+
+  /**
+   * Returns the aggregate through this savepoint, including its mutable current segment.
+   * This method is for transaction internals; clients must use the fixed-boundary public API.
+   *
+   * @since 4.30
+   */
+  public Map<CDOID, CDORevision> getAllBaseNewObjectsIncludingCurrent();
+
+  /**
+   * Returns the aggregate through this savepoint, including its mutable current segment.
+   * This method is for transaction internals; clients must use the fixed-boundary public API.
+   *
+   * @since 4.30
+   */
+  public Map<CDOID, CDORevisionDelta> getAllRevisionDeltasIncludingCurrent();
+
+  /**
+   * Returns the aggregate through this savepoint, including its mutable current segment.
+   * This method is for transaction internals; clients must use the fixed-boundary public API.
+   *
+   * @since 4.30
+   */
+  public Map<CDOID, CDOObject> getAllDetachedObjectsIncludingCurrent();
+
+  /**
+   * Returns change-set data through this savepoint, including its mutable current segment.
+   * This method is for transaction internals; clients must use the fixed-boundary public API.
+   *
+   * @since 4.30
+   */
+  public CDOChangeSetData getAllChangeSetDataIncludingCurrent();
 }

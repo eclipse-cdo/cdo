@@ -59,7 +59,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   // Bug 283985 (Re-attachment)
   private Map<CDOID, CDOObject> reattachedObjects = CDOIDUtil.createMap();
 
-  private Map<CDOID, CDOObject> detachedObjects = new HashMap<CDOID, CDOObject>()
+  private Map<CDOID, CDOObject> detachedObjects = new HashMap<>()
   {
     private static final long serialVersionUID = 1L;
 
@@ -79,7 +79,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
   private Map<CDOID, CDOObject> dirtyObjects = CDOIDUtil.createMap();
 
-  private Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<CDOID, CDORevisionDelta>()
+  private Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<>()
   {
     private static final long serialVersionUID = 1L;
 
@@ -192,7 +192,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Deprecated
   public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
-    return new ConcurrentMap<CDOID, CDORevisionDelta>()
+    return new ConcurrentMap<>()
     {
       @Override
       public int size()
@@ -319,7 +319,19 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public CDOChangeSetData getAllChangeSetData()
   {
-    return sync().supply(() -> createChangeSetData(getAllNewObjects(), getAllRevisionDeltas(), getAllDetachedObjects()));
+    InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
+    return previousSavepoint == null //
+        ? createChangeSetData(Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap()) //
+        : previousSavepoint.getAllChangeSetDataIncludingCurrent();
+  }
+
+  @Override
+  public CDOChangeSetData getAllChangeSetDataIncludingCurrent()
+  {
+    return sync().supply(() -> createChangeSetData( //
+        getAllNewObjectsIncludingCurrent(), //
+        getAllRevisionDeltasIncludingCurrent(), //
+        getAllDetachedObjectsIncludingCurrent()));
   }
 
   private CDOChangeSetData createChangeSetData(Map<CDOID, CDOObject> newObjects, Map<CDOID, CDORevisionDelta> revisionDeltas,
@@ -358,6 +370,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllDirtyObjects()
   {
+    InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
+    return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllDirtyObjectsIncludingCurrent();
+  }
+
+  @Override
+  public Map<CDOID, CDOObject> getAllDirtyObjectsIncludingCurrent()
+  {
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null)
       {
@@ -380,6 +399,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllNewObjects()
   {
+    InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
+    return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllNewObjectsIncludingCurrent();
+  }
+
+  @Override
+  public Map<CDOID, CDOObject> getAllNewObjectsIncludingCurrent()
+  {
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null)
       {
@@ -387,13 +413,19 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       }
 
       Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
-      for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
+
+      for (InternalCDOSavepoint savepoint = getFirstSavePoint();; savepoint = savepoint.getNextSavepoint())
       {
         newObjects.putAll(savepoint.getNewObjects());
 
         for (CDOID removedID : savepoint.getDetachedObjects().keySet())
         {
           newObjects.remove(removedID);
+        }
+
+        if (savepoint == this)
+        {
+          break;
         }
       }
 
@@ -406,6 +438,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
    */
   @Override
   public Map<CDOID, CDORevision> getAllBaseNewObjects()
+  {
+    InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
+    return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllBaseNewObjectsIncludingCurrent();
+  }
+
+  @Override
+  public Map<CDOID, CDORevision> getAllBaseNewObjectsIncludingCurrent()
   {
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null)
@@ -429,6 +468,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas()
   {
+    InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
+    return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllRevisionDeltasIncludingCurrent();
+  }
+
+  @Override
+  public Map<CDOID, CDORevisionDelta> getAllRevisionDeltasIncludingCurrent()
+  {
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null)
       {
@@ -436,13 +482,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       }
 
       InternalCDOSavepoint firstSavePoint = getFirstSavePoint();
-      boolean multiSavepoint = firstSavePoint.getNextSavepoint() != null;
+      boolean multiSavepoint = firstSavePoint != this;
       Set<CDOFeatureDelta> originalFeatureDeltas = multiSavepoint ? new HashSet<>() : null;
 
       // We need to combine the results for all deltas in different savepoints.
       Map<CDOID, CDORevisionDelta> allRevisionDeltas = CDOIDUtil.createMap();
 
-      for (InternalCDOSavepoint savepoint = firstSavePoint; savepoint != null; savepoint = savepoint.getNextSavepoint())
+      for (InternalCDOSavepoint savepoint = firstSavePoint;; savepoint = savepoint.getNextSavepoint())
       {
         for (CDORevisionDelta revisionDelta : savepoint.getRevisionDeltas2().values())
         {
@@ -484,6 +530,11 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
             allRevisionDeltas.remove(detachedID);
           }
         }
+
+        if (savepoint == this)
+        {
+          break;
+        }
       }
 
       return Collections.unmodifiableMap(allRevisionDeltas);
@@ -493,6 +544,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllDetachedObjects()
   {
+    InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
+    return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllDetachedObjectsIncludingCurrent();
+  }
+
+  @Override
+  public Map<CDOID, CDOObject> getAllDetachedObjectsIncludingCurrent()
+  {
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null && getReattachedObjects().isEmpty())
       {
@@ -500,7 +558,8 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       }
 
       Map<CDOID, CDOObject> detachedObjects = CDOIDUtil.createMap();
-      for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
+
+      for (InternalCDOSavepoint savepoint = getFirstSavePoint();; savepoint = savepoint.getNextSavepoint())
       {
         for (Map.Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
         {
@@ -513,9 +572,15 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
         }
 
         Map<CDOID, CDOObject> reattachedObjects = savepoint.getReattachedObjects();
+
         for (CDOID reattachedID : reattachedObjects.keySet())
         {
           detachedObjects.remove(reattachedID);
+        }
+
+        if (savepoint == this)
+        {
+          break;
         }
       }
 

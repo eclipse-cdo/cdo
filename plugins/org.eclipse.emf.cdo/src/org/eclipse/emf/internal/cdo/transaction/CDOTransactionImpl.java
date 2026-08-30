@@ -210,6 +210,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -317,9 +318,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private Set<? extends EObject> committables;
 
   /**
-   * A map to hold a clean (i.e. unmodified) revision for objects that have been modified or detached.
+   * Transaction-wide original revisions for persistent objects that have been modified, detached,
+   * or otherwise need their pre-transaction baseline. This registry supports delta construction,
+   * commit processing, and transient-object lookups; segment-local lifecycle rollback state is
+   * deliberately held by {@link #lifecycleBeforeImages} instead.
    */
   private final Map<InternalCDOObject, InternalCDORevision> cleanRevisions = new CleanRevisionsMap();
+
+  /**
+   * The state that a lifecycle transition must be able to restore when its owning savepoint is rolled back.
+   *
+   * @see #detachObject(InternalCDOObject)
+   */
+  private final Map<InternalCDOSavepoint, Map<InternalCDOObject, LifecycleBeforeImage>> lifecycleBeforeImages = new IdentityHashMap<>();
 
   private final Map<CDOObject, InternalCDOLockState> lockStatesOfNewObjects = new HashMap<>();
 
@@ -555,9 +566,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     checkActive();
 
-    return sync.supply(() -> {
-      return lastSavepoint.getAllChangeSetData();
-    });
+    return sync.supply(() -> lastSavepoint.getAllChangeSetDataIncludingCurrent());
   }
 
   @Override
@@ -2171,6 +2180,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public void detachObject(InternalCDOObject object)
   {
     sync.run(() -> {
+      captureLifecycleBeforeImage(object);
+
       CDOTransactionHandler1[] handlers = getTransactionHandlers1();
       for (int i = 0; i < handlers.length; i++)
       {
@@ -2252,6 +2263,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         // Rollback objects
         Map<CDOObject, CDORevision> newRevisions = new HashMap<>();
         Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(savepoint, newRevisions);
+
+        removeLifecycleBeforeImagesThrough(savepoint);
 
         lastSavepoint = savepoint;
         lastSavepoint.setNextSavepoint(null);
@@ -2485,12 +2498,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           CDOID id = detachedObjectEntry.getKey();
           if (isObjectNew(id))
           {
-            idsOfNewObjectsWithDeltas.add(id);
+            InternalCDOObject detachedObject = (InternalCDOObject)detachedObjectEntry.getValue();
+            LifecycleBeforeImage beforeImage = getLifecycleBeforeImage(itrSavepoint, detachedObject);
+            idsOfNewObjectsWithDeltas.add(beforeImage != null && beforeImage.state == CDOState.NEW ? beforeImage.id : id);
           }
           else
           {
             InternalCDOObject detachedObject = (InternalCDOObject)detachedObjectEntry.getValue();
             InternalCDORevision cleanRev = cleanRevisions.get(detachedObject);
+            if (cleanRev == null)
+            {
+              LifecycleBeforeImage beforeImage = getLifecycleBeforeImage(itrSavepoint, detachedObject);
+              if (beforeImage != null)
+              {
+                cleanRev = beforeImage.revision;
+              }
+            }
+
             cleanObject(detachedObject, cleanRev);
           }
         }
@@ -2552,6 +2576,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDORevision revision = newBaseRevision.get(id);
       if (revision != null)
       {
+        object.cdoInternalSetID(id);
         object.cdoInternalSetRevision(revision.copy());
         object.cdoInternalSetView(this);
         object.cdoInternalSetState(CDOState.NEW);
@@ -2571,6 +2596,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       InternalCDOObject object = (InternalCDOObject)entryNewObject.getValue();
 
       // Go back to the previous state
+      object.cdoInternalSetID(entryNewObject.getKey());
       cleanObject(object, object.cdoRevision());
       object.cdoInternalSetState(CDOState.NEW);
     }
@@ -2935,6 +2961,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       firstSavepoint.setNextSavepoint(null);
 
       cleanRevisions.clear();
+      lifecycleBeforeImages.clear();
 
       Map<CDOID, CDORevision> attachedRevisions = options().getAttachedRevisionsMap();
       if (attachedRevisions != null)
@@ -2969,12 +2996,94 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private void collapseSavepoints(CDOCommitContext commitContext)
   {
     InternalCDOSavepoint newSavepoint = createSavepoint(null);
-    copyUncommitted(lastSavepoint.getAllNewObjects(), commitContext.getNewObjects(), newSavepoint.getNewObjects());
-    copyUncommitted(lastSavepoint.getAllDirtyObjects(), commitContext.getDirtyObjects(), newSavepoint.getDirtyObjects());
-    copyUncommitted(lastSavepoint.getAllRevisionDeltas(), commitContext.getRevisionDeltas(), newSavepoint.getRevisionDeltas2());
-    copyUncommitted(lastSavepoint.getAllDetachedObjects(), commitContext.getDetachedObjects(), newSavepoint.getDetachedObjects());
+    copyUncommitted(lastSavepoint.getAllNewObjectsIncludingCurrent(), commitContext.getNewObjects(), newSavepoint.getNewObjects());
+    copyUncommitted(lastSavepoint.getAllDirtyObjectsIncludingCurrent(), commitContext.getDirtyObjects(), newSavepoint.getDirtyObjects());
+    copyUncommitted(lastSavepoint.getAllRevisionDeltasIncludingCurrent(), commitContext.getRevisionDeltas(), newSavepoint.getRevisionDeltas2());
+    copyUncommitted(lastSavepoint.getAllDetachedObjectsIncludingCurrent(), commitContext.getDetachedObjects(), newSavepoint.getDetachedObjects());
+
     lastSavepoint = newSavepoint;
     firstSavepoint = lastSavepoint;
+
+    Map<InternalCDOObject, LifecycleBeforeImage> retainedBeforeImages = new IdentityHashMap<>();
+
+    for (Map<InternalCDOObject, LifecycleBeforeImage> beforeImages : lifecycleBeforeImages.values())
+    {
+      for (Map.Entry<InternalCDOObject, LifecycleBeforeImage> entry : beforeImages.entrySet())
+      {
+        InternalCDOObject object = entry.getKey();
+        if (newSavepoint.getDetachedObjects().containsValue(object) || newSavepoint.getNewObjects().containsValue(object))
+        {
+          retainedBeforeImages.put(object, entry.getValue());
+        }
+      }
+    }
+
+    lifecycleBeforeImages.clear();
+
+    if (!retainedBeforeImages.isEmpty())
+    {
+      lifecycleBeforeImages.put(newSavepoint, retainedBeforeImages);
+    }
+  }
+
+  private void captureLifecycleBeforeImage(InternalCDOObject object)
+  {
+    Map<InternalCDOObject, LifecycleBeforeImage> beforeImages = lifecycleBeforeImages.computeIfAbsent(lastSavepoint, key -> new IdentityHashMap<>());
+    beforeImages.computeIfAbsent(object, LifecycleBeforeImage::new);
+  }
+
+  private LifecycleBeforeImage getLifecycleBeforeImage(InternalCDOSavepoint savepoint, InternalCDOObject object)
+  {
+    Map<InternalCDOObject, LifecycleBeforeImage> beforeImages = lifecycleBeforeImages.get(savepoint);
+    return beforeImages == null ? null : beforeImages.get(object);
+  }
+
+  @Override
+  public CDOID getLifecycleBeforeImageID(InternalCDOObject object)
+  {
+    for (InternalCDOSavepoint savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      LifecycleBeforeImage beforeImage = getLifecycleBeforeImage(savepoint, object);
+      if (beforeImage != null)
+      {
+        return beforeImage.id;
+      }
+    }
+
+    return null;
+  }
+
+  @Override
+  public InternalCDORevision getLifecycleBeforeImageRevision(InternalCDOObject object)
+  {
+    for (InternalCDOSavepoint savepoint = lastSavepoint; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+    {
+      LifecycleBeforeImage beforeImage = getLifecycleBeforeImage(savepoint, object);
+      if (beforeImage != null)
+      {
+        return copyLifecycleBeforeImageRevision(beforeImage.revision);
+      }
+    }
+
+    return null;
+  }
+
+  private void removeLifecycleBeforeImagesThrough(InternalCDOSavepoint savepoint)
+  {
+    for (InternalCDOSavepoint itrSavepoint = lastSavepoint; itrSavepoint != null; itrSavepoint = itrSavepoint.getPreviousSavepoint())
+    {
+      lifecycleBeforeImages.remove(itrSavepoint);
+
+      if (itrSavepoint == savepoint)
+      {
+        break;
+      }
+    }
+  }
+
+  private static InternalCDORevision copyLifecycleBeforeImageRevision(InternalCDORevision revision)
+  {
+    return revision == null || !revision.isReadable() ? revision : revision.copy();
   }
 
   private <T> void copyUncommitted(Map<CDOID, T> oldSavepointMap, Map<CDOID, T> commitContextMap, Map<CDOID, T> newSavepointMap)
@@ -3256,14 +3365,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
     checkActive();
-    return sync.supply(() -> lastSavepoint.getAllDirtyObjects());
+    return sync.supply(() -> lastSavepoint.getAllDirtyObjectsIncludingCurrent());
   }
 
   @Override
   public Map<CDOID, CDOObject> getNewObjects()
   {
     checkActive();
-    return sync.supply(() -> lastSavepoint.getAllNewObjects());
+    return sync.supply(() -> lastSavepoint.getAllNewObjectsIncludingCurrent());
   }
 
   /**
@@ -3272,14 +3381,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public Map<CDOID, CDORevision> getBaseNewObjects()
   {
     checkActive();
-    return sync.supply(() -> lastSavepoint.getAllBaseNewObjects());
+    return sync.supply(() -> lastSavepoint.getAllBaseNewObjectsIncludingCurrent());
   }
 
   @Override
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas()
   {
     checkActive();
-    return sync.supply(() -> lastSavepoint.getAllRevisionDeltas());
+    return sync.supply(() -> lastSavepoint.getAllRevisionDeltasIncludingCurrent());
   }
 
   /**
@@ -3289,7 +3398,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
     checkActive();
-    return sync.supply(() -> lastSavepoint.getAllDetachedObjects());
+    return sync.supply(() -> lastSavepoint.getAllDetachedObjectsIncludingCurrent());
   }
 
   @Override
@@ -3510,8 +3619,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return super.queryInstancesUnsynced(type, exact);
     }
 
-    final Map<CDOID, CDOObject> newObjects = lastSavepoint.getAllNewObjects();
-    final CloseableIterator<T> delegate = super.queryInstancesUnsynced(type, exact);
+    Map<CDOID, CDOObject> newObjects = lastSavepoint.getAllNewObjectsIncludingCurrent();
+    CloseableIterator<T> delegate = super.queryInstancesUnsynced(type, exact);
 
     return new AbstractCloseableIterator<>()
     {
@@ -3648,14 +3757,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     List<CDOObjectReference> refs = null;
 
-    Map<CDOID, CDOObject> newObjects = lastSavepoint.getAllNewObjects();
-    Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getAllDirtyObjects();
+    Map<CDOID, CDOObject> newObjects = lastSavepoint.getAllNewObjectsIncludingCurrent();
+    Map<CDOID, CDOObject> dirtyObjects = lastSavepoint.getAllDirtyObjectsIncludingCurrent();
 
     if (localIDs != null)
     {
       localIDs.addAll(newObjects.keySet());
       localIDs.addAll(dirtyObjects.keySet());
-      localIDs.addAll(lastSavepoint.getAllDetachedObjects().keySet());
+      localIDs.addAll(lastSavepoint.getAllDetachedObjectsIncludingCurrent().keySet());
     }
 
     Iterator<CDOObject> it = new ComposedIterator<>( //
@@ -5396,6 +5505,29 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     public boolean test(Long startMillis)
     {
       return ++attempt < attempts;
+    }
+  }
+
+  /**
+   * The revision visible immediately before a lifecycle transition changed an object in one savepoint segment.
+   *
+   * @author Eike Stepper
+   */
+  private static final class LifecycleBeforeImage
+  {
+    private final CDOID id;
+
+    private final CDOState state;
+
+    private final InternalCDORevision revision;
+
+    private LifecycleBeforeImage(InternalCDOObject object)
+    {
+      id = object.cdoID();
+      state = object.cdoState();
+
+      InternalCDORevision currentRevision = object.cdoRevision();
+      revision = copyLifecycleBeforeImageRevision(currentRevision);
     }
   }
 

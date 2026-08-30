@@ -12,11 +12,14 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
+import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -160,6 +163,302 @@ public class SavePointTest extends AbstractCDOTest
 
     transaction.rollback();
     assertEquals(false, transaction.isDirty());
+  }
+
+  public void testPersistentDetachReattachRollbackAcrossSavepoints() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    Company company = getModel1Factory().createCompany();
+    company.setName("original");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    CDOUserSavepoint beforeDetach = transaction.setSavepoint();
+    CDOID id = CDOUtil.getCDOObject(company).cdoID();
+    assertPersistentCleanState(company, id, transaction);
+    assertEquals(false, transaction.isDirty());
+    assertEquals(false, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    resource.getContents().remove(company);
+    assertTransient(company);
+    assertEquals(true, transaction.isDirty());
+    assertEquals(true, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    transaction.setSavepoint();
+    resource.getContents().add(company);
+    assertPersistentCleanState(company, id, transaction);
+    assertEquals(false, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    beforeDetach.rollback();
+    assertPersistentCleanState(company, id, transaction);
+    assertEquals(true, resource.getContents().contains(company));
+    assertEquals("original", company.getName());
+    assertEquals(false, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    company.setName("usable");
+    assertDirty(company, transaction);
+    CDOUserSavepoint usable = transaction.setSavepoint();
+    company.setName("changed again");
+    usable.rollback();
+    assertEquals("usable", company.getName());
+    assertDirty(company, transaction);
+    transaction.rollback();
+    assertEquals("original", company.getName());
+    assertClean(company, transaction);
+  }
+
+  public void testPersistentDetachReattachRollbackWithinOneSegment() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    Company company = getModel1Factory().createCompany();
+    company.setName("original");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    CDOID id = CDOUtil.getCDOObject(company).cdoID();
+    assertPersistentCleanState(company, id, transaction);
+
+    resource.getContents().remove(company);
+    assertTransient(company);
+    assertEquals(true, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    resource.getContents().add(company);
+    assertPersistentCleanState(company, id, transaction);
+    assertEquals(false, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    transaction.rollback();
+    assertPersistentCleanState(company, id, transaction);
+    assertEquals(true, resource.getContents().contains(company));
+    assertEquals("original", company.getName());
+    company.setName("usable");
+    assertDirty(company, transaction);
+    transaction.rollback();
+    assertEquals("original", company.getName());
+    assertPersistentCleanState(company, id, transaction);
+  }
+
+  public void testPersistentChangedReattachRollbackRestoresOriginalRevision() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    Company company = getModel1Factory().createCompany();
+    company.setName("original");
+    resource.getContents().add(company);
+    transaction.commit();
+
+    CDOUserSavepoint beforeDetach = transaction.setSavepoint();
+    CDOID id = CDOUtil.getCDOObject(company).cdoID();
+    resource.getContents().remove(company);
+    company.setName("changed while detached");
+    resource.getContents().add(company);
+
+    beforeDetach.rollback();
+    assertEquals(id, CDOUtil.getCDOObject(company).cdoID());
+    assertEquals("original", company.getName());
+    assertEquals(true, resource.getContents().contains(company));
+    assertClean(company, transaction);
+  }
+
+  public void testNewObjectDetachReattachRollbackAcrossSavepoints() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    CDOID id = CDOUtil.getCDOObject(company).cdoID();
+    assertNewState(company, id, transaction);
+    assertEquals(true, transaction.getNewObjects().containsKey(id));
+    assertEquals(false, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    CDOUserSavepoint beforeDetach = transaction.setSavepoint();
+    resource.getContents().remove(company);
+    assertTransient(company);
+    assertEquals(false, transaction.getNewObjects().containsKey(id));
+    assertEquals(false, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    transaction.setSavepoint();
+    resource.getContents().add(company);
+    assertNewState(company, id, transaction);
+    assertEquals(true, transaction.getNewObjects().containsKey(id));
+    assertEquals(false, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    beforeDetach.rollback();
+    assertNewState(company, id, transaction);
+    assertEquals(true, resource.getContents().contains(company));
+    assertEquals(true, transaction.getNewObjects().containsKey(id));
+    assertEquals(false, transaction.getDetachedObjects().containsKey(id));
+    assertEquals(false, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(false, transaction.getRevisionDeltas().containsKey(id));
+
+    company.setName("usable");
+    assertNewState(company, id, transaction);
+    CDOUserSavepoint usable = transaction.setSavepoint();
+    company.setName("changed again");
+    usable.rollback();
+    assertEquals("usable", company.getName());
+    assertNewState(company, id, transaction);
+  }
+
+  public void testReattachDoesNotClearGlobalDirtyStateFromOlderSegment() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    Company companyA = getModel1Factory().createCompany();
+    Company companyB = getModel1Factory().createCompany();
+    resource.getContents().add(companyA);
+    resource.getContents().add(companyB);
+    transaction.commit();
+
+    companyA.setName("changed");
+    transaction.setSavepoint();
+    CDOID idB = CDOUtil.getCDOObject(companyB).cdoID();
+    resource.getContents().remove(companyB);
+    resource.getContents().add(companyB);
+
+    CDOSavepoint lastSavepoint = transaction.getLastSavepoint();
+    assertEquals(true, lastSavepoint.getReattachedObjects().containsKey(idB));
+    // The remove/add pair changes the resource's containment list. Reattach processing removes the no-op delta for B,
+    // but it cannot remove the resource delta, so this public sequence does not reach the empty-current-delta branch.
+    assertEquals(false, lastSavepoint.getRevisionDeltas2().isEmpty());
+    assertEquals(true, transaction.isDirty());
+    assertEquals(true, transaction.getDirtyObjects().containsKey(CDOUtil.getCDOObject(companyA).cdoID()));
+    assertEquals(false, transaction.getDetachedObjects().containsKey(idB));
+
+    transaction.setSavepoint().rollback();
+    assertEquals(true, transaction.isDirty());
+    assertEquals("changed", companyA.getName());
+
+    transaction.rollback();
+    assertEquals(false, transaction.isDirty());
+  }
+
+  public void testRetainedSavepointAllNewObjectsDoesNotIncludeLaterSegments() throws Exception
+  {
+    RetainedSavepointScenario scenario = createRetainedSavepointScenario();
+    assertEquals(false, scenario.first.getAllNewObjects().containsKey(scenario.idC));
+  }
+
+  public void testRetainedSavepointAllRevisionDeltasDoNotIncludeLaterSegments() throws Exception
+  {
+    RetainedSavepointScenario scenario = createRetainedSavepointScenario();
+    assertEquals(true, scenario.first.getAllRevisionDeltas().containsKey(scenario.idA));
+    assertEquals(false, scenario.first.getAllRevisionDeltas().containsKey(scenario.idB));
+  }
+
+  public void testRetainedSavepointAllDetachedObjectsDoNotIncludeLaterSegments() throws Exception
+  {
+    RetainedSavepointScenario scenario = createRetainedSavepointScenario();
+    assertEquals(false, scenario.first.getAllDetachedObjects().containsKey(scenario.idA));
+  }
+
+  public void testRetainedSavepointAllDirtyObjectsDoNotIncludeLaterSegments() throws Exception
+  {
+    RetainedSavepointScenario scenario = createRetainedSavepointScenario();
+    assertEquals(true, scenario.first.getAllDirtyObjects().containsKey(scenario.idA));
+    assertEquals(false, scenario.first.getAllDirtyObjects().containsKey(scenario.idB));
+  }
+
+  public void testRetainedSavepointAllBaseNewObjectsDoNotIncludeLaterSegments() throws Exception
+  {
+    RetainedSavepointScenario scenario = createRetainedSavepointScenario();
+    assertEquals(false, scenario.first.getAllBaseNewObjects().containsKey(scenario.idC));
+  }
+
+  public void testRetainedSavepointAllChangeSetDataDoesNotIncludeLaterSegments() throws Exception
+  {
+    RetainedSavepointScenario scenario = createRetainedSavepointScenario();
+    CDOChangeSetData data = scenario.first.getAllChangeSetData();
+    assertEquals(false, data.getNewObjects().stream().anyMatch(value -> value.getID() == scenario.idC));
+    assertEquals(true, data.getChangedObjects().stream().anyMatch(value -> value.getID() == scenario.idA));
+    assertEquals(false, data.getChangedObjects().stream().anyMatch(value -> value.getID() == scenario.idB));
+    assertEquals(false, data.getDetachedObjects().stream().anyMatch(value -> value.getID() == scenario.idA));
+  }
+
+  private RetainedSavepointScenario createRetainedSavepointScenario() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    Company companyA = getModel1Factory().createCompany();
+    Company companyB = getModel1Factory().createCompany();
+    resource.getContents().add(companyA);
+    resource.getContents().add(companyB);
+    transaction.commit();
+
+    transaction.setSavepoint();
+    companyA.setName("first");
+    CDOSavepoint first = transaction.setSavepoint();
+    CDOID idA = CDOUtil.getCDOObject(companyA).cdoID();
+    CDOID idB = CDOUtil.getCDOObject(companyB).cdoID();
+
+    Company companyC = getModel1Factory().createCompany();
+    resource.getContents().add(companyC);
+    CDOID idC = CDOUtil.getCDOObject(companyC).cdoID();
+    companyB.setName("later");
+    resource.getContents().remove(companyA);
+    transaction.setSavepoint();
+    return new RetainedSavepointScenario(first, idA, idB, idC);
+  }
+
+  private static void assertPersistentCleanState(Company company, CDOID id, CDOTransaction transaction)
+  {
+    assertClean(company, transaction);
+    assertEquals(id, CDOUtil.getCDOObject(company).cdoID());
+    assertEquals(false, id.isTemporary());
+    assertEquals(transaction, CDOUtil.getCDOObject(company).cdoView());
+    assertNotNull(CDOUtil.getCDOObject(company).cdoRevision());
+  }
+
+  private static void assertNewState(Company company, CDOID id, CDOTransaction transaction)
+  {
+    assertNew(company, transaction);
+    assertEquals(id, CDOUtil.getCDOObject(company).cdoID());
+    assertEquals(true, id.isTemporary());
+    assertEquals(transaction, CDOUtil.getCDOObject(company).cdoView());
+    assertNotNull(CDOUtil.getCDOObject(company).cdoRevision());
+    assertEquals(0, CDOUtil.getCDOObject(company).cdoRevision().getVersion());
+  }
+
+  private static final class RetainedSavepointScenario
+  {
+    private final CDOSavepoint first;
+
+    private final CDOID idA;
+
+    private final CDOID idB;
+
+    private final CDOID idC;
+
+    private RetainedSavepointScenario(CDOSavepoint first, CDOID idA, CDOID idB, CDOID idC)
+    {
+      this.first = first;
+      this.idA = idA;
+      this.idB = idB;
+      this.idC = idC;
+    }
   }
 
   private void flow1(boolean commitBegin, boolean commitEnd) throws Exception

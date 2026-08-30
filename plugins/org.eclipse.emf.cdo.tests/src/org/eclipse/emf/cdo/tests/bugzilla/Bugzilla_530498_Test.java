@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+
 /**
  * Bug 530498: Null revision after transaction rollback on transaction with re-attached objects.
  *
@@ -31,6 +33,7 @@ public class Bugzilla_530498_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
+    InternalCDOTransaction internalTransaction = (InternalCDOTransaction)transaction;
 
     // Initialize model.
     Company company1 = getModel1Factory().createCompany();
@@ -58,7 +61,7 @@ public class Bugzilla_530498_Test extends AbstractCDOTest
     assertFalse(transaction.getDirtyObjects().containsKey(company2ID));
 
     assertTrue(transaction.getDetachedObjects().containsKey(customerID));
-    assertTrue(transaction.getLastSavepoint().getAllDetachedObjects().containsKey(customerID));
+    assertTrue(internalTransaction.getLastSavepoint().getAllDetachedObjectsIncludingCurrent().containsKey(customerID));
     assertTrue(transaction.getLastSavepoint().getDetachedObjects().containsKey(customerID));
     assertFalse(transaction.getLastSavepoint().getReattachedObjects().containsKey(customerID));
 
@@ -70,7 +73,7 @@ public class Bugzilla_530498_Test extends AbstractCDOTest
     assertTrue(transaction.getDirtyObjects().containsKey(company2ID));
 
     assertFalse(transaction.getDetachedObjects().containsKey(customerID));
-    assertFalse(transaction.getLastSavepoint().getAllDetachedObjects().containsKey(customerID));
+    assertFalse(internalTransaction.getLastSavepoint().getAllDetachedObjectsIncludingCurrent().containsKey(customerID));
     assertTrue(transaction.getLastSavepoint().getDetachedObjects().containsKey(customerID));
     assertTrue(transaction.getLastSavepoint().getReattachedObjects().containsKey(customerID));
 
@@ -85,7 +88,7 @@ public class Bugzilla_530498_Test extends AbstractCDOTest
     assertFalse(transaction.getDirtyObjects().containsKey(company2ID));
 
     assertFalse(transaction.getDetachedObjects().containsKey(customerID));
-    assertFalse(transaction.getLastSavepoint().getAllDetachedObjects().containsKey(customerID));
+    assertFalse(internalTransaction.getLastSavepoint().getAllDetachedObjectsIncludingCurrent().containsKey(customerID));
     assertEquals(isConfig(LEGACY), transaction.getLastSavepoint().getDetachedObjects().containsKey(customerID));
     assertEquals(isConfig(LEGACY), transaction.getLastSavepoint().getReattachedObjects().containsKey(customerID));
 

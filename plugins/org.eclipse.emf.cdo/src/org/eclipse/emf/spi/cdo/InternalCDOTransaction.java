@@ -119,6 +119,22 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void detachObject(InternalCDOObject object);
 
   /**
+   * Returns the ID from the most recent lifecycle before-image reachable through the
+   * active savepoint chain, or <code>null</code> if no such transition was captured.
+   *
+   * @since 4.30
+   */
+  public CDOID getLifecycleBeforeImageID(InternalCDOObject object);
+
+  /**
+   * Returns a copy of the revision from the most recent lifecycle before-image reachable through
+   * the active savepoint chain, or <code>null</code> if no revision was captured.
+   *
+   * @since 4.30
+   */
+  public InternalCDORevision getLifecycleBeforeImageRevision(InternalCDOObject object);
+
+  /**
    * @deprecated {@link #createIDForNewObject(EObject)} is called since 4.1.
    */
   @Deprecated

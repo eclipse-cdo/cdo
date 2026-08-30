@@ -97,37 +97,51 @@ public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas2();
 
   /**
+   * Returns the aggregate of base revisions at this savepoint's fixed boundary.
+   * Changes recorded in the mutable segment that follows this savepoint are not included.
+   *
    * @since 3.0
    */
   public Map<CDOID, CDORevision> getAllBaseNewObjects();
 
   /**
-   * Return the list of new objects from this point without objects that are removed.
+   * Returns the aggregate of new objects at this savepoint's fixed boundary, excluding objects
+   * that were removed before that boundary. Changes recorded in the mutable segment that follows
+   * this savepoint are not included.
    *
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getAllNewObjects();
 
   /**
+   * Returns the aggregate of detached objects at this savepoint's fixed boundary.
+   * Changes recorded in the mutable segment that follows this savepoint are not included.
+   *
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getAllDetachedObjects();
 
   /**
-   * Return the list of new objects from this point.
+   * Returns the aggregate of dirty objects at this savepoint's fixed boundary.
+   * Changes recorded in the mutable segment that follows this savepoint are not included.
    *
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getAllDirtyObjects();
 
   /**
-   * Return the list of all deltas without objects that are removed.
+   * Returns the aggregate of revision deltas at this savepoint's fixed boundary, excluding
+   * objects that were removed before that boundary. Changes recorded in the mutable segment that
+   * follows this savepoint are not included.
    *
    * @since 3.0
    */
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas();
 
   /**
+   * Returns the change-set data at this savepoint's fixed boundary.
+   * Changes recorded in the mutable segment that follows this savepoint are not included.
+   *
    * @since 4.0
    */
   public CDOChangeSetData getAllChangeSetData();

@@ -228,9 +228,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
   private void attachOrReattach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
     // Bug 283985 (Re-attachment):
-    // If the object going through a prepareTransition is present in cleanRevisions,
-    // then it was detached earlier, and so we can infer that it is being re-attached
-    if (transaction.getCleanRevisions().containsKey(object))
+    // If the object going through a prepareTransition is present in cleanRevisions or has a lifecycle before-image,
+    // then it was detached earlier, and so we can infer that it is being re-attached.
+    if (transaction.getCleanRevisions().containsKey(object) || transaction.getLifecycleBeforeImageID(object) != null)
     {
       reattachObject(object, transaction);
     }
@@ -676,9 +676,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDOTransaction transaction = transactionAndContents.getElement1();
       List<InternalCDOObject> contents = transactionAndContents.getElement2();
 
-      // If the object going through a prepareTransition is present in cleanRevisions,
-      // then it was detached earlier, and so we can infer that it is being re-attached
-      boolean reattaching = transaction.getCleanRevisions().containsKey(object);
+      // If the object going through a prepareTransition is present in cleanRevisions or has a lifecycle before-image,
+      // then it was detached earlier, and so we can infer that it is being re-attached.
+      boolean persistentReattaching = transaction.getCleanRevisions().containsKey(object);
+      CDOID beforeImageID = transaction.getLifecycleBeforeImageID(object);
+      boolean reattaching = persistentReattaching || beforeImageID != null;
 
       if (!reattaching)
       {
@@ -702,8 +704,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         // Register object
         transaction.registerObject(object);
       }
+      else if (!persistentReattaching)
+      {
+        object.cdoInternalSetView(transaction);
+        object.cdoInternalSetID(beforeImageID);
+        object.cdoInternalSetRevision(transaction.getLifecycleBeforeImageRevision(object));
+        transaction.registerObject(object);
+      }
 
-      transaction.registerAttached(object, !reattaching);
+      transaction.registerAttached(object, !reattaching || !persistentReattaching);
 
       // Prepare content tree
       for (Iterator<InternalEObject> it = getPersistentContents(object); it.hasNext();)
@@ -799,7 +808,16 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     @Override
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
-      internalReattach(object, transaction);
+      if (transaction.getCleanRevisions().containsKey(object))
+      {
+        internalReattach(object, transaction);
+      }
+      else
+      {
+        object.cdoInternalPostAttach();
+        changeState(object, CDOState.NEW);
+        transaction.getLastSavepoint().getReattachedObjects().put(object.cdoID(), object);
+      }
 
       // Bug 385268
       CDOID reattachedObject = object.cdoID();
@@ -834,7 +852,11 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
       }
 
-      if (revisionDeltas.isEmpty())
+      if (!lastSavepoint.wasDirty() //
+          && revisionDeltas.isEmpty() //
+          && transaction.getDirtyObjects().isEmpty() //
+          && transaction.getNewObjects().isEmpty() //
+          && transaction.getDetachedObjects().isEmpty())
       {
         transaction.setDirty(false);
       }

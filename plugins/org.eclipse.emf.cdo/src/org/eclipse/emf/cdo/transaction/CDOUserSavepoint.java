@@ -38,5 +38,10 @@ public interface CDOUserSavepoint
 
   public boolean isValid();
 
+  /**
+   * @since 4.30
+   */
+  public boolean isLast();
+
   public void rollback();
 }

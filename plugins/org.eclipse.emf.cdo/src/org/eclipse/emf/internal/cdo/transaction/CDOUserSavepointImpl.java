@@ -91,6 +91,13 @@ public abstract class CDOUserSavepointImpl implements InternalCDOUserSavepoint
   }
 
   @Override
+  public boolean isLast()
+  {
+    InternalCDOUserSavepoint lastSavepoint = getTransaction().getLastSavepoint();
+    return lastSavepoint == this;
+  }
+
+  @Override
   public int getNumber()
   {
     int number = 1;

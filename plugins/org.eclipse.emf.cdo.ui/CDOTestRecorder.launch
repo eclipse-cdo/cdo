@@ -61,7 +61,7 @@
     </listAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
-    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
+    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash&#13;&#10;-clean"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-XX:MaxPermSize=512m&#13;&#10;-Xms40m&#13;&#10;-Xmx2g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=true&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.debug=true&#13;&#10;-Dorg.eclipse.emf.cdo.test.recorder.enabled=true&#13;&#10;-Dorg.eclipse.emf.cdo.test.recorder.outputFolder=${resource_loc:/org.eclipse.emf.cdo.tests/src}&#13;&#10;-Dorg.eclipse.emf.cdo.test.recorder.className=org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_${active_mylyn_task}*_Test&#13;&#10;-Dorg.eclipse.emf.cdo.test.recorder.description=&quot;Bug ${active_mylyn_task} - ${active_mylyn_task:Summary}&quot;"/>

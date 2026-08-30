@@ -459,6 +459,13 @@
                 <message_argument value="CDOView"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="CDOCommonView"/>
+                <message_argument value="CDOView"/>
+                <message_argument value="CDOBranchPoint"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/view/CDOView.java" type="org.eclipse.emf.cdo.view.CDOView$Options">
         <filter id="571473929">

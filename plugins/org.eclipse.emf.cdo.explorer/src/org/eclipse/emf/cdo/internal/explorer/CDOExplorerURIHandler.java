@@ -70,7 +70,7 @@ public abstract class CDOExplorerURIHandler<NODE extends CDOResourceNode> extend
   @Override
   public boolean canHandle(URI uri)
   {
-    return !OMIT_CHECKOUT_FILE_URI_HANDLERS;
+    return !OMIT_CHECKOUT_FILE_URI_HANDLERS && scheme.equals(uri.scheme());
   }
 
   @Override

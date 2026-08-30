@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
+import org.eclipse.emf.cdo.common.util.URIHandlerRegistry;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -18,9 +19,12 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.internal.cdo.view.CDOURIHandler;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.URIHandler;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 
 /**
  * Bug 430251 - Memory leak on ResourceSet.
@@ -38,16 +42,63 @@ public class Bugzilla_430251_Test extends AbstractCDOTest
     ResourceSet resourceSet = new ResourceSetImpl();
     EList<URIHandler> uriHandlers = resourceSet.getURIConverter().getURIHandlers();
     assertNull(getCDOURIHandler(uriHandlers));
+
     CDOSession cdoSession = openSession();
     CDOTransaction cdoTransaction = cdoSession.openTransaction(resourceSet);
     assertNotNull(getCDOURIHandler(uriHandlers));
+
     cdoTransaction.close();
     assertNull(getCDOURIHandler(uriHandlers));
+  }
+
+  public void testURIHandlerRegistryInstallation()
+  {
+    ResourceSet resourceSet = new ResourceSetImpl();
+    URIConverter uriConverter = resourceSet.getURIConverter();
+    EList<URIHandler> uriHandlers = uriConverter.getURIHandlers();
+    uriHandlers.clear();
+
+    URIHandler specializedHandler = new URIHandlerImpl()
+    {
+      @Override
+      public boolean canHandle(URI uri)
+      {
+        return false;
+      }
+    };
+
+    URIHandler fallbackHandler = new URIHandlerImpl();
+    uriHandlers.add(specializedHandler);
+    uriHandlers.add(fallbackHandler);
+
+    assertTrue(URIHandlerRegistry.INSTANCE.installTo(uriConverter));
+    assertFalse(URIHandlerRegistry.INSTANCE.installTo(uriConverter));
+    assertSame(specializedHandler, uriHandlers.get(0));
+    assertSame(URIHandlerRegistry.INSTANCE, uriHandlers.get(1));
+    assertSame(fallbackHandler, uriHandlers.get(2));
+
+    assertTrue(URIHandlerRegistry.INSTANCE.uninstallFrom(resourceSet));
+    assertFalse(URIHandlerRegistry.INSTANCE.uninstallFrom(resourceSet));
+    assertSame(specializedHandler, uriHandlers.get(0));
+    assertSame(fallbackHandler, uriHandlers.get(1));
+
+    uriHandlers.clear();
+    URIHandler fallbackSubclass = new URIHandlerImpl()
+    {
+    };
+
+    uriHandlers.add(fallbackSubclass);
+
+    assertTrue(URIHandlerRegistry.INSTANCE.installTo(uriConverter));
+    assertSame(fallbackSubclass, uriHandlers.get(0));
+    assertSame(URIHandlerRegistry.INSTANCE, uriHandlers.get(1));
+    assertTrue(URIHandlerRegistry.INSTANCE.uninstallFrom(uriConverter));
   }
 
   private Object getCDOURIHandler(EList<URIHandler> uriHandlers)
   {
     CDOURIHandler cdoURIHandler = null;
+
     for (URIHandler uriHandler : uriHandlers)
     {
       if (uriHandler instanceof CDOURIHandler)
@@ -56,6 +107,7 @@ public class Bugzilla_430251_Test extends AbstractCDOTest
         break;
       }
     }
+
     return cdoURIHandler;
   }
 }

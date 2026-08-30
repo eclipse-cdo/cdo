@@ -22,7 +22,10 @@ import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.URIHandler;
+import org.eclipse.emf.ecore.resource.impl.URIHandlerImpl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -120,6 +123,63 @@ public final class URIHandlerRegistryImpl implements URIHandlerRegistry, URIHand
   {
     initialize();
     return handlers.get(scheme);
+  }
+
+  @Override
+  public boolean installTo(URIConverter uriConverter)
+  {
+    synchronized (uriConverter)
+    {
+      for (URIHandler handler : uriConverter.getURIHandlers())
+      {
+        if (handler == this)
+        {
+          return false;
+        }
+      }
+
+      int size = uriConverter.getURIHandlers().size();
+      if (size != 0 && uriConverter.getURIHandlers().get(size - 1).getClass() == URIHandlerImpl.class)
+      {
+        uriConverter.getURIHandlers().add(size - 1, this);
+      }
+      else
+      {
+        uriConverter.getURIHandlers().add(this);
+      }
+
+      return true;
+    }
+  }
+
+  @Override
+  public boolean installTo(ResourceSet resourceSet)
+  {
+    return installTo(resourceSet.getURIConverter());
+  }
+
+  @Override
+  public boolean uninstallFrom(URIConverter uriConverter)
+  {
+    synchronized (uriConverter)
+    {
+      for (int i = 0; i < uriConverter.getURIHandlers().size(); i++)
+      {
+        if (uriConverter.getURIHandlers().get(i) == this)
+        {
+          uriConverter.getURIHandlers().remove(i);
+          return true;
+        }
+      }
+
+      return false;
+    }
+  }
+
+  @Override
+  public boolean uninstallFrom(ResourceSet resourceSet)
+  {
+    return uninstallFrom(resourceSet.getURIConverter());
   }
 
   private URIHandler getHandler(URI uri)

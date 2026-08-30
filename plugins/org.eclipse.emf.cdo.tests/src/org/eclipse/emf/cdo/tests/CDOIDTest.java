@@ -140,7 +140,7 @@ public class CDOIDTest extends AbstractCDOTest
     CDOSession sessionB = openSession();
     CDOTransaction transactionB = sessionB.openTransaction(newBranch);
     CDOResource resourceB = transactionB.getResource(getResourcePath("/test1"));
-    Company companyB = (Company)resourceB.getContents().get(0);
+    Company companyB = (Company)CDOUtil.getEObject(resourceB.getContents().get(0));
     assertEquals(idToForce, CDOUtil.getCDOObject(companyB).cdoID());
   }
 
@@ -189,7 +189,7 @@ public class CDOIDTest extends AbstractCDOTest
 
     CDOTransaction transactionB = sessionB.openTransaction(newBranch);
     CDOResource resourceB = transactionB.getResource(getResourcePath("/test1"));
-    Company companyB = (Company)resourceB.getContents().get(0);
+    Company companyB = (Company)CDOUtil.getEObject(resourceB.getContents().get(0));
     Category categoryB = companyB.getCategories().get(0);
 
     CDOID companyID = CDOUtil.getCDOObject(companyB).cdoID();

@@ -30,15 +30,18 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.db.IBatchingContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.ListLobRefsUpdater;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -46,6 +49,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.Batch;
+import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -59,12 +63,14 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -85,7 +91,7 @@ import java.util.List;
  * @author Lothar Werzinger
  */
 public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping
-    implements ISchemaPreparable, IListMappingDeltaSupport, IListMapping4, IBranchDeletionSupport, ListLobRefsUpdater
+    implements ISchemaPreparable, IListMappingDeltaSupport, IListMappingBatchingSupport, IListMapping4, IBranchDeletionSupport, ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
 
@@ -736,6 +742,116 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
+  @Override
+  public void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions, boolean firstRevision, boolean raw, OMMonitor monitor)
+  {
+    if (!firstRevision && raw)
+    {
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.rawSynchronousFallback"); //$NON-NLS-1$
+      monitor.begin(revisions.length);
+
+      try
+      {
+        // Raw branch imports compare against the base revision and must retain the existing synchronous path.
+        for (InternalCDORevision revision : revisions)
+        {
+          writeValues(accessor, revision, firstRevision, raw);
+          monitor.worked();
+        }
+      }
+      finally
+      {
+        monitor.done();
+      }
+
+      return;
+    }
+
+    if (revisions.length == 0)
+    {
+      return;
+    }
+
+    if (table == null)
+    {
+      initTable(accessor);
+    }
+
+    IBatchingContext batchingContext = accessor.getBatchingContext();
+    BatchedStatement stmt = batchingContext.createStatement(sqlInsertEntry, ReuseProbability.HIGH, "BranchingList.insert"); //$NON-NLS-1$
+    boolean discarded = false;
+    int count = 0;
+
+    monitor.begin(revisions.length);
+
+    try
+    {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      for (InternalCDORevision revision : revisions)
+      {
+        CDOList values = revision.getListOrNull(getFeature());
+        if (values != null)
+        {
+          int index = 0;
+          for (Object value : values)
+          {
+            setEntryValues(idHandler, stmt, revision.getID(), revision.getBranch().getID(), revision.getVersion(), index++, value, null);
+            stmt.executeUpdate();
+            count++;
+          }
+        }
+
+        monitor.worked();
+      }
+
+      batchingContext.flushPhase();
+      validateExactlyOne(stmt, count);
+      batchingContext.recordDiagnosticCounter("BranchingList.insertRows", count); //$NON-NLS-1$
+    }
+    catch (SQLException ex)
+    {
+      batchingContext.discardStatement(stmt);
+      discarded = true;
+      throw new DBException(ex);
+    }
+    catch (IllegalStateException ex)
+    {
+      batchingContext.discardStatement(stmt);
+      discarded = true;
+      throw new DBException(ex);
+    }
+    finally
+    {
+      if (!discarded)
+      {
+        batchingContext.releaseStatement(stmt);
+      }
+
+      monitor.done();
+    }
+  }
+
+  @Override
+  public void processDeltas(IDBStoreAccessor accessor, ListDeltaWork[] work, OMMonitor monitor)
+  {
+    // A delta can expose a base value only after the preceding logical operation has been applied. Keep this
+    // position-sensitive path synchronous; full-revision inserts above remain commit-wide batched.
+    accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.deltaSynchronousFallback", work.length); //$NON-NLS-1$
+    monitor.begin(work.length);
+    try
+    {
+      for (ListDeltaWork item : work)
+      {
+        processDelta(accessor, item.getID(), item.getBranchId(), item.getOldVersion(), item.getNewVersion(), item.getCreated(), item.getDelta());
+        monitor.worked();
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
   protected final void writeValue(IDBStoreAccessor accessor, CDORevision revision, int index, Object value)
   {
     if (TRACER.isEnabled())
@@ -910,13 +1026,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
     try
     {
-      int column = 1;
-      idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, branchID);
-      stmt.setInt(column++, version); // versionAdded
-      stmt.setNull(column++, DBType.INTEGER.getCode()); // versionRemoved
-      stmt.setInt(column++, index);
-      typeMapping.setValue(stmt, column++, value);
+      setEntryValues(idHandler, stmt, id, branchID, version, index, value, null);
 
       DBUtil.update(stmt, true);
     }
@@ -931,6 +1041,37 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     finally
     {
       DBUtil.close(stmt);
+    }
+  }
+
+  private void setEntryValues(IIDHandler idHandler, PreparedStatement stmt, CDOID id, int branchID, int versionAdded, int index, Object value,
+      Integer versionRemoved) throws SQLException
+  {
+    int column = 1;
+    idHandler.setCDOID(stmt, column++, id);
+    stmt.setInt(column++, branchID);
+    stmt.setInt(column++, versionAdded);
+
+    if (versionRemoved == null)
+    {
+      stmt.setNull(column++, DBType.INTEGER.getCode());
+    }
+    else
+    {
+      stmt.setInt(column++, versionRemoved);
+    }
+
+    stmt.setInt(column++, index);
+    typeMapping.setValue(stmt, column, value);
+  }
+
+  private void validateExactlyOne(BatchedStatement stmt, int expectedCount)
+  {
+    int knownResult = stmt.getTotalResult();
+    int unknownResultCount = stmt.getUnknownResultCount();
+    if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+    {
+      throw new DBException("Unexpected branching list insert result"); //$NON-NLS-1$
     }
   }
 

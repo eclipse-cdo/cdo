@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
+import org.eclipse.emf.cdo.server.db.IBatchingContext;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
@@ -48,6 +49,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.Batch;
+import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
@@ -63,6 +65,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -489,6 +492,135 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     finally
     {
       DBUtil.close(stmt);
+    }
+  }
+
+  @Override
+  public void writeRevisions(IDBStoreAccessor accessor, InternalCDORevision[] revisions, boolean firstRevision, boolean revise, OMMonitor monitor)
+  {
+    boolean allFirstRevisions = firstRevision;
+
+    for (InternalCDORevision revision : revisions)
+    {
+      allFirstRevisions &= revision.getVersion() == CDORevision.FIRST_VERSION;
+    }
+
+    if (!allFirstRevisions)
+    {
+      monitor.begin(revisions.length);
+
+      try
+      {
+        // Branching revision setup has per-revision first-version and history semantics. Preserve the established
+        // synchronous ordering for revisions that are not all initial versions.
+        for (InternalCDORevision revision : revisions)
+        {
+          writeRevision(accessor, revision, firstRevision, revise, monitor.fork());
+        }
+      }
+      finally
+      {
+        monitor.done();
+      }
+
+      return;
+    }
+
+    super.writeRevisions(accessor, revisions, firstRevision, revise, monitor);
+  }
+
+  @Override
+  protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision[] revisions)
+  {
+    if (revisions.length == 0)
+    {
+      return;
+    }
+
+    IBatchingContext batchingContext = accessor.getBatchingContext();
+    BatchedStatement stmt = batchingContext.createStatement(sqlInsertAttributes, ReuseProbability.HIGH, "BranchingClass.attribute"); //$NON-NLS-1$
+    boolean discarded = false;
+
+    try
+    {
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+
+      for (InternalCDORevision revision : revisions)
+      {
+        setInsertValues(idHandler, stmt, revision);
+        stmt.executeUpdate();
+      }
+
+      batchingContext.flushPhase();
+      validateExactlyOne(stmt, revisions.length);
+      batchingContext.recordDiagnosticCounter("BranchingClass.attributeRows", revisions.length); //$NON-NLS-1$
+    }
+    catch (SQLException ex)
+    {
+      batchingContext.discardStatement(stmt);
+      discarded = true;
+      throw new DBException(ex);
+    }
+    finally
+    {
+      if (!discarded)
+      {
+        batchingContext.releaseStatement(stmt);
+      }
+    }
+  }
+
+  private void setInsertValues(IIDHandler idHandler, PreparedStatement stmt, InternalCDORevision revision) throws SQLException
+  {
+    int column = 1;
+    idHandler.setCDOID(stmt, column++, revision.getID());
+    stmt.setInt(column++, revision.getVersion());
+    stmt.setInt(column++, revision.getBranch().getID());
+    stmt.setLong(column++, revision.getTimeStamp());
+    stmt.setLong(column++, revision.getRevised());
+    idHandler.setCDOID(stmt, column++, revision.getResourceID());
+    idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
+    stmt.setInt(column++, revision.getContainerFeatureID());
+
+    int isSetCol = column + getValueMappings().size();
+
+    for (ITypeMapping mapping : getValueMappings())
+    {
+      EStructuralFeature feature = mapping.getFeature();
+      if (feature.isUnsettable())
+      {
+        if (revision.getValue(feature) == null)
+        {
+          stmt.setBoolean(isSetCol++, false);
+          mapping.setDefaultValue(stmt, column++);
+          continue;
+        }
+
+        stmt.setBoolean(isSetCol++, true);
+      }
+
+      mapping.setValueFromRevision(stmt, column++, revision);
+    }
+
+    Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
+    if (listSizeFields != null)
+    {
+      column = isSetCol;
+      for (EStructuralFeature feature : listSizeFields.keySet())
+      {
+        CDOList list = revision.getListOrNull(feature);
+        stmt.setInt(column++, list == null ? UNSET_LIST : list.size());
+      }
+    }
+  }
+
+  private void validateExactlyOne(BatchedStatement stmt, int expectedCount)
+  {
+    int knownResult = stmt.getTotalResult();
+    int unknownResultCount = stmt.getUnknownResultCount();
+    if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+    {
+      throw new DBException("Unexpected branching attribute insert result"); //$NON-NLS-1$
     }
   }
 

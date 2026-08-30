@@ -419,8 +419,8 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
     CDOID customerID = leftAdd(getModel1Package().getCustomer());
     assertIDs(rightMerge(), customerID);
 
-    Customer leftCustomer = (Customer)leftTransaction.getObject(customerID);
-    Customer rightCustomer = (Customer)rightTransaction.getObject(customerID);
+    Customer leftCustomer = (Customer)CDOUtil.getEObject(leftTransaction.getObject(customerID));
+    Customer rightCustomer = (Customer)CDOUtil.getEObject(rightTransaction.getObject(customerID));
 
     leftCustomer.setName("target-name");
     leftCommit();

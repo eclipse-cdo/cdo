@@ -18,20 +18,27 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
-import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import java.util.Map;
 
 /**
  * Focused integration tests for batched ObjectType inserts.
  *
  * @author Eike Stepper
  */
-@Skips(IRepositoryConfig.CAPABILITY_BRANCHING)
 public class ObjectTypeBatchingTest extends AbstractCDOTest
 {
+  @Override
+  protected void initTestProperties(Map<String, Object> properties)
+  {
+    super.initTestProperties(properties);
+    properties.put(DBConfig.PROP_TEST_OBJECT_TYPE_BATCH_SIZE, 4);
+  }
+
   public void testManyNewObjectsRemainTypeReadable() throws Exception
   {
     final int objectCount = 64;
@@ -121,6 +128,45 @@ public class ObjectTypeBatchingTest extends AbstractCDOTest
       assertEquals(2, persisted.getContents().size());
       assertTrue(persisted.getContents().get(0) instanceof Category);
       assertTrue(persisted.getContents().get(1) instanceof Category);
+    }
+    finally
+    {
+      view.close();
+      session.close();
+    }
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testBranchingBulkObjectTypesSurviveReopen() throws Exception
+  {
+    int objectCount = 16;
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction(session.getBranchManager().getMainBranch());
+    CDOResource resource = transaction.createResource(getResourcePath("/branching-object-types")); //$NON-NLS-1$
+
+    for (int i = 0; i < objectCount; i++)
+    {
+      Category category = getModel1Factory().createCategory();
+      category.setName("BranchingCategory-" + i); //$NON-NLS-1$
+      resource.getContents().add(category);
+    }
+
+    transaction.commit();
+    transaction.close();
+    session.close();
+
+    session = openSession();
+    CDOView view = session.openView(session.getBranchManager().getMainBranch());
+    try
+    {
+      CDOResource persisted = view.getResource(getResourcePath("/branching-object-types")); //$NON-NLS-1$
+      assertEquals(objectCount, persisted.getContents().size());
+
+      for (int i = 0; i < objectCount; i++)
+      {
+        Category category = (Category)CDOUtil.getEObject(persisted.getContents().get(i));
+        assertEquals("BranchingCategory-" + i, category.getName()); //$NON-NLS-1$
+      }
     }
     finally
     {

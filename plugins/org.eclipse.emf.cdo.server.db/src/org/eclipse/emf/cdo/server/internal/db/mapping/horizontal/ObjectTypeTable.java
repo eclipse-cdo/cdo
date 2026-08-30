@@ -204,19 +204,42 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   }
 
   /**
-   * Inserts the object types of a homogeneous new-revision group.
+   * Inserts the object types of a homogeneous bulk group of new revisions.
    * <p>
-   * Each bounded chunk is first classified with one portable {@code IN} query. Known IDs retain the existing
-   * synchronous insertion path. IDs that are absent at query time are inserted through one batch protected by a
-   * savepoint. A concurrent insert or any other batch failure rolls the complete chunk back and replays all of its
-   * candidate entries through {@link #putObjectType(IDBStoreAccessor, long, CDOID, EClass)}.
+   * The normal class-mapping caller is expected to invoke this method only
+   * when it has more than one revision for the same class and all revisions
+   * represent first-version/new-object writes. That caller-side condition is
+   * what makes the operation a bulk class-setup operation. It is valid for
+   * Normal, Audit, and Branching mapping strategies; the method itself does
+   * not depend on branch information.
+   * <p>
+   * For a supported batch configuration, each bounded chunk is first
+   * classified with one portable {@code IN} query. Known IDs retain the
+   * existing synchronous insertion path. IDs absent at query time are
+   * inserted through one batch protected by a savepoint. A concurrent insert
+   * or any other batch failure rolls the complete chunk back and replays all
+   * candidate entries through
+   * {@link #putObjectType(IDBStoreAccessor, long, CDOID, EClass)}. This
+   * internal prequery/savepoint/replay logic preserves duplicate and race
+   * semantics, including permanent IDs that already have an ObjectType row.
+   * <p>
+   * The method intentionally remains safe when called outside the preferred
+   * bulk conditions. A single revision, a non-positive configured batch size,
+   * or a database connection that does not support savepoints uses the
+   * synchronous {@code putObjectType()} path for every revision. Raw or other
+   * special write paths do not call this method, and callers that need the
+   * exact single-row semantics can continue to call
+   * {@link #putObjectType(IDBStoreAccessor, long, CDOID, EClass)} directly.
+   * <p>
+   * Thus, the caller enforces the grouping, first-version, and normal
+   * class-mapping conditions; this method enforces the revision-count,
+   * batch-size, and savepoint guards and handles duplicate/race fallback
+   * internally.
    *
-   * @param accessor
-   *          the store accessor that owns the current transaction
-   * @param revisions
-   *          the homogeneous new-revision group
-   * @param type
-   *          the EClass shared by the revisions
+   * @param accessor the store accessor that owns the current transaction
+   * @param revisions the homogeneous new-revision group supplied by the
+   *          class-mapping bulk path
+   * @param type the EClass shared by the revisions
    */
   public final void putObjectTypes(IDBStoreAccessor accessor, InternalCDORevision[] revisions, EClass type)
   {

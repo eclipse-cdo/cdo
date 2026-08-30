@@ -844,7 +844,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       OMMonitor classMonitor = monitor.fork();
       try
       {
-        boolean objectTypesWritten = firstRevision && !mappingStrategy.hasBranchingSupport() && revisions.length > 1;
+        boolean objectTypesWritten = firstRevision && revisions.length > 1;
         if (objectTypesWritten)
         {
           mappingStrategy.objects().putObjectTypes(accessor, revisions, eClass);
@@ -927,7 +927,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     {
       if (!objectTypesWritten)
       {
-        // Single revisions and Branching retain the established duplicate-key/savepoint path.
+        // Single revisions and non-bulk paths retain the established duplicate-key/savepoint path.
         mappingStrategy.putObjectType(accessor, timeStamp, id, eClass);
       }
     }

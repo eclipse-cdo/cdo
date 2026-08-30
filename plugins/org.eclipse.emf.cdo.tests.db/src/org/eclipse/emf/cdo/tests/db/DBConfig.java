@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
@@ -47,6 +48,12 @@ public abstract class DBConfig extends RepositoryConfig
   public static final String PROP_TEST_MAPPING_STRATEGY = "test.repository.MappingStrategy";
 
   public static final String PROP_TEST_MODEL_EVOLUTION_SUPPORT = "test.repository.ModelEvolutionSupport";
+
+  /**
+   * Test-only override for the maximum number of ObjectType rows in one bulk
+   * prequery and insert batch.
+   */
+  public static final String PROP_TEST_OBJECT_TYPE_BATCH_SIZE = "test.repository.ObjectTypeBatchSize";
 
   private static final long serialVersionUID = 1L;
 
@@ -210,6 +217,13 @@ public abstract class DBConfig extends RepositoryConfig
   protected Map<String, String> createStoreProperties(String repoName)
   {
     Map<String, String> props = new HashMap<>();
+
+    Object objectTypeBatchSize = getTestProperty(PROP_TEST_OBJECT_TYPE_BATCH_SIZE);
+    if (objectTypeBatchSize != null)
+    {
+      props.put(IDBStore.Props.OBJECT_TYPE_BATCH_SIZE, objectTypeBatchSize.toString());
+    }
+
     // props.put(IDBStore.Props.ID_COLUMN_LENGTH, "66");
     return props;
   }

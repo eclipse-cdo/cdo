@@ -165,6 +165,16 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
     public static final String OBJECT_TYPE_BATCH_SIZE = "objectTypeBatchSize"; //$NON-NLS-1$
 
     /**
+     * ObjectType duplicate handling mode: {@code SAFE} or {@code FAIL}. SAFE is the default and preserves duplicate
+     * detection and replay. FAIL skips those safeguards and requires all committed IDs to be fresh. FAIL is suitable
+     * only when the operator guarantees that commits cannot introduce already-persistent IDs; use SAFE for merge,
+     * import, backup, clone, and other external-permanent-ID scenarios.
+     *
+     * @since 4.15
+     */
+    public static final String OBJECT_TYPE_DUPLICATE_POLICY = "objectTypeDuplicatePolicy"; //$NON-NLS-1$
+
+    /**
      * Maximum number of pending parameter sets across the current DB commit write.
      *
      * @since 4.15

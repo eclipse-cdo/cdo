@@ -22,6 +22,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.emf.ecore.EClass;
 
 import java.sql.Connection;
+import java.util.Set;
 
 /**
  * A {@link IStoreAccessor store accessor} for CDO's proprietary object/relational mapper.
@@ -41,6 +42,13 @@ public interface IDBStoreAccessor extends IStoreAccessor.Raw2, UnitSupport
   public IDBConnection getDBConnection();
 
   public Connection getConnection();
+
+  /**
+   * Returns IDs allocated by the authoritative store during the current commit.
+   *
+   * @since 4.15
+   */
+  public Set<CDOID> getStoreAllocatedIDs();
 
   /**
    * @since 4.15

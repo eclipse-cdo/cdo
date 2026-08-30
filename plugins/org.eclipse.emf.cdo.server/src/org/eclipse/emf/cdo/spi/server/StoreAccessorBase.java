@@ -249,6 +249,7 @@ public abstract class StoreAccessorBase extends Lifecycle implements NewIDSuppor
           }
 
           commitContext.addIDMapping(oldID, newID);
+          commitContext.addStoreAllocatedID(newID);
         }
 
         monitor.worked();

@@ -55,6 +55,8 @@ public abstract class DBConfig extends RepositoryConfig
    */
   public static final String PROP_TEST_OBJECT_TYPE_BATCH_SIZE = "test.repository.ObjectTypeBatchSize";
 
+  public static final String PROP_TEST_OBJECT_TYPE_DUPLICATE_POLICY = "test.repository.ObjectTypeDuplicatePolicy";
+
   private static final long serialVersionUID = 1L;
 
   private boolean withRanges;
@@ -222,6 +224,12 @@ public abstract class DBConfig extends RepositoryConfig
     if (objectTypeBatchSize != null)
     {
       props.put(IDBStore.Props.OBJECT_TYPE_BATCH_SIZE, objectTypeBatchSize.toString());
+    }
+
+    Object objectTypeDuplicatePolicy = getTestProperty(PROP_TEST_OBJECT_TYPE_DUPLICATE_POLICY);
+    if (objectTypeDuplicatePolicy != null)
+    {
+      props.put(IDBStore.Props.OBJECT_TYPE_DUPLICATE_POLICY, objectTypeDuplicatePolicy.toString());
     }
 
     // props.put(IDBStore.Props.ID_COLUMN_LENGTH, "66");

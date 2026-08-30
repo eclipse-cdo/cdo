@@ -36,7 +36,13 @@ public class ObjectTypeBatchingTest extends AbstractCDOTest
   protected void initTestProperties(Map<String, Object> properties)
   {
     super.initTestProperties(properties);
-    properties.put(DBConfig.PROP_TEST_OBJECT_TYPE_BATCH_SIZE, 4);
+
+    properties.put(DBConfig.PROP_TEST_OBJECT_TYPE_BATCH_SIZE, getName().contains("BatchSizeOne") ? 1 : 4); //$NON-NLS-1$
+
+    if (getName().contains("FailMode")) //$NON-NLS-1$
+    {
+      properties.put(DBConfig.PROP_TEST_OBJECT_TYPE_DUPLICATE_POLICY, "FAIL"); //$NON-NLS-1$
+    }
   }
 
   public void testManyNewObjectsRemainTypeReadable() throws Exception
@@ -134,6 +140,16 @@ public class ObjectTypeBatchingTest extends AbstractCDOTest
       view.close();
       session.close();
     }
+  }
+
+  public void testFailModeDirectBatching() throws Exception
+  {
+    testManyNewObjectsRemainTypeReadable();
+  }
+
+  public void testObjectTypeBatchSizeOneUsesSynchronousPath() throws Exception
+  {
+    testManyNewObjectsRemainTypeReadable();
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)

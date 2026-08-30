@@ -194,6 +194,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private Map<CDOID, CDOID> idMappings = CDOIDUtil.createMap();
 
+  private Set<CDOID> storeAllocatedIDs = new HashSet<>();
+
   private CDOReferenceAdjuster idMapper = new CDOIDMapper(idMappings);
 
   private byte rollbackReason = CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN;
@@ -539,6 +541,18 @@ public class TransactionCommitContext implements InternalCommitContext
     {
       throw new IllegalStateException("previousMapping != null && previousMapping != newID"); //$NON-NLS-1$
     }
+  }
+
+  @Override
+  public void addStoreAllocatedID(CDOID id)
+  {
+    storeAllocatedIDs.add(id);
+  }
+
+  @Override
+  public Set<CDOID> getStoreAllocatedIDs()
+  {
+    return Collections.unmodifiableSet(storeAllocatedIDs);
   }
 
   @Override
@@ -1088,7 +1102,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
   protected CDOCommitData createCommitData()
   {
-    List<CDOPackageUnit> newPackageUnitsCollection = new IndexedList.ArrayBacked<CDOPackageUnit>()
+    List<CDOPackageUnit> newPackageUnitsCollection = new IndexedList.ArrayBacked<>()
     {
       @Override
       protected CDOPackageUnit[] getArray()
@@ -1097,7 +1111,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     };
 
-    List<CDOIDAndVersion> newObjectsCollection = new IndexedList.ArrayBacked<CDOIDAndVersion>()
+    List<CDOIDAndVersion> newObjectsCollection = new IndexedList.ArrayBacked<>()
     {
       @Override
       protected CDOIDAndVersion[] getArray()
@@ -1106,7 +1120,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     };
 
-    List<CDORevisionKey> changedObjectsCollection = new IndexedList.ArrayBacked<CDORevisionKey>()
+    List<CDORevisionKey> changedObjectsCollection = new IndexedList.ArrayBacked<>()
     {
       @Override
       protected CDORevisionKey[] getArray()
@@ -1115,7 +1129,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     };
 
-    List<CDOIDAndVersion> detachedObjectsCollection = new IndexedList<CDOIDAndVersion>()
+    List<CDOIDAndVersion> detachedObjectsCollection = new IndexedList<>()
     {
       @Override
       public CDOIDAndVersion get(int i)

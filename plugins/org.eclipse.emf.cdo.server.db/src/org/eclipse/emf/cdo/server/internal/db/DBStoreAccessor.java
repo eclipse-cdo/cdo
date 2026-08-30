@@ -107,6 +107,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -126,6 +127,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   private ConnectionKeepAliveTask connectionKeepAliveTask;
 
   private CDOID maxID = CDOID.NULL;
+
+  private Set<CDOID> storeAllocatedIDs = Collections.emptySet();
 
   private InternalObjectAttacher objectAttacher;
 
@@ -403,9 +406,16 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   }
 
   @Override
+  public Set<CDOID> getStoreAllocatedIDs()
+  {
+    return storeAllocatedIDs;
+  }
+
+  @Override
   protected void applyIDMappings(InternalCommitContext context, OMMonitor monitor)
   {
     super.applyIDMappings(context, monitor);
+    storeAllocatedIDs = context.getStoreAllocatedIDs();
 
     DBStore store = getStore();
     IIDHandler idHandler = store.getIDHandler();
@@ -795,7 +805,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void doUnpassivate() throws Exception
   {
-    // do nothing
+    // Store-allocated ID provenance is valid only for the commit in which the
+    // IDs were allocated.  Accessors are pooled and may otherwise be reused
+    // by a later commit or by a caller that explicitly writes ObjectTypes.
+    storeAllocatedIDs = Collections.emptySet();
   }
 
   private static int getIntProperty(Map<String, String> properties, String key, int defaultValue)

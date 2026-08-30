@@ -188,6 +188,21 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
 
   public void addIDMapping(CDOID oldID, CDOID newID);
 
+  /**
+   * Records that a permanent ID was allocated by the authoritative store for this commit.
+   *
+   * @param id the freshly allocated permanent ID
+   * @since 4.26
+   */
+  public void addStoreAllocatedID(CDOID id);
+
+  /**
+   * Returns the permanent IDs allocated by the authoritative store for this commit.
+   *
+   * @since 4.26
+   */
+  public Set<CDOID> getStoreAllocatedIDs();
+
   public void applyIDMappings(OMMonitor monitor);
 
   /**

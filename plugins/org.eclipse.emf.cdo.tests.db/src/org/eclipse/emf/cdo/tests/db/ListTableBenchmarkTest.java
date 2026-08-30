@@ -45,6 +45,8 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
 
   private static final int CHANGES_PER_LIST = Integer.getInteger("cdo.listTableBenchmark.changesPerList", 100);
 
+  private static final int APPENDS_PER_LIST = Integer.getInteger("cdo.listTableBenchmark.appendsPerList", 10);
+
   private static final int WARMUP_CHANGES_PER_LIST = Integer.getInteger("cdo.listTableBenchmark.warmupChangesPerList",
       Math.min(CHANGES_PER_LIST, 10));
 
@@ -108,6 +110,30 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
     }
   }
 
+  public void testManyListAppends() throws Exception
+  {
+    if (APPENDS_PER_LIST < 1)
+    {
+      fail("cdo.listTableBenchmark.appendsPerList must be at least 1");
+    }
+
+    applyListAppends(APPENDS_PER_LIST);
+
+    long appendCount = (long)LIST_COUNT * APPENDS_PER_LIST;
+    log("Created list appends:");
+    log("  Lists:            " + LIST_COUNT);
+    log("  Initial size/list: " + LIST_SIZE);
+    log("  Appends/list:     " + APPENDS_PER_LIST);
+    log("  Total appends:    " + appendCount);
+
+    double commitSeconds = measure("  Commit took:      ", () -> transaction.commit());
+    if (commitSeconds > 0.0)
+    {
+      log("");
+      log("Appends/second:     " + Math.round(appendCount / commitSeconds));
+    }
+  }
+
   private void applyListChanges(int changesPerList)
   {
     for (Category category : root.getCategories())
@@ -127,6 +153,21 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
         }
 
         products.move(toIndex, fromIndex);
+      }
+    }
+  }
+
+  private void applyListAppends(int appendsPerList)
+  {
+    for (Category category : root.getCategories())
+    {
+      EList<Product1> products = category.getProducts();
+
+      for (int append = 0; append < appendsPerList; append++)
+      {
+        Product1 product = getModel1Factory().createProduct1();
+        product.setName("Append-" + category.getName() + "-" + append);
+        products.add(product);
       }
     }
   }

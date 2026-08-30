@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -582,6 +583,165 @@ public class BranchingTest extends AbstractCDOTest
     check(session, subBranch, CDOBranchPoint.UNSPECIFIED_DATE, 10, "CDO");
 
     session.close();
+  }
+
+  public void testAppendOnlyBranchingListDelta() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    CDOResource resource = transaction.createResource(getResourcePath("/append"));
+    Company company = getModel1Factory().createCompany();
+    Category category = getModel1Factory().createCategory();
+    category.getProducts().add(getModel1Factory().createProduct1());
+    company.getCategories().add(category);
+    resource.getContents().add(company);
+    long baseTime = transaction.commit().getTimeStamp();
+
+    CDOBranch branch = mainBranch.createBranch(getBranchName("append"), baseTime);
+    transaction.close();
+    transaction = session.openTransaction(branch);
+    resource = transaction.getResource(getResourcePath("/append"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    category = (Category)CDOUtil.getEObject(company.getCategories().get(0));
+    category.getProducts().add(getModel1Factory().createProduct1());
+    category.getProducts().add(getModel1Factory().createProduct1());
+    transaction.commit();
+    transaction.close();
+    closeSession1();
+
+    session = openSession2();
+    CDOView view = session.openView(branch);
+    resource = view.getResource(getResourcePath("/append"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    category = (Category)CDOUtil.getEObject(company.getCategories().get(0));
+    assertEquals(3, category.getProducts().size());
+    view.close();
+    session.close();
+  }
+
+  public void testNonAppendBranchingListDeltaKeepsSnapshotFallback() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    CDOResource resource = transaction.createResource(getResourcePath("/fallback"));
+    Company company = getModel1Factory().createCompany();
+    Category category = getModel1Factory().createCategory();
+    category.getProducts().add(getModel1Factory().createProduct1());
+    category.getProducts().add(getModel1Factory().createProduct1());
+    company.getCategories().add(category);
+    resource.getContents().add(company);
+    long baseTime = transaction.commit().getTimeStamp();
+
+    CDOBranch branch = mainBranch.createBranch(getBranchName("fallback"), baseTime);
+    transaction.close();
+    transaction = session.openTransaction(branch);
+    resource = transaction.getResource(getResourcePath("/fallback"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    category = (Category)CDOUtil.getEObject(company.getCategories().get(0));
+    category.getProducts().add(0, getModel1Factory().createProduct1());
+    category.getProducts().set(1, getModel1Factory().createProduct1());
+    transaction.commit();
+    assertEquals(3, category.getProducts().size());
+    transaction.close();
+    session.close();
+  }
+
+  public void testSparseSetAndTailRewriteBranchingListDelta() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    CDOResource resource = transaction.createResource(getResourcePath("/sparse"));
+    Company company = getModel1Factory().createCompany();
+    Category category = getModel1Factory().createCategory();
+    category.getProducts().add(product("base-0"));
+    category.getProducts().add(product("base-1"));
+    category.getProducts().add(product("base-2"));
+    company.getCategories().add(category);
+    resource.getContents().add(company);
+    long baseTime = transaction.commit().getTimeStamp();
+
+    CDOBranch branch = mainBranch.createBranch(getBranchName("sparse"), baseTime);
+    transaction.close();
+    transaction = session.openTransaction(branch);
+    resource = transaction.getResource(getResourcePath("/sparse"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    category = (Category)CDOUtil.getEObject(company.getCategories().get(0));
+    category.getProducts().set(0, product("set-0"));
+    category.getProducts().set(2, product("set-2"));
+    category.getProducts().add(product("append"));
+    transaction.commit();
+
+    category.getProducts().remove(3);
+    category.getProducts().add(product("replacement"));
+    transaction.commit();
+    transaction.close();
+    session.close();
+
+    session = openSession();
+    CDOView view = session.openView(branch);
+    resource = view.getResource(getResourcePath("/sparse"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    category = (Category)CDOUtil.getEObject(company.getCategories().get(0));
+    assertEquals("set-0", category.getProducts().get(0).getName());
+    assertEquals("base-1", category.getProducts().get(1).getName());
+    assertEquals("set-2", category.getProducts().get(2).getName());
+    assertEquals("replacement", category.getProducts().get(3).getName());
+    view.close();
+
+    view = session.openView(mainBranch, baseTime);
+    resource = view.getResource(getResourcePath("/sparse"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    category = (Category)CDOUtil.getEObject(company.getCategories().get(0));
+    assertEquals("base-0", category.getProducts().get(0).getName());
+    assertEquals("base-2", category.getProducts().get(2).getName());
+    view.close();
+    session.close();
+  }
+
+  public void testClearAndAddBranchingListDelta() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    CDOResource resource = transaction.createResource(getResourcePath("/clear"));
+    Company company = getModel1Factory().createCompany();
+    Category category = getModel1Factory().createCategory();
+    category.getProducts().add(product("base"));
+    company.getCategories().add(category);
+    resource.getContents().add(company);
+    long baseTime = transaction.commit().getTimeStamp();
+
+    CDOBranch branch = mainBranch.createBranch(getBranchName("clear"), baseTime);
+    transaction.close();
+    transaction = session.openTransaction(branch);
+    resource = transaction.getResource(getResourcePath("/clear"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    category = (Category)CDOUtil.getEObject(company.getCategories().get(0));
+    category.getProducts().clear();
+    category.getProducts().add(product("replacement"));
+    transaction.commit();
+    transaction.close();
+    session.close();
+
+    session = openSession();
+    CDOView view = session.openView(branch);
+    resource = view.getResource(getResourcePath("/clear"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    category = (Category)CDOUtil.getEObject(company.getCategories().get(0));
+    assertEquals(1, category.getProducts().size());
+    assertEquals("replacement", category.getProducts().get(0).getName());
+    view.close();
+    session.close();
+  }
+
+  private Product1 product(String name)
+  {
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName(name);
+    return product;
   }
 
   public void testCopyOnBranchPreservesInheritedListHistory() throws Exception

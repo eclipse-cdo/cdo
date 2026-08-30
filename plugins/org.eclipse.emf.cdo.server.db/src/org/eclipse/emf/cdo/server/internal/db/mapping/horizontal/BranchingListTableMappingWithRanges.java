@@ -81,7 +81,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is a list-table mapping for audit mode. It is optimized for frequent insert operations at the list's end, which
@@ -139,6 +141,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   private String sqlGetValue;
 
   private String sqlClearList;
+
+  private String sqlClearSuffix;
 
   public BranchingListTableMappingWithRanges(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -343,6 +347,13 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     builder.append(versionRemovedField);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlClearList = builder.toString();
+
+    // ----------- clear local suffix items -----------------
+    builder = new StringBuilder(sqlClearList);
+    builder.append(" AND "); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append(">=?"); //$NON-NLS-1$
+    sqlClearSuffix = builder.toString();
   }
 
   @Override
@@ -835,11 +846,41 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
+  /**
+   * Plans and persists all list deltas for this mapping as one commit-wide
+   * operation.
+   * <p>
+   * The method deliberately separates logical planning from JDBC execution.
+   * Each {@link ListDeltaWork} identifies one object, branch, and target
+   * version. The values carried by its plan are payload only; they are never
+   * used as element identities, which is essential for lists containing
+   * duplicate-equal values.
+   * <p>
+   * Every work item is first classified while its logical list coordinates
+   * are still available. Append plans are the most specific readless case.
+   * Other deltas are applied to a mutable base-aware logical plan, which may
+   * prove a suffix rewrite or sparse stable-index update safe. Only plans
+   * that cannot prove one of those restricted shapes use the complete
+   * snapshot planner and resolve their original/base payloads.
+   * <p>
+   * The resulting DML is grouped by statement kind across independent list
+   * mappings through {@link BranchingDeltaBatch}. Closing or versioning old
+   * local rows is flushed before new rows are inserted because the new rows
+   * must not be affected by the close phase. The method owns statement
+   * lifecycle and batching barriers, but not the surrounding transaction.
+   *
+   * @param accessor the store accessor used for revision lookup and batched persistence
+   * @param work the list delta work items belonging to the commit
+   * @param monitor the progress monitor for the work items
+   */
   @Override
   public void processDeltas(IDBStoreAccessor accessor, ListDeltaWork[] work, OMMonitor monitor)
   {
     BranchingDeltaBatch batch = new BranchingDeltaBatch(accessor);
     List<BranchingDeltaPlan> plans = new ArrayList<>();
+    List<BranchingAppendPlan> appendPlans = new ArrayList<>();
+    List<BranchingSuffixPlan> suffixPlans = new ArrayList<>();
+    List<BranchingSparseSetPlan> sparseSetPlans = new ArrayList<>();
     boolean complete = false;
 
     monitor.begin(work.length);
@@ -851,43 +892,126 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         List<CDOFeatureDelta> changes = item.getDelta().getListChanges();
         if (!changes.isEmpty())
         {
+          // The transaction revision supplies the original logical size. It is
+          // needed for position-aware classification even when the eventual
+          // fast path does not read any original or inherited payloads.
           InternalCDORevision originalRevision = (InternalCDORevision)accessor.getTransaction().getRevision(item.getID());
           if (originalRevision == null)
           {
             throw new IllegalStateException("Original revision not found for " + item.getID()); //$NON-NLS-1$
           }
 
-          plans.add(new BranchingDeltaPlan(accessor, originalRevision, item));
+          // Append-only is checked first because it is the narrowest and
+          // cheapest plan: existing local and inherited rows remain untouched.
+          BranchingAppendPlan appendPlan = tryCreateAppendPlan(originalRevision, item);
+          if (appendPlan == null)
+          {
+            // The general planner mutates logical positions as it applies the
+            // delta. Its final state can prove that only an explicit suffix
+            // needs rewriting, without incorrectly classifying positions up
+            // front before Adds, Removes, or Moves have taken effect.
+            BranchingDeltaPlan plan = new BranchingDeltaPlan(accessor, originalRevision, item);
+
+            BranchingSuffixPlan suffixPlan = plan.createSuffixRewritePlan();
+            if (suffixPlan != null)
+            {
+              suffixPlans.add(suffixPlan);
+            }
+            else
+            {
+              // A sparse Set plan is restricted to stable original indexes and
+              // optional tail appends. Any structural ambiguity goes to the
+              // authoritative full snapshot fallback.
+              BranchingSparseSetPlan sparseSetPlan = tryCreateSparseSetPlan(originalRevision, item);
+              if (sparseSetPlan == null)
+              {
+                plans.add(plan);
+              }
+              else
+              {
+                sparseSetPlans.add(sparseSetPlan);
+              }
+            }
+          }
+          else
+          {
+            appendPlans.add(appendPlan);
+          }
         }
 
         monitor.worked();
       }
 
+      // Only full snapshot plans need original/base payload resolution. The
+      // readless plans already carry every value that they will insert.
       for (BranchingDeltaPlan plan : plans)
       {
         plan.resolveOriginalValues();
       }
 
-      // Closing an existing local overlay must complete before an explicit snapshot for the new version is added.
-      // Resolve all local/base payloads first: the clear itself deliberately makes local values invisible.
-      // This is the sole DML ordering barrier; equal work from independent lists shares statements on either side.
+      // Close old local overlays and changed sparse/suffix rows together. The
+      // payload resolution above must precede this phase because closing rows
+      // deliberately makes their old values invisible to later lookups.
       for (BranchingDeltaPlan plan : plans)
       {
         batch.clearLocalEntries(plan);
       }
 
+      for (BranchingSuffixPlan suffixPlan : suffixPlans)
+      {
+        batch.clearLocalSuffix(suffixPlan);
+      }
+
+      for (BranchingSparseSetPlan sparseSetPlan : sparseSetPlans)
+      {
+        batch.clearSparseSetEntries(sparseSetPlan);
+      }
+
+      // This is the required ordering barrier: all old rows are closed before
+      // any new-version row is inserted, while independent lists still share
+      // the same homogeneous statements on both sides of the barrier.
       batch.flushClearPhase();
+
+      // Insert all readless and snapshot results only after the close phase.
+      // The common insert statement makes these independent rows eligible for
+      // commit-wide JDBC batching.
+      for (BranchingAppendPlan appendPlan : appendPlans)
+      {
+        batch.addAppends(appendPlan);
+      }
+
+      for (BranchingSparseSetPlan sparseSetPlan : sparseSetPlans)
+      {
+        batch.addSparseSetValues(sparseSetPlan);
+      }
+
+      for (BranchingSuffixPlan suffixPlan : suffixPlans)
+      {
+        batch.addSuffix(suffixPlan);
+      }
 
       for (BranchingDeltaPlan plan : plans)
       {
         batch.addSnapshot(plan);
       }
 
+      // Finish the insert phase and validate that every planned row was
+      // accounted for by exactly one insert path before releasing statements.
       batch.flushPhase();
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.appendFastPath", appendPlans.size()); //$NON-NLS-1$
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.appendRows", batch.getAppendEntryCount()); //$NON-NLS-1$
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.suffixRewriteFastPath", suffixPlans.size()); //$NON-NLS-1$
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.suffixRewriteRows", batch.getSuffixEntryCount()); //$NON-NLS-1$
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.sparseSetFastPath", sparseSetPlans.size()); //$NON-NLS-1$
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.sparseSetRows", batch.getSparseSetEntryCount()); //$NON-NLS-1$
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.readlessPlan", appendPlans.size() + suffixPlans.size() + sparseSetPlans.size()); //$NON-NLS-1$
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.snapshotFallback", plans.size()); //$NON-NLS-1$
       complete = true;
     }
     finally
     {
+      // A complete batch releases reusable statements; an interrupted or
+      // failed batch discards them so no partially bound state can escape.
       if (complete)
       {
         batch.release();
@@ -899,6 +1023,70 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
       monitor.done();
     }
+  }
+
+  private BranchingAppendPlan tryCreateAppendPlan(InternalCDORevision originalRevision, ListDeltaWork work)
+  {
+    int logicalSize = originalRevision.size(getFeature());
+    List<Object> values = new ArrayList<>();
+
+    for (CDOFeatureDelta delta : work.getDelta().getListChanges())
+    {
+      if (!(delta instanceof CDOAddFeatureDelta))
+      {
+        return null;
+      }
+
+      CDOAddFeatureDelta add = (CDOAddFeatureDelta)delta;
+      if (add.getIndex() != logicalSize + values.size())
+      {
+        return null;
+      }
+
+      values.add(add.getValue());
+    }
+
+    return values.isEmpty() ? null : new BranchingAppendPlan(work, logicalSize, values);
+  }
+
+  private BranchingSparseSetPlan tryCreateSparseSetPlan(InternalCDORevision originalRevision, ListDeltaWork work)
+  {
+    int originalSize = originalRevision.size(getFeature());
+    int logicalSize = originalSize;
+
+    Map<Integer, Object> values = new LinkedHashMap<>();
+    List<Object> appends = new ArrayList<>();
+
+    for (CDOFeatureDelta delta : work.getDelta().getListChanges())
+    {
+      if (delta instanceof CDOSetFeatureDelta)
+      {
+        CDOSetFeatureDelta set = (CDOSetFeatureDelta)delta;
+        if (set.getIndex() < 0 || set.getIndex() >= originalSize)
+        {
+          return null;
+        }
+
+        values.put(set.getIndex(), set.getValue());
+      }
+      else if (delta instanceof CDOAddFeatureDelta)
+      {
+        CDOAddFeatureDelta add = (CDOAddFeatureDelta)delta;
+        if (add.getIndex() != logicalSize)
+        {
+          return null;
+        }
+
+        appends.add(add.getValue());
+        ++logicalSize;
+      }
+      else
+      {
+        return null;
+      }
+    }
+
+    return values.isEmpty() ? null : new BranchingSparseSetPlan(work, values, originalSize, appends);
   }
 
   protected final void writeValue(IDBStoreAccessor accessor, CDORevision revision, int index, Object value)
@@ -1358,6 +1546,85 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     return accessor.createChunkReader(baseRevision, getFeature());
   }
 
+  @Override
+  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
+  {
+    if (table == null)
+    {
+      // Nothing to read. Take shortcut.
+      return true;
+    }
+
+    String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
+
+    StringBuilder builder = new StringBuilder();
+    builder.append("SELECT l_t."); //$NON-NLS-1$
+    builder.append(sourceField);
+    builder.append(", l_t."); //$NON-NLS-1$
+    builder.append(valueField);
+    builder.append(", l_t."); //$NON-NLS-1$
+    builder.append(indexField);
+    builder.append(" FROM "); //$NON-NLS-1$
+    builder.append(table);
+    builder.append(" l_t, ");//$NON-NLS-1$
+    builder.append(mainTableName);
+    builder.append(" a_t WHERE ");//$NON-NLS-1$
+    builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
+    builder.append(listJoin);
+    builder.append(" AND "); //$NON-NLS-1$
+    builder.append(valueField);
+    builder.append(" IN "); //$NON-NLS-1$
+    builder.append(idString);
+    String sql = builder.toString();
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Query XRefs (list): {0}", sql);
+    }
+
+    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
+    ResultSet resultSet = null;
+
+    try
+    {
+      resultSet = stmt.executeQuery();
+      while (resultSet.next())
+      {
+        CDOID sourceID = idHandler.getCDOID(resultSet, 1);
+        CDOID targetID = idHandler.getCDOID(resultSet, 2);
+        int idx = resultSet.getInt(3);
+
+        boolean more = context.addXRef(targetID, sourceID, (EReference)getFeature(), idx);
+        if (TRACER.isEnabled())
+        {
+          TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", sourceID, targetID, idx);
+        }
+
+        if (!more)
+        {
+          if (TRACER.isEnabled())
+          {
+            TRACER.format("  result limit reached. Ignoring further results.");
+          }
+
+          return false;
+        }
+      }
+
+      return true;
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+      DBUtil.close(stmt);
+    }
+  }
+
   /**
    * Plans one branching list delta without using values as element identities.
    * <p>
@@ -1445,6 +1712,44 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       }
 
       accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.plannerResolvedOriginal", inheritedOrLocalCount); //$NON-NLS-1$
+    }
+
+    public BranchingSuffixPlan createSuffixRewritePlan()
+    {
+      int suffixStart = 0;
+      int size = logicalListPlan.size();
+
+      while (suffixStart < size)
+      {
+        AuditListTableMappingWithRanges.LogicalListPlan.PlanElement element = logicalListPlan.get(suffixStart);
+        if (!element.isOriginal() || element.hasValue() || element.getOriginalIndex() != suffixStart)
+        {
+          break;
+        }
+
+        ++suffixStart;
+      }
+
+      for (int index = suffixStart; index < size; index++)
+      {
+        if (!logicalListPlan.get(index).hasValue())
+        {
+          return null;
+        }
+      }
+
+      if (suffixStart == size && size == originalRevision.size(getFeature()))
+      {
+        return null;
+      }
+
+      List<Object> values = new ArrayList<>(size - suffixStart);
+      for (int index = suffixStart; index < size; index++)
+      {
+        values.add(logicalListPlan.get(index).getValue());
+      }
+
+      return new BranchingSuffixPlan(work, suffixStart, values);
     }
 
     private List<Object> readOriginalValues()
@@ -1557,7 +1862,214 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   }
 
   /**
-   * Commit-wide statements for normalized branching list snapshots.
+   * A readless plan for a delta consisting exclusively of appends at the
+   * logical end of the list.
+   * <p>
+   * {@code startIndex} is the original logical list size and {@code values}
+   * contains the append payloads in their final order. The plan is therefore
+   * independent of the values already present in the list, including values
+   * inherited from a base revision or represented by older local rows. No
+   * existing row is closed and no original/base row is resolved; only the
+   * new rows are inserted with the work item's branch and version metadata.
+   * <p>
+   * Append eligibility is established while processing the delta: every
+   * change must be an Add whose index equals the current logical end. The
+   * plan stores payloads, not identities, so duplicate-equal appended values
+   * remain distinct by their final indexes.
+   *
+   * @author Eike Stepper
+   */
+  private final class BranchingAppendPlan
+  {
+    private final ListDeltaWork work;
+
+    private final int startIndex;
+
+    private final List<Object> values;
+
+    private BranchingAppendPlan(ListDeltaWork work, int startIndex, List<Object> values)
+    {
+      this.work = work;
+      this.startIndex = startIndex;
+      this.values = values;
+    }
+
+    public CDOID getID()
+    {
+      return work.getID();
+    }
+
+    public int getBranchID()
+    {
+      return work.getBranchId();
+    }
+
+    public int getNewVersion()
+    {
+      return work.getNewVersion();
+    }
+
+    public int getStartIndex()
+    {
+      return startIndex;
+    }
+
+    public List<Object> getValues()
+    {
+      return values;
+    }
+  }
+
+  /**
+   * A readless plan for rewriting only a final suffix of a branching list.
+   * <p>
+   * The preceding range {@code [0, startIndex)} has been proven unchanged
+   * relative to the original logical list and is left untouched. Every value
+   * in the suffix is explicit in the completed logical plan, meaning that no
+   * value from a current local row, an older local row, or the base revision
+   * has to be resolved. Persistence closes active local rows at and after the
+   * start index, then inserts the supplied suffix at its final indexes.
+   * <p>
+   * This plan is derived after all delta operations have mutated logical
+   * coordinates. It consequently covers safe combinations such as tail
+   * removals, tail replacements, and clear/unset followed by explicit adds,
+   * while structural changes that leave an unresolved original element in
+   * the suffix remain on the full snapshot path.
+   *
+   * @author Eike Stepper
+   */
+  private final class BranchingSuffixPlan
+  {
+    private final ListDeltaWork work;
+
+    private final int startIndex;
+
+    private final List<Object> values;
+
+    private BranchingSuffixPlan(ListDeltaWork work, int startIndex, List<Object> values)
+    {
+      this.work = work;
+      this.startIndex = startIndex;
+      this.values = values;
+    }
+
+    public CDOID getID()
+    {
+      return work.getID();
+    }
+
+    public int getBranchID()
+    {
+      return work.getBranchId();
+    }
+
+    public int getNewVersion()
+    {
+      return work.getNewVersion();
+    }
+
+    public int getStartIndex()
+    {
+      return startIndex;
+    }
+
+    public List<Object> getValues()
+    {
+      return values;
+    }
+  }
+
+  /**
+   * A readless plan for value changes at stable original indexes, optionally
+   * followed by appends at the tail.
+   * <p>
+   * The keys of {@code values} are logical indexes from the original list;
+   * they are stable because this plan accepts no operation that moves,
+   * removes, clears, or inserts before an existing element. The map is
+   * therefore an identity/provenance record rather than a value comparison:
+   * equal values at different indexes remain separate changes. At execution
+   * time an active local row at each changed index is closed, and the new
+   * value is inserted. If no local row exists, the old value is inherited and
+   * need not be read before replacement.
+   * <p>
+   * {@code appendStartIndex} and {@code appends} describe the optional
+   * explicit tail additions. They are persisted after the same close barrier
+   * as the sparse replacements. Any delta whose structural effect cannot be
+   * proven to preserve the original indexes is rejected by classification and
+   * handled by the general base-aware snapshot planner.
+   *
+   * @author Eike Stepper
+   */
+  private final class BranchingSparseSetPlan
+  {
+    private final ListDeltaWork work;
+
+    private final Map<Integer, Object> values;
+
+    private final int appendStartIndex;
+
+    private final List<Object> appends;
+
+    private BranchingSparseSetPlan(ListDeltaWork work, Map<Integer, Object> values, int appendStartIndex, List<Object> appends)
+    {
+      this.work = work;
+      this.values = values;
+      this.appendStartIndex = appendStartIndex;
+      this.appends = appends;
+    }
+
+    public CDOID getID()
+    {
+      return work.getID();
+    }
+
+    public int getBranchID()
+    {
+      return work.getBranchId();
+    }
+
+    public int getNewVersion()
+    {
+      return work.getNewVersion();
+    }
+
+    public Map<Integer, Object> getValues()
+    {
+      return values;
+    }
+
+    public int getAppendStartIndex()
+    {
+      return appendStartIndex;
+    }
+
+    public List<Object> getAppends()
+    {
+      return appends;
+    }
+  }
+
+  /**
+   * Owns the commit-wide DML statements used by branching list delta plans.
+   * <p>
+   * The batch accepts four logically different producers: complete snapshots,
+   * append-only plans, explicit suffix rewrites, and sparse stable-index
+   * replacements with optional appends. They share homogeneous SQL statements
+   * across all independent {@link ListDeltaWork} items in the commit; the
+   * plan type is used only to select the rows and counters, never to infer
+   * element identity from payload equality.
+   * </p>
+   * The close/update statements form a first phase. {@link #flushClearPhase()}
+   * is an explicit barrier before the shared insert statement is populated,
+   * because new-version rows must not be closed by the old-row phase. The
+   * final flush checks that the number of inserted rows equals the number
+   * planned by all producers. This class does not commit or roll back the
+   * surrounding transaction.
+   * <p>
+   * {@link #release()} returns successfully completed statements to the
+   * batching context. {@link #discard()} is used after an incomplete operation
+   * and drops all statements so partially bound or partially executed state
+   * cannot be reused.
    *
    * @author Eike Stepper
    */
@@ -1569,7 +2081,17 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
     private BatchedStatement insertStmt;
 
+    private BatchedStatement clearSuffixStmt;
+
+    private BatchedStatement clearSparseSetStmt;
+
     private int snapshotEntryCount;
+
+    private int appendEntryCount;
+
+    private int suffixEntryCount;
+
+    private int sparseSetEntryCount;
 
     private BranchingDeltaBatch(IDBStoreAccessor accessor)
     {
@@ -1621,6 +2143,135 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       }
     }
 
+    public void clearLocalSuffix(BranchingSuffixPlan plan)
+    {
+      try
+      {
+        if (clearSuffixStmt == null)
+        {
+          clearSuffixStmt = accessor.getBatchingContext().createStatement(sqlClearSuffix, ReuseProbability.HIGH, "BranchingList.clearSuffix"); //$NON-NLS-1$
+        }
+
+        int column = 1;
+        clearSuffixStmt.setInt(column++, plan.getNewVersion());
+        getMappingStrategy().getStore().getIDHandler().setCDOID(clearSuffixStmt, column++, plan.getID());
+        clearSuffixStmt.setInt(column++, plan.getBranchID());
+        clearSuffixStmt.setInt(column, plan.getStartIndex());
+        clearSuffixStmt.executeUpdate();
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void clearSparseSetEntries(BranchingSparseSetPlan plan)
+    {
+      try
+      {
+        if (clearSparseSetStmt == null)
+        {
+          clearSparseSetStmt = accessor.getBatchingContext().createStatement(sqlRemoveEntry, ReuseProbability.HIGH, "BranchingList.clearSparseSet"); //$NON-NLS-1$
+        }
+
+        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        for (Integer index : plan.getValues().keySet())
+        {
+          int column = 1;
+          clearSparseSetStmt.setInt(column++, plan.getNewVersion());
+          idHandler.setCDOID(clearSparseSetStmt, column++, plan.getID());
+          clearSparseSetStmt.setInt(column++, plan.getBranchID());
+          clearSparseSetStmt.setInt(column, index);
+          clearSparseSetStmt.executeUpdate();
+        }
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void addAppends(BranchingAppendPlan plan)
+    {
+      try
+      {
+        if (insertStmt == null)
+        {
+          insertStmt = accessor.getBatchingContext().createStatement(sqlInsertEntry, ReuseProbability.HIGH, "BranchingList.deltaInsert"); //$NON-NLS-1$
+        }
+
+        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        int index = plan.getStartIndex();
+        for (Object value : plan.getValues())
+        {
+          setEntryValues(idHandler, insertStmt, plan.getID(), plan.getBranchID(), plan.getNewVersion(), index++, value, null);
+          insertStmt.executeUpdate();
+          appendEntryCount++;
+        }
+      }
+      catch (SQLException | IllegalStateException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void addSuffix(BranchingSuffixPlan plan)
+    {
+      try
+      {
+        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        int index = plan.getStartIndex();
+        for (Object value : plan.getValues())
+        {
+          addEntry(idHandler, plan.getID(), plan.getBranchID(), plan.getNewVersion(), index++, value);
+          ++suffixEntryCount;
+        }
+      }
+      catch (SQLException | IllegalStateException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void addSparseSetValues(BranchingSparseSetPlan plan)
+    {
+      try
+      {
+        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        for (Map.Entry<Integer, Object> entry : plan.getValues().entrySet())
+        {
+          addEntry(idHandler, plan.getID(), plan.getBranchID(), plan.getNewVersion(), entry.getKey(), entry.getValue());
+          ++sparseSetEntryCount;
+        }
+
+        int index = plan.getAppendStartIndex();
+        for (Object value : plan.getAppends())
+        {
+          addEntry(idHandler, plan.getID(), plan.getBranchID(), plan.getNewVersion(), index++, value);
+          ++appendEntryCount;
+        }
+      }
+      catch (SQLException | IllegalStateException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public int getAppendEntryCount()
+    {
+      return appendEntryCount;
+    }
+
+    public int getSuffixEntryCount()
+    {
+      return suffixEntryCount;
+    }
+
+    public int getSparseSetEntryCount()
+    {
+      return sparseSetEntryCount;
+    }
+
     public void flushClearPhase()
     {
       accessor.getBatchingContext().flushPhase();
@@ -1629,19 +2280,23 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     public void flushPhase()
     {
       accessor.getBatchingContext().flushPhase();
-      validateExactlyOne(insertStmt, snapshotEntryCount);
+      validateExactlyOne(insertStmt, snapshotEntryCount + appendEntryCount + suffixEntryCount + sparseSetEntryCount);
       accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.plannerSnapshots", snapshotEntryCount); //$NON-NLS-1$
     }
 
     public void release()
     {
       release(clearStmt);
+      release(clearSuffixStmt);
+      release(clearSparseSetStmt);
       release(insertStmt);
     }
 
     public void discard()
     {
       discard(clearStmt);
+      discard(clearSuffixStmt);
+      discard(clearSparseSetStmt);
       discard(insertStmt);
     }
 
@@ -1660,84 +2315,16 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         accessor.getBatchingContext().discardStatement(stmt);
       }
     }
-  }
 
-  @Override
-  public final boolean queryXRefs(IDBStoreAccessor accessor, String mainTableName, String mainTableWhere, QueryXRefsContext context, String idString)
-  {
-    if (table == null)
+    private void addEntry(IIDHandler idHandler, CDOID id, int branchID, int newVersion, int index, Object value) throws SQLException
     {
-      // Nothing to read. Take shortcut.
-      return true;
-    }
-
-    String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
-
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(valueField);
-    builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" l_t, ");//$NON-NLS-1$
-    builder.append(mainTableName);
-    builder.append(" a_t WHERE ");//$NON-NLS-1$
-    builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
-    builder.append(listJoin);
-    builder.append(" AND "); //$NON-NLS-1$
-    builder.append(valueField);
-    builder.append(" IN "); //$NON-NLS-1$
-    builder.append(idString);
-    String sql = builder.toString();
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Query XRefs (list): {0}", sql);
-    }
-
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
-    ResultSet resultSet = null;
-
-    try
-    {
-      resultSet = stmt.executeQuery();
-      while (resultSet.next())
+      if (insertStmt == null)
       {
-        CDOID sourceID = idHandler.getCDOID(resultSet, 1);
-        CDOID targetID = idHandler.getCDOID(resultSet, 2);
-        int idx = resultSet.getInt(3);
-
-        boolean more = context.addXRef(targetID, sourceID, (EReference)getFeature(), idx);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("  add XRef to context: src={0}, tgt={1}, idx={2}", sourceID, targetID, idx);
-        }
-
-        if (!more)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("  result limit reached. Ignoring further results.");
-          }
-
-          return false;
-        }
+        insertStmt = accessor.getBatchingContext().createStatement(sqlInsertEntry, ReuseProbability.HIGH, "BranchingList.deltaInsert"); //$NON-NLS-1$
       }
 
-      return true;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
+      setEntryValues(idHandler, insertStmt, id, branchID, newVersion, index, value, null);
+      insertStmt.executeUpdate();
     }
   }
 

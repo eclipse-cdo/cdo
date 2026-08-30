@@ -38,8 +38,10 @@ import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IListMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -68,7 +70,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -1150,6 +1154,81 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
   }
 
+  @Override
+  protected void writeRevisionDeltasSingle(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
+  {
+    List<IListMapping> mappings = getListMappings();
+    List<FeatureDeltaWriter> writers = new ArrayList<>();
+    monitor.begin(1 + mappings.size());
+    try
+    {
+      OMMonitor revisionMonitor = monitor.fork();
+      revisionMonitor.begin(deltas.length);
+      try
+      {
+        for (InternalCDORevisionDelta delta : deltas)
+        {
+          FeatureDeltaWriter writer = new FeatureDeltaWriter();
+          writer.deferListDeltas = true;
+          writer.process(accessor, delta, created);
+          writers.add(writer);
+          revisionMonitor.worked();
+        }
+      }
+      finally
+      {
+        revisionMonitor.done();
+      }
+
+      for (IListMapping mapping : mappings)
+      {
+        List<ListDeltaWork> work = new ArrayList<>();
+        for (FeatureDeltaWriter writer : writers)
+        {
+          for (ListDeltaWork item : writer.listDeltaWork)
+          {
+            if (item.getDelta().getFeature() == mapping.getFeature())
+            {
+              work.add(item);
+            }
+          }
+        }
+
+        OMMonitor listMonitor = monitor.fork();
+        if (work.isEmpty())
+        {
+          listMonitor.worked();
+        }
+        else if (mapping instanceof IListMappingBatchingSupport)
+        {
+          ((IListMappingBatchingSupport)mapping).processDeltas(accessor, work.toArray(new ListDeltaWork[work.size()]), listMonitor);
+        }
+        else
+        {
+          listMonitor.begin(work.size());
+          try
+          {
+            IListMappingDeltaSupport deltaSupport = (IListMappingDeltaSupport)mapping;
+            for (ListDeltaWork item : work)
+            {
+              deltaSupport.processDelta(accessor, item.getID(), item.getBranchId(), item.getOldVersion(), item.getNewVersion(), item.getCreated(),
+                  item.getDelta());
+              listMonitor.worked();
+            }
+          }
+          finally
+          {
+            listMonitor.done();
+          }
+        }
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
   private void doCopyOnBranch(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     monitor.begin(2);
@@ -1190,6 +1269,10 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     private int newVersion;
 
     private InternalCDORevision newRevision;
+
+    private boolean deferListDeltas;
+
+    private final List<ListDeltaWork> listDeltaWork = new ArrayList<>();
 
     @Override
     protected void doProcess(InternalCDORevisionDelta delta)
@@ -1236,8 +1319,15 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       delta.applyTo(newRevision);
 
-      IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
-      listMapping.processDelta(accessor, id, targetBranch.getID(), oldVersion, newVersion, created, delta);
+      if (deferListDeltas)
+      {
+        listDeltaWork.add(new ListDeltaWork(id, targetBranch.getID(), oldVersion, newVersion, created, delta));
+      }
+      else
+      {
+        IListMappingDeltaSupport listMapping = (IListMappingDeltaSupport)getListMapping(delta.getFeature());
+        listMapping.processDelta(accessor, id, targetBranch.getID(), oldVersion, newVersion, created, delta);
+      }
     }
 
     @Override

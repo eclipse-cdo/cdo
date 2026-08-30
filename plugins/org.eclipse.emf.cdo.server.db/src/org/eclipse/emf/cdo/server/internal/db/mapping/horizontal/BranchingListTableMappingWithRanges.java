@@ -21,9 +21,13 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IStoreChunkReader;
@@ -834,20 +838,65 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   @Override
   public void processDeltas(IDBStoreAccessor accessor, ListDeltaWork[] work, OMMonitor monitor)
   {
-    // A delta can expose a base value only after the preceding logical operation has been applied. Keep this
-    // position-sensitive path synchronous; full-revision inserts above remain commit-wide batched.
-    accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.deltaSynchronousFallback", work.length); //$NON-NLS-1$
+    BranchingDeltaBatch batch = new BranchingDeltaBatch(accessor);
+    List<BranchingDeltaPlan> plans = new ArrayList<>();
+    boolean complete = false;
+
     monitor.begin(work.length);
+
     try
     {
       for (ListDeltaWork item : work)
       {
-        processDelta(accessor, item.getID(), item.getBranchId(), item.getOldVersion(), item.getNewVersion(), item.getCreated(), item.getDelta());
+        List<CDOFeatureDelta> changes = item.getDelta().getListChanges();
+        if (!changes.isEmpty())
+        {
+          InternalCDORevision originalRevision = (InternalCDORevision)accessor.getTransaction().getRevision(item.getID());
+          if (originalRevision == null)
+          {
+            throw new IllegalStateException("Original revision not found for " + item.getID()); //$NON-NLS-1$
+          }
+
+          plans.add(new BranchingDeltaPlan(accessor, originalRevision, item));
+        }
+
         monitor.worked();
       }
+
+      for (BranchingDeltaPlan plan : plans)
+      {
+        plan.resolveOriginalValues();
+      }
+
+      // Closing an existing local overlay must complete before an explicit snapshot for the new version is added.
+      // Resolve all local/base payloads first: the clear itself deliberately makes local values invisible.
+      // This is the sole DML ordering barrier; equal work from independent lists shares statements on either side.
+      for (BranchingDeltaPlan plan : plans)
+      {
+        batch.clearLocalEntries(plan);
+      }
+
+      batch.flushClearPhase();
+
+      for (BranchingDeltaPlan plan : plans)
+      {
+        batch.addSnapshot(plan);
+      }
+
+      batch.flushPhase();
+      complete = true;
     }
     finally
     {
+      if (complete)
+      {
+        batch.release();
+      }
+      else
+      {
+        batch.discard();
+      }
+
       monitor.done();
     }
   }
@@ -1297,6 +1346,310 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     InternalCDORevision baseRevision = revisionManager.getRevision(id, base, 0, CDORevision.DEPTH_NONE, true);
 
     return accessor.createChunkReader(baseRevision, getFeature());
+  }
+
+  /**
+   * Plans one branching list delta without using values as element identities.
+   * <p>
+   * Original elements retain their original logical position identity through all add, remove, set, and move
+   * operations. Added elements use a plan-local identity. Values are deliberately resolved only after the complete
+   * mutable logical plan is known. The existing range reader then resolves local rows in one query and inherited
+   * gaps through grouped base chunks.
+   *
+   * @author Eike Stepper
+   */
+  private final class BranchingDeltaPlan
+  {
+    private final IDBStoreAccessor accessor;
+
+    private final InternalCDORevision originalRevision;
+
+    private final ListDeltaWork work;
+
+    private final AuditListTableMappingWithRanges.LogicalListPlan logicalListPlan;
+
+    private List<Object> values;
+
+    private BranchingDeltaPlan(IDBStoreAccessor accessor, InternalCDORevision originalRevision, ListDeltaWork work)
+    {
+      this.accessor = accessor;
+      this.originalRevision = originalRevision;
+      this.work = work;
+      logicalListPlan = new AuditListTableMappingWithRanges.LogicalListPlan(originalRevision.size(getFeature()));
+
+      for (CDOFeatureDelta delta : work.getDelta().getListChanges())
+      {
+        apply(delta);
+      }
+    }
+
+    public CDOID getID()
+    {
+      return work.getID();
+    }
+
+    public int getBranchID()
+    {
+      return work.getBranchId();
+    }
+
+    public int getNewVersion()
+    {
+      return work.getNewVersion();
+    }
+
+    public int getOldVersion()
+    {
+      return work.getOldVersion();
+    }
+
+    public int size()
+    {
+      return logicalListPlan.size();
+    }
+
+    public Object getValue(int index)
+    {
+      return values.get(index);
+    }
+
+    public void resolveOriginalValues()
+    {
+      List<Object> originalValues = readOriginalValues();
+
+      values = new ArrayList<>(logicalListPlan.size());
+      long inheritedOrLocalCount = 0;
+
+      for (int index = 0; index < logicalListPlan.size(); index++)
+      {
+        AuditListTableMappingWithRanges.LogicalListPlan.PlanElement element = logicalListPlan.get(index);
+        if (element.hasValue())
+        {
+          values.add(element.getValue());
+        }
+        else
+        {
+          values.add(originalValues.get(element.getOriginalIndex()));
+          inheritedOrLocalCount++;
+        }
+      }
+
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.plannerResolvedOriginal", inheritedOrLocalCount); //$NON-NLS-1$
+    }
+
+    private List<Object> readOriginalValues()
+    {
+      int size = originalRevision.size(getFeature());
+      List<Object> originalValues = new ArrayList<>(Collections.nCopies(size, null));
+      List<Pair<Integer, Integer>> missingRanges = new ArrayList<>();
+
+      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectChunksPrefix + sqlOrderByIndex, ReuseProbability.HIGH);
+      ResultSet resultSet = null;
+
+      try
+      {
+        idHandler.setCDOID(stmt, 1, getID());
+        stmt.setInt(2, getBranchID());
+        stmt.setInt(3, getOldVersion());
+        stmt.setInt(4, getOldVersion());
+        resultSet = stmt.executeQuery();
+
+        int nextIndex = 0;
+
+        while (resultSet.next())
+        {
+          int index = resultSet.getInt(1);
+          if (index >= size)
+          {
+            break;
+          }
+
+          if (nextIndex < index)
+          {
+            missingRanges.add(Pair.create(nextIndex, index));
+          }
+
+          originalValues.set(index, typeMapping.readValue(resultSet));
+          nextIndex = index + 1;
+        }
+
+        if (nextIndex < size)
+        {
+          missingRanges.add(Pair.create(nextIndex, size));
+        }
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+        DBUtil.close(stmt);
+      }
+
+      if (!missingRanges.isEmpty())
+      {
+        IStoreChunkReader baseReader = createBaseChunkReader(accessor, getID(), getBranchID());
+
+        for (Pair<Integer, Integer> range : missingRanges)
+        {
+          baseReader.addRangedChunk(range.getElement1(), range.getElement2());
+        }
+
+        for (Chunk chunk : baseReader.executeRead())
+        {
+          int startIndex = chunk.getStartIndex();
+
+          for (int i = 0; i < chunk.size(); i++)
+          {
+            originalValues.set(startIndex + i, chunk.get(i));
+          }
+        }
+
+        accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.plannerBaseRanges", missingRanges.size()); //$NON-NLS-1$
+      }
+
+      return originalValues;
+    }
+
+    private void apply(CDOFeatureDelta delta)
+    {
+      if (delta instanceof CDOAddFeatureDelta)
+      {
+        CDOAddFeatureDelta add = (CDOAddFeatureDelta)delta;
+        logicalListPlan.add(add.getIndex(), add.getValue());
+      }
+      else if (delta instanceof CDORemoveFeatureDelta)
+      {
+        logicalListPlan.remove(((CDORemoveFeatureDelta)delta).getIndex());
+      }
+      else if (delta instanceof CDOSetFeatureDelta)
+      {
+        CDOSetFeatureDelta set = (CDOSetFeatureDelta)delta;
+        logicalListPlan.set(set.getIndex(), set.getValue());
+      }
+      else if (delta instanceof CDOMoveFeatureDelta)
+      {
+        CDOMoveFeatureDelta move = (CDOMoveFeatureDelta)delta;
+        logicalListPlan.move(move.getOldPosition(), move.getNewPosition());
+      }
+      else if (delta instanceof CDOClearFeatureDelta || delta instanceof CDOUnsetFeatureDelta)
+      {
+        logicalListPlan.clear();
+      }
+      else
+      {
+        throw new IllegalArgumentException("Unsupported list delta: " + delta); //$NON-NLS-1$
+      }
+    }
+  }
+
+  /**
+   * Commit-wide statements for normalized branching list snapshots.
+   * 
+   * @author Eike Stepper
+   */
+  private final class BranchingDeltaBatch
+  {
+    private final IDBStoreAccessor accessor;
+
+    private BatchedStatement clearStmt;
+
+    private BatchedStatement insertStmt;
+
+    private int snapshotEntryCount;
+
+    private BranchingDeltaBatch(IDBStoreAccessor accessor)
+    {
+      this.accessor = accessor;
+    }
+
+    public void clearLocalEntries(BranchingDeltaPlan plan)
+    {
+      try
+      {
+        if (clearStmt == null)
+        {
+          clearStmt = accessor.getBatchingContext().createStatement(sqlClearList, ReuseProbability.HIGH, "BranchingList.clear"); //$NON-NLS-1$
+        }
+
+        int column = 1;
+        clearStmt.setInt(column++, plan.getNewVersion());
+        getMappingStrategy().getStore().getIDHandler().setCDOID(clearStmt, column++, plan.getID());
+        clearStmt.setInt(column, plan.getBranchID());
+        clearStmt.executeUpdate();
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void addSnapshot(BranchingDeltaPlan plan)
+    {
+      try
+      {
+        if (insertStmt == null)
+        {
+          insertStmt = accessor.getBatchingContext().createStatement(sqlInsertEntry, ReuseProbability.HIGH, "BranchingList.deltaInsert"); //$NON-NLS-1$
+        }
+
+        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+
+        for (int index = 0; index < plan.size(); index++)
+        {
+          setEntryValues(idHandler, insertStmt, plan.getID(), plan.getBranchID(), plan.getNewVersion(), index, plan.getValue(index), null);
+          insertStmt.executeUpdate();
+          snapshotEntryCount++;
+        }
+      }
+      catch (SQLException | IllegalStateException ex)
+      {
+        throw new DBException(ex);
+      }
+    }
+
+    public void flushClearPhase()
+    {
+      accessor.getBatchingContext().flushPhase();
+    }
+
+    public void flushPhase()
+    {
+      accessor.getBatchingContext().flushPhase();
+      validateExactlyOne(insertStmt, snapshotEntryCount);
+      accessor.getBatchingContext().recordDiagnosticCounter("BranchingList.plannerSnapshots", snapshotEntryCount); //$NON-NLS-1$
+    }
+
+    public void release()
+    {
+      release(clearStmt);
+      release(insertStmt);
+    }
+
+    public void discard()
+    {
+      discard(clearStmt);
+      discard(insertStmt);
+    }
+
+    private void release(BatchedStatement stmt)
+    {
+      if (stmt != null)
+      {
+        accessor.getBatchingContext().releaseStatement(stmt);
+      }
+    }
+
+    private void discard(BatchedStatement stmt)
+    {
+      if (stmt != null)
+      {
+        accessor.getBatchingContext().discardStatement(stmt);
+      }
+    }
   }
 
   @Override

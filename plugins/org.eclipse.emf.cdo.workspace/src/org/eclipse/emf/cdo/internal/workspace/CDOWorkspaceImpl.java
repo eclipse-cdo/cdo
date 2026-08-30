@@ -569,7 +569,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       }
       else
       {
-        CDOChangeSetData result = getMergeResult(merger, basePoint, remotePoint, localData, remoteData);
+        CDOChangeSetData result = getMergeResult(merger, remoteSession, basePoint, remotePoint, localData, remoteData);
 
         transaction = openLocalTransaction(remoteSession, remoteData, remotePoint, newTimeStamp);
         transaction.applyChangeSet(result, new BaseRevisionProvider(), this, null, false);
@@ -753,16 +753,19 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
     throw ex;
   }
 
-  private CDOChangeSetData getMergeResult(CDOMerger merger, CDOBranchPoint basePoint, CDOBranchPoint remotePoint, CDOChangeSetData localData,
-      CDOChangeSetData remoteData)
+  private CDOChangeSetData getMergeResult(CDOMerger merger, InternalCDOSession remoteSession, CDOBranchPoint basePoint, CDOBranchPoint remotePoint,
+      CDOChangeSetData localData, CDOChangeSetData remoteData)
   {
     if (localData.isEmpty())
     {
       return remoteData;
     }
 
-    CDOChangeSet localChanges = CDORevisionUtil.createChangeSet(basePoint, null, localData);
-    CDOChangeSet remoteChanges = CDORevisionUtil.createChangeSet(basePoint, remotePoint, remoteData);
+    // Both histories are executable from the same common base. Retain its complete revisions so semantic many-valued
+    // merging can recover occurrence identity and feature set-state; originSize alone is deliberately insufficient.
+    CDORevisionProvider commonBase = new ManagedRevisionProvider(remoteSession.getRevisionManager(), basePoint);
+    CDOChangeSet localChanges = CDORevisionUtil.createChangeSet(basePoint, null, localData, commonBase);
+    CDOChangeSet remoteChanges = CDORevisionUtil.createChangeSet(basePoint, remotePoint, remoteData, commonBase);
     return merger.merge(localChanges, remoteChanges);
   }
 

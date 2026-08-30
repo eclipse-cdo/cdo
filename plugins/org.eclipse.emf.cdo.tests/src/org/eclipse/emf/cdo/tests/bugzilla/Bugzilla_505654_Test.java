@@ -389,8 +389,8 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
     CDOID customerID = leftAdd(getModel1Package().getCustomer());
     assertIDs(rightMerge(), customerID);
 
-    Customer leftCustomer = (Customer)leftTransaction.getObject(customerID);
-    Customer rightCustomer = (Customer)rightTransaction.getObject(customerID);
+    Customer leftCustomer = (Customer)CDOUtil.getEObject(leftTransaction.getObject(customerID));
+    Customer rightCustomer = (Customer)CDOUtil.getEObject(rightTransaction.getObject(customerID));
 
     leftCompany.getCustomers().remove(leftCustomer);
     assertIDs(leftCommit());
@@ -406,7 +406,7 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
     // its detached synthetic version tells the store that this is a resurrection rather than a new object identity.
     assertTrue("A restored persistent goal must use CDO's NEW-revision resurrection lifecycle", leftTransaction.getNewObjects().containsKey(customerID));
     assertIDs(leftCommit(), customerID);
-    Customer mergedCustomer = (Customer)leftTransaction.getObject(customerID);
+    Customer mergedCustomer = (Customer)CDOUtil.getEObject(leftTransaction.getObject(customerID));
     assertEquals("source-name", mergedCustomer.getName());
   }
 
@@ -428,8 +428,8 @@ public class Bugzilla_505654_Test extends AbstractCDOTest
     rightCustomer.setName("goal-name");
     rightCommit();
 
-    InternalCDOObject leftInternal = (InternalCDOObject)leftCustomer;
-    InternalCDOObject rightInternal = (InternalCDOObject)rightCustomer;
+    InternalCDOObject leftInternal = (InternalCDOObject)CDOUtil.getCDOObject(leftCustomer);
+    InternalCDOObject rightInternal = (InternalCDOObject)CDOUtil.getCDOObject(rightCustomer);
 
     InternalCDORevision targetRevision = leftInternal.cdoRevision();
     InternalCDORevision goalRevision = rightInternal.cdoRevision().copy();

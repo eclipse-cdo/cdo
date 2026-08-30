@@ -303,6 +303,23 @@ public final class CDORevisionUtil
   }
 
   /**
+   * Creates a change set and retains the complete revisions at its start point for consumers that must interpret
+   * executable feature deltas against their actual common base.
+   *
+   * @param startPoint the coordinate at which the histories start.
+   * @param endPoint the coordinate reached after applying the histories.
+   * @param data the change-set data.
+   * @param startRevisionProvider the provider of full start revisions.
+   * @return a change set retaining the supplied start-revision context.
+   * @since 4.28
+   */
+  public static CDOChangeSet createChangeSet(CDOBranchPoint startPoint, CDOBranchPoint endPoint, CDOChangeSetData data,
+      CDORevisionProvider startRevisionProvider)
+  {
+    return new CDOChangeSetImpl(startPoint, endPoint, data, startRevisionProvider);
+  }
+
+  /**
    * @since 3.0
    */
   public static Object remapID(Object value, Map<CDOID, CDOID> idMappings, boolean allowUnmappedTempIDs)

@@ -20,11 +20,13 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 
@@ -86,7 +88,7 @@ public interface ICommitConflictResolver
 
     private CDOChangeSet createSourceChangeSet(final IStoreAccessor.CommitContext commitContext, CDOBranchPoint startPoint, CDOBranchPoint endPoint)
     {
-      List<CDOIDAndVersion> newObjects = new AbstractList<CDOIDAndVersion>()
+      List<CDOIDAndVersion> newObjects = new AbstractList<>()
       {
         private final InternalCDORevision[] revisions = commitContext.getNewObjects();
 
@@ -105,7 +107,7 @@ public interface ICommitConflictResolver
         }
       };
 
-      List<CDORevisionKey> changedObjects = new AbstractList<CDORevisionKey>()
+      List<CDORevisionKey> changedObjects = new AbstractList<>()
       {
         private final InternalCDORevisionDelta[] revisionDeltas = commitContext.getDirtyObjectDeltas();
 
@@ -124,7 +126,7 @@ public interface ICommitConflictResolver
         }
       };
 
-      List<CDOIDAndVersion> detachedObjects = new AbstractList<CDOIDAndVersion>()
+      List<CDOIDAndVersion> detachedObjects = new AbstractList<>()
       {
         private final CDOID[] ids = commitContext.getDetachedObjects();
 
@@ -145,15 +147,20 @@ public interface ICommitConflictResolver
         }
       };
 
+      InternalRepository repository = (InternalRepository)commitContext.getTransaction().getRepository();
+      CDORevisionProvider commonBase = new ManagedRevisionProvider(repository.getRevisionManager(), startPoint);
+
       CDOChangeSetData sourceChangeSetData = CDORevisionUtil.createChangeSetData(newObjects, changedObjects, detachedObjects);
-      return CDORevisionUtil.createChangeSet(startPoint, endPoint, sourceChangeSetData);
+      return CDORevisionUtil.createChangeSet(startPoint, endPoint, sourceChangeSetData, commonBase);
     }
 
     private CDOChangeSet createTargetChangeSet(IStoreAccessor.CommitContext commitContext, CDOBranchPoint startPoint, CDOBranchPoint endPoint)
     {
       InternalRepository repository = (InternalRepository)commitContext.getTransaction().getRepository();
+      CDORevisionProvider commonBase = new ManagedRevisionProvider(repository.getRevisionManager(), startPoint);
+
       CDOChangeSetData targetChangeSetData = repository.getChangeSet(startPoint, endPoint);
-      return CDORevisionUtil.createChangeSet(startPoint, endPoint, targetChangeSetData);
+      return CDORevisionUtil.createChangeSet(startPoint, endPoint, targetChangeSetData, commonBase);
     }
   }
 }

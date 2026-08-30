@@ -58,6 +58,7 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
       public void modify2(CDOTransaction transaction2, Company company2) throws Exception
       {
         Category category2 = getModel1Factory().createCategory();
+        category2.setName("local");
         company2.getCategories().add(category2);
         IOUtil.OUT().println("[2] Added " + category2);
       }
@@ -66,6 +67,7 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
       public void modifyAndCommit1(CDOTransaction transaction1, Company company1) throws Exception
       {
         Category category1 = getModel1Factory().createCategory();
+        category1.setName("master");
         company1.getCategories().add(category1);
         IOUtil.OUT().println("[1] Added " + category1);
 
@@ -80,7 +82,10 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
         CDORevision cdoRevision = CDOUtil.getCDOObject(company2).cdoRevision();
         assertEquals(expectedVersion, cdoRevision.getVersion());
 
-        assertEquals(2, company2.getCategories().size());
+        assertEquals(3, company2.getCategories().size());
+        assertEquals("base", company2.getCategories().get(0).getName());
+        assertEquals("local", company2.getCategories().get(1).getName());
+        assertEquals("master", company2.getCategories().get(2).getName());
       }
     });
   }
@@ -95,15 +100,21 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
       @Override
       public void modify2(CDOTransaction transaction2, Company company2) throws Exception
       {
-        company2.getCategories().add(getModel1Factory().createCategory());
+        Category category = getModel1Factory().createCategory();
+        category.setName("local");
+        company2.getCategories().add(category);
       }
 
       @Override
       public void modifyAndCommit1(CDOTransaction transaction1, Company company1) throws Exception
       {
-        company1.getCategories().add(getModel1Factory().createCategory());
+        Category first = getModel1Factory().createCategory();
+        first.setName("master1");
+        company1.getCategories().add(first);
         transaction1.commit();
-        company1.getCategories().add(getModel1Factory().createCategory());
+        Category second = getModel1Factory().createCategory();
+        second.setName("master2");
+        company1.getCategories().add(second);
         transaction1.commit();
         expectedVersion = CDOUtil.getCDOObject(company1).cdoRevision().getVersion() + 1;
       }
@@ -113,6 +124,11 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
       {
         CDORevision cdoRevision = CDOUtil.getCDOObject(company2).cdoRevision();
         assertEquals(expectedVersion, cdoRevision.getVersion());
+        assertEquals(4, company2.getCategories().size());
+        assertEquals("base", company2.getCategories().get(0).getName());
+        assertEquals("local", company2.getCategories().get(1).getName());
+        assertEquals("master1", company2.getCategories().get(2).getName());
+        assertEquals("master2", company2.getCategories().get(3).getName());
       }
     });
   }
@@ -142,6 +158,9 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
     CDOSession session1 = openSession();
     CDOTransaction transaction1 = session1.openTransaction();
     Company company1 = getModel1Factory().createCompany();
+    Category baseCategory = getModel1Factory().createCategory();
+    baseCategory.setName("base");
+    company1.getCategories().add(baseCategory);
     transaction1.createResource(getResourcePath("resource")).getContents().add(company1);
     transaction1.commit();
 

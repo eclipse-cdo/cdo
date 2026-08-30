@@ -17,6 +17,8 @@
         <bundles name="org.eclipse.net4j.util"/>
       </repositories>
       <mavenMappings namePattern="(org\.eclipse\.(?:net4j(?:\.(?:util|tcp|db(?:\.(?:jdbc|h2))?))?|emf\.cdo(?:\.(?:common|net4j|server(?:\.(?:net4j|db))?))?))" groupId="org.eclipse.cdo" artifactId="$1"/>
+      <mavenMappings namePattern=".*" groupId="\$maven-groupId\$" artifactId="\$maven-artifactId\$" versionPattern=".*" versionTemplate="\$maven-version\$"/>
+      <mavenDependencyMapping namespacePattern="java\.package" namePattern=".*" groupId="*" artifactId="*" versionRangePattern=".*" versionRangeTemplate="major.minor.micro-qualifier"/>
     </contributions>
     <validationRepositories location="${org.eclipse.cbi.p2repo.simrel-location}"/>
   </validationSets>

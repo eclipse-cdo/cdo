@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -147,20 +148,36 @@ public interface ICommitConflictResolver
         }
       };
 
-      InternalRepository repository = (InternalRepository)commitContext.getTransaction().getRepository();
-      CDORevisionProvider commonBase = new ManagedRevisionProvider(repository.getRevisionManager(), startPoint);
-
+      CDORevisionProvider commonBase = createCommonBaseProvider(commitContext, startPoint);
       CDOChangeSetData sourceChangeSetData = CDORevisionUtil.createChangeSetData(newObjects, changedObjects, detachedObjects);
       return CDORevisionUtil.createChangeSet(startPoint, endPoint, sourceChangeSetData, commonBase);
     }
 
     private CDOChangeSet createTargetChangeSet(IStoreAccessor.CommitContext commitContext, CDOBranchPoint startPoint, CDOBranchPoint endPoint)
     {
-      InternalRepository repository = (InternalRepository)commitContext.getTransaction().getRepository();
-      CDORevisionProvider commonBase = new ManagedRevisionProvider(repository.getRevisionManager(), startPoint);
-
-      CDOChangeSetData targetChangeSetData = repository.getChangeSet(startPoint, endPoint);
+      CDORevisionProvider commonBase = createCommonBaseProvider(commitContext, startPoint);
+      CDOChangeSetData targetChangeSetData = ((InternalRepository)commitContext.getTransaction().getRepository()).getChangeSet(startPoint, endPoint);
       return CDORevisionUtil.createChangeSet(startPoint, endPoint, targetChangeSetData, commonBase);
+    }
+
+    /**
+     * Provides complete revisions at the common start point. Temporary commit-local IDs have no common-base
+     * revision and are therefore returned as {@code null}; persistent IDs are resolved strictly from the repository
+     * history at {@code startPoint} so the revision contents match the delta origin size.
+     */
+    private static CDORevisionProvider createCommonBaseProvider(final IStoreAccessor.CommitContext commitContext, CDOBranchPoint startPoint)
+    {
+      CDORevisionManager revisionManager = commitContext.getTransaction().getRepository().getRevisionManager();
+      CDORevisionProvider startPointProvider = new ManagedRevisionProvider(revisionManager, startPoint);
+
+      return id -> {
+        if (id.isTemporary())
+        {
+          return null;
+        }
+
+        return startPointProvider.getRevision(id);
+      };
     }
   }
 }

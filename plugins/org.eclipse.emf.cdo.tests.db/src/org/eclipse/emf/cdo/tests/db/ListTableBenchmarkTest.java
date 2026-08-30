@@ -10,12 +10,14 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -33,21 +35,35 @@ import org.eclipse.emf.ecore.resource.Resource;
  * <li>{@code cdo.listTableBenchmark.listSize}
  * <li>{@code cdo.listTableBenchmark.changesPerList}
  * <li>{@code cdo.listTableBenchmark.warmupChangesPerList}
+ * <li>{@code cdo.listTableBenchmark.appendsPerList}
+ * <li>{@code cdo.listTableBenchmark.tailRemovesPerList}
+ * <li>{@code cdo.listTableBenchmark.tailReplacementsPerList}
+ * <li>{@code cdo.listTableBenchmark.sparseSetsPerList}
+ * <li>{@code cdo.listTableBenchmark.clearAddsPerList}
  * </ul>
  *
  * @author Eike Stepper
  */
+@Requires(DBConfig.CAPABILITY)
 public class ListTableBenchmarkTest extends AbstractCDOTest
 {
-  private static final int LIST_COUNT = Integer.getInteger("cdo.listTableBenchmark.listCount", 100);
+  private static final int LIST_COUNT = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.listCount", 100);
 
-  private static final int LIST_SIZE = Integer.getInteger("cdo.listTableBenchmark.listSize", 1000);
+  private static final int LIST_SIZE = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.listSize", 1000);
 
-  private static final int CHANGES_PER_LIST = Integer.getInteger("cdo.listTableBenchmark.changesPerList", 100);
+  private static final int CHANGES_PER_LIST = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.changesPerList", 100);
 
-  private static final int APPENDS_PER_LIST = Integer.getInteger("cdo.listTableBenchmark.appendsPerList", 10);
+  private static final int APPENDS_PER_LIST = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.appendsPerList", 10);
 
-  private static final int WARMUP_CHANGES_PER_LIST = Integer.getInteger("cdo.listTableBenchmark.warmupChangesPerList",
+  private static final int TAIL_REMOVES_PER_LIST = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.tailRemovesPerList", 10);
+
+  private static final int TAIL_REPLACEMENTS_PER_LIST = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.tailReplacementsPerList", 10);
+
+  private static final int SPARSE_SETS_PER_LIST = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.sparseSetsPerList", 10);
+
+  private static final int CLEAR_ADDS_PER_LIST = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.clearAddsPerList", 10);
+
+  private static final int WARMUP_CHANGES_PER_LIST = OMPlatform.INSTANCE.getProperty("cdo.listTableBenchmark.warmupChangesPerList",
       Math.min(CHANGES_PER_LIST, 10));
 
   private CDOTransaction transaction;
@@ -134,6 +150,76 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
     }
   }
 
+  public void testManyListTailRemoves() throws Exception
+  {
+    requirePositive(TAIL_REMOVES_PER_LIST, "cdo.listTableBenchmark.tailRemovesPerList");
+    requireEnoughElements(TAIL_REMOVES_PER_LIST);
+
+    for (Category category : root.getCategories())
+    {
+      EList<Product1> products = category.getProducts();
+      for (int remove = 0; remove < TAIL_REMOVES_PER_LIST; remove++)
+      {
+        products.remove(products.size() - 1);
+      }
+    }
+
+    measureListCommit("Created tail removals:", "Removes/list:", TAIL_REMOVES_PER_LIST, "Tail removals/second:", (long)LIST_COUNT * TAIL_REMOVES_PER_LIST);
+  }
+
+  public void testManyListTailReplacements() throws Exception
+  {
+    requirePositive(TAIL_REPLACEMENTS_PER_LIST, "cdo.listTableBenchmark.tailReplacementsPerList");
+
+    for (Category category : root.getCategories())
+    {
+      EList<Product1> products = category.getProducts();
+      for (int replacement = 0; replacement < TAIL_REPLACEMENTS_PER_LIST; replacement++)
+      {
+        int index = products.size() - 1;
+        products.set(index, createProduct("TailReplacement-" + category.getName() + "-" + replacement));
+      }
+    }
+
+    measureListCommit("Created tail replacements:", "Replacements/list:", TAIL_REPLACEMENTS_PER_LIST, "Tail replacements/second:",
+        (long)LIST_COUNT * TAIL_REPLACEMENTS_PER_LIST);
+  }
+
+  public void testManyListSparseSets() throws Exception
+  {
+    requirePositive(SPARSE_SETS_PER_LIST, "cdo.listTableBenchmark.sparseSetsPerList");
+    requireEnoughElements(SPARSE_SETS_PER_LIST);
+
+    for (Category category : root.getCategories())
+    {
+      EList<Product1> products = category.getProducts();
+      for (int set = 0; set < SPARSE_SETS_PER_LIST; set++)
+      {
+        int index = set * products.size() / SPARSE_SETS_PER_LIST;
+        products.set(index, createProduct("SparseSet-" + category.getName() + "-" + set));
+      }
+    }
+
+    measureListCommit("Created sparse sets:", "Sets/list:", SPARSE_SETS_PER_LIST, "Sparse sets/second:", (long)LIST_COUNT * SPARSE_SETS_PER_LIST);
+  }
+
+  public void testManyListClearAndAdds() throws Exception
+  {
+    requirePositive(CLEAR_ADDS_PER_LIST, "cdo.listTableBenchmark.clearAddsPerList");
+
+    for (Category category : root.getCategories())
+    {
+      EList<Product1> products = category.getProducts();
+      products.clear();
+      for (int add = 0; add < CLEAR_ADDS_PER_LIST; add++)
+      {
+        products.add(createProduct("ClearAdd-" + category.getName() + "-" + add));
+      }
+    }
+
+    measureListCommit("Created clear/add changes:", "Adds/list:", CLEAR_ADDS_PER_LIST, "Clear/add rows/second:", (long)LIST_COUNT * CLEAR_ADDS_PER_LIST);
+  }
+
   private void applyListChanges(int changesPerList)
   {
     for (Category category : root.getCategories())
@@ -165,10 +251,47 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
 
       for (int append = 0; append < appendsPerList; append++)
       {
-        Product1 product = getModel1Factory().createProduct1();
-        product.setName("Append-" + category.getName() + "-" + append);
-        products.add(product);
+        products.add(createProduct("Append-" + category.getName() + "-" + append));
       }
+    }
+  }
+
+  private Product1 createProduct(String name)
+  {
+    Product1 product = getModel1Factory().createProduct1();
+    product.setName(name);
+    return product;
+  }
+
+  private void measureListCommit(String title, String countLabel, int count, String rateLabel, long totalCount) throws Exception
+  {
+    log(title);
+    log("  Lists:            " + LIST_COUNT);
+    log("  Initial size/list: " + LIST_SIZE);
+    log("  " + countLabel + "     " + count);
+    log("  Total changes:    " + totalCount);
+
+    double commitSeconds = measure("  Commit took:      ", () -> transaction.commit());
+    if (commitSeconds > 0.0)
+    {
+      log("");
+      log(rateLabel + " " + Math.round(totalCount / commitSeconds));
+    }
+  }
+
+  private void requirePositive(int value, String property)
+  {
+    if (value < 1)
+    {
+      fail(property + " must be at least 1");
+    }
+  }
+
+  private void requireEnoughElements(int count)
+  {
+    if (LIST_SIZE < count)
+    {
+      fail("cdo.listTableBenchmark.listSize must be at least " + count);
     }
   }
 

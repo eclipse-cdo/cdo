@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.tests.db.bundle.OM;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.oracle.OracleAdapter;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import javax.sql.DataSource;
@@ -35,17 +36,17 @@ public abstract class OracleConfig extends AbstractSetupDBConfig
 {
   public static final String DB_ADAPTER_NAME = OracleAdapter.NAME;
 
-  private static final String DRIVER_TYPE = System.getProperty("test.oracle.drivertype", "thin");
+  private static final String DRIVER_TYPE = OMPlatform.INSTANCE.getProperty("test.oracle.drivertype", "thin");
 
-  private static final String SERVER_NAME = System.getProperty("test.oracle.servername", "localhost");
+  private static final String SERVER_NAME = OMPlatform.INSTANCE.getProperty("test.oracle.servername", "localhost");
 
-  private static final int PORT_NUMBER = Integer.getInteger("test.oracle.portnumber", 1521);
+  private static final int PORT_NUMBER = OMPlatform.INSTANCE.getProperty("test.oracle.portnumber", 1521);
 
-  private static final String DATABASE_NAME = System.getProperty("test.oracle.databasename", "TEST");
+  private static final String DATABASE_NAME = OMPlatform.INSTANCE.getProperty("test.oracle.databasename", "TEST");
 
-  private static final String USER = System.getProperty("test.oracle.user", "cdotest");
+  private static final String USER = OMPlatform.INSTANCE.getProperty("test.oracle.user", "cdotest");
 
-  private static final String PASSWORD = System.getProperty("test.oracle.password", "oracle");
+  private static final String PASSWORD = OMPlatform.INSTANCE.getProperty("test.oracle.password", "oracle");
 
   private static final long serialVersionUID = 1L;
 

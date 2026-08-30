@@ -18,13 +18,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.eclipse.emf.cdo</groupId>
+    <groupId>org.eclipse.cdo</groupId>
     <artifactId>org.eclipse.emf.cdo.releng.parent</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <relativePath>../</relativePath>
   </parent>
-
-  <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.releng.tp</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>eclipse-target-definition</packaging>

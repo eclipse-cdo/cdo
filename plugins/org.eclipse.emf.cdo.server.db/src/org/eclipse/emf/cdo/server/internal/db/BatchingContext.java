@@ -443,31 +443,65 @@ public final class BatchingContext implements IBatchingContext
    */
   public void discard()
   {
-    for (BatchedStatement statement : statementOrder)
+    DBException failure = null;
+    List<BatchedStatement> statementsToDiscard = new ArrayList<>(statementOrder);
+
+    try
     {
-      try
+      for (BatchedStatement statement : statementsToDiscard)
       {
-        statement.clearBatch();
-      }
-      catch (SQLException ex)
-      {
-        throw new DBException(ex);
-      }
-      finally
-      {
-        DBUtil.close(statement);
+        try
+        {
+          statement.clearBatch();
+        }
+        catch (SQLException ex)
+        {
+          failure = addCleanupFailure(failure, ex);
+        }
+
+        try
+        {
+          Exception closeFailure = DBUtil.close(statement);
+          if (closeFailure != null)
+          {
+            failure = addCleanupFailure(failure, closeFailure);
+          }
+        }
+        catch (RuntimeException ex)
+        {
+          failure = addCleanupFailure(failure, ex);
+        }
       }
     }
+    finally
+    {
+      clearState();
+    }
 
+    if (failure != null)
+    {
+      throw failure;
+    }
+  }
+
+  private void clearState()
+  {
     statements.clear();
     statementOrder.clear();
+    statistics.clear();
+    statisticsOrder.clear();
+    diagnosticCounters.clear();
+  }
 
-    if (STATISTICS_ENABLED)
+  private static DBException addCleanupFailure(DBException first, Exception failure)
+  {
+    if (first == null)
     {
-      statistics.clear();
-      statisticsOrder.clear();
-      diagnosticCounters.clear();
+      return new DBException(failure);
     }
+
+    first.addSuppressed(failure);
+    return first;
   }
 
   /**

@@ -74,6 +74,10 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
 
   private String sqlSelect;
 
+  private boolean supportsSavepoints;
+
+  private int batchSize;
+
   public ObjectTypeTable(IDBStore store)
   {
     super(store, MappingNames.CDO_OBJECTS);
@@ -216,8 +220,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
    */
   public final void putObjectTypes(IDBStoreAccessor accessor, InternalCDORevision[] revisions, EClass type)
   {
-    int batchSize = getObjectTypeBatchSize();
-    if (batchSize <= 0 || revisions.length <= 1)
+    if (batchSize <= 0 || revisions.length <= 1 || !supportsSavepoints)
     {
       for (InternalCDORevision revision : revisions)
       {
@@ -379,74 +382,6 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     }
   }
 
-  private static void discardBatch(BatchedStatement stmt)
-  {
-    try
-    {
-      stmt.clearBatch();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
-  private static void recordDiagnosticCounter(IDBStoreAccessor accessor, String name, long value)
-  {
-    if (BatchingContext.STATISTICS_ENABLED)
-    {
-      accessor.getBatchingContext().recordDiagnosticCounter(name, value);
-    }
-  }
-
-  private static void validateBatchResult(BatchedStatement stmt, int expectedCount)
-  {
-    int knownResult = stmt.getTotalResult();
-    int unknownResultCount = stmt.getUnknownResultCount();
-
-    if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
-    {
-      throw new DBException("Object type batch did not insert all entries"); //$NON-NLS-1$
-    }
-  }
-
-  private static void rollbackBatch(Connection connection, Savepoint savepoint, Exception failure)
-  {
-    try
-    {
-      connection.rollback(savepoint);
-      connection.releaseSavepoint(savepoint);
-    }
-    catch (SQLException ex)
-    {
-      failure.addSuppressed(ex);
-      throw new DBException(failure);
-    }
-  }
-
-  private int getObjectTypeBatchSize()
-  {
-    Map<String, String> properties = store().getProperties();
-    int legacyDefault = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE", //$NON-NLS-1$
-        BatchingContext.DEFAULT_STATEMENT_BATCH_SIZE);
-    int statementBatchSize = getIntProperty(properties, IDBStore.Props.BATCH_STATEMENT_SIZE, legacyDefault);
-    return getIntProperty(properties, IDBStore.Props.OBJECT_TYPE_BATCH_SIZE, statementBatchSize);
-  }
-
-  private static int getIntProperty(Map<String, String> properties, String key, int defaultValue)
-  {
-    if (properties != null)
-    {
-      String value = properties.get(key);
-      if (value != null)
-      {
-        return Integer.parseInt(value);
-      }
-    }
-
-    return defaultValue;
-  }
-
   @Override
   public final boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
@@ -537,6 +472,36 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   }
 
   @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+
+    // Pre-determine whether savepoints are supported.
+    Connection connection = null;
+
+    try
+    {
+      connection = store().getConnection();
+      supportsSavepoints = connection.getMetaData().supportsSavepoints();
+    }
+    catch (SQLException | AbstractMethodError ex)
+    {
+      supportsSavepoints = false;
+    }
+    finally
+    {
+      DBUtil.close(connection);
+    }
+
+    // Initialize the batchSize to use from the configuration.
+    Map<String, String> properties = store().getProperties();
+    int legacyDefault = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE", //$NON-NLS-1$
+        BatchingContext.DEFAULT_STATEMENT_BATCH_SIZE);
+    int statementBatchSize = getIntProperty(properties, IDBStore.Props.BATCH_STATEMENT_SIZE, legacyDefault);
+    batchSize = getIntProperty(properties, IDBStore.Props.OBJECT_TYPE_BATCH_SIZE, statementBatchSize);
+  }
+
+  @Override
   protected void firstActivate(IDBTable table)
   {
     DBType idType = store().getIDHandler().getDBType();
@@ -568,6 +533,65 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     sqlSelect = "SELECT " + clazz + " FROM " + table + " WHERE " + id + "=?";
     sqlInsert = "INSERT INTO " + table + "(" + id + "," + clazz + "," + created + ") VALUES (?, ?, ?)";
     sqlDelete = "DELETE FROM " + table + " WHERE " + id + "=?";
+  }
+
+  private static void discardBatch(BatchedStatement stmt)
+  {
+    try
+    {
+      stmt.clearBatch();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  private static void recordDiagnosticCounter(IDBStoreAccessor accessor, String name, long value)
+  {
+    if (BatchingContext.STATISTICS_ENABLED)
+    {
+      accessor.getBatchingContext().recordDiagnosticCounter(name, value);
+    }
+  }
+
+  private static void validateBatchResult(BatchedStatement stmt, int expectedCount)
+  {
+    int knownResult = stmt.getTotalResult();
+    int unknownResultCount = stmt.getUnknownResultCount();
+
+    if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
+    {
+      throw new DBException("Object type batch did not insert all entries"); //$NON-NLS-1$
+    }
+  }
+
+  private static void rollbackBatch(Connection connection, Savepoint savepoint, Exception failure)
+  {
+    try
+    {
+      connection.rollback(savepoint);
+      connection.releaseSavepoint(savepoint);
+    }
+    catch (SQLException ex)
+    {
+      failure.addSuppressed(ex);
+      throw new DBException(failure);
+    }
+  }
+
+  private static int getIntProperty(Map<String, String> properties, String key, int defaultValue)
+  {
+    if (properties != null)
+    {
+      String value = properties.get(key);
+      if (value != null)
+      {
+        return Integer.parseInt(value);
+      }
+    }
+
+    return defaultValue;
   }
 
   /**

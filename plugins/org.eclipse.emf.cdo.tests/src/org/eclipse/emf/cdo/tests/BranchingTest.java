@@ -584,6 +584,60 @@ public class BranchingTest extends AbstractCDOTest
     session.close();
   }
 
+  public void testCopyOnBranchPreservesInheritedListHistory() throws Exception
+  {
+    CDOSession session = openSession1();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    CDOResource resource = transaction.createResource(getResourcePath("/copy"));
+
+    Company company = getModel1Factory().createCompany();
+    company.setName("base");
+    company.getCategories().add(getModel1Factory().createCategory());
+    resource.getContents().add(company);
+
+    long baseTime = transaction.commit().getTimeStamp();
+
+    CDOBranch branch = mainBranch.createBranch(getBranchName("copy"), baseTime);
+    transaction.close();
+    transaction = session.openTransaction(branch);
+    resource = transaction.getResource(getResourcePath("/copy"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    assertEquals("base", company.getName());
+    assertEquals(1, company.getCategories().size());
+
+    company.setName("branch");
+    company.getCategories().add(getModel1Factory().createCategory());
+    long branchTime = transaction.commit().getTimeStamp();
+    transaction.close();
+    closeSession1();
+
+    session = openSession2();
+    mainBranch = session.getBranchManager().getMainBranch();
+    CDOView view = session.openView(mainBranch);
+    resource = view.getResource(getResourcePath("/copy"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    assertEquals("base", company.getName());
+    assertEquals(1, company.getCategories().size());
+    view.close();
+
+    view = session.openView(mainBranch, baseTime);
+    resource = view.getResource(getResourcePath("/copy"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    assertEquals("base", company.getName());
+    assertEquals(1, company.getCategories().size());
+    view.close();
+
+    view = session.openView(branch);
+    resource = view.getResource(getResourcePath("/copy"));
+    company = (Company)CDOUtil.getEObject(resource.getContents().get(0));
+    assertEquals("branch", company.getName());
+    assertEquals(2, company.getCategories().size());
+    assertTrue(branchTime > baseTime);
+    view.close();
+    session.close();
+  }
+
   public void testCommitAddOrderDetail() throws Exception
   {
     String name = getBranchName("subBranch");

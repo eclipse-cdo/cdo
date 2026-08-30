@@ -15,6 +15,7 @@ import org.eclipse.net4j.db.BatchedStatement;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.sql.SQLException;
 
 import junit.framework.TestCase;
 
@@ -94,6 +95,34 @@ public class DBBatchingContextTest extends TestCase
     assertEquals(0, context.getPendingCount());
   }
 
+  public void testDiscardCleansAllStatementsAfterCleanupFailure()
+  {
+    BatchingContext context = new BatchingContext(null, 10, 100);
+    CleanupState firstState = new CleanupState(true, true);
+    CleanupState secondState = new CleanupState(false, false);
+    BatchedStatement first = createStatement(firstState);
+    BatchedStatement second = createStatement(secondState);
+    context.manageStatement(first);
+    context.manageStatement(second);
+    add(context, first, 1);
+    add(context, second, 1);
+
+    try
+    {
+      context.discard();
+      fail("Expected cleanup failure");
+    }
+    catch (RuntimeException expected)
+    {
+      // The first cleanup failure is retained.
+    }
+
+    assertEquals(0, context.getPendingCount());
+    assertTrue(firstState.closed);
+    assertTrue(secondState.cleared);
+    assertTrue(secondState.closed);
+  }
+
   private static void add(BatchingContext context, BatchedStatement statement, int count)
   {
     for (int i = 0; i < count; i++)
@@ -112,6 +141,11 @@ public class DBBatchingContextTest extends TestCase
   }
 
   private static BatchedStatement createStatement(State state)
+  {
+    return createStatement((InvocationHandler)state);
+  }
+
+  private static BatchedStatement createStatement(InvocationHandler state)
   {
     return (BatchedStatement)Proxy.newProxyInstance(DBBatchingContextTest.class.getClassLoader(), new Class<?>[] { BatchedStatement.class }, state);
   }
@@ -213,6 +247,61 @@ public class DBBatchingContextTest extends TestCase
       }
 
       throw new AssertionError(type);
+    }
+  }
+
+  private static final class CleanupState implements InvocationHandler
+  {
+    private final boolean failClear;
+
+    private final boolean failClose;
+
+    private boolean cleared;
+
+    private boolean closed;
+
+    private int pendingCount;
+
+    private CleanupState(boolean failClear, boolean failClose)
+    {
+      this.failClear = failClear;
+      this.failClose = failClose;
+    }
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
+    {
+      switch (method.getName())
+      {
+      case "addBatch": //$NON-NLS-1$
+        ++pendingCount;
+        return null;
+
+      case "getPendingCount": //$NON-NLS-1$
+        return pendingCount;
+
+      case "clearBatch": //$NON-NLS-1$
+        cleared = true;
+        pendingCount = 0;
+        if (failClear)
+        {
+          throw new SQLException("injected clear failure");
+        }
+
+        return null;
+
+      case "close": //$NON-NLS-1$
+        closed = true;
+        if (failClose)
+        {
+          throw new RuntimeException("injected close failure");
+        }
+
+        return null;
+
+      default:
+        return State.defaultValue(method.getReturnType());
+      }
     }
   }
 }

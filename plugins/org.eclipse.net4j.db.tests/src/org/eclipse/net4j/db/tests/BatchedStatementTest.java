@@ -15,6 +15,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import junit.framework.TestCase;
@@ -107,6 +108,30 @@ public class BatchedStatementTest extends TestCase
     {
       statement.close();
     }
+
+    assertEquals(1, state.executeBatchCount);
+  }
+
+  public void testSQLExceptionDoesNotExecuteAgainOnClose() throws Exception
+  {
+    State state = new State();
+    state.failure = new SQLException("injected");
+    BatchedStatement statement = createStatement(state, 10);
+    statement.executeUpdate();
+
+    try
+    {
+      statement.flush();
+      fail("Expected failed batch");
+    }
+    catch (SQLException expected)
+    {
+      // Expected.
+    }
+
+    statement.close();
+    assertEquals(1, state.executeBatchCount);
+    assertEquals(0, statement.getPendingCount());
   }
 
   private static BatchedStatement createStatement(State state, int batchSize)
@@ -122,6 +147,10 @@ public class BatchedStatementTest extends TestCase
 
     private int executedEntries;
 
+    private int executeBatchCount;
+
+    private SQLException failure;
+
     private int[] results;
 
     @Override
@@ -134,6 +163,12 @@ public class BatchedStatementTest extends TestCase
         return null;
 
       case "executeBatch": //$NON-NLS-1$
+        ++executeBatchCount;
+        if (failure != null)
+        {
+          throw failure;
+        }
+
         int count = pendingEntries;
         pendingEntries = 0;
         executedEntries += count;

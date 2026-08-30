@@ -34,11 +34,20 @@ public class AllTestsDBH2Branching extends DBConfigs
     // JVM, NATIVE);
 
     // With ranges
-    suite.addScenario(parent, new H2Config().supportingBranches(true).idGenerationLocation(idGenerationLocation).withRanges(true), JVM, NATIVE);
+    suite.addScenario(parent, //
+        new H2Config() //
+            .supportingBranches(true) //
+            .idGenerationLocation(idGenerationLocation) //
+            .withRanges(true), //
+        JVM, NATIVE);
 
     // With ranges and copy-on-branch
-    // suite.addScenario(parent, new
-    // H2Config().supportingBranches(true).idGenerationLocation(idGenerationLocation).copyOnBranch(true), JVM, NATIVE);
+    suite.addScenario(parent, //
+        new H2Config() //
+            .supportingBranches(true) //
+            .idGenerationLocation(idGenerationLocation) //
+            .withRanges(true).copyOnBranch(true), //
+        JVM, NATIVE);
   }
 
   @Override

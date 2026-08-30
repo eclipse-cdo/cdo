@@ -154,9 +154,19 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
   private int doExecuteBatch() throws SQLException
   {
     int sum = 0;
+    int[] results;
 
-    int[] results = getDelegate().executeBatch();
-    ++executionCount;
+    try
+    {
+      results = getDelegate().executeBatch();
+      ++executionCount;
+      pendingCount = 0;
+    }
+    catch (SQLException ex)
+    {
+      clearAfterFailedExecution(ex);
+      throw ex;
+    }
 
     for (int i = 0; i < results.length; i++)
     {
@@ -170,6 +180,7 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
       {
         if (result < 0)
         {
+          clearAfterFailedExecution(null);
           throw new DBException("Result " + i + " is not successful: " + result);
         }
 
@@ -178,7 +189,6 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
     }
 
     totalResult += sum;
-    pendingCount = 0;
     return sum;
   }
 
@@ -202,9 +212,19 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
       return new int[0];
     }
 
-    int[] results = getDelegate().executeBatch();
-    ++executionCount;
-    pendingCount = 0;
+    int[] results;
+
+    try
+    {
+      results = getDelegate().executeBatch();
+      ++executionCount;
+      pendingCount = 0;
+    }
+    catch (SQLException ex)
+    {
+      clearAfterFailedExecution(ex);
+      throw ex;
+    }
 
     for (int i = 0; i < results.length; i++)
     {
@@ -217,6 +237,7 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
       {
         if (result < 0)
         {
+          clearAfterFailedExecution(null);
           throw new DBException("Result " + i + " is not successful: " + result); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
@@ -225,6 +246,23 @@ public final class BatchedStatementImpl extends DelegatingPreparedStatement impl
     }
 
     return results;
+  }
+
+  private void clearAfterFailedExecution(Exception failure)
+  {
+    pendingCount = 0;
+
+    try
+    {
+      getDelegate().clearBatch();
+    }
+    catch (SQLException ex)
+    {
+      if (failure != null)
+      {
+        failure.addSuppressed(ex);
+      }
+    }
   }
 
   @Override

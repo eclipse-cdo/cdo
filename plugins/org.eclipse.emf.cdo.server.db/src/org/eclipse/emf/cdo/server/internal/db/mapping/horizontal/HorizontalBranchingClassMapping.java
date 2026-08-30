@@ -1157,13 +1157,30 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected void writeRevisionDeltasSingle(IDBStoreAccessor accessor, InternalCDORevisionDelta[] deltas, long created, OMMonitor monitor)
   {
+    boolean shallCopyOnBranch = ((HorizontalBranchingMappingStrategyWithRanges)getMappingStrategy()).shallCopyOnBranch();
+    if (shallCopyOnBranch)
+    {
+      CDOBranch commitBranch = accessor.getTransaction().getBranch();
+
+      for (InternalCDORevisionDelta delta : deltas)
+      {
+        if (commitBranch != delta.getBranch())
+        {
+          super.writeRevisionDeltasSingle(accessor, deltas, created, monitor);
+          return;
+        }
+      }
+    }
+
     List<IListMapping> mappings = getListMappings();
     List<FeatureDeltaWriter> writers = new ArrayList<>();
     monitor.begin(1 + mappings.size());
+
     try
     {
       OMMonitor revisionMonitor = monitor.fork();
       revisionMonitor.begin(deltas.length);
+
       try
       {
         for (InternalCDORevisionDelta delta : deltas)
@@ -1172,6 +1189,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
           writer.deferListDeltas = true;
           writer.process(accessor, delta, created);
           writers.add(writer);
+
           revisionMonitor.worked();
         }
       }
@@ -1183,6 +1201,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       for (IListMapping mapping : mappings)
       {
         List<ListDeltaWork> work = new ArrayList<>();
+
         for (FeatureDeltaWriter writer : writers)
         {
           for (ListDeltaWork item : writer.listDeltaWork)
@@ -1195,6 +1214,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         }
 
         OMMonitor listMonitor = monitor.fork();
+
         if (work.isEmpty())
         {
           listMonitor.worked();
@@ -1206,13 +1226,16 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         else
         {
           listMonitor.begin(work.size());
+
           try
           {
             IListMappingDeltaSupport deltaSupport = (IListMappingDeltaSupport)mapping;
+
             for (ListDeltaWork item : work)
             {
               deltaSupport.processDelta(accessor, item.getID(), item.getBranchId(), item.getOldVersion(), item.getNewVersion(), item.getCreated(),
                   item.getDelta());
+
               listMonitor.worked();
             }
           }
@@ -1232,6 +1255,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   private void doCopyOnBranch(IDBStoreAccessor accessor, InternalCDORevisionDelta delta, long created, OMMonitor monitor)
   {
     monitor.begin(2);
+
     try
     {
       InternalRepository repository = (InternalRepository)accessor.getStore().getRepository();
@@ -1248,7 +1272,9 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       InternalCDORevision newRevision = oldRevision.copy();
       newRevision.adjustForCommit(accessor.getTransaction().getBranch(), created);
       delta.applyTo(newRevision);
+
       monitor.worked();
+
       writeRevision(accessor, newRevision, false, true, monitor.fork());
     }
     finally

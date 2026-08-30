@@ -836,12 +836,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return;
     }
 
-    String changeKind = plan.changeKinds.get(id);
-    if (changeKind != null && !"DETACHED".equals(changeKind))
-    {
-      throw new IllegalArgumentException("Object " + id + " is both " + changeKind + " and contained by a DETACHED object");
-    }
-
     switch (object.cdoState())
     {
     case NEW:
@@ -899,11 +893,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOID id = resultBaseGoalDelta.getID();
       plan.claim(id, "CHANGED");
 
-      if (plan.detachedIDs.contains(id))
-      {
-        throw new IllegalArgumentException("Object " + id + " is both CHANGED and contained by a DETACHED object");
-      }
-
       InternalCDORevision resultBaseRevision = (InternalCDORevision)resultBaseProvider.getRevision(id);
       if (resultBaseRevision == null)
       {
@@ -915,8 +904,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       goalRevision.setRevised(UNSPECIFIED_DATE);
       resultBaseGoalDelta.applyTo(goalRevision);
 
+      // A changed object that is in the detach closure is detached first and then reattached. This is the normal
+      // representation of a moved child in a branch merge; during planning the original object is still present.
       InternalCDOObject object = getObjectIfExists(id);
-      if (object == null)
+      if (plan.detachedIDs.contains(id) || object == null)
       {
         planReattachedGoalObject(plan, goalRevision, resultBaseRevision);
       }
@@ -1118,6 +1109,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     // internalReattach() fails before it reaches its own savepoint bookkeeping.
     cleanRevisions.put(object, application.cleanRevision);
     lastSavepoint.getReattachedObjects().put(id, object);
+
+    // A persistent detach keeps the old object in the view register until normal invalidation/cleanup. The reattached
+    // object must replace that stale registration before it can be registered under the same ID.
+    removeObject(id);
     registerObject(object);
     CDOStateMachine.INSTANCE.internalReattach(object, this);
   }
@@ -5410,43 +5405,43 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private final class ApplyChangeSetPlan
   {
     private final InternalCDOSavepoint applicationSavepoint;
-  
+
     private final ApplyChangeSetResult result = new ApplyChangeSetResult();
-  
+
     private final Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
-  
+
     private final Map<CDOID, String> changeKinds = CDOIDUtil.createMap();
-  
+
     private final Set<CDOID> detachedIDs = new HashSet<>();
-  
+
     private final List<PlannedNewObject> newObjects = new ArrayList<>();
-  
+
     private final List<InternalCDOObject> detachedRoots = new ArrayList<>();
-  
+
     private final List<PlannedDetachedObject> detachClosure = new ArrayList<>();
-  
+
     private final List<PlannedGoalObject> goalObjects = new ArrayList<>();
-  
+
     private final Set<CDOObject> detachedSet = new HashSet<>();
-  
+
     private final Map<InternalCDOObject, OriginalObjectState> originalObjectStates = new HashMap<>();
-  
+
     private final Map<InternalCDOObject, InternalCDORevision> cleanRevisionsBefore = new HashMap<>(cleanRevisions);
-  
+
     private final Map<CDOObject, InternalCDOLockState> lockStatesOfNewObjectsBefore = new HashMap<>(lockStatesOfNewObjects);
-  
+
     private final Map<CDOID, CDORevision> attachedRevisionsBefore;
-  
+
     private final int conflictBefore = conflict;
-  
+
     private ApplyChangeSetPlan(InternalCDOSavepoint applicationSavepoint)
     {
       this.applicationSavepoint = applicationSavepoint;
-  
+
       Map<CDOID, CDORevision> attachedRevisions = options().getAttachedRevisionsMap();
       attachedRevisionsBefore = attachedRevisions == null ? null : new HashMap<>(attachedRevisions);
     }
-  
+
     private void claim(CDOID id, String changeKind)
     {
       String oldChangeKind = changeKinds.put(id, changeKind);
@@ -5455,7 +5450,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalArgumentException("Object " + id + " occurs as both " + oldChangeKind + " and " + changeKind);
       }
     }
-  
+
     private void rememberOriginalState(InternalCDOObject object)
     {
       if (!originalObjectStates.containsKey(object))
@@ -5471,7 +5466,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private static final class PlannedNewObject
   {
     private final InternalCDOObject object;
-  
+
     private PlannedNewObject(InternalCDOObject object)
     {
       this.object = object;
@@ -5484,11 +5479,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private static final class PlannedDetachedObject
   {
     private final CDOID id;
-  
+
     private final InternalCDOObject object;
-  
+
     private final InternalCDORevision cleanRevision;
-  
+
     private PlannedDetachedObject(CDOID id, InternalCDOObject object, InternalCDORevision cleanRevision)
     {
       this.id = id;
@@ -5503,17 +5498,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private static final class PlannedGoalObject
   {
     private final InternalCDOObject object;
-  
+
     private final InternalCDORevision targetRevision;
-  
+
     private final InternalCDORevision goalRevision;
-  
+
     private final InternalCDORevisionDelta targetGoalDelta;
-  
+
     private final boolean installTargetRevision;
-  
+
     private final InternalCDORevision cleanRevision;
-  
+
     private PlannedGoalObject(InternalCDOObject object, InternalCDORevision targetRevision, InternalCDORevision goalRevision,
         InternalCDORevisionDelta targetGoalDelta, boolean installTargetRevision, InternalCDORevision cleanRevision)
     {
@@ -5532,13 +5527,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private static final class OriginalObjectState
   {
     private final InternalCDOObject object;
-  
+
     private final CDOID id;
-  
+
     private final CDOState state;
-  
+
     private final InternalCDORevision revision;
-  
+
     private OriginalObjectState(InternalCDOObject object)
     {
       this.object = object;

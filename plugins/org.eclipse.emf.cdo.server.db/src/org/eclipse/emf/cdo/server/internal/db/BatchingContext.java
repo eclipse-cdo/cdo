@@ -58,8 +58,10 @@ public final class BatchingContext implements IBatchingContext
   /**
    * Enables diagnostic batching statistics and one summary log message per successfully closed commit context.
    */
-  public static final boolean STATISTICS_ENABLED = OMPlatform.INSTANCE //
+  private static final boolean STATISTICS_ENABLED = OMPlatform.INSTANCE //
       .isProperty("org.eclipse.emf.cdo.server.db.DBBatchingContext.ENABLE_STATISTICS");
+
+  private static boolean statisticsEnabled = STATISTICS_ENABLED;
 
   private final IDBConnection connection;
 
@@ -225,7 +227,7 @@ public final class BatchingContext implements IBatchingContext
    * Registers a statement with optional diagnostic metadata.
    * <p>
    * The name is never used for statement identity, ordering, or scheduling. It is only included in the optional
-   * commit summary when {@link #STATISTICS_ENABLED} is enabled.
+   * commit summary when {@link #statisticsEnabled} is enabled.
    *
    * @param statement
    *          the statement owned by this context
@@ -239,7 +241,7 @@ public final class BatchingContext implements IBatchingContext
     {
       statementOrder.add(statement);
 
-      if (STATISTICS_ENABLED)
+      if (statisticsEnabled)
       {
         statistics.put(statement, new StatementStatistics(diagnosticName));
         statisticsOrder.add(statistics.get(statement));
@@ -264,7 +266,7 @@ public final class BatchingContext implements IBatchingContext
   {
     manageStatement(statement);
 
-    if (STATISTICS_ENABLED)
+    if (statisticsEnabled)
     {
       ++totalEntriesAdded;
       statistics.get(statement).entriesAdded++;
@@ -274,7 +276,7 @@ public final class BatchingContext implements IBatchingContext
     {
       ++capacityFlushCount;
 
-      if (STATISTICS_ENABLED)
+      if (statisticsEnabled)
       {
         statistics.get(statement).capacityFlushes++;
       }
@@ -313,7 +315,7 @@ public final class BatchingContext implements IBatchingContext
   @Override
   public void recordDiagnosticCounter(String name, long value)
   {
-    if (STATISTICS_ENABLED)
+    if (statisticsEnabled)
     {
       diagnosticCounters.merge(name, value, Long::sum);
     }
@@ -342,7 +344,7 @@ public final class BatchingContext implements IBatchingContext
       {
         ++orderingFlushCount;
 
-        if (STATISTICS_ENABLED)
+        if (statisticsEnabled)
         {
           statistics.get(statement).orderingFlushes++;
         }
@@ -393,7 +395,7 @@ public final class BatchingContext implements IBatchingContext
     statements.remove(statement);
     removeFromOrder(statement);
 
-    if (STATISTICS_ENABLED)
+    if (statisticsEnabled)
     {
       statistics.remove(statement);
     }
@@ -417,7 +419,7 @@ public final class BatchingContext implements IBatchingContext
     statements.remove(statement);
     removeFromOrder(statement);
 
-    if (STATISTICS_ENABLED)
+    if (statisticsEnabled)
     {
       statistics.remove(statement);
     }
@@ -484,26 +486,6 @@ public final class BatchingContext implements IBatchingContext
     }
   }
 
-  private void clearState()
-  {
-    statements.clear();
-    statementOrder.clear();
-    statistics.clear();
-    statisticsOrder.clear();
-    diagnosticCounters.clear();
-  }
-
-  private static DBException addCleanupFailure(DBException first, Exception failure)
-  {
-    if (first == null)
-    {
-      return new DBException(failure);
-    }
-
-    first.addSuppressed(failure);
-    return first;
-  }
-
   /**
    * Flushes and closes all statements managed by this context.
    * <p>
@@ -520,7 +502,7 @@ public final class BatchingContext implements IBatchingContext
       flushFinal();
       flushed = true;
 
-      if (STATISTICS_ENABLED)
+      if (statisticsEnabled)
       {
         logStatistics();
       }
@@ -547,7 +529,7 @@ public final class BatchingContext implements IBatchingContext
       statements.clear();
       statementOrder.clear();
 
-      if (STATISTICS_ENABLED)
+      if (statisticsEnabled)
       {
         statistics.clear();
         statisticsOrder.clear();
@@ -596,7 +578,7 @@ public final class BatchingContext implements IBatchingContext
         {
           ++capacityFlushCount;
 
-          if (STATISTICS_ENABLED)
+          if (statisticsEnabled)
           {
             statistics.get(largest).capacityFlushes++;
           }
@@ -621,7 +603,7 @@ public final class BatchingContext implements IBatchingContext
         statement.flush();
 
         int executions = recordExecutions(statement);
-        if (executions != 0 && STATISTICS_ENABLED)
+        if (executions != 0 && statisticsEnabled)
         {
           StatementStatistics statementStatistics = statistics.get(statement);
 
@@ -655,7 +637,7 @@ public final class BatchingContext implements IBatchingContext
       int executions = statement.getExecutionCount() - previous;
       batchExecutionCount += executions;
 
-      if (STATISTICS_ENABLED)
+      if (statisticsEnabled)
       {
         statistics.get(statement).executionCount += executions;
       }
@@ -683,7 +665,7 @@ public final class BatchingContext implements IBatchingContext
 
   private void updateMaximumPendingCount()
   {
-    if (STATISTICS_ENABLED)
+    if (statisticsEnabled)
     {
       int pending = getPendingCount();
       maximumPendingCount = Math.max(maximumPendingCount, pending);
@@ -735,6 +717,36 @@ public final class BatchingContext implements IBatchingContext
     }
 
     OM.LOG.info(builder.toString());
+  }
+
+  private void clearState()
+  {
+    statements.clear();
+    statementOrder.clear();
+    statistics.clear();
+    statisticsOrder.clear();
+    diagnosticCounters.clear();
+  }
+
+  private static DBException addCleanupFailure(DBException first, Exception failure)
+  {
+    if (first == null)
+    {
+      return new DBException(failure);
+    }
+
+    first.addSuppressed(failure);
+    return first;
+  }
+
+  public static boolean isStatisticsEnabled()
+  {
+    return statisticsEnabled;
+  }
+
+  public static void setStatisticsEnabled(boolean statisticsEnabled)
+  {
+    BatchingContext.statisticsEnabled = statisticsEnabled;
   }
 
   /**

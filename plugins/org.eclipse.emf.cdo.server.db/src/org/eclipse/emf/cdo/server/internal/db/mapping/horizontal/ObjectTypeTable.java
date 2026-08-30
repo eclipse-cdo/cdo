@@ -549,7 +549,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
 
   private static void recordDiagnosticCounter(IDBStoreAccessor accessor, String name, long value)
   {
-    if (BatchingContext.STATISTICS_ENABLED)
+    if (BatchingContext.isStatisticsEnabled())
     {
       accessor.getBatchingContext().recordDiagnosticCounter(name, value);
     }

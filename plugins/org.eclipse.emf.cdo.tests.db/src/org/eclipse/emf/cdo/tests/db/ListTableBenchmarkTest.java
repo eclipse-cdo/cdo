@@ -8,6 +8,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.server.internal.db.BatchingContext;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
@@ -70,10 +71,15 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
 
   private Category root;
 
+  private boolean wasStatisticsEnabled;
+
   @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
+
+    wasStatisticsEnabled = BatchingContext.isStatisticsEnabled();
+    BatchingContext.setStatisticsEnabled(true);
 
     root = getModel1Factory().createCategory();
     root.setName("ROOT");
@@ -102,6 +108,13 @@ public class ListTableBenchmarkTest extends AbstractCDOTest
       transaction.commit();
       log("");
     }
+  }
+
+  @Override
+  protected void doTearDown() throws Exception
+  {
+    BatchingContext.setStatisticsEnabled(wasStatisticsEnabled);
+    super.doTearDown();
   }
 
   public void testManyListChanges() throws Exception

@@ -395,7 +395,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
 
     if (branch != null)
     {
-      iterator = new AbstractFilteredIterator<CommitInfo>(iterator)
+      iterator = new AbstractFilteredIterator<>(iterator)
       {
         @Override
         protected boolean isValid(CommitInfo element)
@@ -673,6 +673,37 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
 
     return false;
+  }
+
+  /**
+   * Restores an exact predecessor revision retained by a transaction-local rollback record.
+   */
+  public synchronized void restoreRevision(InternalCDORevision revision)
+  {
+    Object listKey = createListKey(revision.getID(), revision.getBranch());
+
+    List<InternalCDORevision> list = revisions.get(listKey);
+    if (list == null)
+    {
+      list = new ArrayList<>();
+      revisions.put(listKey, list);
+    }
+
+    InternalCDORevision existing = getRevisionByVersion(list, revision.getVersion());
+    if (existing != null)
+    {
+      existing.setRevised(revision.getRevised());
+      return;
+    }
+
+    int index = 0;
+    while (index < list.size() && list.get(index).getVersion() < revision.getVersion())
+    {
+      index++;
+    }
+
+    list.add(index, revision);
+    objectTypes.putIfAbsent(revision.getID(), revision.getEClass());
   }
 
   /**
@@ -1138,12 +1169,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   {
     Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
-    result.put(branchManager.getMainBranch(), new ArrayList<CDORevision>());
+    result.put(branchManager.getMainBranch(), new ArrayList<>());
 
     for (Integer branchID : branchInfos.keySet())
     {
       InternalCDOBranch branch = branchManager.getBranch(branchID);
-      result.put(branch, new ArrayList<CDORevision>());
+      result.put(branch, new ArrayList<>());
     }
 
     for (List<InternalCDORevision> list : revisions.values())

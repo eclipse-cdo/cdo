@@ -70,6 +70,8 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
 
   private List<InternalCDORevision> newRevisions;
 
+  private List<InternalCDORevision> undoRevisions;
+
   public MEMStoreAccessor(MEMStore store, ISession session)
   {
     super(store, session);
@@ -202,6 +204,7 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   protected void doCommit(OMMonitor monitor)
   {
     newRevisions = null;
+    undoRevisions = null;
   }
 
   @Override
@@ -227,12 +230,23 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
     {
       synchronized (store)
       {
-        for (InternalCDORevision revision : newRevisions)
+        for (int i = newRevisions.size() - 1; i >= 0; i--)
         {
-          store.rollbackRevision(revision);
+          store.rollbackRevision(newRevisions.get(i));
+        }
+
+        if (undoRevisions != null)
+        {
+          for (int i = undoRevisions.size() - 1; i >= 0; i--)
+          {
+            store.restoreRevision(undoRevisions.get(i));
+          }
         }
       }
     }
+
+    newRevisions = null;
+    undoRevisions = null;
   }
 
   @Override
@@ -286,11 +300,19 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
           + " that was already modified"); //$NON-NLS-1$
     }
 
+    InternalCDORevision previousRevision = revision.copy();
     InternalCDORevision newRevision = revision.copy();
     newRevision.adjustForCommit(branch, created);
 
     revisionDelta.applyTo(newRevision);
     writeRevision(newRevision);
+
+    if (undoRevisions == null)
+    {
+      undoRevisions = new ArrayList<>();
+    }
+
+    undoRevisions.add(previousRevision);
   }
 
   @Override

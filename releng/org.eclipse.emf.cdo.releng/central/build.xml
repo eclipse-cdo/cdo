@@ -16,32 +16,33 @@
 	<tstamp>
 		<format property="run.id" pattern="yyyyMMdd-HHmmss-SSS" />
 	</tstamp>
-	<!-- Pass -Dwork.dir=<directory> to retain all generated state there. The
-	     Jenkins uses an isolated workspace-local directory; the system-temporary
-	     location is the fallback for local invocations without WORKSPACE. -->
-	<property environment="env" />
-	<condition property="default.work.dir" value="${env.WORKSPACE}/.cdo-maven-publishing/${env.BUILD_TAG}" else="${java.io.tmpdir}/cdo-maven-aggregation/${run.id}">
-		<and>
-			<isset property="env.WORKSPACE" />
-			<isset property="env.BUILD_TAG" />
-		</and>
+	<!-- Pass -Dwork.dir=<directory> to retain all generated state there. Jenkins
+	     uses $WORKSPACE/maven-publishing/work; local runs default to target/central. -->
+	<condition property="explicit.work.dir">
+		<isset property="work.dir" />
 	</condition>
+	<property name="default.work.dir" location="${basedir}/../target/central" />
 	<property name="work.dir" location="${default.work.dir}" />
+	<condition property="build.root.option" value="--buildRoot &quot;${work.dir}/repository&quot;" else="">
+		<isset property="explicit.work.dir" />
+	</condition>
 	<!-- Isolated Maven cache copied from the source cache before consumer runs. -->
 	<property name="maven.consumer.repository" location="${work.dir}/maven-local" />
 	<property name="classes.dir" location="${work.dir}/classes" />
-	<property name="model.dir" location="${work.dir}/model" />
-	<property name="build.root" location="${work.dir}/repository" />
+	<condition property="default.build.root" value="${work.dir}/repository" else="${work.dir}">
+		<isset property="explicit.work.dir" />
+	</condition>
+	<property name="build.root" location="${default.build.root}" />
 	<property name="cdo.maven.repository" location="${build.root}/final" />
 	<property name="configuration.dir" location="${work.dir}/configuration" />
 	<property name="workspace.dir" location="${work.dir}/workspace" />
 	<property name="metadata.file" location="${work.dir}/cdo-build-metadata.properties" />
 	<property name="publishing.metadata.file" location="${basedir}/publishing.properties" />
 	<property name="repositories.file" location="${work.dir}/cdo-validation-repositories.txt" />
-	<property name="model.file" location="${model.dir}/CDO.aggr" />
+	<property name="model.file" location="${basedir}/CDO.aggr" />
 	<property name="consumer.work.dir" location="${work.dir}/consumer-test" />
 	<property name="consumer.versions.file" location="${consumer.work.dir}/cdo-consumer-versions.properties" />
-	<property name="consumer.project.dir" location="${basedir}/consumer-test" />
+	<property name="consumer.project.dir" location="${basedir}/../consumer-test" />
 	<property name="sources.javadoc.dir" location="${work.dir}/sources-javadoc" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
@@ -78,28 +79,27 @@
 
 	<target name="compile-helper">
 		<mkdir dir="${classes.dir}" />
-		<javac srcdir="${basedir}/../../src" destdir="${classes.dir}" includeantruntime="false" source="11" target="11" encoding="UTF-8">
+		<javac srcdir="${basedir}/../src" destdir="${classes.dir}" includeantruntime="false" source="11" target="11" encoding="UTF-8">
 			<include name="org/eclipse/emf/cdo/releng/CDOAggregationTool.java" />
 		</javac>
 	</target>
 
 	<target name="prepare" depends="compile-helper">
 		<echo message="Aggregation work directory: ${work.dir}" />
-		<mkdir dir="${model.dir}" />
 		<mkdir dir="${configuration.dir}" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="prepare" />
 			<arg value="${cdo.drop.dir}" />
-			<arg value="${basedir}/CDO.aggr.template" />
-			<arg value="${model.file}" />
 			<arg value="${metadata.file}" />
 			<arg value="${repositories.file}" />
-			<arg value="${build.root}" />
 		</java>
 		<echo message="CDO drop: ${cdo.drop.dir}" />
-		<echo message="Generated model: ${model.file}" />
 		<echo message="Generated metadata: ${metadata.file}" />
 		<echo message="Resolved validation repositories: ${repositories.file}" />
+	</target>
+
+	<target name="load-derived-values" depends="prepare">
+		<property file="${metadata.file}" />
 	</target>
 
 	<target name="check-drop">
@@ -113,7 +113,7 @@
 		<fail unless="cbi.console.available" message="Synchronous CBI console executable does not exist: ${cbi.aggregator}" />
 	</target>
 
-	<target name="execute-validate" depends="check-drop,check-console,prepare">
+	<target name="execute-validate" depends="check-drop,check-console,load-derived-values">
 		<exec executable="${cbi.aggregator}" failifexecutionfails="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="${configuration.dir}" />
@@ -124,10 +124,14 @@
 			<arg value="${model.file}" />
 			<arg value="--action" />
 			<arg value="VALIDATE" />
+			<arg line="${build.root.option}" />
+			<arg value="-vmargs" />
+			<arg value="-Dorg.eclipse.cbi.p2repo.cdo-location=${org.eclipse.cbi.p2repo.cdo-location}" />
+			<arg value="-Dorg.eclipse.cbi.p2repo.simrel-location=${org.eclipse.cbi.p2repo.simrel-location}" />
 		</exec>
 	</target>
 
-	<target name="execute-clean-build" depends="check-drop,check-console,prepare">
+	<target name="execute-clean-build" depends="check-drop,check-console,load-derived-values">
 		<exec executable="${cbi.aggregator}" failifexecutionfails="true" failonerror="true">
 			<arg value="-configuration" />
 			<arg value="${configuration.dir}" />
@@ -138,6 +142,10 @@
 			<arg value="${model.file}" />
 			<arg value="--action" />
 			<arg value="CLEAN_BUILD" />
+			<arg line="${build.root.option}" />
+			<arg value="-vmargs" />
+			<arg value="-Dorg.eclipse.cbi.p2repo.cdo-location=${org.eclipse.cbi.p2repo.cdo-location}" />
+			<arg value="-Dorg.eclipse.cbi.p2repo.simrel-location=${org.eclipse.cbi.p2repo.simrel-location}" />
 		</exec>
 	</target>
 
@@ -280,7 +288,7 @@
 		<delete dir="${work.dir}" failonerror="false" />
 		<!-- Remove the workspace left by older runs before -data was isolated. -->
 		<delete dir="${basedir}/workspace" failonerror="false" />
-		<delete dir="${basedir}/../../workspace" failonerror="false" />
+		<delete dir="${basedir}/../workspace" failonerror="false" />
 		<echo message="Removed temporary aggregation directory ${work.dir}" />
 	</target>
 </project>

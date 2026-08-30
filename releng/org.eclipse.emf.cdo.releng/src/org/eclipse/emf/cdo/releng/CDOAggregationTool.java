@@ -144,7 +144,7 @@ public final class CDOAggregationTool
   }
 
   /**
-   * Implements {@code prepare}: args are command, drop, template, model, metadata, repositories, build root.
+   * Implements {@code prepare}: args are command, drop, metadata, repositories.
    *
    * @author Eike Stepper
    */
@@ -152,9 +152,13 @@ public final class CDOAggregationTool
   {
     private static final LinkedHashMap<String, String> ATTRIBUTES = new LinkedHashMap<>();
 
+    private static final String CDO_LOCATION = "org.eclipse.cbi.p2repo.cdo-location";
+
+    private static final String SIMREL_LOCATION = "org.eclipse.cbi.p2repo.simrel-location";
+
     static
     {
-      ATTRIBUTES.put("qualifier", "cdo.build.drop");
+      ATTRIBUTES.put("qualifier", "cdo.drop.id");
       ATTRIBUTES.put("revision", "cdo.git.commit");
       ATTRIBUTES.put("branch", "cdo.build.branch");
       ATTRIBUTES.put("eclipse", "cdo.eclipse.version");
@@ -167,13 +171,14 @@ public final class CDOAggregationTool
       ATTRIBUTES.put("train", "cdo.eclipse.simrel");
       ATTRIBUTES.put("trigger", "cdo.build.trigger");
       ATTRIBUTES.put("type", "cdo.build.type");
+
     }
 
     public static void execute(String[] args) throws Exception
     {
-      if (args.length != 7)
+      if (args.length != 4)
       {
-        throw new IllegalArgumentException("prepare requires drop, template, model, metadata, repositories, buildRoot");
+        throw new IllegalArgumentException("prepare requires drop, metadata, repositories");
       }
 
       File drop = requireDirectory(args[1], "drop");
@@ -193,7 +198,7 @@ public final class CDOAggregationTool
         values.put(attribute.getValue(), required(build, attribute.getKey()));
       }
 
-      String dropID = values.get("cdo.build.drop");
+      String dropID = values.get("cdo.drop.id");
       if (dropID.isBlank())
       {
         throw new IllegalArgumentException("build/@qualifier must not be empty");
@@ -205,37 +210,28 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("No repository locations found in " + setup);
       }
 
-      LinkedHashSet<String> validationRepositories = new LinkedHashSet<>();
-      for (String repository : repositories)
-      {
-        validationRepositories.add(validationLocation(repository, dropID, drop));
-      }
+      Map<String, String> derived = new LinkedHashMap<>(values);
+      String dropSource = repositories.stream()
+          .filter(repository -> repository.contains(dropID) || repository.equals("https://download.eclipse.org/modeling/emf/cdo/updates")).findFirst()
+          .orElseThrow(() -> new IllegalArgumentException("Target-platform CDO repository is missing"));
+      String dropRepository = validationLocation(dropSource, dropID, drop);
+      String simrelRepository = repositories.stream().filter(PrepareCommand::isSimrelRepository).findFirst()
+          .map(repository -> validationLocation(repository, dropID, drop))
+          .orElseThrow(() -> new IllegalArgumentException("Target-platform SimRel repository is missing"));
+      derived.put(CDO_LOCATION, dropRepository);
+      derived.put(SIMREL_LOCATION, simrelRepository);
 
-      Files.write(Path.of(args[5]), validationRepositories, StandardCharsets.UTF_8);
-      writeProperties(Path.of(args[4]), values);
+      writeProperties(Path.of(args[2]), derived);
+      Files.write(Path.of(args[3]), List.of(simrelRepository), StandardCharsets.UTF_8);
+      System.out.println(CDO_LOCATION + "=" + dropRepository);
+      System.out.println(SIMREL_LOCATION + "=" + simrelRepository);
+      System.out.println("Validated CDO and SimRel repositories; build=" + dropID);
+    }
 
-      String template = Files.readString(Path.of(args[2]), StandardCharsets.UTF_8);
-      String fragment = validationRepositories.stream().map(url -> "    <validationRepositories location=\"" + xml(url) + "\"/>\n").reduce("", String::concat);
-      String sourceBundles = BUNDLES.stream().map(bundle -> "        <bundles name=\"" + xml(bundle + ".source") + "\"/>\n").reduce("", String::concat);
-      String model = template.replace("@CDO_DROP_ID@", xml(dropID)).replace("@CDO_DROP_DIRECTORY@", xml(drop.toURI().toString()))
-          // cbiAggr treats buildRoot as a filesystem path (unlike repository
-          // locations, which are URIs). Use a portable, slash-normalized path.
-          .replace("@BUILD_ROOT@", xml(new File(args[6]).getAbsolutePath().replace('\\', '/'))).replace("@VALIDATION_REPOSITORIES@", fragment)
-          .replace("@SOURCE_BUNDLES@", sourceBundles);
-
-      if (model.contains("@VALIDATION_REPOSITORIES@"))
-      {
-        throw new IllegalArgumentException("Template did not consume @VALIDATION_REPOSITORIES@");
-      }
-
-      if (model.contains("@SOURCE_BUNDLES@"))
-      {
-        throw new IllegalArgumentException("Template did not consume @SOURCE_BUNDLES@");
-      }
-
-      Files.createDirectories(Path.of(args[3]).getParent());
-      Files.writeString(Path.of(args[3]), model, StandardCharsets.UTF_8);
-      System.out.println("Extracted " + repositories.size() + " validation repositories; cdo.build.drop=" + dropID);
+    private static boolean isSimrelRepository(String repository)
+    {
+      String value = repository.toLowerCase();
+      return value.contains("download.eclipse.org/releases/") || value.contains("simrel");
     }
   }
 
@@ -446,7 +442,7 @@ public final class CDOAggregationTool
         versions.put("cdo.version." + bundle, version);
       }
 
-      for (String key : Arrays.asList("cdo.build.drop", "cdo.git.commit", "cdo.eclipse.simrel"))
+      for (String key : Arrays.asList("cdo.drop.id", "cdo.git.commit", "cdo.eclipse.simrel"))
       {
         String value = metadata.get(key);
         if (value == null || value.isBlank())
@@ -1187,7 +1183,7 @@ public final class CDOAggregationTool
       List<String> report = new ArrayList<>();
       report.add("status=" + status);
       report.add("repository=" + repository.getAbsolutePath());
-      report.add("cdo.build.drop=" + value(metadata, "cdo.build.drop"));
+      report.add("cdo.drop.id=" + value(metadata, "cdo.drop.id"));
       report.add("cdo.git.commit=" + value(metadata, "cdo.git.commit"));
       report.add("coordinates=" + actualArtifacts.size());
       report.add("classifierJars=" + actualArtifacts.size() * CLASSIFIERS.size());
@@ -1396,7 +1392,7 @@ public final class CDOAggregationTool
       try (PrintWriter out = new PrintWriter(summary, StandardCharsets.UTF_8.name()))
       {
         out.println("cdo.build.type=" + value(metadata, "cdo.build.type"));
-        out.println("cdo.build.drop=" + value(metadata, "cdo.build.drop"));
+        out.println("cdo.drop.id=" + value(metadata, "cdo.drop.id"));
         out.println("cdo.git.commit=" + value(metadata, "cdo.git.commit"));
         out.println("publishing.mode=" + mode);
         out.println("staging.artifacts=" + artifacts);
@@ -1549,11 +1545,6 @@ public final class CDOAggregationTool
     }
 
     return file;
-  }
-
-  private static String xml(String value)
-  {
-    return value.replace("&", "&amp;").replace("\"", "&quot;").replace("<", "&lt;").replace(">", "&gt;");
   }
 
   private static Document parse(File file) throws Exception

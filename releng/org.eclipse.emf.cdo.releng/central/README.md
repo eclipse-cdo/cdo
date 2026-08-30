@@ -4,6 +4,17 @@ This directory contains the portable CBI `p2repo-aggregator` model for CDO.
 It consumes a supplied CDO p2 drop (a promoted repository is not required for a
 local run), and it neither builds CDO nor publishes to Maven Central.
 
+`CDO.aggr` is the checked-in Maven Central publication policy and `CDO.aggran`
+is its checked-in Analyzer descriptor. Both can be opened directly with the
+CBI Aggregator tooling; no preparation step generates or rewrites an
+aggregation model. The static IU and validation-repository structures are
+deliberate policy. Drop-specific repository locations are supplied at runtime
+through CBI's native `${key}` substitution and the `MappedRepository`
+description override `org.eclipse.cbi.p2repo.cdo-location`.
+For IDE analysis, define `org.eclipse.cbi.p2repo.simrel-location` as an Eclipse string
+substitution variables (or use the repository's normal target-platform setup);
+headless Ant runs provide them as JVM properties.
+
 ## Required input
 
 The canonical workflow is Ant and can be launched from Eclipse External Tools,
@@ -19,10 +30,9 @@ The Ant properties/arguments are:
 * `cdo.drop.dir` — required. The promoted, unhidden CDO p2 drop containing
   `build-info.xml` and `tp-macro.setup`. The build fails immediately if the
   property is omitted or does not name an existing directory.
-* `work.dir` — optional output/work area for the generated model, metadata,
-  CBI configuration, workspace, and repository. If omitted, a unique folder
-  below the system temporary directory is used. Pass
-  `-Dwork.dir="C:\path\to\work"` to retain a stable location.
+* `work.dir` — optional output/work area for metadata, CBI configuration,
+  workspace, and repository. If omitted, Jenkins uses `$WORKSPACE/maven-publishing/work`;
+  local runs use `central/target/central`.
 * `cbi.aggregator` — path to the CBI console executable. The portable default
   is `cbiAggrc.exe`; override it with `-Dcbi.aggregator=...` when the
   executable is not on the working directory/PATH.
@@ -141,13 +151,13 @@ Jenkinsfile. Local manual runs continue to use
 `-Dcdo.drop.dir=<local-drop>` and `-Dcbi.aggregator=...` through Ant; neither
 local override is exposed as a Jenkins parameter.
 
-The generated CBI model enables the native Maven checks
+The checked-in `CDO.aggr` model enables the native Maven checks
 `validateNexusPublishingRequirements="true"` and
 `validatePOMDependencies="true"` on the root `aggregator:Aggregation` element.
-`versionFormat="MavenRelease"` keeps generated Maven versions release
-compatible. `includeSources="true"` is used together with source IUs generated
-from the same central bundle map; CBI requires those IUs when validating a
-binary bundle that contains class files.
+`versionFormat="MavenRelease"` keeps Maven versions release-compatible.
+`includeSources="true"` is used together with the statically declared source
+IUs; CBI requires those IUs when validating a binary bundle that contains class
+files.
 
 ## CBI Maven metadata checks
 
@@ -223,10 +233,10 @@ the versioned consumer source tree.
 
 ## Model scope
 
-`CDO.aggr.template` selects the 12 approved runtime Bundle-SymbolicNames and,
-at generation time, their matching `.source` IUs from the same central
-`BUNDLES` map. The source IUs are validation inputs; the later source/Javadoc
-step creates the two Maven classifiers explicitly.
+`CDO.aggr` statically selects the approved runtime Bundle-SymbolicNames and
+their matching `.source` IUs. The source IUs are validation inputs; the later
+source/Javadoc step creates the two Maven classifiers explicitly. Structural
+changes to this list require a deliberate edit to `CDO.aggr`.
 The sole Maven mapping fixes their groupId to `org.eclipse.cdo` and retains the
 exact Bundle-SymbolicName as artifactId. No features, UI, tests, examples,
 documentation, JDBC drivers, or database dialects other than H2 are selected.
@@ -252,18 +262,19 @@ The H2 adapter is published without the H2 driver. The consumer declares
 in the selected OSGi configuration. This keeps the driver available from its
 normal Maven Central coordinate without redistributing it here.
 
-The validation repositories are extracted at runtime from the promoted drop's
-`tp-macro.setup`, preserving order and removing duplicates. The resolved list
-used by CBI is saved as `cdo-validation-repositories.txt`; moving URLs such as
-`latest` are preserved and reported as reducing long-term reproducibility.
-The promotion step replaces the fixed CDO token with the promoted drop URL.
-For a locally supplied drop that has not yet gone through promotion/unhide, the
-generated validation model safely substitutes the matching local drop directory
-for that one CDO validation repository; other validation repositories remain
-the dynamically extracted URLs. This permits a complete local dry run without
-pretending that the drop is already published.
-The aggregation-side generator retains a legacy fallback that resolves the
-unreplaced catalog URL to its p2 child (`.../updates/releases/latest`).
+The preparation step extracts the promoted drop's `tp-macro.setup` and derives
+exactly two runtime properties: `org.eclipse.cbi.p2repo.cdo-location` (the
+selected drop repository) and `org.eclipse.cbi.p2repo.simrel-location` (the
+SimRel validation repository). They are passed to the CBI JVM with
+`-vmargs -D...`; the Ant `--buildRoot` option supplies run-local output without
+modifying the checked-in model. The CDO MappedRepository uses the description
+`cdo-location`; headless publishing must provide its override explicitly.
+
+Preparation prints every supplied value for diagnostics. CBI 1.1.0 may report
+raw `p2:${key}` text in its generic repository error even after resolving the
+location; diagnose failures against the resolved URL and its repository
+contents, not against that wording alone.
+
 They provide the external Eclipse, EMF, Orbit, and Java execution-environment
 IUs needed to validate dependency closure, but are never selected or copied to
 the Maven result. This prevents silently copying or assigning Maven coordinates
@@ -277,7 +288,7 @@ POMs are inspected, the smallest suitable extension is a post-generation XML
 POM overlay that adds these properties from `build-info.xml` and the supplied
 drop identity:
 
-* `cdo.build.drop`
+* `cdo.drop.id`
 * `cdo.eclipse.simrel`
 * `cdo.jenkins.job`
 * `cdo.jenkins.build`

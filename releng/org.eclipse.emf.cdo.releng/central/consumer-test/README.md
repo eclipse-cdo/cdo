@@ -44,7 +44,7 @@ mvn -Dcdo.maven.repository=C:/path/to/repository/final \
     -Dcdo.version.org.eclipse.emf.cdo=... clean test
 ```
 
-The generated properties file also records `cdo.build.drop`, `cdo.git.commit`,
+The generated properties file also records `cdo.drop.id`, `cdo.git.commit`,
 and `cdo.eclipse.simrel`; release values are not hard-coded in this project.
 
 The tests instantiate client/common APIs (`ManagedContainer` and `CDOUtil`)

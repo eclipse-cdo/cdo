@@ -96,12 +96,12 @@ pipeline {
           }
           env.CDO_DOWNLOADED_DROP = dropDir
           env.CDO_AGGR_WORK_DIR = workDir
-          withEnv(["DROP_ID=${dropId}", "CDO_DOWNLOADED_DROP=${dropDir}", "CDO_AGGR_WORK_DIR=${workDir}"]) {
+          withEnv(["DROP_ID=${dropId}", "LOCAL_DROP_DIR=${dropDir}", "CDO_AGGR_WORK_DIR=${workDir}"]) {
           withAnt(installation: 'apache-ant-latest') {
             sh '''
               set -eu
-              ant -Dcdo.drop.dir="$CDO_DOWNLOADED_DROP" -Dcdo.drop.id="$DROP_ID" \
-                -Dwork.dir="$CDO_AGGR_WORK_DIR" -f releng/org.eclipse.emf.cdo.releng/publish/aggr/build.xml drop-info
+              ant -Dcdo.drop.dir="$LOCAL_DROP_DIR" -Dcdo.drop.id="$DROP_ID" \
+                -Dwork.dir="$CDO_AGGR_WORK_DIR" -f releng/org.eclipse.emf.cdo.releng/central/build.xml drop-info
             '''
           }
           }
@@ -137,13 +137,13 @@ pipeline {
               ''').trim()
             }
           }
-          withEnv(["CDO_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}"]) {
+          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}"]) {
           withAnt(installation: 'apache-ant-latest') {
             sh '''
               set -eu
-              ant -Dcdo.drop.dir="$CDO_DROP_DIR" -Dwork.dir="$AGGR_WORK_DIR" \
+              ant -Dcdo.drop.dir="$LOCAL_DROP_DIR" -Dwork.dir="$AGGR_WORK_DIR" \
                 -Dcbi.aggregator="$CBI_AGGREGATOR" -Dpublishing.mode="$PUBLISHING_MODE" \
-                -f releng/org.eclipse.emf.cdo.releng/publish/aggr/build.xml clean-build consumer-dependency-tree
+                -f releng/org.eclipse.emf.cdo.releng/central/build.xml clean-build consumer-dependency-tree
             '''
           }
           }
@@ -157,7 +157,7 @@ pipeline {
       }
       steps {
         script {
-          withEnv(["CDO_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "MAVEN_UPLOADER=${MAVEN_UPLOADER}"]) {
+          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "MAVEN_UPLOADER=${MAVEN_UPLOADER}"]) {
           withCredentials([
             usernamePassword(credentialsId: PUBLISH_CREDENTIALS_ID,
               usernameVariable: 'MAVEN_CENTRAL_USERNAME', passwordVariable: 'MAVEN_CENTRAL_PASSWORD'),
@@ -166,9 +166,9 @@ pipeline {
             withAnt(installation: 'apache-ant-latest') {
               sh '''
                 set -eu
-                ant -Dpublishing.mode=PUBLISH -Dcdo.drop.dir="$CDO_DROP_DIR" \
+                ant -Dpublishing.mode=PUBLISH -Dcdo.drop.dir="$LOCAL_DROP_DIR" \
                   -Dwork.dir="$AGGR_WORK_DIR" \
-                  -Dmaven.uploader="$MAVEN_UPLOADER" -f releng/org.eclipse.emf.cdo.releng/publish/aggr/build.xml publish
+                  -Dmaven.uploader="$MAVEN_UPLOADER" -f releng/org.eclipse.emf.cdo.releng/central/build.xml publish
               '''
             }
           }

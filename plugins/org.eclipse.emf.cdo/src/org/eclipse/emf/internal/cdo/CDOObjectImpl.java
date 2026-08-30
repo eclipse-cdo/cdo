@@ -383,6 +383,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       TRACER.format("Setting ID: {0}", id); //$NON-NLS-1$
     }
 
+    // A materialized revision already carries this ID. In particular, rollback may restore an object with its current
+    // ID; do not turn this harmless idempotent operation into a request for a new revision stub.
+    if (id != null && id.equals(revision.getID()))
+    {
+      return;
+    }
+
     if (id == null)
     {
       revision = cdoClassInfo().getRevisionForID(null);

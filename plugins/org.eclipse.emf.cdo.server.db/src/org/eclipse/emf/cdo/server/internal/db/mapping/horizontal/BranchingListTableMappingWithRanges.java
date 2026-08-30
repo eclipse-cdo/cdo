@@ -1116,6 +1116,16 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
   private void validateExactlyOne(BatchedStatement stmt, int expectedCount)
   {
+    if (stmt == null)
+    {
+      if (expectedCount != 0)
+      {
+        throw new DBException("Missing branching list insert statement"); //$NON-NLS-1$
+      }
+
+      return;
+    }
+
     int knownResult = stmt.getTotalResult();
     int unknownResultCount = stmt.getUnknownResultCount();
     if (knownResult > expectedCount || unknownResultCount == 0 && knownResult != expectedCount || knownResult + unknownResultCount < expectedCount)
@@ -1548,7 +1558,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
   /**
    * Commit-wide statements for normalized branching list snapshots.
-   * 
+   *
    * @author Eike Stepper
    */
   private final class BranchingDeltaBatch

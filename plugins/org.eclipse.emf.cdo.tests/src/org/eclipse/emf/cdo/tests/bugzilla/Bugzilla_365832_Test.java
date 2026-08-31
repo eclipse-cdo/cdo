@@ -18,8 +18,9 @@ import org.eclipse.emf.cdo.tests.model6.A;
 import org.eclipse.emf.cdo.tests.model6.D;
 import org.eclipse.emf.cdo.tests.model6.E;
 import org.eclipse.emf.cdo.tests.model6.F;
-import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
+import org.eclipse.emf.cdo.transaction.CDOFileTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.EList;
@@ -80,37 +81,37 @@ public class Bugzilla_365832_Test extends AbstractCDOTest
     // Step 2 : open a push transaction a save locally a modification
     // Step 2.1 : open a push transaction
     File fileForStoringChanges = createTempFile();
-    CDOPushTransaction pushTransaction = createPushTransaction(fileForStoringChanges, reconstructSavePoints);
+    CDOFileTransaction fileTransaction = createPushTransaction(fileForStoringChanges, reconstructSavePoints);
 
     // Step 2.2 : create a new element
-    addNewChildren(pushTransaction);
+    addNewChildren(fileTransaction);
 
     // => make sure that diagram is modified as expected
-    checkDiagramAsCorrectlyBeenModified(pushTransaction);
+    checkDiagramAsCorrectlyBeenModified(fileTransaction);
 
     // Step 2.3 : save locally
-    pushTransaction.commit();
-    pushTransaction.getSession().close();
+    fileTransaction.commit();
+    fileTransaction.getSession().close();
 
     // Step 3 : load changes
-    pushTransaction = createPushTransaction(fileForStoringChanges, reconstructSavePoints);
+    fileTransaction = createPushTransaction(fileForStoringChanges, reconstructSavePoints);
 
     // => check that diagram is modified as expected
-    checkDiagramAsCorrectlyBeenModified(pushTransaction);
+    checkDiagramAsCorrectlyBeenModified(fileTransaction);
 
     // => check that diagram is modified as expected
-    checkDiagramAsCorrectlyBeenModified(pushTransaction);
+    checkDiagramAsCorrectlyBeenModified(fileTransaction);
 
     // Step 4 : try to modify objects and commit
-    Diagram diagram = getDiagram(pushTransaction);
+    Diagram diagram = getDiagram(fileTransaction);
 
     @SuppressWarnings("unchecked")
     EList<Node> children = (EList<Node>)(EList<?>)diagram.getPersistedChildren();
     Node newElement = children.get(1);
     newElement.setType("newType");
-    pushTransaction.commit();
+    fileTransaction.commit();
 
-    pushTransaction.getSession().close();
+    fileTransaction.getSession().close();
   }
 
   /**
@@ -121,11 +122,11 @@ public class Bugzilla_365832_Test extends AbstractCDOTest
    * @param reconstructSavePoints
    *          if CDOSavePoints should be reconstructed when creating the PushTransaction
    */
-  private CDOPushTransaction createPushTransaction(File fileForStoringChanges, boolean reconstructSavePoints) throws IOException
+  private CDOFileTransaction createPushTransaction(File fileForStoringChanges, boolean reconstructSavePoints) throws IOException
   {
     CDOSession session = openSession();
     CDOTransaction delegate = session.openTransaction();
-    return new CDOPushTransaction(delegate, fileForStoringChanges, reconstructSavePoints);
+    return CDOUtil.createFileTransaction(delegate, fileForStoringChanges, reconstructSavePoints);
   }
 
   /**

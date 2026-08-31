@@ -339,31 +339,20 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/transaction/CDOPushTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
-        <filter id="337682486">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
-                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-            </message_arguments>
-        </filter>
-        <filter id="574660632">
+    <resource path="src/org/eclipse/emf/cdo/transaction/CDONestedTransaction.java" type="org.eclipse.emf.cdo.transaction.CDONestedTransaction">
+        <filter id="576782386">
             <message_arguments>
                 <message_argument value="CDOTransaction"/>
-                <message_argument value="CDOCommonView"/>
-                <message_argument value="CDOPushTransaction"/>
+                <message_argument value="CDONestedTransaction"/>
             </message_arguments>
         </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/transaction/CDOPushTransaction.java" type="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
         <filter id="574668824">
             <message_arguments>
                 <message_argument value="CDOTransaction"/>
                 <message_argument value="CDOPushTransaction"/>
                 <message_argument value="CDOCommonView"/>
-            </message_arguments>
-        </filter>
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="CDOTransaction"/>
-                <message_argument value="CDOPushTransaction"/>
             </message_arguments>
         </filter>
     </resource>
@@ -392,13 +381,6 @@
             <message_arguments>
                 <message_argument value="CDOCommonTransaction"/>
                 <message_argument value="CDOTransaction"/>
-            </message_arguments>
-        </filter>
-        <filter id="1209008130">
-            <message_arguments>
-                <message_argument value="4.8"/>
-                <message_argument value="4.9"/>
-                <message_argument value="commit(Runnable, Predicate&lt;Long&gt;, IProgressMonitor)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -935,6 +917,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/transaction/DelegatingCDOTransactionImpl.java" type="org.eclipse.emf.internal.cdo.transaction.DelegatingCDOTransactionImpl">
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="DelegatingCDOTransaction"/>
+                <message_argument value="DelegatingCDOTransactionImpl"/>
+                <message_argument value="CDOCommonView"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/view/AbstractCDOView.java" type="org.eclipse.emf.internal.cdo.view.AbstractCDOView">
         <filter id="574668824">
             <message_arguments>
@@ -1000,6 +991,14 @@
             <message_arguments>
                 <message_argument value="CDOCommonRepository"/>
                 <message_argument value="OpenSessionResult"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/spi/cdo/DelegatingCDOTransaction.java" type="org.eclipse.emf.spi.cdo.DelegatingCDOTransaction">
+        <filter id="576782386">
+            <message_arguments>
+                <message_argument value="CDOTransaction"/>
+                <message_argument value="DelegatingCDOTransaction"/>
             </message_arguments>
         </filter>
     </resource>

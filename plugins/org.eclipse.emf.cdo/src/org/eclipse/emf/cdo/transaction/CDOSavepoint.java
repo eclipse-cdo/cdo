@@ -29,69 +29,85 @@ import java.util.concurrent.ConcurrentMap;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
+public interface CDOSavepoint extends CDOUserSavepoint, CDOTransactionAware, CDOChangeSetDataProvider
 {
   /**
+   * Returns the transaction that owns this savepoint.
+   *
+   * @return the owning transaction.
    * @since 3.0
    */
   @Override
   public CDOTransaction getTransaction();
 
+  /**
+   * Returns the next savepoint after this one.
+   *
+   * @return the next savepoint, or {@code null}.
+   */
   @Override
   public CDOSavepoint getNextSavepoint();
 
+  /**
+   * Returns the savepoint preceding this one.
+   *
+   * @return the previous savepoint, or {@code null}.
+   */
   @Override
   public CDOSavepoint getPreviousSavepoint();
 
   /**
+   * Indicates whether the transaction was dirty when this savepoint was created.
+   *
+   * @return {@code true} if the transaction was dirty.
    * @since 3.0
    */
   public boolean wasDirty();
 
   /**
+   * Returns objects that were already new at this savepoint's boundary.
+   *
+   * @return the base-new object map.
    * @since 3.0
    */
   public Map<CDOID, CDORevision> getBaseNewObjects();
 
   /**
+   * Returns objects created at this savepoint.
+   *
+   * @return the new-object map.
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getNewObjects();
 
   /**
+   * Returns objects detached at this savepoint.
+   *
+   * @return the detached-object map.
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getDetachedObjects();
 
   /**
+   * Returns objects reattached at this savepoint.
    * Bug 283985 (Re-attachment)
    *
+   * @return the reattached-object map.
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getReattachedObjects();
 
   /**
+   * Returns objects modified at this savepoint.
+   *
+   * @return the dirty-object map.
    * @since 3.0
    */
   public Map<CDOID, CDOObject> getDirtyObjects();
 
   /**
-   * The returned map delegates to {@link #getRevisionDeltas2()} and does <b>not</b> support the following methods:
+   * Returns deltas of the revisions modified at this savepoint.
    *
-   * <ul>
-   * <li> {@link ConcurrentMap#putIfAbsent(Object, Object)}
-   * <li> {@link ConcurrentMap#remove(Object, Object)}
-   * <li> {@link ConcurrentMap#replace(Object, Object)}
-   * <li> {@link ConcurrentMap#replace(Object, Object, Object)}
-   * </ul>
-   *
-   * @since 3.0
-   * @deprecated As of 4.2 use {@link #getRevisionDeltas2()} instead.
-   */
-  @Deprecated
-  public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas();
-
-  /**
    * @since 4.2
    */
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas2();
@@ -145,4 +161,19 @@ public interface CDOSavepoint extends CDOUserSavepoint, CDOChangeSetDataProvider
    * @since 4.0
    */
   public CDOChangeSetData getAllChangeSetData();
+
+  /**
+   * The returned map delegates to {@link #getRevisionDeltas2()} and does <b>not</b> support the following methods:
+   * <ul>
+   * <li> {@link ConcurrentMap#putIfAbsent(Object, Object)}
+   * <li> {@link ConcurrentMap#remove(Object, Object)}
+   * <li> {@link ConcurrentMap#replace(Object, Object)}
+   * <li> {@link ConcurrentMap#replace(Object, Object, Object)}
+   * </ul>
+   *
+   * @since 3.0
+   * @deprecated As of 4.2 use {@link #getRevisionDeltas2()} instead.
+   */
+  @Deprecated
+  public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas();
 }

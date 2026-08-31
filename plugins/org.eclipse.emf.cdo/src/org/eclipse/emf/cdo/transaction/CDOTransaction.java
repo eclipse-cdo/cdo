@@ -51,6 +51,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Callable;
@@ -213,6 +214,30 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
    */
   @Override
   public CDOSavepoint getLastSavepoint();
+
+  /**
+   * Opens a scope inside the current innermost scope, if any.
+   *
+   * @since 4.30
+   */
+  public CDOTransactionScope openScope();
+
+  /**
+   * @since 4.30
+   */
+  public CDOTransactionScope getOutermostScope();
+
+  /**
+   * @since 4.30
+   */
+  public CDOTransactionScope getInnermostScope();
+
+  /**
+   * Returns an immutable outermost-to-innermost snapshot of open scopes.
+   *
+   * @since 4.30
+   */
+  public List<CDOTransactionScope> getScopes();
 
   public Map<CDOID, CDOObject> getNewObjects();
 

@@ -80,6 +80,8 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(EMapTest.class);
     testClasses.add(EnumTest.class);
     testClasses.add(ExternalReferenceTest.class);
+    testClasses.add(FileTransactionTest.class);
+    testClasses.add(FileTransactionWithoutReconstructSavepointsTest.class);
     testClasses.add(IndexReconstructionTest.class);
     testClasses.add(InitialTest.class);
     testClasses.add(InvalidationTest.class);
@@ -101,8 +103,6 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(OCLQueryTest.class);
     testClasses.add(PackageRegistryTest.class);
     testClasses.add(PartialCommitTest.class);
-    testClasses.add(PushTransactionTest.class);
-    testClasses.add(PushTransactionWithoutReconstructSavepointsTest.class);
     testClasses.add(ReconnectingSessionTest.class);
     testClasses.add(RepositoryTest.class);
     testClasses.add(ResourceModificationTrackingTest.class);
@@ -120,6 +120,7 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(StateMachineTest.class);
     testClasses.add(StickyViewsTest.class);
     testClasses.add(TransactionHandlerTest.class);
+    testClasses.add(TransactionScopeTest.class);
     testClasses.add(TransactionTest.class);
     testClasses.add(UnsetTest.class);
     testClasses.add(ViewProviderTest.class);

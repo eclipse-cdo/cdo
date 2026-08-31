@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.session.CDOSession.Options;
 import org.eclipse.emf.cdo.session.CDOSessionProvider;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+import org.eclipse.emf.cdo.transaction.CDOFileTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
 import org.eclipse.emf.cdo.transaction.CDOTransactionContainer;
@@ -70,6 +71,7 @@ import org.eclipse.emf.internal.cdo.object.CDOExternalObject;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingPolicyImpl;
+import org.eclipse.emf.internal.cdo.transaction.CDOFileTransactionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDOXATransactionImpl.CDOXAInternalAdapter;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
@@ -110,6 +112,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -476,6 +479,37 @@ public final class CDOUtil
   public static CDOFeatureAnalyzer createUIFeatureAnalyzer(long maxTimeBetweenOperation)
   {
     return new CDOFeatureAnalyzerUI(maxTimeBetweenOperation);
+  }
+
+  /**
+   * Creates a file-backed transaction using a generated temporary file.
+   *
+   * @since 4.30
+   */
+  public static CDOFileTransaction createFileTransaction(CDOTransaction delegate) throws IOException
+  {
+    File file = File.createTempFile("cdo_tx_" + delegate.getSession().getSessionID() + "_" + delegate.getViewID() + "__", null);
+    return new CDOFileTransactionImpl(delegate, file, true);
+  }
+
+  /**
+   * Creates a file-backed transaction using the given file.
+   *
+   * @since 4.30
+   */
+  public static CDOFileTransaction createFileTransaction(CDOTransaction delegate, File file) throws IOException
+  {
+    return new CDOFileTransactionImpl(delegate, file, true);
+  }
+
+  /**
+   * Creates a file-backed transaction using the given file and savepoint reconstruction policy.
+   *
+   * @since 4.30
+   */
+  public static CDOFileTransaction createFileTransaction(CDOTransaction delegate, File file, boolean reconstructSavepoints) throws IOException
+  {
+    return new CDOFileTransactionImpl(delegate, file, reconstructSavepoints);
   }
 
   /**

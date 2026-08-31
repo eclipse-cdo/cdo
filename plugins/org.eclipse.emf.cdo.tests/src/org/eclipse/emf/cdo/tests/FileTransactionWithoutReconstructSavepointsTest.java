@@ -11,8 +11,9 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
+import org.eclipse.emf.cdo.transaction.CDOFileTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,11 +21,11 @@ import java.io.IOException;
 /**
  * @author Eike Stepper
  */
-public class PushTransactionWithoutReconstructSavepointsTest extends PushTransactionTest
+public class FileTransactionWithoutReconstructSavepointsTest extends FileTransactionTest
 {
   @Override
-  protected CDOPushTransaction openPushTransaction(CDOTransaction transaction, File file) throws IOException
+  protected CDOFileTransaction openFileTransaction(CDOTransaction transaction, File file) throws IOException
   {
-    return new CDOPushTransaction(transaction, file, false);
+    return CDOUtil.createFileTransaction(transaction, file, false);
   }
 }

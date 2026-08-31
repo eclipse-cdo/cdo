@@ -29,7 +29,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOUserTransaction
+public interface CDOUserTransaction extends CDORollbackable
 {
   /**
    * Same as {@link #commit(IProgressMonitor) commit(null)}.
@@ -94,6 +94,10 @@ public interface CDOUserTransaction
    */
   public CDOCommitInfo commit(IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
 
+  /**
+   * Rolls back all uncommitted changes in this transaction.
+   */
+  @Override
   public void rollback();
 
   /**
@@ -107,6 +111,9 @@ public interface CDOUserTransaction
   public CDOUserSavepoint setSavepoint();
 
   /**
+   * Returns the most recently created savepoint.
+   *
+   * @return the last savepoint, or {@code null} if none exists.
    * @since 3.0
    */
   public CDOUserSavepoint getLastSavepoint();

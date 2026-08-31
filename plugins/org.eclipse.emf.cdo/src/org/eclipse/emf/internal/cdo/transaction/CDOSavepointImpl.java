@@ -33,11 +33,11 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -52,50 +52,10 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 {
   private final InternalCDOTransaction transaction;
 
-  private Map<CDOID, CDORevision> baseNewObjects = CDOIDUtil.createMap();
-
-  private Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
-
-  // Bug 283985 (Re-attachment)
-  private Map<CDOID, CDOObject> reattachedObjects = CDOIDUtil.createMap();
-
-  private Map<CDOID, CDOObject> detachedObjects = new HashMap<>()
-  {
-    private static final long serialVersionUID = 1L;
-
-    @Override
-    public CDOObject put(CDOID key, CDOObject object)
-    {
-      return sync().supply(() -> {
-        baseNewObjects.remove(key);
-        newObjects.remove(key);
-        reattachedObjects.remove(key);
-        dirtyObjects.remove(key);
-        revisionDeltas.remove(key);
-        return super.put(key, object);
-      });
-    }
-  };
-
-  private Map<CDOID, CDOObject> dirtyObjects = CDOIDUtil.createMap();
-
-  private Map<CDOID, CDORevisionDelta> revisionDeltas = new HashMap<>()
-  {
-    private static final long serialVersionUID = 1L;
-
-    @Override
-    public CDORevisionDelta put(CDOID id, CDORevisionDelta delta)
-    {
-      transaction.clearResourcePathCacheIfNecessary(delta);
-      return super.put(id, delta);
-    }
-
-    @Override
-    public void putAll(Map<? extends CDOID, ? extends CDORevisionDelta> m)
-    {
-      throw new UnsupportedOperationException();
-    }
-  };
+  /**
+   * The fixed point represented by this public savepoint handle.
+   */
+  private final TransactionBoundary boundary;
 
   private boolean wasDirty;
 
@@ -103,7 +63,22 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   {
     super(transaction, lastSavepoint);
     this.transaction = transaction;
+
+    TransactionBoundary previousBoundary = lastSavepoint instanceof CDOSavepointImpl ? ((CDOSavepointImpl)lastSavepoint).boundary : null;
+    boundary = new TransactionBoundary(transaction, previousBoundary);
+    boundary.setSavepoint(this);
+
+    if (previousBoundary != null)
+    {
+      previousBoundary.setNext(boundary);
+    }
+
     wasDirty = transaction.isDirty();
+  }
+
+  TransactionBoundary getBoundary()
+  {
+    return boundary;
   }
 
   @Override
@@ -115,31 +90,49 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public InternalCDOSavepoint getFirstSavePoint()
   {
-    return sync().supply(() -> (InternalCDOSavepoint)super.getFirstSavePoint());
+    return sync().supply(() -> {
+      TransactionBoundary first = boundary;
+
+      while (first.getPrevious() != null)
+      {
+        first = first.getPrevious();
+      }
+
+      return first.getSavepoint();
+    });
   }
 
   @Override
   public InternalCDOSavepoint getPreviousSavepoint()
   {
-    return sync().supply(() -> (InternalCDOSavepoint)super.getPreviousSavepoint());
+    return sync().supply(() -> boundary.getPrevious() == null ? null : boundary.getPrevious().getSavepoint());
   }
 
   @Override
   public InternalCDOSavepoint getNextSavepoint()
   {
-    return sync().supply(() -> (InternalCDOSavepoint)super.getNextSavepoint());
+    return sync().supply(() -> boundary.getNext() == null ? null : boundary.getNext().getSavepoint());
+  }
+
+  @Override
+  public void setPreviousSavepoint(InternalCDOUserSavepoint previousSavepoint)
+  {
+    super.setPreviousSavepoint(previousSavepoint);
+    boundary.setPrevious(previousSavepoint instanceof CDOSavepointImpl ? ((CDOSavepointImpl)previousSavepoint).boundary : null);
+  }
+
+  @Override
+  public void setNextSavepoint(InternalCDOUserSavepoint nextSavepoint)
+  {
+    super.setNextSavepoint(nextSavepoint);
+    boundary.setNext(nextSavepoint instanceof CDOSavepointImpl ? ((CDOSavepointImpl)nextSavepoint).boundary : null);
   }
 
   @Override
   public void clear()
   {
     sync().run(() -> {
-      newObjects.clear();
-      dirtyObjects.clear();
-      revisionDeltas.clear();
-      baseNewObjects.clear();
-      detachedObjects.clear();
-      reattachedObjects.clear();
+      boundary.getSegment().clear();
     });
   }
 
@@ -152,168 +145,38 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getNewObjects()
   {
-    return newObjects;
+    return boundary.getSegment().getNewObjects();
   }
 
   @Override
   public Map<CDOID, CDOObject> getDetachedObjects()
   {
-    return detachedObjects;
+    return boundary.getSegment().getDetachedObjects();
   }
 
   // Bug 283985 (Re-attachment)
   @Override
   public Map<CDOID, CDOObject> getReattachedObjects()
   {
-    return reattachedObjects;
+    return boundary.getSegment().getReattachedObjects();
   }
 
   @Override
   public Map<CDOID, CDOObject> getDirtyObjects()
   {
-    return dirtyObjects;
-  }
-
-  @Override
-  @Deprecated
-  public Set<CDOID> getSharedDetachedObjects()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void recalculateSharedDetachedObjects()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas()
-  {
-    return new ConcurrentMap<>()
-    {
-      @Override
-      public int size()
-      {
-        return revisionDeltas.size();
-      }
-
-      @Override
-      public boolean isEmpty()
-      {
-        return revisionDeltas.isEmpty();
-      }
-
-      @Override
-      public boolean containsKey(Object key)
-      {
-        return revisionDeltas.containsKey(key);
-      }
-
-      @Override
-      public boolean containsValue(Object value)
-      {
-        return revisionDeltas.containsValue(value);
-      }
-
-      @Override
-      public CDORevisionDelta get(Object key)
-      {
-        return revisionDeltas.get(key);
-      }
-
-      @Override
-      public CDORevisionDelta put(CDOID key, CDORevisionDelta value)
-      {
-        return revisionDeltas.put(key, value);
-      }
-
-      @Override
-      public CDORevisionDelta remove(Object key)
-      {
-        return revisionDeltas.remove(key);
-      }
-
-      @Override
-      public void putAll(Map<? extends CDOID, ? extends CDORevisionDelta> m)
-      {
-        revisionDeltas.putAll(m);
-      }
-
-      @Override
-      public void clear()
-      {
-        revisionDeltas.clear();
-      }
-
-      @Override
-      public Set<CDOID> keySet()
-      {
-        return revisionDeltas.keySet();
-      }
-
-      @Override
-      public Collection<CDORevisionDelta> values()
-      {
-        return revisionDeltas.values();
-      }
-
-      @Override
-      public Set<Map.Entry<CDOID, CDORevisionDelta>> entrySet()
-      {
-        return revisionDeltas.entrySet();
-      }
-
-      @Override
-      public boolean equals(Object o)
-      {
-        return revisionDeltas.equals(o);
-      }
-
-      @Override
-      public int hashCode()
-      {
-        return revisionDeltas.hashCode();
-      }
-
-      @Override
-      public CDORevisionDelta putIfAbsent(CDOID key, CDORevisionDelta value)
-      {
-        return null;
-      }
-
-      @Override
-      public boolean remove(Object key, Object value)
-      {
-        return false;
-      }
-
-      @Override
-      public boolean replace(CDOID key, CDORevisionDelta oldValue, CDORevisionDelta newValue)
-      {
-        return false;
-      }
-
-      @Override
-      public CDORevisionDelta replace(CDOID key, CDORevisionDelta value)
-      {
-        return null;
-      }
-    };
+    return boundary.getSegment().getDirtyObjects();
   }
 
   @Override
   public Map<CDOID, CDORevisionDelta> getRevisionDeltas2()
   {
-    return revisionDeltas;
+    return boundary.getSegment().getRevisionDeltas();
   }
 
   @Override
   public CDOChangeSetData getChangeSetData()
   {
-    return sync().supply(() -> createChangeSetData(newObjects, revisionDeltas, detachedObjects));
+    return sync().supply(() -> createChangeSetData(getNewObjects(), getRevisionDeltas2(), getDetachedObjects()));
   }
 
   @Override
@@ -361,7 +224,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDORevision> getBaseNewObjects()
   {
-    return baseNewObjects;
+    return boundary.getSegment().getBaseNewObjects();
   }
 
   /**
@@ -711,5 +574,135 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   private CriticalSection sync()
   {
     return transaction.sync();
+  }
+
+  @Override
+  @Deprecated
+  public Set<CDOID> getSharedDetachedObjects()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void recalculateSharedDetachedObjects()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public ConcurrentMap<CDOID, CDORevisionDelta> getRevisionDeltas()
+  {
+    return new ConcurrentMap<>()
+    {
+      @Override
+      public int size()
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().size();
+      }
+
+      @Override
+      public boolean isEmpty()
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().isEmpty();
+      }
+
+      @Override
+      public boolean containsKey(Object key)
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().containsKey(key);
+      }
+
+      @Override
+      public boolean containsValue(Object value)
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().containsValue(value);
+      }
+
+      @Override
+      public CDORevisionDelta get(Object key)
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().get(key);
+      }
+
+      @Override
+      public CDORevisionDelta put(CDOID key, CDORevisionDelta value)
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().put(key, value);
+      }
+
+      @Override
+      public CDORevisionDelta remove(Object key)
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().remove(key);
+      }
+
+      @Override
+      public void putAll(Map<? extends CDOID, ? extends CDORevisionDelta> m)
+      {
+        CDOSavepointImpl.this.getRevisionDeltas2().putAll(m);
+      }
+
+      @Override
+      public void clear()
+      {
+        CDOSavepointImpl.this.getRevisionDeltas2().clear();
+      }
+
+      @Override
+      public Set<CDOID> keySet()
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().keySet();
+      }
+
+      @Override
+      public Collection<CDORevisionDelta> values()
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().values();
+      }
+
+      @Override
+      public Set<Map.Entry<CDOID, CDORevisionDelta>> entrySet()
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().entrySet();
+      }
+
+      @Override
+      public boolean equals(Object o)
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().equals(o);
+      }
+
+      @Override
+      public int hashCode()
+      {
+        return CDOSavepointImpl.this.getRevisionDeltas2().hashCode();
+      }
+
+      @Override
+      public CDORevisionDelta putIfAbsent(CDOID key, CDORevisionDelta value)
+      {
+        return null;
+      }
+
+      @Override
+      public boolean remove(Object key, Object value)
+      {
+        return false;
+      }
+
+      @Override
+      public boolean replace(CDOID key, CDORevisionDelta oldValue, CDORevisionDelta newValue)
+      {
+        return false;
+      }
+
+      @Override
+      public CDORevisionDelta replace(CDOID key, CDORevisionDelta value)
+      {
+        return null;
+      }
+    };
   }
 }

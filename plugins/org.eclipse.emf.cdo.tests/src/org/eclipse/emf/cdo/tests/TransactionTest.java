@@ -34,7 +34,7 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
-import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
+import org.eclipse.emf.cdo.transaction.CDOFileTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
@@ -387,17 +387,17 @@ public class TransactionTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
-    File file = pushTransaction.getFile();
+    CDOFileTransaction fileTransaction = CDOUtil.createFileTransaction(transaction);
+    File file = fileTransaction.getFile();
 
-    CDOResource resource = pushTransaction.getOrCreateResource(getResourcePath("/test1"));
+    CDOResource resource = fileTransaction.getOrCreateResource(getResourcePath("/test1"));
     resource.getContents().add(company);
 
-    pushTransaction.commit();
-    pushTransaction.close();
+    fileTransaction.commit();
+    fileTransaction.close();
     transaction = session.openTransaction();
-    pushTransaction = new CDOPushTransaction(transaction, file);
-    pushTransaction.push();
+    fileTransaction = CDOUtil.createFileTransaction(transaction, file);
+    fileTransaction.push();
 
     session.close();
     session = openSession();
@@ -428,13 +428,13 @@ public class TransactionTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
 
-    CDOPushTransaction pushTransaction = new CDOPushTransaction(transaction);
-    File file = pushTransaction.getFile();
+    CDOFileTransaction fileTransaction = CDOUtil.createFileTransaction(transaction);
+    File file = fileTransaction.getFile();
 
-    CDOResource resource = pushTransaction.getOrCreateResource(getResourcePath("/test1"));
+    CDOResource resource = fileTransaction.getOrCreateResource(getResourcePath("/test1"));
     resource.getContents().add(company);
 
-    pushTransaction.commit();
+    fileTransaction.commit();
 
     IOUtil.OUT().println("Creating category2");
     Category category2 = getModel1Factory().createCategory();
@@ -446,12 +446,12 @@ public class TransactionTest extends AbstractCDOTest
     category3.setName("category3");
     category1.getCategories().add(category3);
 
-    pushTransaction.commit();
-    pushTransaction.close();
+    fileTransaction.commit();
+    fileTransaction.close();
 
     transaction = session.openTransaction();
-    pushTransaction = new CDOPushTransaction(transaction, file);
-    pushTransaction.push();
+    fileTransaction = CDOUtil.createFileTransaction(transaction, file);
+    fileTransaction.push();
 
     session.close();
     session = openSession();

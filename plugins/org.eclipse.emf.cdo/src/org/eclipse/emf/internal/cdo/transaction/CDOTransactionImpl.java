@@ -104,6 +104,7 @@ import org.eclipse.emf.cdo.transaction.CDOConflictResolver3;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMergerBaseAware;
+import org.eclipse.emf.cdo.transaction.CDONestedTransaction;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -117,6 +118,9 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionHandler1;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler3;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandlerBase;
+import org.eclipse.emf.cdo.transaction.CDOTransactionScope;
+import org.eclipse.emf.cdo.transaction.CDOTransactionScopeClosedEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionScopeOpenedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.transaction.CDOUndoDetector;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
@@ -205,6 +209,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -283,6 +288,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private InternalCDOSavepoint lastSavepoint = createSavepoint(null);
 
   private InternalCDOSavepoint firstSavepoint = lastSavepoint;
+
+  /**
+   * Open closed-nesting scopes, ordered from outermost to innermost.
+   */
+  private final List<CDOTransactionScopeImpl> scopes = new ArrayList<>();
+
+  private final ArrayDeque<IEvent> scopeEvents = new ArrayDeque<>();
+
+  private boolean dispatchingScopeEvents;
 
   private boolean dirty;
 
@@ -1682,6 +1696,123 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return lastSavepoint;
   }
 
+  @Override
+  public CDOTransactionScope openScope()
+  {
+    CDOTransactionScope scope = sync.supply(() -> openScope(null));
+    dispatchScopeEvents();
+    return scope;
+  }
+
+  private CDOTransactionScopeImpl openScope(CDOTransactionScopeImpl outerScope)
+  {
+    if (outerScope != null && (!outerScope.open || getInnermostScope() != outerScope))
+    {
+      throw new IllegalStateException("A scope can only open directly inside the current innermost open scope");
+    }
+
+    if (outerScope == null && !scopes.isEmpty())
+    {
+      outerScope = scopes.get(scopes.size() - 1);
+    }
+
+    InternalCDOSavepoint scopeSavepoint = handleSetSavepoint();
+    CDOTransactionScopeImpl scope = new CDOTransactionScopeImpl(outerScope, ((CDOSavepointImpl)scopeSavepoint).getBoundary(), scopes.size() + 1);
+    scopes.add(scope);
+    scopeEvents.add(new ScopeOpenedEvent(scope));
+    return scope;
+  }
+
+  @Override
+  public CDOTransactionScope getOutermostScope()
+  {
+    return sync.supply(() -> scopes.isEmpty() ? null : scopes.get(0));
+  }
+
+  @Override
+  public CDOTransactionScope getInnermostScope()
+  {
+    return sync.supply(() -> scopes.isEmpty() ? null : scopes.get(scopes.size() - 1));
+  }
+
+  @Override
+  public List<CDOTransactionScope> getScopes()
+  {
+    return sync.supply(() -> Collections.unmodifiableList(new ArrayList<CDOTransactionScope>(scopes)));
+  }
+
+  private void closeScope(CDOTransactionScopeImpl scope, CDOTransactionScopeClosedEvent.Cause cause)
+  {
+    if (scopes.isEmpty() || scopes.get(scopes.size() - 1) != scope)
+    {
+      throw new IllegalStateException("Only the innermost open scope can be committed");
+    }
+
+    scopes.remove(scopes.size() - 1);
+    scope.open = false;
+    scopeEvents.add(new ScopeClosedEvent(scope, cause));
+  }
+
+  private void rollbackScope(CDOTransactionScopeImpl scope)
+  {
+    int index = scopes.indexOf(scope);
+    if (index < 0 || !scope.open)
+    {
+      throw new IllegalStateException("The transaction scope is already closed");
+    }
+
+    // Restore the shared transaction graph before publishing post-state close events.
+    handleRollback(scope.boundary.getSavepoint());
+
+    for (int i = scopes.size() - 1; i >= index; --i)
+    {
+      CDOTransactionScopeImpl closed = scopes.remove(i);
+      closed.open = false;
+      scopeEvents.add(new ScopeClosedEvent(closed, CDOTransactionScopeClosedEvent.Cause.ROLLED_BACK));
+    }
+  }
+
+  private void dispatchScopeEvents()
+  {
+    /*
+     * Claim the drain under transaction synchronization. A reentrant listener, or another thread completing a scope
+     * while this drain is active, only appends to the queue and leaves the original drainer responsible for delivery.
+     * Polling is synchronized one event at a time, but callbacks are deliberately made outside sync.
+     */
+    boolean start = sync.supply(() -> {
+      if (dispatchingScopeEvents)
+      {
+        return false;
+      }
+
+      dispatchingScopeEvents = true;
+      return true;
+    });
+
+    if (!start)
+    {
+      return;
+    }
+
+    try
+    {
+      for (;;)
+      {
+        IEvent event = sync.supply(() -> scopeEvents.pollFirst());
+        if (event == null)
+        {
+          break;
+        }
+
+        fireEvent(event);
+      }
+    }
+    finally
+    {
+      sync.run(() -> dispatchingScopeEvents = false);
+    }
+  }
+
   /**
    * @since 2.0
    */
@@ -1817,6 +1948,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public CDOCommitInfo commit(IProgressMonitor monitor) throws CommitException
   {
+    if (getInnermostScope() != null)
+    {
+      throw new IllegalStateException("The root transaction cannot commit while a transaction scope is open");
+    }
+
     CDOCommitInfo info = commitAfterResolveConflicts(monitor);
     if (info != null)
     {
@@ -2146,11 +2282,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     checkActive();
 
     sync.run(() -> {
+      while (!scopes.isEmpty())
+      {
+        rollbackScope(scopes.get(0));
+      }
+
       CDOTransactionStrategy strategy = getTransactionStrategy();
       strategy.rollback(this, firstSavepoint);
 
       cleanUp(null);
     });
+
+    dispatchScopeEvents();
   }
 
   private void removeObject(CDOID id, final CDOObject object)
@@ -5322,8 +5465,183 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   /**
+   * Internal lifecycle object backed by an opening transaction boundary. The boundary is deliberately not exposed as
+   * a user savepoint; it is only used to restore the shared transaction segment on rollback.
+   *
    * @author Eike Stepper
    */
+  private final class CDOTransactionScopeImpl implements CDOTransactionScope
+  {
+    private final CDOTransactionScopeImpl outerScope;
+
+    private final TransactionBoundary boundary;
+
+    private final int depth;
+
+    private boolean open = true;
+
+    private CDONestedTransaction transactionFacade;
+
+    private CDOTransactionScopeImpl(CDOTransactionScopeImpl outerScope, TransactionBoundary boundary, int depth)
+    {
+      this.outerScope = outerScope;
+      this.boundary = boundary;
+      this.depth = depth;
+    }
+
+    @Override
+    public CDOTransaction getTransaction()
+    {
+      return CDOTransactionImpl.this;
+    }
+
+    @Override
+    public CDOTransactionScope getOuterScope()
+    {
+      return outerScope;
+    }
+
+    @Override
+    public CDOTransactionScope getInnerScope()
+    {
+      return sync.supply(() -> {
+        int index = scopes.indexOf(this);
+        return index >= 0 && index + 1 < scopes.size() ? scopes.get(index + 1) : null;
+      });
+    }
+
+    @Override
+    public int getDepth()
+    {
+      return depth;
+    }
+
+    @Override
+    public boolean isOpen()
+    {
+      return sync.supply(() -> open);
+    }
+
+    @Override
+    public CDOTransactionScope openScope()
+    {
+      CDOTransactionScope scope = sync.supply(() -> CDOTransactionImpl.this.openScope(this));
+      dispatchScopeEvents();
+      return scope;
+    }
+
+    @Override
+    public void commit()
+    {
+      sync.run(() -> {
+        if (!open)
+        {
+          throw new IllegalStateException("The transaction scope is already closed");
+        }
+
+        closeScope(this, CDOTransactionScopeClosedEvent.Cause.COMMITTED);
+      });
+
+      dispatchScopeEvents();
+    }
+
+    @Override
+    public void rollback()
+    {
+      sync.run(() -> rollbackScope(this));
+      dispatchScopeEvents();
+    }
+
+    @Override
+    public void close()
+    {
+      sync.run(() -> {
+        if (open)
+        {
+          rollbackScope(this);
+        }
+      });
+
+      dispatchScopeEvents();
+    }
+
+    @Override
+    public CDONestedTransaction asTransaction()
+    {
+      return sync.supply(() -> {
+        if (transactionFacade == null)
+        {
+          transactionFacade = new CDONestedTransactionImpl(this);
+        }
+
+        return transactionFacade;
+      });
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ScopeOpenedEvent extends Event implements CDOTransactionScopeOpenedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final CDOTransactionScope scope;
+
+    private ScopeOpenedEvent(CDOTransactionScope scope)
+    {
+      this.scope = scope;
+    }
+
+    @Override
+    public CDOTransactionImpl getSource()
+    {
+      return CDOTransactionImpl.this;
+    }
+
+    @Override
+    public CDOTransactionScope getScope()
+    {
+      return scope;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ScopeClosedEvent extends Event implements CDOTransactionScopeClosedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final CDOTransactionScope scope;
+
+    private final Cause cause;
+
+    private ScopeClosedEvent(CDOTransactionScope scope, Cause cause)
+    {
+      this.scope = scope;
+      this.cause = cause;
+    }
+
+    @Override
+    public CDOTransactionImpl getSource()
+    {
+      return CDOTransactionImpl.this;
+    }
+
+    @Override
+    public CDOTransactionScope getScope()
+    {
+      return scope;
+    }
+
+    @Override
+    public Cause getCause()
+    {
+      return cause;
+    }
+  }
+
   private final class StartedEvent extends Event implements CDOTransactionStartedEvent
   {
     private static final long serialVersionUID = 1L;

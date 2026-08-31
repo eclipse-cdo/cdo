@@ -16,8 +16,9 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model6.A;
 import org.eclipse.emf.cdo.tests.model6.D;
-import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
+import org.eclipse.emf.cdo.transaction.CDOFileTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.EObject;
@@ -61,26 +62,26 @@ public class Bugzilla_352204_Test extends AbstractCDOTest
     // Step 2 : open a push transaction a save locally a modification
     // Step 2.1 : open a push transaction
     File fileForStoringChanges = createTempFile();
-    CDOPushTransaction pushTransaction = createPushTransaction(fileForStoringChanges, reconstructSavePoints);
+    CDOFileTransaction fileTransaction = createCDOFileTransaction(fileForStoringChanges, reconstructSavePoints);
 
     // Step 2.2 : create a new element
-    addNewChildren(pushTransaction);
+    addNewChildren(fileTransaction);
 
     // Step 2.3 : save locally
-    pushTransaction.commit();
-    pushTransaction.getSession().close();
+    fileTransaction.commit();
+    fileTransaction.getSession().close();
 
     // Step 3 : load changes
-    pushTransaction = createPushTransaction(fileForStoringChanges, reconstructSavePoints);
+    fileTransaction = createCDOFileTransaction(fileForStoringChanges, reconstructSavePoints);
 
-    pushTransaction.getSession().close();
+    fileTransaction.getSession().close();
   }
 
-  private CDOPushTransaction createPushTransaction(File fileForStoringChanges, boolean reconstructSavePoints) throws IOException
+  private CDOFileTransaction createCDOFileTransaction(File fileForStoringChanges, boolean reconstructSavePoints) throws IOException
   {
     CDOSession session = openSession();
     CDOTransaction delegate = session.openTransaction();
-    return new CDOPushTransaction(delegate, fileForStoringChanges, reconstructSavePoints);
+    return CDOUtil.createFileTransaction(delegate, fileForStoringChanges, reconstructSavePoints);
   }
 
   private Diagram getDiagram(CDOView view)

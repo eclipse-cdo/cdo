@@ -23,25 +23,55 @@ package org.eclipse.emf.cdo.transaction;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOUserSavepoint
+public interface CDOUserSavepoint extends CDORollbackable
 {
+  /**
+   * Returns the transaction that owns this savepoint.
+   *
+   * @return the owning transaction.
+   */
   public CDOUserTransaction getTransaction();
 
+  /**
+   * Returns the next savepoint in the transaction's savepoint sequence.
+   *
+   * @return the next savepoint, or {@code null}.
+   */
   public CDOUserSavepoint getNextSavepoint();
 
+  /**
+   * Returns the previous savepoint in the transaction's savepoint sequence.
+   *
+   * @return the previous savepoint, or {@code null}.
+   */
   public CDOUserSavepoint getPreviousSavepoint();
 
   /**
+   * Returns this savepoint's sequence number.
+   *
+   * @return the savepoint number.
    * @since 4.1
    */
   public int getNumber();
 
+  /**
+   * Indicates whether this savepoint can still be used.
+   *
+   * @return {@code true} if the savepoint is valid.
+   */
   public boolean isValid();
 
   /**
+   * Indicates whether this is the transaction's current last savepoint.
+   *
+   * @return {@code true} if this is the last savepoint.
    * @since 4.30
    */
   public boolean isLast();
 
+  /**
+   * Rolls the owning transaction back to this savepoint.
+   */
+  @Override
   public void rollback();
 }

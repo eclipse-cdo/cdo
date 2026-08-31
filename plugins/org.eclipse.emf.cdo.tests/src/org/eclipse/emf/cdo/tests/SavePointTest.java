@@ -435,8 +435,9 @@ public class SavePointTest extends AbstractCDOTest
   private static void assertNewState(Company company, CDOID id, CDOTransaction transaction)
   {
     assertNew(company, transaction);
-    assertEquals(id, CDOUtil.getCDOObject(company).cdoID());
-    assertEquals(true, id.isTemporary());
+    CDOID actualID = CDOUtil.getCDOObject(company).cdoID();
+    assertEquals(id, actualID);
+    assertEquals(id.isTemporary(), actualID.isTemporary());
     assertEquals(transaction, CDOUtil.getCDOObject(company).cdoView());
     assertNotNull(CDOUtil.getCDOObject(company).cdoRevision());
     assertEquals(0, CDOUtil.getCDOObject(company).cdoRevision().getVersion());

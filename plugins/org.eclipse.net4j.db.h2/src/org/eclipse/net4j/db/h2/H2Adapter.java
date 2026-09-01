@@ -42,6 +42,8 @@ public class H2Adapter extends DBAdapter
 
   private static final boolean LOWER_CASE_SCHEMA_NAME = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.db.h2.H2Adapter.LOWER_CASE_SCHEMA_NAME"); //$NON-NLS-1$
 
+  private static final boolean USE_LONG_LOB_TYPE_NAMES = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.db.h2.H2Adapter.USE_LONG_LOB_TYPE_NAMES"); //$NON-NLS-1$
+
   private static final String DEFAULT_SCHEMA_NAME = LOWER_CASE_SCHEMA_NAME ? "public" : "PUBLIC"; //$NON-NLS-1$ //$NON-NLS-2$
 
   public H2Adapter()
@@ -78,10 +80,10 @@ public class H2Adapter extends DBAdapter
     case LONGVARBINARY:
     case VARBINARY:
     case BLOB:
-      return "BINARY LARGE OBJECT"; //$NON-NLS-1$
+      return USE_LONG_LOB_TYPE_NAMES ? "BINARY LARGE OBJECT" : "BLOB"; //$NON-NLS-1$ //$NON-NLS-2$
 
     case CLOB:
-      return "CHARACTER LARGE OBJECT"; //$NON-NLS-1$
+      return USE_LONG_LOB_TYPE_NAMES ? "CHARACTER LARGE OBJECT" : "CLOB"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     return super.getTypeName(field);

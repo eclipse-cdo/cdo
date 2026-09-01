@@ -832,6 +832,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
       else
       {
+        CDOID beforeImageID = transaction.getLifecycleBeforeImageID(object);
+        if (beforeImageID != null && beforeImageID.isTemporary())
+        {
+          // A reattached object that was new before the detach still follows the
+          // normal legacy lifecycle, including the PREPARED state transition.
+          changeState(object, CDOState.PREPARED);
+        }
+
         object.cdoInternalPostAttach();
         changeState(object, CDOState.NEW);
         currentSegment(transaction).getReattachedObjects().put(object.cdoID(), object);

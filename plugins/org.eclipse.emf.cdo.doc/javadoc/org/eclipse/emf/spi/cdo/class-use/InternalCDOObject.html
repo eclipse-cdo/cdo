@@ -760,6 +760,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#detachObject(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">detachObject</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#getLifecycleBeforeImageID(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">getLifecycleBeforeImageID</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the ID from the most recent lifecycle before-image reachable through the
+ active savepoint chain, or <code>null</code> if no such transition was captured.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#getLifecycleBeforeImageRevision(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">getLifecycleBeforeImageRevision</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns a copy of the revision from the most recent lifecycle before-image reachable through
+ the active savepoint chain, or <code>null</code> if no revision was captured.</div>
+</div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#handleAddAdapter(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.common.notify.Adapter)" class="member-name-link">handleAddAdapter</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;eObject,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a>&nbsp;adapter)</code></div>

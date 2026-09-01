@@ -230,15 +230,31 @@ loadScripts(document, 'script');</script>
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IListMappingDeltaSupport.</span><code><a href="../mapping/IListMappingDeltaSupport.html#processDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,int,int,int,long,org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta)" class="member-name-link">processDelta</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategySchemaPreflight.</span><code><a href="../mapping/IMappingStrategySchemaPreflight.html#prepareSchema(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.revision.CDORevision%5B%5D,org.eclipse.emf.cdo.common.revision.CDORevision%5B%5D,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta%5B%5D,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">prepareSchema</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>[]&nbsp;newObjects,
+ <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>[]&nbsp;dirtyObjects,
+ <a href="../../../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>[]&nbsp;dirtyObjectDeltas,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Prepares every physical schema object that may be accessed while writing the supplied commit.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IListMappingDeltaSupport.</span><code><a href="../mapping/IListMappingDeltaSupport.html#processDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,int,int,int,long,org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta)" class="member-name-link">processDelta</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  int&nbsp;branchId,
  int&nbsp;oldVersion,
  int&nbsp;newVersion,
  long&nbsp;created,
  <a href="../../../common/revision/delta/CDOListFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOListFeatureDelta</a>&nbsp;delta)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Process a set of CDOFeatureDeltas for a many-valued feature.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListMappingBatchingSupport.</span><code><a href="../mapping/IListMappingBatchingSupport.html#processDeltas(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.db.mapping.ListDeltaWork%5B%5D,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">processDeltas</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../mapping/ListDeltaWork.html" title="class in org.eclipse.emf.cdo.server.db.mapping">ListDeltaWork</a>[]&nbsp;work,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Processes list deltas in their supplied order.</div>
 </div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)" class="member-name-link">queryResources</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
@@ -364,6 +380,40 @@ loadScripts(document, 'script');</script>
 <div class="block">Write a revision delta.</div>
 </div>
 <div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IClassMappingBatchingSupport.</span><code><a href="../mapping/IClassMappingBatchingSupport.html#writeRevisionDeltas(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta%5B%5D,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisionDeltas</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;deltas,
+ long&nbsp;created,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Writes revision deltas that all belong to this class mapping.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategyBatchingSupport.</span><code><a href="../mapping/IMappingStrategyBatchingSupport.html#writeRevisionDeltas(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta%5B%5D,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisionDeltas</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;deltas,
+ long&nbsp;created,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Writes a group of revision deltas belonging to one DBStore write phase.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IClassMappingBatchingSupport.</span><code><a href="../mapping/IClassMappingBatchingSupport.html#writeRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions,
+ boolean&nbsp;firstRevision,
+ boolean&nbsp;revise,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Writes revisions that all belong to this class mapping.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategyBatchingSupport.</span><code><a href="../mapping/IMappingStrategyBatchingSupport.html#writeRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions,
+ boolean&nbsp;firstRevision,
+ boolean&nbsp;revise,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Writes a group of revisions belonging to one DBStore write phase.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">writeValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last odd-row-color">
@@ -376,6 +426,15 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;raw)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Write a complete list of values to the database.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IListMappingBatchingSupport.</span><code><a href="../mapping/IListMappingBatchingSupport.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions,
+ boolean&nbsp;firstRevision,
+ boolean&nbsp;raw,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Writes complete list values for the supplied revisions.</div>
 </div>
 </div>
 </section>

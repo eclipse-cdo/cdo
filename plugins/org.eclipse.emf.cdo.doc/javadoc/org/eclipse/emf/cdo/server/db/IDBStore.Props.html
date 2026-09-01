@@ -117,6 +117,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#BATCH_COMMIT_SIZE" class="member-name-link">BATCH_COMMIT_SIZE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Maximum number of pending parameter sets across the current DB commit write.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#BATCH_STATEMENT_SIZE" class="member-name-link">BATCH_STATEMENT_SIZE</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Maximum number of pending parameter sets per JDBC batch statement.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#CONNECTION_KEEPALIVE_PERIOD" class="member-name-link">CONNECTION_KEEPALIVE_PERIOD</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Period at which to execute an SQL statement to keep DB connection alive, in minutes.</div>
@@ -153,6 +163,16 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#JDBC_FETCH_SIZE" class="member-name-link">JDBC_FETCH_SIZE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#OBJECT_TYPE_BATCH_SIZE" class="member-name-link">OBJECT_TYPE_BATCH_SIZE</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Maximum number of ObjectType rows considered by one prequery and ObjectType insert batch.</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#OBJECT_TYPE_DUPLICATE_POLICY" class="member-name-link">OBJECT_TYPE_DUPLICATE_POLICY</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">ObjectType duplicate handling mode: <code>SAFE</code> or <code>FAIL</code>.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#PREPEND_SCHEMA_NAME" class="member-name-link">PREPEND_SCHEMA_NAME</a></code></div>
 <div class="col-last odd-row-color">
@@ -249,6 +269,80 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="tag-list">
 <li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.CONNECTION_KEEPALIVE_PERIOD">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="BATCH_STATEMENT_SIZE">
+<h3>BATCH_STATEMENT_SIZE</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">BATCH_STATEMENT_SIZE</span></div>
+<div class="block">Maximum number of pending parameter sets per JDBC batch statement. If absent, the legacy
+ <code>org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE</code> property is used as the default.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.15</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.BATCH_STATEMENT_SIZE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="OBJECT_TYPE_BATCH_SIZE">
+<h3>OBJECT_TYPE_BATCH_SIZE</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OBJECT_TYPE_BATCH_SIZE</span></div>
+<div class="block">Maximum number of ObjectType rows considered by one prequery and ObjectType insert batch.
+ <p>
+ If omitted, <a href="#BATCH_STATEMENT_SIZE"><code>BATCH_STATEMENT_SIZE</code></a> and its legacy fallback behavior determine the size.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.15</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.OBJECT_TYPE_BATCH_SIZE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="OBJECT_TYPE_DUPLICATE_POLICY">
+<h3>OBJECT_TYPE_DUPLICATE_POLICY</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OBJECT_TYPE_DUPLICATE_POLICY</span></div>
+<div class="block">ObjectType duplicate handling mode: <code>SAFE</code> or <code>FAIL</code>. SAFE is the default and preserves duplicate
+ detection and replay. FAIL skips those safeguards and requires all committed IDs to be fresh. FAIL is suitable
+ only when the operator guarantees that commits cannot introduce already-persistent IDs; use SAFE for merge,
+ import, backup, clone, and other external-permanent-ID scenarios.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.15</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.OBJECT_TYPE_DUPLICATE_POLICY">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="BATCH_COMMIT_SIZE">
+<h3>BATCH_COMMIT_SIZE</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">BATCH_COMMIT_SIZE</span></div>
+<div class="block">Maximum number of pending parameter sets across the current DB commit write.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.15</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.BATCH_COMMIT_SIZE">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>

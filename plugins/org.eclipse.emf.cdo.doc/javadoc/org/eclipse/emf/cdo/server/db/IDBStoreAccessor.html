@@ -138,26 +138,34 @@ extends <a href="../IStoreAccessor.Raw2.html" title="interface in org.eclipse.em
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConnection()" class="member-name-link">getConnection</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IBatchingContext.html" title="interface in org.eclipse.emf.cdo.server.db">IBatchingContext</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBatchingContext()" class="member-name-link">getBatchingContext</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.db.IDBConnection</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDBConnection()" class="member-name-link">getDBConnection</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConnection()" class="member-name-link">getConnection</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getObjectType</a><wbr>(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.db.IDBConnection</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDBConnection()" class="member-name-link">getDBConnection</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getStatementCache()" class="member-name-link">getStatementCache</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getObjectType</a><wbr>(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="IPreparedStatementCache.html" title="interface in org.eclipse.emf.cdo.server.db">IPreparedStatementCache</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getStatementCache()" class="member-name-link">getStatementCache</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 use <code>IDBConnection.prepareStatement(String, org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)</code>.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the store this accessor is associated with.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStoreAllocatedIDs()" class="member-name-link">getStoreAllocatedIDs</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns IDs allocated by the authoritative store during the current commit.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.db.IDBSchemaTransaction</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openSchemaTransaction()" class="member-name-link">openSchemaTransaction</a>()</code></div>
@@ -226,6 +234,27 @@ extends <a href="../IStoreAccessor.Raw2.html" title="interface in org.eclipse.em
 <section class="detail" id="getConnection()">
 <h3>getConnection</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></span>&nbsp;<span class="element-name">getConnection</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getStoreAllocatedIDs()">
+<h3>getStoreAllocatedIDs</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</span>&nbsp;<span class="element-name">getStoreAllocatedIDs</span>()</div>
+<div class="block">Returns IDs allocated by the authoritative store during the current commit.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.15</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getBatchingContext()">
+<h3>getBatchingContext</h3>
+<div class="member-signature"><span class="return-type"><a href="IBatchingContext.html" title="interface in org.eclipse.emf.cdo.server.db">IBatchingContext</a></span>&nbsp;<span class="element-name">getBatchingContext</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.15</dd>
+</dl>
 </section>
 </li>
 <li>

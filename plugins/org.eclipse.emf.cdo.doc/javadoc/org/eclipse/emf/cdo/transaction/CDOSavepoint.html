@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></code>, <code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></dd>
+<dd><code><a href="../common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></code>, <code><a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></code>, <code><a href="CDOTransactionAware.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionAware</a></code>, <code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
@@ -97,7 +97,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOSavepoint</span><span class="extends-implements">
-extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a>, <a href="../common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></span></div>
+extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a>, <a href="CDOTransactionAware.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionAware</a>, <a href="../common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></span></div>
 <div class="block">One in a sequence of possibly several points in time of a <a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> that encapsulates the
  changes to transactional objects and that later changes can be <a href="CDOUserSavepoint.html#rollback()"><code>rolled back</code></a> to.</div>
 <dl class="notes">
@@ -124,50 +124,70 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAllBaseNewObjects()" class="member-name-link">getAllBaseNewObjects</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the aggregate of base revisions at this savepoint's fixed boundary.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAllChangeSetData()" class="member-name-link">getAllChangeSetData</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the change-set data at this savepoint's fixed boundary.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAllDetachedObjects()" class="member-name-link">getAllDetachedObjects</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the aggregate of detached objects at this savepoint's fixed boundary.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAllDirtyObjects()" class="member-name-link">getAllDirtyObjects</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Return the list of new objects from this point.</div>
+<div class="block">Returns the aggregate of dirty objects at this savepoint's fixed boundary.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAllNewObjects()" class="member-name-link">getAllNewObjects</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Return the list of new objects from this point without objects that are removed.</div>
+<div class="block">Returns the aggregate of new objects at this savepoint's fixed boundary, excluding objects
+ that were removed before that boundary.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getAllRevisionDeltas()" class="member-name-link">getAllRevisionDeltas</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Return the list of all deltas without objects that are removed.</div>
+<div class="block">Returns the aggregate of revision deltas at this savepoint's fixed boundary, excluding
+ objects that were removed before that boundary.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBaseNewObjects()" class="member-name-link">getBaseNewObjects</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns objects that were already new at this savepoint's boundary.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDetachedObjects()" class="member-name-link">getDetachedObjects</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns objects detached at this savepoint.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDirtyObjects()" class="member-name-link">getDirtyObjects</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns objects modified at this savepoint.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNewObjects()" class="member-name-link">getNewObjects</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns objects created at this savepoint.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNextSavepoint()" class="member-name-link">getNextSavepoint</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the next savepoint after this one.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPreviousSavepoint()" class="member-name-link">getPreviousSavepoint</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the savepoint preceding this one.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getReattachedObjects()" class="member-name-link">getReattachedObjects</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Bug 283985 (Re-attachment)</div>
+<div class="block">Returns objects reattached at this savepoint.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentMap.html" title="class or interface in java.util.concurrent" class="external-link">ConcurrentMap</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getRevisionDeltas()" class="member-name-link">getRevisionDeltas</a>()</code></div>
@@ -178,13 +198,19 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionDeltas2()" class="member-name-link">getRevisionDeltas2</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns deltas of the revisions modified at this savepoint.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the transaction that owns this savepoint.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#wasDirty()" class="member-name-link">wasDirty</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Indicates whether the transaction was dirty when this savepoint was created.</div>
+</div>
 </div>
 </div>
 </div>
@@ -193,7 +219,7 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <code><a href="../common/commit/CDOChangeSetDataProvider.html#getChangeSetData()">getChangeSetData</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.transaction.CDOUserSavepoint">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.transaction.<a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></h3>
-<code><a href="CDOUserSavepoint.html#getNumber()">getNumber</a>, <a href="CDOUserSavepoint.html#isValid()">isValid</a>, <a href="CDOUserSavepoint.html#rollback()">rollback</a></code></div>
+<code><a href="CDOUserSavepoint.html#getNumber()">getNumber</a>, <a href="CDOUserSavepoint.html#isLast()">isLast</a>, <a href="CDOUserSavepoint.html#isValid()">isValid</a>, <a href="CDOUserSavepoint.html#rollback()">rollback</a></code></div>
 </section>
 </li>
 </ul>
@@ -209,9 +235,14 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="getTransaction()">
 <h3>getTransaction</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">getTransaction</span>()</div>
+<div class="block">Returns the transaction that owns this savepoint.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
+<dd><code><a href="CDOTransactionAware.html#getTransaction()">getTransaction</a></code>&nbsp;in interface&nbsp;<code><a href="CDOTransactionAware.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionAware</a></code></dd>
+<dt>Specified by:</dt>
 <dd><code><a href="CDOUserSavepoint.html#getTransaction()">getTransaction</a></code>&nbsp;in interface&nbsp;<code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></dd>
+<dt>Returns:</dt>
+<dd>the owning transaction.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
@@ -221,9 +252,12 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="getNextSavepoint()">
 <h3>getNextSavepoint</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></span>&nbsp;<span class="element-name">getNextSavepoint</span>()</div>
+<div class="block">Returns the next savepoint after this one.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="CDOUserSavepoint.html#getNextSavepoint()">getNextSavepoint</a></code>&nbsp;in interface&nbsp;<code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></dd>
+<dt>Returns:</dt>
+<dd>the next savepoint, or <code>null</code>.</dd>
 </dl>
 </section>
 </li>
@@ -231,9 +265,12 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="getPreviousSavepoint()">
 <h3>getPreviousSavepoint</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></span>&nbsp;<span class="element-name">getPreviousSavepoint</span>()</div>
+<div class="block">Returns the savepoint preceding this one.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="CDOUserSavepoint.html#getPreviousSavepoint()">getPreviousSavepoint</a></code>&nbsp;in interface&nbsp;<code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></dd>
+<dt>Returns:</dt>
+<dd>the previous savepoint, or <code>null</code>.</dd>
 </dl>
 </section>
 </li>
@@ -241,7 +278,10 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="wasDirty()">
 <h3>wasDirty</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">wasDirty</span>()</div>
+<div class="block">Indicates whether the transaction was dirty when this savepoint was created.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the transaction was dirty.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
@@ -251,7 +291,10 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="getBaseNewObjects()">
 <h3>getBaseNewObjects</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</span>&nbsp;<span class="element-name">getBaseNewObjects</span>()</div>
+<div class="block">Returns objects that were already new at this savepoint's boundary.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>the base-new object map.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
@@ -261,7 +304,10 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="getNewObjects()">
 <h3>getNewObjects</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getNewObjects</span>()</div>
+<div class="block">Returns objects created at this savepoint.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>the new-object map.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
@@ -271,7 +317,10 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="getDetachedObjects()">
 <h3>getDetachedObjects</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getDetachedObjects</span>()</div>
+<div class="block">Returns objects detached at this savepoint.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>the detached-object map.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
@@ -281,8 +330,11 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="getReattachedObjects()">
 <h3>getReattachedObjects</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getReattachedObjects</span>()</div>
-<div class="block">Bug 283985 (Re-attachment)</div>
+<div class="block">Returns objects reattached at this savepoint.
+ Bug 283985 (Re-attachment)</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>the reattached-object map.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
@@ -292,9 +344,97 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <section class="detail" id="getDirtyObjects()">
 <h3>getDirtyObjects</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getDirtyObjects</span>()</div>
+<div class="block">Returns objects modified at this savepoint.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the dirty-object map.</dd>
+<dt>Since:</dt>
+<dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRevisionDeltas2()">
+<h3>getRevisionDeltas2</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;</span>&nbsp;<span class="element-name">getRevisionDeltas2</span>()</div>
+<div class="block">Returns deltas of the revisions modified at this savepoint.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.2</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAllBaseNewObjects()">
+<h3>getAllBaseNewObjects</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</span>&nbsp;<span class="element-name">getAllBaseNewObjects</span>()</div>
+<div class="block">Returns the aggregate of base revisions at this savepoint's fixed boundary.
+ Changes recorded in the mutable segment that follows this savepoint are not included.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAllNewObjects()">
+<h3>getAllNewObjects</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getAllNewObjects</span>()</div>
+<div class="block">Returns the aggregate of new objects at this savepoint's fixed boundary, excluding objects
+ that were removed before that boundary. Changes recorded in the mutable segment that follows
+ this savepoint are not included.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAllDetachedObjects()">
+<h3>getAllDetachedObjects</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getAllDetachedObjects</span>()</div>
+<div class="block">Returns the aggregate of detached objects at this savepoint's fixed boundary.
+ Changes recorded in the mutable segment that follows this savepoint are not included.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAllDirtyObjects()">
+<h3>getAllDirtyObjects</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getAllDirtyObjects</span>()</div>
+<div class="block">Returns the aggregate of dirty objects at this savepoint's fixed boundary.
+ Changes recorded in the mutable segment that follows this savepoint are not included.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAllRevisionDeltas()">
+<h3>getAllRevisionDeltas</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;</span>&nbsp;<span class="element-name">getAllRevisionDeltas</span>()</div>
+<div class="block">Returns the aggregate of revision deltas at this savepoint's fixed boundary, excluding
+ objects that were removed before that boundary. Changes recorded in the mutable segment that
+ follows this savepoint are not included.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getAllChangeSetData()">
+<h3>getAllChangeSetData</h3>
+<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">getAllChangeSetData</span>()</div>
+<div class="block">Returns the change-set data at this savepoint's fixed boundary.
+ Changes recorded in the mutable segment that follows this savepoint are not included.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.0</dd>
 </dl>
 </section>
 </li>
@@ -307,7 +447,6 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <div class="deprecation-comment">As of 4.2 use <a href="#getRevisionDeltas2()"><code>getRevisionDeltas2()</code></a> instead.</div>
 </div>
 <div class="block">The returned map delegates to <a href="#getRevisionDeltas2()"><code>getRevisionDeltas2()</code></a> and does <b>not</b> support the following methods:
-
  <ul>
  <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentMap.html#putIfAbsent(K,V)" title="class or interface in java.util.concurrent" class="external-link"><code>ConcurrentMap.putIfAbsent(Object, Object)</code></a>
  <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ConcurrentMap.html#remove(java.lang.Object,java.lang.Object)" title="class or interface in java.util.concurrent" class="external-link"><code>ConcurrentMap.remove(Object, Object)</code></a>
@@ -317,79 +456,6 @@ extends <a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getRevisionDeltas2()">
-<h3>getRevisionDeltas2</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;</span>&nbsp;<span class="element-name">getRevisionDeltas2</span>()</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>4.2</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getAllBaseNewObjects()">
-<h3>getAllBaseNewObjects</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</span>&nbsp;<span class="element-name">getAllBaseNewObjects</span>()</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>3.0</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getAllNewObjects()">
-<h3>getAllNewObjects</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getAllNewObjects</span>()</div>
-<div class="block">Return the list of new objects from this point without objects that are removed.</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>3.0</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getAllDetachedObjects()">
-<h3>getAllDetachedObjects</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getAllDetachedObjects</span>()</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>3.0</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getAllDirtyObjects()">
-<h3>getAllDirtyObjects</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</span>&nbsp;<span class="element-name">getAllDirtyObjects</span>()</div>
-<div class="block">Return the list of new objects from this point.</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>3.0</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getAllRevisionDeltas()">
-<h3>getAllRevisionDeltas</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;</span>&nbsp;<span class="element-name">getAllRevisionDeltas</span>()</div>
-<div class="block">Return the list of all deltas without objects that are removed.</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>3.0</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="getAllChangeSetData()">
-<h3>getAllChangeSetData</h3>
-<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">getAllChangeSetData</span>()</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>4.0</dd>
 </dl>
 </section>
 </li>

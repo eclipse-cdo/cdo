@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code></dd>
+<dd><code><a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></code>, <code><a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
@@ -129,7 +129,9 @@ extends <a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cd
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOXASavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXASavepoint</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastSavepoint()" class="member-name-link">getLastSavepoint</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the most recently created savepoint.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isAllowRequestFromTransactionEnabled()" class="member-name-link">isAllowRequestFromTransactionEnabled</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -218,9 +220,13 @@ extends <a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cd
 <section class="detail" id="getLastSavepoint()">
 <h3>getLastSavepoint</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOXASavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXASavepoint</a></span>&nbsp;<span class="element-name">getLastSavepoint</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="CDOUserTransaction.html#getLastSavepoint()">CDOUserTransaction</a></code></span></div>
+<div class="block">Returns the most recently created savepoint.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="CDOUserTransaction.html#getLastSavepoint()">getLastSavepoint</a></code>&nbsp;in interface&nbsp;<code><a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code></dd>
+<dt>Returns:</dt>
+<dd>the last savepoint, or <code>null</code> if none exists.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>

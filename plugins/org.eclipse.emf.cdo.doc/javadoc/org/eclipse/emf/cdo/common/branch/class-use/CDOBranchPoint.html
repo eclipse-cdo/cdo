@@ -451,62 +451,71 @@ loadScripts(document, 'script');</script>
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
  <a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;data)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDORevisionUtil.</span><code><a href="../../revision/CDORevisionUtil.html#createChangeSetData(java.util.Set,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager)" class="member-name-link">createChangeSetData</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+<div class="col-first even-row-color"><code>static <a href="../../commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionUtil.</span><code><a href="../../revision/CDORevisionUtil.html#createChangeSet(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">createChangeSet</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
+ <a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;data,
+ <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;startRevisionProvider)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a change set and retains the complete revisions at its start point for consumers that must interpret
+ executable feature deltas against their actual common base.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionUtil.</span><code><a href="../../revision/CDORevisionUtil.html#createChangeSetData(java.util.Set,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager)" class="member-name-link">createChangeSetData</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;startPoint,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;endPoint,
  <a href="../../revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionCache.</span><code><a href="../../revision/CDORevisionCache.html#forEachValidRevision(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.function.Consumer)" class="member-name-link">forEachValidRevision</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionCache.</span><code><a href="../../revision/CDORevisionCache.html#forEachValidRevision(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.function.Consumer)" class="member-name-link">forEachValidRevision</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  boolean&nbsp;considerBranchBases,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Passes each <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> that is valid at the given <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a>
  (or optionally at the base ranch points) into the given consumer.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">getObjectLifetime</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionCache.</span><code><a href="../../revision/CDORevisionCache.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-first odd-row-color"><code><a href="../CDOBranchPointRange.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPointRange</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">getObjectLifetime</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionCache.</span><code><a href="../../revision/CDORevisionCache.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ int&nbsp;referenceChunk,
+ int&nbsp;prefetchDepth,
+ boolean&nbsp;loadOnDemand)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch
+ point</code></a> (branch + timestamp), optionally demand loading it if it is not already in the <a href="../../revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Returns the <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch
- point</code></a> (branch + timestamp), optionally demand loading it if it is not already in the <a href="../../revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
-</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
- int&nbsp;referenceChunk,
- int&nbsp;prefetchDepth,
- boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last odd-row-color">
 <div class="block">Returns the <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> with the given <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> at the given <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp), optionally demand loading them if they are not already in the
  <a href="../../revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Returns the <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> with the given <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> at the given <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp), optionally demand loading them if they are not already in the
  <a href="../../revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDORevision.</span><code><a href="../../revision/CDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">isValid</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevision.</span><code><a href="../../revision/CDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">isValid</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -1812,6 +1821,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../../transaction/CDOFileTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDOFileTransaction</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A transaction whose uncommitted changes can be persisted in a local file and explicitly pushed to the repository.</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../transaction/CDONestedTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDONestedTransaction</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">A transaction-compatible facade for a <a href="../../../transaction/CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction scope</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../transaction/CDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">A read-write view to the <em>current</em> (i.e.</div>
@@ -1825,8 +1844,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../transaction/CDOPushTransaction.html" class="type-name-link" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A <a href="../../../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> that persists changes to the object graph locally on commit and can later load
- these changes and push them to the <a href="../../CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a>.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.30, use <a href="../../../transaction/CDOFileTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a>.</div>
+</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../../../transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> that return <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></span></div>
@@ -1853,22 +1873,30 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#compareRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">compareRevisions</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
  <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
  <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="../../../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../../../transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
@@ -1905,17 +1933,23 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><code><a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#revertTo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">revertTo</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../../../transaction/CDOTransaction.html#revertTo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">revertTo</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code>static boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOTransactionCommentator.</span><code><a href="../../../transaction/CDOTransactionCommentator.html#setRevertComment(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setRevertComment</a><wbr>(<a href="../../../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;revertTo)</code></div>
@@ -2180,18 +2214,23 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../../spi/cdo/InternalCDOSessionInvalidationEvent.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionInvalidationEvent</a></code></div>
+<div class="col-second even-row-color"><code><a href="../../../../spi/cdo/DelegatingCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">DelegatingCDOTransaction</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A <a href="../../../session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session invalidation event</code></a> with <a href="../../../../spi/cdo/InternalCDOSessionInvalidationEvent.html#getSecurityImpact()"><code>security impact information</code></a>.</div>
+<div class="block">SPI for a transaction wrapper that exposes exactly one delegation level.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../../../spi/cdo/InternalCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../../../../spi/cdo/InternalCDOSessionInvalidationEvent.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionInvalidationEvent</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">A <a href="../../../session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session invalidation event</code></a> with <a href="../../../../spi/cdo/InternalCDOSessionInvalidationEvent.html#getSecurityImpact()"><code>security impact information</code></a>.</div>
 </div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../../spi/cdo/InternalCDOView.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></code></div>
+<div class="col-second even-row-color"><code><a href="../../../../spi/cdo/InternalCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../../spi/cdo/InternalCDOView.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
 </div>
@@ -2263,14 +2302,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../../../../spi/cdo/InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)" class="member-name-link">applyChangeSet</a><wbr>(<a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
- <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
+ <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;resultBaseProvider,
  <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  boolean&nbsp;keepVersions)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Applies a goal change set whose NEW, CHANGED, and DETACHED classifications are defined relative to
+ <code>resultBaseProvider</code>.</div>
+</div>
 <div class="col-first odd-row-color"><code>org.eclipse.net4j.util.collection.Pair<wbr>&lt;<a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>,<wbr>org.eclipse.net4j.util.collection.Pair&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&gt;&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">applyChangeSetData</a><wbr>(<a href="../../commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
- <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
+ <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;resultBaseProvider,
  <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source)</code></div>
 <div class="col-last odd-row-color">

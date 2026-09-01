@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../../cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code>, <code><a href="../../cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</a></code>, <code><a href="InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></code></dd>
+<dd><code><a href="../../cdo/transaction/CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></code>, <code><a href="../../cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code>, <code><a href="../../cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</a></code>, <code><a href="InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOXATransaction</span><span class="extends-implements">
@@ -148,7 +148,9 @@ extends <a href="../../cdo/transaction/CDOXATransaction.html" title="interface i
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDOXASavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXASavepoint</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastSavepoint()" class="member-name-link">getLastSavepoint</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the most recently created savepoint.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#remove(org.eclipse.emf.spi.cdo.InternalCDOTransaction)" class="member-name-link">remove</a><wbr>(<a href="InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -205,6 +207,8 @@ extends <a href="../../cdo/transaction/CDOXATransaction.html" title="interface i
 <section class="detail" id="getLastSavepoint()">
 <h3>getLastSavepoint</h3>
 <div class="member-signature"><span class="return-type"><a href="InternalCDOXASavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXASavepoint</a></span>&nbsp;<span class="element-name">getLastSavepoint</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/transaction/CDOUserTransaction.html#getLastSavepoint()">CDOUserTransaction</a></code></span></div>
+<div class="block">Returns the most recently created savepoint.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../cdo/transaction/CDOUserTransaction.html#getLastSavepoint()">getLastSavepoint</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code></dd>
@@ -212,6 +216,8 @@ extends <a href="../../cdo/transaction/CDOXATransaction.html" title="interface i
 <dd><code><a href="../../cdo/transaction/CDOXATransaction.html#getLastSavepoint()">getLastSavepoint</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</a></code></dd>
 <dt>Specified by:</dt>
 <dd><code><a href="InternalCDOUserTransaction.html#getLastSavepoint()">getLastSavepoint</a></code>&nbsp;in interface&nbsp;<code><a href="InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></code></dd>
+<dt>Returns:</dt>
+<dd>the last savepoint, or <code>null</code> if none exists.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>

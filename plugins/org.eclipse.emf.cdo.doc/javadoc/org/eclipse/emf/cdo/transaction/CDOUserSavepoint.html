@@ -88,11 +88,16 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
+<dt>All Superinterfaces:</dt>
+<dd><code><a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></code></dd>
+</dl>
+<dl class="notes">
 <dt>All Known Subinterfaces:</dt>
 <dd><code><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></code>, <code><a href="CDOXASavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXASavepoint</a></code>, <code><a href="../../spi/cdo/InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a></code>, <code><a href="../../spi/cdo/InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a></code>, <code><a href="../../spi/cdo/InternalCDOXASavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXASavepoint</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOUserSavepoint</span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOUserSavepoint</span><span class="extends-implements">
+extends <a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></span></div>
 <div class="block">Creates a save point in a <a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOUserTransaction</code></a> that can be used to roll back a part of the transaction.
  <p>
  <b>Note:</b> Save points do not flush to disk. Everything is done in memory on the client side.</div>
@@ -122,22 +127,40 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNextSavepoint()" class="member-name-link">getNextSavepoint</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the next savepoint in the transaction's savepoint sequence.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNumber()" class="member-name-link">getNumber</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns this savepoint's sequence number.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPreviousSavepoint()" class="member-name-link">getPreviousSavepoint</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the previous savepoint in the transaction's savepoint sequence.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the transaction that owns this savepoint.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValid()" class="member-name-link">isValid</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#rollback()" class="member-name-link">rollback</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isLast()" class="member-name-link">isLast</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Indicates whether this is the transaction's current last savepoint.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isValid()" class="member-name-link">isValid</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Indicates whether this savepoint can still be used.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#rollback()" class="member-name-link">rollback</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Rolls the owning transaction back to this savepoint while keeping the
+ owning root transaction active.</div>
+</div>
 </div>
 </div>
 </div>
@@ -156,25 +179,43 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTransaction()">
 <h3>getTransaction</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></span>&nbsp;<span class="element-name">getTransaction</span>()</div>
+<div class="block">Returns the transaction that owns this savepoint.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the owning transaction.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getNextSavepoint()">
 <h3>getNextSavepoint</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></span>&nbsp;<span class="element-name">getNextSavepoint</span>()</div>
+<div class="block">Returns the next savepoint in the transaction's savepoint sequence.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the next savepoint, or <code>null</code>.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getPreviousSavepoint()">
 <h3>getPreviousSavepoint</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></span>&nbsp;<span class="element-name">getPreviousSavepoint</span>()</div>
+<div class="block">Returns the previous savepoint in the transaction's savepoint sequence.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the previous savepoint, or <code>null</code>.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getNumber()">
 <h3>getNumber</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getNumber</span>()</div>
+<div class="block">Returns this savepoint's sequence number.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>the savepoint number.</dd>
 <dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
@@ -184,12 +225,39 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isValid()">
 <h3>isValid</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isValid</span>()</div>
+<div class="block">Indicates whether this savepoint can still be used.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the savepoint is valid.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isLast()">
+<h3>isLast</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isLast</span>()</div>
+<div class="block">Indicates whether this is the transaction's current last savepoint.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if this is the last savepoint.</dd>
+<dt>Since:</dt>
+<dd>4.30</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="rollback()">
 <h3>rollback</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">rollback</span>()</div>
+<div class="block">Rolls the owning transaction back to this savepoint while keeping the
+ owning root transaction active. This restores only the changes made after
+ this savepoint; it does not perform the lifecycle operation represented by
+ <a href="CDOUserTransaction.html#rollback()"><code>CDOUserTransaction.rollback()</code></a> and therefore does not finish the root
+ transaction.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="CDORollbackable.html#rollback()">rollback</a></code>&nbsp;in interface&nbsp;<code><a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>

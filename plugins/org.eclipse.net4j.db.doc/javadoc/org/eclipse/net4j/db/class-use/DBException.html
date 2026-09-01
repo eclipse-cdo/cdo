@@ -87,93 +87,101 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#batched(java.sql.PreparedStatement,int)" class="member-name-link">batched</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;delegate,
  int&nbsp;batchSize)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Batch.</span><code><a href="../Batch.html#close()" class="member-name-link">close</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">createTable</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="class or interface in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#createTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">createTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#dropTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">dropTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IDBConnectionProvider.</span><code><a href="../IDBConnectionProvider.html#getConnection()" class="member-name-link">getConnection</a>()</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#batched(java.sql.PreparedStatement,int,org.eclipse.net4j.db.BatchedStatement.Context,java.lang.String)" class="member-name-link">batched</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;delegate,
+ int&nbsp;batchSize,
+ <a href="../BatchedStatement.Context.html" title="interface in org.eclipse.net4j.db">BatchedStatement.Context</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;diagnosticName)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Creates a batched statement associated with a batching context.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Batch.</span><code><a href="../Batch.html#close()" class="member-name-link">close</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">createTable</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="class or interface in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#createTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">createTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#dropTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">dropTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBConnectionProvider.</span><code><a href="../IDBConnectionProvider.html#getConnection()" class="member-name-link">getConnection</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns a connection.</div>
 </div>
-<div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#getRowCount(java.sql.Connection,java.lang.String)" class="member-name-link">getRowCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first odd-row-color"><code>static int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#getRowCount(java.sql.Connection,java.lang.String)" class="member-name-link">getRowCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableName)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Returns the number of rows contained in the given table.</div>
 </div>
-<div class="col-first odd-row-color"><code>static int</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#getRowCount(java.sql.ResultSet)" class="member-name-link">getRowCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static int</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#getRowCount(java.sql.ResultSet)" class="member-name-link">getRowCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns the number of rows contained in the given result set.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#select(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;where,
- <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static int</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="../IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
+<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#select(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;where,
  <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;where,
  <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static int</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#selectMaximumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMaximumInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
+ <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static long</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#selectMaximumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMaximumLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first even-row-color"><code>static int</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#selectMaximumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMaximumInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static int</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#selectMinimumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMinimumInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first odd-row-color"><code>static long</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#selectMaximumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMaximumLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static long</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#selectMinimumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMinimumLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first even-row-color"><code>static int</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#selectMinimumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMinimumInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String)" class="member-name-link">serializeTable</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
+<div class="col-first odd-row-color"><code>static long</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#selectMinimumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMinimumLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String)" class="member-name-link">serializeTable</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableAlias,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sqlSuffix)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)" class="member-name-link">serializeTable</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)" class="member-name-link">serializeTable</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableAlias,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sqlSuffix,
  <a href="../DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a>&nbsp;handler)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)" class="member-name-link">updateSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)" class="member-name-link">updateSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
  <a href="../ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -279,8 +287,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">createTable</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="class or interface in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">createTable</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="class or interface in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#createTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">createTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#createTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">createTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#createTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">createTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
@@ -305,26 +321,35 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#dropTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">dropTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBSchema.</span><code><a href="../../spi/db/DBSchema.html#export(java.sql.Connection,java.io.PrintStream)" class="member-name-link">export</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a>&nbsp;out)</code></div>
-<div class="col-last odd-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
-</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a><wbr>&lt;<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#dropTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">dropTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBSchema.</span><code><a href="../../spi/db/DBSchema.html#export(javax.sql.DataSource,java.io.PrintStream)" class="member-name-link">export</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a>&nbsp;dataSource,
+<div class="col-second even-row-color"><span class="type-name-label">DBSchema.</span><code><a href="../../spi/db/DBSchema.html#export(java.sql.Connection,java.io.PrintStream)" class="member-name-link">export</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a>&nbsp;out)</code></div>
 <div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBSchema.</span><code><a href="../../spi/db/DBSchema.html#export(org.eclipse.net4j.db.IDBConnectionProvider,java.io.PrintStream)" class="member-name-link">export</a><wbr>(<a href="../IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+<div class="col-second odd-row-color"><span class="type-name-label">DBSchema.</span><code><a href="../../spi/db/DBSchema.html#export(javax.sql.DataSource,java.io.PrintStream)" class="member-name-link">export</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a>&nbsp;dataSource,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a>&nbsp;out)</code></div>
 <div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)" class="member-name-link">updateSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-second even-row-color"><span class="type-name-label">DBSchema.</span><code><a href="../../spi/db/DBSchema.html#export(org.eclipse.net4j.db.IDBConnectionProvider,java.io.PrintStream)" class="member-name-link">export</a><wbr>(<a href="../IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a>&nbsp;out)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)" class="member-name-link">updateSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
+ <a href="../ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)" class="member-name-link">updateSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
  <a href="../ddl/delta/IDBSchemaDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>

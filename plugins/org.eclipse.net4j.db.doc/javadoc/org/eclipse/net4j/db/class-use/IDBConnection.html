@@ -101,8 +101,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IDBDatabase.</span><code><a href="../IDBDatabase.html#openSchemaTransaction(org.eclipse.net4j.db.IDBConnection)" class="member-name-link">openSchemaTransaction</a><wbr>(<a href="../IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#openSchemaTransaction(org.eclipse.net4j.db.IDBDatabase,org.eclipse.net4j.db.IDBConnection)" class="member-name-link">openSchemaTransaction</a><wbr>(<a href="../IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;database,
+ <a href="../IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;currentConnection)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Opens a schema transaction through the adapter extension point.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBDatabase.</span><code><a href="../IDBDatabase.html#openSchemaTransaction(org.eclipse.net4j.db.IDBConnection)" class="member-name-link">openSchemaTransaction</a><wbr>(<a href="../IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -118,6 +124,10 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#openSchemaTransaction(org.eclipse.net4j.db.IDBDatabase,org.eclipse.net4j.db.IDBConnection)" class="member-name-link">openSchemaTransaction</a><wbr>(<a href="../IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;database,
  <a href="../IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;currentConnection)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#openSchemaTransaction(org.eclipse.net4j.db.IDBDatabase,org.eclipse.net4j.db.IDBConnection)" class="member-name-link">openSchemaTransaction</a><wbr>(<a href="../IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;database,
+ <a href="../IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;currentConnection)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

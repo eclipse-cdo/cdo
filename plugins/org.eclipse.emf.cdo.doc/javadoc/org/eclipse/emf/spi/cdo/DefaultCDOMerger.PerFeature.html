@@ -94,11 +94,11 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></code></dd>
+<dd><code><a href="../../cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></code>, <code><a href="../../cdo/transaction/CDOMergerBaseAware.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMergerBaseAware</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="DefaultCDOMerger.PerFeature.ManyValued.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued</a></code>, <code><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld</a></code></dd>
+<dd><code><a href="DefaultCDOMerger.PerFeature.ManyValued.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Enclosing class:</dt>
@@ -127,12 +127,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="DefaultCDOMerger.PerFeature.ManyValued.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Per-feature merger whose many-valued path performs a semantic three-way list merge.</div>
 </div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Instantiate <a href="DefaultCDOMerger.PerFeature.ManyValued.html" title="class in org.eclipse.emf.spi.cdo"><code>DefaultCDOMerger.PerFeature.ManyValued</code></a>.</div>
+</div>
 </div>
 </div>
 <div class="inherited-list">
@@ -173,13 +175,62 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">changedInSource</a><wbr>(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">changedInSource</a><wbr>(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Re-encodes a source-only feature change relative to the actual result base.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">changedInSource</a><wbr>(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceEndRevision)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolves a one-sided source change as a goal relative to the actual result base.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">changedInSourceAndTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;targetFeatureDelta,
  <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;sourceFeatureDelta)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">changedInSourceAndTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;targetFeatureDelta,
+ <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;sourceFeatureDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;ancestorRevision)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolves concurrent changes of one feature with an optional full common-ancestor revision.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">changedInSourceAndTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;targetFeatureDelta,
+ <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;sourceFeatureDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolves concurrent feature changes with explicit result/target/source base revisions.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)" class="member-name-link">changedInSourceAndTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
  <a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">changedInSourceAndTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
+ <a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;ancestorRevision)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolves concurrent revision changes with an optional full common-ancestor revision.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">changedInSourceAndTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
+ <a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolves concurrent revision changes with explicit asymmetric branch/remerge base revisions.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInSourceAndTargetManyValued(org.eclipse.emf.ecore.EStructuralFeature,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">changedInSourceAndTargetManyValued</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;targetFeatureDelta,
@@ -193,12 +244,29 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">changedInTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">changedInTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Re-encodes a target-only feature change relative to the actual result base.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">changedInTarget</a><wbr>(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetEndRevision)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolves a one-sided target change as a goal relative to the actual result base.</div>
+</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.emf.spi.cdo.DefaultCDOMerger">Methods inherited from class&nbsp;org.eclipse.emf.spi.cdo.<a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></h3>
-<code><a href="DefaultCDOMerger.html#addedInSource(org.eclipse.emf.cdo.common.revision.CDORevision)">addedInSource</a>, <a href="DefaultCDOMerger.html#addedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">addedInSourceAndTarget</a>, <a href="DefaultCDOMerger.html#addedInTarget(org.eclipse.emf.cdo.common.revision.CDORevision)">addedInTarget</a>, <a href="DefaultCDOMerger.html#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInSource</a>, <a href="DefaultCDOMerger.html#changedInSourceAndDetachedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInSourceAndDetachedInTarget</a>, <a href="DefaultCDOMerger.html#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInTarget</a>, <a href="DefaultCDOMerger.html#changedInTargetAndDetachedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInTargetAndDetachedInSource</a>, <a href="DefaultCDOMerger.html#detachedInSource(org.eclipse.emf.cdo.common.id.CDOID)">detachedInSource</a>, <a href="DefaultCDOMerger.html#detachedInSourceAndTarget(org.eclipse.emf.cdo.common.id.CDOID)">detachedInSourceAndTarget</a>, <a href="DefaultCDOMerger.html#detachedInTarget(org.eclipse.emf.cdo.common.id.CDOID)">detachedInTarget</a>, <a href="DefaultCDOMerger.html#getConflicts()">getConflicts</a>, <a href="DefaultCDOMerger.html#getListOrdering()">getListOrdering</a>, <a href="DefaultCDOMerger.html#getResolutionPreference()">getResolutionPreference</a>, <a href="DefaultCDOMerger.html#getResult()">getResult</a>, <a href="DefaultCDOMerger.html#getSourceMap()">getSourceMap</a>, <a href="DefaultCDOMerger.html#getTargetMap()">getTargetMap</a>, <a href="DefaultCDOMerger.html#merge(java.lang.Object,java.lang.Object)">merge</a>, <a href="DefaultCDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet)">merge</a></code></div>
+<code><a href="DefaultCDOMerger.html#addedInSource(org.eclipse.emf.cdo.common.revision.CDORevision)">addedInSource</a>, <a href="DefaultCDOMerger.html#addedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">addedInSourceAndTarget</a>, <a href="DefaultCDOMerger.html#addedInTarget(org.eclipse.emf.cdo.common.revision.CDORevision)">addedInTarget</a>, <a href="DefaultCDOMerger.html#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInSource</a>, <a href="DefaultCDOMerger.html#changedInSourceAndDetachedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInSourceAndDetachedInTarget</a>, <a href="DefaultCDOMerger.html#changedInSourceAndDetachedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">changedInSourceAndDetachedInTarget</a>, <a href="DefaultCDOMerger.html#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInTarget</a>, <a href="DefaultCDOMerger.html#changedInTargetAndDetachedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInTargetAndDetachedInSource</a>, <a href="DefaultCDOMerger.html#changedInTargetAndDetachedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">changedInTargetAndDetachedInSource</a>, <a href="DefaultCDOMerger.html#detachedInSource(org.eclipse.emf.cdo.common.id.CDOID)">detachedInSource</a>, <a href="DefaultCDOMerger.html#detachedInSourceAndTarget(org.eclipse.emf.cdo.common.id.CDOID)">detachedInSourceAndTarget</a>, <a href="DefaultCDOMerger.html#detachedInTarget(org.eclipse.emf.cdo.common.id.CDOID)">detachedInTarget</a>, <a href="DefaultCDOMerger.html#getConflicts()">getConflicts</a>, <a href="DefaultCDOMerger.html#getListOrdering()">getListOrdering</a>, <a href="DefaultCDOMerger.html#getResolutionPreference()">getResolutionPreference</a>, <a href="DefaultCDOMerger.html#getResult()">getResult</a>, <a href="DefaultCDOMerger.html#getSourceMap()">getSourceMap</a>, <a href="DefaultCDOMerger.html#getTargetMap()">getTargetMap</a>, <a href="DefaultCDOMerger.html#merge(java.lang.Object,java.lang.Object)">merge</a>, <a href="DefaultCDOMerger.html#merge(java.lang.Object,java.lang.Object,org.eclipse.emf.cdo.common.revision.CDORevision)">merge</a>, <a href="DefaultCDOMerger.html#merge(java.lang.Object,java.lang.Object,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">merge</a>, <a href="DefaultCDOMerger.html#merge(java.lang.Object,java.lang.Object,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">merge</a>, <a href="DefaultCDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet)">merge</a>, <a href="DefaultCDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">merge</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -238,6 +306,44 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>changedInTarget</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">changedInTarget</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetEndRevision)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="DefaultCDOMerger.html#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">DefaultCDOMerger</a></code></span></div>
+<div class="block">Resolves a one-sided target change as a goal relative to the actual result base.
+ <p>
+ The base implementation treats the selected target endpoint as the complete object-level goal. <a href="DefaultCDOMerger.PerFeature.html" title="class in org.eclipse.emf.spi.cdo"><code>DefaultCDOMerger.PerFeature</code></a>
+ refines this behavior so unchanged features stay unobserved and many-valued changes retain occurrence semantics.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="DefaultCDOMerger.html#changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">changedInTarget</a></code>&nbsp;in class&nbsp;<code><a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>changedInSource</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">changedInSource</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceEndRevision)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="DefaultCDOMerger.html#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">DefaultCDOMerger</a></code></span></div>
+<div class="block">Resolves a one-sided source change as a goal relative to the actual result base.
+ <p>
+ The base implementation treats the selected source endpoint as the complete object-level goal. <a href="DefaultCDOMerger.PerFeature.html" title="class in org.eclipse.emf.spi.cdo"><code>DefaultCDOMerger.PerFeature</code></a>
+ refines this behavior so unchanged features stay unobserved and many-valued changes retain occurrence semantics.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="DefaultCDOMerger.html#changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">changedInSource</a></code>&nbsp;in class&nbsp;<code><a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">
 <h3>changedInSourceAndTarget</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">changedInSourceAndTarget</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
@@ -245,6 +351,37 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="DefaultCDOMerger.html#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">changedInSourceAndTarget</a></code>&nbsp;in class&nbsp;<code><a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>changedInSourceAndTarget</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">changedInSourceAndTarget</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
+ <a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;ancestorRevision)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="DefaultCDOMerger.html#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision)">DefaultCDOMerger</a></code></span></div>
+<div class="block">Resolves concurrent revision changes with an optional full common-ancestor revision. Subclasses that need only
+ deltas retain the established two-argument hook; semantic many-valued merging overrides this overload.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="DefaultCDOMerger.html#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision)">changedInSourceAndTarget</a></code>&nbsp;in class&nbsp;<code><a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>changedInSourceAndTarget</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">changedInSourceAndTarget</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;targetDelta,
+ <a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;sourceDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from class:&nbsp;<code><a href="DefaultCDOMerger.html#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">DefaultCDOMerger</a></code></span></div>
+<div class="block">Resolves concurrent revision changes with explicit asymmetric branch/remerge base revisions.</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="DefaultCDOMerger.html#changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">changedInSourceAndTarget</a></code>&nbsp;in class&nbsp;<code><a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></code></dd>
 </dl>
 </section>
 </li>
@@ -269,6 +406,36 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="changedInTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>changedInTarget</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span>&nbsp;<span class="element-name">changedInTarget</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision)</span></div>
+<div class="block">Re-encodes a target-only feature change relative to the actual result base. Single-valued deltas are absolute and
+ therefore already base-independent; many-valued subclasses override this hook.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.30</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="changedInSource(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>changedInSource</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span>&nbsp;<span class="element-name">changedInSource</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision)</span></div>
+<div class="block">Re-encodes a source-only feature change relative to the actual result base. Single-valued deltas are absolute and
+ therefore already base-independent; many-valued subclasses override this hook.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.30</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)">
 <h3>changedInSourceAndTarget</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span>&nbsp;<span class="element-name">changedInSourceAndTarget</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;targetFeatureDelta,
@@ -276,6 +443,36 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the result feature delta, or <code>null</code> to indicate an unresolved conflict.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>changedInSourceAndTarget</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span>&nbsp;<span class="element-name">changedInSourceAndTarget</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;targetFeatureDelta,
+ <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;sourceFeatureDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;ancestorRevision)</span></div>
+<div class="block">Resolves concurrent changes of one feature with an optional full common-ancestor revision. The default delegates
+ to the established delta-only hook so existing extenders retain their behavior.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.30</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="changedInSourceAndTarget(org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevision)">
+<h3>changedInSourceAndTarget</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span>&nbsp;<span class="element-name">changedInSourceAndTarget</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;targetFeatureDelta,
+ <a href="../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;sourceFeatureDelta,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;resultBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;targetBaseRevision,
+ <a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;sourceBaseRevision)</span></div>
+<div class="block">Resolves concurrent feature changes with explicit result/target/source base revisions. The default preserves the
+ existing common-ancestor hook for extenders that do not need asymmetric list visibility.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.30</dd>
 </dl>
 </section>
 </li>

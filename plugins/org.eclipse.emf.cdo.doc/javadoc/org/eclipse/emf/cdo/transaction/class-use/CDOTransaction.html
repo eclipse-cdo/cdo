@@ -96,16 +96,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Classes that help to open EMF Compare user interfaces on CDO models.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.util">org.eclipse.emf.cdo.util</a></div>
 <div class="col-last even-row-color">
+<div class="block">Client utility classes, some common interfaces and exceptions.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.workspace">org.eclipse.emf.cdo.workspace</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.workspace">org.eclipse.emf.cdo.workspace</a></div>
+<div class="col-last even-row-color">
 <div class="block">Concepts to checkout, open and further operate CDO <a href="../../workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </div>
 </div>
@@ -235,6 +239,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.eclipse.emf.cdo.transaction">
 <h2>Uses of <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.transaction</a></h2>
+<div class="caption"><span>Subinterfaces of <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a> in <a href="../package-summary.html">org.eclipse.emf.cdo.transaction</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../CDOFileTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDOFileTransaction</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A transaction whose uncommitted changes can be persisted in a local file and explicitly pushed to the repository.</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../CDONestedTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDONestedTransaction</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">A transaction-compatible facade for a <a href="../CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction scope</code></a>.</div>
+</div>
+</div>
 <div class="caption"><span>Classes in <a href="../package-summary.html">org.eclipse.emf.cdo.transaction</a> that implement <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -243,8 +263,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../CDOPushTransaction.html" class="type-name-link" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> that persists changes to the object graph locally on commit and can later load
- these changes and push them to the <a href="../../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a>.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.30, use <a href="../CDOFileTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a>.</div>
+</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.transaction</a> that return <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span></div>
@@ -259,7 +280,19 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../CDOPushTransaction.html#getDelegate()" class="member-name-link">getDelegate</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first even-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOTransactionScopeClosedEvent.</span><code><a href="../CDOTransactionScopeClosedEvent.html#getSource()" class="member-name-link">getSource</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the real transaction that emitted this event.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOTransactionScopeOpenedEvent.</span><code><a href="../CDOTransactionScopeOpenedEvent.html#getSource()" class="member-name-link">getSource</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the real transaction that emitted this event.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOAutoAttacher.</span><code><a href="../CDOAutoAttacher.html#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -275,13 +308,25 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOSavepoint.</span><code><a href="../CDOSavepoint.html#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the transaction that owns this savepoint.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOTransactionAware.</span><code><a href="../CDOTransactionAware.html#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the associated transaction.</div>
+</div>
+<div class="col-first odd-row-color"><code>final <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOTransactionCommentator.</span><code><a href="../CDOTransactionCommentator.html#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>final <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOTransactionCommentator.</span><code><a href="../CDOTransactionCommentator.html#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
+<div class="col-first even-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOTransactionContainer.</span><code><a href="../CDOTransactionContainer.html#getTransaction(int)" class="member-name-link">getTransaction</a><wbr>(int&nbsp;viewID)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOTransactionContainer.</span><code><a href="../CDOTransactionContainer.html#getTransaction(int)" class="member-name-link">getTransaction</a><wbr>(int&nbsp;viewID)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOTransactionScope.</span><code><a href="../CDOTransactionScope.html#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the root transaction that contains this scope.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>[]</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransactionContainer.</span><code><a href="../CDOTransactionContainer.html#getTransactions()" class="member-name-link">getTransactions</a>()</code></div>
 <div class="col-last even-row-color">
@@ -464,7 +509,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../CDOPushTransaction.html#createTempFile(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">createTempFile</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPostEventTransactionHandler.Default.</span><code><a href="../CDOPostEventTransactionHandler.Default.html#detachedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.common.notify.Notification)" class="member-name-link">detachedObject</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
  <a href="../../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
@@ -643,16 +690,22 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../CDOPushTransaction.html#%3Cinit%3E(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">CDOPushTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../CDOPushTransaction.html#%3Cinit%3E(org.eclipse.emf.cdo.transaction.CDOTransaction,java.io.File)" class="member-name-link">CDOPushTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../CDOPushTransaction.html#%3Cinit%3E(org.eclipse.emf.cdo.transaction.CDOTransaction,java.io.File,boolean)" class="member-name-link">CDOPushTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
  boolean&nbsp;reconstructSavepoints)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../CDOTransactionCommentator.html#%3Cinit%3E(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">CDOTransactionCommentator</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -714,6 +767,35 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOCompareEditorUtil.</span><code><a href="../../ui/compare/CDOCompareEditorUtil.html#closeTransactionAfterCommit(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">closeTransactionAfterCommit</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.util">
+<h2>Uses of <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a> in <a href="../../util/package-summary.html">org.eclipse.emf.cdo.util</a></h2>
+<div class="caption"><span>Methods in <a href="../../util/package-summary.html">org.eclipse.emf.cdo.util</a> with parameters of type <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../CDOFileTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOFileTransaction</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOUtil.</span><code><a href="../../util/CDOUtil.html#createFileTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">createFileTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a file-backed transaction using a generated temporary file.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../CDOFileTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOFileTransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOUtil.</span><code><a href="../../util/CDOUtil.html#createFileTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,java.io.File)" class="member-name-link">createFileTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a file-backed transaction using the given file.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../CDOFileTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOFileTransaction</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOUtil.</span><code><a href="../../util/CDOUtil.html#createFileTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,java.io.File,boolean)" class="member-name-link">createFileTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;delegate,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ boolean&nbsp;reconstructSavepoints)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a file-backed transaction using the given file and savepoint reconstruction policy.</div>
+</div>
 </div>
 </section>
 </li>
@@ -784,8 +866,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../spi/cdo/InternalCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></div>
+<div class="col-second even-row-color"><code><a href="../../../spi/cdo/DelegatingCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">DelegatingCDOTransaction</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">SPI for a transaction wrapper that exposes exactly one delegation level.</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../spi/cdo/InternalCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
 </div>
@@ -794,6 +881,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDOTransaction.</span><code><a href="../../../spi/cdo/DelegatingCDOTransaction.html#getDelegate()" class="member-name-link">getDelegate</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the directly wrapped transaction.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDOTransaction.</span><code><a href="../../../spi/cdo/DelegatingCDOTransaction.html#getEffectiveTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">getEffectiveTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Resolves a wrapper chain to its effective non-delegating transaction.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractConflictResolver.</span><code><a href="../../../spi/cdo/AbstractConflictResolver.html#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -806,30 +903,35 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../../../spi/cdo/InternalCDOXATransaction.InternalCDOXACommitContext.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction.InternalCDOXACommitContext</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalCDOXATransaction.</span><code><a href="../../../spi/cdo/InternalCDOXATransaction.html#getCommitContext(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">getCommitContext</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AbstractChangeSetsConflictResolver.</span><code><a href="../../../spi/cdo/AbstractChangeSetsConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDOTransaction.</span><code><a href="../../../spi/cdo/DelegatingCDOTransaction.html#getEffectiveTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">getEffectiveTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Resolves a wrapper chain to its effective non-delegating transaction.</div>
+</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AbstractConflictResolver.</span><code><a href="../../../spi/cdo/AbstractConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractChangeSetsConflictResolver.</span><code><a href="../../../spi/cdo/AbstractChangeSetsConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><a href="../../../spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AbstractConflictResolver.</span><code><a href="../../../spi/cdo/AbstractConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOMergingConflictResolver.</span><code><a href="../../../spi/cdo/CDOMergingConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AbstractConflictResolver.</span><code><a href="../../../spi/cdo/AbstractConflictResolver.html#setTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">setTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AbstractChangeSetsConflictResolver.</span><code><a href="../../../spi/cdo/AbstractChangeSetsConflictResolver.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">unhookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><a href="../../../spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AbstractConflictResolver.</span><code><a href="../../../spi/cdo/AbstractConflictResolver.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">unhookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOMergingConflictResolver.</span><code><a href="../../../spi/cdo/CDOMergingConflictResolver.html#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractConflictResolver.</span><code><a href="../../../spi/cdo/AbstractConflictResolver.html#setTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">setTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AbstractChangeSetsConflictResolver.</span><code><a href="../../../spi/cdo/AbstractChangeSetsConflictResolver.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">unhookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><a href="../../../spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">unhookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">AbstractConflictResolver.</span><code><a href="../../../spi/cdo/AbstractConflictResolver.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">unhookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AbstractObjectConflictResolver.ThreeWayMerge.</span><code><a href="../../../spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">unhookTransaction</a><wbr>(<a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

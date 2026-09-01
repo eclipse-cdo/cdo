@@ -205,60 +205,66 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#postProcessRevisions(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">postProcessRevisions</a><wbr>(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeBlob(byte%5B%5D,long,java.io.InputStream)" class="member-name-link">writeBlob</a><wbr>(byte[]&nbsp;id,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#prepareSchema(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">prepareSchema</a><wbr>(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Prepares store-specific schema objects before this commit starts to write transactional data.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeBlob(byte%5B%5D,long,java.io.InputStream)" class="member-name-link">writeBlob</a><wbr>(byte[]&nbsp;id,
  long&nbsp;size,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;inputStream)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeClob(byte%5B%5D,long,java.io.Reader)" class="member-name-link">writeClob</a><wbr>(byte[]&nbsp;id,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeClob(byte%5B%5D,long,java.io.Reader)" class="member-name-link">writeClob</a><wbr>(byte[]&nbsp;id,
  long&nbsp;size,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeCommitInfo</a><wbr>(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeCommitInfo</a><wbr>(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  long&nbsp;timeStamp,
  long&nbsp;previousTimeStamp,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;mergeSource,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>protected abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeCommitInfo</a><wbr>(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeCommitInfo</a><wbr>(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  long&nbsp;timeStamp,
  long&nbsp;previousTimeStamp,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.6 override <a href="#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>writeCommitInfo(CDOBranch, long, long, String, String, CDOBranchPoint, OMMonitor)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeDirtyObjectRevisions(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeDirtyObjectRevisions</a><wbr>(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeDirtyObjectRevisions(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeDirtyObjectRevisions</a><wbr>(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
  <a href="../common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;dirtyObjects,
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeNewObjectRevisions(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeNewObjectRevisions</a><wbr>(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeNewObjectRevisions(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeNewObjectRevisions</a><wbr>(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
  <a href="../common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;newObjects,
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeRevisionDeltas(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisionDeltas</a><wbr>(<a href="../common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;revisionDeltas,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeRevisionDeltas(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisionDeltas</a><wbr>(<a href="../common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>[]&nbsp;revisionDeltas,
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  long&nbsp;created,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeRevisions(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisions</a><wbr>(<a href="../common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeRevisions(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisions</a><wbr>(<a href="../common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions,
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -364,6 +370,21 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="prepareSchema(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<h3>prepareSchema</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prepareSchema</span><wbr><span class="parameters">(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span></div>
+<div class="block">Prepares store-specific schema objects before this commit starts to write transactional data.
+ <p>
+ Implementations that create schema objects with a JDBC schema transaction must do so here because several
+ databases commit the JDBC connection as part of DDL processing.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.26</dd>
 </dl>
 </section>
 </li>

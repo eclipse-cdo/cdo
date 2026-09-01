@@ -330,10 +330,37 @@ loadScripts(document, 'script');</script>
 <div class="block">Write the revision data to the database.</div>
 </div>
 <div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IClassMappingBatchingSupport.</span><code><a href="../../../../server/db/mapping/IClassMappingBatchingSupport.html#writeRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisions</a><wbr>(<a href="../../../../server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions,
+ boolean&nbsp;firstRevision,
+ boolean&nbsp;revise,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Writes revisions that all belong to this class mapping.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategyBatchingSupport.</span><code><a href="../../../../server/db/mapping/IMappingStrategyBatchingSupport.html#writeRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisions</a><wbr>(<a href="../../../../server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions,
+ boolean&nbsp;firstRevision,
+ boolean&nbsp;revise,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Writes a group of revisions belonging to one DBStore write phase.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../../../../server/db/mapping/IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">writeValues</a><wbr>(<a href="../../../../server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Write a complete list of values to the database.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListMappingBatchingSupport.</span><code><a href="../../../../server/db/mapping/IListMappingBatchingSupport.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeValues</a><wbr>(<a href="../../../../server/db/IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions,
+ boolean&nbsp;firstRevision,
+ boolean&nbsp;raw,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Writes complete list values for the supplied revisions.</div>
 </div>
 </div>
 </section>
@@ -697,9 +724,15 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDOObject.</span><code><a href="../../../../../spi/cdo/InternalCDOObject.html#cdoRevision(boolean)" class="member-name-link">cdoRevision</a><wbr>(boolean&nbsp;loadOnDemand)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../../spi/cdo/InternalCDOView.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,boolean)" class="member-name-link">getRevision</a><wbr>(<a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#getLifecycleBeforeImageRevision(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">getLifecycleBeforeImageRevision</a><wbr>(<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns a copy of the revision from the most recent lifecycle before-image reachable through
+ the active savepoint chain, or <code>null</code> if no revision was captured.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../../spi/cdo/InternalCDOView.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,boolean)" class="member-name-link">getRevision</a><wbr>(<a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> that return types with arguments of type <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span></div>
 <div class="summary-table three-column-summary">

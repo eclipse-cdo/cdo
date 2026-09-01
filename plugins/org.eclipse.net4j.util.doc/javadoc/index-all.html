@@ -8445,7 +8445,17 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/util/om/log/RollingLog.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class org.eclipse.net4j.util.om.log.<a href="org/eclipse/net4j/util/om/log/RollingLog.html" title="class in org.eclipse.net4j.util.om.log">RollingLog</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/ReflectUtil.html#makeAccessible(java.lang.reflect.AccessibleObject)" class="member-name-link">makeAccessible(AccessibleObject)</a> - Static method in class org.eclipse.net4j.util.<a href="org/eclipse/net4j/util/ReflectUtil.html" title="class in org.eclipse.net4j.util">ReflectUtil</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">This method performs only ordinary Java reflection accessibility handling. It does not bypass Java
+             module-access checks, and callers must not rely on access to members rejected by normal Java access
+             or module rules. Use <a href="org/eclipse/net4j/util/ReflectUtil.html#makeAccessibleNormally(java.lang.reflect.AccessibleObject)"><code>ReflectUtil.makeAccessibleNormally(AccessibleObject)</code></a>.</div>
+</div>
+</dd>
+<dt><a href="org/eclipse/net4j/util/ReflectUtil.html#makeAccessibleNormally(java.lang.reflect.AccessibleObject)" class="member-name-link">makeAccessibleNormally(AccessibleObject)</a> - Static method in class org.eclipse.net4j.util.<a href="org/eclipse/net4j/util/ReflectUtil.html" title="class in org.eclipse.net4j.util">ReflectUtil</a></dt>
+<dd>
+<div class="block">Makes a reflective object accessible using only the supported Java reflection API.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/util/io/IOUtil.html#makeRelative(java.io.File,java.io.File)" class="member-name-link">makeRelative(File, File)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/IOUtil.html" title="class in org.eclipse.net4j.util.io">IOUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/container/ManagedContainer.html" class="type-name-link" title="class in org.eclipse.net4j.util.container">ManagedContainer</a> - Class in <a href="org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></dt>
@@ -11873,7 +11883,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/util/ReflectUtil.html#setValue(java.lang.reflect.Field,java.lang.Object,java.lang.Object)" class="member-name-link">setValue(Field, Object, Object)</a> - Static method in class org.eclipse.net4j.util.<a href="org/eclipse/net4j/util/ReflectUtil.html" title="class in org.eclipse.net4j.util">ReflectUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/ReflectUtil.html#setValue(java.lang.reflect.Field,java.lang.Object,java.lang.Object,boolean)" class="member-name-link">setValue(Field, Object, Object, boolean)</a> - Static method in class org.eclipse.net4j.util.<a href="org/eclipse/net4j/util/ReflectUtil.html" title="class in org.eclipse.net4j.util">ReflectUtil</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">The <code>force</code> parameter is retained only for API compatibility and is ignored. Use
+             <a href="org/eclipse/net4j/util/ReflectUtil.html#setValue(java.lang.reflect.Field,java.lang.Object,java.lang.Object)"><code>ReflectUtil.setValue(Field, Object, Object)</code></a>.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/net4j/util/ui/widgets/TextAndDisable.html#setValue(java.lang.String)" class="member-name-link">setValue(String)</a> - Method in class org.eclipse.net4j.util.ui.widgets.<a href="org/eclipse/net4j/util/ui/widgets/TextAndDisable.html" title="class in org.eclipse.net4j.util.ui.widgets">TextAndDisable</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/ui/prefs/OMPreferenceStore.html#setValue(java.lang.String,boolean)" class="member-name-link">setValue(String, boolean)</a> - Method in class org.eclipse.net4j.util.ui.prefs.<a href="org/eclipse/net4j/util/ui/prefs/OMPreferenceStore.html" title="class in org.eclipse.net4j.util.ui.prefs">OMPreferenceStore</a></dt>
@@ -12406,6 +12421,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/util/concurrent/Worker.WorkContext.html#terminate()" class="member-name-link">terminate()</a> - Method in class org.eclipse.net4j.util.concurrent.<a href="org/eclipse/net4j/util/concurrent/Worker.WorkContext.html" title="class in org.eclipse.net4j.util.concurrent">Worker.WorkContext</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/concurrent/Worker.Terminate.html#%3Cinit%3E()" class="member-name-link">Terminate()</a> - Constructor for exception class org.eclipse.net4j.util.concurrent.<a href="org/eclipse/net4j/util/concurrent/Worker.Terminate.html" title="class in org.eclipse.net4j.util.concurrent">Worker.Terminate</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/concurrent/ThreadPool.html#terminated()" class="member-name-link">terminated()</a> - Method in class org.eclipse.net4j.util.concurrent.<a href="org/eclipse/net4j/util/concurrent/ThreadPool.html" title="class in org.eclipse.net4j.util.concurrent">ThreadPool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/DoubleBiPredicate.html#test(double,double)" class="member-name-link">test(double, double)</a> - Method in interface org.eclipse.net4j.util.<a href="org/eclipse/net4j/util/DoubleBiPredicate.html" title="interface in org.eclipse.net4j.util">DoubleBiPredicate</a></dt>
 <dd>&nbsp;</dd>

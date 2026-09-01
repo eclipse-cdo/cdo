@@ -39,7 +39,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Summary:</p>
 <ul>
-<li>Nested</li>
+<li><a href="#nested-class-summary">Nested</a></li>
 <li><a href="#field-summary">Field</a></li>
 <li>Constr</li>
 <li><a href="#method-summary">Method</a></li>
@@ -59,7 +59,7 @@ loadScripts(document, 'script');</script>
 <div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
@@ -94,6 +94,13 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">BatchedStatement</span><span class="extends-implements">
 extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span></div>
+<div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link"><code>PreparedStatement</code></a> that supports batching of parameter sets. A batch is executed when the number of
+ parameter sets reaches the <a href="#getBatchSize()"><code>batch size</code></a>. The total number of parameter sets submitted to
+ this statement can be retrieved using <a href="#getBatchCount()"><code>getBatchCount()</code></a>. The total number of rows affected by all
+ executions of this statement can be retrieved using <a href="#getTotalResult()"><code>getTotalResult()</code></a>.
+ <p>
+ The <a href="#flush()"><code>flush()</code></a> method can be used to execute all currently pending parameter sets, and the number of
+ parameter sets that have not yet been executed can be retrieved using <a href="#getPendingCount()"><code>getPendingCount()</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.5</dd>
@@ -107,6 +114,21 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/jav
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="BatchedStatement.Context.html" class="type-name-link" title="interface in org.eclipse.net4j.db">BatchedStatement.Context</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
@@ -128,14 +150,41 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/jav
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBatchCount()" class="member-name-link">getBatchCount</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#flush()" class="member-name-link">flush</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Executes all currently pending parameter sets.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBatchSize()" class="member-name-link">getBatchSize</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBatchCount()" class="member-name-link">getBatchCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the total number of parameter sets submitted to this statement.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTotalResult()" class="member-name-link">getTotalResult</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBatchSize()" class="member-name-link">getBatchSize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the maximum number of parameter sets that can be submitted to this statement
+ before an execution is triggered.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getExecutionCount()" class="member-name-link">getExecutionCount</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the number of executed JDBC batches.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPendingCount()" class="member-name-link">getPendingCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the number of parameter sets that have not yet been executed.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTotalResult()" class="member-name-link">getTotalResult</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the total number of rows affected by all executions of this statement.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUnknownResultCount()" class="member-name-link">getUnknownResultCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the number of successful JDBC batch entries whose update count is unknown.</div>
+</div>
 </div>
 </div>
 </div>
@@ -163,18 +212,70 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/jav
 <section class="detail" id="getBatchSize()">
 <h3>getBatchSize</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getBatchSize</span>()</div>
+<div class="block">Returns the maximum number of parameter sets that can be submitted to this statement
+ before an execution is triggered.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBatchCount()">
 <h3>getBatchCount</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getBatchCount</span>()</div>
+<div class="block">Returns the total number of parameter sets submitted to this statement.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTotalResult()">
 <h3>getTotalResult</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getTotalResult</span>()</div>
+<div class="block">Returns the total number of rows affected by all executions of this statement.
+ This is the sum of the update counts for each execution.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPendingCount()">
+<h3>getPendingCount</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getPendingCount</span>()</div>
+<div class="block">Returns the number of parameter sets that have not yet been executed.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.14</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getExecutionCount()">
+<h3>getExecutionCount</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getExecutionCount</span>()</div>
+<div class="block">Returns the number of executed JDBC batches.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.14</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getUnknownResultCount()">
+<h3>getUnknownResultCount</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getUnknownResultCount</span>()</div>
+<div class="block">Returns the number of successful JDBC batch entries whose update count is unknown.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.14</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="flush()">
+<h3>flush</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">flush</span>()
+   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+<div class="block">Executes all currently pending parameter sets.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code></dd>
+<dt>Since:</dt>
+<dd>4.14</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -88,15 +88,20 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
+<dt>All Superinterfaces:</dt>
+<dd><code><a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></code></dd>
+</dl>
+<dl class="notes">
 <dt>All Known Subinterfaces:</dt>
-<dd><code><a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code>, <code><a href="CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</a></code>, <code><a href="../../spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code>, <code><a href="../../spi/cdo/InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></code>, <code><a href="../../spi/cdo/InternalCDOXATransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction</a></code></dd>
+<dd><code><a href="CDOFileTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOFileTransaction</a></code>, <code><a href="CDONestedTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDONestedTransaction</a></code>, <code><a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code>, <code><a href="CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</a></code>, <code><a href="../../spi/cdo/DelegatingCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">DelegatingCDOTransaction</a></code>, <code><a href="../../spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code>, <code><a href="../../spi/cdo/InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></code>, <code><a href="../../spi/cdo/InternalCDOXATransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
 <dd><code><a href="CDOPushTransaction.html" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOUserTransaction</span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOUserTransaction</span><span class="extends-implements">
+extends <a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></span></div>
 <div class="block">Provides functionality that is common to both <a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>single</code></a> transactions and <a href="CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>distributed</code></a> (XA) transactions.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -134,10 +139,14 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastSavepoint()" class="member-name-link">getLastSavepoint</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the most recently created savepoint.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#rollback()" class="member-name-link">rollback</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Rolls back all uncommitted changes in this transaction.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setSavepoint()" class="member-name-link">setSavepoint</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -242,6 +251,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="rollback()">
 <h3>rollback</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">rollback</span>()</div>
+<div class="block">Rolls back all uncommitted changes in this transaction.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="CDORollbackable.html#rollback()">rollback</a></code>&nbsp;in interface&nbsp;<code><a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
@@ -262,7 +276,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getLastSavepoint()">
 <h3>getLastSavepoint</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></span>&nbsp;<span class="element-name">getLastSavepoint</span>()</div>
+<div class="block">Returns the most recently created savepoint.</div>
 <dl class="notes">
+<dt>Returns:</dt>
+<dd>the last savepoint, or <code>null</code> if none exists.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>

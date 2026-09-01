@@ -87,6 +87,15 @@ loadScripts(document, 'script');</script>
  <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;remoteView,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOMergerBaseAware.</span><code><a href="../CDOMergerBaseAware.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">merge</a><wbr>(<a href="../../common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
+ <a href="../../common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source,
+ <a href="../../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
+ <a href="../../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;sourceBaseProvider,
+ <a href="../../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;resultBaseProvider)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Merges the given target and source change sets using their respective base revisions.</div>
+</div>
 </div>
 </section>
 </li>
@@ -102,6 +111,15 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">DefaultCDOMerger.</span><code><a href="../../../spi/cdo/DefaultCDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet)" class="member-name-link">merge</a><wbr>(<a href="../../common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
  <a href="../../common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DefaultCDOMerger.</span><code><a href="../../../spi/cdo/DefaultCDOMerger.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">merge</a><wbr>(<a href="../../common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;target,
+ <a href="../../common/commit/CDOChangeSet.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSet</a>&nbsp;source,
+ <a href="../../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
+ <a href="../../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;sourceBaseProvider,
+ <a href="../../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;resultBaseProvider)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Merges branch/remerge change sets while preserving their independently selected source and target bases.</div>
+</div>
 </div>
 </section>
 </li>

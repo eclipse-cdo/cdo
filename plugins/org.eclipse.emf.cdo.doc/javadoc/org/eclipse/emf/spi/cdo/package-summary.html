@@ -203,7 +203,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Default three-way merger for CDO change sets.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.ChangedInSourceAndDetachedInTargetConflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ChangedInSourceAndDetachedInTargetConflict</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
@@ -227,27 +227,47 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.ManyValued.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Per-feature merger whose many-valued path performs a semantic three-way list merge.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.Element.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld.Element</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">A virtual list element to establish unique relations between ancestor, source and target sides.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.PerSide.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld.PerSide</a>&lt;T&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Holds data for the source and target sides.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.Side.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld.Side</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab3">
-<div class="block">Enumerates the possible sides of a merge, i.e., <a href="DefaultCDOMerger.PerFeature.ManyValuedOld.Side.html#SOURCE"><code>DefaultCDOMerger.PerFeature.ManyValuedOld.Side.SOURCE</code></a> and <a href="DefaultCDOMerger.PerFeature.ManyValuedOld.Side.html#TARGET"><code>DefaultCDOMerger.PerFeature.ManyValuedOld.Side.TARGET</code></a>.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.ResolutionPreference.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.PerFeature.ManyValued.ClearSemanticPolicy.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued.ClearSemanticPolicy</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab3">
+<div class="block">Immutable policy for the semantic scope of an effective CLEAR operation.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.PerFeature.ManyValued.DuplicateResolutionPolicy.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued.DuplicateResolutionPolicy</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
+<div class="block">Immutable policy for hard uniqueness collisions between distinct surviving occurrences.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.PerFeature.ManyValued.OccurrenceConflictPolicy.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued.OccurrenceConflictPolicy</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">
+<div class="block">Immutable policy for genuinely incompatible changes to one ancestor occurrence lineage.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.PerFeature.ManyValued.OrderingPolicy.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued.OrderingPolicy</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
+<div class="block">Immutable policy used only when the final position DAG has multiple simultaneously eligible occurrences.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.PerFeature.ManyValued.UnsetSemanticPolicy.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued.UnsetSemanticPolicy</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">
+<div class="block">Immutable policy for an effective UNSET that cannot coexist with concurrent effective mutation.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.
+<div class="deprecation-comment">Instantiate <a href="DefaultCDOMerger.PerFeature.ManyValued.html" title="class in org.eclipse.emf.spi.cdo"><code>DefaultCDOMerger.PerFeature.ManyValued</code></a>.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.Element.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld.Element</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">Deprecated.</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.PerSide.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld.PerSide</a>&lt;T&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.</div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.PerFeature.ManyValuedOld.Side.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld.Side</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">Deprecated.
+<div class="deprecation-comment">Instantiate <a href="DefaultCDOMerger.PerFeature.ManyValued.html" title="class in org.eclipse.emf.spi.cdo"><code>DefaultCDOMerger.PerFeature.ManyValued</code></a>.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="DefaultCDOMerger.ResolutionPreference.html" title="enum class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ResolutionPreference</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
 <div class="block">Enumerates the possible resolution preferences that can be used with a <a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo"><code>DefaultCDOMerger</code></a>.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="DelegatingCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">DelegatingCDOTransaction</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">SPI for a transaction wrapper that exposes exactly one delegation level.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="FSMUtil.html" title="class in org.eclipse.emf.spi.cdo">FSMUtil</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -279,7 +299,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Adds transaction-internal access to the mutable segment owned by a savepoint.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">

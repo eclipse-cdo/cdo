@@ -73,11 +73,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)" class="member-name-link">applyChangeSet</a><wbr>(<a href="../../../cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;changeSetData,
- <a href="../../../cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetBaseProvider,
+ <a href="../../../cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;resultBaseProvider,
  <a href="../../../cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;targetProvider,
  <a href="../../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  boolean&nbsp;keepVersions)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Applies a goal change set whose NEW, CHANGED, and DETACHED classifications are defined relative to
+ <code>resultBaseProvider</code>.</div>
+</div>
 </div>
 </section>
 </li>

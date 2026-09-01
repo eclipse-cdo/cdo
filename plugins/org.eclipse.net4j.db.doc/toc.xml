@@ -8,6 +8,7 @@
       <topic label="org.eclipse.net4j.db" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="package">
         <topic label="Batch" href="javadoc/org/eclipse/net4j/db/Batch.html" icon="class" />
         <topic label="BatchedStatement" href="javadoc/org/eclipse/net4j/db/BatchedStatement.html" icon="interface" />
+        <topic label="BatchedStatement.Context" href="javadoc/org/eclipse/net4j/db/BatchedStatement.Context.html" icon="interface" />
         <topic label="BatchingIDChanger" href="javadoc/org/eclipse/net4j/db/BatchingIDChanger.html" icon="class" />
         <topic label="DBException" href="javadoc/org/eclipse/net4j/db/DBException.html" icon="class" />
         <topic label="DBType" href="javadoc/org/eclipse/net4j/db/DBType.html" icon="enum" />
@@ -17,6 +18,8 @@
         <topic label="DBUtil.RunnableWithConnection&lt;T&gt;" href="javadoc/org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" icon="interface" />
         <topic label="DBUtil.SerializeRowHandler" href="javadoc/org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" icon="interface" />
         <topic label="IDBAdapter" href="javadoc/org/eclipse/net4j/db/IDBAdapter.html" icon="interface" />
+        <topic label="IDBAdapter.Registry" href="javadoc/org/eclipse/net4j/db/IDBAdapter.Registry.html" icon="interface" />
+        <topic label="IDBAdapterID" href="javadoc/org/eclipse/net4j/db/IDBAdapterID.html" icon="interface" />
         <topic label="IDBConnection" href="javadoc/org/eclipse/net4j/db/IDBConnection.html" icon="interface" />
         <topic label="IDBConnectionProvider" href="javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" icon="interface" />
         <topic label="IDBConnectionProvider2" href="javadoc/org/eclipse/net4j/db/IDBConnectionProvider2.html" icon="interface" />
@@ -75,6 +78,7 @@
         <topic label="DBAdapter.FieldInfo" href="javadoc/org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" icon="class" />
         <topic label="DBAdapter.IndexInfo" href="javadoc/org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" icon="class" />
         <topic label="DBSchema" href="javadoc/org/eclipse/net4j/spi/db/DBSchema.html" icon="class" />
+        <topic label="DelegatingDBAdapter" href="javadoc/org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" icon="class" />
       </topic>
       <topic label="org.eclipse.net4j.spi.db.ddl" href="javadoc/org/eclipse/net4j/spi/db/ddl/package-summary.html" icon="package">
         <topic label="InternalDBElement" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBElement.html" icon="interface" />

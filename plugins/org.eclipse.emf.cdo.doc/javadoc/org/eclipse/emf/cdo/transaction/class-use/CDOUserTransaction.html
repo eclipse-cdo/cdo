@@ -76,6 +76,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../CDOFileTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDOFileTransaction</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A transaction whose uncommitted changes can be persisted in a local file and explicitly pushed to the repository.</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../CDONestedTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDONestedTransaction</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">A transaction-compatible facade for a <a href="../CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction scope</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../CDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">A read-write view to the <em>current</em> (i.e.</div>
@@ -95,8 +105,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../CDOPushTransaction.html" class="type-name-link" title="class in org.eclipse.emf.cdo.transaction">CDOPushTransaction</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">A <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> that persists changes to the object graph locally on commit and can later load
- these changes and push them to the <a href="../../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a>.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.30, use <a href="../CDOFileTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a>.</div>
+</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.transaction</a> that return <a href="../CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></span></div>
@@ -106,7 +117,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOUserSavepoint.</span><code><a href="../CDOUserSavepoint.html#getTransaction()" class="member-name-link">getTransaction</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Returns the transaction that owns this savepoint.</div>
+</div>
 </div>
 </section>
 </li>
@@ -119,18 +132,23 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../spi/cdo/InternalCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></div>
+<div class="col-second even-row-color"><code><a href="../../../spi/cdo/DelegatingCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">DelegatingCDOTransaction</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">SPI for a transaction wrapper that exposes exactly one delegation level.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../../spi/cdo/InternalCDOUserTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></code></div>
+<div class="col-second odd-row-color"><code><a href="../../../spi/cdo/InternalCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../spi/cdo/InternalCDOXATransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction</a></code></div>
+<div class="col-second even-row-color"><code><a href="../../../spi/cdo/InternalCDOUserTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../spi/cdo/InternalCDOXATransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
 </div>

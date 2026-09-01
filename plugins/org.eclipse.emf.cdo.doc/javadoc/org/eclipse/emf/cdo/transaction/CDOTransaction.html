@@ -89,11 +89,11 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code>, <code><a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code>, <code><a href="../common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code>, <code><a href="../common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></code>, <code><a href="../common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<wbr><a href="../CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</a>&gt;</code>, <code><a href="../common/CDOCommonTransaction.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonTransaction</a></code>, <code><a href="../common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a></code>, <code><a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></code>, <code><a href="../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code><a href="../util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></code>, <code><a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code>, <code><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code>, <code>org.eclipse.net4j.util.collection.Closeable</code>, <code><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a></code>, <code>org.eclipse.net4j.util.container.IContainer&lt;<a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&gt;</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.options.IOptionsContainer</code>, <code>org.eclipse.net4j.util.properties.IPropertiesContainer</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code>, <code><a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code>, <code><a href="../common/branch/CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></code>, <code><a href="../common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></code>, <code><a href="../common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>,<wbr><a href="../CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</a>&gt;</code>, <code><a href="../common/CDOCommonTransaction.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonTransaction</a></code>, <code><a href="../common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a></code>, <code><a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></code>, <code><a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.transaction">CDORollbackable</a></code>, <code><a href="../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code><a href="../util/CDOUpdatable.html" title="interface in org.eclipse.emf.cdo.util">CDOUpdatable</a></code>, <code><a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code>, <code><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code>, <code>org.eclipse.net4j.util.collection.Closeable</code>, <code><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a></code>, <code>org.eclipse.net4j.util.container.IContainer&lt;<a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a>&gt;</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.options.IOptionsContainer</code>, <code>org.eclipse.net4j.util.properties.IPropertiesContainer</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
-<dd><code><a href="../../spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></dd>
+<dd><code><a href="CDOFileTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOFileTransaction</a></code>, <code><a href="CDONestedTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDONestedTransaction</a></code>, <code><a href="../../spi/cdo/DelegatingCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">DelegatingCDOTransaction</a></code>, <code><a href="../../spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
@@ -267,85 +267,107 @@ extends <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.v
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFirstSavepoint()" class="member-name-link">getFirstSavepoint</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastCommitTime()" class="member-name-link">getLastCommitTime</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastSavepoint()" class="member-name-link">getLastSavepoint</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionScope</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getInnermostScope()" class="member-name-link">getInnermostScope</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the innermost currently open nested scope, or <code>null</code> if no scope is open.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastCommitTime()" class="member-name-link">getLastCommitTime</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNewObjects()" class="member-name-link">getNewObjects</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOrCreateBinaryResource(java.lang.String)" class="member-name-link">getOrCreateBinaryResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastSavepoint()" class="member-name-link">getLastSavepoint</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the most recently created savepoint.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNewObjects()" class="member-name-link">getNewObjects</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOrCreateResource(java.lang.String)" class="member-name-link">getOrCreateResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../eresource/CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOBinaryResource</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOrCreateBinaryResource(java.lang.String)" class="member-name-link">getOrCreateBinaryResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOrCreateResourceFolder(java.lang.String)" class="member-name-link">getOrCreateResourceFolder</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOrCreateResource(java.lang.String)" class="member-name-link">getOrCreateResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOrCreateTextResource(java.lang.String)" class="member-name-link">getOrCreateTextResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceFolder</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOrCreateResourceFolder(java.lang.String)" class="member-name-link">getOrCreateResourceFolder</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../eresource/CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOTextResource</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOrCreateTextResource(java.lang.String)" class="member-name-link">getOrCreateTextResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionScope</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOutermostScope()" class="member-name-link">getOutermostScope</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the outermost currently open nested scope, or <code>null</code> if no scope is open.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionDeltas()" class="member-name-link">getRevisionDeltas</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransactionHandlers()" class="member-name-link">getTransactionHandlers</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransactionHandlers1()" class="member-name-link">getTransactionHandlers1</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionScope</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getScopes()" class="member-name-link">getScopes</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns an immutable outermost-to-innermost snapshot of open scopes.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransactionHandlers()" class="member-name-link">getTransactionHandlers</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransactionHandlers2()" class="member-name-link">getTransactionHandlers2</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler1</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransactionHandlers1()" class="member-name-link">getTransactionHandlers1</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#hasConflict()" class="member-name-link">hasConflict</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionHandler2</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransactionHandlers2()" class="member-name-link">getTransactionHandlers2</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#hasConflict()" class="member-name-link">hasConflict</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns <code>true</code> if this transaction contains local modifications that are conflicting with remote
  modifications, <code>false</code> otherwise.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#importChanges(java.io.InputStream,boolean)" class="member-name-link">importChanges</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;in,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#importChanges(java.io.InputStream,boolean)" class="member-name-link">importChanges</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;in,
  boolean&nbsp;reconstructSavepoints)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isDirty()" class="member-name-link">isDirty</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isDirty()" class="member-name-link">isDirty</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns <code>true</code> if this transaction is not closed and contains uncommitted changes, <code>false</code>
  otherwise.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
  <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
+ <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
  <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
- <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Merges the changes between the given source base point and the given source point into this transaction.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
- <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Merges the changes from the given source point into this transaction and possibly considers previous merges
  from that <a href="../common/branch/CDOBranchPoint.html#getBranch()"><code>branch</code></a> by inspecting the <a href="../common/commit/CDOCommitInfo.html#getMergeSource()"><code>merge source</code></a>
  information of the <a href="../session/CDOSession.html#getCommitInfoManager()"><code>commit history</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
  <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Merges the changes from the given source branch into this transaction and possibly considers previous merges
  from that branch by inspecting the <a href="../common/commit/CDOCommitInfo.html#getMergeSource()"><code>merge source</code></a>
  information of the <a href="../session/CDOSession.html#getCommitInfoManager()"><code>commit history</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionScope</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openScope()" class="member-name-link">openScope</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Opens a nested scope inside the current innermost scope, if any.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOTransaction.Options.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction.Options</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#options()" class="member-name-link">options</a>()</code></div>
@@ -727,11 +749,73 @@ extends <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.v
 <section class="detail" id="getLastSavepoint()">
 <h3>getLastSavepoint</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOSavepoint</a></span>&nbsp;<span class="element-name">getLastSavepoint</span>()</div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="CDOUserTransaction.html#getLastSavepoint()">CDOUserTransaction</a></code></span></div>
+<div class="block">Returns the most recently created savepoint.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="CDOUserTransaction.html#getLastSavepoint()">getLastSavepoint</a></code>&nbsp;in interface&nbsp;<code><a href="CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></code></dd>
+<dt>Returns:</dt>
+<dd>the last savepoint, or <code>null</code> if none exists.</dd>
 <dt>Since:</dt>
 <dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="openScope()">
+<h3>openScope</h3>
+<div class="member-signature"><span class="return-type"><a href="CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionScope</a></span>&nbsp;<span class="element-name">openScope</span>()</div>
+<div class="block">Opens a nested scope inside the current innermost scope, if any.
+ <p>
+ The scope shares this transaction's view, object identities, object cache, resource set, dirty state, locks, and
+ repository session. Its changes are immediately visible in this transaction. Scope completion does not persist
+ changes; only this root transaction's repository commit does so.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the newly opened scope.</dd>
+<dt>Since:</dt>
+<dd>4.30</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getOutermostScope()">
+<h3>getOutermostScope</h3>
+<div class="member-signature"><span class="return-type"><a href="CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionScope</a></span>&nbsp;<span class="element-name">getOutermostScope</span>()</div>
+<div class="block">Returns the outermost currently open nested scope, or <code>null</code> if no scope is open.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the outermost open scope, or <code>null</code>.</dd>
+<dt>Since:</dt>
+<dd>4.30</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getInnermostScope()">
+<h3>getInnermostScope</h3>
+<div class="member-signature"><span class="return-type"><a href="CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionScope</a></span>&nbsp;<span class="element-name">getInnermostScope</span>()</div>
+<div class="block">Returns the innermost currently open nested scope, or <code>null</code> if no scope is open.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the innermost open scope, or <code>null</code>.</dd>
+<dt>Since:</dt>
+<dd>4.30</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getScopes()">
+<h3>getScopes</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransactionScope</a>&gt;</span>&nbsp;<span class="element-name">getScopes</span>()</div>
+<div class="block">Returns an immutable outermost-to-innermost snapshot of open scopes.
+ <p>
+ The ordering is the scope completion order: only the last scope in the snapshot can be committed directly.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>an immutable snapshot of the currently open scopes.</dd>
+<dt>Since:</dt>
+<dd>4.30</dd>
 </dl>
 </section>
 </li>

@@ -60,58 +60,66 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/Batch.html" title="class in org.eclipse.net4j.db">Batch</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="class in org.eclipse.net4j.db">BatchingIDChanger</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link"><code>PreparedStatement</code></a> that supports batching of parameter sets.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/BatchedStatement.Context.html" title="interface in org.eclipse.net4j.db">BatchedStatement.Context</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="class in org.eclipse.net4j.db">BatchingIDChanger</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A <code>IDChanger.ChangeHandler</code> that batches SQL update statements to change IDs in a database table.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A useful base class for implementing custom <a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>DB adapters</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab5">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/net4j/db/DBException.html" title="class in org.eclipse.net4j.db">DBException</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab5">
 <div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link"><code>runtime exception</code></a> thrown to indicate problems with a database, frequently used to wrap
  checked <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link"><code>SQL exceptions</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DBSchema.html" title="class in org.eclipse.net4j.spi.db">DBSchema</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">Deprecated.
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DBSchema.html" title="class in org.eclipse.net4j.spi.db">DBSchema</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">Deprecated.
 <div class="deprecation-comment">As of 4.2 call <a href="org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)"><code>DBUtil.createSchema(String)</code></a>, <a href="org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)"><code>DBUtil.readSchema(IDBAdapter, Connection, IDBSchema)</code></a>,
     <a href="org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)"><code>DBUtil.readSchema(IDBAdapter, Connection, String)</code></a> or <a href="org/eclipse/net4j/db/DBUtil.html#copySchema(org.eclipse.net4j.db.ddl.IDBSchema)"><code>DBUtil.copySchema(IDBSchema)</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/net4j/db/DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/net4j/db/DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the SQL data types that are compatible with the DB framework.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A utility class with various static factory and convenience methods.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A <a href="org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)"><code>method</code></a>
  that is called once per row deserialized within <a href="org/eclipse/net4j/db/DBUtil.html#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)"><code>DBUtil.deserializeTable()</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.RowHandler</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.RowHandler</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Call-back interface with a <a href="org/eclipse/net4j/db/DBUtil.RowHandler.html#done(boolean)"><code>method</code></a> that is called <i>after</i>
  a number of table rows have been handled by one of the subtypes of this interface.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection&lt;T&gt;</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection&lt;T&gt;</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A <a href="org/eclipse/net4j/db/DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)"><code>method</code></a>
  that is called once per row serialized within <a href="org/eclipse/net4j/db/DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)"><code>DBUtil.serializeTable()</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/jdbc/DelegatingConnection.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingConnection</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/jdbc/DelegatingConnection.Default.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingConnection.Default</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/jdbc/DelegatingConnection.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingConnection</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/jdbc/DelegatingConnection.Default.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingConnection.Default</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Keeps extension metadata authoritative without requiring the created adapter to extend DBAdapter.</div>
+</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></div>
@@ -139,6 +147,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/IDBAdapter.Registry.html" title="interface in org.eclipse.net4j.db">IDBAdapter.Registry</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">The registry of all registered <a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>adapters</code></a>.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/IDBAdapterID.html" title="interface in org.eclipse.net4j.db">IDBAdapterID</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="block">Identifies a database adapter by its database-system name and development version.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/db/IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>

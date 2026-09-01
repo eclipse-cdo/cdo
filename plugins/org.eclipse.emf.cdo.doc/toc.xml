@@ -532,12 +532,16 @@
           <topic label="CDODefaultTransactionHandler1" href="javadoc/org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html" icon="class" />
           <topic label="CDODefaultTransactionHandler2" href="javadoc/org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html" icon="class" />
           <topic label="CDODefaultTransactionHandler3" href="javadoc/org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html" icon="class" />
+          <topic label="CDOFileTransaction" href="javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html" icon="interface" />
           <topic label="CDOMerger" href="javadoc/org/eclipse/emf/cdo/transaction/CDOMerger.html" icon="interface" />
           <topic label="CDOMerger.ConflictException" href="javadoc/org/eclipse/emf/cdo/transaction/CDOMerger.ConflictException.html" icon="class" />
           <topic label="CDOMerger2" href="javadoc/org/eclipse/emf/cdo/transaction/CDOMerger2.html" icon="interface" />
+          <topic label="CDOMergerBaseAware" href="javadoc/org/eclipse/emf/cdo/transaction/CDOMergerBaseAware.html" icon="interface" />
+          <topic label="CDONestedTransaction" href="javadoc/org/eclipse/emf/cdo/transaction/CDONestedTransaction.html" icon="interface" />
           <topic label="CDOPostEventTransactionHandler" href="javadoc/org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.html" icon="class" />
           <topic label="CDOPostEventTransactionHandler.Default" href="javadoc/org/eclipse/emf/cdo/transaction/CDOPostEventTransactionHandler.Default.html" icon="class" />
           <topic label="CDOPushTransaction" href="javadoc/org/eclipse/emf/cdo/transaction/CDOPushTransaction.html" icon="class" />
+          <topic label="CDORollbackable" href="javadoc/org/eclipse/emf/cdo/transaction/CDORollbackable.html" icon="interface" />
           <topic label="CDOSavepoint" href="javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html" icon="interface" />
           <topic label="CDOStaleReferenceCleaner" href="javadoc/org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.html" icon="interface" />
           <topic label="CDOStaleReferenceCleaner.Default" href="javadoc/org/eclipse/emf/cdo/transaction/CDOStaleReferenceCleaner.Default.html" icon="class" />
@@ -553,6 +557,7 @@
           <topic label="CDOTransaction.Options.OptimisticLockingTimeout" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.Options.OptimisticLockingTimeout.html" icon="interface" />
           <topic label="CDOTransaction.Options.StaleReferenceCleanerEvent" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.Options.StaleReferenceCleanerEvent.html" icon="interface" />
           <topic label="CDOTransaction.Options.UndoDetectorEvent" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.Options.UndoDetectorEvent.html" icon="interface" />
+          <topic label="CDOTransactionAware" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionAware.html" icon="interface" />
           <topic label="CDOTransactionCommentator" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionCommentator.html" icon="class" />
           <topic label="CDOTransactionConflictAddedEvent" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionConflictAddedEvent.html" icon="interface" />
           <topic label="CDOTransactionConflictChangedEvent" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionConflictChangedEvent.html" icon="interface" />
@@ -569,6 +574,10 @@
           <topic label="CDOTransactionHandler3" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" icon="interface" />
           <topic label="CDOTransactionHandlerBase" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionHandlerBase.html" icon="interface" />
           <topic label="CDOTransactionOpener" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" icon="interface" />
+          <topic label="CDOTransactionScope" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html" icon="interface" />
+          <topic label="CDOTransactionScopeClosedEvent" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScopeClosedEvent.html" icon="interface" />
+          <topic label="CDOTransactionScopeClosedEvent.Cause" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScopeClosedEvent.Cause.html" icon="enum" />
+          <topic label="CDOTransactionScopeOpenedEvent" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScopeOpenedEvent.html" icon="interface" />
           <topic label="CDOTransactionStartedEvent" href="javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionStartedEvent.html" icon="interface" />
           <topic label="CDOUndoDetector" href="javadoc/org/eclipse/emf/cdo/transaction/CDOUndoDetector.html" icon="interface" />
           <topic label="CDOUserSavepoint" href="javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html" icon="interface" />
@@ -719,11 +728,17 @@
           <topic label="DefaultCDOMerger.Conflict" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.Conflict.html" icon="class" />
           <topic label="DefaultCDOMerger.PerFeature" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.html" icon="class" />
           <topic label="DefaultCDOMerger.PerFeature.ManyValued" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html" icon="class" />
+          <topic label="DefaultCDOMerger.PerFeature.ManyValued.ClearSemanticPolicy" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.ClearSemanticPolicy.html" icon="enum" />
+          <topic label="DefaultCDOMerger.PerFeature.ManyValued.DuplicateResolutionPolicy" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.DuplicateResolutionPolicy.html" icon="enum" />
+          <topic label="DefaultCDOMerger.PerFeature.ManyValued.OccurrenceConflictPolicy" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.OccurrenceConflictPolicy.html" icon="enum" />
+          <topic label="DefaultCDOMerger.PerFeature.ManyValued.OrderingPolicy" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.OrderingPolicy.html" icon="enum" />
+          <topic label="DefaultCDOMerger.PerFeature.ManyValued.UnsetSemanticPolicy" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.UnsetSemanticPolicy.html" icon="enum" />
           <topic label="DefaultCDOMerger.PerFeature.ManyValuedOld" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValuedOld.html" icon="class" />
           <topic label="DefaultCDOMerger.PerFeature.ManyValuedOld.Element" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValuedOld.Element.html" icon="class" />
           <topic label="DefaultCDOMerger.PerFeature.ManyValuedOld.PerSide&lt;T&gt;" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValuedOld.PerSide.html" icon="class" />
           <topic label="DefaultCDOMerger.PerFeature.ManyValuedOld.Side" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.PerFeature.ManyValuedOld.Side.html" icon="enum" />
           <topic label="DefaultCDOMerger.ResolutionPreference" href="javadoc/org/eclipse/emf/spi/cdo/DefaultCDOMerger.ResolutionPreference.html" icon="enum" />
+          <topic label="DelegatingCDOTransaction" href="javadoc/org/eclipse/emf/spi/cdo/DelegatingCDOTransaction.html" icon="interface" />
           <topic label="FSMUtil" href="javadoc/org/eclipse/emf/spi/cdo/FSMUtil.html" icon="class" />
           <topic label="InternalCDOLoadable" href="javadoc/org/eclipse/emf/spi/cdo/InternalCDOLoadable.html" icon="interface" />
           <topic label="InternalCDOObject" href="javadoc/org/eclipse/emf/spi/cdo/InternalCDOObject.html" icon="interface" />
@@ -2051,6 +2066,7 @@
       <topic label="CDO Model Repository Server DB" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.db" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="package">
           <topic label="CDODBUtil" href="javadoc/org/eclipse/emf/cdo/server/db/CDODBUtil.html" icon="class" />
+          <topic label="IBatchingContext" href="javadoc/org/eclipse/emf/cdo/server/db/IBatchingContext.html" icon="interface" />
           <topic label="IDBStore" href="javadoc/org/eclipse/emf/cdo/server/db/IDBStore.html" icon="interface" />
           <topic label="IDBStore.Props" href="javadoc/org/eclipse/emf/cdo/server/db/IDBStore.Props.html" icon="interface" />
           <topic label="IDBStore.TableVisitor" href="javadoc/org/eclipse/emf/cdo/server/db/IDBStore.TableVisitor.html" icon="interface" />
@@ -2091,6 +2107,7 @@
           <topic label="IBranchDeletionSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IBranchDeletionSupport.html" icon="interface" />
           <topic label="IClassMapping" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" icon="interface" />
           <topic label="IClassMappingAuditSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IClassMappingAuditSupport.html" icon="interface" />
+          <topic label="IClassMappingBatchingSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IClassMappingBatchingSupport.html" icon="interface" />
           <topic label="IClassMappingDeltaSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IClassMappingDeltaSupport.html" icon="interface" />
           <topic label="IClassMappingUnitSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IClassMappingUnitSupport.html" icon="interface" />
           <topic label="IFeatureMapping" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IFeatureMapping.html" icon="interface" />
@@ -2098,6 +2115,7 @@
           <topic label="IListMapping2" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IListMapping2.html" icon="interface" />
           <topic label="IListMapping3" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IListMapping3.html" icon="interface" />
           <topic label="IListMapping4" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IListMapping4.html" icon="interface" />
+          <topic label="IListMappingBatchingSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IListMappingBatchingSupport.html" icon="interface" />
           <topic label="IListMappingDeltaSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IListMappingDeltaSupport.html" icon="interface" />
           <topic label="IListMappingUnitSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IListMappingUnitSupport.html" icon="interface" />
           <topic label="ILobRefsUpdater" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/ILobRefsUpdater.html" icon="interface" />
@@ -2105,12 +2123,15 @@
           <topic label="IMappingStrategy" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" icon="interface" />
           <topic label="IMappingStrategy.Props" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.Props.html" icon="interface" />
           <topic label="IMappingStrategy2" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy2.html" icon="interface" />
+          <topic label="IMappingStrategyBatchingSupport" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategyBatchingSupport.html" icon="interface" />
+          <topic label="IMappingStrategySchemaPreflight" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategySchemaPreflight.html" icon="interface" />
           <topic label="ITypeMapping" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" icon="interface" />
           <topic label="ITypeMapping.Descriptor" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Descriptor.html" icon="interface" />
           <topic label="ITypeMapping.Factory" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Factory.html" icon="interface" />
           <topic label="ITypeMapping.Provider" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Provider.html" icon="interface" />
           <topic label="ITypeMapping.Provider.Factory" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Provider.Factory.html" icon="class" />
           <topic label="ITypeMapping.Registry" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.Registry.html" icon="interface" />
+          <topic label="ListDeltaWork" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/ListDeltaWork.html" icon="class" />
         </topic>
       </topic>
       <topic label="CDO Model Repository Server Embedded Support" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="plugin">

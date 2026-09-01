@@ -102,67 +102,79 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="class-use/BatchedStatement.html#org.eclipse.net4j.db">BatchedStatement</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/DBException.html#org.eclipse.net4j.db">DBException</a></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
+<div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link"><code>PreparedStatement</code></a> that supports batching of parameter sets.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/BatchedStatement.Context.html#org.eclipse.net4j.db">BatchedStatement.Context</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/DBException.html#org.eclipse.net4j.db">DBException</a></div>
+<div class="col-last even-row-color">
 <div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link"><code>runtime exception</code></a> thrown to indicate problems with a database, frequently used to wrap
  checked <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link"><code>SQL exceptions</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/DBType.html#org.eclipse.net4j.db">DBType</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/DBType.html#org.eclipse.net4j.db">DBType</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Enumerates the SQL data types that are compatible with the DB framework.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/DBUtil.DeserializeRowHandler.html#org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/DBUtil.DeserializeRowHandler.html#org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></div>
+<div class="col-last even-row-color">
 <div class="block">A <a href="DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="DBUtil.DeserializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)"><code>method</code></a>
  that is called once per row deserialized within <a href="DBUtil.html#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)"><code>DBUtil.deserializeTable()</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/DBUtil.RowHandler.html#org.eclipse.net4j.db">DBUtil.RowHandler</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/DBUtil.RowHandler.html#org.eclipse.net4j.db">DBUtil.RowHandler</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Call-back interface with a <a href="DBUtil.RowHandler.html#done(boolean)"><code>method</code></a> that is called <i>after</i>
  a number of table rows have been handled by one of the subtypes of this interface.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/DBUtil.RunnableWithConnection.html#org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/DBUtil.SerializeRowHandler.html#org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/DBUtil.RunnableWithConnection.html#org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/DBUtil.SerializeRowHandler.html#org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A <a href="DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="DBUtil.SerializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)"><code>method</code></a>
  that is called once per row serialized within <a href="DBUtil.html#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)"><code>DBUtil.serializeTable()</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IDBAdapter.html#org.eclipse.net4j.db">IDBAdapter</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IDBAdapter.html#org.eclipse.net4j.db">IDBAdapter</a></div>
+<div class="col-last even-row-color">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IDBConnection.html#org.eclipse.net4j.db">IDBConnection</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/IDBConnectionProvider.html#org.eclipse.net4j.db">IDBConnectionProvider</a></div>
+<div class="col-first odd-row-color"><a href="class-use/IDBAdapter.Registry.html#org.eclipse.net4j.db">IDBAdapter.Registry</a></div>
+<div class="col-last odd-row-color">
+<div class="block">The registry of all registered <a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>adapters</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/IDBAdapterID.html#org.eclipse.net4j.db">IDBAdapterID</a></div>
+<div class="col-last even-row-color">
+<div class="block">Identifies a database adapter by its database-system name and development version.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IDBConnection.html#org.eclipse.net4j.db">IDBConnection</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/IDBConnectionProvider.html#org.eclipse.net4j.db">IDBConnectionProvider</a></div>
+<div class="col-last even-row-color">
+<div class="block">Provides a database <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link"><code>connection</code></a>, roughly comparable with a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link"><code>data source</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IDBConnectionProvider2.html#org.eclipse.net4j.db">IDBConnectionProvider2</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Provides a database <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link"><code>connection</code></a>, roughly comparable with a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link"><code>data source</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IDBConnectionProvider2.html#org.eclipse.net4j.db">IDBConnectionProvider2</a></div>
-<div class="col-last even-row-color">
-<div class="block">Provides a database <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link"><code>connection</code></a>, roughly comparable with a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link"><code>data source</code></a>.</div>
-</div>
-<div class="col-first odd-row-color"><a href="class-use/IDBDatabase.html#org.eclipse.net4j.db">IDBDatabase</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/IDBDatabase.RunnableWithSchema.html#org.eclipse.net4j.db">IDBDatabase.RunnableWithSchema</a></div>
+<div class="col-first even-row-color"><a href="class-use/IDBDatabase.html#org.eclipse.net4j.db">IDBDatabase</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/IDBPreparedStatement.html#org.eclipse.net4j.db">IDBPreparedStatement</a></div>
+<div class="col-first odd-row-color"><a href="class-use/IDBDatabase.RunnableWithSchema.html#org.eclipse.net4j.db">IDBDatabase.RunnableWithSchema</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/IDBPreparedStatement.ReuseProbability.html#org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IDBPreparedStatement.html#org.eclipse.net4j.db">IDBPreparedStatement</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/IDBPreparedStatement.ReuseProbability.html#org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An enum for the degree of probability to which a prepared statement is reused later on.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IDBResultSet.html#org.eclipse.net4j.db">IDBResultSet</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/IDBRowHandler.html#org.eclipse.net4j.db">IDBRowHandler</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IDBResultSet.html#org.eclipse.net4j.db">IDBResultSet</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/IDBRowHandler.html#org.eclipse.net4j.db">IDBRowHandler</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Call-back that handles the values of, for example, a row in a database table.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IDBSchemaTransaction.html#org.eclipse.net4j.db">IDBSchemaTransaction</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/StatementBatcher.html#org.eclipse.net4j.db">StatementBatcher</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IDBSchemaTransaction.html#org.eclipse.net4j.db">IDBSchemaTransaction</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/StatementBatcher.html#org.eclipse.net4j.db">StatementBatcher</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A helper for batching SQL statements.</div>
 </div>
 </div>
@@ -204,6 +216,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
 </div>
+<div class="col-first odd-row-color"><a href="class-use/IDBAdapterID.html#org.eclipse.net4j.db.derby">IDBAdapterID</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Identifies a database adapter by its database-system name and development version.</div>
+</div>
 </div>
 </section>
 </li>
@@ -217,6 +233,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
 </div>
+<div class="col-first odd-row-color"><a href="class-use/IDBAdapterID.html#org.eclipse.net4j.db.h2">IDBAdapterID</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Identifies a database adapter by its database-system name and development version.</div>
+</div>
 </div>
 </section>
 </li>
@@ -229,6 +249,10 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><a href="class-use/IDBAdapter.html#org.eclipse.net4j.db.hsqldb">IDBAdapter</a></div>
 <div class="col-last even-row-color">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IDBAdapterID.html#org.eclipse.net4j.db.hsqldb">IDBAdapterID</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Identifies a database adapter by its database-system name and development version.</div>
 </div>
 </div>
 </section>
@@ -247,6 +271,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
 </div>
+<div class="col-first even-row-color"><a href="class-use/IDBAdapterID.html#org.eclipse.net4j.db.mysql">IDBAdapterID</a></div>
+<div class="col-last even-row-color">
+<div class="block">Identifies a database adapter by its database-system name and development version.</div>
+</div>
 </div>
 </section>
 </li>
@@ -256,9 +284,17 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="class-use/IDBAdapter.html#org.eclipse.net4j.db.postgresql">IDBAdapter</a></div>
+<div class="col-first even-row-color"><a href="class-use/DBType.html#org.eclipse.net4j.db.postgresql">DBType</a></div>
 <div class="col-last even-row-color">
+<div class="block">Enumerates the SQL data types that are compatible with the DB framework.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IDBAdapter.html#org.eclipse.net4j.db.postgresql">IDBAdapter</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/IDBAdapterID.html#org.eclipse.net4j.db.postgresql">IDBAdapterID</a></div>
+<div class="col-last even-row-color">
+<div class="block">Identifies a database adapter by its database-system name and development version.</div>
 </div>
 </div>
 </section>
@@ -282,16 +318,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Abstracts all aspects of a database that are vendor-specific.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IDBConnection.html#org.eclipse.net4j.spi.db">IDBConnection</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/IDBConnectionProvider.html#org.eclipse.net4j.spi.db">IDBConnectionProvider</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IDBAdapterID.html#org.eclipse.net4j.spi.db">IDBAdapterID</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Identifies a database adapter by its database-system name and development version.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/IDBConnection.html#org.eclipse.net4j.spi.db">IDBConnection</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/IDBConnectionProvider.html#org.eclipse.net4j.spi.db">IDBConnectionProvider</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides a database <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link"><code>connection</code></a>, roughly comparable with a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link"><code>data source</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IDBDatabase.html#org.eclipse.net4j.spi.db">IDBDatabase</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/IDBSchemaTransaction.html#org.eclipse.net4j.spi.db">IDBSchemaTransaction</a></div>
+<div class="col-first even-row-color"><a href="class-use/IDBDatabase.html#org.eclipse.net4j.spi.db">IDBDatabase</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/IDBSchemaTransaction.html#org.eclipse.net4j.spi.db">IDBSchemaTransaction</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

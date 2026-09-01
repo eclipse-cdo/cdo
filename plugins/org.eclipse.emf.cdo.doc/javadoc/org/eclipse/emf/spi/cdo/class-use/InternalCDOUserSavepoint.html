@@ -74,7 +74,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../InternalCDOSavepoint.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSavepoint</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Adds transaction-internal access to the mutable segment owned by a savepoint.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../InternalCDOXASavepoint.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXASavepoint</a></code></div>
@@ -116,11 +116,17 @@ loadScripts(document, 'script');</script>
  <a href="../InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;savepoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOUserSavepoint.</span><code><a href="../InternalCDOUserSavepoint.html#setNextSavepoint(org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)" class="member-name-link">setNextSavepoint</a><wbr>(<a href="../InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;nextSavepoint)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#rollbackToSavepoint(org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)" class="member-name-link">rollbackToSavepoint</a><wbr>(<a href="../InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;savepoint)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Restores this transaction to a retained public savepoint without reporting
+ that the root transaction itself has been rolled back.</div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOUserSavepoint.</span><code><a href="../InternalCDOUserSavepoint.html#setPreviousSavepoint(org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)" class="member-name-link">setPreviousSavepoint</a><wbr>(<a href="../InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;previousSavepoint)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOUserSavepoint.</span><code><a href="../InternalCDOUserSavepoint.html#setNextSavepoint(org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)" class="member-name-link">setNextSavepoint</a><wbr>(<a href="../InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;nextSavepoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOUserSavepoint.</span><code><a href="../InternalCDOUserSavepoint.html#setPreviousSavepoint(org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint)" class="member-name-link">setPreviousSavepoint</a><wbr>(<a href="../InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a>&nbsp;previousSavepoint)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

@@ -121,6 +121,12 @@ loadScripts(document, 'script');</script>
 <div class="block">Merges the changes between a local <a href="../CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and a remote <a href="../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
  into the local transaction.</div>
 </div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../CDOMergerBaseAware.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.transaction">CDOMergerBaseAware</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Extends <a href="../CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOMerger</code></a> with support for merge operations whose target and source change sets may have
+ different causal base revisions.</div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.transaction</a> that return <a href="../CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></span></div>
 <div class="summary-table three-column-summary">
@@ -141,20 +147,28 @@ loadScripts(document, 'script');</script>
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;targetBase,
  <a href="../CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
  <a href="../CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="../CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../CDOPushTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;source,
  <a href="../CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">merge</a><wbr>(<a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;source,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBase,
@@ -240,7 +254,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/cdo/DefaultCDOMerger.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Default three-way merger for CDO change sets.</div>
 </div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/cdo/DefaultCDOMerger.PerFeature.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature</a></code></div>
@@ -250,12 +264,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Per-feature merger whose many-valued path performs a semantic three-way list merge.</div>
 </div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/cdo/DefaultCDOMerger.PerFeature.ManyValuedOld.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValuedOld</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Instantiate <a href="../../../spi/cdo/DefaultCDOMerger.PerFeature.ManyValued.html" title="class in org.eclipse.emf.spi.cdo"><code>DefaultCDOMerger.PerFeature.ManyValued</code></a>.</div>
+</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> that return <a href="../CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></span></div>

@@ -89,12 +89,28 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">URIHandlerRegistry</span></div>
-<div class="block">A <a href="#INSTANCE"><code>global</code></a> URI handler registry.</div>
+<div class="block">A <a href="#INSTANCE"><code>global</code></a> URI handler registry.
+ <p>
+ Handlers registered here are available through this registry. They are not automatically available to arbitrary EMF
+ URI converters. Use <a href="#installTo(org.eclipse.emf.ecore.resource.URIConverter)"><code>installTo(URIConverter)</code></a> or <a href="#installTo(org.eclipse.emf.ecore.resource.ResourceSet)"><code>installTo(ResourceSet)</code></a> when a particular converter should
+ consult this registry. For example:
+ <pre>
+ ResourceSet resourceSet = new ResourceSetImpl();
+ URIHandlerRegistry.INSTANCE.install(resourceSet);
+ URI uri = URI.createURI("cdo.checkout.text://my-checkout/path/to/file.txt");
+ InputStream in = resourceSet.getURIConverter().createInputStream(uri);
+ </pre>
+ <p>
+ The schemes available at runtime depend on the <a href="../../spi/common/util/URIHandlerFactory.html" title="class in org.eclipse.emf.cdo.spi.common.util"><code>URIHandlerFactory</code></a> contributions.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.13</dd>
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
+<dt>No Implement</dt>
+<dd>This interface is not intended to be implemented by clients.</dd>
+<dt>No Extend</dt>
+<dd>This interface is not intended to be extended by clients.</dd>
 </dl>
 </section>
 <section class="summary">
@@ -128,13 +144,39 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIHandler</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addURIHandler(java.lang.String,org.eclipse.emf.ecore.resource.URIHandler)" class="member-name-link">addURIHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;scheme,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIHandler</a>&nbsp;handler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Adds a URI handler for the given scheme to this registry.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIHandler</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getURIHandler(java.lang.String)" class="member-name-link">getURIHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;scheme)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the URI handler for the given scheme, or <code>null</code> if none is registered.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#installTo(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">installTo</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Installs this registry into a resource set's URI converter, if it is not already present.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#installTo(org.eclipse.emf.ecore.resource.URIConverter)" class="member-name-link">installTo</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIConverter.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIConverter</a>&nbsp;uriConverter)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Installs this registry into a URI converter, if it is not already present.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIHandler</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeURIHandler(java.lang.String)" class="member-name-link">removeURIHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;scheme)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Removes the URI handler for the given scheme from this registry and returns it.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#uninstallFrom(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">uninstallFrom</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Removes this exact registry instance from a resource set's URI converter.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#uninstallFrom(org.eclipse.emf.ecore.resource.URIConverter)" class="member-name-link">uninstallFrom</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIConverter.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIConverter</a>&nbsp;uriConverter)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Removes this exact registry instance from a URI converter.</div>
+</div>
 </div>
 </div>
 </div>
@@ -168,18 +210,75 @@ loadScripts(document, 'script');</script>
 <h3>addURIHandler</h3>
 <div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIHandler</a></span>&nbsp;<span class="element-name">addURIHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;scheme,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIHandler</a>&nbsp;handler)</span></div>
+<div class="block">Adds a URI handler for the given scheme to this registry.
+ <p>
+ If a handler was already registered for the scheme, it is replaced and returned.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="removeURIHandler(java.lang.String)">
 <h3>removeURIHandler</h3>
 <div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIHandler</a></span>&nbsp;<span class="element-name">removeURIHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;scheme)</span></div>
+<div class="block">Removes the URI handler for the given scheme from this registry and returns it.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getURIHandler(java.lang.String)">
 <h3>getURIHandler</h3>
 <div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIHandler.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIHandler</a></span>&nbsp;<span class="element-name">getURIHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;scheme)</span></div>
+<div class="block">Returns the URI handler for the given scheme, or <code>null</code> if none is registered.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="installTo(org.eclipse.emf.ecore.resource.URIConverter)">
+<h3>installTo</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">installTo</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIConverter.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIConverter</a>&nbsp;uriConverter)</span></div>
+<div class="block">Installs this registry into a URI converter, if it is not already present.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the converter was changed, or <code>false</code> if this registry was already installed.</dd>
+<dt>Since:</dt>
+<dd>4.28</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="installTo(org.eclipse.emf.ecore.resource.ResourceSet)">
+<h3>installTo</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">installTo</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</span></div>
+<div class="block">Installs this registry into a resource set's URI converter, if it is not already present.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the resource set was changed, or <code>false</code> if this registry was already installed.</dd>
+<dt>Since:</dt>
+<dd>4.28</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="uninstallFrom(org.eclipse.emf.ecore.resource.URIConverter)">
+<h3>uninstallFrom</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">uninstallFrom</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/URIConverter.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">URIConverter</a>&nbsp;uriConverter)</span></div>
+<div class="block">Removes this exact registry instance from a URI converter.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the converter was changed, or <code>false</code> if this registry was not installed.</dd>
+<dt>Since:</dt>
+<dd>4.28</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="uninstallFrom(org.eclipse.emf.ecore.resource.ResourceSet)">
+<h3>uninstallFrom</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">uninstallFrom</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</span></div>
+<div class="block">Removes this exact registry instance from a resource set's URI converter.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the resource set was changed, or <code>false</code> if this registry was not installed.</dd>
+<dt>Since:</dt>
+<dd>4.28</dd>
+</dl>
 </section>
 </li>
 </ul>

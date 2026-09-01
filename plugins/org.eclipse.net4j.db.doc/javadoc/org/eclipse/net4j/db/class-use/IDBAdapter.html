@@ -101,7 +101,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final org.eclipse.net4j.util.registry.IRegistry<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#REGISTRY" class="member-name-link">REGISTRY</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.14, use <a href="../IDBAdapter.Registry.html#INSTANCE"><code>IDBAdapter.Registry.INSTANCE</code></a> instead.</div>
+</div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.db</a> that return <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></span></div>
 <div class="summary-table three-column-summary">
@@ -109,12 +113,49 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IDBDatabase.</span><code><a href="../IDBDatabase.html#getAdapter()" class="member-name-link">getAdapter</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#getDBAdapter(java.lang.String)" class="member-name-link">getDBAdapter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;adapterName)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.Registry.</span><code><a href="../IDBAdapter.Registry.html#getAdapter(java.lang.String)" class="member-name-link">getAdapter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;adapterName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the highest registered version for a name.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.Registry.</span><code><a href="../IDBAdapter.Registry.html#getAdapter(java.lang.String,java.lang.String)" class="member-name-link">getAdapter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;adapterName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;version)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Returns the adapter for an exact logical name/version pair.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.Registry.</span><code><a href="../IDBAdapter.Registry.html#getAdapter(org.eclipse.net4j.db.IDBAdapterID)" class="member-name-link">getAdapter</a><wbr>(<a href="../IDBAdapterID.html" title="interface in org.eclipse.net4j.db">IDBAdapterID</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the adapter for an exact logical identity.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBDatabase.</span><code><a href="../IDBDatabase.html#getAdapter()" class="member-name-link">getAdapter</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.Registry.</span><code><a href="../IDBAdapter.Registry.html#getAdapters()" class="member-name-link">getAdapters</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns all registered adapters, materializing lazy descriptors as necessary.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.Registry.</span><code><a href="../IDBAdapter.Registry.html#getAdapters(java.lang.String)" class="member-name-link">getAdapters</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;adapterName)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns all registered variants for a name, materializing matching lazy
+ descriptors as necessary.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#getDBAdapter(java.lang.String)" class="member-name-link">getDBAdapter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;adapterName)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Retrieves an <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>adapter</code></a> from the <a href="../IDBAdapter.html#REGISTRY"><code>adapter registry</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#getDBAdapters()" class="member-name-link">getDBAdapters</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns all registered adapters, sorted by name and numeric version.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#getDBAdapters(java.lang.String)" class="member-name-link">getDBAdapters</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;adapterName)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns all registered variants for an adapter name, sorted by numeric version.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.db</a> with parameters of type <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></span></div>
@@ -299,6 +340,11 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">A useful base class for implementing custom <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>DB adapters</code></a>.</div>
 </div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../spi/db/DelegatingDBAdapter.html" class="type-name-link" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Keeps extension metadata authoritative without requiring the created adapter to extend DBAdapter.</div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../spi/db/package-summary.html">org.eclipse.net4j.spi.db</a> with parameters of type <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></span></div>
 <div class="summary-table three-column-summary">
@@ -341,6 +387,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
+</div>
+<div class="caption"><span>Constructors in <a href="../../spi/db/package-summary.html">org.eclipse.net4j.spi.db</a> with parameters of type <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../spi/db/DelegatingDBAdapter.html#%3Cinit%3E(org.eclipse.net4j.db.IDBAdapter)" class="member-name-link">DelegatingDBAdapter</a><wbr>(<a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;delegate)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../spi/db/DelegatingDBAdapter.html#%3Cinit%3E(org.eclipse.net4j.db.IDBAdapter,java.lang.String,java.lang.String)" class="member-name-link">DelegatingDBAdapter</a><wbr>(<a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;delegate,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;version)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

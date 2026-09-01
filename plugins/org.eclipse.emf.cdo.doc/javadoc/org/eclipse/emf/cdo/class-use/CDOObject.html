@@ -1391,11 +1391,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getObject(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getObject</a><wbr>(<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getObject(org.eclipse.emf.cdo.common.id.CDOID,boolean)" class="member-name-link">getObject</a><wbr>(<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> that return types with arguments of type <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></span></div>
 <div class="summary-table three-column-summary">
@@ -1404,20 +1408,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOSavepoint.</span><code><a href="../transaction/CDOSavepoint.html#getAllDetachedObjects()" class="member-name-link">getAllDetachedObjects</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Returns the aggregate of detached objects at this savepoint's fixed boundary.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOSavepoint.</span><code><a href="../transaction/CDOSavepoint.html#getAllDirtyObjects()" class="member-name-link">getAllDirtyObjects</a>()</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Return the list of new objects from this point.</div>
+<div class="block">Returns the aggregate of dirty objects at this savepoint's fixed boundary.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOSavepoint.</span><code><a href="../transaction/CDOSavepoint.html#getAllNewObjects()" class="member-name-link">getAllNewObjects</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Return the list of new objects from this point without objects that are removed.</div>
+<div class="block">Returns the aggregate of new objects at this savepoint's fixed boundary, excluding objects
+ that were removed before that boundary.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getConflicts()" class="member-name-link">getConflicts</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../transaction/CDOTransaction.html#getConflicts()" class="member-name-link">getConflicts</a>()</code></div>
 <div class="col-last even-row-color">
@@ -1430,10 +1439,14 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getDetachedObjects()" class="member-name-link">getDetachedObjects</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOSavepoint.</span><code><a href="../transaction/CDOSavepoint.html#getDetachedObjects()" class="member-name-link">getDetachedObjects</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Returns objects detached at this savepoint.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../transaction/CDOTransaction.html#getDetachedObjects()" class="member-name-link">getDetachedObjects</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1444,10 +1457,14 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getDirtyObjects()" class="member-name-link">getDirtyObjects</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOSavepoint.</span><code><a href="../transaction/CDOSavepoint.html#getDirtyObjects()" class="member-name-link">getDirtyObjects</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Returns objects modified at this savepoint.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../transaction/CDOTransaction.html#getDirtyObjects()" class="member-name-link">getDirtyObjects</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1458,20 +1475,26 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getNewObjects()" class="member-name-link">getNewObjects</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOSavepoint.</span><code><a href="../transaction/CDOSavepoint.html#getNewObjects()" class="member-name-link">getNewObjects</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Returns objects created at this savepoint.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../transaction/CDOTransaction.html#getNewObjects()" class="member-name-link">getNewObjects</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getObjects(java.util.Collection)" class="member-name-link">getObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOSavepoint.</span><code><a href="../transaction/CDOSavepoint.html#getReattachedObjects()" class="member-name-link">getReattachedObjects</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Bug 283985 (Re-attachment)</div>
+<div class="block">Returns objects reattached at this savepoint.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../transaction/package-summary.html">org.eclipse.emf.cdo.transaction</a> with parameters of type <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></span></div>
@@ -1549,7 +1572,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><code><a href="../CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getHistory(org.eclipse.emf.cdo.CDOObject)" class="member-name-link">getHistory</a><wbr>(<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOAutoCommitter.</span><code><a href="../transaction/CDOAutoCommitter.html#modifiedObject(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.common.notify.Notification)" class="member-name-link">modifiedObject</a><wbr>(<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
  <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
@@ -1609,7 +1634,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#queryXRefs(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.ecore.EReference...)" class="member-name-link">queryXRefs</a><wbr>(<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;targetObject,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a>...&nbsp;sourceReferences)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code>int</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#reload(org.eclipse.emf.cdo.CDOObject...)" class="member-name-link">reload</a><wbr>(<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>...&nbsp;objects)</code></div>
 <div class="col-last odd-row-color">
@@ -1637,26 +1664,36 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="../common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#getLockStatesOfObjects(java.util.Collection)" class="member-name-link">getLockStatesOfObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#lockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)" class="member-name-link">lockObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  long&nbsp;timeout)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#lockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long,boolean)" class="member-name-link">lockObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  long&nbsp;timeout,
  boolean&nbsp;recursive)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#queryXRefs(java.util.Set,org.eclipse.emf.ecore.EReference...)" class="member-name-link">queryXRefs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a>...&nbsp;sourceReferences)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code>org.eclipse.net4j.util.collection.CloseableIterator<wbr>&lt;<a href="../CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#queryXRefsAsync(java.util.Set,org.eclipse.emf.ecore.EReference...)" class="member-name-link">queryXRefsAsync</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;targetObjects,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a>...&nbsp;sourceReferences)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOConflictResolver.</span><code><a href="../transaction/CDOConflictResolver.html#resolveConflicts(java.util.Set)" class="member-name-link">resolveConflicts</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;conflicts)</code></div>
 <div class="col-last odd-row-color">
@@ -1671,12 +1708,16 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#unlockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">unlockObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../transaction/CDOPushTransaction.html#unlockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">unlockObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  boolean&nbsp;recursive)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 </div>
 </section>
 </li>
@@ -2041,9 +2082,24 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOChangeSubscriptionAdapter.</span><code><a href="../../spi/cdo/CDOChangeSubscriptionAdapter.html#getNotifiers()" class="member-name-link">getNotifiers</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSavepoint.</span><code><a href="../../spi/cdo/InternalCDOSavepoint.html#getAllDetachedObjectsIncludingCurrent()" class="member-name-link">getAllDetachedObjectsIncludingCurrent</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the aggregate through this savepoint, including its mutable current segment.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOSavepoint.</span><code><a href="../../spi/cdo/InternalCDOSavepoint.html#getAllDirtyObjectsIncludingCurrent()" class="member-name-link">getAllDirtyObjectsIncludingCurrent</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the aggregate through this savepoint, including its mutable current segment.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSavepoint.</span><code><a href="../../spi/cdo/InternalCDOSavepoint.html#getAllNewObjectsIncludingCurrent()" class="member-name-link">getAllNewObjectsIncludingCurrent</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the aggregate through this savepoint, including its mutable current segment.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOChangeSubscriptionAdapter.</span><code><a href="../../spi/cdo/CDOChangeSubscriptionAdapter.html#getNotifiers()" class="member-name-link">getNotifiers</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with parameters of type <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></span></div>
 <div class="summary-table three-column-summary">

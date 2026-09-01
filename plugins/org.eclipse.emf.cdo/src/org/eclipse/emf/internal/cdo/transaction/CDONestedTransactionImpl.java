@@ -10,15 +10,15 @@ package org.eclipse.emf.internal.cdo.transaction;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.transaction.CDONestedTransaction;
+import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransactionScope;
 import org.eclipse.emf.cdo.transaction.CDOTransactionScopeClosedEvent;
-import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
-import org.eclipse.core.runtime.IProgressMonitor;
-
 import org.eclipse.net4j.util.event.IEvent;
+
+import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.util.concurrent.Callable;
 
@@ -56,26 +56,6 @@ public final class CDONestedTransactionImpl extends DelegatingCDOTransactionImpl
   public CDOTransactionScope openScope()
   {
     return scope.openScope();
-  }
-
-  @Override
-  protected synchronized void firstListenerAdded()
-  {
-    if (!isClosed())
-    {
-      super.firstListenerAdded();
-    }
-  }
-
-  @Override
-  protected void handleDelegateEvent(IEvent event)
-  {
-    super.handleDelegateEvent(event);
-
-    if (event instanceof CDOTransactionScopeClosedEvent && ((CDOTransactionScopeClosedEvent)event).getScope() == scope)
-    {
-      detachDelegateListener();
-    }
   }
 
   @Override
@@ -148,6 +128,28 @@ public final class CDONestedTransactionImpl extends DelegatingCDOTransactionImpl
       scope.close();
     }
     finally
+    {
+      detachDelegateListener();
+    }
+  }
+
+  @Override
+  protected synchronized void firstListenerAdded()
+  {
+    delegate.sync().run(() -> {
+      if (scope.isOpen() && !delegate.isClosed())
+      {
+        super.firstListenerAdded();
+      }
+    });
+  }
+
+  @Override
+  protected void handleDelegateEvent(IEvent event)
+  {
+    super.handleDelegateEvent(event);
+
+    if (event instanceof CDOTransactionScopeClosedEvent && ((CDOTransactionScopeClosedEvent)event).getScope() == scope)
     {
       detachDelegateListener();
     }

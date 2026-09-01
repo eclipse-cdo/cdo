@@ -44,7 +44,7 @@ public final class TransactionSegment
 
   private final Map<CDOID, CDORevisionDelta> revisionDeltas;
 
-  private TransactionBoundary boundary;
+  private final TransactionBoundary boundary;
 
   /**
    * Creates an empty segment owned by the given transaction.

@@ -1742,7 +1742,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     scopeEvents.add(new ScopeOpenedEvent(scope));
 
     TransactionHistory.Diagnostics.checkInvariants(this);
-    TransactionHistory.Diagnostics.dump(this);
     return scope;
   }
 
@@ -1778,7 +1777,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     scopeEvents.add(new ScopeClosedEvent(scope, cause));
 
     TransactionHistory.Diagnostics.checkInvariants(this);
-    TransactionHistory.Diagnostics.dump(this);
   }
 
   private void rollbackScope(CDOTransactionScopeImpl scope)
@@ -1800,7 +1798,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     TransactionHistory.Diagnostics.checkInvariants(this);
-    TransactionHistory.Diagnostics.dump(this);
   }
 
   private void dispatchScopeEvents()
@@ -2130,6 +2127,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         try
         {
           checkActive();
+
+          if (!scopes.isEmpty())
+          {
+            throw new IllegalStateException("The root transaction cannot commit while a transaction scope is open");
+          }
+
           if (hasConflict())
           {
             throw new LocalCommitConflictException(Messages.getString("CDOTransactionImpl.2")); //$NON-NLS-1$
@@ -2636,6 +2639,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     Set<CDOID> idsOfNewObjectsWithDeltas = new HashSet<>();
     Set<InternalCDOObject> newObjects = new HashSet<>();
+    Map<CDOID, CDOObject> currentNewObjects = aggregateCurrentNewObjects();
 
     // Start at the current boundary and walk the internal history backwards.
     for (TransactionBoundary itrBoundary = currentBoundary; itrBoundary != null; itrBoundary = itrBoundary.getPrevious())
@@ -2762,7 +2766,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         for (CDORevisionDelta dirtyObject : revisionDeltas.values())
         {
           CDOID id = dirtyObject.getID();
-          if (isObjectNew(id))
+          if (currentNewObjects.containsKey(id))
           {
             idsOfNewObjectsWithDeltas.add(id);
           }
@@ -2776,7 +2780,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         for (Map.Entry<CDOID, CDOObject> detachedObjectEntry : detachedObjectsMap.entrySet())
         {
           CDOID id = detachedObjectEntry.getKey();
-          if (isObjectNew(id))
+          if (currentNewObjects.containsKey(id))
           {
             InternalCDOObject detachedObject = (InternalCDOObject)detachedObjectEntry.getValue();
             LifecycleBeforeImage beforeImage = getLifecycleBeforeImage(itrBoundary, detachedObject);
@@ -2804,7 +2808,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       for (Map.Entry<CDOID, CDOObject> entryDirtyObject : segment.getDirtyObjects().entrySet())
       {
         CDOID id = entryDirtyObject.getKey();
-        if (!isObjectNew(id))
+        if (!currentNewObjects.containsKey(id))
         {
           InternalCDOObject internalDirtyObject = (InternalCDOObject)entryDirtyObject.getValue();
 
@@ -2894,13 +2898,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
 
     CDOObjectMerger merger = new CDOObjectMerger();
+    Map<CDOID, CDOObject> currentNewObjects = aggregateCurrentNewObjects();
 
     for (TransactionBoundary itrBoundary = getBoundary(firstSavepoint); itrBoundary != boundary; itrBoundary = itrBoundary.getNext())
     {
       for (CDORevisionDelta delta : itrBoundary.getSegment().getRevisionDeltas().values())
       {
         CDOID id = delta.getID();
-        boolean isNew = isObjectNew(id);
+        boolean isNew = currentNewObjects.containsKey(id);
         if (isNew && !idsOfNewObjectWithDeltas.contains(id) || detachedObjects.containsKey(id))
         {
           continue;
@@ -3145,9 +3150,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     registerNew(dirtyObjects, object);
   }
 
-  /**
-   * TODO Simon: Should this method go to CDOSavePointImpl?
-   */
   @SuppressWarnings({ "rawtypes", "unchecked" })
   private void registerNew(Map map, InternalCDOObject object)
   {
@@ -3390,51 +3392,129 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       };
 
       List<CDOSavepoint> savepoints = new ArrayList<>();
-      int totalNewObjects = 0;
+      List<ExportChanges> changes = new ArrayList<>();
+      TransactionBoundary previousBoundary = null;
 
       InternalCDOSavepoint savepoint = firstSavepoint;
       while (savepoint != null)
       {
-        Collection<CDOObject> newObjects = savepoint.getNewObjects().values();
-        totalNewObjects += newObjects.size();
+        ExportChanges exportChanges = collectExportChanges(previousBoundary, getBoundary(savepoint));
+        if (!exportChanges.isEmpty())
+        {
+          savepoints.add(savepoint);
+          changes.add(exportChanges);
+        }
 
+        previousBoundary = getBoundary(savepoint);
         savepoint = savepoint.getNextSavepoint();
+      }
+
+      if (previousBoundary != currentBoundary)
+      {
+        ExportChanges trailingChanges = collectExportChanges(previousBoundary, currentBoundary);
+        if (!trailingChanges.isEmpty())
+        {
+          if (changes.isEmpty())
+          {
+            savepoints.add(lastSavepoint);
+            changes.add(trailingChanges);
+          }
+          else
+          {
+            mergeExportChanges(changes.get(changes.size() - 1), trailingChanges);
+          }
+        }
+      }
+
+      int totalNewObjects = 0;
+      for (ExportChanges exportChanges : changes)
+      {
+        totalNewObjects += exportChanges.newObjects.size();
       }
 
       out.writeXInt(totalNewObjects);
 
-      savepoint = firstSavepoint;
-      while (savepoint != null)
+      for (ExportChanges exportChanges : changes)
       {
-        Collection<CDOObject> newObjects = savepoint.getNewObjects().values();
-        Collection<CDORevisionDelta> revisionDeltas = savepoint.getRevisionDeltas2().values();
-        if (newObjects.isEmpty() && revisionDeltas.isEmpty())
-        {
-          savepoint = savepoint.getNextSavepoint();
-          continue;
-        }
-
-        savepoints.add(savepoint);
         out.writeBoolean(true);
 
-        out.writeXInt(newObjects.size());
-        for (CDOObject newObject : newObjects)
+        out.writeXInt(exportChanges.newObjects.size());
+        for (CDOObject newObject : exportChanges.newObjects.values())
         {
           out.writeCDORevision(newObject.cdoRevision(), CDORevision.UNCHUNKED);
         }
 
-        out.writeXInt(revisionDeltas.size());
-        for (CDORevisionDelta revisionDelta : revisionDeltas)
+        out.writeXInt(exportChanges.revisionDeltas.size());
+        for (CDORevisionDelta revisionDelta : exportChanges.revisionDeltas.values())
         {
           out.writeCDORevisionDelta(revisionDelta);
         }
-
-        savepoint = savepoint.getNextSavepoint();
       }
 
       out.writeBoolean(false);
       return savepoints.toArray(new CDOSavepoint[savepoints.size()]);
     });
+  }
+
+  private ExportChanges collectExportChanges(TransactionBoundary start, TransactionBoundary end)
+  {
+    ExportChanges result = new ExportChanges();
+
+    for (TransactionBoundary boundary = start == null ? end : start.getNext(); boundary != null; boundary = boundary.getNext())
+    {
+      TransactionSegment segment = boundary.getSegment();
+      result.newObjects.putAll(segment.getNewObjects());
+      result.newObjects.keySet().removeAll(segment.getDetachedObjects().keySet());
+
+      for (CDORevisionDelta delta : segment.getRevisionDeltas().values())
+      {
+        mergeExportRevisionDelta(result.revisionDeltas, delta);
+      }
+
+      if (boundary == end)
+      {
+        break;
+      }
+    }
+
+    return result;
+  }
+
+  private void mergeExportChanges(ExportChanges target, ExportChanges source)
+  {
+    target.newObjects.putAll(source.newObjects);
+    for (CDORevisionDelta delta : source.revisionDeltas.values())
+    {
+      mergeExportRevisionDelta(target.revisionDeltas, delta);
+    }
+  }
+
+  private void mergeExportRevisionDelta(Map<CDOID, CDORevisionDelta> target, CDORevisionDelta delta)
+  {
+    CDORevisionDeltaImpl old = (CDORevisionDeltaImpl)target.get(delta.getID());
+    if (old == null)
+    {
+      target.put(delta.getID(), delta.copy());
+    }
+    else
+    {
+      for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+      {
+        old.addFeatureDelta(featureDelta.copy(), null);
+      }
+    }
+  }
+
+  private static final class ExportChanges
+  {
+    private final Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
+
+    private final Map<CDOID, CDORevisionDelta> revisionDeltas = CDOIDUtil.createMap();
+
+    private boolean isEmpty()
+    {
+      return newObjects.isEmpty() && revisionDeltas.isEmpty();
+    }
   }
 
   @Override
@@ -4794,8 +4874,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public Map<CDOID, CDOObject> aggregateNewObjects(TransactionBoundary boundary, boolean includeEnd)
   {
-    Map<CDOID, CDOObject> result = CDOIDUtil.createMap();
     List<TransactionBoundary> boundaries = historyBoundaries(boundary, includeEnd);
+    return aggregateNewObjects(boundary, includeEnd, boundaries);
+  }
+
+  private Map<CDOID, CDOObject> aggregateNewObjects(TransactionBoundary boundary, boolean includeEnd, List<TransactionBoundary> boundaries)
+  {
+    Map<CDOID, CDOObject> result = CDOIDUtil.createMap();
 
     for (TransactionBoundary historyBoundary : boundaries)
     {
@@ -4812,7 +4897,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    TransactionHistory.Diagnostics.aggregate("NEW", boundary, includeEnd, boundaries.size(), result);
     return result;
   }
 
@@ -4827,7 +4911,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       result.putAll(historyBoundary.getSegment().getDirtyObjects());
     }
 
-    TransactionHistory.Diagnostics.aggregate("DIRTY", boundary, includeEnd, boundaries.size(), result);
     return result;
   }
 
@@ -4849,7 +4932,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     Map<CDOID, CDOObject> result = CDOIDUtil.createMap();
     List<TransactionBoundary> boundaries = historyBoundaries(boundary, includeEnd);
-    Map<CDOID, CDOObject> newObjects = aggregateNewObjects(boundary, includeEnd);
+    Map<CDOID, CDOObject> newObjects = aggregateNewObjects(boundary, includeEnd, boundaries);
 
     for (TransactionBoundary historyBoundary : boundaries)
     {
@@ -4866,7 +4949,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       result.keySet().removeAll(segment.getReattachedObjects().keySet());
     }
 
-    TransactionHistory.Diagnostics.aggregate("DETACHED", boundary, includeEnd, boundaries.size(), result);
     return result;
   }
 
@@ -4875,7 +4957,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     Map<CDOID, CDORevisionDelta> result = CDOIDUtil.createMap();
     List<TransactionBoundary> boundaries = historyBoundaries(boundary, includeEnd);
-    Map<CDOID, CDOObject> newObjects = aggregateNewObjects(boundary, includeEnd);
+    Map<CDOID, CDOObject> newObjects = aggregateNewObjects(boundary, includeEnd, boundaries);
 
     for (TransactionBoundary historyBoundary : boundaries)
     {
@@ -4910,7 +4992,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    TransactionHistory.Diagnostics.aggregate("REVISION_DELTAS", boundary, includeEnd, boundaries.size(), result);
     return result;
   }
 
@@ -5025,7 +5106,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     currentBoundary = boundary;
     TransactionHistory.Diagnostics.checkInvariants(this);
-    TransactionHistory.Diagnostics.dump(this);
   }
 
   /**
@@ -5041,7 +5121,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       previous.setNext(boundary);
     }
 
-    TransactionHistory.Diagnostics.boundary("created", boundary);
     return boundary;
   }
 
@@ -5651,8 +5730,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         try
         {
-          // TODO (CD) It might be wise to always do the checks,
-          // instead of only for partial commits
+          // TODO (CD) It might be wise to always do the checks, instead of only for partial commits
           if (isPartialCommit)
           {
             new CommitIntegrityCheck(this, CommitIntegrityCheck.Style.EXCEPTION_FAST).check();

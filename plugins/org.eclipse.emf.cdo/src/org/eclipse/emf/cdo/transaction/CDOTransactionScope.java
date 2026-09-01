@@ -9,7 +9,7 @@
 package org.eclipse.emf.cdo.transaction;
 
 /**
- * A closed-nested lifecycle region in a {@link CDOTransaction transaction}.
+ * A stack-disciplined nested lifecycle region in a {@link CDOTransaction transaction}.
  * <p>
  * A scope shares its transaction's view, repository session, resource set, object identities, object cache, dirty
  * state, and locks. Changes made in a scope are immediately visible in the containing transaction and remain part of

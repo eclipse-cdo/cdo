@@ -8,11 +8,13 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.transaction.CDOConflictResolver3;
 import org.eclipse.emf.cdo.transaction.CDONestedTransaction;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -20,6 +22,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionScope;
 import org.eclipse.emf.cdo.transaction.CDOTransactionScopeClosedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionScopeOpenedEvent;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.internal.cdo.transaction.CDOFileTransactionImpl;
 import org.eclipse.emf.internal.cdo.transaction.CDONestedTransactionImpl;
@@ -33,11 +36,20 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DelegatingCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Verifies the closed-nesting lifecycle contract independently of any generated model implementation. The tests use
@@ -313,6 +325,363 @@ public class TransactionScopeTest extends AbstractCDOTest
       assertTrue(facade.isClosed());
       transaction.close();
       assertEquals(1, events.size());
+    }
+  }
+
+  public void testScopesCanBeCompletedAcrossThreadsInStackOrder() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = session.openTransaction())
+    {
+      ExecutorService executor = Executors.newSingleThreadExecutor();
+
+      try
+      {
+        CDOTransactionScope outer = transaction.openScope();
+        CDOTransactionScope inner = executor.submit(outer::openScope).get();
+
+        inner.commit();
+        executor.submit(outer::rollback).get();
+        assertEquals(0, transaction.getScopes().size());
+
+        CDOTransactionScope committed = transaction.openScope();
+        executor.submit(committed::commit).get();
+        assertEquals(0, transaction.getScopes().size());
+
+        CDOTransactionScope rolledBack = transaction.openScope();
+        executor.submit(rolledBack::rollback).get();
+        assertEquals(0, transaction.getScopes().size());
+      }
+      finally
+      {
+        executor.shutdownNow();
+        assertTrue(executor.awaitTermination(10, TimeUnit.SECONDS));
+      }
+    }
+  }
+
+  public void testRootRollbackAndCloseFinalizeObservedNestedFacade() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = session.openTransaction())
+    {
+      CDOTransactionScope scope = transaction.openScope();
+      CDONestedTransaction facade = scope.asTransaction();
+      CountDownLatch rollback = new CountDownLatch(1);
+
+      ExecutorService executor = Executors.newSingleThreadExecutor();
+
+      try
+      {
+        Future<?> observer = executor.submit(() -> {
+          try
+          {
+            rollback.await();
+            assertTrue(facade.isClosed());
+            assertEquals(0, facade.getScopes().size());
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.currentThread().interrupt();
+            throw new AssertionError(ex);
+          }
+        });
+
+        transaction.rollback();
+        rollback.countDown();
+        observer.get();
+
+        try
+        {
+          facade.openScope();
+          fail("IllegalStateException expected");
+        }
+        catch (IllegalStateException expected)
+        {
+          // SUCCESS
+        }
+      }
+      finally
+      {
+        rollback.countDown();
+        executor.shutdownNow();
+        assertTrue(executor.awaitTermination(10, TimeUnit.SECONDS));
+      }
+
+      CDOTransactionScope closeScope = transaction.openScope();
+      CDONestedTransaction closeFacade = closeScope.asTransaction();
+      transaction.close();
+      assertFalse(closeScope.isOpen());
+      assertTrue(closeFacade.isClosed());
+
+      try
+      {
+        closeFacade.rollback();
+        fail("IllegalStateException expected");
+      }
+      catch (IllegalStateException expected)
+      {
+        // SUCCESS
+      }
+    }
+  }
+
+  public void testReentrantScopeLifecycleListenerCanOpenAndCloseScope() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = session.openTransaction())
+    {
+      AtomicBoolean reentered = new AtomicBoolean();
+      AtomicReference<Throwable> failure = new AtomicReference<>();
+
+      transaction.addListener(event -> {
+        if (event instanceof CDOTransactionScopeOpenedEvent && reentered.compareAndSet(false, true))
+        {
+          try
+          {
+            transaction.getInnermostScope().commit();
+          }
+          catch (Throwable ex)
+          {
+            failure.set(ex);
+          }
+        }
+      });
+
+      transaction.openScope();
+      assertNull(failure.get());
+      assertEquals(0, transaction.getScopes().size());
+    }
+  }
+
+  public void testPartialCommitRetainsChangesOutsideCommittedNestedHistory() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = openCommittedCompanyTransaction(session, "partialNested"))
+    {
+      CDOResource resource = transaction.getResource(getResourcePath("/partialNested"));
+      CDOResource deferredResource = transaction.createResource(getResourcePath("/partialNestedB"));
+      transaction.commit();
+      CDOTransactionScope scope = transaction.openScope();
+      Company committed = getModel1Factory().createCompany();
+      committed.setName("nested");
+      resource.getContents().add(committed);
+      scope.commit();
+
+      Company deferred = getModel1Factory().createCompany();
+      deferred.setName("root");
+      deferredResource.getContents().add(deferred);
+      Set<EObject> committables = new HashSet<>();
+      committables.add(committed);
+      committables.add(resource);
+      transaction.setCommittables(committables);
+      transaction.commit();
+
+      assertFalse(transaction.getNewObjects().containsValue(CDOUtil.getCDOObject(committed)));
+      assertNew(deferred, transaction);
+      assertEquals("root", deferred.getName());
+
+      committables.clear();
+      committables.add(deferred);
+      committables.add(deferredResource);
+      transaction.setCommittables(committables);
+      transaction.commit();
+      assertFalse(transaction.isDirty());
+    }
+  }
+
+  public void testNestedScopesShareTransactionLocksAcrossRollbackAndCommit() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = openCommittedCompanyTransaction(session, "nestedLocks"))
+    {
+      CDOResource resource = transaction.getResource(getResourcePath("/nestedLocks"));
+      Company company = (Company)resource.getContents().get(0);
+      CDOLock lock = CDOUtil.getCDOObject(company).cdoWriteLock();
+      transaction.options().setAutoReleaseLocksEnabled(false);
+
+      lock.lock(DEFAULT_TIMEOUT);
+      CDOTransactionScope scope = transaction.openScope();
+      company.setName("rolledBack");
+      scope.rollback();
+      assertTrue(lock.isLocked());
+
+      lock.unlock();
+      assertFalse(lock.isLocked());
+      scope = transaction.openScope();
+      lock.lock(DEFAULT_TIMEOUT);
+      assertTrue(lock.isLocked());
+      company.setName("rolledBackDuringScope");
+      scope.rollback();
+      assertTrue(lock.isLocked());
+
+      scope = transaction.openScope();
+      company.setName("committed");
+      scope.commit();
+      assertTrue(lock.isLocked());
+
+      transaction.options().setAutoReleaseLocksEnabled(true);
+      transaction.commit();
+      assertFalse(lock.isLocked());
+
+      lock.lock(DEFAULT_TIMEOUT);
+      scope = transaction.openScope();
+      company.setName("committedThenRolledBack");
+      scope.commit();
+      transaction.rollback();
+      assertFalse(lock.isLocked());
+    }
+  }
+
+  public void testRetainedNestedHistoryAcrossRootCommitEpochs() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = openCommittedCompanyTransaction(session, "nestedHistoryStress"))
+    {
+      CDOResource resource = transaction.getResource(getResourcePath("/nestedHistoryStress"));
+
+      int emptyScopes = 1000;
+      int changedScopes = 256;
+      int epochs = 3;
+      int expectedCompanies = 1;
+
+      for (int epoch = 0; epoch < epochs; ++epoch)
+      {
+        for (int i = 0; i < emptyScopes; ++i)
+        {
+          CDOTransactionScope scope = transaction.openScope();
+          scope.commit();
+        }
+
+        for (int i = 0; i < changedScopes; ++i)
+        {
+          CDOTransactionScope scope = transaction.openScope();
+          Company company = getModel1Factory().createCompany();
+          company.setName("epoch-" + epoch + "-" + i);
+          resource.getContents().add(company);
+          scope.commit();
+        }
+
+        expectedCompanies += changedScopes;
+        assertEquals(changedScopes, transaction.getNewObjects().size());
+        assertTrue(transaction.isDirty());
+
+        transaction.commit();
+        assertFalse(transaction.isDirty());
+        assertEquals(0, transaction.getNewObjects().size());
+        assertEquals(0, transaction.getDirtyObjects().size());
+        assertEquals(0, transaction.getRevisionDeltas().size());
+        assertEquals(expectedCompanies, resource.getContents().size());
+      }
+    }
+  }
+
+  public void testRootCommitRejectsScopeOpenedDuringPreCommit() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = openCommittedCompanyTransaction(session, "commitScopeRace"))
+    {
+      CountDownLatch preCommitEntered = new CountDownLatch(1);
+      CountDownLatch releasePreCommit = new CountDownLatch(1);
+
+      transaction.options().addConflictResolver(new CDOConflictResolver3()
+      {
+        private CDOTransaction resolverTransaction;
+
+        @Override
+        public CDOTransaction getTransaction()
+        {
+          return resolverTransaction;
+        }
+
+        @Override
+        public void setTransaction(CDOTransaction value)
+        {
+          resolverTransaction = value;
+        }
+
+        @Override
+        public void resolveConflicts(Set<CDOObject> conflicts)
+        {
+        }
+
+        @Override
+        public boolean preCommit()
+        {
+          preCommitEntered.countDown();
+
+          try
+          {
+            releasePreCommit.await();
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.currentThread().interrupt();
+            throw new AssertionError(ex);
+          }
+
+          return true;
+        }
+      });
+
+      ExecutorService executor = Executors.newFixedThreadPool(2);
+
+      try
+      {
+        Future<?> commit = executor.submit(() -> {
+          try
+          {
+            transaction.commit();
+            fail("IllegalStateException expected");
+          }
+          catch (CommitException ex)
+          {
+            assertTrue(ex.getCause() instanceof IllegalStateException);
+          }
+          catch (Exception ex)
+          {
+            throw new AssertionError(ex);
+          }
+        });
+
+        preCommitEntered.await();
+
+        Future<?> scope = executor.submit(() -> transaction.openScope());
+        scope.get();
+        releasePreCommit.countDown();
+
+        commit.get();
+        assertEquals(1, transaction.getScopes().size());
+        transaction.getInnermostScope().close();
+      }
+      finally
+      {
+        executor.shutdownNow();
+      }
+    }
+  }
+
+  public void testExportIncludesChangesFromCommittedNestedScope() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction source = openCommittedCompanyTransaction(session, "exportNested"))
+    {
+      CDOResource resource = source.getResource(getResourcePath("/exportNested"));
+      Company existing = (Company)resource.getContents().get(0);
+      existing.setName("changed");
+
+      CDOTransactionScope scope = source.openScope();
+      Company added = getModel1Factory().createCompany();
+      added.setName("added");
+      resource.getContents().add(added);
+      scope.commit();
+
+      ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      source.exportChanges(bytes);
+
+      try (CDOTransaction target = session.openTransaction())
+      {
+        target.importChanges(new ByteArrayInputStream(bytes.toByteArray()), false);
+        assertEquals(1, target.getNewObjects().size());
+
+        CDOObject imported = target.getNewObjects().values().iterator().next();
+        assertEquals("Company", imported.eClass().getName());
+        assertEquals("added", ((Company)CDOUtil.getEObject(imported)).getName());
+        assertEquals(2, target.getDirtyObjects().size());
+        assertEquals(0, target.getScopes().size());
+      }
     }
   }
 

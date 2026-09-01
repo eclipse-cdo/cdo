@@ -209,7 +209,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     TransactionHistory history = getTransactionHistory();
     if (history != null)
     {
-      return sync().supply(() -> history.aggregateCurrentDirtyObjects());
+      return sync().supply(() -> history.aggregateDirtyObjects(boundary, true));
     }
 
     return sync().supply(() -> {
@@ -491,41 +491,6 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       return false;
     });
   }
-
-  // TODO Not sure if this new implementation is needed. The existing one passes all tests.
-  // public boolean isNewObject(CDOID id)
-  // {
-  // if (id.isTemporary())
-  // {
-  // return true;
-  // }
-  //
-  // boolean isNew = false;
-  // boolean wasNew = false;
-  // synchronized (transaction) // TODO synchronized -> transaction.getViewLock().lock()
-  // {
-  // for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-  // {
-  // if (savepoint.getNewObjects().containsKey(id))
-  // {
-  // isNew = true;
-  // wasNew = true;
-  // }
-  //
-  // if (isNew && savepoint.getDetachedObjects().containsKey(id))
-  // {
-  // isNew = false;
-  // }
-  //
-  // if (!isNew && wasNew && savepoint.getReattachedObjects().containsKey(id))
-  // {
-  // isNew = true;
-  // }
-  // }
-  // }
-  //
-  // return isNew;
-  // }
 
   @Override
   public CDOObject getDetachedObject(CDOID id)

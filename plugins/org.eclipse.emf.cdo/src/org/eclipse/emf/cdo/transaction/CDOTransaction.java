@@ -228,14 +228,17 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public CDOTransactionScope openScope();
 
   /**
-   * Returns the innermost currently open nested scope, or {@code null} if no scope is open.
+   * Returns the outermost currently open nested scope, or {@code null} if no scope is open.
    *
-   * @return the innermost open scope, or {@code null}.
+   * @return the outermost open scope, or {@code null}.
    * @since 4.30
    */
   public CDOTransactionScope getOutermostScope();
 
   /**
+   * Returns the innermost currently open nested scope, or {@code null} if no scope is open.
+   *
+   * @return the innermost open scope, or {@code null}.
    * @since 4.30
    */
   public CDOTransactionScope getInnermostScope();

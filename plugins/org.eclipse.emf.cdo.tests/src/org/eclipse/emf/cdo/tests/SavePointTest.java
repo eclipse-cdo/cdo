@@ -437,6 +437,39 @@ public class SavePointTest extends AbstractCDOTest
     assertEquals(false, scenario.first.getAllDirtyObjects().containsKey(scenario.idB));
   }
 
+  public void testRetainedSavepointAllDirtyObjectsIncludingCurrentIncludesLaterSegments() throws Exception
+  {
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(getModel1Package());
+    CDOTransaction transaction = session.openTransaction();
+
+    try
+    {
+      CDOResource resource = transaction.createResource(getResourcePath("/dirtyIncludingCurrent"));
+      Company company = getModel1Factory().createCompany();
+      company.setName("original");
+      resource.getContents().add(company);
+      transaction.commit();
+
+      CDOID id = CDOUtil.getCDOObject(company).cdoID();
+
+      InternalCDOSavepoint savepoint = (InternalCDOSavepoint)transaction.setSavepoint();
+      company.setName("first");
+      assertTrue(savepoint.getAllDirtyObjectsIncludingCurrent().containsKey(id));
+
+      InternalCDOSavepoint later = (InternalCDOSavepoint)transaction.setSavepoint();
+      company.setName("second");
+      assertTrue(savepoint.getAllDirtyObjectsIncludingCurrent().containsKey(id));
+      assertTrue(later.getAllDirtyObjectsIncludingCurrent().containsKey(id));
+      assertTrue(transaction.getDirtyObjects().containsKey(id));
+    }
+    finally
+    {
+      transaction.close();
+      session.close();
+    }
+  }
+
   public void testRetainedSavepointAllBaseNewObjectsDoNotIncludeLaterSegments() throws Exception
   {
     RetainedSavepointScenario scenario = createRetainedSavepointScenario();
@@ -489,6 +522,95 @@ public class SavePointTest extends AbstractCDOTest
     scope.close();
   }
 
+  /**
+   * Bug 283131
+   */
+  public void testNotification() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    company.setCity("CITY1");
+    CDOUserSavepoint savePoint1 = transaction.setSavepoint();
+
+    company.setCity("CITY2");
+
+    TestAdapter adapter = new TestAdapter(company);
+
+    savePoint1.rollback();
+    assertEquals("CITY1", company.getCity());
+    adapter.assertNotifications(1);
+  }
+
+  /**
+   * Compare http://www.eclipse.org/newsportal/article.php?id=41697&group=eclipse.tools.emf#41697
+   *
+   * <pre>
+   * Passive update is enabled.
+   * client1 sets a save point
+   * client1 write locks object1
+   * client1 modifies object1
+   * client2 modifies object2
+   * client2 commits
+   * client1 rolls back to save point
+   * Result:
+   * CDORepositoryInfo: object1 not modified, object2 is modified
+   * client1: same as repository
+   * client2: same as repository
+   * </pre>
+   */
+  public void _testScenario1() throws Exception
+  {
+    CDOSession client1 = openSession();
+    CDOTransaction transaction1 = client1.openTransaction();
+    CDOResource object1X = transaction1.createResource(getResourcePath("/object1"));
+    CDOResource object2X = transaction1.createResource(getResourcePath("/object2"));
+    transaction1.commit();
+
+    // client1 sets a save point
+    CDOUserSavepoint savepoint = transaction1.setSavepoint();
+
+    // client1 write locks object1
+    object1X.cdoWriteLock().lock(DEFAULT_TIMEOUT);
+
+    // client1 modifies object1
+    object1X.getContents().add(getModel1Factory().createCompany());
+
+    // client2 modifies object2
+    CDOSession client2 = openSession();
+    CDOTransaction transaction2 = client2.openTransaction();
+    CDOResource object2Y = transaction2.getResource(getResourcePath("/object2"));
+    object2Y.getContents().add(getModel1Factory().createPurchaseOrder());
+
+    // client2 commits
+    transaction2.commit();
+
+    // client1 rolls back to save point
+    savepoint.rollback();
+
+    // CDORepositoryInfo: object1 not modified, object2 is modified
+    CDOSession client3 = openSession();
+    CDOView view = client3.openView();
+    CDOResource object1Test = view.getResource(getResourcePath("/object1"));
+    assertEquals(0, object1Test.getContents().size());
+    CDOResource object2Test = view.getResource(getResourcePath("/object2"));
+    assertEquals(1, object2Test.getContents().size());
+
+    // client1: same as repository
+    assertEquals(object1Test.getContents().size(), object1X.getContents().size());
+    assertEquals(object2Test.getContents().size(), object2X.getContents().size());
+
+    // client2: same as repository
+    CDOResource object1Y = transaction2.getResource(getResourcePath("/object1"));
+    assertEquals(object1Test.getContents().size(), object1Y.getContents().size());
+    assertEquals(object2Test.getContents().size(), object2Y.getContents().size());
+  }
+
   private RetainedSavepointScenario createRetainedSavepointScenario() throws Exception
   {
     CDOSession session = openSession();
@@ -513,45 +635,6 @@ public class SavePointTest extends AbstractCDOTest
     resource.getContents().remove(companyA);
     transaction.setSavepoint();
     return new RetainedSavepointScenario(first, idA, idB, idC);
-  }
-
-  private static void assertPersistentCleanState(Company company, CDOID id, CDOTransaction transaction)
-  {
-    assertClean(company, transaction);
-    assertEquals(id, CDOUtil.getCDOObject(company).cdoID());
-    assertEquals(false, id.isTemporary());
-    assertEquals(transaction, CDOUtil.getCDOObject(company).cdoView());
-    assertNotNull(CDOUtil.getCDOObject(company).cdoRevision());
-  }
-
-  private static void assertNewState(Company company, CDOID id, CDOTransaction transaction)
-  {
-    assertNew(company, transaction);
-    CDOID actualID = CDOUtil.getCDOObject(company).cdoID();
-    assertEquals(id, actualID);
-    assertEquals(id.isTemporary(), actualID.isTemporary());
-    assertEquals(transaction, CDOUtil.getCDOObject(company).cdoView());
-    assertNotNull(CDOUtil.getCDOObject(company).cdoRevision());
-    assertEquals(0, CDOUtil.getCDOObject(company).cdoRevision().getVersion());
-  }
-
-  private static final class RetainedSavepointScenario
-  {
-    private final CDOSavepoint first;
-
-    private final CDOID idA;
-
-    private final CDOID idB;
-
-    private final CDOID idC;
-
-    private RetainedSavepointScenario(CDOSavepoint first, CDOID idA, CDOID idB, CDOID idC)
-    {
-      this.first = first;
-      this.idA = idA;
-      this.idB = idB;
-      this.idC = idC;
-    }
   }
 
   private void flow1(boolean commitBegin, boolean commitEnd) throws Exception
@@ -654,92 +737,45 @@ public class SavePointTest extends AbstractCDOTest
     }
   }
 
-  /**
-   * Compare http://www.eclipse.org/newsportal/article.php?id=41697&group=eclipse.tools.emf#41697
-   *
-   * <pre>
-   * Passive update is enabled.
-   * client1 sets a save point
-   * client1 write locks object1
-   * client1 modifies object1
-   * client2 modifies object2
-   * client2 commits
-   * client1 rolls back to save point
-   * Result:
-   * CDORepositoryInfo: object1 not modified, object2 is modified
-   * client1: same as repository
-   * client2: same as repository
-   * </pre>
-   */
-  public void _testScenario1() throws Exception
+  private static void assertPersistentCleanState(Company company, CDOID id, CDOTransaction transaction)
   {
-    CDOSession client1 = openSession();
-    CDOTransaction transaction1 = client1.openTransaction();
-    CDOResource object1X = transaction1.createResource(getResourcePath("/object1"));
-    CDOResource object2X = transaction1.createResource(getResourcePath("/object2"));
-    transaction1.commit();
+    assertClean(company, transaction);
+    assertEquals(id, CDOUtil.getCDOObject(company).cdoID());
+    assertEquals(false, id.isTemporary());
+    assertEquals(transaction, CDOUtil.getCDOObject(company).cdoView());
+    assertNotNull(CDOUtil.getCDOObject(company).cdoRevision());
+  }
 
-    // client1 sets a save point
-    CDOUserSavepoint savepoint = transaction1.setSavepoint();
-
-    // client1 write locks object1
-    object1X.cdoWriteLock().lock(DEFAULT_TIMEOUT);
-
-    // client1 modifies object1
-    object1X.getContents().add(getModel1Factory().createCompany());
-
-    // client2 modifies object2
-    CDOSession client2 = openSession();
-    CDOTransaction transaction2 = client2.openTransaction();
-    CDOResource object2Y = transaction2.getResource(getResourcePath("/object2"));
-    object2Y.getContents().add(getModel1Factory().createPurchaseOrder());
-
-    // client2 commits
-    transaction2.commit();
-
-    // client1 rolls back to save point
-    savepoint.rollback();
-
-    // CDORepositoryInfo: object1 not modified, object2 is modified
-    CDOSession client3 = openSession();
-    CDOView view = client3.openView();
-    CDOResource object1Test = view.getResource(getResourcePath("/object1"));
-    assertEquals(0, object1Test.getContents().size());
-    CDOResource object2Test = view.getResource(getResourcePath("/object2"));
-    assertEquals(1, object2Test.getContents().size());
-
-    // client1: same as repository
-    assertEquals(object1Test.getContents().size(), object1X.getContents().size());
-    assertEquals(object2Test.getContents().size(), object2X.getContents().size());
-
-    // client2: same as repository
-    CDOResource object1Y = transaction2.getResource(getResourcePath("/object1"));
-    assertEquals(object1Test.getContents().size(), object1Y.getContents().size());
-    assertEquals(object2Test.getContents().size(), object2Y.getContents().size());
+  private static void assertNewState(Company company, CDOID id, CDOTransaction transaction)
+  {
+    assertNew(company, transaction);
+    CDOID actualID = CDOUtil.getCDOObject(company).cdoID();
+    assertEquals(id, actualID);
+    assertEquals(id.isTemporary(), actualID.isTemporary());
+    assertEquals(transaction, CDOUtil.getCDOObject(company).cdoView());
+    assertNotNull(CDOUtil.getCDOObject(company).cdoRevision());
+    assertEquals(0, CDOUtil.getCDOObject(company).cdoRevision().getVersion());
   }
 
   /**
-   * Bug 283131
+   * @author Eike Stepper
    */
-  public void testNotification() throws Exception
+  private static final class RetainedSavepointScenario
   {
-    CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    private final CDOSavepoint first;
 
-    Company company = getModel1Factory().createCompany();
-    resource.getContents().add(company);
-    transaction.commit();
+    private final CDOID idA;
 
-    company.setCity("CITY1");
-    CDOUserSavepoint savePoint1 = transaction.setSavepoint();
+    private final CDOID idB;
 
-    company.setCity("CITY2");
+    private final CDOID idC;
 
-    TestAdapter adapter = new TestAdapter(company);
-
-    savePoint1.rollback();
-    assertEquals("CITY1", company.getCity());
-    adapter.assertNotifications(1);
+    private RetainedSavepointScenario(CDOSavepoint first, CDOID idA, CDOID idB, CDOID idC)
+    {
+      this.first = first;
+      this.idA = idA;
+      this.idB = idB;
+      this.idC = idC;
+    }
   }
 }

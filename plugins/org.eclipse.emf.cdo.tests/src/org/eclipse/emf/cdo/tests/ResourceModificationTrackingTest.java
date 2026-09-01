@@ -216,6 +216,31 @@ public class ResourceModificationTrackingTest extends AbstractCDOTest
     assertEquals(false, resource1.isModified());
   }
 
+  /**
+   * Verifies that partial rollback restores modification tracking per resource,
+   * rather than using one transaction-wide dirty flag.
+   */
+  public void testPartialRollbackPerResource() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resourceA = transaction.createResource(getResourcePath("/my/resourceA"));
+    CDOResource resourceB = transaction.createResource(getResourcePath("/my/resourceB"));
+    resourceA.getContents().add(getModel1Factory().createCompany());
+    resourceB.getContents().add(getModel1Factory().createCompany());
+    transaction.commit();
+
+    resourceA.setTrackingModification(true);
+    resourceB.setTrackingModification(true);
+    resourceA.getContents().add(getModel1Factory().createCompany());
+    CDOSavepoint boundary = transaction.setSavepoint();
+    resourceB.getContents().add(getModel1Factory().createCompany());
+
+    boundary.rollback();
+    assertEquals(true, resourceA.isModified());
+    assertEquals(false, resourceB.isModified());
+  }
+
   public void testResourceModificationTrackingNotification() throws Exception
   {
     CDOSession session = openSession();

@@ -875,7 +875,7 @@ public final class CDOUtil
     {
       CDOTransaction transaction = (CDOTransaction)view;
 
-      Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getLastSavepoint().getRevisionDeltas2();
+      Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getRevisionDeltas();
       return revisionDeltas.get(object.cdoID());
     }
 

@@ -10,8 +10,14 @@ package org.eclipse.emf.cdo.transaction;
 
 /**
  * A closed-nested lifecycle region in a {@link CDOTransaction transaction}.
- * A scope shares the transaction's view, resource set, object identities, and locks. Committing a scope accepts its
- * changes into its outer scope; it never commits to the repository.
+ * <p>
+ * A scope shares its transaction's view, repository session, resource set, object identities, object cache, dirty
+ * state, and locks. Changes made in a scope are immediately visible in the containing transaction and remain part of
+ * its effective state until the scope or an enclosing transaction rolls them back.
+ * <p>
+ * Committing a scope accepts its changes into its outer scope or the root transaction. It never commits to the
+ * repository, assigns permanent IDs, establishes a repository baseline, or starts a repository commit epoch. Only
+ * the root transaction's repository commit persists the effective changes.
  * Scopes belong to the transaction rather than to a thread: they may be opened and completed on different threads.
  * Individual lifecycle operations are atomic; callers that need a larger isolated sequence must use the transaction's
  * existing synchronization mechanism.
@@ -24,7 +30,9 @@ package org.eclipse.emf.cdo.transaction;
 public interface CDOTransactionScope extends CDOTransactionAware, CDORollbackable, AutoCloseable
 {
   /**
-   * Returns the transaction that contains this scope.
+   * Returns the root transaction that contains this scope.
+   *
+   * @return the containing root transaction.
    */
   @Override
   public CDOTransaction getTransaction();
@@ -67,11 +75,20 @@ public interface CDOTransactionScope extends CDOTransactionAware, CDORollbackabl
 
   /**
    * Accepts this scope into its outer scope or root transaction.
+   * <p>
+   * This operation is a nested-scope commit only. It does not persist changes, assign permanent IDs, establish a
+   * repository baseline, or close the root transaction's repository commit epoch. A later root transaction commit is
+   * required for persistence.
+   *
+   * @throws IllegalStateException if this scope is not the current innermost open scope or is already closed.
    */
   public void commit();
 
   /**
-   * Rolls this scope and all of its open child scopes back to the scope boundary.
+   * Rolls this scope and all of its open child scopes back to the state at this scope's beginning.
+   * <p>
+   * Changes made before this scope remain in the containing transaction. The rollback does not affect the repository
+   * commit epoch.
    *
    * @throws IllegalStateException if this scope is already closed.
    */
@@ -79,7 +96,10 @@ public interface CDOTransactionScope extends CDOTransactionAware, CDORollbackabl
   public void rollback();
 
   /**
-   * Rolls this scope back when it is still open. Calling this method after the scope has closed has no effect.
+   * Rolls this scope back when it is still open.
+   * <p>
+   * Calling this method after the scope has closed has no effect. In particular, closing an active scope rolls back
+   * its changes, while closing an already closed scope is idempotent.
    */
   @Override
   public void close();

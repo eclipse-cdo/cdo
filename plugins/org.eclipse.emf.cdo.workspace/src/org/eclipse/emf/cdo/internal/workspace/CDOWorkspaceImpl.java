@@ -102,7 +102,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
-import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -466,14 +465,12 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
         Set<CDOID> changedIDs = new HashSet<>();
 
         InternalCDOTransaction tx = (InternalCDOTransaction)transaction;
-        InternalCDOSavepoint lastSavepoint = tx.getLastSavepoint();
-
         for (InternalCDORevision revision : tx.getCleanRevisions().values())
         {
           CDOID id = revision.getID();
           changedIDs.add(id);
 
-          if (lastSavepoint.getDetachedObject(id) != null)
+          if (tx.getDetachedObjects().containsKey(id))
           {
             if (base.isAddedObject(id))
             {
@@ -484,7 +481,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
               base.registerChangedOrDetachedObject(revision);
             }
           }
-          else if (lastSavepoint.getDirtyObject(id) != null)
+          else if (tx.getDirtyObjects().containsKey(id))
           {
             base.registerChangedOrDetachedObject(revision);
           }

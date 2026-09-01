@@ -1620,7 +1620,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         InternalCDOObject object = getObject(i, false);
         if (object == null)
         {
-          missingIDs.add(i);
+          // A temporary ID can belong to a NEW object that has already been detached. Such an ID
+          // has no repository revision and must not be turned into a load request.
+          if (!i.isTemporary())
+          {
+            missingIDs.add(i);
+          }
         }
 
         return object;

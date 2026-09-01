@@ -44,12 +44,15 @@ public final class TransactionSegment
 
   private final Map<CDOID, CDORevisionDelta> revisionDeltas;
 
+  private TransactionBoundary boundary;
+
   /**
    * Creates an empty segment owned by the given transaction.
    *
    * @param transaction the owning transaction.
+   * @param boundary the associated boundary.
    */
-  public TransactionSegment(InternalCDOTransaction transaction)
+  public TransactionSegment(InternalCDOTransaction transaction, TransactionBoundary boundary)
   {
     detachedObjects = new HashMap<>()
     {
@@ -86,6 +89,13 @@ public final class TransactionSegment
         throw new UnsupportedOperationException();
       }
     };
+
+    this.boundary = boundary;
+  }
+
+  public TransactionBoundary getBoundary()
+  {
+    return boundary;
   }
 
   /**

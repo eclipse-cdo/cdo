@@ -107,6 +107,15 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    */
   public void handleRollback(InternalCDOSavepoint savepoint);
 
+  /**
+   * Restores this transaction to a retained public savepoint without reporting
+   * that the root transaction itself has been rolled back. The transaction
+   * strategy remains responsible for strategy-specific restore behavior.
+   *
+   * @since 4.30
+   */
+  public void rollbackToSavepoint(InternalCDOUserSavepoint savepoint);
+
   public CDOTransactionStrategy getTransactionStrategy();
 
   public void setTransactionStrategy(CDOTransactionStrategy transactionStrategy);

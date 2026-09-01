@@ -70,7 +70,11 @@ public interface CDOUserSavepoint extends CDORollbackable
   public boolean isLast();
 
   /**
-   * Rolls the owning transaction back to this savepoint.
+   * Rolls the owning transaction back to this savepoint while keeping the
+   * owning root transaction active. This restores only the changes made after
+   * this savepoint; it does not perform the lifecycle operation represented by
+   * {@link CDOTransaction#rollback()} and therefore does not finish the root
+   * transaction.
    */
   @Override
   public void rollback();

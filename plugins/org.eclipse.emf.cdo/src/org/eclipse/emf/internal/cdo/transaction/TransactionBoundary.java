@@ -8,10 +8,22 @@
  */
 package org.eclipse.emf.internal.cdo.transaction;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
+
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
+import java.util.IdentityHashMap;
+import java.util.Map;
+
 /**
- * A fixed point in the transaction's linear change history.
+ * A fixed point in the transaction's linear change history. An invisible
+ * boundary can be structurally significant for rollback and scope ownership
+ * while remaining transparent to current-state aggregation. Nested scopes use
+ * such boundaries for rollback; nested rollback discards segments since the
+ * boundary, while nested commit leaves the history in the enclosing repository
+ * commit epoch. Only a root repository commit ends that epoch.
  *
  * @author Eike Stepper
  */
@@ -22,6 +34,16 @@ public final class TransactionBoundary
    * already executing under InternalCDOTransaction.sync(); this class intentionally does not add a second lock.
    */
   private final TransactionSegment segment;
+
+  private final boolean wasDirty;
+
+  /**
+   * The tracked resources that were modified when this fixed point was
+   * created. The map deliberately records only positive state: a partial
+   * rollback clears every currently tracked resource that is not in this
+   * identity set. This keeps history proportional to modified resources.
+   */
+  private final Map<CDOResource, Boolean> modifiedResources = new IdentityHashMap<>();
 
   private TransactionBoundary previous;
 
@@ -38,7 +60,36 @@ public final class TransactionBoundary
   public TransactionBoundary(InternalCDOTransaction transaction, TransactionBoundary previous)
   {
     this.previous = previous;
-    segment = new TransactionSegment(transaction);
+    segment = new TransactionSegment(transaction, this);
+    wasDirty = transaction.isDirty();
+
+    ResourceSet resourceSet = transaction.getResourceSet();
+    if (resourceSet == null)
+    {
+      return;
+    }
+
+    for (Resource resource : resourceSet.getResources())
+    {
+      if (resource instanceof CDOResource)
+      {
+        CDOResource cdoResource = (CDOResource)resource;
+        if (cdoResource.isTrackingModification() && cdoResource.isModified())
+        {
+          modifiedResources.put(cdoResource, Boolean.TRUE);
+        }
+      }
+    }
+  }
+
+  /**
+   * Indicates whether the transaction was dirty when this boundary was
+   * created. Restoration uses this internal history state rather than a
+   * public savepoint handle.
+   */
+  public boolean wasDirty()
+  {
+    return wasDirty;
   }
 
   /**
@@ -89,6 +140,34 @@ public final class TransactionBoundary
   public void setNext(TransactionBoundary next)
   {
     this.next = next;
+  }
+
+  /**
+   * Restores modification tracking to the state captured at this boundary.
+   * This is separate from transaction rollback lifecycle callbacks because a
+   * savepoint or scope rollback is not a root transaction rollback.
+   *
+   * @param transaction the owning transaction.
+   */
+  public void restoreModifiedResources(InternalCDOTransaction transaction)
+  {
+    ResourceSet resourceSet = transaction.getResourceSet();
+    if (resourceSet == null)
+    {
+      return;
+    }
+
+    for (Resource resource : resourceSet.getResources())
+    {
+      if (resource instanceof CDOResource)
+      {
+        CDOResource cdoResource = (CDOResource)resource;
+        if (cdoResource.isTrackingModification())
+        {
+          cdoResource.setModified(modifiedResources.containsKey(cdoResource));
+        }
+      }
+    }
   }
 
   /**

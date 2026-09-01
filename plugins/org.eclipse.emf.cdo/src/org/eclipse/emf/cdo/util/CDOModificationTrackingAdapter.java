@@ -49,7 +49,7 @@ public class CDOModificationTrackingAdapter extends CDOLazyContentAdapter
       @Override
       public void rolledBackTransaction(CDOTransaction transaction)
       {
-        if (!transaction.getLastSavepoint().wasDirty())
+        if (!transaction.isDirty())
         {
           container.setModified(false);
         }

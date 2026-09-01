@@ -30,10 +30,8 @@ import org.eclipse.net4j.util.collection.MultiMap;
 import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
-import org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,26 +57,14 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
 
   private boolean wasDirty;
 
-  public CDOSavepointImpl(InternalCDOTransaction transaction, InternalCDOSavepoint lastSavepoint)
+  public CDOSavepointImpl(InternalCDOTransaction transaction, InternalCDOSavepoint lastSavepoint, TransactionBoundary boundary)
   {
     super(transaction, lastSavepoint);
     this.transaction = transaction;
+    this.boundary = boundary;
 
-    TransactionBoundary previousBoundary = lastSavepoint instanceof CDOSavepointImpl ? ((CDOSavepointImpl)lastSavepoint).boundary : null;
-    boundary = new TransactionBoundary(transaction, previousBoundary);
     boundary.setSavepoint(this);
-
-    if (previousBoundary != null)
-    {
-      previousBoundary.setNext(boundary);
-    }
-
-    wasDirty = transaction.isDirty();
-  }
-
-  TransactionBoundary getBoundary()
-  {
-    return boundary;
+    wasDirty = boundary.wasDirty();
   }
 
   @Override
@@ -87,53 +73,33 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     return (InternalCDOTransaction)super.getTransaction();
   }
 
+  public TransactionBoundary getBoundary()
+  {
+    return boundary;
+  }
+
   @Override
   public InternalCDOSavepoint getFirstSavePoint()
   {
-    return sync().supply(() -> {
-      TransactionBoundary first = boundary;
-
-      while (first.getPrevious() != null)
-      {
-        first = first.getPrevious();
-      }
-
-      return first.getSavepoint();
-    });
+    return (InternalCDOSavepoint)super.getFirstSavePoint();
   }
 
   @Override
   public InternalCDOSavepoint getPreviousSavepoint()
   {
-    return sync().supply(() -> boundary.getPrevious() == null ? null : boundary.getPrevious().getSavepoint());
+    return (InternalCDOSavepoint)super.getPreviousSavepoint();
   }
 
   @Override
   public InternalCDOSavepoint getNextSavepoint()
   {
-    return sync().supply(() -> boundary.getNext() == null ? null : boundary.getNext().getSavepoint());
-  }
-
-  @Override
-  public void setPreviousSavepoint(InternalCDOUserSavepoint previousSavepoint)
-  {
-    super.setPreviousSavepoint(previousSavepoint);
-    boundary.setPrevious(previousSavepoint instanceof CDOSavepointImpl ? ((CDOSavepointImpl)previousSavepoint).boundary : null);
-  }
-
-  @Override
-  public void setNextSavepoint(InternalCDOUserSavepoint nextSavepoint)
-  {
-    super.setNextSavepoint(nextSavepoint);
-    boundary.setNext(nextSavepoint instanceof CDOSavepointImpl ? ((CDOSavepointImpl)nextSavepoint).boundary : null);
+    return (InternalCDOSavepoint)super.getNextSavepoint();
   }
 
   @Override
   public void clear()
   {
-    sync().run(() -> {
-      boundary.getSegment().clear();
-    });
+    sync().run(() -> boundary.getSegment().clear());
   }
 
   @Override
@@ -182,6 +148,15 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public CDOChangeSetData getAllChangeSetData()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> createChangeSetData( //
+          history.aggregateNewObjects(boundary, false), //
+          history.aggregateRevisionDeltas(boundary, false), //
+          history.aggregateDetachedObjects(boundary, false)));
+    }
+
     InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
     return previousSavepoint == null //
         ? createChangeSetData(Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap()) //
@@ -191,34 +166,19 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public CDOChangeSetData getAllChangeSetDataIncludingCurrent()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> createChangeSetData( //
+          history.aggregateNewObjects(boundary, true), //
+          history.aggregateRevisionDeltas(boundary, true), //
+          history.aggregateDetachedObjects(boundary, true)));
+    }
+
     return sync().supply(() -> createChangeSetData( //
         getAllNewObjectsIncludingCurrent(), //
         getAllRevisionDeltasIncludingCurrent(), //
         getAllDetachedObjectsIncludingCurrent()));
-  }
-
-  private CDOChangeSetData createChangeSetData(Map<CDOID, CDOObject> newObjects, Map<CDOID, CDORevisionDelta> revisionDeltas,
-      Map<CDOID, CDOObject> detachedObjects)
-  {
-    List<CDOIDAndVersion> newList = new ArrayList<>(newObjects.size());
-    for (CDOObject object : newObjects.values())
-    {
-      newList.add(object.cdoRevision());
-    }
-
-    List<CDORevisionKey> changedList = new ArrayList<>(revisionDeltas.size());
-    for (CDORevisionDelta delta : revisionDeltas.values())
-    {
-      changedList.add(delta);
-    }
-
-    List<CDOIDAndVersion> detachedList = new ArrayList<>(detachedObjects.size());
-    for (CDOID id : detachedObjects.keySet())
-    {
-      detachedList.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
-    }
-
-    return new CDOChangeSetDataImpl(newList, changedList, detachedList);
   }
 
   @Override
@@ -233,6 +193,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllDirtyObjects()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateDirtyObjects(boundary, false));
+    }
+
     InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
     return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllDirtyObjectsIncludingCurrent();
   }
@@ -240,6 +206,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllDirtyObjectsIncludingCurrent()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateCurrentDirtyObjects());
+    }
+
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null)
       {
@@ -262,6 +234,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllNewObjects()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateNewObjects(boundary, false));
+    }
+
     InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
     return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllNewObjectsIncludingCurrent();
   }
@@ -269,6 +247,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllNewObjectsIncludingCurrent()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateNewObjects(boundary, true));
+    }
+
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null)
       {
@@ -302,6 +286,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDORevision> getAllBaseNewObjects()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateBaseNewObjects(boundary, false));
+    }
+
     InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
     return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllBaseNewObjectsIncludingCurrent();
   }
@@ -309,6 +299,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDORevision> getAllBaseNewObjectsIncludingCurrent()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateBaseNewObjects(boundary, true));
+    }
+
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null)
       {
@@ -331,6 +327,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateRevisionDeltas(boundary, false));
+    }
+
     InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
     return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllRevisionDeltasIncludingCurrent();
   }
@@ -338,6 +340,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltasIncludingCurrent()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateRevisionDeltas(boundary, true));
+    }
+
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null)
       {
@@ -407,6 +415,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllDetachedObjects()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateDetachedObjects(boundary, false));
+    }
+
     InternalCDOSavepoint previousSavepoint = getPreviousSavepoint();
     return previousSavepoint == null ? Collections.emptyMap() : previousSavepoint.getAllDetachedObjectsIncludingCurrent();
   }
@@ -414,6 +428,12 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllDetachedObjectsIncludingCurrent()
   {
+    TransactionHistory history = getTransactionHistory();
+    if (history != null)
+    {
+      return sync().supply(() -> history.aggregateDetachedObjects(boundary, true));
+    }
+
     return sync().supply(() -> {
       if (getPreviousSavepoint() == null && getReattachedObjects().isEmpty())
       {
@@ -565,10 +585,37 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     sync().run(() -> {
       InternalCDOTransaction transaction = getTransaction();
       LifecycleUtil.checkActive(transaction);
-
-      CDOTransactionStrategy transactionStrategy = transaction.getTransactionStrategy();
-      transactionStrategy.rollback(transaction, this);
+      transaction.rollbackToSavepoint(this);
     });
+  }
+
+  private TransactionHistory getTransactionHistory()
+  {
+    return transaction instanceof TransactionHistory ? (TransactionHistory)transaction : null;
+  }
+
+  private CDOChangeSetData createChangeSetData(Map<CDOID, CDOObject> newObjects, Map<CDOID, CDORevisionDelta> revisionDeltas,
+      Map<CDOID, CDOObject> detachedObjects)
+  {
+    List<CDOIDAndVersion> newList = new ArrayList<>(newObjects.size());
+    for (CDOObject object : newObjects.values())
+    {
+      newList.add(object.cdoRevision());
+    }
+
+    List<CDORevisionKey> changedList = new ArrayList<>(revisionDeltas.size());
+    for (CDORevisionDelta delta : revisionDeltas.values())
+    {
+      changedList.add(delta);
+    }
+
+    List<CDOIDAndVersion> detachedList = new ArrayList<>(detachedObjects.size());
+    for (CDOID id : detachedObjects.keySet())
+    {
+      detachedList.add(CDOIDUtil.createIDAndVersion(id, CDOBranchVersion.UNSPECIFIED_VERSION));
+    }
+
+    return new CDOChangeSetDataImpl(newList, changedList, detachedList);
   }
 
   private CriticalSection sync()

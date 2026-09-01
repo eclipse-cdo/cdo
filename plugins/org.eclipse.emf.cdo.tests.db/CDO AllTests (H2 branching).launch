@@ -16,5 +16,5 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.db.AllTestsDBH2Branching"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.tests.db"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms512m&#13;&#10;-Xmx1536m&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=false"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms512m&#13;&#10;-Xmx1536m&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true&#13;&#10;-Dorg.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.enableServerBrowser=false&#13;&#10;-Dcdo.diagnostic=true"/>
 </launchConfiguration>

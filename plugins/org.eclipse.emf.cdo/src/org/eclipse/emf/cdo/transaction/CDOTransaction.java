@@ -216,13 +216,21 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public CDOSavepoint getLastSavepoint();
 
   /**
-   * Opens a scope inside the current innermost scope, if any.
+   * Opens a nested scope inside the current innermost scope, if any.
+   * <p>
+   * The scope shares this transaction's view, object identities, object cache, resource set, dirty state, locks, and
+   * repository session. Its changes are immediately visible in this transaction. Scope completion does not persist
+   * changes; only this root transaction's repository commit does so.
    *
+   * @return the newly opened scope.
    * @since 4.30
    */
   public CDOTransactionScope openScope();
 
   /**
+   * Returns the innermost currently open nested scope, or {@code null} if no scope is open.
+   *
+   * @return the innermost open scope, or {@code null}.
    * @since 4.30
    */
   public CDOTransactionScope getOutermostScope();
@@ -234,7 +242,10 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
 
   /**
    * Returns an immutable outermost-to-innermost snapshot of open scopes.
+   * <p>
+   * The ordering is the scope completion order: only the last scope in the snapshot can be committed directly.
    *
+   * @return an immutable snapshot of the currently open scopes.
    * @since 4.30
    */
   public List<CDOTransactionScope> getScopes();

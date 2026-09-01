@@ -19,13 +19,21 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
+import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionScope;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.event.IListener;
+
 import org.eclipse.emf.spi.cdo.FSMUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Simon McDuff
@@ -35,6 +43,54 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
  */
 public class SavePointTest extends AbstractCDOTest
 {
+  /**
+   * A retained savepoint reverts only a portion of an active transaction. It
+   * must therefore not report the root transaction as finished or invoke the
+   * root rollback handler callback.
+   */
+  public void testRollbackDoesNotFinishRootTransaction() throws Exception
+  {
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(getModel1Package());
+
+    CDOTransaction transaction = session.openTransaction();
+    AtomicInteger finishedEvents = new AtomicInteger();
+    AtomicInteger rollbackCallbacks = new AtomicInteger();
+    IListener listener = event -> {
+      if (event instanceof CDOTransactionFinishedEvent)
+      {
+        finishedEvents.incrementAndGet();
+      }
+    };
+
+    transaction.addListener(listener);
+    transaction.addTransactionHandler(new CDODefaultTransactionHandler()
+    {
+      @Override
+      public void rolledBackTransaction(CDOTransaction transaction)
+      {
+        rollbackCallbacks.incrementAndGet();
+      }
+    });
+
+    CDOResource resource = transaction.createResource(getResourcePath("/testRollbackDoesNotFinishRootTransaction"));
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+
+    CDOUserSavepoint savepoint = transaction.setSavepoint();
+    company.setName("discarded");
+    savepoint.rollback();
+
+    assertEquals(0, finishedEvents.get());
+    assertEquals(0, rollbackCallbacks.get());
+    assertTrue(transaction.isDirty());
+
+    transaction.rollback();
+
+    assertEquals(1, finishedEvents.get());
+    assertEquals(1, rollbackCallbacks.get());
+  }
+
   public void testRollbackWithNewObject_Collection() throws Exception
   {
     CDOSession session = openSession();
@@ -395,6 +451,42 @@ public class SavePointTest extends AbstractCDOTest
     assertEquals(true, data.getChangedObjects().stream().anyMatch(value -> value.getID() == scenario.idA));
     assertEquals(false, data.getChangedObjects().stream().anyMatch(value -> value.getID() == scenario.idB));
     assertEquals(false, data.getDetachedObjects().stream().anyMatch(value -> value.getID() == scenario.idA));
+  }
+
+  public void testAggregationAcrossInvisibleScopeBoundary() throws Exception
+  {
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(getModel1Package());
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/aggregationScope"));
+    Company first = getModel1Factory().createCompany();
+    resource.getContents().add(first);
+    transaction.commit();
+
+    first.setName("p1");
+    InternalCDOSavepoint p1 = (InternalCDOSavepoint)transaction.setSavepoint();
+    Company second = getModel1Factory().createCompany();
+    resource.getContents().add(second);
+    second.setName("s1");
+    CDOTransactionScope scope = transaction.openScope();
+    Company third = getModel1Factory().createCompany();
+    resource.getContents().add(third);
+    InternalCDOSavepoint p2 = (InternalCDOSavepoint)transaction.setSavepoint();
+    Company fourth = getModel1Factory().createCompany();
+    resource.getContents().add(fourth);
+
+    CDOID firstID = CDOUtil.getCDOObject(first).cdoID();
+    CDOID secondID = CDOUtil.getCDOObject(second).cdoID();
+    CDOID thirdID = CDOUtil.getCDOObject(third).cdoID();
+    CDOID fourthID = CDOUtil.getCDOObject(fourth).cdoID();
+    assertTrue(p1.getAllDirtyObjects().containsKey(firstID));
+    assertFalse(p1.getAllDirtyObjects().containsKey(secondID));
+    assertFalse(p1.getAllDirtyObjectsIncludingCurrent().containsKey(secondID));
+    assertTrue(p2.getAllNewObjects().containsKey(thirdID));
+    assertFalse(p2.getAllNewObjects().containsKey(fourthID));
+    assertTrue(p2.getAllNewObjectsIncludingCurrent().containsKey(fourthID));
+    assertTrue(transaction.getNewObjects().containsKey(fourthID));
+    scope.close();
   }
 
   private RetainedSavepointScenario createRetainedSavepointScenario() throws Exception

@@ -35,11 +35,11 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
-import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.transaction.TransactionHistory;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -216,10 +216,10 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
   private void updateTransactionWithResult(Set<CDOObject> conflicts, CDOChangeSet remoteChangeSet, CDOChangeSetData result)
   {
     InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
-    InternalCDOSavepoint savepoint = transaction.getLastSavepoint();
+    TransactionHistory history = (TransactionHistory)transaction;
 
     Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
-    final ObjectsMapUpdater detachedObjectsUpdater = new ObjectsMapUpdater(savepoint.getDetachedObjects());
+    ObjectsMapUpdater detachedObjectsUpdater = new ObjectsMapUpdater(history.getCurrentSegment().getDetachedObjects());
 
     Map<CDOID, CDORevisionDelta> remoteDeltas = getRemoteDeltas(remoteChangeSet);
 
@@ -240,37 +240,25 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
         // Adjust local object
         object.cdoInternalSetRevision(newLocalRevision);
 
-        final InternalCDORevision newCleanRevision = computeNewCleanRevision(remoteDeltas, id, newVersion, cleanRevision);
+        InternalCDORevision newCleanRevision = computeNewCleanRevision(remoteDeltas, id, newVersion, cleanRevision);
 
         // Compute new local delta
         InternalCDORevisionDelta newLocalDelta = newLocalRevision.compare(newCleanRevision);
         if (newLocalDelta.isEmpty())
         {
-          CDOSavepoint currentCDOSavePoint = savepoint;
-          while (currentCDOSavePoint != null)
-          {
-            currentCDOSavePoint.getRevisionDeltas2().remove(id);
-            currentCDOSavePoint.getDirtyObjects().remove(id);
-            currentCDOSavePoint = currentCDOSavePoint.getPreviousSavepoint();
-          }
-
+          history.clearRevisionDeltaAndDirty(id);
           object.cdoInternalSetState(CDOState.CLEAN);
         }
         else
         {
           newLocalDelta.setTarget(null);
-          CDOSavepoint currentCDOSavePoint = savepoint;
-          while (currentCDOSavePoint != null)
-          {
-            currentCDOSavePoint.getRevisionDeltas2().put(id, newLocalDelta);
-            currentCDOSavePoint.getDirtyObjects().put(id, object);
-            currentCDOSavePoint = currentCDOSavePoint.getPreviousSavepoint();
-          }
+          history.setRevisionDeltaAndDirty(id, newLocalDelta, object);
 
           object.cdoInternalSetState(CDOState.DIRTY);
           cleanRevisions.put(object, newCleanRevision);
           updateObjects(newCleanRevision, newLocalDelta, detachedObjectsUpdater);
         }
+
         object.cdoInternalPostLoad();
       }
     }

@@ -46,6 +46,8 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
+import org.eclipse.emf.internal.cdo.transaction.TransactionHistory;
+import org.eclipse.emf.internal.cdo.transaction.TransactionSegment;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
@@ -569,8 +571,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
 
     // Add the object to the set of reattached objects
-    InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
-    lastSavepoint.getReattachedObjects().put(id, object);
+    currentSegment(transaction).getReattachedObjects().put(id, object);
   }
 
   public void dispatchLoadNotification(InternalCDOObject object)
@@ -621,6 +622,23 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     changeState(object, CDOState.CLEAN);
     object.cdoInternalPostLoad();
     dispatchLoadNotification(object);
+  }
+
+  private static TransactionSegment currentSegment(InternalCDOTransaction transaction)
+  {
+    return ((TransactionHistory)transaction).getCurrentSegment();
+  }
+
+  private static void unsetTransactionDirtyIfEmpty(InternalCDOTransaction transaction, Map<CDOID, CDORevisionDelta> revisionDeltas)
+  {
+    if (revisionDeltas.isEmpty() //
+        && transaction.getDirtyObjects().isEmpty() //
+        && transaction.getRevisionDeltas().isEmpty() //
+        && transaction.getNewObjects().isEmpty() //
+        && transaction.getDetachedObjects().isEmpty())
+    {
+      transaction.setDirty(false);
+    }
   }
 
   /**
@@ -816,7 +834,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         object.cdoInternalPostAttach();
         changeState(object, CDOState.NEW);
-        transaction.getLastSavepoint().getReattachedObjects().put(object.cdoID(), object);
+        currentSegment(transaction).getReattachedObjects().put(object.cdoID(), object);
       }
 
       // Bug 385268
@@ -826,10 +844,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     private void processRevisionDeltas(CDOID reattachedObject, InternalCDOTransaction transaction)
     {
+      TransactionSegment currentSegment = currentSegment(transaction);
+      Map<CDOID, CDORevisionDelta> revisionDeltas = currentSegment.getRevisionDeltas();
       Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
-      InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
 
-      Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
       for (Iterator<Map.Entry<CDOID, CDORevisionDelta>> it = revisionDeltas.entrySet().iterator(); it.hasNext();)
       {
         Map.Entry<CDOID, CDORevisionDelta> entry = it.next();
@@ -843,23 +861,20 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           it.remove();
 
           CDOID id = revisionDelta.getID();
-          InternalCDOObject cleanObject = (InternalCDOObject)lastSavepoint.getDirtyObjects().remove(id);
+          InternalCDOObject cleanObject = (InternalCDOObject)currentSegment.getDirtyObjects().remove(id);
           if (cleanObject != null)
           {
-            cleanObject.cdoInternalSetState(CDOState.CLEAN);
+            if (!transaction.getDirtyObjects().containsKey(id) && !transaction.getRevisionDeltas().containsKey(id))
+            {
+              cleanObject.cdoInternalSetState(CDOState.CLEAN);
+            }
+
             cleanRevisions.remove(cleanObject);
           }
         }
       }
 
-      if (!lastSavepoint.wasDirty() //
-          && revisionDeltas.isEmpty() //
-          && transaction.getDirtyObjects().isEmpty() //
-          && transaction.getNewObjects().isEmpty() //
-          && transaction.getDetachedObjects().isEmpty())
-      {
-        transaction.setDirty(false);
-      }
+      unsetTransactionDirtyIfEmpty(transaction, revisionDeltas);
     }
 
     private void processFeatureDeltas(CDOID reattachedObject, Map<EStructuralFeature, CDOFeatureDelta> map)
@@ -989,37 +1004,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     public void execute(InternalCDOObject object, CDOState state, CDOEvent event, InternalCDOTransaction transaction)
     {
       CDOID id = object.cdoID();
-      if (transaction.getLastSavepoint().isNewObject(id))
+      if (transaction.getNewObjects().containsKey(id))
       {
-        // Map<CDOID, CDORevision> attachedRevisions = transaction.options().getAttachedRevisionsMap();
-        // if (attachedRevisions != null)
-        // {
-        // InternalCDORevision revision = (InternalCDORevision)attachedRevisions.get(id);
-        // if (revision != null)
-        // {
-        // CDOID containerID = transaction.provideCDOID(revision.getContainerID());
-        // if (!CDOIDUtil.isNull(containerID) && !attachedRevisions.containsKey(containerID))
-        // {
-        // revision.setContainerID(null);
-        // revision.setContainingFeatureID(0);
-        // }
-        //
-        // CDOID resourceID = revision.getResourceID();
-        // if (!CDOIDUtil.isNull(resourceID) && !attachedRevisions.containsKey(resourceID))
-        // {
-        // revision.setResourceID(null);
-        // }
-        //
-        // object.cdoInternalSetRevision(revision);
-        //
-        // if (object instanceof CDOLegacyWrapper)
-        // {
-        // CDOLegacyWrapper wrapper = (CDOLegacyWrapper)object;
-        // wrapper.cdoInternalPostLoad();
-        // }
-        // }
-        // }
-
         // postDetach() requires the object to be TRANSIENT, but listeners must not be notified at this point!
         CDOState oldState = setStateQuietely(object, CDOState.TRANSIENT);
         object.cdoInternalPostDetach(false, false);
@@ -1154,8 +1140,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           {
             CDOID id = revision.getID();
 
-            InternalCDOSavepoint lastSavepoint = transaction.getLastSavepoint();
-            Map<CDOID, CDORevisionDelta> revisionDeltas = lastSavepoint.getRevisionDeltas2();
+            TransactionSegment currentSegment = currentSegment(transaction);
+            Map<CDOID, CDORevisionDelta> revisionDeltas = currentSegment.getRevisionDeltas();
+
             InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(id);
             if (revisionDelta != null)
             {
@@ -1166,22 +1153,22 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
               {
                 cleanRevisions.remove(object);
                 revisionDeltas.remove(id);
-                lastSavepoint.getDirtyObjects().remove(id);
+                currentSegment.getDirtyObjects().remove(id);
 
-                if (lastSavepoint.getReattachedObjects().remove(id) != null)
+                if (currentSegment.getReattachedObjects().remove(id) != null)
                 {
-                  lastSavepoint.getDetachedObjects().remove(id);
+                  currentSegment.getDetachedObjects().remove(id);
                 }
 
                 object.cdoInternalSetRevision(cleanRevision);
-                changeState(object, CDOState.CLEAN);
+                if (!transaction.getDirtyObjects().containsKey(id) && !transaction.getRevisionDeltas().containsKey(id))
+                {
+                  changeState(object, CDOState.CLEAN);
+                }
               }
             }
 
-            if (revisionDeltas.isEmpty())
-            {
-              transaction.setDirty(false);
-            }
+            unsetTransactionDirtyIfEmpty(transaction, revisionDeltas);
 
             CDOTransactionHandler1[] handlers = transaction.getTransactionHandlers1();
             for (int i = 0; i < handlers.length; i++)

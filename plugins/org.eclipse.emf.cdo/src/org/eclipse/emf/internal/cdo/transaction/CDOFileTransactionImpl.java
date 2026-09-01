@@ -104,24 +104,39 @@ public final class CDOFileTransactionImpl extends DelegatingCDOTransactionImpl i
     }
 
     this.file = file;
+
     boolean delegateWasDirty = delegate.isDirty();
+    boolean initialized = false;
+
     delegate.addTransactionHandler(delegateTransactionHandler);
 
-    if (file.exists())
+    try
     {
-      InputStream in = null;
-      try
+      if (file.exists())
       {
-        in = new FileInputStream(file);
-        delegate.importChanges(in, reconstructSavepoints);
+        InputStream in = null;
+        try
+        {
+          in = new FileInputStream(file);
+          delegate.importChanges(in, reconstructSavepoints);
+        }
+        finally
+        {
+          IOUtil.close(in);
+        }
       }
-      finally
+
+      dirty = delegateWasDirty;
+      initialized = true;
+    }
+    finally
+    {
+      if (!initialized)
       {
-        IOUtil.close(in);
+        delegate.removeTransactionHandler(delegateTransactionHandler);
+        detachDelegateListener();
       }
     }
-
-    dirty = delegateWasDirty;
   }
 
   @Override

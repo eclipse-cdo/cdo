@@ -89,7 +89,7 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
         if (view instanceof InternalCDOTransaction)
         {
           InternalCDOTransaction transaction = (InternalCDOTransaction)view;
-          CDOObject cdoObject = transaction.getLastSavepoint().getDetachedObject(id);
+          CDOObject cdoObject = transaction.getDetachedObjects().get(id);
           return (T)CDOUtil.getEObject(cdoObject);
         }
 
@@ -102,6 +102,7 @@ public class CDOQueryResultIteratorImpl<T> extends AbstractQueryIterator<T>
     {
       Object[] objects = (Object[])object;
       Object[] resolvedObjects = new Object[objects.length];
+
       for (int i = 0; i < objects.length; i++)
       {
         if (objects[i] instanceof CDOID)

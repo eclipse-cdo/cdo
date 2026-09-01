@@ -12,6 +12,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.transaction.CDONestedTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionScope;
 import org.eclipse.emf.cdo.transaction.CDOTransactionScopeClosedEvent;
+import org.eclipse.emf.cdo.transaction.CDOSavepoint;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
@@ -24,9 +25,13 @@ import java.util.concurrent.Callable;
 /**
  * Transaction facade for exactly one open transaction scope.
  * <p>
- * This facade deliberately exposes ordinary view and transaction inspection operations of its real transaction while
- * making every repository commit operation fail. A scope can only be accepted with {@link CDOTransactionScope#commit()}
- * or rolled back with {@link CDOTransactionScope#rollback()}; it cannot manufacture repository commit information.
+ * This facade deliberately exposes ordinary view and transaction inspection operations of its containing root
+ * transaction while making every repository commit operation fail. It therefore shares the root transaction's view,
+ * object identities, object cache, resource set, dirty state, locks, and repository session.
+ * <p>
+ * A scope can only be accepted with {@link CDOTransactionScope#commit()} or rolled back with
+ * {@link CDOTransactionScope#rollback()}; accepting a scope does not persist changes or manufacture repository
+ * commit information.
  *
  * @author Eike Stepper
  * @since 4.30
@@ -121,6 +126,12 @@ public final class CDONestedTransactionImpl extends DelegatingCDOTransactionImpl
   public void rollback()
   {
     scope.rollback();
+  }
+
+  @Override
+  public CDOSavepoint setSavepoint()
+  {
+    throw new UnsupportedOperationException("A nested transaction cannot create a root transaction savepoint");
   }
 
   @Override

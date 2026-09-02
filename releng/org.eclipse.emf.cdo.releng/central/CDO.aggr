@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<aggregator:Aggregation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aggregator="http://www.eclipse.org/cbi/p2repo/2011/aggregator/1.1.0" label="CDO Maven Aggregation" buildRoot="../target/central" packedStrategy="SKIP" type="R" mavenResult="true" versionFormat="MavenRelease" includeSources="true" excludeFeatures="true" includedIUPattern="^(?:org\.eclipse\.net4j(?:\.util|\.tcp|\.db(?:\.(?:jdbc|h2))?)?|org\.eclipse\.emf\.cdo(?:\.(?:common|net4j|server(?:\.(?:net4j|db))?))?)(?:\.source)?$" validateNexusPublishingRequirements="true" validatePOMDependencies="true">
+<aggregator:Aggregation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:aggregator="http://www.eclipse.org/cbi/p2repo/2011/aggregator/1.1.0" label="CDO Maven Aggregation" buildRoot="../target/central" packedStrategy="SKIP" type="R" mavenResult="true" versionFormat="MavenRelease" includeSources="true" excludeFeatures="true" includedIUPattern="^org\.eclipse\.(emf\.cdo|net4j).*$" validateNexusPublishingRequirements="true" validatePOMDependencies="true">
   <validationSets label="CDO">
     <contributions label="CDO">
       <repositories location="https://download.eclipse.org/modeling/emf/cdo/updates/releases/latest" description="cdo-location">
@@ -16,7 +16,7 @@
         <bundles name="org.eclipse.net4j.tcp"/>
         <bundles name="org.eclipse.net4j.util"/>
       </repositories>
-      <mavenMappings namePattern="(org\.eclipse\.(?:net4j(?:\.(?:util|tcp|db(?:\.(?:jdbc|h2))?))?|emf\.cdo(?:\.(?:common|net4j|server(?:\.(?:net4j|db))?))?))" groupId="org.eclipse.cdo" artifactId="$1"/>
+      <mavenMappings namePattern="(org\.eclipse\.(emf\.cdo|net4j).*)" groupId="org.eclipse.cdo" artifactId="$1"/>
       <mavenMappings namePattern=".*" groupId="\$maven-groupId\$" artifactId="\$maven-artifactId\$" versionPattern=".*" versionTemplate="\$maven-version\$"/>
       <mavenDependencyMapping namespacePattern="java\.package" namePattern=".*" groupId="*" artifactId="*" versionRangePattern=".*" versionRangeTemplate="major.minor.micro-qualifier"/>
     </contributions>

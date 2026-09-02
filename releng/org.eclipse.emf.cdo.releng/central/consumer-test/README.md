@@ -14,7 +14,7 @@ consumer target. It writes the generated properties to
 property as an individual Maven `-D` argument before invoking Maven:
 
 ```text
-ant -Dcdo.drop.dir="C:\path\to\drop" -Dwork.dir="C:\path\to\work" -Dmaven.executable=mvn -f ../build.xml consumer-test
+ant -Dcdo.drop.location="C:\path\to\drop" -Dwork.dir="C:\path\to\work" -Dmaven.executable=mvn -f ../build.xml consumer-test
 ```
 
 The Maven executable defaults to `mvn` on `PATH`; set `-Dmaven.executable` to

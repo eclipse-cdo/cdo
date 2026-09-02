@@ -16,8 +16,8 @@
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.ant.internal.launching.remote.InternalAntRunner"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.releng"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.ant.ui.AntClasspathProvider"/>
-    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_TARGETS" value="consumer-test,"/>
+    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_ANT_TARGETS" value="clean-build,"/>
     <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="${workspace_loc:/org.eclipse.emf.cdo.releng/central/build.xml}"/>
-    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-Dwork.dir=&quot;${resource_loc:/org.eclipse.emf.cdo.releng/central}/target/central&quot;&#13;&#10;-Dmaven.executable=&quot;${maven.root}\bin\mvn.cmd&quot;"/>
+    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-Dcdo.drop.location=&quot;${string_prompt:the CDO drop location:https://download.eclipse.org/modeling/emf/cdo/drops/R20260901-1311}&quot;&#13;&#10;-Dwork.dir=&quot;${resource_loc:/org.eclipse.emf.cdo.releng}/target/central&#13;&#10;-Dmaven.executable=&quot;${maven.root}\bin\mvn.cmd&quot;&#13;&#10;-Dcbi.aggregator=${cbi.aggregator}"/>
     <stringAttribute key="process_factory_id" value="org.eclipse.ant.ui.remoteAntProcessFactory"/>
 </launchConfiguration>

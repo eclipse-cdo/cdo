@@ -16,17 +16,21 @@
 	<!-- Override with -Dcbi.aggregator=<path-to-cbiAggrc.exe>. -->
 	<property name="cbi.aggregator" value="cbiAggrc.exe" />
 	<property name="maven.executable" value="mvn" />
+	
 	<!-- VALIDATE_ONLY and DRY_RUN are allowed for every supported build type;
 	     PUBLISH is checked against build-info.xml immediately before upload. -->
 	<property name="publishing.mode" value="VALIDATE_ONLY" />
+	
 	<!-- Identifier of a future Jenkins uploader; empty until Eclipse publishing
 	     infrastructure and credentials are approved. -->
 	<property name="maven.uploader" value="" />
+	
 	<!-- Read-only source cache for Javadoc's Eclipse/EMF classpath. -->
 	<property name="maven.local.repository" location="${user.home}/.m2/repository" />
 	<tstamp>
 		<format property="run.id" pattern="yyyyMMdd-HHmmss-SSS" />
 	</tstamp>
+	
 	<!-- Pass -Dwork.dir=<directory> to retain all generated state there. Jenkins
 	     uses $WORKSPACE/maven-publishing/work; local runs default to target/central. -->
 	<condition property="explicit.work.dir">
@@ -37,6 +41,7 @@
 	<condition property="build.root.option" value="--buildRoot &quot;${work.dir}/repository&quot;" else="">
 		<isset property="explicit.work.dir" />
 	</condition>
+	
 	<!-- Isolated Maven cache copied from the source cache before consumer runs. -->
 	<property name="maven.consumer.repository" location="${work.dir}/maven-local" />
 	<property name="classes.dir" location="${work.dir}/classes" />
@@ -100,11 +105,11 @@
 		<mkdir dir="${configuration.dir}" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="prepare" />
-			<arg value="${cdo.drop.dir}" />
+			<arg value="${cdo.drop.location}" />
 			<arg value="${metadata.file}" />
 			<arg value="${repositories.file}" />
 		</java>
-		<echo message="CDO drop: ${cdo.drop.dir}" />
+		<echo message="CDO drop location: ${cdo.drop.location}" />
 		<echo message="Generated metadata: ${metadata.file}" />
 		<echo message="Resolved validation repositories: ${repositories.file}" />
 	</target>
@@ -114,14 +119,28 @@
 	</target>
 
 	<target name="check-drop">
-		<fail unless="cdo.drop.dir" message="Required property cdo.drop.dir was not supplied. Use -Dcdo.drop.dir=&lt;promoted-drop-directory&gt;." />
-		<available file="${cdo.drop.dir}" type="dir" property="cdo.drop.available" />
-		<fail unless="cdo.drop.available" message="cdo.drop.dir is not a valid directory: ${cdo.drop.dir}" />
+		<fail unless="cdo.drop.location" message="Required property cdo.drop.location was not supplied. Use -Dcdo.drop.location=&lt;local-drop-directory-or-http(s)-drop-url&gt;." />
+		<condition property="cdo.drop.remote">
+			<matches string="${cdo.drop.location}" pattern="(?i)^https?://.+" />
+		</condition>
+		<condition property="cdo.drop.available">
+			<and>
+				<not><isset property="cdo.drop.remote" /></not>
+				<available file="${cdo.drop.location}" type="dir" />
+			</and>
+		</condition>
+		<condition property="cdo.drop.valid">
+			<or>
+				<isset property="cdo.drop.remote" />
+				<isset property="cdo.drop.available" />
+			</or>
+		</condition>
+		<fail unless="cdo.drop.valid" message="cdo.drop.location must be an existing local directory or an HTTP(S) URL: ${cdo.drop.location}" />
 	</target>
 
 	<target name="check-console">
 		<available file="${cbi.aggregator}" property="cbi.console.available" />
-		<fail unless="cbi.console.available" message="Synchronous CBI console executable does not exist: ${cbi.aggregator}" />
+		<fail unless="cbi.console.available" message="Synchronous CBI console executable does not exist: ${cbi.aggregator}. Add -Dcbi.aggregator=&lt;path-to-cbiAggrc.exe&gt; (or put it on PATH)." />
 	</target>
 
 	<target name="execute-validate" depends="check-drop,check-console,load-derived-values">
@@ -182,7 +201,7 @@
 		<fail unless="sources.repository.available" message="Final Maven repository does not exist: ${cdo.maven.repository}" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="sources-javadoc" />
-			<arg value="${cdo.drop.dir}" />
+			<arg value="${cdo.drop.location}" />
 			<arg value="${cdo.maven.repository}" />
 			<arg value="${sources.javadoc.dir}" />
 			<arg value="${maven.local.repository}" />
@@ -230,11 +249,11 @@
 	</target>
 
 	<target name="drop-info" depends="compile-helper">
-		<fail unless="cdo.drop.dir" message="Required property cdo.drop.dir was not supplied." />
+		<fail unless="cdo.drop.location" message="Required property cdo.drop.location was not supplied. Use -Dcdo.drop.location=&lt;local-drop-directory-or-http(s)-drop-url&gt;." />
 		<fail unless="cdo.drop.id" message="Required property cdo.drop.id was not supplied." />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="drop-info" />
-			<arg value="${cdo.drop.dir}" />
+			<arg value="${cdo.drop.location}" />
 			<arg value="${cdo.drop.id}" />
 		</java>
 	</target>

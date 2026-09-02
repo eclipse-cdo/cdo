@@ -21,15 +21,15 @@ The canonical workflow is Ant and can be launched from Eclipse External Tools,
 Windows command line, or later a Unix-like Jenkins agent:
 
 ```text
-ant -Dcdo.drop.dir="C:\path\to\promoted\CDO-drop" -f build.xml validate
-ant -Dcdo.drop.dir="C:\path\to\promoted\CDO-drop" -f build.xml clean-build
+ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -f build.xml validate
+ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -f build.xml clean-build
 ```
 
 The Ant properties/arguments are:
 
-* `cdo.drop.dir` — required. The promoted, unhidden CDO p2 drop containing
-  `build-info.xml` and `tp-macro.setup`. The build fails immediately if the
-  property is omitted or does not name an existing directory.
+* `cdo.drop.location` — required. A promoted, unhidden CDO p2 drop, supplied as
+  either a local directory or an HTTP(S) URL, containing `build-info.xml` and
+  `tp-macro.setup`. Drop resources are read relative to this location.
 * `work.dir` — optional output/work area for metadata, CBI configuration,
   workspace, and repository. If omitted, Jenkins uses `$WORKSPACE/maven-publishing/work`;
   local runs use `central/target/central`.
@@ -148,7 +148,7 @@ The Jenkinsfile has only two job parameters: `PUBLISHING_MODE` and
 `CDO_DROP_ID`. The CBI URL, version, checksum, workspace layout, tool names,
 credential IDs, and uploader setting are deliberately global constants in the
 Jenkinsfile. Local manual runs continue to use
-`-Dcdo.drop.dir=<local-drop>` and `-Dcbi.aggregator=...` through Ant; neither
+`-Dcdo.drop.location=<local-or-http-drop>` and `-Dcbi.aggregator=...` through Ant; neither
 local override is exposed as a Jenkins parameter.
 
 The checked-in `CDO.aggr` model enables the native Maven checks
@@ -187,7 +187,7 @@ the canonical project-specific step and supplies final values from
 For example:
 
 ```text
-ant -Dcdo.drop.dir="C:\path\to\promoted\CDO-drop" -Dwork.dir="C:\path\to\work" -f build.xml clean-build
+ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -Dwork.dir="C:\path\to\work" -f build.xml clean-build
 ```
 
 ## Maven repository output
@@ -320,7 +320,7 @@ dependencies, traceability properties, SCM commit, classifier files, and all
 classifier checksums:
 
 ```text
-ant -Dcdo.drop.dir="C:\path\to\drop" -Dwork.dir="C:\path\to\work" -f build.xml audit
+ant -Dcdo.drop.location="C:\path\to\drop" -Dwork.dir="C:\path\to\work" -f build.xml audit
 ```
 
 The audit writes `maven-central-readiness-audit.txt` and a complete local

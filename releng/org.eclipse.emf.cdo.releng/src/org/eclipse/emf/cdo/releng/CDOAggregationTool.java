@@ -37,6 +37,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.FileSystemException;
@@ -58,6 +61,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.jar.JarOutputStream;
 import java.util.jar.Manifest;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -181,11 +185,9 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("prepare requires drop, metadata, repositories");
       }
 
-      File drop = requireDirectory(args[1], "drop");
-      File buildInfo = requireFile(new File(drop, "build-info.xml"), "build-info.xml");
-      File setup = requireFile(new File(drop, "tp-macro.setup"), "tp-macro.setup");
+      DropLocation drop = DropLocation.parse(args[1]);
 
-      Document info = parse(buildInfo);
+      Document info = parse(drop.open("build-info.xml"), "build-info.xml");
       Element build = info.getDocumentElement();
       if (!"build".equals(build.getNodeName()))
       {
@@ -204,10 +206,10 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("build/@qualifier must not be empty");
       }
 
-      LinkedHashSet<String> repositories = extractRepositories(setup);
+      LinkedHashSet<String> repositories = extractRepositories(drop.open("tp-macro.setup"));
       if (repositories.isEmpty())
       {
-        throw new IllegalArgumentException("No repository locations found in " + setup);
+        throw new IllegalArgumentException("No repository locations found in tp-macro.setup at drop location " + drop.location());
       }
 
       Map<String, String> derived = new LinkedHashMap<>(values);
@@ -488,7 +490,8 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("sources-javadoc requires drop, finalRepository, workDirectory, mavenRepository");
       }
 
-      File dropPlugins = requireDirectory(new File(args[1], "plugins").getPath(), "drop/plugins");
+      DropLocation drop = DropLocation.parse(args[1]);
+      File dropPlugins = drop.materializePlugins(new File(args[3], "drop-plugins"));
       File repository = requireDirectory(args[2], "Maven repository");
       File work = new File(args[3]);
       Files.createDirectories(work.toPath());
@@ -1476,11 +1479,11 @@ public final class CDOAggregationTool
     }
   }
 
-  private static LinkedHashSet<String> extractRepositories(File setup) throws Exception
+  private static LinkedHashSet<String> extractRepositories(InputStream setup) throws Exception
   {
     LinkedHashSet<String> result = new LinkedHashSet<>();
 
-    Document document = parse(setup);
+    Document document = parse(setup, "tp-macro.setup");
     NodeList nodes = document.getElementsByTagNameNS("*", "repository");
 
     for (int i = 0; i < nodes.getLength(); i++)
@@ -1506,13 +1509,13 @@ public final class CDOAggregationTool
   /**
    * This is a legacy correction for a bug in promoter.TPMacroSetup.insertDropRepository(BuildInfo).
    */
-  private static String validationLocation(String url, String dropID, File drop)
+  private static String validationLocation(String url, String dropID, DropLocation drop)
   {
     // See promoter.TPMacroSetup.FIXED_TOKEN
     String FIXED_TOKEN = "https://download.eclipse.org/modeling/emf/cdo/updates";
     String resolved = FIXED_TOKEN.equals(url) ? "https://download.eclipse.org/modeling/emf/cdo/drops/" + dropID : url;
     String promotedDrop = "https://download.eclipse.org/modeling/emf/cdo/drops/" + dropID;
-    return promotedDrop.equals(resolved) ? drop.toURI().toString() : resolved;
+    return promotedDrop.equals(resolved) ? drop.location() : resolved;
   }
 
   private static String required(Element e, String name)
@@ -1549,6 +1552,11 @@ public final class CDOAggregationTool
 
   private static Document parse(File file) throws Exception
   {
+    return parse(new FileInputStream(file), file.getPath());
+  }
+
+  private static Document parse(InputStream in, String label) throws Exception
+  {
     DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
     f.setNamespaceAware(true);
     f.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
@@ -1557,9 +1565,9 @@ public final class CDOAggregationTool
 
     DocumentBuilder b = f.newDocumentBuilder();
 
-    try (InputStream in = new FileInputStream(file))
+    try (InputStream input = in)
     {
-      return b.parse(in);
+      return b.parse(input);
     }
   }
 
@@ -1671,5 +1679,112 @@ public final class CDOAggregationTool
     }
 
     return result;
+  }
+
+  /**
+   * Resolves resources from either a local promoted drop or an HTTP(S) drop.
+   *
+   * @author Eike Stepper
+   */
+  private static final class DropLocation
+  {
+    private final String value;
+
+    private final URI uri;
+
+    public DropLocation(String value, URI uri)
+    {
+      this.value = value;
+      this.uri = uri;
+    }
+
+    public String location()
+    {
+      return value.endsWith("/") ? value : value + "/";
+    }
+
+    public InputStream open(String resource) throws IOException
+    {
+      URI resourceURI = uri.resolve(resource);
+      if ("file".equalsIgnoreCase(resourceURI.getScheme()))
+      {
+        return Files.newInputStream(Path.of(resourceURI));
+      }
+
+      URL url = resourceURI.toURL();
+      HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+      connection.setConnectTimeout(30000);
+      connection.setReadTimeout(30000);
+      connection.setInstanceFollowRedirects(true);
+      if (connection.getResponseCode() >= 400)
+      {
+        throw new IOException("Unable to read drop resource " + resourceURI + ": HTTP " + connection.getResponseCode());
+      }
+
+      return connection.getInputStream();
+    }
+
+    public File materializePlugins(File target) throws IOException
+    {
+      if ("file".equalsIgnoreCase(uri.getScheme()))
+      {
+        return requireDirectory(Path.of(uri).resolve("plugins").toString(), "drop/plugins");
+      }
+
+      Files.createDirectories(target.toPath());
+      String listing;
+      try (InputStream in = open("plugins/"))
+      {
+        listing = new String(in.readAllBytes(), StandardCharsets.UTF_8);
+      }
+
+      Pattern href = Pattern.compile("href=[\\\"']([^\\\"']+\\.jar)[\\\"']", Pattern.CASE_INSENSITIVE);
+      Matcher matcher = href.matcher(listing);
+      int downloaded = 0;
+      while (matcher.find())
+      {
+        String name = matcher.group(1);
+        int slash = name.lastIndexOf('/');
+        name = slash < 0 ? name : name.substring(slash + 1);
+        String fileName = name;
+        boolean needed = BUNDLES.stream().anyMatch(bundle -> fileName.startsWith(bundle + "-") || fileName.startsWith(bundle + "_")
+            || fileName.startsWith(bundle + ".source") || fileName.startsWith(bundle + "_source"));
+        if (!needed)
+        {
+          continue;
+        }
+
+        Path destination = target.toPath().resolve(name);
+        try (InputStream in = open("plugins/" + name))
+        {
+          Files.copy(in, destination, StandardCopyOption.REPLACE_EXISTING);
+        }
+        downloaded++;
+      }
+
+      if (downloaded == 0)
+      {
+        throw new IOException(
+            "No required plugin JARs were found at " + uri.resolve("plugins/") + "; verify that the drop URL exposes a browsable plugins directory");
+      }
+
+      return target;
+    }
+
+    public static DropLocation parse(String value)
+    {
+      if (value == null || value.isBlank())
+      {
+        throw new IllegalArgumentException("Drop location is empty; supply a local directory or an HTTP(S) drop URL");
+      }
+
+      if (value.matches("(?i)^https?://.+"))
+      {
+        return new DropLocation(value, URI.create(value.endsWith("/") ? value : value + "/"));
+      }
+
+      File directory = requireDirectory(value, "drop");
+      return new DropLocation(directory.toURI().toString(), directory.toURI());
+    }
   }
 }

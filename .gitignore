@@ -11,3 +11,4 @@ Copy of *.launch
 com.chronon.sb.browser.launcher.prefs
 .DS_Store
 .tycho-consumer-pom.xml
+AGENTS.override.md

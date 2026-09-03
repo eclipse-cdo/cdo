@@ -26,7 +26,7 @@
 
   <groupId>org.eclipse.cdo.features</groupId>
   <artifactId>org.eclipse.emf.cdo.examples.installer</artifactId>
-  <version>4.4.10-SNAPSHOT</version>
+  <version>4.4.11-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

@@ -836,6 +836,12 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
 
   protected IScenario getDefaultScenario()
   {
+    IScenario externalScenario = Scenario.createFromProperties();
+    if (externalScenario != null)
+    {
+      return externalScenario;
+    }
+
     IScenario scenario;
 
     try

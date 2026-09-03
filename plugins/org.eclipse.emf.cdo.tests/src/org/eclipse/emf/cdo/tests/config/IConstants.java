@@ -24,6 +24,19 @@ import org.eclipse.emf.cdo.tests.config.impl.SessionConfig.Net4j;
  */
 public interface IConstants
 {
+  /**
+   * Names of the external system properties used to select a CDO test scenario. The complete scenario property is
+   * mutually exclusive with the repository, session, and model component properties; the component form requires all
+   * three component properties.
+   */
+  public static final String TEST_SCENARIO_PROPERTY = "cdo.test.scenario";
+
+  public static final String TEST_REPOSITORY_PROPERTY = "cdo.test.repository";
+
+  public static final String TEST_SESSION_PROPERTY = "cdo.test.session";
+
+  public static final String TEST_MODEL_PROPERTY = "cdo.test.model";
+
   public static final RepositoryConfig MEM = new MEMConfig();
 
   public static final RepositoryConfig MEM_AUDITS = new MEMConfig().supportingAudits(true);

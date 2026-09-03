@@ -24,7 +24,7 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
   <artifactId>org.eclipse.emf.cdo.tests</artifactId>
-  <version>4.2.10-SNAPSHOT</version>
+  <version>4.2.11-SNAPSHOT</version>
   <packaging>eclipse-test-plugin</packaging>
 
 </project>

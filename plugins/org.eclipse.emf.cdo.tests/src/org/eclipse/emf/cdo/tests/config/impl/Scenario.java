@@ -30,6 +30,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.MessageFormat;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -38,6 +39,12 @@ import java.util.Set;
 public class Scenario implements IScenario
 {
   public static final String STATE_FILE = "cdo_config_test.state";
+
+  private static final String[] SCENARIO_PROPERTIES = { //
+      IConstants.TEST_SCENARIO_PROPERTY, //
+      IConstants.TEST_REPOSITORY_PROPERTY, //
+      IConstants.TEST_SESSION_PROPERTY, //
+      IConstants.TEST_MODEL_PROPERTY };
 
   private static final long serialVersionUID = 1L;
 
@@ -331,6 +338,187 @@ public class Scenario implements IScenario
     }
 
     return null;
+  }
+
+  /**
+   * Creates a scenario from the externally supplied test configuration properties.
+   * <p>
+   * The complete scenario property takes precedence over the component properties, but mixing the two forms is
+   * rejected. A {@code null} result means that no external override was supplied and allows callers to retain the
+   * serialized-scenario fallback.
+   *
+   * @return the externally configured scenario, or {@code null} if no override is configured.
+   * @throws IllegalArgumentException if the properties are incomplete, mixed, or name an unknown configuration.
+   */
+  public static IScenario createFromProperties()
+  {
+    String scenarioName = getProperty(IConstants.TEST_SCENARIO_PROPERTY);
+    String repositoryName = getProperty(IConstants.TEST_REPOSITORY_PROPERTY);
+    String sessionName = getProperty(IConstants.TEST_SESSION_PROPERTY);
+    String modelName = getProperty(IConstants.TEST_MODEL_PROPERTY);
+
+    if (scenarioName != null)
+    {
+      if (repositoryName != null || sessionName != null || modelName != null)
+      {
+        throw new IllegalArgumentException("Property " + IConstants.TEST_SCENARIO_PROPERTY + " must not be combined with " + IConstants.TEST_REPOSITORY_PROPERTY
+            + ", " + IConstants.TEST_SESSION_PROPERTY + ", or " + IConstants.TEST_MODEL_PROPERTY);
+      }
+
+      return createScenario(scenarioName);
+    }
+
+    boolean hasRepository = repositoryName != null;
+    boolean hasSession = sessionName != null;
+    boolean hasModel = modelName != null;
+    if (!hasRepository && !hasSession && !hasModel)
+    {
+      return null;
+    }
+
+    if (!hasRepository || !hasSession || !hasModel)
+    {
+      throw new IllegalArgumentException("Properties " + String.join(", ", SCENARIO_PROPERTIES) + " require either " + IConstants.TEST_SCENARIO_PROPERTY
+          + " alone or all three component properties");
+    }
+
+    return new Scenario(createRepository(repositoryName), createSession(sessionName), createModel(modelName));
+  }
+
+  private static String getProperty(String name)
+  {
+    return System.getProperty(name);
+  }
+
+  private static IScenario createScenario(String name)
+  {
+    switch (normalize(name))
+    {
+    case "MEM_JVM_NATIVE":
+      return new Scenario(IConstants.MEM, IConstants.JVM, IConstants.NATIVE);
+    case "MEM_AUDITS_JVM_NATIVE":
+      return new Scenario(IConstants.MEM_AUDITS, IConstants.JVM, IConstants.NATIVE);
+    case "MEM_BRANCHES_JVM_NATIVE":
+      return new Scenario(IConstants.MEM_BRANCHES, IConstants.JVM, IConstants.NATIVE);
+    case "MEM_BRANCHES_UUIDS_JVM_NATIVE":
+      return new Scenario(IConstants.MEM_BRANCHES_UUIDS, IConstants.JVM, IConstants.NATIVE);
+    case "MEM_OFFLINE_JVM_NATIVE":
+      return new Scenario(IConstants.MEM_OFFLINE, IConstants.JVM, IConstants.NATIVE);
+    case "MEM_EMBEDDED_BRANCHES_EMBEDDED_NATIVE":
+      return new Scenario(IConstants.MEM_EMBEDDED_BRANCHES, IConstants.EMBEDDED, IConstants.NATIVE);
+    case "MEM_JVM_LEGACY":
+      return new Scenario(IConstants.MEM, IConstants.JVM, IConstants.LEGACY);
+    case "MEM_AUDITS_JVM_LEGACY":
+      return new Scenario(IConstants.MEM_AUDITS, IConstants.JVM, IConstants.LEGACY);
+    case "MEM_BRANCHES_JVM_LEGACY":
+      return new Scenario(IConstants.MEM_BRANCHES, IConstants.JVM, IConstants.LEGACY);
+    case "MEM_BRANCHES_TCP_NATIVE":
+      return new Scenario(IConstants.MEM_BRANCHES, IConstants.TCP, IConstants.NATIVE);
+    case "MEM_BRANCHES_SSL_NATIVE":
+      return new Scenario(IConstants.MEM_BRANCHES, IConstants.SSL, IConstants.NATIVE);
+    case "MEM_WS_NATIVE":
+      return new Scenario(IConstants.MEM, IConstants.WS, IConstants.NATIVE);
+    case "MEM_AUDITS_WS_NATIVE":
+      return new Scenario(IConstants.MEM_AUDITS, IConstants.WS, IConstants.NATIVE);
+    case "MEM_BRANCHES_WS_NATIVE":
+      return new Scenario(IConstants.MEM_BRANCHES, IConstants.WS, IConstants.NATIVE);
+    case "MEM_BRANCHES_UUIDS_WS_NATIVE":
+      return new Scenario(IConstants.MEM_BRANCHES_UUIDS, IConstants.WS, IConstants.NATIVE);
+    case "MEM_WSS_NATIVE":
+      return new Scenario(IConstants.MEM, IConstants.WSS, IConstants.NATIVE);
+    case "MEM_AUDITS_WSS_NATIVE":
+      return new Scenario(IConstants.MEM_AUDITS, IConstants.WSS, IConstants.NATIVE);
+    case "MEM_BRANCHES_WSS_NATIVE":
+      return new Scenario(IConstants.MEM_BRANCHES, IConstants.WSS, IConstants.NATIVE);
+    case "MEM_BRANCHES_UUIDS_WSS_NATIVE":
+      return new Scenario(IConstants.MEM_BRANCHES_UUIDS, IConstants.WSS, IConstants.NATIVE);
+    case "MEM_WS_LEGACY":
+      return new Scenario(IConstants.MEM, IConstants.WS, IConstants.LEGACY);
+    case "MEM_AUDITS_WS_LEGACY":
+      return new Scenario(IConstants.MEM_AUDITS, IConstants.WS, IConstants.LEGACY);
+    case "MEM_BRANCHES_WS_LEGACY":
+      return new Scenario(IConstants.MEM_BRANCHES, IConstants.WS, IConstants.LEGACY);
+    case "MEM_WSS_LEGACY":
+      return new Scenario(IConstants.MEM, IConstants.WSS, IConstants.LEGACY);
+    case "MEM_AUDITS_WSS_LEGACY":
+      return new Scenario(IConstants.MEM_AUDITS, IConstants.WSS, IConstants.LEGACY);
+    case "MEM_BRANCHES_WSS_LEGACY":
+      return new Scenario(IConstants.MEM_BRANCHES, IConstants.WSS, IConstants.LEGACY);
+    default:
+      throw unknown(IConstants.TEST_SCENARIO_PROPERTY, name,
+          "MEM_JVM_NATIVE, MEM_AUDITS_JVM_NATIVE, MEM_BRANCHES_JVM_NATIVE, MEM_BRANCHES_UUIDS_JVM_NATIVE, "
+              + "MEM_OFFLINE_JVM_NATIVE, MEM_EMBEDDED_BRANCHES_EMBEDDED_NATIVE, MEM_JVM_LEGACY, "
+              + "MEM_AUDITS_JVM_LEGACY, MEM_BRANCHES_JVM_LEGACY, MEM_BRANCHES_TCP_NATIVE, "
+              + "MEM_BRANCHES_SSL_NATIVE, MEM_WS_NATIVE, MEM_AUDITS_WS_NATIVE, MEM_BRANCHES_WS_NATIVE, "
+              + "MEM_BRANCHES_UUIDS_WS_NATIVE, MEM_WSS_NATIVE, MEM_AUDITS_WSS_NATIVE, MEM_BRANCHES_WSS_NATIVE, "
+              + "MEM_BRANCHES_UUIDS_WSS_NATIVE, MEM_WS_LEGACY, MEM_AUDITS_WS_LEGACY, MEM_BRANCHES_WS_LEGACY, "
+              + "MEM_WSS_LEGACY, MEM_AUDITS_WSS_LEGACY, MEM_BRANCHES_WSS_LEGACY");
+    }
+  }
+
+  private static IRepositoryConfig createRepository(String name)
+  {
+    switch (normalize(name))
+    {
+    case "MEM":
+      return IConstants.MEM;
+    case "MEM_AUDITS":
+      return IConstants.MEM_AUDITS;
+    case "MEM_BRANCHES":
+      return IConstants.MEM_BRANCHES;
+    case "MEM_BRANCHES_UUIDS":
+      return IConstants.MEM_BRANCHES_UUIDS;
+    case "MEM_OFFLINE":
+      return IConstants.MEM_OFFLINE;
+    case "MEM_EMBEDDED_BRANCHES":
+      return IConstants.MEM_EMBEDDED_BRANCHES;
+    default:
+      throw unknown(IConstants.TEST_REPOSITORY_PROPERTY, name, "MEM, MEM_AUDITS, MEM_BRANCHES, MEM_BRANCHES_UUIDS, MEM_OFFLINE, MEM_EMBEDDED_BRANCHES");
+    }
+  }
+
+  private static ISessionConfig createSession(String name)
+  {
+    switch (normalize(name))
+    {
+    case "EMBEDDED":
+      return IConstants.EMBEDDED;
+    case "JVM":
+      return IConstants.JVM;
+    case "TCP":
+      return IConstants.TCP;
+    case "SSL":
+      return IConstants.SSL;
+    case "WS":
+      return IConstants.WS;
+    case "WSS":
+      return IConstants.WSS;
+    default:
+      throw unknown(IConstants.TEST_SESSION_PROPERTY, name, "EMBEDDED, JVM, TCP, SSL, WS, WSS");
+    }
+  }
+
+  private static IModelConfig createModel(String name)
+  {
+    switch (normalize(name))
+    {
+    case "NATIVE":
+      return IConstants.NATIVE;
+    case "LEGACY":
+      return IConstants.LEGACY;
+    default:
+      throw unknown(IConstants.TEST_MODEL_PROPERTY, name, "NATIVE, LEGACY");
+    }
+  }
+
+  private static String normalize(String value)
+  {
+    return value.trim().toUpperCase(Locale.ROOT).replace('-', '_');
+  }
+
+  private static IllegalArgumentException unknown(String property, String value, String accepted)
+  {
+    return new IllegalArgumentException("Unknown value '" + value + "' for " + property + ". Accepted values: " + accepted);
   }
 
   public static File getStateFile()

@@ -14,6 +14,29 @@
 
 <plugin>
 
+  <extension point="org.eclipse.net4j.util.productGroups">
+    <productGroup id="org.eclipse.emf.cdo.tests.repositoryConfigs" name="Repository Configurations"/>
+    <productGroup id="org.eclipse.emf.cdo.tests.sessionConfigs" name="Session Configurations"/>
+    <productGroup id="org.eclipse.emf.cdo.tests.modelConfigs" name="Model Configurations"/>
+  </extension>
+
+  <extension point="org.eclipse.net4j.util.factories">
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_AUDITS" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_AUDITS"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_BRANCHES" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_BRANCHES"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_BRANCHES_UUIDS" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_BRANCHES_UUIDS"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_OFFLINE" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_OFFLINE"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_EMBEDDED_BRANCHES" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_EMBEDDED_BRANCHES"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.sessionConfigs" type="EMBEDDED" class="org.eclipse.emf.cdo.tests.config.IConstants" name="EMBEDDED"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.sessionConfigs" type="JVM" class="org.eclipse.emf.cdo.tests.config.IConstants" name="JVM"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.sessionConfigs" type="TCP" class="org.eclipse.emf.cdo.tests.config.IConstants" name="TCP"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.sessionConfigs" type="SSL" class="org.eclipse.emf.cdo.tests.config.IConstants" name="SSL"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.sessionConfigs" type="WS" class="org.eclipse.emf.cdo.tests.config.IConstants" name="WS"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.sessionConfigs" type="WSS" class="org.eclipse.emf.cdo.tests.config.IConstants" name="WSS"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.modelConfigs" type="NATIVE" class="org.eclipse.emf.cdo.tests.config.IConstants" name="NATIVE"/>
+    <constantFactory productGroup="org.eclipse.emf.cdo.tests.modelConfigs" type="LEGACY" class="org.eclipse.emf.cdo.tests.config.IConstants" name="LEGACY"/>
+  </extension>
+
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
        uri = "http://www.fernuni-hagen.de/ST/dummy/base.ecore" 

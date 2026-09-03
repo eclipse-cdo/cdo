@@ -17,20 +17,24 @@ import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
+import org.eclipse.emf.cdo.tests.bundle.OM;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CaseInsensitiveStringSet;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.util.StringUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -392,133 +396,115 @@ public class Scenario implements IScenario
 
   private static IScenario createScenario(String name)
   {
-    switch (normalize(name))
+    String[] parts = split(name, '/', IConstants.TEST_SCENARIO_PROPERTY, true);
+    if (parts.length != 3)
     {
-    case "MEM_JVM_NATIVE":
-      return new Scenario(IConstants.MEM, IConstants.JVM, IConstants.NATIVE);
-    case "MEM_AUDITS_JVM_NATIVE":
-      return new Scenario(IConstants.MEM_AUDITS, IConstants.JVM, IConstants.NATIVE);
-    case "MEM_BRANCHES_JVM_NATIVE":
-      return new Scenario(IConstants.MEM_BRANCHES, IConstants.JVM, IConstants.NATIVE);
-    case "MEM_BRANCHES_UUIDS_JVM_NATIVE":
-      return new Scenario(IConstants.MEM_BRANCHES_UUIDS, IConstants.JVM, IConstants.NATIVE);
-    case "MEM_OFFLINE_JVM_NATIVE":
-      return new Scenario(IConstants.MEM_OFFLINE, IConstants.JVM, IConstants.NATIVE);
-    case "MEM_EMBEDDED_BRANCHES_EMBEDDED_NATIVE":
-      return new Scenario(IConstants.MEM_EMBEDDED_BRANCHES, IConstants.EMBEDDED, IConstants.NATIVE);
-    case "MEM_JVM_LEGACY":
-      return new Scenario(IConstants.MEM, IConstants.JVM, IConstants.LEGACY);
-    case "MEM_AUDITS_JVM_LEGACY":
-      return new Scenario(IConstants.MEM_AUDITS, IConstants.JVM, IConstants.LEGACY);
-    case "MEM_BRANCHES_JVM_LEGACY":
-      return new Scenario(IConstants.MEM_BRANCHES, IConstants.JVM, IConstants.LEGACY);
-    case "MEM_BRANCHES_TCP_NATIVE":
-      return new Scenario(IConstants.MEM_BRANCHES, IConstants.TCP, IConstants.NATIVE);
-    case "MEM_BRANCHES_SSL_NATIVE":
-      return new Scenario(IConstants.MEM_BRANCHES, IConstants.SSL, IConstants.NATIVE);
-    case "MEM_WS_NATIVE":
-      return new Scenario(IConstants.MEM, IConstants.WS, IConstants.NATIVE);
-    case "MEM_AUDITS_WS_NATIVE":
-      return new Scenario(IConstants.MEM_AUDITS, IConstants.WS, IConstants.NATIVE);
-    case "MEM_BRANCHES_WS_NATIVE":
-      return new Scenario(IConstants.MEM_BRANCHES, IConstants.WS, IConstants.NATIVE);
-    case "MEM_BRANCHES_UUIDS_WS_NATIVE":
-      return new Scenario(IConstants.MEM_BRANCHES_UUIDS, IConstants.WS, IConstants.NATIVE);
-    case "MEM_WSS_NATIVE":
-      return new Scenario(IConstants.MEM, IConstants.WSS, IConstants.NATIVE);
-    case "MEM_AUDITS_WSS_NATIVE":
-      return new Scenario(IConstants.MEM_AUDITS, IConstants.WSS, IConstants.NATIVE);
-    case "MEM_BRANCHES_WSS_NATIVE":
-      return new Scenario(IConstants.MEM_BRANCHES, IConstants.WSS, IConstants.NATIVE);
-    case "MEM_BRANCHES_UUIDS_WSS_NATIVE":
-      return new Scenario(IConstants.MEM_BRANCHES_UUIDS, IConstants.WSS, IConstants.NATIVE);
-    case "MEM_WS_LEGACY":
-      return new Scenario(IConstants.MEM, IConstants.WS, IConstants.LEGACY);
-    case "MEM_AUDITS_WS_LEGACY":
-      return new Scenario(IConstants.MEM_AUDITS, IConstants.WS, IConstants.LEGACY);
-    case "MEM_BRANCHES_WS_LEGACY":
-      return new Scenario(IConstants.MEM_BRANCHES, IConstants.WS, IConstants.LEGACY);
-    case "MEM_WSS_LEGACY":
-      return new Scenario(IConstants.MEM, IConstants.WSS, IConstants.LEGACY);
-    case "MEM_AUDITS_WSS_LEGACY":
-      return new Scenario(IConstants.MEM_AUDITS, IConstants.WSS, IConstants.LEGACY);
-    case "MEM_BRANCHES_WSS_LEGACY":
-      return new Scenario(IConstants.MEM_BRANCHES, IConstants.WSS, IConstants.LEGACY);
-    default:
-      throw unknown(IConstants.TEST_SCENARIO_PROPERTY, name,
-          "MEM_JVM_NATIVE, MEM_AUDITS_JVM_NATIVE, MEM_BRANCHES_JVM_NATIVE, MEM_BRANCHES_UUIDS_JVM_NATIVE, "
-              + "MEM_OFFLINE_JVM_NATIVE, MEM_EMBEDDED_BRANCHES_EMBEDDED_NATIVE, MEM_JVM_LEGACY, "
-              + "MEM_AUDITS_JVM_LEGACY, MEM_BRANCHES_JVM_LEGACY, MEM_BRANCHES_TCP_NATIVE, "
-              + "MEM_BRANCHES_SSL_NATIVE, MEM_WS_NATIVE, MEM_AUDITS_WS_NATIVE, MEM_BRANCHES_WS_NATIVE, "
-              + "MEM_BRANCHES_UUIDS_WS_NATIVE, MEM_WSS_NATIVE, MEM_AUDITS_WSS_NATIVE, MEM_BRANCHES_WSS_NATIVE, "
-              + "MEM_BRANCHES_UUIDS_WSS_NATIVE, MEM_WS_LEGACY, MEM_AUDITS_WS_LEGACY, MEM_BRANCHES_WS_LEGACY, "
-              + "MEM_WSS_LEGACY, MEM_AUDITS_WSS_LEGACY, MEM_BRANCHES_WSS_LEGACY");
+      throw new IllegalArgumentException("Property " + IConstants.TEST_SCENARIO_PROPERTY + " must contain exactly three components separated by '/'");
     }
+
+    return new Scenario(createRepository(parts[0]), createSession(parts[1]), createModel(parts[2]));
   }
 
   private static IRepositoryConfig createRepository(String name)
   {
-    switch (normalize(name))
-    {
-    case "MEM":
-      return IConstants.MEM;
-    case "MEM_AUDITS":
-      return IConstants.MEM_AUDITS;
-    case "MEM_BRANCHES":
-      return IConstants.MEM_BRANCHES;
-    case "MEM_BRANCHES_UUIDS":
-      return IConstants.MEM_BRANCHES_UUIDS;
-    case "MEM_OFFLINE":
-      return IConstants.MEM_OFFLINE;
-    case "MEM_EMBEDDED_BRANCHES":
-      return IConstants.MEM_EMBEDDED_BRANCHES;
-    default:
-      throw unknown(IConstants.TEST_REPOSITORY_PROPERTY, name, "MEM, MEM_AUDITS, MEM_BRANCHES, MEM_BRANCHES_UUIDS, MEM_OFFLINE, MEM_EMBEDDED_BRANCHES");
-    }
+    return create(IConstants.REPOSITORY_CONFIGS, name, IRepositoryConfig.class, IConstants.TEST_REPOSITORY_PROPERTY);
   }
 
   private static ISessionConfig createSession(String name)
   {
-    switch (normalize(name))
-    {
-    case "EMBEDDED":
-      return IConstants.EMBEDDED;
-    case "JVM":
-      return IConstants.JVM;
-    case "TCP":
-      return IConstants.TCP;
-    case "SSL":
-      return IConstants.SSL;
-    case "WS":
-      return IConstants.WS;
-    case "WSS":
-      return IConstants.WSS;
-    default:
-      throw unknown(IConstants.TEST_SESSION_PROPERTY, name, "EMBEDDED, JVM, TCP, SSL, WS, WSS");
-    }
+    return create(IConstants.SESSION_CONFIGS, name, ISessionConfig.class, IConstants.TEST_SESSION_PROPERTY);
   }
 
   private static IModelConfig createModel(String name)
   {
-    switch (normalize(name))
+    return create(IConstants.MODEL_CONFIGS, name, IModelConfig.class, IConstants.TEST_MODEL_PROPERTY);
+  }
+
+  private static <T> T create(String productGroup, String specification, Class<T> productType, String property)
+  {
+    prepareStandaloneFactories();
+    String[] parts = split(specification, ':', property, true);
+    if (parts.length > 2 || parts[0].length() == 0)
     {
-    case "NATIVE":
-      return IConstants.NATIVE;
-    case "LEGACY":
-      return IConstants.LEGACY;
-    default:
-      throw unknown(IConstants.TEST_MODEL_PROPERTY, name, "NATIVE, LEGACY");
+      throw new IllegalArgumentException("Malformed configuration specification '" + specification + "' for " + property);
+    }
+
+    String type = parts[0];
+    String description = parts.length == 2 ? parts[1] : null;
+    try
+    {
+      T result = IPluginContainer.INSTANCE.getElementOrNull(productGroup, type, description);
+      if (result == null || !productType.isInstance(result))
+      {
+        throw new IllegalArgumentException("Unknown factory type '" + type + "' for " + property);
+      }
+
+      return result;
+    }
+    catch (ProductCreationException ex)
+    {
+      throw new IllegalArgumentException("Could not create configuration '" + specification + "' for " + property, ex);
     }
   }
 
-  private static String normalize(String value)
+  private static boolean standaloneFactoriesPrepared;
+
+  private static synchronized void prepareStandaloneFactories()
   {
-    return value.trim().toUpperCase(Locale.ROOT).replace('-', '_');
+    if (!OMPlatform.INSTANCE.isExtensionRegistryAvailable() && !standaloneFactoriesPrepared)
+    {
+      OM.BUNDLE.prepareContainer(IPluginContainer.INSTANCE);
+      standaloneFactoriesPrepared = true;
+    }
   }
 
-  private static IllegalArgumentException unknown(String property, String value, String accepted)
+  private static String[] split(String value, char separator, String property, boolean decode)
   {
-    return new IllegalArgumentException("Unknown value '" + value + "' for " + property + ". Accepted values: " + accepted);
+    if (value == null || value.length() == 0)
+    {
+      throw new IllegalArgumentException("Empty configuration specification for " + property);
+    }
+
+    ArrayList<String> result = new ArrayList<>();
+    int start = 0;
+    boolean escaped = false;
+    for (int i = 0; i < value.length(); i++)
+    {
+      char c = value.charAt(i);
+      if (escaped)
+      {
+        escaped = false;
+      }
+      else if (c == '\\')
+      {
+        escaped = true;
+      }
+      else if (c == separator)
+      {
+        result.add(decode ? unescape(value.substring(start, i), separator, property) : value.substring(start, i));
+        start = i + 1;
+      }
+    }
+
+    if (escaped)
+    {
+      throw new IllegalArgumentException("Malformed escaping in '" + value + "' for " + property);
+    }
+
+    result.add(decode ? unescape(value.substring(start), separator, property) : value.substring(start));
+    return result.toArray(new String[result.size()]);
+  }
+
+  private static String unescape(String value, char separator, String property)
+  {
+    try
+    {
+      return StringUtil.unescape(value, separator);
+    }
+    catch (RuntimeException ex)
+    {
+      throw new IllegalArgumentException("Malformed escaping in '" + value + "' for " + property, ex);
+    }
   }
 
   public static File getStateFile()

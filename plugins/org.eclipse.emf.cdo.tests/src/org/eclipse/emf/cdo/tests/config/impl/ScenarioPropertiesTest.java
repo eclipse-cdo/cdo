@@ -28,9 +28,9 @@ public class ScenarioPropertiesTest extends TestCase
 
   public void testCompleteScenario()
   {
-    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM_BRANCHES_UUIDS_JVM_NATIVE" }, () -> {
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM/JVM/NATIVE" }, () -> {
       IScenario scenario = Scenario.createFromProperties();
-      assertSame(IConstants.MEM_BRANCHES_UUIDS, scenario.getRepositoryConfig());
+      assertSame(IConstants.MEM, scenario.getRepositoryConfig());
       assertSame(IConstants.JVM, scenario.getSessionConfig());
       assertSame(IConstants.NATIVE, scenario.getModelConfig());
     });
@@ -49,7 +49,7 @@ public class ScenarioPropertiesTest extends TestCase
 
   public void testMixedFormsRejected()
   {
-    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY, IConstants.TEST_MODEL_PROPERTY }, new String[] { "MEM_JVM_NATIVE", "NATIVE" },
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY, IConstants.TEST_MODEL_PROPERTY }, new String[] { "MEM/JVM/NATIVE", "NATIVE" },
         () -> assertRejected());
   }
 
@@ -61,13 +61,37 @@ public class ScenarioPropertiesTest extends TestCase
 
   public void testUnknownNamesRejected()
   {
-    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "unknown" }, () -> assertRejected());
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "UNKNOWN/JVM/NATIVE" }, () -> assertRejected());
     withProperties(new String[] { IConstants.TEST_REPOSITORY_PROPERTY, IConstants.TEST_SESSION_PROPERTY, IConstants.TEST_MODEL_PROPERTY },
         new String[] { "unknown", "JVM", "NATIVE" }, () -> assertRejected());
     withProperties(new String[] { IConstants.TEST_REPOSITORY_PROPERTY, IConstants.TEST_SESSION_PROPERTY, IConstants.TEST_MODEL_PROPERTY },
         new String[] { "MEM", "unknown", "NATIVE" }, () -> assertRejected());
     withProperties(new String[] { IConstants.TEST_REPOSITORY_PROPERTY, IConstants.TEST_SESSION_PROPERTY, IConstants.TEST_MODEL_PROPERTY },
         new String[] { "MEM", "JVM", "unknown" }, () -> assertRejected());
+  }
+
+  public void testMalformedScenarioRejected()
+  {
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM/JVM" }, () -> assertRejected());
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM\\sJVM/NATIVE" }, () -> assertRejected());
+  }
+
+  public void testEscapedConfigurationDescription()
+  {
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM:slash\\sinside/JVM/NATIVE" }, () -> {
+      IScenario scenario = Scenario.createFromProperties();
+      assertSame(IConstants.MEM, scenario.getRepositoryConfig());
+    });
+
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM:colon\\\\sinside/JVM/NATIVE" }, () -> {
+      IScenario scenario = Scenario.createFromProperties();
+      assertSame(IConstants.MEM, scenario.getRepositoryConfig());
+    });
+
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM:backslash\\\\\\\\inside/JVM/NATIVE" }, () -> {
+      IScenario scenario = Scenario.createFromProperties();
+      assertSame(IConstants.MEM, scenario.getRepositoryConfig());
+    });
   }
 
   private void assertRejected()

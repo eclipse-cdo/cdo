@@ -26,7 +26,7 @@
 
   <groupId>org.eclipse.cdo.features</groupId>
   <artifactId>org.eclipse.net4j.ui</artifactId>
-  <version>4.9.4-SNAPSHOT</version>
+  <version>4.9.5-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

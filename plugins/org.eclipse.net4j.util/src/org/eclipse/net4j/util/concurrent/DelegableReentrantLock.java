@@ -82,7 +82,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
    */
   public DelegableReentrantLock(boolean usePluginContainer)
   {
-    this(usePluginContainer ? IPluginContainer.INSTANCE : null);
+    this(usePluginContainer ? IManagedContainer.INSTANCE : null);
   }
 
   /**
@@ -91,7 +91,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
    */
   public DelegableReentrantLock()
   {
-    this(IPluginContainer.INSTANCE);
+    this(IManagedContainer.INSTANCE);
   }
 
   /**

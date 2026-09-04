@@ -12,8 +12,9 @@
 package org.eclipse.net4j.internal.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
+import org.eclipse.net4j.internal.util.container.StandaloneContainer;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.LegacyUtil;
 import org.eclipse.net4j.util.om.OMBundle;
@@ -132,6 +133,15 @@ public class LegacyPlatform extends AbstractPlatform
   }
 
   @Override
+  public IManagedContainer createManagedContainer()
+  {
+    StandaloneContainer container = new StandaloneContainer();
+    container.setName("INSTANCE");
+    container.activate();
+    return container;
+  }
+
+  @Override
   protected OMBundle createBundle(String bundleID, Class<?> accessor)
   {
     return new LegacyBundle(this, bundleID, accessor);
@@ -170,7 +180,7 @@ public class LegacyPlatform extends AbstractPlatform
     IProgressMonitor monitor = new NullProgressMonitor();
     jobMonitors.put(job, monitor);
 
-    ExecutorService threadPool = ConcurrencyUtil.getExecutorService(IPluginContainer.INSTANCE);
+    ExecutorService threadPool = ConcurrencyUtil.getExecutorService(IManagedContainer.INSTANCE);
     threadPool.submit(() -> {
       try
       {

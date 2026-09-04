@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.transfer.CDOTransferType;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.jface.viewers.ILabelProvider;
@@ -160,6 +159,6 @@ public class TransferLabelProvider extends LabelProvider implements ITableLabelP
 
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 }

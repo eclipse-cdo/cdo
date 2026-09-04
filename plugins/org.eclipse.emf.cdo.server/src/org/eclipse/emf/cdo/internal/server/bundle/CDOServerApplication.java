@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 import org.eclipse.net4j.util.PluginUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle.TranslationSupport;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -281,6 +280,6 @@ public class CDOServerApplication extends OSGiApplication
 
   public static IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 }

@@ -26,7 +26,7 @@
 
   <groupId>org.eclipse.cdo.features</groupId>
   <artifactId>org.eclipse.net4j.examples.installer</artifactId>
-  <version>4.4.7-SNAPSHOT</version>
+  <version>4.4.8-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

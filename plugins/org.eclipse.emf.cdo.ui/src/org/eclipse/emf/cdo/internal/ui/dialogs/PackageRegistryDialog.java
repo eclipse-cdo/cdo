@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.CustomizeableComposite;
 
@@ -160,7 +160,7 @@ public class PackageRegistryDialog extends TitleAreaDialog
           }
         });
 
-    CustomizeableComposite.customize(parent, IPluginContainer.INSTANCE, PRODUCT_GROUP, this);
+    CustomizeableComposite.customize(parent, IManagedContainer.INSTANCE, PRODUCT_GROUP, this);
 
     createButton(parent, IDialogConstants.CANCEL_ID, IDialogConstants.CLOSE_LABEL, false);
   }

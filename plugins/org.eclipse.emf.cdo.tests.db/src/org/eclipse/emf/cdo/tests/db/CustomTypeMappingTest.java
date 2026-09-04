@@ -27,7 +27,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
@@ -52,7 +52,7 @@ public class CustomTypeMappingTest extends AbstractCDOTest
   {
     // Manually register type mapping
     MyIntToVarcharTypeMapping.Factory factory = new MyIntToVarcharTypeMapping.Factory();
-    IPluginContainer.INSTANCE.registerFactory(factory);
+    IManagedContainer.INSTANCE.registerFactory(factory);
 
     try
     {
@@ -113,7 +113,7 @@ public class CustomTypeMappingTest extends AbstractCDOTest
     }
     finally
     {
-      IPluginContainer.INSTANCE.getFactoryRegistry().remove(factory.getKey());
+      IManagedContainer.INSTANCE.getFactoryRegistry().remove(factory.getKey());
     }
   }
 

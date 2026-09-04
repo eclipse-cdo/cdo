@@ -1,0 +1,4 @@
+[mcp_servers.eclipse]
+url = "http://127.0.0.1:8642/mcp"
+bearer_token_env_var = "ECLIPSE_MCP_TOKEN"
+enabled = true

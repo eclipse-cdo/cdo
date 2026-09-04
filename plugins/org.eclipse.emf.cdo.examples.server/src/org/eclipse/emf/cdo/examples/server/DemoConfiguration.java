@@ -26,7 +26,7 @@ import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -153,7 +153,7 @@ public class DemoConfiguration extends Lifecycle
       sessionManager.setAuthenticator(authenticator);
     }
 
-    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
+    CDOServerUtil.addRepository(IManagedContainer.INSTANCE, repository);
   }
 
   @Override

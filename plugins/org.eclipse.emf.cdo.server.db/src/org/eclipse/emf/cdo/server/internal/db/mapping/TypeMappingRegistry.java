@@ -33,7 +33,6 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
@@ -225,7 +224,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
   @Override
   public IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   @Override
@@ -394,7 +393,7 @@ public class TypeMappingRegistry implements ITypeMapping.Registry, ITypeMapping.
 
     try
     {
-      columnTypeModifier = (ColumnTypeModifier)IPluginContainer.INSTANCE.getElement(ColumnTypeModifier.Factory.PRODUCT_GROUP, factoryType, null);
+      columnTypeModifier = (ColumnTypeModifier)IManagedContainer.INSTANCE.getElement(ColumnTypeModifier.Factory.PRODUCT_GROUP, factoryType, null);
     }
     catch (FactoryNotFoundException ex)
     {

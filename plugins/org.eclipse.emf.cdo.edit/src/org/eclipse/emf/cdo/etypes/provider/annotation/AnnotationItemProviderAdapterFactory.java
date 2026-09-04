@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.etypes.provider.StringToStringMapEntryItemProvider;
 import org.eclipse.emf.cdo.etypes.util.BasicAnnotationValidator;
 import org.eclipse.emf.cdo.etypes.util.EtypesSwitch;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -504,7 +504,7 @@ public abstract class AnnotationItemProviderAdapterFactory extends AdapterFactor
    */
   public static AnnotationItemProviderAdapterFactory create(String annotationSoure)
   {
-    return IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, annotationSoure);
+    return IManagedContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, annotationSoure);
   }
 
   /**

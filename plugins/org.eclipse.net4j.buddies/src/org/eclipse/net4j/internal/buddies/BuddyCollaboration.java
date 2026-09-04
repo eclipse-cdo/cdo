@@ -27,7 +27,6 @@ import org.eclipse.net4j.internal.buddies.protocol.InstallFacilityRequest;
 import org.eclipse.net4j.internal.buddies.protocol.InviteBuddiesNotification;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,6 +167,6 @@ public class BuddyCollaboration extends Collaboration implements IBuddyCollabora
 
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 }

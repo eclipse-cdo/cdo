@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.w3c.dom.Document;
@@ -61,7 +60,7 @@ public class RepositoryConfigurationManagerExtension extends AbstractAppExtensio
   @Override
   public void start(File configFile) throws Exception
   {
-    IManagedContainer container = IPluginContainer.INSTANCE;
+    IManagedContainer container = IManagedContainer.INSTANCE;
     Document document = getDocument(configFile);
 
     NodeList children = document.getDocumentElement().getChildNodes();

@@ -24,7 +24,7 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
   <artifactId>org.eclipse.net4j.util.ui</artifactId>
-  <version>3.21.2-SNAPSHOT</version>
+  <version>3.21.3-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

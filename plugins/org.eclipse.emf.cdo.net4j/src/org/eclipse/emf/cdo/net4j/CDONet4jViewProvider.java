@@ -26,7 +26,6 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
@@ -275,7 +274,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   protected IConnector getConnector(String authority)

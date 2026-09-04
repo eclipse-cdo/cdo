@@ -38,7 +38,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -315,7 +314,7 @@ public final class CDOServerUtil
   public static void addRepository(IManagedContainer container, IRepository repository)
   {
     InternalRepository internal = (InternalRepository)repository;
-    if (internal.getContainer() == null && container != IPluginContainer.INSTANCE)
+    if (internal.getContainer() == null && container != IManagedContainer.INSTANCE)
     {
       internal.setContainer(container);
     }

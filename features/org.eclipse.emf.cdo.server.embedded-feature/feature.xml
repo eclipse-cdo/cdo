@@ -13,7 +13,7 @@
 <feature
       id="org.eclipse.emf.cdo.server.embedded"
       label="%featureName"
-      version="4.31.0.qualifier"
+      version="4.31.1.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"

@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.dnd.DNDDropAdapter;
 
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -56,7 +55,7 @@ public class TransferDropAdapter extends DNDDropAdapter<Object>
 
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   protected TransferUIProvider[] getUIProviders()

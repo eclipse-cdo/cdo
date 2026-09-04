@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -62,7 +61,7 @@ public final class ResourceSetConfigurerRegistry implements ResourceSetConfigure
 
     if (container == null)
     {
-      container = IPluginContainer.INSTANCE;
+      container = IManagedContainer.INSTANCE;
     }
 
     for (String type : container.getFactoryTypes(ResourceSetConfigurer.Factory.PRODUCT_GROUP))

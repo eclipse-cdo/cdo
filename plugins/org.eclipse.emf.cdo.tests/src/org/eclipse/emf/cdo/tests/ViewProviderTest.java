@@ -25,7 +25,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 import org.eclipse.emf.internal.cdo.view.PluginContainerViewProvider;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -67,7 +67,7 @@ public class ViewProviderTest extends AbstractCDOTest
   {
     init();
     URI uri = CDOURIUtil.createResourceURI(REPO, getResourcePath(PATH));
-    IPluginContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, "my-type", "my-description", openSession());
+    IManagedContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, "my-type", "my-description", openSession());
 
     ResourceSet resourceSet = new ResourceSetImpl();
     CDOResource resource = (CDOResource)resourceSet.getResource(uri, true);

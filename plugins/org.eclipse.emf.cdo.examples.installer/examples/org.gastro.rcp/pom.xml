@@ -24,7 +24,7 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
   <artifactId>org.gastro.rcp</artifactId>
-  <version>4.3.2-SNAPSHOT</version>
+  <version>4.3.3-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

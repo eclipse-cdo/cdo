@@ -32,7 +32,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -247,7 +247,7 @@ public class UnitManagerMain
 
   private static CDOSession openSession()
   {
-    IConnector connector = TCPUtil.getConnector(IPluginContainer.INSTANCE, "localhost");
+    IConnector connector = TCPUtil.getConnector(IManagedContainer.INSTANCE, "localhost");
 
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
@@ -283,10 +283,10 @@ public class UnitManagerMain
   {
     Model1Package.eINSTANCE.getClass();
 
-    Net4jUtil.prepareContainer(IPluginContainer.INSTANCE);
-    TCPUtil.prepareContainer(IPluginContainer.INSTANCE);
-    CDONet4jServerUtil.prepareContainer(IPluginContainer.INSTANCE);
-    CDONet4jUtil.prepareContainer(IPluginContainer.INSTANCE);
-    IPluginContainer.INSTANCE.activate();
+    Net4jUtil.prepareContainer(IManagedContainer.INSTANCE);
+    TCPUtil.prepareContainer(IManagedContainer.INSTANCE);
+    CDONet4jServerUtil.prepareContainer(IManagedContainer.INSTANCE);
+    CDONet4jUtil.prepareContainer(IManagedContainer.INSTANCE);
+    IManagedContainer.INSTANCE.activate();
   }
 }

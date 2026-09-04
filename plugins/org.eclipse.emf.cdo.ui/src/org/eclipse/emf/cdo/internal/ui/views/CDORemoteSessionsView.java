@@ -22,7 +22,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -313,12 +313,12 @@ public class CDORemoteSessionsView extends ContainerView.Default<CDORemoteSessio
     Color entryBackgroundColor = new Color(display, 241, 241, 241);
     parent.addDisposeListener(e -> entryBackgroundColor.dispose());
 
-    ChatRenderer renderer = IPluginContainer.INSTANCE.getElementOrNull( //
+    ChatRenderer renderer = IManagedContainer.INSTANCE.getElementOrNull( //
         ChatRenderer.Factory.PRODUCT_GROUP, //
         CHAT_RENDERER_TYPE, //
         CHAT_RENDERER_DESCRIPTION);
 
-    EntryControlAdvisor entryControlAdvisor = IPluginContainer.INSTANCE.getElementOrNull( //
+    EntryControlAdvisor entryControlAdvisor = IManagedContainer.INSTANCE.getElementOrNull( //
         EntryControlAdvisor.Factory.PRODUCT_GROUP, //
         ENTRY_CONTROL_ADVISOR_TYPE, //
         ENTRY_CONTROL_ADVISOR_DESCRIPTION);

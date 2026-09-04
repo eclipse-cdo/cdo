@@ -20,7 +20,7 @@ import org.eclipse.net4j.buddies.internal.server.BuddyAdmin;
 import org.eclipse.net4j.buddies.internal.server.bundle.OM;
 import org.eclipse.net4j.buddies.spi.common.ServerFacilityFactory;
 import org.eclipse.net4j.signal.IndicationWithResponse;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 
@@ -50,7 +50,7 @@ public class InstallFacilityIndication extends IndicationWithResponse
     try
     {
       String description = String.valueOf(collaborationID);
-      IFacility facility = (IFacility)IPluginContainer.INSTANCE.getElement(FACILITY_GROUP, facilityType, description);
+      IFacility facility = (IFacility)IManagedContainer.INSTANCE.getElement(FACILITY_GROUP, facilityType, description);
 
       Collaboration collaboration = (Collaboration)BuddyAdmin.INSTANCE.getCollaboration(collaborationID);
       if (collaboration != null)

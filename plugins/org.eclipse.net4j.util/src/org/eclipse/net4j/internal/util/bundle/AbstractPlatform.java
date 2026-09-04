@@ -54,7 +54,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   private final Map<String, AbstractBundle> bundles = new ConcurrentHashMap<>(0);
 
-  private final ConcurrentArray<OMLogFilter> logFilters = new ConcurrentArray.Unique<OMLogFilter>()
+  private final ConcurrentArray<OMLogFilter> logFilters = new ConcurrentArray.Unique<>()
   {
     @Override
     protected OMLogFilter[] newArray(int length)
@@ -63,7 +63,7 @@ public abstract class AbstractPlatform implements OMPlatform
     }
   };
 
-  private final ConcurrentArray<OMLogHandler> logHandlers = new ConcurrentArray.Unique<OMLogHandler>()
+  private final ConcurrentArray<OMLogHandler> logHandlers = new ConcurrentArray.Unique<>()
   {
     @Override
     protected OMLogHandler[] newArray(int length)
@@ -72,7 +72,7 @@ public abstract class AbstractPlatform implements OMPlatform
     }
   };
 
-  private final ConcurrentArray<OMTraceHandler> traceHandlers = new ConcurrentArray.Unique<OMTraceHandler>()
+  private final ConcurrentArray<OMTraceHandler> traceHandlers = new ConcurrentArray.Unique<>()
   {
     @Override
     protected OMTraceHandler[] newArray(int length)

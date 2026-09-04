@@ -13,7 +13,7 @@ package org.eclipse.net4j.internal.util.bundle;
 
 import org.eclipse.net4j.internal.util.container.PluginContainer;
 import org.eclipse.net4j.internal.util.om.OSGiBundle;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -82,10 +82,11 @@ public abstract class OM
       }
 
       OSGiActivator.traceStart(context);
-      IPluginContainer container = IPluginContainer.INSTANCE;
+
+      IManagedContainer container = IManagedContainer.INSTANCE;
       if (TRACER.isEnabled())
       {
-        TRACER.format("Plugin container created: {0}", container); //$NON-NLS-1$
+        TRACER.format("Managed container created: {0}", container); //$NON-NLS-1$
       }
     }
 

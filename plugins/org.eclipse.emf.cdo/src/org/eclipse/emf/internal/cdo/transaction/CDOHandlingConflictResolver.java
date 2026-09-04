@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
@@ -112,7 +111,7 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
 
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   protected ConflictHandler getConflictHandler(CDOTransaction transaction) throws CancelException

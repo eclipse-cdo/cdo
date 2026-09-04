@@ -42,7 +42,7 @@ import org.eclipse.emf.cdo.ui.DecoratingStyledLabelProvider;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.MenuFiller;
@@ -271,7 +271,7 @@ public class SystemsView extends MultiViewersView
 
     manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 
-    IPluginContainer.INSTANCE.forEachElement( //
+    IManagedContainer.INSTANCE.forEachElement( //
         MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class, //
         filler -> filler.fillMenu(page, viewer, manager, element));
   }
@@ -279,7 +279,7 @@ public class SystemsView extends MultiViewersView
   @Override
   protected void doubleClicked(Object object)
   {
-    if (OpenHandler.Factory.handleOpen(IPluginContainer.INSTANCE, getSite().getPage(), treeViewer, object))
+    if (OpenHandler.Factory.handleOpen(IManagedContainer.INSTANCE, getSite().getPage(), treeViewer, object))
     {
       return;
     }

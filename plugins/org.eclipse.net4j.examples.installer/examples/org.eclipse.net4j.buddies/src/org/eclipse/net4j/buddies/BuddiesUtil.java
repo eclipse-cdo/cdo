@@ -17,7 +17,7 @@ import org.eclipse.net4j.internal.buddies.protocol.BuddiesClientProtocol;
 import org.eclipse.net4j.internal.buddies.protocol.OpenSessionRequest;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import java.util.Set;
 
@@ -32,7 +32,7 @@ public final class BuddiesUtil
 
   public static Set<String> getFacilityTypes()
   {
-    return IPluginContainer.INSTANCE.getFactoryTypes(ClientFacilityFactory.PRODUCT_GROUP);
+    return IManagedContainer.INSTANCE.getFactoryTypes(ClientFacilityFactory.PRODUCT_GROUP);
   }
 
   public static IBuddySession openSession(IConnector connector, String userID, String password, long timeout)

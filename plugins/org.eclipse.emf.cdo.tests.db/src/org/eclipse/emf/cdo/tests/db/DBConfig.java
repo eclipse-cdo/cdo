@@ -24,7 +24,6 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 
 import javax.sql.DataSource;
 
@@ -180,7 +179,7 @@ public abstract class DBConfig extends RepositoryConfig
   public void setUp() throws Exception
   {
     System.setProperty("org.eclipse.emf.cdo.server.db.DISABLE_LOG_SQL_QUERY_HANDLER", "true");
-    CDODBUtil.prepareContainer(IPluginContainer.INSTANCE);
+    CDODBUtil.prepareContainer(IManagedContainer.INSTANCE);
     super.setUp();
     ((TypeMappingRegistry)ITypeMapping.Registry.INSTANCE).init();
   }

@@ -95,7 +95,6 @@ import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.ThrowableEvent;
@@ -503,7 +502,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         }
       }
 
-      if (repository.getContainer() == IPluginContainer.INSTANCE)
+      if (repository.getContainer() == IManagedContainer.INSTANCE)
       {
         IManagedContainer serverContainer = getServerContainer();
         repository.setContainer(serverContainer);

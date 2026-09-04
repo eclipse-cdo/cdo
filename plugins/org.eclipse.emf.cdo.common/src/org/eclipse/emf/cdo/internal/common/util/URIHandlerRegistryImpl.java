@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.spi.common.util.URIHandlerFactory;
 
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 
@@ -54,11 +54,11 @@ public final class URIHandlerRegistryImpl implements URIHandlerRegistry, URIHand
     {
       initialized = true;
 
-      for (String scheme : IPluginContainer.INSTANCE.getFactoryTypes(URIHandlerFactory.PRODUCT_GROUP))
+      for (String scheme : IManagedContainer.INSTANCE.getFactoryTypes(URIHandlerFactory.PRODUCT_GROUP))
       {
         try
         {
-          URIHandler handler = (URIHandler)IPluginContainer.INSTANCE.getElement(URIHandlerFactory.PRODUCT_GROUP, scheme, null);
+          URIHandler handler = (URIHandler)IManagedContainer.INSTANCE.getElement(URIHandlerFactory.PRODUCT_GROUP, scheme, null);
           addURIHandler(scheme, handler);
         }
         catch (Exception ex)
@@ -67,7 +67,7 @@ public final class URIHandlerRegistryImpl implements URIHandlerRegistry, URIHand
         }
       }
 
-      IPluginContainer.INSTANCE.getFactoryRegistry().addListener(new ContainerEventAdapter<Map.Entry<IFactoryKey, IFactory>>()
+      IManagedContainer.INSTANCE.getFactoryRegistry().addListener(new ContainerEventAdapter<Map.Entry<IFactoryKey, IFactory>>()
       {
         @Override
         protected void onAdded(IContainer<Map.Entry<IFactoryKey, IFactory>> container, Map.Entry<IFactoryKey, IFactory> element)
@@ -75,7 +75,7 @@ public final class URIHandlerRegistryImpl implements URIHandlerRegistry, URIHand
           String scheme = getScheme(element);
           if (scheme != null)
           {
-            URIHandler handler = (URIHandler)IPluginContainer.INSTANCE.getElement(URIHandlerFactory.PRODUCT_GROUP, scheme, null);
+            URIHandler handler = (URIHandler)IManagedContainer.INSTANCE.getElement(URIHandlerFactory.PRODUCT_GROUP, scheme, null);
             addURIHandler(scheme, handler);
           }
         }

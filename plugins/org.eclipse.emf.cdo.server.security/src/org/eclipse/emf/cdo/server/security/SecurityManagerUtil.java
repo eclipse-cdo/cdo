@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.server.internal.security.SecurityManager;
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 
 /**
  * Static factory methods for creating {@link ISecurityManager security managers}.
@@ -44,7 +43,7 @@ public final class SecurityManagerUtil
 
   public static ISecurityManager createSecurityManager(String realmPath)
   {
-    return createSecurityManager(realmPath, IPluginContainer.INSTANCE);
+    return createSecurityManager(realmPath, IManagedContainer.INSTANCE);
   }
 
   public static ISecurityManager createSecurityManager(String realmPath, IManagedContainer container)

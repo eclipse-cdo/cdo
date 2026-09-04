@@ -15,7 +15,7 @@ package org.eclipse.net4j.internal.util.container;
 
 import org.eclipse.net4j.internal.util.factory.PluginFactoryRegistry;
 import org.eclipse.net4j.util.container.IElementProcessor;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.ManagedContainer;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
@@ -28,10 +28,9 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class PluginContainer extends ManagedContainer implements IPluginContainer
+@SuppressWarnings("deprecation")
+public class PluginContainer extends ManagedContainer implements org.eclipse.net4j.util.container.IPluginContainer
 {
-  private static PluginContainer instance;
-
   public PluginContainer()
   {
   }
@@ -59,24 +58,15 @@ public class PluginContainer extends ManagedContainer implements IPluginContaine
 
   public static void dispose()
   {
-    if (instance != null)
-    {
-      LifecycleUtil.deactivate(instance, OMLogger.Level.WARN);
-      instance = null;
-    }
+    LifecycleUtil.deactivate(IManagedContainer.INSTANCE, OMLogger.Level.WARN);
   }
 
-  public static synchronized PluginContainer getInstance()
+  /**
+   * @deprecated As of 3.31, use {@link IManagedContainer#INSTANCE}.
+   */
+  @Deprecated
+  public static PluginContainer getInstance()
   {
-    if (instance == null)
-    {
-      PluginContainer container = new PluginContainer();
-      container.setName("INSTANCE");
-      container.activate();
-
-      instance = container; // Leave instance==null in case of a Throwable in activate()
-    }
-
-    return instance;
+    return (PluginContainer)IManagedContainer.INSTANCE;
   }
 }

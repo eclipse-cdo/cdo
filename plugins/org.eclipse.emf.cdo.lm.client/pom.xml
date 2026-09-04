@@ -24,7 +24,7 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
 	<artifactId>org.eclipse.emf.cdo.lm.client</artifactId>
-  <version>1.6.2-SNAPSHOT</version>
+  <version>1.6.3-SNAPSHOT</version>
 	<packaging>eclipse-plugin</packaging>
 
 </project>

@@ -135,7 +135,6 @@ import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -1813,7 +1812,7 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     if (container == null)
     {
-      return IPluginContainer.INSTANCE;
+      return IManagedContainer.INSTANCE;
     }
 
     return container;

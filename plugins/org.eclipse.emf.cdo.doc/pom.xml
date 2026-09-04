@@ -24,7 +24,7 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
   <artifactId>org.eclipse.emf.cdo.doc</artifactId>
-  <version>4.2.19-SNAPSHOT</version>
+  <version>4.2.20-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
   <build>

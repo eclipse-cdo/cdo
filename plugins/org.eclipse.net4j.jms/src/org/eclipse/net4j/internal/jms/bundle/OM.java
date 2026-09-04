@@ -12,7 +12,7 @@
 package org.eclipse.net4j.internal.jms.bundle;
 
 import org.eclipse.net4j.jms.JMSUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -38,7 +38,7 @@ public abstract class OM
 
   static void start() throws Exception
   {
-    JMSUtil.setTransportContainer(IPluginContainer.INSTANCE);
+    JMSUtil.setTransportContainer(IManagedContainer.INSTANCE);
   }
 
   /**

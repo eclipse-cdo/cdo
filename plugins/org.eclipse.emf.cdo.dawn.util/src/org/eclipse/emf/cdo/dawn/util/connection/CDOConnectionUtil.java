@@ -24,7 +24,7 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -61,9 +61,9 @@ public class CDOConnectionUtil
   {
     if (!OMPlatform.INSTANCE.isOSGiRunning())
     {
-      Net4jUtil.prepareContainer(IPluginContainer.INSTANCE);
-      TCPUtil.prepareContainer(IPluginContainer.INSTANCE);
-      CDONet4jUtil.prepareContainer(IPluginContainer.INSTANCE);
+      Net4jUtil.prepareContainer(IManagedContainer.INSTANCE);
+      TCPUtil.prepareContainer(IManagedContainer.INSTANCE);
+      CDONet4jUtil.prepareContainer(IManagedContainer.INSTANCE);
     }
   }
 
@@ -76,7 +76,7 @@ public class CDOConnectionUtil
     this.repositoryName = repositoryName;
     this.protocol = protocol;
     this.host = host;
-    setConnector(Net4jUtil.getConnector(IPluginContainer.INSTANCE, protocol, host));
+    setConnector(Net4jUtil.getConnector(IManagedContainer.INSTANCE, protocol, host));
   }
 
   public void registerPackages(List<EPackage> packages)
@@ -97,7 +97,7 @@ public class CDOConnectionUtil
    */
   public CDOSession openSession()
   {
-    currentSession = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
+    currentSession = (CDOSession)IManagedContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
         protocol + "://" + host + "?repositoryName=" + repositoryName);
 
     return currentSession;

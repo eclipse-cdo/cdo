@@ -12,7 +12,7 @@
 package org.eclipse.internal.net4j.bundle;
 
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.osgi.framework.console.CommandInterpreter;
 import org.eclipse.osgi.framework.console.CommandProvider;
@@ -92,14 +92,14 @@ public class Net4jCommandProvider implements CommandProvider
     return null;
   }
 
-  protected IPluginContainer getContainer()
+  protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   private void printFactoryTypes(CommandInterpreter interpreter, String productGroup, String prefix)
   {
-    IPluginContainer container = getContainer();
+    IManagedContainer container = getContainer();
     for (String factoryType : container.getFactoryTypes(productGroup))
     {
       Object[] elements = container.getElements(productGroup, factoryType);

@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.tests.db.DBConfig;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import javax.sql.DataSource;
 
@@ -136,7 +136,7 @@ public abstract class DBOfflineConfig extends OfflineConfig
   @Override
   public void setUp() throws Exception
   {
-    CDODBUtil.prepareContainer(IPluginContainer.INSTANCE);
+    CDODBUtil.prepareContainer(IManagedContainer.INSTANCE);
     super.setUp();
   }
 

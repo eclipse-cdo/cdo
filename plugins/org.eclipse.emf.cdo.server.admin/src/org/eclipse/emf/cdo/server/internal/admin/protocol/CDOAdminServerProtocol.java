@@ -27,7 +27,6 @@ import org.eclipse.net4j.signal.security.AuthenticationRequest;
 import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
@@ -203,7 +202,7 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
     {
       public Plugin()
       {
-        super(IPluginContainer.INSTANCE);
+        super(IManagedContainer.INSTANCE);
       }
     }
   }

@@ -22,7 +22,7 @@ import org.eclipse.net4j.internal.buddies.bundle.OM;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -124,7 +124,7 @@ public class SessionManager extends Lifecycle implements ISessionManager, IListe
           connecting = true;
           while (session == null && connecting)
           {
-            IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, getConnectorDescription());
+            IConnector connector = Net4jUtil.getConnector(IManagedContainer.INSTANCE, getConnectorDescription());
             if (connector == null)
             {
               throw new IllegalStateException("connector == null"); //$NON-NLS-1$

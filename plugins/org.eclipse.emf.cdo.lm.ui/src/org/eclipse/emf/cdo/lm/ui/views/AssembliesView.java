@@ -48,7 +48,7 @@ import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.ui.MenuFiller;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -252,7 +252,7 @@ public class AssembliesView extends ContainerView
     }
 
     addMenuGroup(manager, "show-in");
-    IPluginContainer.INSTANCE.forEachElement(MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class,
+    IManagedContainer.INSTANCE.forEachElement(MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class,
         filler -> showInFilled[0] |= filler.fillMenu(page, viewer, showInMenu, selectedElement));
 
     if (showInFilled[0])
@@ -261,7 +261,7 @@ public class AssembliesView extends ContainerView
     }
 
     addMenuGroupAdditions(manager);
-    IPluginContainer.INSTANCE.forEachElement(MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class,
+    IManagedContainer.INSTANCE.forEachElement(MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class,
         filler -> showInFilled[0] |= filler.fillMenu(page, viewer, manager, selectedElement));
 
     addMenuGroup(manager, "errors");

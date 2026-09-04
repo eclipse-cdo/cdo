@@ -12,6 +12,7 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.internal.util.bundle.AbstractManagedContainer;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -29,7 +30,6 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.factory.ProductDescriptionProvider;
 import org.eclipse.net4j.util.factory.TreeFactory;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -60,7 +60,7 @@ import java.util.function.Function;
  *
  * @author Eike Stepper
  */
-public class ManagedContainer extends Lifecycle implements IManagedContainer
+public class ManagedContainer extends AbstractManagedContainer
 {
   private String name;
 

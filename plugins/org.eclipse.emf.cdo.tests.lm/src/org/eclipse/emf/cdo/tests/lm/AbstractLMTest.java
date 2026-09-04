@@ -63,7 +63,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.jvm.JVMUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -96,7 +96,7 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
 
   public static final String MODULE_DEFINITION_PATH = "module.md";
 
-  public static final IPluginContainer CONTAINER = IPluginContainer.INSTANCE;
+  public static final IManagedContainer CONTAINER = IManagedContainer.INSTANCE;
 
   @SuppressWarnings("restriction")
   private static final String BROWSER_PORT = org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication.PROP_BROWSER_PORT;

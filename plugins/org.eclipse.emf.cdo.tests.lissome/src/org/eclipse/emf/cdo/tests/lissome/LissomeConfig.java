@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.server.internal.lissome.file.Vob;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import javax.sql.DataSource;
@@ -101,7 +101,7 @@ public class LissomeConfig extends RepositoryConfig
   @Override
   public void setUp() throws Exception
   {
-    IPluginContainer.INSTANCE.registerFactory(new LissomeBrowserPage.Factory());
+    IManagedContainer.INSTANCE.registerFactory(new LissomeBrowserPage.Factory());
     super.setUp();
   }
 }

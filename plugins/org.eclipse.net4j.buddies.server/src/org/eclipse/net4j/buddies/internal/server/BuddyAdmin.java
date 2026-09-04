@@ -30,7 +30,7 @@ import org.eclipse.net4j.buddies.server.IBuddyAdmin;
 import org.eclipse.net4j.buddies.spi.common.ServerFacilityFactory;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -269,6 +269,6 @@ public class BuddyAdmin extends CollaborationContainer implements IBuddyAdmin
 
   public static Set<String> getFacilityTypes()
   {
-    return IPluginContainer.INSTANCE.getFactoryTypes(ServerFacilityFactory.PRODUCT_GROUP);
+    return IManagedContainer.INSTANCE.getFactoryTypes(ServerFacilityFactory.PRODUCT_GROUP);
   }
 }

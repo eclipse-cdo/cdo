@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.cdo.spi.server;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
  * @author Eike Stepper
@@ -26,6 +26,6 @@ public final class PluginRepositoryProvider extends ContainerRepositoryProvider
 
   private PluginRepositoryProvider()
   {
-    super(IPluginContainer.INSTANCE);
+    super(IManagedContainer.INSTANCE);
   }
 }

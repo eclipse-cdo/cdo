@@ -117,7 +117,6 @@ import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.container.ContainerElementList;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
@@ -297,7 +296,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   @Override

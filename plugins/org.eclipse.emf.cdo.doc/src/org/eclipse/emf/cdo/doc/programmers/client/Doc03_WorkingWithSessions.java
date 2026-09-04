@@ -279,7 +279,7 @@ public class Doc03_WorkingWithSessions
      * <p>
      * Typically a Net4j connector is created and configured using a Net4j container. Within an Eclipse environment,
      * the container is usually managed by the Eclipse extension registry. Such a container can be accessed using
-     * IPluginContainer.INSTANCE. In a non-Eclipse environment, you can create and manage the container
+     * IManagedContainer.INSTANCE. In a non-Eclipse environment, you can create and manage the container
      * programmatically. Refer to {@link IManagedContainer} for more details.
      * <p>
      * The following example demonstrates how to set up a JVM connector within an Eclipse environment:
@@ -300,7 +300,7 @@ public class Doc03_WorkingWithSessions
       {
         // Obtain the connector from the plugin container by its product group, factory type, and factory-specific
         // description.
-        IConnector connector = IPluginContainer.INSTANCE.getElementOrNull("org.eclipse.net4j.connectors", "jvm", "acceptor1");
+        IConnector connector = IManagedContainer.INSTANCE.getElementOrNull("org.eclipse.net4j.connectors", "jvm", "acceptor1");
 
         // Use the connector to create and open a session...
 
@@ -406,7 +406,7 @@ public class Doc03_WorkingWithSessions
        */
       public void reconnectingSession(String hostAndPort, String repositoryName)
       {
-        IManagedContainer container = IPluginContainer.INSTANCE;
+        IManagedContainer container = IManagedContainer.INSTANCE;
 
         ReconnectingCDOSessionConfiguration configuration = //
             CDONet4jUtil.createReconnectingSessionConfiguration(hostAndPort, repositoryName, container);
@@ -431,7 +431,7 @@ public class Doc03_WorkingWithSessions
        */
       public void failoverSession(String monitorConnectorDescription, String repositoryGroup)
       {
-        IManagedContainer container = IPluginContainer.INSTANCE;
+        IManagedContainer container = IManagedContainer.INSTANCE;
 
         FailoverCDOSessionConfiguration configuration = //
             CDONet4jUtil.createFailoverSessionConfiguration(monitorConnectorDescription, repositoryGroup, container);
@@ -2472,7 +2472,7 @@ public class Doc03_WorkingWithSessions
      * Hence, it can <b>delegate</b> the lock to another thread.
      * <p>
      * When delegable view locks are enabled, the view locks become instances of {@link DelegableReentrantLock},
-     * which uses {@link DelegateDetector}s that are contributed to {@link IPluginContainer#INSTANCE IPluginContainer.INSTANCE} in order
+     * which uses {@link DelegateDetector}s that are contributed to {@link IPluginContainer#INSTANCE IManagedContainer.INSTANCE} in order
      * to decide whether a thread is allowed to delegate its lock to another thread.
      * The <code>org.eclipse.net4j.util.ui</code> plug-in contributes a
      * <code>org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector</code> that allows

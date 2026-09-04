@@ -12,6 +12,7 @@
 package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.log.OMLogFilter;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.trace.OMTraceHandler;
@@ -33,6 +34,13 @@ public interface OMPlatform
   public static final OMPlatform INSTANCE = AbstractPlatform.createPlatform();
 
   public OMBundle bundle(String bundleID, Class<?> accessor);
+
+  /**
+   * Creates a managed container that is appropriate for this platform.
+   *
+   * @since 3.30
+   */
+  public IManagedContainer createManagedContainer();
 
   public boolean isOSGiRunning();
 

@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.explorer.checkouts;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -80,7 +79,7 @@ public interface ResourceSetConfigurer
     @Deprecated
     public boolean configureResourceSet(ResourceSet resourceSet, CDOCheckout checkout)
     {
-      return configureResourceSet(resourceSet, checkout, IPluginContainer.INSTANCE);
+      return configureResourceSet(resourceSet, checkout, IManagedContainer.INSTANCE);
     }
   }
 }

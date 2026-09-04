@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.ui.CDOLoadResourceProvider.ImageProvider;
 
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.ui.CommonUIPlugin;
@@ -81,7 +81,7 @@ public class CDOLoadResourceAction extends LoadResourceAction
       boolean multi = isMulti();
 
       ResourceSet resourceSet = domain.getResourceSet();
-      List<CDOLoadResourceProvider> providers = CDOLoadResourceProvider.Factory.getProviders(IPluginContainer.INSTANCE, resourceSet);
+      List<CDOLoadResourceProvider> providers = CDOLoadResourceProvider.Factory.getProviders(IManagedContainer.INSTANCE, resourceSet);
 
       // Create a composite with standard margins and spacing.
       GridLayout areaLayout = new GridLayout();

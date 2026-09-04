@@ -25,7 +25,6 @@ import org.eclipse.net4j.util.StringConverter;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import java.security.MessageDigest;
@@ -160,7 +159,7 @@ public class DigestFingerPrinter implements CDOFingerPrinter
    */
   public static class Factory extends CDOFingerPrinter.Factory implements ContainerAware
   {
-    private IManagedContainer container = IPluginContainer.INSTANCE;
+    private IManagedContainer container = IManagedContainer.INSTANCE;
 
     public Factory()
     {

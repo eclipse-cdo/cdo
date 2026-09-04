@@ -29,7 +29,6 @@ import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle.DaemonFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -80,7 +79,7 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
   @Override
   public IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   public IConnector getMonitorConnector()

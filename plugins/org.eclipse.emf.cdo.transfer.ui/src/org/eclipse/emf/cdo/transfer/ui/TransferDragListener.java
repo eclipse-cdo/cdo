@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider;
 import org.eclipse.emf.cdo.transfer.spi.ui.TransferUIProvider.Factory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.dnd.DNDDragListener;
 
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -56,7 +55,7 @@ public class TransferDragListener extends DNDDragListener<Object>
 
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   protected TransferUIProvider[] getUIProviders()

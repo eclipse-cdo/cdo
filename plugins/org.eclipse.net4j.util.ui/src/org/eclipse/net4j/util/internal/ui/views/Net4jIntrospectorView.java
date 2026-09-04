@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.ReflectUtil.Setting;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -241,7 +241,7 @@ public class Net4jIntrospectorView extends ViewPart
 
   public Net4jIntrospectorView()
   {
-    IPluginContainer.INSTANCE.forEachElement(IntrospectionProvider.Factory.PRODUCT_GROUP, IntrospectionProvider.class, providers::add);
+    IManagedContainer.INSTANCE.forEachElement(IntrospectionProvider.Factory.PRODUCT_GROUP, IntrospectionProvider.class, providers::add);
     providers.sort(null);
     providers.addAll(DEFAULT_INTROSPECTION_PROVIDERS);
   }
@@ -814,7 +814,7 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     public void run()
     {
-      setValue(IPluginContainer.INSTANCE);
+      setValue(IManagedContainer.INSTANCE);
     }
   }
 

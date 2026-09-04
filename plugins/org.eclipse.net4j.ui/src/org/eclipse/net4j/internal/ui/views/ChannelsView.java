@@ -26,7 +26,7 @@ import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.ui.Net4jItemProvider;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -63,7 +63,7 @@ public class ChannelsView extends ContainerView implements IElementFilter
 
   private final Map<IChannel, LinkedList<LogEntry>> logs = new HashMap<>();
 
-  private final ChannelContainer channelContainer = new ChannelContainer(IPluginContainer.INSTANCE)
+  private final ChannelContainer channelContainer = new ChannelContainer(IManagedContainer.INSTANCE)
   {
     @Override
     public boolean removeElement(IChannel channel)

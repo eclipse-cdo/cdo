@@ -20,7 +20,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -212,7 +212,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
     if (DEBUG)
     {
-      IPluginContainer.INSTANCE.putElement("___" + getClass().getSimpleName(), "debug", null, this);
+      IManagedContainer.INSTANCE.putElement("___" + getClass().getSimpleName(), "debug", null, this);
     }
   }
 

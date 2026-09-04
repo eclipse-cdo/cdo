@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.security.SecurityUtil;
  * An example:
  *
  * <pre>
- * IManagedContainer container = IPluginContainer.INSTANCE;
+ * IManagedContainer container = IManagedContainer.INSTANCE;
  *
  * String connectorDescription = &quot;localhost:2036&quot;;
  * String userID = &quot;name&quot;;

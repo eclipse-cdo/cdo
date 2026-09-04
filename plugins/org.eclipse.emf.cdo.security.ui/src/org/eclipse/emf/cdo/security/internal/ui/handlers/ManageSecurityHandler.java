@@ -30,7 +30,6 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
@@ -332,7 +331,7 @@ public class ManageSecurityHandler extends LongRunningHandler
 
     protected CDOSession getExistingAdminSession(CDOAdminClientRepository repository)
     {
-      for (Object element : IPluginContainer.INSTANCE.getElements(CDOSessionFactory.PRODUCT_GROUP))
+      for (Object element : IManagedContainer.INSTANCE.getElements(CDOSessionFactory.PRODUCT_GROUP))
       {
         CDONet4jSession session = ObjectUtil.tryCast(element, CDONet4jSession.class);
 
@@ -359,7 +358,7 @@ public class ManageSecurityHandler extends LongRunningHandler
 
           // Add this session to the shared container so that it may appear in the CDO Sessions view
           String description = "session" + NEXT_SESSION_NUMBER.incrementAndGet(); //$NON-NLS-1$
-          IPluginContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, "security", description, result); //$NON-NLS-1$
+          IManagedContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, "security", description, result); //$NON-NLS-1$
         }
 
         return result;
@@ -373,7 +372,7 @@ public class ManageSecurityHandler extends LongRunningHandler
 
     protected IPasswordCredentialsProvider getCredentialsProvider()
     {
-      IManagedContainer container = IPluginContainer.INSTANCE;
+      IManagedContainer container = IManagedContainer.INSTANCE;
       String productGroup = CredentialsProviderFactory.PRODUCT_GROUP;
       String factoryType = "interactive"; //$NON-NLS-1$
       IPasswordCredentialsProvider credentialsProvider = (IPasswordCredentialsProvider)container.getElement(productGroup, factoryType, null);

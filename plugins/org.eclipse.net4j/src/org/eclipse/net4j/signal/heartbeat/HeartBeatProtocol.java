@@ -24,7 +24,6 @@ import org.eclipse.net4j.util.concurrent.Timeouter;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -87,7 +86,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
 
   public HeartBeatProtocol(IConnector connector)
   {
-    this(connector, IPluginContainer.INSTANCE);
+    this(connector, IManagedContainer.INSTANCE);
   }
 
   public Timer getTimer()

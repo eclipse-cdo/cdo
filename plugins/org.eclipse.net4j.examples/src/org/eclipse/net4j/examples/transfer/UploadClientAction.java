@@ -16,7 +16,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.internal.examples.bundle.OM;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
@@ -108,7 +108,7 @@ public class UploadClientAction implements IWorkbenchWindowActionDelegate, Uploa
     try
     {
       // Start a connector that represents the client side of a physical connection
-      IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", "localhost:2036");
+      IConnector connector = Net4jUtil.getConnector(IManagedContainer.INSTANCE, "tcp", "localhost:2036");
 
       // Open a virtual channel with the ECHO protocol, send an ECHO request and close the channel
       protocol = new SignalProtocol<>(PROTOCOL_NAME);

@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.view.ManagedContainerViewProvider;
 import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -42,7 +41,7 @@ public class PluginContainerViewProvider extends ManagedContainerViewProvider
 
   public PluginContainerViewProvider()
   {
-    super(IPluginContainer.INSTANCE, REGEX, PRIORITY);
+    super(IManagedContainer.INSTANCE, REGEX, PRIORITY);
   }
 
   @Override

@@ -12,7 +12,6 @@
 package org.eclipse.net4j.util.ui;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.properties.IPropertyProvider;
 import org.eclipse.net4j.util.properties.Property;
 
@@ -111,7 +110,7 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
    */
   public DefaultPropertySource<RECEIVER> extendDescriptors()
   {
-    return extendDescriptors(IPluginContainer.INSTANCE);
+    return extendDescriptors(IManagedContainer.INSTANCE);
   }
 
   /**

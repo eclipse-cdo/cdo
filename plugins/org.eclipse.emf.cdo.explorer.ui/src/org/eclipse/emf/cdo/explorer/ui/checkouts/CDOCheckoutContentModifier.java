@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.IFactory;
@@ -65,7 +65,7 @@ public interface CDOCheckoutContentModifier
 
     private Registry()
     {
-      IRegistry<IFactoryKey, IFactory> factories = IPluginContainer.INSTANCE.getFactoryRegistry();
+      IRegistry<IFactoryKey, IFactory> factories = IManagedContainer.INSTANCE.getFactoryRegistry();
       for (Map.Entry<IFactoryKey, IFactory> entry : factories.getElements())
       {
         updateModifiers(entry, IContainerDelta.Kind.ADDED);
@@ -138,7 +138,7 @@ public interface CDOCheckoutContentModifier
         ILifecycleEvent e = (ILifecycleEvent)event;
         if (e.getKind() == ILifecycleEvent.Kind.DEACTIVATED)
         {
-          IPluginContainer.INSTANCE.getFactoryRegistry().removeListener(this);
+          IManagedContainer.INSTANCE.getFactoryRegistry().removeListener(this);
 
           synchronized (modifiers)
           {
@@ -158,7 +158,7 @@ public interface CDOCheckoutContentModifier
           String type = key.getType();
           if (deltaKind == IContainerDelta.Kind.ADDED)
           {
-            CDOCheckoutContentModifier modifier = (CDOCheckoutContentModifier)IPluginContainer.INSTANCE.getElement(Factory.PRODUCT_GROUP, type, null);
+            CDOCheckoutContentModifier modifier = (CDOCheckoutContentModifier)IManagedContainer.INSTANCE.getElement(Factory.PRODUCT_GROUP, type, null);
 
             synchronized (modifiers)
             {

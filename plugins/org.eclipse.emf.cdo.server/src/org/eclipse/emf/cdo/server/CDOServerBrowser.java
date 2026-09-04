@@ -50,7 +50,6 @@ import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -498,7 +497,7 @@ public class CDOServerBrowser extends Worker
    */
   protected IManagedContainer getPagesContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   @Override
@@ -585,7 +584,7 @@ public class CDOServerBrowser extends Worker
 
     public ContainerBased()
     {
-      this(IPluginContainer.INSTANCE);
+      this(IManagedContainer.INSTANCE);
     }
 
     public IContainer<?> getContainer()
@@ -601,7 +600,7 @@ public class CDOServerBrowser extends Worker
         return (IManagedContainer)container;
       }
 
-      return IPluginContainer.INSTANCE;
+      return IManagedContainer.INSTANCE;
     }
 
     @Override
@@ -657,7 +656,7 @@ public class CDOServerBrowser extends Worker
 
       public Factory()
       {
-        this(IPluginContainer.INSTANCE);
+        this(IManagedContainer.INSTANCE);
       }
 
       public Factory(IContainer<?> container)

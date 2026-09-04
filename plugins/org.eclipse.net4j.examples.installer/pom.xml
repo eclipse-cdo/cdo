@@ -24,7 +24,7 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
   <artifactId>org.eclipse.net4j.examples.installer</artifactId>
-  <version>4.3.7-SNAPSHOT</version>
+  <version>4.3.8-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

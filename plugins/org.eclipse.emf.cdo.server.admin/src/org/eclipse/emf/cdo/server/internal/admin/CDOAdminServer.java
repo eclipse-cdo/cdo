@@ -36,7 +36,6 @@ import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -461,7 +460,7 @@ public class CDOAdminServer extends AbstractCDOAdmin implements IManagedContaine
     {
       public Plugin()
       {
-        super(IPluginContainer.INSTANCE);
+        super(IManagedContainer.INSTANCE);
       }
     }
   }

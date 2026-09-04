@@ -19,6 +19,12 @@
                 <message_argument value="4.3.0"/>
             </message_arguments>
         </filter>
+        <filter id="931135546">
+            <message_arguments>
+                <message_argument value="4.28.1"/>
+                <message_argument value="4.27.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.core.runtime.ILibrary">
         <filter id="305422471">

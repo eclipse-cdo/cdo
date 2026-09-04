@@ -20,7 +20,6 @@ import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.ui.Net4jItemProvider;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
@@ -51,7 +50,7 @@ public abstract class AbstractTransportView extends ContainerView implements IEl
   @Override
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   @Override

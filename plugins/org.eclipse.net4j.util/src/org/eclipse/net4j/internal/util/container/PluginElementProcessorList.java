@@ -260,7 +260,7 @@ public class PluginElementProcessorList extends Lifecycle implements List<IEleme
    * <b>Note:</b> This level of indirection is required to delay class loading and plug-in activation that is triggered by
    * IConfigurationElement.createExecutableExtension(). Upstream plug-ins may, as part of their legal activation process,
    * call back down to PluginContainer, which is at this point still in its own activation process and has not initialized
-   * IPluginContainer.INSTANCE, yet.
+   * IManagedContainer.INSTANCE, yet.
    *
    * @author Eike Stepper
    */

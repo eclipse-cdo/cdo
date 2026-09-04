@@ -12,6 +12,8 @@
 package org.eclipse.net4j.internal.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
+import org.eclipse.net4j.internal.util.container.PluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMBundle;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -53,6 +55,15 @@ public class OSGiPlatform extends AbstractPlatform
   public boolean isOSGiRunning()
   {
     return true;
+  }
+
+  @Override
+  public IManagedContainer createManagedContainer()
+  {
+    PluginContainer container = new PluginContainer();
+    container.setName("GLOBAL");
+    container.activate();
+    return container;
   }
 
   @Override

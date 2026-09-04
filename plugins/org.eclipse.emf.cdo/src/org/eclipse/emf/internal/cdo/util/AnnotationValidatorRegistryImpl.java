@@ -13,7 +13,7 @@ package org.eclipse.emf.internal.cdo.util;
 
 import org.eclipse.emf.cdo.etypes.AnnotationValidator;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 
 import java.util.Set;
 
@@ -29,12 +29,12 @@ public class AnnotationValidatorRegistryImpl implements AnnotationValidator.Regi
   @Override
   public Set<String> getAnnotationSources()
   {
-    return IPluginContainer.INSTANCE.getFactoryTypes(PRODUCT_GROUP);
+    return IManagedContainer.INSTANCE.getFactoryTypes(PRODUCT_GROUP);
   }
 
   @Override
   public AnnotationValidator getAnnotationValidator(String annotationSource)
   {
-    return IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, annotationSource);
+    return IManagedContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, annotationSource);
   }
 }

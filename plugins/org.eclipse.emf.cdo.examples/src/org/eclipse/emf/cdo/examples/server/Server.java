@@ -23,7 +23,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.tcp.TCPUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
@@ -46,18 +46,18 @@ public class Server
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
 
-    Net4jUtil.prepareContainer(IPluginContainer.INSTANCE); // Prepare the Net4j kernel
-    TCPUtil.prepareContainer(IPluginContainer.INSTANCE); // Prepare the TCP support
-    CDONet4jServerUtil.prepareContainer(IPluginContainer.INSTANCE); // Prepare the CDO server
+    Net4jUtil.prepareContainer(IManagedContainer.INSTANCE); // Prepare the Net4j kernel
+    TCPUtil.prepareContainer(IManagedContainer.INSTANCE); // Prepare the TCP support
+    CDONet4jServerUtil.prepareContainer(IManagedContainer.INSTANCE); // Prepare the CDO server
 
     String name = "demo";
     IStore store = createStore(name);
     Map<String, String> properties = createProperties(name);
 
     IRepository repository = CDOServerUtil.createRepository(name, store, properties);
-    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
+    CDOServerUtil.addRepository(IManagedContainer.INSTANCE, repository);
 
-    Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "tcp", "0.0.0.0:2036");
+    Net4jUtil.getAcceptor(IManagedContainer.INSTANCE, "tcp", "0.0.0.0:2036");
 
     while (System.in.available() == 0)
     {
@@ -65,7 +65,7 @@ public class Server
     }
 
     LifecycleUtil.deactivate(repository);
-    LifecycleUtil.deactivate(IPluginContainer.INSTANCE);
+    LifecycleUtil.deactivate(IManagedContainer.INSTANCE);
   }
 
   private static IStore createStore(String name)

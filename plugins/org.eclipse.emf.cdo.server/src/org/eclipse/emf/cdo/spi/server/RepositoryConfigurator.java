@@ -31,7 +31,6 @@ import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.factory.PropertiesFactory;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -705,7 +704,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   public static Map<String, String> getProperties(Element element, int levels, Map<String, String> parameters)
   {
     Map<String, String> properties = new HashMap<>();
-    collectProperties(element, "", properties, levels, parameters, IPluginContainer.INSTANCE); //$NON-NLS-1$
+    collectProperties(element, "", properties, levels, parameters, IManagedContainer.INSTANCE); //$NON-NLS-1$
     return properties;
   }
 

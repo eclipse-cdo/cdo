@@ -12,7 +12,6 @@
 package org.eclipse.net4j.util.ui.container;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
@@ -45,7 +44,7 @@ public class ElementWizardAction extends LongRunningAction
 
   public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup)
   {
-    this(shell, title, toolTip, image, productGroup, IPluginContainer.INSTANCE);
+    this(shell, title, toolTip, image, productGroup, IManagedContainer.INSTANCE);
   }
 
   public ElementWizardAction(Shell shell, String title, String toolTip, ImageDescriptor image, String productGroup, IManagedContainer container)

@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.internal.util.container.ManagedContainerFactory;
 import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
@@ -36,6 +37,13 @@ import java.util.function.Function;
  */
 public interface IManagedContainer extends IContainer<Object>, ILifecycle
 {
+  /**
+   * The canonical managed container for the current Net4j platform.
+   *
+   * @since 3.30
+   */
+  public static final IManagedContainer INSTANCE = ManagedContainerFactory.createGlobalContainer();
+
   /**
    * Returns the name of this container, or <code>null</code> if no name has been set.
    *

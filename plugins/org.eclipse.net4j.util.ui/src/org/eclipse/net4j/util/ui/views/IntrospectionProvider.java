@@ -12,7 +12,7 @@
 package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -252,7 +252,7 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
 
   static
   {
-    IPluginContainer.INSTANCE.forEachElement(ValueFormatter.Factory.PRODUCT_GROUP, ValueFormatter.class, FORMATTERS::add);
+    IManagedContainer.INSTANCE.forEachElement(ValueFormatter.Factory.PRODUCT_GROUP, ValueFormatter.class, FORMATTERS::add);
     FORMATTERS.sort(null);
   }
 

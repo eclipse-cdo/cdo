@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.net4j" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="931135546">
+            <message_arguments>
+                <message_argument value="4.22.1"/>
+                <message_argument value="4.21.1"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/internal/net4j/TransportConfig.java" type="org.eclipse.internal.net4j.TransportConfig">
         <filter id="574619656">
             <message_arguments>

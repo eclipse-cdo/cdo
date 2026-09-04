@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesPackage;
 
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -210,7 +210,7 @@ public class DependencyDefinitionItemProvider extends ModelElementItemProvider
   {
     List<TargetNameProvider> providers = new ArrayList<>();
 
-    IPluginContainer.INSTANCE.forEachElement(TargetNameProvider.Factory.PRODUCT_GROUP, TargetNameProvider.class, provider -> {
+    IManagedContainer.INSTANCE.forEachElement(TargetNameProvider.Factory.PRODUCT_GROUP, TargetNameProvider.class, provider -> {
       if (provider != null)
       {
         providers.add(provider);

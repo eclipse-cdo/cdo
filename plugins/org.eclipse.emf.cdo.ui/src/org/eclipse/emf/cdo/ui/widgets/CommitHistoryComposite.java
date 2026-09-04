@@ -35,7 +35,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -391,11 +391,11 @@ public class CommitHistoryComposite extends Composite
           EObject eObject = (EObject)delegate;
           Object modifiedObject = null;
 
-          for (String type : IPluginContainer.INSTANCE.getFactoryTypes(ObjectModifier.Factory.PRODUCT_GROUP))
+          for (String type : IManagedContainer.INSTANCE.getFactoryTypes(ObjectModifier.Factory.PRODUCT_GROUP))
           {
             try
             {
-              ObjectModifier modifier = (ObjectModifier)IPluginContainer.INSTANCE.getElement(ObjectModifier.Factory.PRODUCT_GROUP, type, null);
+              ObjectModifier modifier = (ObjectModifier)IManagedContainer.INSTANCE.getElement(ObjectModifier.Factory.PRODUCT_GROUP, type, null);
               modifiedObject = modifier.modifyObject(eObject);
               if (modifiedObject != null)
               {

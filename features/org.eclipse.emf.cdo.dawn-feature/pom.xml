@@ -26,7 +26,7 @@
 
   <groupId>org.eclipse.cdo.features</groupId>
   <artifactId>org.eclipse.emf.cdo.dawn</artifactId>
-  <version>2.5.8-SNAPSHOT</version>
+  <version>2.5.9-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

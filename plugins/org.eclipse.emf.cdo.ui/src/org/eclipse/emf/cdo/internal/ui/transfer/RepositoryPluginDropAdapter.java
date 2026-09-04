@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.view.CDOViewRegistry;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -52,7 +51,7 @@ public class RepositoryPluginDropAdapter implements IDropActionDelegate
 
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   protected TransferUIProvider[] getUIProviders()

@@ -25,7 +25,6 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
@@ -125,6 +124,6 @@ public final class OpenSessionAction extends LongRunningAction
 
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 }

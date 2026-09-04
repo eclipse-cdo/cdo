@@ -25,7 +25,7 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -87,8 +87,8 @@ public class GastroServlet extends HttpServlet
     String repositoryName = repository.getName();
     restaurantName = getRestaurantName();
 
-    acceptor = Net4jUtil.getAcceptor(IPluginContainer.INSTANCE, "jvm", repositoryName);
-    connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "jvm", repositoryName);
+    acceptor = Net4jUtil.getAcceptor(IManagedContainer.INSTANCE, "jvm", repositoryName);
+    connector = Net4jUtil.getConnector(IManagedContainer.INSTANCE, "jvm", repositoryName);
 
     CDONet4jSessionConfiguration config = CDONet4jUtil.createNet4jSessionConfiguration();
     config.setConnector(connector);

@@ -20,7 +20,6 @@ import org.eclipse.emf.internal.cdo.session.CDOSessionFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerFactory;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.security.CredentialsProviderFactory;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 
@@ -36,7 +35,7 @@ public class Net4jSessionFactory extends CDOSessionFactory implements IManagedCo
 {
   public static final String TYPE = "cdo"; //$NON-NLS-1$
 
-  private IManagedContainer managedContainer = IPluginContainer.INSTANCE;
+  private IManagedContainer managedContainer = IManagedContainer.INSTANCE;
 
   public Net4jSessionFactory()
   {

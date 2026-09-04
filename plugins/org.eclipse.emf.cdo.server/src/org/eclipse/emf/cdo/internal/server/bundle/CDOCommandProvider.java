@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -449,7 +448,7 @@ public class CDOCommandProvider implements CommandProvider
 
     try
     {
-      for (String name : IPluginContainer.INSTANCE.getFactoryTypes(CDOCommand.PRODUCT_GROUP))
+      for (String name : IManagedContainer.INSTANCE.getFactoryTypes(CDOCommand.PRODUCT_GROUP))
       {
         try
         {
@@ -472,7 +471,7 @@ public class CDOCommandProvider implements CommandProvider
 
   protected CDOCommand createCommand(String name)
   {
-    return (CDOCommand)IPluginContainer.INSTANCE.getElement(CDOCommand.PRODUCT_GROUP, name, null);
+    return (CDOCommand)IManagedContainer.INSTANCE.getElement(CDOCommand.PRODUCT_GROUP, name, null);
   }
 
   private void addCommand(Map<String, CDOCommand> commands, CDOCommand command)

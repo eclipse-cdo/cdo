@@ -14,7 +14,6 @@ package org.eclipse.net4j.util.internal.ui.views;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.actions.ToggleAction;
@@ -57,7 +56,7 @@ public class Net4jContainerView extends ContainerView
   @Override
   protected IManagedContainer getContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   @Override

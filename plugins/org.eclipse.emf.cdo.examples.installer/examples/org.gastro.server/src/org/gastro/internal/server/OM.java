@@ -25,7 +25,7 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -93,11 +93,11 @@ public abstract class OM
       props.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
 
       repository = CDOServerUtil.createRepository("gastro", store, props);
-      CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
-      CDONet4jServerUtil.prepareContainer(IPluginContainer.INSTANCE);
+      CDOServerUtil.addRepository(IManagedContainer.INSTANCE, repository);
+      CDONet4jServerUtil.prepareContainer(IManagedContainer.INSTANCE);
 
       String description = "0.0.0.0:" + serverPort;
-      acceptor = (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", description);
+      acceptor = (IAcceptor)IManagedContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", description);
       OM.LOG.info("Gastro server started");
     }
 

@@ -13,7 +13,7 @@ package org.eclipse.net4j.util.ui.chat;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.io.IORuntimeException;
@@ -120,7 +120,7 @@ public class ChatRenderer implements UnaryOperator<String>
           description = description.substring(1);
         }
 
-        AvatarGenerator generator = IPluginContainer.INSTANCE.getElementOrNull(AvatarGenerator.PRODUCT_GROUP, type, description);
+        AvatarGenerator generator = IManagedContainer.INSTANCE.getElementOrNull(AvatarGenerator.PRODUCT_GROUP, type, description);
         if (generator != null)
         {
           generator.generateAvatar(author, html, properties);

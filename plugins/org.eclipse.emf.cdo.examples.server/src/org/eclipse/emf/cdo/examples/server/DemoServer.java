@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.examples.server.DemoConfiguration.Mode;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.concurrent.Worker;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -92,7 +92,7 @@ public class DemoServer extends Lifecycle
     OMPlatform.INSTANCE.removeLogHandler(EclipseLoggingBridge.INSTANCE);
     OM.LOG.info("Demo server starting");
 
-    IPluginContainer container = IPluginContainer.INSTANCE;
+    IManagedContainer container = IManagedContainer.INSTANCE;
     acceptor = TCPUtil.getAcceptor(container, "0.0.0.0:" + PORT);
 
     String port = OMPlatform.INSTANCE.getProperty(PROP_BROWSER_PORT);

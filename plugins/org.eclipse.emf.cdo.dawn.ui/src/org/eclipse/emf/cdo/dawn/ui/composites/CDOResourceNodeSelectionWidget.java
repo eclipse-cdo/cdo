@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
@@ -87,7 +86,7 @@ public class CDOResourceNodeSelectionWidget extends Composite
 
   protected IManagedContainer getManagedContainer()
   {
-    return IPluginContainer.INSTANCE;
+    return IManagedContainer.INSTANCE;
   }
 
   protected IContentProvider createContentProvider()

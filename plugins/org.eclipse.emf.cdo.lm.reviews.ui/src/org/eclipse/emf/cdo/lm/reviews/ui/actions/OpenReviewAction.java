@@ -43,7 +43,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -402,12 +402,12 @@ public class OpenReviewAction extends AbstractReviewAction
           Color entryBackgroundColor = new Color(display, 241, 241, 241);
           addDisposeListener(e -> entryBackgroundColor.dispose());
 
-          renderer = IPluginContainer.INSTANCE.getElementOrNull( //
+          renderer = IManagedContainer.INSTANCE.getElementOrNull( //
               ChatRenderer.Factory.PRODUCT_GROUP, //
               CHAT_RENDERER_TYPE, //
               CHAT_RENDERER_DESCRIPTION);
 
-          EntryControlAdvisor entryControlAdvisor = IPluginContainer.INSTANCE.getElementOrNull( //
+          EntryControlAdvisor entryControlAdvisor = IManagedContainer.INSTANCE.getElementOrNull( //
               EntryControlAdvisor.Factory.PRODUCT_GROUP, //
               ENTRY_CONTROL_ADVISOR_TYPE, //
               ENTRY_CONTROL_ADVISOR_DESCRIPTION);

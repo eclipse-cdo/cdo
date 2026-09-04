@@ -24,7 +24,7 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
   <artifactId>org.gastro.server.web</artifactId>
-  <version>4.4.5-SNAPSHOT</version>
+  <version>4.4.6-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

@@ -23,7 +23,6 @@ import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
@@ -252,7 +251,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
 
     protected AbstractServerProtocolFactory(String type)
     {
-      this(type, IPluginContainer.INSTANCE);
+      this(type, IManagedContainer.INSTANCE);
     }
 
     protected AbstractServerProtocolFactory(String type, IManagedContainer container)

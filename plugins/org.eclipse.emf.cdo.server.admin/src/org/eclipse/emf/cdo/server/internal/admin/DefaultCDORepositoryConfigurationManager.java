@@ -46,7 +46,6 @@ import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -84,7 +83,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DefaultCDORepositoryConfigurationManager.class);
 
-  private IManagedContainer container = IPluginContainer.INSTANCE;
+  private IManagedContainer container = IManagedContainer.INSTANCE;
 
   private InternalRepository adminRepository;
 

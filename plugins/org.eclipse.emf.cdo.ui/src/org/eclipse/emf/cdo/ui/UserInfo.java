@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.ui.UserInfo.Manager.UserInfoStorage;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -297,7 +296,7 @@ public final class UserInfo implements IUserInfo
     {
       super.doActivate();
 
-      localUserInfoStorage = UserInfoStorage.Factory.get(IPluginContainer.INSTANCE);
+      localUserInfoStorage = UserInfoStorage.Factory.get(IManagedContainer.INSTANCE);
       localUser = localUserInfoStorage == null ? null : localUserInfoStorage.loadUserInfo();
 
       if (localUser == null)

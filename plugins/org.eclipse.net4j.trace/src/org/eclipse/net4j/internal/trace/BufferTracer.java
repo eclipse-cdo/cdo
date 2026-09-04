@@ -17,7 +17,7 @@ import org.eclipse.net4j.trace.Element;
 import org.eclipse.net4j.trace.Element.BufferElement;
 import org.eclipse.net4j.trace.Element.ThreadElement;
 import org.eclipse.net4j.trace.Listener;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.Stack;
@@ -132,7 +132,7 @@ public class BufferTracer
     if (type != null)
     {
       String description = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.trace.listenerDescription");
-      return (Listener)IPluginContainer.INSTANCE.getElement(Listener.Factory.PRODUCT_GROUP, type, description);
+      return (Listener)IManagedContainer.INSTANCE.getElement(Listener.Factory.PRODUCT_GROUP, type, description);
     }
 
     return new DefaultListener();

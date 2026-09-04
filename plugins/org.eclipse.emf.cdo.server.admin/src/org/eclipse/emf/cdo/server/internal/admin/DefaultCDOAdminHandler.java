@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -49,7 +48,7 @@ public class DefaultCDOAdminHandler implements CDOAdminHandler2, ContainerAware
 {
   private final String type;
 
-  private IManagedContainer container = IPluginContainer.INSTANCE;
+  private IManagedContainer container = IManagedContainer.INSTANCE;
 
   private CDORepositoryConfigurationManager configurationManager;
 

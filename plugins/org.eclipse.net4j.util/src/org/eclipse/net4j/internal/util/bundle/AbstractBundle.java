@@ -174,145 +174,164 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
   @Override
   public void prepareContainer(IManagedContainer container)
   {
-    try (InputStream in = getInputStream("plugin.xml"))
+    AbstractManagedContainer managedContainer = container instanceof AbstractManagedContainer ? (AbstractManagedContainer)container : null;
+    if (managedContainer != null && !managedContainer.beginBundlePreparation(this))
     {
-      DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-      documentBuilderFactory.setNamespaceAware(false);
-      documentBuilderFactory.setValidating(false);
+      return;
+    }
 
-      DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-      Document document = documentBuilder.parse(in);
-
-      Tree plugin = Tree.XMLConverter.convertDocumentToTree(document);
-      for (Tree extension : plugin.children("extension"))
+    boolean successful = false;
+    try
+    {
+      try (InputStream in = getInputStream("plugin.xml"))
       {
-        if (EXT_POINT_FACTORIES.equals(extension.attribute("point")))
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setNamespaceAware(false);
+        documentBuilderFactory.setValidating(false);
+
+        DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        Document document = documentBuilder.parse(in);
+
+        Tree plugin = Tree.XMLConverter.convertDocumentToTree(document);
+        for (Tree extension : plugin.children("extension"))
         {
-          for (Tree child : extension.children())
+          if (EXT_POINT_FACTORIES.equals(extension.attribute("point")))
           {
-            if (MarkupNames.FACTORY.equals(child.name()))
+            for (Tree child : extension.children())
             {
-              String className = child.attribute(MarkupNames.CLASS);
-
-              @SuppressWarnings("unchecked")
-              Class<IFactory> factoryClass = (Class<IFactory>)loadClass(getBundleID(), className);
-              IFactory factory = factoryClass.getConstructor().newInstance();
-
-              String type = child.attribute(MarkupNames.TYPE);
-              FactoryDescriptor.adjustFactoryType(factory, type);
-              container.registerFactory(factory);
-            }
-            else if (MarkupNames.FACTORIES.equals(child.name()))
-            {
-              String className = child.attribute(MarkupNames.CLASS);
-
-              @SuppressWarnings("unchecked")
-              Class<IFactory> factoryClass = (Class<IFactory>)loadClass(getBundleID(), className);
-              Constructor<IFactory> factoryConstructor = factoryClass.getConstructor();
-
-              for (Tree grandChild : child.children(MarkupNames.TYPE))
+              if (MarkupNames.FACTORY.equals(child.name()))
               {
-                IFactory factory = factoryConstructor.newInstance();
+                String className = child.attribute(MarkupNames.CLASS);
 
-                String type = grandChild.attribute(MarkupNames.VALUE);
+                @SuppressWarnings("unchecked")
+                Class<IFactory> factoryClass = (Class<IFactory>)loadClass(getBundleID(), className);
+                IFactory factory = factoryClass.getConstructor().newInstance();
+
+                String type = child.attribute(MarkupNames.TYPE);
                 FactoryDescriptor.adjustFactoryType(factory, type);
                 container.registerFactory(factory);
               }
-            }
-            else if (MarkupNames.ANNOTATION_FACTORY.equals(child.name()))
-            {
-              String productClassName = child.attribute(MarkupNames.PRODUCT_CLASS);
-              String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
-              String type = child.attribute(MarkupNames.TYPE);
-
-              @SuppressWarnings("unchecked")
-              Class<IFactory> productClass = (Class<IFactory>)loadClass(getBundleID(), productClassName);
-              IFactory factory = new AnnotationFactory<>(productClass, productGroup, type);
-
-              FactoryDescriptor.adjustFactoryType(factory, type);
-              container.registerFactory(factory);
-            }
-            else if (MarkupNames.SIMPLE_FACTORY.equals(child.name()))
-            {
-              String productClassName = child.attribute(MarkupNames.PRODUCT_CLASS);
-              String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
-              String type = child.attribute(MarkupNames.TYPE);
-
-              @SuppressWarnings("unchecked")
-              Class<Object> productClass = (Class<Object>)loadClass(getBundleID(), productClassName);
-              Constructor<Object> productConstructor = productClass.getConstructor();
-
-              IFactory factory = new Factory(productGroup, type)
+              else if (MarkupNames.FACTORIES.equals(child.name()))
               {
-                @Override
-                public Object create(String description) throws ProductCreationException
-                {
-                  try
-                  {
-                    Object product = productConstructor.newInstance();
-                    if (product != null)
-                    {
-                      String setterName = child.attribute(MarkupNames.SETTER_NAME);
-                      SimpleFactory.configure(product, description, setterName);
-                    }
+                String className = child.attribute(MarkupNames.CLASS);
 
+                @SuppressWarnings("unchecked")
+                Class<IFactory> factoryClass = (Class<IFactory>)loadClass(getBundleID(), className);
+                Constructor<IFactory> factoryConstructor = factoryClass.getConstructor();
+
+                for (Tree grandChild : child.children(MarkupNames.TYPE))
+                {
+                  IFactory factory = factoryConstructor.newInstance();
+
+                  String type = grandChild.attribute(MarkupNames.VALUE);
+                  FactoryDescriptor.adjustFactoryType(factory, type);
+                  container.registerFactory(factory);
+                }
+              }
+              else if (MarkupNames.ANNOTATION_FACTORY.equals(child.name()))
+              {
+                String productClassName = child.attribute(MarkupNames.PRODUCT_CLASS);
+                String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
+                String type = child.attribute(MarkupNames.TYPE);
+
+                @SuppressWarnings("unchecked")
+                Class<IFactory> productClass = (Class<IFactory>)loadClass(getBundleID(), productClassName);
+                IFactory factory = new AnnotationFactory<>(productClass, productGroup, type);
+
+                FactoryDescriptor.adjustFactoryType(factory, type);
+                container.registerFactory(factory);
+              }
+              else if (MarkupNames.SIMPLE_FACTORY.equals(child.name()))
+              {
+                String productClassName = child.attribute(MarkupNames.PRODUCT_CLASS);
+                String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
+                String type = child.attribute(MarkupNames.TYPE);
+
+                @SuppressWarnings("unchecked")
+                Class<Object> productClass = (Class<Object>)loadClass(getBundleID(), productClassName);
+                Constructor<Object> productConstructor = productClass.getConstructor();
+
+                IFactory factory = new Factory(productGroup, type)
+                {
+                  @Override
+                  public Object create(String description) throws ProductCreationException
+                  {
+                    try
+                    {
+                      Object product = productConstructor.newInstance();
+                      if (product != null)
+                      {
+                        String setterName = child.attribute(MarkupNames.SETTER_NAME);
+                        SimpleFactory.configure(product, description, setterName);
+                      }
+
+                      return product;
+                    }
+                    catch (Exception ex)
+                    {
+                      throw productCreationException(description, ex);
+                    }
+                  }
+                };
+
+                container.registerFactory(factory);
+              }
+              else if (MarkupNames.CONSTANT_FACTORY.equals(child.name()))
+              {
+                String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
+                String type = child.attribute(MarkupNames.TYPE);
+                String constantClassName = child.attribute(MarkupNames.CLASS);
+                String constantName = child.attribute(MarkupNames.NAME);
+                if (StringUtil.isEmpty(constantName))
+                {
+                  constantName = type.toUpperCase();
+                }
+
+                Class<?> constantClass = OM.BUNDLE.loadClass(getBundleID(), constantClassName);
+                Field constantField = constantClass.getField(constantName);
+                Object product = constantField.get(null);
+
+                IFactory factory = new Factory(productGroup, type)
+                {
+                  @Override
+                  public Object create(String description) throws ProductCreationException
+                  {
                     return product;
                   }
-                  catch (Exception ex)
-                  {
-                    throw productCreationException(description, ex);
-                  }
-                }
-              };
+                };
 
-              container.registerFactory(factory);
-            }
-            else if (MarkupNames.CONSTANT_FACTORY.equals(child.name()))
-            {
-              String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
-              String type = child.attribute(MarkupNames.TYPE);
-              String constantClassName = child.attribute(MarkupNames.CLASS);
-              String constantName = child.attribute(MarkupNames.NAME);
-              if (StringUtil.isEmpty(constantName))
-              {
-                constantName = type.toUpperCase();
+                container.registerFactory(factory);
               }
+            }
+          }
+          else if (EXT_POINT_ELEMENT_PROCESSORS.equals(extension.attribute("point")))
+          {
+            for (Tree child : extension.children())
+            {
+              String className = child.attribute(PluginElementProcessorList.ATTR_CLASS);
 
-              Class<?> constantClass = OM.BUNDLE.loadClass(getBundleID(), constantClassName);
-              Field constantField = constantClass.getField(constantName);
-              Object product = constantField.get(null);
+              @SuppressWarnings("unchecked")
+              Class<IElementProcessor> factoryClass = (Class<IElementProcessor>)loadClass(getBundleID(), className);
+              IElementProcessor elementProcessor = factoryClass.getConstructor().newInstance();
 
-              IFactory factory = new Factory(productGroup, type)
-              {
-                @Override
-                public Object create(String description) throws ProductCreationException
-                {
-                  return product;
-                }
-              };
-
-              container.registerFactory(factory);
+              container.addPostProcessor(elementProcessor);
             }
           }
         }
-        else if (EXT_POINT_ELEMENT_PROCESSORS.equals(extension.attribute("point")))
-        {
-          for (Tree child : extension.children())
-          {
-            String className = child.attribute(PluginElementProcessorList.ATTR_CLASS);
 
-            @SuppressWarnings("unchecked")
-            Class<IElementProcessor> factoryClass = (Class<IElementProcessor>)loadClass(getBundleID(), className);
-            IElementProcessor elementProcessor = factoryClass.getConstructor().newInstance();
-
-            container.addPostProcessor(elementProcessor);
-          }
-        }
+        successful = true;
       }
     }
     catch (Exception ex)
     {
       throw WrappedException.wrap(ex);
+    }
+    finally
+    {
+      if (managedContainer != null)
+      {
+        managedContainer.endBundlePreparation(this, successful);
+      }
     }
   }
 

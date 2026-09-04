@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.ecore.EClassifier;
@@ -244,7 +244,7 @@ public interface CDOType
 
       private Registry()
       {
-        IPluginContainer.INSTANCE.forEachElement(Factory.PRODUCT_GROUP, Handler.class, this::registerHandler);
+        IManagedContainer.INSTANCE.forEachElement(Factory.PRODUCT_GROUP, Handler.class, this::registerHandler);
         updateHandlers();
       }
 

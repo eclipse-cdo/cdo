@@ -45,7 +45,6 @@ import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -252,7 +251,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
     menu.add(new Separator(ICommonMenuConstants.GROUP_ADDITIONS));
 
     boolean[] finalFilled = { filled };
-    IPluginContainer.INSTANCE.forEachElement(MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class,
+    IManagedContainer.INSTANCE.forEachElement(MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class,
         filler -> finalFilled[0] |= filler.fillMenu(page, viewer, menu, selectedElement));
 
     return finalFilled[0];
@@ -634,7 +633,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
       try
       {
-        return (CDOSession)IPluginContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP, factoryType, description);
+        return (CDOSession)IManagedContainer.INSTANCE.getElement(CDOSessionFactory.PRODUCT_GROUP, factoryType, description);
       }
       catch (FactoryNotFoundException | ProductCreationException ex)
       {
@@ -683,7 +682,7 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
         session.addListener(listener);
         CDOExplorerUtil.getRepositoryManager().addListener(listener);
 
-        IPluginContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, factoryType, description, session);
+        IManagedContainer.INSTANCE.putElement(CDOSessionFactory.PRODUCT_GROUP, factoryType, description, session);
 
         return session;
       }

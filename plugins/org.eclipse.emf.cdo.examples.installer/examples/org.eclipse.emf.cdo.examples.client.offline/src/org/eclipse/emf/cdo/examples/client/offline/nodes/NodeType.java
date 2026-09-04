@@ -40,7 +40,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -233,7 +233,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     String browserPort = node.getSetting(BROWSER_PROPERTY);
     if (browserPort != null && browserPort.length() != 0)
     {
-      CDOServerBrowser browser = (CDOServerBrowser)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", browserPort);
+      CDOServerBrowser browser = (CDOServerBrowser)IManagedContainer.INSTANCE.getElement("org.eclipse.emf.cdo.server.browsers", "default", browserPort);
       node.setObject(CDOServerBrowser.class, browser);
     }
   }
@@ -345,13 +345,13 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
   protected void activateRepository(IRepository repository)
   {
     // Don't do this with failover participants!
-    CDOServerUtil.addRepository(IPluginContainer.INSTANCE, repository);
+    CDOServerUtil.addRepository(IManagedContainer.INSTANCE, repository);
   }
 
   protected IAcceptor createAcceptor(Node node)
   {
     String description = "0.0.0.0:" + node.getSetting(PORT_PROPERTY);
-    return (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", description);
+    return (IAcceptor)IManagedContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", description);
   }
 
   /**
@@ -559,7 +559,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super.start(node);
 
-      final CDOSession session = (CDOSession)IPluginContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
+      final CDOSession session = (CDOSession)IManagedContainer.INSTANCE.getElement("org.eclipse.emf.cdo.sessions", "cdo",
           "jvm://example?repositoryName=" + REPOSITORY_NAME);
       session.getPackageRegistry().putEPackage(CompanyPackage.eINSTANCE);
 
@@ -619,7 +619,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
           }
           else
           {
-            IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", serverAddress);
+            IConnector connector = Net4jUtil.getConnector(IManagedContainer.INSTANCE, "tcp", serverAddress);
 
             configuration = CDONet4jUtil.createNet4jSessionConfiguration();
             configuration.setConnector(connector);
@@ -642,7 +642,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     @Override
     protected IAcceptor createAcceptor(Node node)
     {
-      return (IAcceptor)IPluginContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "jvm", "example");
+      return (IAcceptor)IManagedContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "jvm", "example");
     }
 
     protected void createTransaction(final Node node)
@@ -794,7 +794,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
         @Override
         protected CDONet4jSessionConfiguration createSessionConfiguration(String connectorDescription, String repositoryName)
         {
-          IConnector connector = Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", connectorDescription);
+          IConnector connector = Net4jUtil.getConnector(IManagedContainer.INSTANCE, "tcp", connectorDescription);
 
           CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
           configuration.setConnector(connector);
@@ -804,7 +804,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
         }
       };
 
-      agent.setMonitorConnector(Net4jUtil.getConnector(IPluginContainer.INSTANCE, "tcp", monitorAddress));
+      agent.setMonitorConnector(Net4jUtil.getConnector(IManagedContainer.INSTANCE, "tcp", monitorAddress));
       agent.setConnectorDescription("localhost:" + node.getSetting(PORT_PROPERTY));
       agent.setRepository(repository);
       agent.setGroup(monitorNode.getName());
@@ -842,7 +842,7 @@ public abstract class NodeType extends SetContainer<Node> implements IElement
     {
       super.start(node);
 
-      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = (org.eclipse.emf.cdo.server.net4j.FailoverMonitor)IPluginContainer.INSTANCE.getElement(
+      org.eclipse.emf.cdo.server.net4j.FailoverMonitor monitor = (org.eclipse.emf.cdo.server.net4j.FailoverMonitor)IManagedContainer.INSTANCE.getElement(
           org.eclipse.emf.cdo.server.net4j.FailoverMonitor.PRODUCT_GROUP, org.eclipse.emf.cdo.server.net4j.FailoverMonitor.Factory.TYPE, node.getName());
       node.setObject(org.eclipse.emf.cdo.server.net4j.FailoverMonitor.class, monitor);
     }

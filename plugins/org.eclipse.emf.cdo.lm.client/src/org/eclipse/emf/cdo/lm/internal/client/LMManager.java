@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -157,7 +157,7 @@ public abstract class LMManager<EE extends CDOExplorerElement, EM extends CDOExp
 
     if (DEBUG)
     {
-      IPluginContainer.INSTANCE.putElement("___" + getClass().getSimpleName(), "debug", null, this);
+      IManagedContainer.INSTANCE.putElement("___" + getClass().getSimpleName(), "debug", null, this);
     }
   }
 

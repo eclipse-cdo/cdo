@@ -80,7 +80,7 @@ public class ContainerElementList<ELEMENT> extends Container<ELEMENT>
 
   public ContainerElementList(Class<ELEMENT> elementType)
   {
-    this(elementType, IPluginContainer.INSTANCE);
+    this(elementType, IManagedContainer.INSTANCE);
   }
 
   public final IManagedContainer getContainer()

@@ -19,7 +19,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.collection.CollectionUtil;
-import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.URI;
@@ -150,9 +150,9 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
 
       private static void fillClassNames(Set<String> classNames)
       {
-        for (String type : IPluginContainer.INSTANCE.getFactoryTypes(PRODUCT_GROUP))
+        for (String type : IManagedContainer.INSTANCE.getFactoryTypes(PRODUCT_GROUP))
         {
-          ResourceSetClassNameProvider provider = IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, type);
+          ResourceSetClassNameProvider provider = IManagedContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, type);
           if (provider != null)
           {
             try

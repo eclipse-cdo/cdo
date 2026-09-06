@@ -8,6 +8,8 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.Scenario;
@@ -19,22 +21,73 @@ import junit.framework.TestCase;
  */
 public class ScenarioPropertiesDBTest extends TestCase
 {
-  private static final String[] PROPERTIES = { IConstants.TEST_SCENARIO_PROPERTY, IConstants.TEST_REPOSITORY_PROPERTY,
-      IConstants.TEST_SESSION_PROPERTY, IConstants.TEST_MODEL_PROPERTY };
-
-  private static final DBConfigs DB_CONFIGS = new DBConfigs()
-  {
-  };
+  private static final String[] PROPERTIES = { IConstants.TEST_SCENARIO_PROPERTY, IConstants.TEST_REPOSITORY_PROPERTY, IConstants.TEST_SESSION_PROPERTY,
+      IConstants.TEST_MODEL_PROPERTY };
 
   public void testH2FactoryDescription()
   {
-    assertNotNull(DB_CONFIGS);
-    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "H2:branches-ranges-client/JVM/NATIVE" }, () -> {
+    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "H2:branches,ranges,clientIDs/JVM/NATIVE" }, () -> {
       IScenario scenario = Scenario.createFromProperties();
       DBConfig config = (DBConfig)scenario.getRepositoryConfig();
       assertTrue(config.supportingBranches());
       assertTrue(config.withRanges());
+      assertEquals(IDGenerationLocation.CLIENT, config.idGenerationLocation());
     });
+  }
+
+  public void testNullAndEmptyDescriptionUseDefaults()
+  {
+    assertDefault(new H2ConfigFactory().create(null));
+    assertDefault(new H2ConfigFactory().create(""));
+  }
+
+  public void testOrderIndependence()
+  {
+    DBConfig first = new H2ConfigFactory().create("branches,ranges,clientIDs,copyOnBranch");
+    DBConfig second = new H2ConfigFactory().create("copyOnBranch=true,clientIDs=true,ranges=true,branches=true");
+    assertEquals(first.supportingAudits(), second.supportingAudits());
+    assertEquals(first.supportingBranches(), second.supportingBranches());
+    assertEquals(first.withRanges(), second.withRanges());
+    assertEquals(first.copyOnBranch(), second.copyOnBranch());
+    assertEquals(first.idGenerationLocation(), second.idGenerationLocation());
+  }
+
+  public void testValidAndInvalidCombinations()
+  {
+    assertTrue(new H2ConfigFactory().create("audits,ranges").withRanges());
+    assertTrue(new H2ConfigFactory().create("branches,copyOnBranch").copyOnBranch());
+    assertTrue(new H2ConfigFactory().create("inverseLists").inverseLists());
+
+    assertRejected("branches,audits=false");
+    assertRejected("ranges");
+    assertRejected("copyOnBranch");
+    assertRejected("inverseLists,inverseLists");
+  }
+
+  private void assertDefault(DBConfig config)
+  {
+    assertFalse(config.supportingAudits());
+    assertFalse(config.supportingBranches());
+    assertTrue(config.supportingChunks());
+    assertTrue(config.supportingExtRefs());
+    assertFalse(config.withRanges());
+    assertFalse(config.copyOnBranch());
+    assertFalse(config.inverseLists());
+    assertEquals(IDGenerationLocation.STORE, config.idGenerationLocation());
+    assertEquals(ListOrdering.ORDERED, config.listOrdering());
+  }
+
+  private void assertRejected(String description)
+  {
+    try
+    {
+      new H2ConfigFactory().create(description);
+      fail("ProductCreationException expected for " + description);
+    }
+    catch (RuntimeException expected)
+    {
+      // Expected.
+    }
   }
 
   private static void withProperties(String[] names, String[] values, Runnable test)

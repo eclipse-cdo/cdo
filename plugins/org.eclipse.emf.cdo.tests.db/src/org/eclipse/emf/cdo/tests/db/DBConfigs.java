@@ -27,9 +27,6 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.db.bugzilla.Bugzilla_527002_Test;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
 
-import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.om.OMPlatform;
-
 import java.util.List;
 
 /**
@@ -37,14 +34,6 @@ import java.util.List;
  */
 public abstract class DBConfigs extends AllConfigs
 {
-  static
-  {
-    if (!OMPlatform.INSTANCE.isExtensionRegistryAvailable())
-    {
-      OM.BUNDLE.prepareContainer(IPluginContainer.INSTANCE);
-    }
-  }
-
   @Override
   public List<Class<? extends ConfigTest>> getBugzillaTests()
   {

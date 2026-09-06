@@ -21,10 +21,7 @@
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">
-    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM"/>
-    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_AUDITS" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_AUDITS"/>
-    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_BRANCHES" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_BRANCHES"/>
-    <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_BRANCHES_UUIDS" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_BRANCHES_UUIDS"/>
+    <factory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM" class="org.eclipse.emf.cdo.tests.config.impl.MEMConfigFactory"/>
     <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_OFFLINE" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_OFFLINE"/>
     <constantFactory productGroup="org.eclipse.emf.cdo.tests.repositoryConfigs" type="MEM_EMBEDDED_BRANCHES" class="org.eclipse.emf.cdo.tests.config.IConstants" name="MEM_EMBEDDED_BRANCHES"/>
     <constantFactory productGroup="org.eclipse.emf.cdo.tests.sessionConfigs" type="EMBEDDED" class="org.eclipse.emf.cdo.tests.config.IConstants" name="EMBEDDED"/>

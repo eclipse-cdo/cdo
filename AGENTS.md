@@ -13,3 +13,9 @@
 * `CDO_TESTS` supports class/prefix selection but not individual test methods.
 * Maven is configured to ignore test failures. Always inspect current `target/surefire-reports/TEST-*.xml`; a successful Maven exit code alone does not prove that tests passed.
 * Use a root `clean verify` only for broad/build/target/feature/site changes or final CI-equivalent verification.
+
+## CDO Test Scenario Selection
+
+- For external CDO test-scenario selection, do not guess property names, syntax, factory types, or capabilities. Read the canonical test-framework JavaDocs starting at `IScenario`; consult `RepositoryConfigFactory` for repository capabilities and `DBConfigFactory` for DB extensions.
+- The primary system properties are `cdo.test.scenario`, `cdo.test.repository`, `cdo.test.session`, and `cdo.test.model`. For syntax, precedence, valid factory types, and capabilities, consult the canonical JavaDocs above.
+- CDO tests launched through Eclipse MCP are ordinary JUnit tests and must use `pluginTest=false`.

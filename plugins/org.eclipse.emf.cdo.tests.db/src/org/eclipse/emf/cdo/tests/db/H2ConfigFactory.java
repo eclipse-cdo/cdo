@@ -8,50 +8,22 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
-import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-
-import org.eclipse.net4j.util.factory.Factory;
-import org.eclipse.net4j.util.factory.ProductCreationException;
-
 /**
- * Creates the H2 repository configurations used by the DB test suites.
+ * Creates H2 repository configurations and inherits generic and DB-specific capability handling from
+ * {@link DBConfigFactory}.
  *
  * @author Eike Stepper
  */
-public final class H2ConfigFactory extends Factory
+public final class H2ConfigFactory extends DBConfigFactory<H2Config>
 {
   public H2ConfigFactory()
   {
-    super("org.eclipse.emf.cdo.tests.repositoryConfigs", "H2");
+    super("H2");
   }
 
   @Override
-  public DBConfig create(String description) throws ProductCreationException
+  protected H2Config createConfig()
   {
-    H2Config config = new H2Config();
-    if (description == null || description.length() == 0 || "default".equals(description))
-    {
-      return config;
-    }
-
-    switch (description)
-    {
-    case "audit-ranges":
-      return config.supportingAudits(true).withRanges(true);
-    case "audit-ranges-client":
-      return config.supportingAudits(true).withRanges(true).idGenerationLocation(IDGenerationLocation.CLIENT);
-    case "branches-ranges":
-      return config.supportingBranches(true).withRanges(true);
-    case "branches-ranges-client":
-      return config.supportingBranches(true).withRanges(true).idGenerationLocation(IDGenerationLocation.CLIENT);
-    case "branches":
-      return config.supportingBranches(true);
-    case "branches-client":
-      return config.supportingBranches(true).idGenerationLocation(IDGenerationLocation.CLIENT);
-    case "client":
-      return config.idGenerationLocation(IDGenerationLocation.CLIENT);
-    default:
-      throw productCreationException(description);
-    }
+    return new H2Config();
   }
 }

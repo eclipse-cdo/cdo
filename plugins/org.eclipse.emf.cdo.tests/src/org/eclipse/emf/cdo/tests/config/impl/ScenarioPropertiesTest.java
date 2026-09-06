@@ -8,8 +8,11 @@
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering;
 import org.eclipse.emf.cdo.tests.config.IConstants;
 import org.eclipse.emf.cdo.tests.config.IScenario;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig;
 
 import junit.framework.TestCase;
 
@@ -18,7 +21,10 @@ import junit.framework.TestCase;
  */
 public class ScenarioPropertiesTest extends TestCase
 {
-  private static final String[] PROPERTIES = { IConstants.TEST_SCENARIO_PROPERTY, IConstants.TEST_REPOSITORY_PROPERTY, IConstants.TEST_SESSION_PROPERTY,
+  private static final String[] PROPERTIES = { //
+      IConstants.TEST_SCENARIO_PROPERTY, //
+      IConstants.TEST_REPOSITORY_PROPERTY, //
+      IConstants.TEST_SESSION_PROPERTY, //
       IConstants.TEST_MODEL_PROPERTY };
 
   public void testNoOverride()
@@ -30,7 +36,8 @@ public class ScenarioPropertiesTest extends TestCase
   {
     withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM/JVM/NATIVE" }, () -> {
       IScenario scenario = Scenario.createFromProperties();
-      assertSame(IConstants.MEM, scenario.getRepositoryConfig());
+      assertFalse(scenario.getRepositoryConfig().supportingAudits());
+      assertFalse(scenario.getRepositoryConfig().supportingBranches());
       assertSame(IConstants.JVM, scenario.getSessionConfig());
       assertSame(IConstants.NATIVE, scenario.getModelConfig());
     });
@@ -39,12 +46,90 @@ public class ScenarioPropertiesTest extends TestCase
   public void testComponentTriple()
   {
     withProperties(new String[] { IConstants.TEST_REPOSITORY_PROPERTY, IConstants.TEST_SESSION_PROPERTY, IConstants.TEST_MODEL_PROPERTY },
-        new String[] { "MEM_BRANCHES_UUIDS", "JVM", "NATIVE" }, () -> {
+        new String[] { "MEM:branches,clientIDs", "JVM", "NATIVE" }, () -> {
           IScenario scenario = Scenario.createFromProperties();
-          assertSame(IConstants.MEM_BRANCHES_UUIDS, scenario.getRepositoryConfig());
+          assertTrue(scenario.getRepositoryConfig().supportingBranches());
+          assertEquals(IDGenerationLocation.CLIENT, scenario.getRepositoryConfig().idGenerationLocation());
           assertSame(IConstants.JVM, scenario.getSessionConfig());
           assertSame(IConstants.NATIVE, scenario.getModelConfig());
         });
+  }
+
+  public void testMEMFactoryCapabilities()
+  {
+    MEMConfig config = new MEMConfigFactory().create(null);
+    assertFalse(config.supportingAudits());
+    assertFalse(config.supportingBranches());
+    assertTrue(config.supportingChunks());
+    assertTrue(config.supportingExtRefs());
+    assertEquals(IDGenerationLocation.STORE, config.idGenerationLocation());
+    assertEquals(ListOrdering.ORDERED, config.listOrdering());
+
+    config = new MEMConfigFactory().create("");
+    assertFalse(config.supportingAudits());
+    assertTrue(config.supportingChunks());
+
+    config = new MEMConfigFactory().create("audits");
+    assertTrue(config.supportingAudits());
+    config = new MEMConfigFactory().create("branches");
+    assertTrue(config.supportingBranches());
+    assertTrue(config.supportingAudits());
+    config = new MEMConfigFactory().create("branches,clientIDs");
+    assertEquals(IDGenerationLocation.CLIENT, config.idGenerationLocation());
+  }
+
+  public void testMEMFactoryBooleanCapabilities()
+  {
+    MEMConfig config = new MEMConfigFactory().create("audits=true,branches=true,chunks=false,extRefs=false,clientIDs=false,unorderedLists=false");
+    assertTrue(config.supportingAudits());
+    assertTrue(config.supportingBranches());
+    assertFalse(config.supportingChunks());
+    assertFalse(config.supportingExtRefs());
+    assertEquals(IDGenerationLocation.STORE, config.idGenerationLocation());
+    assertEquals(ListOrdering.ORDERED, config.listOrdering());
+
+    config = new MEMConfigFactory().create("audits=false,branches=false,chunks=false,extRefs=false,clientIDs=false,unorderedLists=false");
+    assertFalse(config.supportingAudits());
+    assertFalse(config.supportingBranches());
+    assertFalse(config.supportingChunks());
+    assertFalse(config.supportingExtRefs());
+    assertEquals(IDGenerationLocation.STORE, config.idGenerationLocation());
+    assertEquals(ListOrdering.ORDERED, config.listOrdering());
+  }
+
+  public void testMEMFactoryOrderIndependence()
+  {
+    MEMConfig first = new MEMConfigFactory().create("branches,clientIDs,chunks=false,extRefs=false,unorderedLists");
+    MEMConfig second = new MEMConfigFactory().create("unorderedLists=true,extRefs=false,chunks=false,clientIDs=true,branches=true");
+    assertEquals(first.supportingAudits(), second.supportingAudits());
+    assertEquals(first.supportingBranches(), second.supportingBranches());
+    assertEquals(first.supportingChunks(), second.supportingChunks());
+    assertEquals(first.supportingExtRefs(), second.supportingExtRefs());
+    assertEquals(first.idGenerationLocation(), second.idGenerationLocation());
+    assertEquals(first.listOrdering(), second.listOrdering());
+  }
+
+  public void testMEMFactoryValidation()
+  {
+    assertRejectedMEM("branches,audits=false");
+    assertRejectedMEM("branches,branches");
+    assertRejectedMEM("unknown");
+    assertRejectedMEM("branches=maybe");
+    assertRejectedMEM("branches,,audits");
+    assertRejectedMEM("branches=audit");
+  }
+
+  private void assertRejectedMEM(String description)
+  {
+    try
+    {
+      new MEMConfigFactory().create(description);
+      fail("ProductCreationException expected for " + description);
+    }
+    catch (RuntimeException expected)
+    {
+      // Expected.
+    }
   }
 
   public void testMixedFormsRejected()
@@ -74,24 +159,6 @@ public class ScenarioPropertiesTest extends TestCase
   {
     withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM/JVM" }, () -> assertRejected());
     withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM\\sJVM/NATIVE" }, () -> assertRejected());
-  }
-
-  public void testEscapedConfigurationDescription()
-  {
-    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM:slash\\sinside/JVM/NATIVE" }, () -> {
-      IScenario scenario = Scenario.createFromProperties();
-      assertSame(IConstants.MEM, scenario.getRepositoryConfig());
-    });
-
-    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM:colon\\\\sinside/JVM/NATIVE" }, () -> {
-      IScenario scenario = Scenario.createFromProperties();
-      assertSame(IConstants.MEM, scenario.getRepositoryConfig());
-    });
-
-    withProperties(new String[] { IConstants.TEST_SCENARIO_PROPERTY }, new String[] { "MEM:backslash\\\\\\\\inside/JVM/NATIVE" }, () -> {
-      IScenario scenario = Scenario.createFromProperties();
-      assertSame(IConstants.MEM, scenario.getRepositoryConfig());
-    });
   }
 
   private void assertRejected()

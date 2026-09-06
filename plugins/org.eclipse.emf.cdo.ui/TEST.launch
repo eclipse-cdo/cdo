@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
+    <booleanAttribute key="add_console" value="false"/>
     <setAttribute key="additional_plugins">
         <setEntry value="javax.servlet:3.1.0.v201410161800:default:false:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.edit:4.5.2.qualifier:default:true:default:default"/>
@@ -104,35 +105,18 @@
         <setEntry value="com.sun.jna.platform@default:default"/>
         <setEntry value="com.sun.jna@default:default"/>
         <setEntry value="jakarta.activation-api@default:default"/>
-        <setEntry value="jakarta.annotation-api*1.3.5@default:default"/>
-        <setEntry value="jakarta.annotation-api*2.1.1@default:default"/>
+        <setEntry value="jakarta.annotation-api@default:default"/>
         <setEntry value="jakarta.inject.jakarta.inject-api*1.0.5@default:default"/>
         <setEntry value="jakarta.inject.jakarta.inject-api*2.0.1@default:default"/>
-        <setEntry value="jakarta.xml.bind-api*4.0.4@default:default"/>
-        <setEntry value="javax.activation@default:default"/>
-        <setEntry value="junit-jupiter-api*5.14.1@default:default"/>
-        <setEntry value="junit-jupiter-engine*5.14.1@default:default"/>
+        <setEntry value="jakarta.xml.bind-api@default:default"/>
         <setEntry value="junit-jupiter-migrationsupport@default:default"/>
-        <setEntry value="junit-jupiter-params*5.14.1@default:default"/>
-        <setEntry value="junit-platform-commons*1.14.1@default:default"/>
-        <setEntry value="junit-platform-commons*6.0.1@default:default"/>
-        <setEntry value="junit-platform-engine*1.14.1@default:default"/>
-        <setEntry value="junit-platform-engine*6.0.1@default:default"/>
-        <setEntry value="junit-platform-launcher*1.14.1@default:default"/>
-        <setEntry value="junit-platform-launcher*6.0.1@default:default"/>
         <setEntry value="junit-platform-runner@default:default"/>
-        <setEntry value="junit-platform-suite-api*1.14.1@default:default"/>
         <setEntry value="junit-platform-suite-commons@default:default"/>
-        <setEntry value="junit-platform-suite-engine*1.14.1@default:default"/>
         <setEntry value="junit-vintage-engine@default:default"/>
         <setEntry value="lpg.runtime.java@default:default"/>
         <setEntry value="oracle.database.driver@default:default"/>
         <setEntry value="org.apache.ant@default:default"/>
         <setEntry value="org.apache.aries.spifly.dynamic.bundle@default:default"/>
-        <setEntry value="org.apache.batik.constants@default:default"/>
-        <setEntry value="org.apache.batik.css@default:default"/>
-        <setEntry value="org.apache.batik.i18n@default:default"/>
-        <setEntry value="org.apache.batik.util@default:default"/>
         <setEntry value="org.apache.commons.commons-io@default:default"/>
         <setEntry value="org.apache.commons.commons-logging@default:default"/>
         <setEntry value="org.apache.commons.lang3@default:default"/>
@@ -147,7 +131,6 @@
         <setEntry value="org.apache.lucene.analysis-smartcn@default:default"/>
         <setEntry value="org.apache.lucene.core@default:default"/>
         <setEntry value="org.apache.xml.resolver@default:default"/>
-        <setEntry value="org.apache.xmlgraphics@default:default"/>
         <setEntry value="org.apiguardian.api@default:default"/>
         <setEntry value="org.aspectj.runtime@default:default"/>
         <setEntry value="org.aspectj.weaver@default:default"/>
@@ -200,7 +183,6 @@
         <setEntry value="org.eclipse.e4.ui.model.workbench@default:default"/>
         <setEntry value="org.eclipse.e4.ui.progress@default:default"/>
         <setEntry value="org.eclipse.e4.ui.services@default:default"/>
-        <setEntry value="org.eclipse.e4.ui.swt.win32@default:false"/>
         <setEntry value="org.eclipse.e4.ui.widgets@default:default"/>
         <setEntry value="org.eclipse.e4.ui.workbench.addons.swt@default:default"/>
         <setEntry value="org.eclipse.e4.ui.workbench.renderers.swt@default:default"/>
@@ -393,7 +375,6 @@
         <setEntry value="org.eclipse.equinox.security@default:default"/>
         <setEntry value="org.eclipse.equinox.simpleconfigurator.manipulator@default:default"/>
         <setEntry value="org.eclipse.equinox.simpleconfigurator@1:true"/>
-        <setEntry value="org.eclipse.equinox.slf4j@default:default"/>
         <setEntry value="org.eclipse.equinox.weaving.aspectj@default:default"/>
         <setEntry value="org.eclipse.equinox.weaving.hook@default:false"/>
         <setEntry value="org.eclipse.gef@default:default"/>
@@ -489,7 +470,6 @@
         <setEntry value="org.eclipse.ocl.common@default:default"/>
         <setEntry value="org.eclipse.ocl.ecore@default:default"/>
         <setEntry value="org.eclipse.ocl@default:default"/>
-        <setEntry value="org.eclipse.orbit.xml-apis-ext@default:default"/>
         <setEntry value="org.eclipse.osgi.compatibility.state@default:false"/>
         <setEntry value="org.eclipse.osgi.util@default:default"/>
         <setEntry value="org.eclipse.osgi@-1:true"/>
@@ -582,7 +562,6 @@
         <setEntry value="org.osgi.util.position@default:default"/>
         <setEntry value="org.osgi.util.promise@default:default"/>
         <setEntry value="org.osgi.util.xml@default:default"/>
-        <setEntry value="org.postgresql@default:default"/>
         <setEntry value="org.sat4j.core@default:default"/>
         <setEntry value="org.sat4j.pb@default:default"/>
         <setEntry value="org.tukaani.xz@default:default"/>

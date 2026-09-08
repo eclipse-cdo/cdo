@@ -162,6 +162,7 @@ public class Bugzilla_376620b_Test extends AbstractCDOTest
       }
       catch (InterruptedException e)
       {
+        Thread.currentThread().interrupt();
         fail("Interrupted while awaiting assertion.");
       }
 

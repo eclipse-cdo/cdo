@@ -19,6 +19,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.connector.IConnectorStateEvent;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -157,6 +158,8 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
         break;
 
       case NEGOTIATING:
+        // Publish the context before making the NEGOTIATING state visible. Transport input dispatch
+        // is allowed only after this transition and can therefore rely on a usable context.
         context = createNegotiationContext();
         negotiationContext = context;
         connectingLatch = finishedConnecting;
@@ -301,6 +304,8 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     catch (Exception ex)
     {
       setState(ConnectorState.DISCONNECTED);
+
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw new ConnectorException(ex);
     }
   }
@@ -464,16 +469,16 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
     {
     case DISCONNECTED:
       return true;
-  
+
     case CONNECTING:
       return oldState == ConnectorState.DISCONNECTED;
-  
+
     case NEGOTIATING:
       return oldState == ConnectorState.CONNECTING;
-  
+
     case CONNECTED:
       return oldState == ConnectorState.CONNECTING || oldState == ConnectorState.NEGOTIATING;
-  
+
     default:
       throw new AssertionError(newState);
     }

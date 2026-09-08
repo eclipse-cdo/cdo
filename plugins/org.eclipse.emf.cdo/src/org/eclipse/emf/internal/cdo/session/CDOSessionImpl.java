@@ -829,6 +829,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
   }
@@ -1185,6 +1186,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           throw WrappedException.wrap(ex);
         }
       }

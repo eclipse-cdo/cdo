@@ -1131,6 +1131,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       }
       catch (InterruptedException ex)
       {
+        Thread.currentThread().interrupt();
         throw WrappedException.wrap(ex);
       }
 

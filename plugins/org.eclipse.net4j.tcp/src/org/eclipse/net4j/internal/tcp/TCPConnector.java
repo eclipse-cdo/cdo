@@ -298,6 +298,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       }
       catch (InterruptedException ex)
       {
+        Thread.currentThread().interrupt();
         throw WrappedException.wrap(ex);
       }
 

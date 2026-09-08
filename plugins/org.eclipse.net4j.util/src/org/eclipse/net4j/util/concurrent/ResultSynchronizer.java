@@ -94,7 +94,8 @@ public final class ResultSynchronizer<RESULT> implements ISynchronizer<RESULT>
     }
     catch (InterruptedException ex)
     {
-      return false;
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
     }
 
     return true;

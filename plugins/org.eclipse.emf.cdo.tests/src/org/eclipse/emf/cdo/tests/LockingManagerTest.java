@@ -233,6 +233,7 @@ public class LockingManagerTest extends AbstractLockingTest
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           fail("Should not have exception");
         }
       }

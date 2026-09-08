@@ -67,6 +67,7 @@ public abstract class AsyncOutputStream extends PipedOutputStream
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
   }

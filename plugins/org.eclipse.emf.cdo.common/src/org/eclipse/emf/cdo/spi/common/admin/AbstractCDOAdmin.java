@@ -97,6 +97,7 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           throw WrappedException.wrap(ex);
         }
       }
@@ -146,7 +147,8 @@ public abstract class AbstractCDOAdmin extends SetContainer<CDOAdminRepository> 
         }
         catch (InterruptedException ex)
         {
-          return false;
+          Thread.currentThread().interrupt();
+          throw WrappedException.wrap(ex);
         }
       }
 

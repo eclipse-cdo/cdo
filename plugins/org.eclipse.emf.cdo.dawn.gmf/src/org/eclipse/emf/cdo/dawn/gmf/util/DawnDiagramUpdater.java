@@ -99,6 +99,7 @@ public class DawnDiagramUpdater
       }
       catch (InterruptedException ex)
       {
+        Thread.currentThread().interrupt();
         throw new RuntimeException(ex);
       }
     }

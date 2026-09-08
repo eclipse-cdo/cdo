@@ -44,7 +44,7 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
 
   private IBufferProvider bufferProvider;
 
-  private INFRA_STRUCTURE infraStructure;
+  private volatile INFRA_STRUCTURE infraStructure;
 
   private IChannel channel;
 

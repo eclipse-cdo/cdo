@@ -80,6 +80,7 @@ public interface CriticalSection
     }
     catch (Exception ex)
     {
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }
@@ -93,6 +94,7 @@ public interface CriticalSection
     catch (Exception ex)
     {
       // Make the compiler happy, even though Supplier can not throw checked exceptions.
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }
@@ -106,6 +108,7 @@ public interface CriticalSection
     catch (Exception ex)
     {
       // Make the compiler happy, even though BooleanSupplier can not throw checked exceptions.
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }
@@ -119,6 +122,7 @@ public interface CriticalSection
     catch (Exception ex)
     {
       // Make the compiler happy, even though IntSupplier can not throw checked exceptions.
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }
@@ -132,6 +136,7 @@ public interface CriticalSection
     catch (Exception ex)
     {
       // Make the compiler happy, even though LongSupplier can not throw checked exceptions.
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }
@@ -145,6 +150,7 @@ public interface CriticalSection
     catch (Exception ex)
     {
       // Make the compiler happy, even though DoubleSupplier can not throw checked exceptions.
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }
@@ -162,6 +168,7 @@ public interface CriticalSection
         throw exceptionType.cast(ex);
       }
 
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }

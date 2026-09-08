@@ -231,6 +231,7 @@ public class SecurityTest extends AbstractOMTest
             }
             catch (InterruptedException ex)
             {
+              Thread.currentThread().interrupt();
               throw WrappedException.wrap(ex);
             }
 

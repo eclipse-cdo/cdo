@@ -218,6 +218,7 @@ public class TestListener2 implements IListener
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           throw WrappedException.wrap(ex);
         }
 

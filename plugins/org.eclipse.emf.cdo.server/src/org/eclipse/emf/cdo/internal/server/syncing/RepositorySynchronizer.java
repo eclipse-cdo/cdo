@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
 import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.PriorityQueueRunnable;
 import org.eclipse.net4j.util.concurrent.PriorityQueueRunner;
 import org.eclipse.net4j.util.container.IContainerDelta;
@@ -53,6 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Eike Stepper
@@ -75,6 +75,8 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
   private int retryInterval = DEFAULT_RETRY_INTERVAL;
 
   private Object connectLock = new Object();
+
+  private boolean connectPending;
 
   private InternalSynchronizableRepository localRepository;
 
@@ -232,6 +234,11 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
   @Override
   protected void doDeactivate() throws Exception
   {
+    synchronized (connectLock)
+    {
+      connectPending = false;
+    }
+
     if (recommitTimer != null)
     {
       recommitTimer.cancel();
@@ -258,6 +265,11 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
 
   protected void handleDisconnect()
   {
+    handleDisconnect(true);
+  }
+
+  private void handleDisconnect(boolean reconnect)
+  {
     if (TRACER.isEnabled())
     {
       TRACER.trace("Disconnected from master."); //$NON-NLS-1$
@@ -279,7 +291,10 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
       fireEvent(new SingleDeltaContainerEvent<>(this, element, IContainerDelta.Kind.REMOVED));
     }
 
-    reconnect();
+    if (reconnect)
+    {
+      reconnect();
+    }
   }
 
   private void closeRemoteSession()
@@ -292,9 +307,10 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
 
   private void reconnect()
   {
-    clearQueue();
-    if (isActive())
+    synchronized (connectLock)
     {
+      clearQueue();
+      connectPending = false;
       scheduleConnect();
     }
   }
@@ -309,9 +325,14 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         return;
       }
 
-      if (isActive())
+      if (isActive() && !connectPending)
       {
-        addWork(new ConnectRunnable());
+        connectPending = true;
+
+        if (!addWork(new ConnectRunnable()))
+        {
+          connectPending = false;
+        }
       }
     }
   }
@@ -324,19 +345,31 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     }
   }
 
-  private void sleepRetryInterval()
+  private boolean sleepRetryInterval()
   {
-    long end = System.currentTimeMillis() + 1000L * retryInterval;
+    long end = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(retryInterval);
 
     for (;;)
     {
       long now = System.currentTimeMillis();
       if (now >= end || !isActive())
       {
-        break;
+        return isActive();
       }
 
-      ConcurrencyUtil.sleep(Math.min(100L, end - now));
+      try
+      {
+        Thread.sleep(Math.min(100L, end - now));
+      }
+      catch (InterruptedException ex)
+      {
+        if (isActive())
+        {
+          Thread.currentThread().interrupt();
+        }
+
+        return false;
+      }
     }
   }
 
@@ -401,6 +434,8 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
     @Override
     public void run()
     {
+      Exception connectionFailure = null;
+
       synchronized (connectLock)
       {
         checkActive();
@@ -422,29 +457,61 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
         catch (Exception ex)
         {
           remoteSession = null;
+          connectionFailure = ex;
+        }
 
-          if (isActive())
+        if (connectionFailure == null)
+        {
+          if (!isActive())
           {
-            if (TRACER.isEnabled())
-            {
-              TRACER.format("Connection attempt failed. Retrying in {0} seconds...", retryInterval); //$NON-NLS-1$
-            }
-
-            fireThrowable(ex);
-            sleepRetryInterval();
-            reconnect();
+            handleDisconnect(false);
+            connectPending = false;
+            return;
           }
 
-          return;
-        }
+          if (TRACER.isEnabled())
+          {
+            TRACER.trace("Connected to master."); //$NON-NLS-1$
+          }
 
+          handleConnect();
+          connectPending = false;
+        }
+        else if (!isActive())
+        {
+          connectPending = false;
+        }
+      }
+
+      if (connectionFailure != null)
+      {
         if (TRACER.isEnabled())
         {
-          TRACER.trace("Connected to master."); //$NON-NLS-1$
+          TRACER.format("Connection attempt failed. Retrying in {0} seconds...", retryInterval); //$NON-NLS-1$
         }
 
-        handleConnect();
+        fireThrowable(connectionFailure);
+
+        if (sleepRetryInterval())
+        {
+          synchronized (connectLock)
+          {
+            connectPending = false;
+          }
+
+          reconnect();
+        }
+        else
+        {
+          synchronized (connectLock)
+          {
+            connectPending = false;
+          }
+        }
+
+        return;
       }
+
     }
 
     @Override
@@ -518,6 +585,7 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
       }
       catch (RuntimeException ex)
       {
+        boolean retry = false;
         if (isActive())
         {
           if (TRACER.isEnabled())
@@ -526,9 +594,11 @@ public class RepositorySynchronizer extends PriorityQueueRunner implements Inter
           }
 
           fireThrowable(ex);
-          sleepRetryInterval();
-          handleDisconnect();
+
+          retry = sleepRetryInterval();
         }
+
+        handleDisconnect(retry && isActive());
       }
     }
 

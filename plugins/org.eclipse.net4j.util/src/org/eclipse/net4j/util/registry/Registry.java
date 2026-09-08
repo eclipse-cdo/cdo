@@ -242,6 +242,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
       }
       catch (InterruptedException ex)
       {
+        Thread.currentThread().interrupt();
         throw WrappedException.wrap(ex);
       }
     }

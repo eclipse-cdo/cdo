@@ -118,6 +118,7 @@ public class XATransactionCommitContext extends TransactionCommitContext
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
 

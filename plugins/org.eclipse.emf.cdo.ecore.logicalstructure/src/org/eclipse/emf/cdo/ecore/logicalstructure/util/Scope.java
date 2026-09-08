@@ -111,7 +111,16 @@ public class Scope
     evaluationEngine.evaluateExpression(compiledExpression, value, thread, listener, DebugEvent.EVALUATION_IMPLICIT,
         false);
 
-    IEvaluationResult result = listener.getResult();
+    IEvaluationResult result;
+    try
+    {
+      result = listener.getResult();
+    }
+    catch (InterruptedException ex)
+    {
+      throw new DebugException(new Status(IStatus.CANCEL, Activator.PLUGIN_ID, "Evaluation interrupted", ex));
+    }
+
     if (result == null)
     {
       return null;
@@ -311,7 +320,7 @@ public class Scope
       notifyAll();
     }
 
-    public synchronized IEvaluationResult getResult()
+    public synchronized IEvaluationResult getResult() throws InterruptedException
     {
       while (result == null)
       {
@@ -321,7 +330,8 @@ public class Scope
         }
         catch (InterruptedException ex)
         {
-          break;
+          Thread.currentThread().interrupt();
+          throw ex;
         }
       }
 

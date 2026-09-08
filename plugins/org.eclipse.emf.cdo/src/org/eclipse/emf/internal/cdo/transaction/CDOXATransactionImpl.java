@@ -371,6 +371,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
       }
       catch (InterruptedException ex1)
       {
+        Thread.currentThread().interrupt();
         throw WrappedException.wrap(ex1);
       }
       catch (ExecutionException ex1)

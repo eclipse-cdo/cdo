@@ -19,7 +19,6 @@ import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.tcp.messages.Messages;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.ImplementationError;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -134,11 +133,11 @@ public class ControlChannel extends Channel
       case OPCODE_NEGOTIATION:
       {
         assertNegotiating();
+
         INegotiationContext negotiationContext = getConnector().getNegotiationContext();
-        while (negotiationContext == null)
+        if (negotiationContext == null)
         {
-          ConcurrencyUtil.sleep(20);
-          negotiationContext = getConnector().getNegotiationContext();
+          throw new IllegalStateException("Negotiation context is not available while connector is negotiating"); //$NON-NLS-1$
         }
 
         Receiver receiver = negotiationContext.getReceiver();
@@ -154,6 +153,7 @@ public class ControlChannel extends Channel
       case OPCODE_REGISTRATION_VERSIONED:
       {
         assertConnected();
+
         short channelID = buffer.getShort();
         assertValidChannelID(channelID);
         String error = null;
@@ -185,6 +185,7 @@ public class ControlChannel extends Channel
       case OPCODE_DEREGISTRATION:
       {
         assertConnected();
+
         short channelID = buffer.getShort();
         if (channelID == CONTROL_CHANNEL_INDEX)
         {
@@ -209,6 +210,7 @@ public class ControlChannel extends Channel
       case OPCODE_REGISTRATION_ACK:
       {
         assertConnected();
+
         short channelID = buffer.getShort();
         String error = buffer.getString();
         if (error == null)

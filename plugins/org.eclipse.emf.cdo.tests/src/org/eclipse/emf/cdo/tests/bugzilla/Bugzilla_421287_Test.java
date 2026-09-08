@@ -152,6 +152,7 @@ public class Bugzilla_421287_Test extends AbstractCDOTest
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       fail("Test interrupted");
     }
     catch (ExecutionException ex)

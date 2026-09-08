@@ -1518,7 +1518,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
             }
             catch (InterruptedException ex)
             {
-              Thread.currentThread().interrupt();
             }
             finally
             {
@@ -1574,6 +1573,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
               }
               catch (InterruptedException ex)
               {
+                Thread.currentThread().interrupt();
                 throw WrappedException.wrap(ex);
               }
             }

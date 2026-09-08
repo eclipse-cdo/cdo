@@ -377,6 +377,7 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           return;
         }
       }

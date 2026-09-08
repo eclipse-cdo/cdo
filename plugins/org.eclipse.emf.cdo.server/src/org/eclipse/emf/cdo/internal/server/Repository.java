@@ -2457,6 +2457,7 @@ public class Repository extends Container<Object> implements InternalRepository
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
 

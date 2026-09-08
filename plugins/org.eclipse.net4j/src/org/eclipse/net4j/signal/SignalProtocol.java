@@ -298,7 +298,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
           }
           catch (InterruptedException ex)
           {
-            return false;
+            Thread.currentThread().interrupt();
+            throw WrappedException.wrap(ex);
           }
         }
 
@@ -320,7 +321,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
         }
         catch (InterruptedException ex)
         {
-          return false;
+          Thread.currentThread().interrupt();
+          throw WrappedException.wrap(ex);
         }
       }
     }

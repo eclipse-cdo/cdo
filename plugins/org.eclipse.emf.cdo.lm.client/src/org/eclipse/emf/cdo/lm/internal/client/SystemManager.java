@@ -38,7 +38,7 @@ import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
@@ -72,6 +72,8 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
   private final Map<String, ISystemDescriptor> descriptorsBySystemName = new HashMap<>();
 
   private final Set<CDORepository> analyzingRepositories = Collections.synchronizedSet(new HashSet<>());
+
+  private final Map<CDORepository, OMJob> analysisJobs = new HashMap<>();
 
   private SystemManager()
   {
@@ -146,8 +148,8 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
         }
         catch (InterruptedException ex)
         {
-          Thread.interrupted();
-          break;
+          Thread.currentThread().interrupt();
+          throw WrappedException.wrap(ex);
         }
       }
 
@@ -317,9 +319,11 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
       if (e.isConnected())
       {
         repositoryConnected(e.getRepository());
+        scheduleRepositoryAnalysis(e.getRepository());
       }
       else
       {
+        cancelRepositoryAnalysis(e.getRepository());
         repositoryDisconnected(e.getRepository());
       }
     }
@@ -441,27 +445,46 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
   {
     if (analyzingRepositories.add(repository))
     {
-      repository.connect();
+      try
+      {
+        repository.connect();
+        scheduleRepositoryAnalysis(repository);
+      }
+      catch (RuntimeException | Error ex)
+      {
+        analyzingRepositories.remove(repository);
+        throw ex;
+      }
+    }
+  }
 
-      schedule(new OMJob("Analyze " + repository.getName())
+  private void scheduleRepositoryAnalysis(CDORepository repository)
+  {
+    if (!repository.isConnected())
+    {
+      return;
+    }
+
+    synchronized (analysisJobs)
+    {
+      if (!analyzingRepositories.contains(repository) || analysisJobs.containsKey(repository))
+      {
+        return;
+      }
+
+      OMJob job = new OMJob("Analyze " + repository.getName())
       {
         @Override
         protected IStatus run(IProgressMonitor monitor)
         {
           try
           {
-            while (!repository.isConnected())
+            if (monitor.isCanceled() || !repository.isConnected())
             {
-              if (monitor.isCanceled())
-              {
-                return Status.CANCEL_STATUS;
-              }
-
-              ConcurrencyUtil.sleep(100);
+              return Status.CANCEL_STATUS;
             }
 
             Properties lmProperties = new Properties();
-
             String systemName = querySystemName(repository);
             if (systemName != null)
             {
@@ -487,11 +510,33 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
           finally
           {
             analyzingRepositories.remove(repository);
+
+            synchronized (analysisJobs)
+            {
+              analysisJobs.remove(repository);
+            }
           }
 
           return Status.OK_STATUS;
         }
-      });
+      };
+
+      analysisJobs.put(repository, job);
+      schedule(job);
+    }
+  }
+
+  private void cancelRepositoryAnalysis(CDORepository repository)
+  {
+    analyzingRepositories.remove(repository);
+
+    synchronized (analysisJobs)
+    {
+      OMJob job = analysisJobs.remove(repository);
+      if (job != null)
+      {
+        job.cancel();
+      }
     }
   }
 

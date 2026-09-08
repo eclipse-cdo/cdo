@@ -64,7 +64,6 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Entity;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil.ReactivationTrigger;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -351,10 +350,28 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     }
     catch (SQLException ex)
     {
+      closeConnectionAfterFailure(connection, ex);
       throw new DBException(ex, "SET AUTO COMMIT = false");
+    }
+    catch (RuntimeException ex)
+    {
+      closeConnectionAfterFailure(connection, ex);
+      throw ex;
     }
 
     return connection;
+  }
+
+  private static void closeConnectionAfterFailure(Connection connection, Throwable failure)
+  {
+    try
+    {
+      connection.close();
+    }
+    catch (Exception ex)
+    {
+      failure.addSuppressed(ex);
+    }
   }
 
   public Connection getConnectionOrRetry()
@@ -372,7 +389,16 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       if (i != 0)
       {
         OM.LOG.info("Database connection could not be established. Next attempt is scheduled in " + seconds + " seconds...");
-        ConcurrencyUtil.sleep(1000L * seconds);
+
+        try
+        {
+          Thread.sleep(1000L * seconds);
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+          throw WrappedException.wrap(ex);
+        }
       }
 
       try

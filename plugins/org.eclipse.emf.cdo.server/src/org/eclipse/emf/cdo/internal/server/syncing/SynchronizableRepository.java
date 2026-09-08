@@ -778,6 +778,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
   }

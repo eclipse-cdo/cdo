@@ -114,6 +114,7 @@ public class MessageConsumerImpl extends Lifecycle implements MessageConsumer
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw new JMSException(ex.getMessage());
     }
   }

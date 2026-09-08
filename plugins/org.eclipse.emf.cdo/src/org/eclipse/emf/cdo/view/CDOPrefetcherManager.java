@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -114,7 +115,8 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
         }
         catch (InterruptedException ex)
         {
-          return false;
+          Thread.currentThread().interrupt();
+          throw WrappedException.wrap(ex);
         }
       }
     }
@@ -147,7 +149,8 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
     }
     catch (InterruptedException ex)
     {
-      OM.LOG.error(ex);
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
     }
   }
 

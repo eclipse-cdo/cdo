@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.lifecycle;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.om.log.OMLogger.Level;
@@ -236,6 +237,7 @@ public final class LifecycleUtil
     }
     catch (Exception ex)
     {
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }

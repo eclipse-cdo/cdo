@@ -174,6 +174,8 @@ public class CDOQueryImpl extends CDOQueryInfoImpl implements CDOQuery
     }
     catch (Exception ex)
     {
+      ConcurrencyUtil.restoreInterrupt(ex);
+
       exception[0] = ex;
     }
 

@@ -11,7 +11,9 @@
  */
 package org.eclipse.net4j.util.tests;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -20,6 +22,7 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * @author Eike Stepper
@@ -85,6 +88,27 @@ public class RWOLockManagerTest extends AbstractOMTest
     IOUtil.OUT().println("SUCCESS");
   }
 
+  public void testRWLockInterruptStatus() throws Exception
+  {
+    Thread.currentThread().interrupt();
+
+    try
+    {
+      RWLock.call(() -> null, new ReentrantLock(), DEFAULT_TIMEOUT);
+      fail("WrappedException expected");
+    }
+    catch (RuntimeException ex)
+    {
+      assertInstanceOf(WrappedException.class, ex);
+      assertInstanceOf(InterruptedException.class, ex.getCause());
+      assertTrue(Thread.currentThread().isInterrupted());
+    }
+    finally
+    {
+      Thread.interrupted();
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -146,6 +170,7 @@ public class RWOLockManagerTest extends AbstractOMTest
             }
             catch (InterruptedException ex)
             {
+              Thread.currentThread().interrupt();
               exception = ex;
               return;
             }

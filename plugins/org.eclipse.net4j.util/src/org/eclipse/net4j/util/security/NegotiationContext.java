@@ -99,6 +99,7 @@ public abstract class NegotiationContext implements INegotiationContext
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
     finally

@@ -21,7 +21,6 @@ import org.eclipse.net4j.internal.ws.WSClientConnector;
 import org.eclipse.net4j.internal.ws.WSConnector;
 import org.eclipse.net4j.internal.ws.bundle.OM;
 import org.eclipse.net4j.protocol.IProtocol;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.ISynchronizer;
 import org.eclipse.net4j.util.concurrent.SynchronizingCorrelator;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -453,10 +452,9 @@ public class Net4jWebSocket implements WebSocketListener
           assertNegotiating();
 
           INegotiationContext negotiationContext = connector.getNegotiationContext();
-          while (negotiationContext == null)
+          if (negotiationContext == null)
           {
-            ConcurrencyUtil.sleep(20);
-            negotiationContext = connector.getNegotiationContext();
+            throw new ConnectorException("Negotiation context is not available while connector is negotiating"); //$NON-NLS-1$
           }
 
           Receiver receiver = negotiationContext.getReceiver();

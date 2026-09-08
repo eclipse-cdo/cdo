@@ -109,6 +109,7 @@ public class ExpectedFileInputStream extends FileInputStream
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           throw WrappedException.wrap(ex);
         }
 

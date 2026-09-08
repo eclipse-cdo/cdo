@@ -333,6 +333,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
 

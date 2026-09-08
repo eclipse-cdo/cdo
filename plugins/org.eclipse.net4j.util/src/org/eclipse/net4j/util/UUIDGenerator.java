@@ -294,13 +294,14 @@ public final class UUIDGenerator
         }
         catch (InterruptedException exception)
         {
-          // We just woke up.
+          Thread.currentThread().interrupt();
+          currentTime = System.currentTimeMillis() + EPOCH_ADJUSTMENT;
         }
 
         timeAdjustment = 0;
         currentTime = System.currentTimeMillis() + EPOCH_ADJUSTMENT;
 
-        while (lastTime == currentTime)
+        while (lastTime == currentTime && !Thread.currentThread().isInterrupted())
         {
           try
           {
@@ -309,8 +310,10 @@ public final class UUIDGenerator
           }
           catch (InterruptedException exception)
           {
-            // We just woke up.
+            Thread.currentThread().interrupt();
+            break;
           }
+
           currentTime = System.currentTimeMillis() + EPOCH_ADJUSTMENT;
         }
       }

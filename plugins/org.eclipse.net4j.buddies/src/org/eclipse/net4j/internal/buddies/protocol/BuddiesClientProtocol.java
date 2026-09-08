@@ -19,7 +19,9 @@ import org.eclipse.net4j.internal.buddies.ClientSession;
 import org.eclipse.net4j.internal.buddies.Self;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.spi.net4j.Protocol;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 /**
  * @author Eike Stepper
@@ -27,8 +29,6 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 public class BuddiesClientProtocol extends SignalProtocol<ClientSession>
 {
   private static final long GET_SESSION_TIMEOUT = 20000;
-
-  private static final int GET_SESSION_INTERVAL = 100;
 
   public BuddiesClientProtocol(IConnector connector)
   {
@@ -73,22 +73,74 @@ public class BuddiesClientProtocol extends SignalProtocol<ClientSession>
     return (Self)session.getSelf();
   }
 
+  @Override
+  public synchronized void setInfraStructure(ClientSession infraStructure)
+  {
+    super.setInfraStructure(infraStructure);
+    notifyAll();
+  }
+
   public ClientSession getSession()
   {
-    int max = (int)(GET_SESSION_TIMEOUT / GET_SESSION_INTERVAL);
-    for (int i = 0; i < max; i++)
+    synchronized (this)
     {
       ClientSession session = getInfraStructure();
-      if (session == null)
-      {
-        ConcurrencyUtil.sleep(GET_SESSION_INTERVAL);
-      }
-      else
+      if (session != null)
       {
         return session;
       }
+
+      IListener listener = new IListener()
+      {
+        @Override
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof Protocol.InfraStructureChangedEvent)
+          {
+            synchronized (BuddiesClientProtocol.this)
+            {
+              BuddiesClientProtocol.this.notifyAll();
+            }
+          }
+        }
+      };
+
+      addListener(listener);
+      try
+      {
+        long deadline = java.lang.System.nanoTime() + GET_SESSION_TIMEOUT * 1000000L;
+        while ((session = getInfraStructure()) == null)
+        {
+          long remaining = deadline - java.lang.System.nanoTime();
+          if (remaining <= 0)
+          {
+            break;
+          }
+
+          try
+          {
+            long millis = remaining / 1000000L;
+            int nanos = (int)(remaining % 1000000L);
+            wait(millis, nanos);
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("Interrupted while waiting for session", ex); //$NON-NLS-1$
+          }
+        }
+
+        if (session != null)
+        {
+          return session;
+        }
+      }
+      finally
+      {
+        removeListener(listener);
+      }
     }
 
-    throw new IllegalStateException("No session after " + max + " milliseconds"); //$NON-NLS-1$ //$NON-NLS-2$
+    throw new IllegalStateException("No session after " + GET_SESSION_TIMEOUT + " milliseconds"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 }

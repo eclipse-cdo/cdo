@@ -118,6 +118,7 @@ public class ExpectedFileReader extends FileReader
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           throw WrappedException.wrap(ex);
         }
 

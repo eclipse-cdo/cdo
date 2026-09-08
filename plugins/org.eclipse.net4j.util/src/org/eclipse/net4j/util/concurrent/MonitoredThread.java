@@ -176,6 +176,7 @@ public abstract class MonitoredThread extends Thread
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           throw WrappedException.wrap(ex);
         }
       }

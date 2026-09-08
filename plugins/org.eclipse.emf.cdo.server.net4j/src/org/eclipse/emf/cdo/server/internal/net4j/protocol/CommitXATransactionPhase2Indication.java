@@ -65,6 +65,7 @@ public class CommitXATransactionPhase2Indication extends CommitTransactionIndica
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
     catch (ExecutionException ex)

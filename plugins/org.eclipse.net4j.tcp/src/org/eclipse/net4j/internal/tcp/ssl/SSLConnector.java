@@ -17,12 +17,14 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
+
+import org.eclipse.spi.net4j.InternalChannel;
 
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -62,6 +64,7 @@ public abstract class SSLConnector extends TCPConnector
 
     if (!sslEngineManager.isHandshakeComplete() && isClient())
     {
+      suspendInitialHandshakeInterests();
       getConfig().getReceiveExecutor().execute(createHandShakeTask(channel));
     }
   }
@@ -73,6 +76,7 @@ public abstract class SSLConnector extends TCPConnector
 
     if (!sslEngineManager.isHandshakeComplete() && isServer())
     {
+      suspendInitialHandshakeInterests();
       getConfig().getReceiveExecutor().execute(createHandShakeTask(socketChannel));
     }
   }
@@ -80,7 +84,11 @@ public abstract class SSLConnector extends TCPConnector
   @Override
   public void handleRead(ITCPSelector selector, SocketChannel socketChannel)
   {
-    waitForHandShakeFinish();
+    if (!sslEngineManager.isHandshakeComplete())
+    {
+      suspendInitialHandshakeInterests();
+      return;
+    }
 
     try
     {
@@ -117,7 +125,12 @@ public abstract class SSLConnector extends TCPConnector
   @Override
   public void handleWrite(ITCPSelector selector, SocketChannel socketChannel)
   {
-    waitForHandShakeFinish();
+    if (!sslEngineManager.isHandshakeComplete())
+    {
+      suspendInitialHandshakeInterests();
+      return;
+    }
+
     super.handleWrite(selector, socketChannel);
     checkRehandShake(socketChannel);
   }
@@ -212,37 +225,49 @@ public abstract class SSLConnector extends TCPConnector
     }
   }
 
-  private void waitForHandShakeFinish()
+  private void suspendInitialHandshakeInterests()
   {
-    int handShakeWaitTime = sslEngineManager.getHandShakeWaitTime();
+    SelectionKey selectionKey = getSelectionKey();
+    ITCPSelector selector = getSelector();
 
-    // Wait until handshake finished. If handshake finish it will not enter this loop.
-    while (!sslEngineManager.isHandshakeComplete())
+    if (selectionKey != null && selectionKey.isValid() && selector != null)
     {
-      if (isNegotiating())
+      boolean client = isClient();
+      selector.orderReadInterest(selectionKey, client, false);
+      selector.orderWriteInterest(selectionKey, client, false);
+    }
+  }
+
+  private void restoreInitialHandshakeInterests()
+  {
+    if (!isActive() || isClosed() || !sslEngineManager.isHandshakeComplete())
+    {
+      return;
+    }
+
+    SelectionKey selectionKey = getSelectionKey();
+    ITCPSelector selector = getSelector();
+
+    if (selectionKey == null || !selectionKey.isValid() || selector == null)
+    {
+      return;
+    }
+
+    BlockingQueue<InternalChannel> writeQueue = getWriteQueue();
+
+    synchronized (writeQueue)
+    {
+      boolean client = isClient();
+
+      if (writeQueue.isEmpty())
       {
-        ConcurrencyUtil.sleep(handShakeWaitTime);
-      }
-      else if (!isNegotiating() && !isActive())
-      {
-        // Prevent sleeping and reading forever.
-        break;
+        selector.orderWriteInterest(selectionKey, client, false);
+        selector.orderReadInterest(selectionKey, client, true);
       }
       else
       {
-        Thread.yield();
-      }
-    }
-
-    if (!isNegotiating() && !isActive())
-    {
-      try
-      {
-        deactivateAsync();
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.warn(ex);
+        selector.orderReadInterest(selectionKey, client, false);
+        selector.orderWriteInterest(selectionKey, client, true);
       }
     }
   }
@@ -258,6 +283,7 @@ public abstract class SSLConnector extends TCPConnector
         try
         {
           sslEngineManager.checkInitialHandshake(socket);
+          restoreInitialHandshakeInterests();
         }
         catch (Exception ex)
         {

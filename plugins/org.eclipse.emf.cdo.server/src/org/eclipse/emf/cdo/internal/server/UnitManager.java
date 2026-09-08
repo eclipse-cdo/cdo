@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -106,9 +107,9 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     UnitInitializer unitInitializer;
     boolean hook = false;
 
-    ////////////////////////////////////
+    //////////////////////////////////
     // Phase 1: Register (short, locked)
-    ////////////////////////////////////
+    //////////////////////////////////
 
     writeLock.lock();
 
@@ -166,17 +167,17 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
     try
     {
-      /////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////
       // Phase 2: Initialize (potentially long, not locked)
-      /////////////////////////////////////////////////////
+      ///////////////////////////////////////////////////
 
       unit = unitInitializer.initialize(monitor);
     }
     finally
     {
-      ///////////////////////////////////
+      /////////////////////////////////
       // Phase 3: Publish (short, locked)
-      ///////////////////////////////////
+      /////////////////////////////////
 
       try
       {
@@ -359,9 +360,9 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
     ObjectAttacher objectAttacher = null;
     Map<CDOID, CDOID> unitMappings = CDOIDUtil.createMap();
 
-    ///////////////////////////////////////////////
+    /////////////////////////////////////////////
     // Phase 1: Analyze new objects (short, locked)
-    ///////////////////////////////////////////////
+    /////////////////////////////////////////////
 
     ReadLock readLock = managerLock.readLock();
     readLock.lock();
@@ -405,9 +406,9 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       readLock.unlock();
     }
 
-    //////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
     // Phase 2: Map objects to existing units (long, unlocked)
-    //////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
 
     if (!unitMappings.isEmpty())
     {
@@ -723,7 +724,8 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
         }
         catch (InterruptedException ex)
         {
-          return null;
+          Thread.currentThread().interrupt();
+          throw WrappedException.wrap(ex);
         }
         finally
         {
@@ -853,7 +855,8 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
       }
       catch (InterruptedException ex)
       {
-        return false;
+        Thread.currentThread().interrupt();
+        throw WrappedException.wrap(ex);
       }
 
       return commitSucceeded;

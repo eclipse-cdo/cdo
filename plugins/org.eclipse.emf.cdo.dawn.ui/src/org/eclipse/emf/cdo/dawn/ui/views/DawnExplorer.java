@@ -75,7 +75,8 @@ public class DawnExplorer extends CDOSessionsView
             }
             catch (InterruptedException ex)
             {
-              ex.printStackTrace();
+              Thread.currentThread().interrupt();
+              return;
             }
           }
         }

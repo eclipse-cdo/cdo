@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
-import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.util.LinkedList;
@@ -73,6 +73,19 @@ class TimeStampAuthority
     this.repository = repository;
   }
 
+  private static void sleepInterruptibly(long millis)
+  {
+    try
+    {
+      Thread.sleep(millis);
+    }
+    catch (InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
+    }
+  }
+
   /**
    * The purpose of this method is to make sure that no commit can occur at the same time as
    * the base of a new branch. Otherwise that commit could change revisions of that branch base.
@@ -81,9 +94,9 @@ class TimeStampAuthority
   synchronized long getMaxBaseTimeForNewBranch()
   {
     long now = repository.getTimeStamp();
-    while (repository.getTimeStamp() == now)
+    while (repository.getTimeStamp() <= now)
     {
-      ConcurrencyUtil.sleep(1);
+      sleepInterruptibly(1);
     }
 
     return now;
@@ -106,11 +119,13 @@ class TimeStampAuthority
     try
     {
       long now = repository.getTimeStamp();
+
       if (lastIssuedTimeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
       {
-        while (lastIssuedTimeStamp == now)
+        while (now <= lastIssuedTimeStamp)
         {
-          ConcurrencyUtil.sleep(1);
+          sleepInterruptibly(1);
+
           now = repository.getTimeStamp();
           monitor.checkCanceled();
         }

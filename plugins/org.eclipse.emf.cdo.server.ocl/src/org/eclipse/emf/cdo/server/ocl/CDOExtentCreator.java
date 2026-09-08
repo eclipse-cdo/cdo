@@ -268,6 +268,7 @@ public class CDOExtentCreator implements OCLExtentCreator
           }
           catch (InterruptedException ex)
           {
+            Thread.currentThread().interrupt();
             throw new Error("Interrupted");
           }
         }
@@ -396,6 +397,7 @@ public class CDOExtentCreator implements OCLExtentCreator
                     }
                     catch (InterruptedException ex)
                     {
+                      Thread.currentThread().interrupt();
                       throw new Error(ex);
                     }
                   }

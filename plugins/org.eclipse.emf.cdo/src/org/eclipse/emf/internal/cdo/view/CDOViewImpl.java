@@ -1687,6 +1687,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
         }
         catch (InterruptedException ex)
         {
+          Thread.currentThread().interrupt();
           throw WrappedException.wrap(ex);
         }
       }

@@ -971,6 +971,7 @@ public abstract class AbstractOMTest extends TestCase
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
   }

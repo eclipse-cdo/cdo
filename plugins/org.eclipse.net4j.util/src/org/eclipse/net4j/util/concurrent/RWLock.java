@@ -80,6 +80,7 @@ public class RWLock extends ReentrantReadWriteLock
     }
     catch (Exception ex)
     {
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }
@@ -107,6 +108,7 @@ public class RWLock extends ReentrantReadWriteLock
     }
     catch (Exception ex)
     {
+      ConcurrencyUtil.restoreInterrupt(ex);
       throw WrappedException.wrap(ex);
     }
   }

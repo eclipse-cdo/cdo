@@ -1073,6 +1073,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       }
       catch (InterruptedException ex)
       {
+        Thread.currentThread().interrupt();
         throw new TimeoutRuntimeException();
       }
       finally

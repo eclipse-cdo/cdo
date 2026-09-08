@@ -155,4 +155,41 @@ public final class ConcurrencyUtil
       throw new OperationCanceledException();
     }
   }
+
+  /**
+   * Restores the interrupt status of the current thread when the directly caught exception is an
+   * {@link InterruptedException}.
+   * <p>
+   * Interruptible operations such as {@link Thread#sleep(long)}, {@link Object#wait()},
+   * {@link Thread#join()}, {@code CountDownLatch.await()}, and interruptible queue or lock
+   * operations clear the current thread's interrupt status before throwing {@code InterruptedException}.
+   * This helper is intended for a broader catch boundary that cannot propagate that checked
+   * exception and instead translates it or otherwise terminates the current operation, when the
+   * surrounding thread-ownership and cancellation policy requires the status to remain observable.
+   * <p>
+   * Callers must not use this as a blanket action for every broad catch, as a substitute for
+   * propagating {@code InterruptedException}, or without analyzing continuing loops, retry logic,
+   * worker lifecycle code, ordinary-result translations, and intentional interrupt-consumption
+   * policies. Those contexts may require a different policy, because retaining the status can
+   * change subsequent waits, retries, shutdown behavior, or worker termination.
+   * <p>
+   * Only the directly caught value is inspected. Causes are deliberately not traversed: a wrapper
+   * that merely contains an {@code InterruptedException} does not establish that this catch
+   * consumed the current thread's interrupt status, and restoring from a nested historical cause
+   * could spuriously interrupt unrelated execution.
+   * <p>
+   * For a non-{@code InterruptedException} value this method does nothing. For an
+   * {@code InterruptedException} it sets the current thread's interrupt status and otherwise
+   * leaves the supplied exception untouched. It does not throw, wrap, log, or inspect causes.
+   *
+   * @param ex
+   *          the exception directly caught by the caller
+   */
+  public static void restoreInterrupt(Throwable ex)
+  {
+    if (ex instanceof InterruptedException)
+    {
+      Thread.currentThread().interrupt();
+    }
+  }
 }

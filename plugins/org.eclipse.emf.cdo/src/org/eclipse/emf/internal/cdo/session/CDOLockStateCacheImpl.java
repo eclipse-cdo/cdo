@@ -271,6 +271,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
             }
             catch (InterruptedException ex1)
             {
+              Thread.currentThread().interrupt();
               throw new Error(ex1);
             }
           }

@@ -118,7 +118,7 @@ public class ReconnectingCDOSessionImpl extends RecoveringCDOSessionImpl
     super.setConnector(newConnector);
   }
 
-  private void delayAsNeeded(long startOfLastAttempt)
+  private void delayAsNeeded(long startOfLastAttempt) throws InterruptedException
   {
     long timeToWait = requiredDelay(startOfLastAttempt);
     while (timeToWait > 0)
@@ -130,7 +130,8 @@ public class ReconnectingCDOSessionImpl extends RecoveringCDOSessionImpl
       }
       catch (InterruptedException ex)
       {
-        timeToWait = requiredDelay(startOfLastAttempt);
+        Thread.currentThread().interrupt();
+        throw ex;
       }
     }
   }

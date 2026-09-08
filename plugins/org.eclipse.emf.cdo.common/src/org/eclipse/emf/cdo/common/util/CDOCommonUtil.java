@@ -30,6 +30,7 @@ import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -366,7 +367,8 @@ public final class CDOCommonUtil
     }
     catch (InterruptedException ex)
     {
-      return false;
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
     }
     finally
     {

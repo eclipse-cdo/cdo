@@ -120,6 +120,7 @@ public class CDOLockImpl implements CDOLock
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
   }
@@ -193,6 +194,7 @@ public class CDOLockImpl implements CDOLock
     catch (InterruptedException ex)
     {
       // Should not happen.
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
   }

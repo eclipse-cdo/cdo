@@ -63,7 +63,7 @@ public class SSLEngineManager
 
   private int handShakeWaitTime;
 
-  private boolean handShakeComplete;
+  private volatile boolean handShakeComplete;
 
   private SSLEngineResult.HandshakeStatus handShakeStatus;
 
@@ -212,7 +212,15 @@ public class SSLEngineManager
         while (!isHandshakeFinished() && counter <= handShakeTimeOut)
         {
           performHandshake(socketChannel, needRehandShake);
-          counter = handShakeStatus == HandshakeStatus.NEED_UNWRAP ? counter++ : 0;
+
+          if (handShakeStatus == HandshakeStatus.NEED_UNWRAP)
+          {
+            ++counter;
+          }
+          else
+          {
+            counter = 0;
+          }
         }
 
         if (!isHandshakeFinished() && counter == handShakeTimeOut)

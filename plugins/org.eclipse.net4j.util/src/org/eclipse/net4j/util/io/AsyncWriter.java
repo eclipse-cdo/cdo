@@ -67,6 +67,7 @@ public abstract class AsyncWriter extends PipedWriter
     }
     catch (InterruptedException ex)
     {
+      Thread.currentThread().interrupt();
       throw WrappedException.wrap(ex);
     }
   }

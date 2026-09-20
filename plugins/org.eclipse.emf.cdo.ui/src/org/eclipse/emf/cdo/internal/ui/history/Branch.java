@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.swt.graphics.Color;
@@ -28,6 +30,8 @@ import org.eclipse.swt.graphics.Color;
  */
 public final class Branch extends SegmentList
 {
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
   private final CDOBranch cdoBranch;
 
   private final Color color;
@@ -53,12 +57,12 @@ public final class Branch extends SegmentList
       CDORevisionManager revisionManager = session.getRevisionManager();
 
       CDOBranchPoint lastPoint = cdoBranch.getHead();
-      CDORevision lastRevision = revisionManager.getRevision(objectID, lastPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+      CDORevision lastRevision = revisionManager.getRevision(objectID, lastPoint, UNCHUNKED_LOADING_CONFIG);
 
       if (lastRevision != null && lastRevision.getBranch() == cdoBranch)
       {
         CDOBranchVersion firstVersion = cdoBranch.getVersion(CDOBranchVersion.FIRST_VERSION);
-        CDORevision firstRevision = revisionManager.getRevisionByVersion(objectID, firstVersion, CDORevision.UNCHUNKED, true);
+        CDORevision firstRevision = revisionManager.getRevisionByVersion(objectID, firstVersion, UNCHUNKED_LOADING_CONFIG);
 
         firstCommitTime = firstRevision.getTimeStamp();
         lastCommitTime = lastRevision.getTimeStamp();

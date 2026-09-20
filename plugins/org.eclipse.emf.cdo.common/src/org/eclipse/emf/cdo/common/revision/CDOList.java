@@ -17,7 +17,7 @@ import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.emf.common.util.EList;
 
 /**
- * A {@link MoveableList moveable} {@link EList}.
+ * A {@link MoveableList movable} {@link EList}.
  *
  * @author Simon McDuff
  * @since 2.0
@@ -27,13 +27,43 @@ import org.eclipse.emf.common.util.EList;
 public interface CDOList extends MoveableList<Object>, EList<Object>
 {
   /**
+   * Returns whether the element at {@code index} is loaded.
+   */
+  public default boolean isLoadedAt(int index)
+  {
+    Object value = get(index);
+    return value != CDORevisionUtil.UNLOADED && !(value instanceof CDOElementProxy);
+  }
+
+  /**
+   * Returns whether all elements in this list are loaded.
+   * <p>
+   * An empty list is considered fully loaded. This is an observation-only query and does not load any elements.
+   * Implementations with unloaded-state bookkeeping should override this method to provide a constant-time result.
+   *
+   * @return {@code true} if every position in this list is loaded, or if the list is empty
+   */
+  public default boolean isFullyLoaded()
+  {
+    for (int i = 0; i < size(); i++)
+    {
+      if (!isLoadedAt(i))
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  /**
    * Returns the element at position index of this list and optionally resolves proxies (see CDOElementProxy).
    * <p>
    *
    * @param index
    *          The position of the element to return from this list.
    * @param resolve
-   *          A value of <code>false</code> indicates that {@link CDORevisionUtil#UNINITIALIZED} may be returned for
+   *          A value of <code>false</code> indicates that {@link CDORevisionUtil#UNLOADED} may be returned for
    *          unresolved elements. A value of <code>true</code> indicates that it should behave identical to
    *          {@link CDOList#get(int)}.
    */

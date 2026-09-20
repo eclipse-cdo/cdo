@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.server.IUnit;
 import org.eclipse.emf.cdo.server.IUnitManager;
@@ -56,6 +58,8 @@ import java.util.concurrent.ExecutorService;
  */
 public class View extends Lifecycle implements InternalView, CDOCommonView.Options
 {
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
   private InternalSession session;
 
   private final int viewID;
@@ -200,13 +204,13 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public InternalCDORevision getRevision(CDOID id)
   {
     CDORevisionManager revisionManager = repository.getRevisionManager();
-    return (InternalCDORevision)revisionManager.getRevision(id, normalizedBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    return (InternalCDORevision)revisionManager.getRevision(id, normalizedBranchPoint, UNCHUNKED_LOADING_CONFIG);
   }
 
   private List<CDORevision> getRevisions(List<CDOID> ids)
   {
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
-    return revisionManager.getRevisions(ids, normalizedBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    return revisionManager.getRevisions(ids, normalizedBranchPoint, UNCHUNKED_LOADING_CONFIG);
   }
 
   @Override

@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDORenameContext;
@@ -152,6 +154,8 @@ public final class CDOUtil
    * @since 4.3
    */
   public static final String DOCUMENTATION_KEY = "documentation";
+
+  private static final Config NO_CHUNKS_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
 
   static
   {
@@ -429,7 +433,9 @@ public final class CDOUtil
 
   /**
    * @since 2.0
+   * @deprecated As of 4.31 use collection loading configuration.
    */
+  @Deprecated
   public static CDOCollectionLoadingPolicy createCollectionLoadingPolicy(int initialChunkSize, int resolveChunkSize)
   {
     return new CDOCollectionLoadingPolicyImpl(initialChunkSize, resolveChunkSize);
@@ -928,7 +934,7 @@ public final class CDOUtil
         throw new IllegalStateException(Messages.getString("CDOUtil.0")); //$NON-NLS-1$
       }
 
-      revision = session.getRevisionManager().getRevisionByVersion(object.cdoID(), branch.getVersion(version), 0, true);
+      revision = session.getRevisionManager().getRevisionByVersion(object.cdoID(), branch.getVersion(version), NO_CHUNKS_LOADING_CONFIG);
     }
 
     return revision;

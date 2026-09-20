@@ -81,6 +81,7 @@ public class Bugzilla_365204_Test extends AbstractCDOTest
     assertEquals(3, CDOUtil.getCDOObject(auditCategory).cdoRevision().getVersion());
   }
 
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   private CDORevision cacheRevision(CDOSession session, CDOID id, int version)
   {
     CDOBranchVersion branchVersion = session.getBranchManager().getMainBranch().getVersion(version);

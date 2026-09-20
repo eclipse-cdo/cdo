@@ -14,16 +14,28 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+
+import java.lang.reflect.Method;
 
 /**
  * @author Eike Stepper
@@ -226,6 +238,38 @@ public class CompareTest extends AbstractCDOTest
     tx1.close();
 
     assertCompare(session, mainBranch.getHead(), source.getHead(), 1, 2, 0);
+  }
+
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testPartialCachedRevisionIsNotAdvertised() throws Exception
+  {
+    CDOSession session = openSession();
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res"));
+    Company company = getModel1Factory().createCompany();
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    resource.getContents().add(company);
+    transaction.commit();
+    CDOBranchPoint branchPoint = transaction.getBranch().getHead();
+    CDOID companyID = CDOUtil.getCDOObject(company).cdoID();
+    transaction.close();
+
+    InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)session.getRevisionManager();
+    revisionManager.getCache().clear();
+    InternalCDORevision partialRevision = revisionManager.getRevision(companyID, branchPoint,
+        new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 1));
+    assertFalse(partialRevision.isUnchunked());
+
+    Method method = CDOSessionImpl.class.getDeclaredMethod("createRevisionAvailabilityInfo2", CDOBranchPoint.class);
+    method.setAccessible(true);
+    CDORevisionAvailabilityInfo info = (CDORevisionAvailabilityInfo)method.invoke(session, branchPoint);
+    assertFalse(info.containsRevision(companyID));
+    assertFalse(partialRevision.isUnchunked());
+
+    session.close();
   }
 
   private Company addCompany(EList<EObject> contents)

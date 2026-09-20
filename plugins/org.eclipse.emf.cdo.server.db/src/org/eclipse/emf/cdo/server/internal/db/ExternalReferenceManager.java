@@ -43,9 +43,6 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author Stefan Winkler
  */
-/**
- * @author Eike Stepper
- */
 public class ExternalReferenceManager extends DBStoreTable
 {
   private static final DBType DEFAULT_URI_COLUMN_TYPE = DBType.VARCHAR;

@@ -31,39 +31,40 @@ public class CDOFetchRuleManagerThreadLocal implements CDOFetchRuleManager
   {
   }
 
-  public static CDOFetchRuleManager getCurrent()
-  {
-    return THREAD_LOCAL.get();
-  }
-
-  public static void join(CDOFetchRuleManager fetchRulemanager)
-  {
-    THREAD_LOCAL.set(fetchRulemanager);
-  }
-
-  public static void leave()
-  {
-    THREAD_LOCAL.remove();
-  }
-
   @Override
   public CDOID getContext()
   {
-    CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
-    return analyzer != null ? analyzer.getContext() : null;
+    CDOFetchRuleManager fetchRuleManager = CDOFetchRuleManagerThreadLocal.getCurrent();
+    return fetchRuleManager != null ? fetchRuleManager.getContext() : null;
   }
 
   @Override
   public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids)
   {
-    CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
-    return analyzer != null ? analyzer.getFetchRules(ids) : null;
+    CDOFetchRuleManager fetchRuleManager = CDOFetchRuleManagerThreadLocal.getCurrent();
+    return fetchRuleManager != null ? fetchRuleManager.getFetchRules(ids) : null;
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
   {
-    CDOFetchRuleManager analyzer = CDOFetchRuleManagerThreadLocal.getCurrent();
-    return analyzer != null ? analyzer.getCollectionLoadingPolicy() : null;
+    CDOFetchRuleManager fetchRuleManager = CDOFetchRuleManagerThreadLocal.getCurrent();
+    return fetchRuleManager != null ? fetchRuleManager.getCollectionLoadingPolicy() : null;
+  }
+
+  public static CDOFetchRuleManager getCurrent()
+  {
+    return THREAD_LOCAL.get();
+  }
+
+  public static void join(CDOFetchRuleManager fetchRuleManager)
+  {
+    THREAD_LOCAL.set(fetchRuleManager);
+  }
+
+  public static void leave()
+  {
+    THREAD_LOCAL.remove();
   }
 }

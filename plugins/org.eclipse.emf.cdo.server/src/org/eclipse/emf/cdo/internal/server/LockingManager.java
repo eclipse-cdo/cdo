@@ -26,9 +26,13 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -41,6 +45,7 @@ import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -70,6 +75,8 @@ import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.core.runtime.PlatformObject;
 
 import java.io.IOException;
@@ -96,13 +103,15 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 {
   private static final LockType[] ALL_LOCK_TYPES = LockType.values();
 
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
   private InternalRepository repository;
 
   private Map<String, InternalView> openDurableViews = new HashMap<>();
 
   private Map<String, DurableView> durableViews = Collections.synchronizedMap(new HashMap<>());
 
-  private ConcurrentArray<DurableViewHandler> durableViewHandlers = new ConcurrentArray<DurableViewHandler>()
+  private ConcurrentArray<DurableViewHandler> durableViewHandlers = new ConcurrentArray<>()
   {
     @Override
     protected DurableViewHandler[] newArray(int length)
@@ -241,7 +250,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     CDOBranch branch = view.getBranch();
 
     CDORevisionManager revisionManager = view.getSession().getRepository().getRevisionManager();
-    CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, branch.getHead());
+    CDORevisionProvider revisionProvider = new RecursiveLockRevisionProvider(revisionManager, branch.getHead());
 
     Set<Object> contents = new HashSet<>();
 
@@ -770,6 +779,43 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   /**
+   * Provides revisions for recursive locking with only the containment lists materialized. Recursive locking needs
+   * the complete containment tree, but it must not materialize unrelated many-valued features.
+   *
+   * @author Eike Stepper
+   */
+  private final class RecursiveLockRevisionProvider extends ManagedRevisionProvider
+  {
+    public RecursiveLockRevisionProvider(CDORevisionManager revisionManager, CDOBranchPoint branchPoint)
+    {
+      super(revisionManager, branchPoint);
+    }
+
+    @Override
+    public CDORevision getRevision(CDOID id)
+    {
+      InternalCDORevision revision = revisionManager.getRevision(id, branchPoint,
+          new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0));
+      if (revision != null)
+      {
+        for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentContainments())
+        {
+          if (feature.isMany())
+          {
+            CDOList list = revision.getListOrNull(feature);
+            if (list != null && !list.isFullyLoaded())
+            {
+              repository.ensureChunk(revision, feature, 0, list.size());
+            }
+          }
+        }
+      }
+
+      return revision;
+    }
+  }
+
+  /**
    * @author Eike Stepper
    */
   private final class DurableView extends PlatformObject implements InternalView, CDOCommonView.Options
@@ -856,7 +902,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     public CDORevision getRevision(CDOID id)
     {
       CDORevisionManager revisionManager = getRepository().getRevisionManager();
-      return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+      return revisionManager.getRevision(id, branchPoint, UNCHUNKED_LOADING_CONFIG);
     }
 
     @Override

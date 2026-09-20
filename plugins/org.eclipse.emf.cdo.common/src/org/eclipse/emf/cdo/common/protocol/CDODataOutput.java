@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -66,16 +67,6 @@ import java.util.function.Predicate;
 public interface CDODataOutput extends ExtendedDataOutput
 {
   /**
-   * @since 4.6
-   */
-  public void writeXInt(int v) throws IOException;
-
-  /**
-   * @since 4.6
-   */
-  public void writeXLong(long v) throws IOException;
-
-  /**
    * @since 4.18
    */
   public CDOCommonSession getSession();
@@ -93,6 +84,46 @@ public interface CDODataOutput extends ExtendedDataOutput
    * @since 4.3
    */
   public CDORevisionUnchunker getRevisionUnchunker();
+
+  /**
+   * Returns the initial reference chunk to use for a many-valued feature while
+   * a revision is being serialized. The default preserves the supplied value.
+   *
+   * @since 4.31
+   */
+  public default int getInitialChunkSize(EClass owner, EStructuralFeature feature, int referenceChunk)
+  {
+    return referenceChunk;
+  }
+
+  /**
+   * Prepares a many-valued feature for serialization with the selected initial chunk size. The default implementation
+   * preserves the existing behavior.
+   *
+   * @param revision
+   *          the revision that contains the feature
+   * @param feature
+   *          the many-valued feature to prepare
+   * @param initialChunkSize
+   *          the initial chunk size selected for the feature
+   * @since 4.38
+   */
+  public default void prepareCollection(InternalCDORevision revision, EStructuralFeature feature, int initialChunkSize)
+  {
+    // Do nothing by default.
+  }
+
+  // /////////////////////////////////////////////////////////////////////////////////////////////////
+
+  /**
+   * @since 4.6
+   */
+  public void writeXInt(int v) throws IOException;
+
+  /**
+   * @since 4.6
+   */
+  public void writeXLong(long v) throws IOException;
 
   // /////////////////////////////////////////////////////////////////////////////////////////////////
 

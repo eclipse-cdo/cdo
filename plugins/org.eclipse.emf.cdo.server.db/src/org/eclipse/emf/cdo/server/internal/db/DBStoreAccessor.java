@@ -32,6 +32,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -120,6 +122,8 @@ import java.util.function.Consumer;
  */
 public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, BranchLoader5, DurableLocking2
 {
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DBStoreAccessor.class);
 
   private IDBConnection connection;
@@ -627,7 +631,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
         // but for now:
 
-        InternalCDORevision revision = revisionManager.getRevision(id, branch.getHead(), CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+        InternalCDORevision revision = revisionManager.getRevision(id, branch.getHead(), UNCHUNKED_LOADING_CONFIG);
         int version = ObjectUtil.equals(branch, revision.getBranch()) ? revision.getVersion() + 1 : CDOBranchVersion.FIRST_VERSION;
 
         if (TRACER.isEnabled())
@@ -806,7 +810,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   protected void doUnpassivate() throws Exception
   {
     // Store-allocated ID provenance is valid only for the commit in which the
-    // IDs were allocated.  Accessors are pooled and may otherwise be reused
+    // IDs were allocated. Accessors are pooled and may otherwise be reused
     // by a later commit or by a caller that explicitly writes ObjectTypes.
     storeAllocatedIDs = Collections.emptySet();
   }

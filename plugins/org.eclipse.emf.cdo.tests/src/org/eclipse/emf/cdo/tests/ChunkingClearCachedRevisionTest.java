@@ -34,6 +34,7 @@ import java.util.Iterator;
 public class ChunkingClearCachedRevisionTest extends AbstractCDOTest
 {
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testReadNative() throws Exception
   {
     CDORevision revisionToRemove = null;
@@ -82,6 +83,7 @@ public class ChunkingClearCachedRevisionTest extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testWriteNative() throws Exception
   {
     CDORevision revisionToRemove = null;

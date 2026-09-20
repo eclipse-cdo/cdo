@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
@@ -396,6 +398,8 @@ public class XRefsQueryHandler implements IQueryHandler
    */
   private static final class QueryContextBranching extends QueryContext
   {
+    private static final Config UNSPECIFIED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false);
+
     private final CDOBranchPoint originalBranchPoint;
 
     private final Set<CDOID> ignoredObjects = new HashSet<>();
@@ -433,7 +437,7 @@ public class XRefsQueryHandler implements IQueryHandler
       SyntheticCDORevision[] synthetics = { null };
 
       InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)getRepository().getRevisionManager();
-      revisionManager.getRevision(sourceID, originalBranchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+      revisionManager.getRevision(sourceID, originalBranchPoint, UNSPECIFIED_LOADING_CONFIG, synthetics);
 
       return synthetics[0] instanceof DetachedCDORevision;
     }

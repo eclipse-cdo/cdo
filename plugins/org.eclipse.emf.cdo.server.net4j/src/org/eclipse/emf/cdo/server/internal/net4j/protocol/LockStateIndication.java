@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
@@ -21,7 +22,11 @@ import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
 import org.eclipse.emf.cdo.server.IView;
@@ -43,6 +48,8 @@ import java.util.Collection;
  */
 public class LockStateIndication extends CDOServerReadIndication
 {
+  private static final Config REVISION_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
+
   private final LockStateCollector existingLockStates = new LockStateCollector();
 
   private InternalLockManager lockManager;
@@ -75,7 +82,7 @@ public class LockStateIndication extends CDOServerReadIndication
       prefetchDepth = in.readXInt();
 
       CDORevisionManager revisionManager = repository.getRevisionManager();
-      revisionProvider = new ManagedRevisionProvider(revisionManager, branch.getHead());
+      revisionProvider = new LockStateRevisionProvider(revisionManager, branch.getHead());
     }
 
     if (idsLength == 0)
@@ -156,5 +163,41 @@ public class LockStateIndication extends CDOServerReadIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     out.writeCDOLockStates(existingLockStates, null);
+  }
+
+  /**
+   * Provides revisions for lock-state prefetch with only containment lists materialized. Lock-state traversal needs
+   * containment structure, but none of the unrelated feature values.
+   *
+   * @author Eike Stepper
+   */
+  private final class LockStateRevisionProvider extends ManagedRevisionProvider
+  {
+    public LockStateRevisionProvider(CDORevisionManager revisionManager, CDOBranchPoint branchPoint)
+    {
+      super(revisionManager, branchPoint);
+    }
+
+    @Override
+    public CDORevision getRevision(CDOID id)
+    {
+      InternalCDORevision revision = revisionManager.getRevision(id, branchPoint, REVISION_LOADING_CONFIG);
+      if (revision != null)
+      {
+        for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentContainments())
+        {
+          if (feature.isMany())
+          {
+            CDOList list = revision.getListOrNull(feature);
+            if (list != null && !list.isFullyLoaded())
+            {
+              getRepository().ensureChunk(revision, feature, 0, list.size());
+            }
+          }
+        }
+      }
+
+      return revision;
+    }
   }
 }

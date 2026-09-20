@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 import java.text.MessageFormat;
@@ -30,6 +32,8 @@ import java.util.Map;
  */
 public final class CDORevisionAvailabilityInfo implements CDORevisionProvider
 {
+  private static final Config UNCHUNKED_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false);
+
   private final Map<CDOID, CDORevisionKey> availableRevisions = CDOIDUtil.createMap();
 
   private CDOBranchPoint branchPoint;
@@ -89,7 +93,7 @@ public final class CDORevisionAvailabilityInfo implements CDORevisionProvider
     CDORevision revision = (CDORevision)availableRevisions.get(id);
     if (revision == null && revisionManager != null)
     {
-      return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+      return revisionManager.getRevision(id, branchPoint, UNCHUNKED_CONFIG);
     }
 
     return revision;

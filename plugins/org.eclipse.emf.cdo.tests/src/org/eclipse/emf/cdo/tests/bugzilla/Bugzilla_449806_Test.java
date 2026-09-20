@@ -67,6 +67,7 @@ public class Bugzilla_449806_Test extends AbstractCDOTest
     testCDOAbstractFeatureRuleAnalyzer(new CDOFeatureAnalyzerModelBased());
   }
 
+  @SuppressWarnings("deprecation")
   private void testCDOAbstractFeatureRuleAnalyzer(CDOAbstractFeatureRuleAnalyzer abstractFeatureRuleAnalyzer) throws Exception
   {
     CDOSession session = openSession();

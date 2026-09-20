@@ -41,9 +41,11 @@ import java.text.MessageFormat;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractCDORevision implements InternalCDORevision
+public abstract class AbstractCDORevision implements InternalCDORevision, InternalCDOList.Owner
 {
   private InternalCDOClassInfo classInfo;
+
+  private RevisionPCLState pclState;
 
   /**
    * @since 3.0
@@ -75,12 +77,46 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   @Override
   public final InternalCDOClassInfo getClassInfo()
   {
-    return classInfo;
+    return pclState == null ? classInfo : pclState.classInfo;
+  }
+
+  @Override
+  public final void unloadedCountChanged(int delta)
+  {
+    int count = (pclState == null ? 0 : pclState.unloadedCount) + delta;
+    if (count < 0)
+    {
+      throw new IllegalStateException("Negative unloaded count");
+    }
+
+    if (count == 0)
+    {
+      if (pclState != null)
+      {
+        classInfo = pclState.classInfo;
+      }
+
+      pclState = null;
+    }
+    else if (pclState == null)
+    {
+      pclState = new RevisionPCLState(classInfo, count);
+    }
+    else
+    {
+      pclState.unloadedCount = count;
+    }
+  }
+
+  protected final int getUnloadedCount()
+  {
+    return pclState == null ? 0 : pclState.unloadedCount;
   }
 
   @Override
   public final EClass getEClass()
   {
+    InternalCDOClassInfo classInfo = getClassInfo();
     if (classInfo != null)
     {
       return classInfo.getEClass();
@@ -97,10 +133,10 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   {
     if (id != null && id.equals(getID()))
     {
-      throw new ImplementationError(); // XXX Remove me!
+      throw new ImplementationError();
     }
 
-    return classInfo.getRevisionForID(id);
+    return getClassInfo().getRevisionForID(id);
   }
 
   /**
@@ -115,19 +151,19 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   @Override
   public boolean isResourceNode()
   {
-    return classInfo.isResourceNode();
+    return getClassInfo().isResourceNode();
   }
 
   @Override
   public boolean isResourceFolder()
   {
-    return classInfo.isResourceFolder();
+    return getClassInfo().isResourceFolder();
   }
 
   @Override
   public boolean isResource()
   {
-    return classInfo.isResource();
+    return getClassInfo().isResource();
   }
 
   @Override
@@ -211,7 +247,8 @@ public abstract class AbstractCDORevision implements InternalCDORevision
   @Override
   public void accept(CDORevisionValueVisitor visitor, java.util.function.Predicate<EStructuralFeature> filter)
   {
-    for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
+    // This visitor traverses currently loaded values only. Unloaded positions are deliberately not materialized.
+    for (EStructuralFeature feature : getClassInfo().getAllPersistentFeatures())
     {
       if (filter.test(feature))
       {
@@ -220,10 +257,13 @@ public abstract class AbstractCDORevision implements InternalCDORevision
           CDOList list = getListOrNull(feature);
           if (list != null)
           {
-            int index = 0;
-            for (Object value : list)
+            for (int i = 0, size = list.size(); i < size; i++)
             {
-              visitor.visit(feature, value, index++);
+              if (list.isLoadedAt(i))
+              {
+                Object value = list.get(i, false);
+                visitor.visit(feature, value, i);
+              }
             }
           }
         }
@@ -329,7 +369,16 @@ public abstract class AbstractCDORevision implements InternalCDORevision
    */
   protected void initClassInfo(EClass eClass)
   {
-    classInfo = (InternalCDOClassInfo)CDOModelUtil.getClassInfo(eClass);
+    InternalCDOClassInfo newClassInfo = (InternalCDOClassInfo)CDOModelUtil.getClassInfo(eClass);
+
+    if (pclState == null)
+    {
+      classInfo = newClassInfo;
+    }
+    else
+    {
+      pclState.classInfo = newClassInfo;
+    }
   }
 
   /**
@@ -337,7 +386,7 @@ public abstract class AbstractCDORevision implements InternalCDORevision
    */
   protected EStructuralFeature[] getAllPersistentFeatures()
   {
-    return classInfo.getAllPersistentFeatures();
+    return getClassInfo().getAllPersistentFeatures();
   }
 
   /**
@@ -345,6 +394,22 @@ public abstract class AbstractCDORevision implements InternalCDORevision
    */
   protected int getFeatureIndex(EStructuralFeature feature)
   {
-    return classInfo.getPersistentFeatureIndex(feature);
+    return getClassInfo().getPersistentFeatureIndex(feature);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RevisionPCLState
+  {
+    private InternalCDOClassInfo classInfo;
+
+    private int unloadedCount;
+
+    private RevisionPCLState(InternalCDOClassInfo classInfo, int unloadedCount)
+    {
+      this.classInfo = classInfo;
+      this.unloadedCount = unloadedCount;
+    }
   }
 }

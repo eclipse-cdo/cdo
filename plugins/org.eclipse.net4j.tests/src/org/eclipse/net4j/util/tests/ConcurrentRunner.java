@@ -100,10 +100,11 @@ public class ConcurrentRunner
 
   /**
    * A Wrapper for runnables that catches a Throwable that occur when running the runnable
+   *
+   * @author Eike Stepper
    */
-  private static class ThrowableCatchingWrapper implements Callable<Throwable>
+  private static final class ThrowableCatchingWrapper implements Callable<Throwable>
   {
-    /** The runnable. */
     private Runnable runnable;
 
     /**
@@ -112,7 +113,7 @@ public class ConcurrentRunner
      * @param runnable
      *          the runnable
      */
-    private ThrowableCatchingWrapper(Runnable runnable)
+    public ThrowableCatchingWrapper(Runnable runnable)
     {
       this.runnable = runnable;
     }

@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
@@ -38,6 +39,7 @@ import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 
+import org.eclipse.emf.internal.cdo.CDORevisionTransitionUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.transaction.TransactionHistory;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
@@ -216,6 +218,7 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
   private void updateTransactionWithResult(Set<CDOObject> conflicts, CDOChangeSet remoteChangeSet, CDOChangeSetData result)
   {
     InternalCDOTransaction transaction = (InternalCDOTransaction)getTransaction();
+    InternalCDOSession session = transaction.getSession();
     TransactionHistory history = (TransactionHistory)transaction;
 
     Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
@@ -235,12 +238,12 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
 
         int newVersion = computeNewVersion(object);
         InternalCDORevision cleanRevision = cleanRevisions.get(object);
-        InternalCDORevision newLocalRevision = computeNewLocalRevision(resultDelta, newVersion, cleanRevision);
+        InternalCDORevision newLocalRevision = computeNewLocalRevision(resultDelta, newVersion, cleanRevision, session);
 
         // Adjust local object
         object.cdoInternalSetRevision(newLocalRevision);
 
-        InternalCDORevision newCleanRevision = computeNewCleanRevision(remoteDeltas, id, newVersion, cleanRevision);
+        InternalCDORevision newCleanRevision = computeNewCleanRevision(remoteDeltas, id, newVersion, cleanRevision, session);
 
         // Compute new local delta
         InternalCDORevisionDelta newLocalDelta = newLocalRevision.compare(newCleanRevision);
@@ -271,19 +274,23 @@ public class CDOMergingConflictResolver extends AbstractChangeSetsConflictResolv
     return newVersion;
   }
 
-  private InternalCDORevision computeNewLocalRevision(InternalCDORevisionDelta resultDelta, int newVersion, InternalCDORevision cleanRevision)
+  private InternalCDORevision computeNewLocalRevision(InternalCDORevisionDelta resultDelta, int newVersion, InternalCDORevision cleanRevision,
+      CDOSession session)
   {
+    CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(cleanRevision, resultDelta, session);
     InternalCDORevision newLocalRevision = cleanRevision.copy();
     newLocalRevision.setVersion(newVersion);
     resultDelta.applyTo(newLocalRevision);
     return newLocalRevision;
   }
 
-  private InternalCDORevision computeNewCleanRevision(Map<CDOID, CDORevisionDelta> remoteDeltas, CDOID id, int newVersion, InternalCDORevision cleanRevision)
+  private InternalCDORevision computeNewCleanRevision(Map<CDOID, CDORevisionDelta> remoteDeltas, CDOID id, int newVersion, InternalCDORevision cleanRevision,
+      CDOSession session)
   {
     CDORevisionDelta remoteDelta = remoteDeltas.get(id);
     if (remoteDelta != null)
     {
+      CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(cleanRevision, remoteDelta, session);
       InternalCDORevision newCleanRevision = cleanRevision.copy();
       newCleanRevision.setVersion(newVersion);
       remoteDelta.applyTo(newCleanRevision);

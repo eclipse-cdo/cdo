@@ -343,6 +343,11 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       getPackageRegistry().putPackageUnit(packageUnit);
     }
 
+    if (options().getCollectionLoadingConfig() != null)
+    {
+      setRepositoryCollectionLoadingConfig(sessionProtocol.setCollectionLoadingConfig(options().getCollectionLoadingConfig()));
+    }
+
     repository.getTimeStamp(true);
     sessionProtocol.openedSession();
   }

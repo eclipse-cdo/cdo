@@ -122,6 +122,7 @@ public class MultiValuedOfAttributeTest extends AbstractCDOTest
     testMultiValuedIOfAttribute(list, containerClass, elements);
   }
 
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   protected <T> void testMultiValuedIOfAttribute(List<T> list, EClass containerClass, EStructuralFeature feature) throws CommitException
   {
     {

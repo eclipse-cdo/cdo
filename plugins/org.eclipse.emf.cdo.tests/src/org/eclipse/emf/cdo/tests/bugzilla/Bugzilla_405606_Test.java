@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 public class Bugzilla_405606_Test extends AbstractCDOTest
 {
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testUnchunkedRevisionWithPCL() throws Exception
   {
     {

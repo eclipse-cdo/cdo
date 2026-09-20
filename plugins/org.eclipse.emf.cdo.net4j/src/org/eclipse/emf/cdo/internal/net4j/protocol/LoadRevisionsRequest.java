@@ -153,8 +153,8 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
 
     if (fetchRulesCount > 0)
     {
-      CDOCollectionLoadingPolicy collectionLoadingPolicy = ruleManager.getCollectionLoadingPolicy();
-      out.writeXInt(collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize() : CDORevision.UNCHUNKED);
+      int initialChunkSize = getInitialChunkSize(ruleManager);
+      out.writeXInt(initialChunkSize);
 
       CDOID contextID = ruleManager.getContext();
       out.writeCDOID(contextID);
@@ -237,6 +237,17 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
   {
     return MessageFormat.format("infos={0}, branchPoint={1}, referenceChunk={2}, prefetchDepth={3}, prefetchLockStates={4}", //
         infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates);
+  }
+
+  private int getInitialChunkSize(CDOFetchRuleManager ruleManager)
+  {
+    @SuppressWarnings("deprecation")
+    CDOCollectionLoadingPolicy collectionLoadingPolicy = ruleManager.getCollectionLoadingPolicy();
+
+    @SuppressWarnings("deprecation")
+    int legacyInitialChunkSize = collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize() : CDORevision.UNCHUNKED;
+
+    return legacyInitialChunkSize;
   }
 
   /**

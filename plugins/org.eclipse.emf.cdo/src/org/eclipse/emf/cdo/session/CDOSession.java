@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -278,6 +279,8 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * package emulation mode} has changed.
    * <li> {@link CollectionLoadingPolicyEvent} after the {@link #setCollectionLoadingPolicy(CDOCollectionLoadingPolicy)
    * collection loading policy} has changed.
+   * <li> {@link CollectionLoadingConfigEvent} after the {@link #setCollectionLoadingConfig(CDOCollectionLoadingConfig)
+   * collection loading configuration} has changed.
    * <li> {@link LobCacheEvent} after the {@link #setLobCache(CDOLobStore) large object cache} has changed.
    * </ul>
    *
@@ -315,13 +318,58 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      * <code>CDOUtil.createCollectionLoadingPolicy(initialElements, subsequentElements);</code>
      * <p>
      * The user can also provide its own implementation of the CDOCollectionLoadingPolicy interface.
+     *
+     * @deprecated As of 4.31 use {@link #getCollectionLoadingConfig()}.
      */
+    @Deprecated
     public CDOCollectionLoadingPolicy getCollectionLoadingPolicy();
 
     /**
      * Sets the {@link CDOCollectionLoadingPolicy collection loading} to be used by this session.
+     *
+     * @deprecated As of 4.31 use {@link #setCollectionLoadingConfig(CDOCollectionLoadingConfig)}.
      */
+    @Deprecated
     public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy);
+
+    /**
+     * Returns the modern session-wide collection-loading configuration, or {@code null} if modern partial collection
+     * loading is disabled.
+     *
+     * @return the immutable configuration snapshot, or {@code null}
+     * @since 4.38
+     */
+    public default CDOCollectionLoadingConfig getCollectionLoadingConfig()
+    {
+      return null;
+    }
+
+    /**
+     * Replaces the complete modern session-wide collection-loading configuration snapshot.
+     *
+     * @param config the new immutable configuration, or {@code null} to disable modern partial collection loading
+     * @since 4.38
+     */
+    public default void setCollectionLoadingConfig(CDOCollectionLoadingConfig config)
+    {
+      if (config != null)
+      {
+        throw new UnsupportedOperationException("This session options implementation does not support collection loading configurations");
+      }
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired after the complete modern collection-loading configuration of a
+     * session has changed.
+     *
+     * @author Eike Stepper
+     * @since 4.38
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface CollectionLoadingConfigEvent extends IOptionsEvent
+    {
+    }
 
     /**
      * Returns the {@link CDOLobStore large object cache} currently being used by this session.

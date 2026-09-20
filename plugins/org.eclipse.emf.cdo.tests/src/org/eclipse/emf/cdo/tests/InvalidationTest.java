@@ -17,13 +17,19 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
+import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -42,6 +48,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -49,6 +56,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
@@ -503,6 +511,100 @@ public class InvalidationTest extends AbstractCDOTest
     CDOSession session = openSession();
     assertEquals(0, session.refresh());
     session.close();
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testRefreshWithPartialUnrelatedList() throws Exception
+  {
+    CDOSession sessionA = openSession();
+    CDOTransaction transactionA = sessionA.openTransaction();
+
+    Company companyA = getModel1Factory().createCompany();
+    companyA.setName("before");
+    for (int i = 0; i < 3; i++)
+    {
+      Category category = getModel1Factory().createCategory();
+      category.setName("category" + i);
+      companyA.getCategories().add(category);
+    }
+
+    CDOResource resourceA = transactionA.createResource(getResourcePath("/pcl-refresh"));
+    resourceA.getContents().add(companyA);
+    transactionA.commit();
+
+    URI companyURI = EcoreUtil.getURI(companyA);
+    CDOSession sessionB = openSession();
+    sessionB.options().setPassiveUpdateEnabled(false);
+    sessionB.options().setCollectionLoadingConfig(new CDOCollectionLoadingConfig(new ChunkConfig(ChunkConfig.INHERIT, ChunkConfig.INHERIT),
+        Collections.<EModelElement, ChunkConfig> singletonMap(getModel1Package().getCompany_Categories(), new ChunkConfig(2, ChunkConfig.INHERIT))));
+    CDOView viewB = sessionB.openTransaction();
+    Company companyB = (Company)viewB.getResourceSet().getEObject(companyURI, true);
+
+    companyB.getCategories().get(0);
+    InternalCDORevision viewedRevision = (InternalCDORevision)CDOUtil.getCDOObject(companyB).cdoRevision();
+    CDOList viewedCategories = viewedRevision.getListOrNull(getModel1Package().getCompany_Categories());
+    assertNotNull(viewedCategories);
+    assertFalse(viewedCategories.isFullyLoaded());
+
+    companyA.setName("after");
+    transactionA.commit();
+
+    sessionB.refresh();
+
+    assertEquals("after", companyB.getName());
+    InternalCDORevision refreshedRevision = (InternalCDORevision)CDOUtil.getCDOObject(companyB).cdoRevision();
+    CDOList refreshedCategories = refreshedRevision.getListOrNull(getModel1Package().getCompany_Categories());
+    assertNotNull(refreshedCategories);
+    assertFalse(refreshedCategories.isFullyLoaded());
+    assertTrue(refreshedCategories.isLoadedAt(1));
+    assertFalse(refreshedCategories.isLoadedAt(2));
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testRefreshChangedPartialListKeepsUnrelatedListPartial() throws Exception
+  {
+    CDOSession sessionA = openSession();
+    CDOTransaction transactionA = sessionA.openTransaction();
+
+    Company companyA = getModel1Factory().createCompany();
+    for (int i = 0; i < 3; i++)
+    {
+      Category category = getModel1Factory().createCategory();
+      category.setName("category" + i);
+      companyA.getCategories().add(category);
+
+      Supplier supplier = getModel1Factory().createSupplier();
+      supplier.setName("supplier" + i);
+      companyA.getSuppliers().add(supplier);
+    }
+
+    CDOResource resourceA = transactionA.createResource(getResourcePath("/pcl-refresh-list"));
+    resourceA.getContents().add(companyA);
+    transactionA.commit();
+
+    URI companyURI = EcoreUtil.getURI(companyA);
+    CDOSession sessionB = openSession();
+    sessionB.options().setPassiveUpdateEnabled(false);
+    sessionB.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+    Company companyB = (Company)sessionB.openTransaction().getResourceSet().getEObject(companyURI, true);
+    companyB.getCategories().get(0);
+    companyB.getSuppliers().get(0);
+
+    InternalCDORevision viewedRevision = (InternalCDORevision)CDOUtil.getCDOObject(companyB).cdoRevision();
+    assertFalse(viewedRevision.getListOrNull(getModel1Package().getCompany_Categories()).isFullyLoaded());
+    assertFalse(viewedRevision.getListOrNull(getModel1Package().getCompany_Suppliers()).isFullyLoaded());
+
+    Category addedCategory = getModel1Factory().createCategory();
+    addedCategory.setName("added");
+    companyA.getCategories().add(addedCategory);
+    transactionA.commit();
+
+    sessionB.refresh();
+
+    assertEquals(4, companyB.getCategories().size());
+    InternalCDORevision refreshedRevision = (InternalCDORevision)CDOUtil.getCDOObject(companyB).cdoRevision();
+    assertFalse(refreshedRevision.getListOrNull(getModel1Package().getCompany_Suppliers()).isFullyLoaded());
   }
 
   public void testSeparateSession_PassiveUpdateDisable() throws Exception

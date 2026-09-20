@@ -34,11 +34,13 @@ import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
@@ -242,6 +244,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   }
 
   @Override
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, List<ChunkRange> ranges)
+  {
+    return send(new LoadChunkRequest(this, revision, feature, ranges));
+  }
+
+  @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean prefetchLockStates)
   {
@@ -259,9 +267,49 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   }
 
   @Override
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, CDORevisionManager.Request.Config config)
+  {
+    int configReferenceChunk = config.getReferenceChunk();
+    int referenceChunk = configReferenceChunk == CDORevisionManager.Request.Config.REFERENCE_CHUNK_UNSPECIFIED ? getInitialReferenceChunk()
+        : configReferenceChunk;
+
+    LoadRevisionsRequest request = new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, config.getPrefetchDepth(), config.isPrefetchLockStates());
+
+    try
+    {
+      REVISION_LOADING.start(request);
+      return send(request);
+    }
+    finally
+    {
+      REVISION_LOADING.stop(request);
+    }
+  }
+
+  private int getInitialReferenceChunk()
+  {
+    if (getSession().options().getCollectionLoadingConfig() != null)
+    {
+      return 0;
+    }
+
+    return getSession().getEffectiveLegacyCollectionLoadingInitialChunkSize();
+  }
+
+  @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
     return send(new LoadRevisionByVersionRequest(this, id, branchVersion, referenceChunk));
+  }
+
+  @Override
+  public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, CDORevisionManager.Request.Config config)
+  {
+    int configReferenceChunk = config.getReferenceChunk();
+    int initialChunkSize = configReferenceChunk == CDORevisionManager.Request.Config.REFERENCE_CHUNK_UNSPECIFIED
+        ? getSession().getEffectiveLegacyCollectionLoadingInitialChunkSize()
+        : configReferenceChunk;
+    return loadRevisionByVersion(id, branchVersion, initialChunkSize);
   }
 
   @Override
@@ -569,6 +617,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   public void setLockNotificationMode(LockNotificationMode mode)
   {
     send(new SetLockNotificationModeRequest(this, mode));
+  }
+
+  @Override
+  public CDOCollectionLoadingConfig setCollectionLoadingConfig(CDOCollectionLoadingConfig config)
+  {
+    return send(new SetCollectionLoadingConfigRequest(this, config));
   }
 
   @Override

@@ -8,12 +8,13 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
+
 import org.eclipse.spi.net4j.ClientProtocolFactory;
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 

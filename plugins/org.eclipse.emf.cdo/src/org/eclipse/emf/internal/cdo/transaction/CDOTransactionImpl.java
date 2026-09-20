@@ -59,11 +59,16 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOOriginSizeProvider;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
@@ -77,10 +82,13 @@ import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.commit.DelegatingCommitInfo;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.revision.CDOListWithElementProxiesImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOUnsetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -136,6 +144,7 @@ import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+import org.eclipse.emf.internal.cdo.CDORevisionTransitionUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
@@ -143,6 +152,7 @@ import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
+import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingResolver;
 import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
@@ -191,6 +201,7 @@ import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult;
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
+import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
@@ -237,6 +248,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_TRANSACTION, CDOTransactionImpl.class);
 
   private static final boolean X_COMPRESSION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.transaction.X_COMPRESSION");
+
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
+  private static final Config NO_CHUNKS_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
 
   private static final LockType[] ALL_LOCK_TYPES = LockType.values();
 
@@ -625,7 +640,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
         // Load and cache missing revisions.
         List<CDOID> ids = changeSetData.getAffectedIDs();
-        cache = revisionManager.getRevisions(ids, startPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+        cache = revisionManager.getRevisions(ids, startPoint, UNCHUNKED_LOADING_CONFIG);
 
         CDORevisionProvider startProvider = new ManagedRevisionProvider(revisionManager, startPoint).withSynthetics();
         CDORevisionProvider endProvider = new ManagedRevisionProvider(revisionManager, endPoint);
@@ -698,6 +713,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOChangeSet sourceChanges = mergeData.getSourceChanges();
       CDOChangeSet targetChanges = mergeData.getTargetChanges();
 
+      Map<CDOID, Set<EStructuralFeature>> semanticListFeatures = merger instanceof DefaultCDOMerger.PerFeature.ManyValued //
+          ? collectSemanticListFeatures(targetChanges, sourceChanges) //
+          : new HashMap<>();
+      collectCoordinateChangingFeatures(semanticListFeatures, targetChanges);
+      collectCoordinateChangingFeatures(semanticListFeatures, sourceChanges);
+
+      if (!semanticListFeatures.isEmpty())
+      {
+        targetChanges = scopeSemanticListMaterialization(targetChanges, semanticListFeatures);
+        sourceChanges = scopeSemanticListMaterialization(sourceChanges, semanticListFeatures);
+      }
+
       CDORevisionProvider resultBaseProvider = mergeData.getTargetBaseInfo();
       CDORevisionProvider targetProvider = mergeData.getTargetInfo();
       boolean asymmetricBases = !mergeData.getTargetBase().equals(mergeData.getSourceBase());
@@ -719,6 +746,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           // Use a full result-base provider: a partial MergeData map may omit an affected ID needed to establish
           // semantic list identity or to classify a result-base-relative goal.
           resultBaseProvider = new ManagedRevisionProvider(revisionManager, resultBase).withSynthetics();
+        }
+
+        if (!semanticListFeatures.isEmpty())
+        {
+          targetBaseProvider = scopeSemanticListMaterialization(targetBaseProvider, semanticListFeatures);
+          sourceBaseProvider = scopeSemanticListMaterialization(sourceBaseProvider, semanticListFeatures);
+          resultBaseProvider = scopeSemanticListMaterialization(resultBaseProvider, semanticListFeatures);
         }
 
         result = ((CDOMergerBaseAware)merger).merge(targetChanges, sourceChanges, targetBaseProvider, sourceBaseProvider, resultBaseProvider);
@@ -744,6 +778,95 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   public CDOChangeSetData remerge(CDOBranchPoint source, CDOMerger merger)
   {
     return merge(source, CDOBranchUtil.AUTO_BRANCH_POINT, merger);
+  }
+
+  private Map<CDOID, Set<EStructuralFeature>> collectSemanticListFeatures(CDOChangeSet targetChanges, CDOChangeSet sourceChanges)
+  {
+    Map<CDOID, Set<EStructuralFeature>> result = new HashMap<>();
+    collectSemanticListFeatures(result, targetChanges);
+    collectSemanticListFeatures(result, sourceChanges);
+    return result;
+  }
+
+  private void collectSemanticListFeatures(Map<CDOID, Set<EStructuralFeature>> features, CDOChangeSet changeSet)
+  {
+    if (changeSet == null)
+    {
+      return;
+    }
+
+    for (CDORevisionKey key : changeSet.getChangedObjects())
+    {
+      if (key instanceof CDORevisionDelta)
+      {
+        CDORevisionDelta delta = (CDORevisionDelta)key;
+        for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+        {
+          if (featureDelta instanceof CDOListFeatureDelta)
+          {
+            features.computeIfAbsent(delta.getID(), id -> new HashSet<>()).add(featureDelta.getFeature());
+          }
+        }
+      }
+    }
+  }
+
+  private void collectCoordinateChangingFeatures(Map<CDOID, Set<EStructuralFeature>> features, CDOChangeSet changeSet)
+  {
+    if (changeSet == null)
+    {
+      return;
+    }
+
+    for (CDORevisionKey key : changeSet.getChangedObjects())
+    {
+      if (key instanceof CDORevisionDelta)
+      {
+        Set<EStructuralFeature> coordinateChangingFeatures = CDORevisionTransitionUtil.getCoordinateChangingFeatures((CDORevisionDelta)key);
+        if (!coordinateChangingFeatures.isEmpty())
+        {
+          features.computeIfAbsent(key.getID(), id -> new HashSet<>()).addAll(coordinateChangingFeatures);
+        }
+      }
+    }
+  }
+
+  private CDOChangeSet scopeSemanticListMaterialization(CDOChangeSet changeSet, Map<CDOID, Set<EStructuralFeature>> features)
+  {
+    if (changeSet == null)
+    {
+      return null;
+    }
+
+    return new CDOChangeSetImpl(changeSet.getStartPoint(), changeSet.getEndPoint(), changeSet,
+        scopeSemanticListMaterialization(changeSet.getStartRevisionProvider(), features));
+  }
+
+  private CDORevisionProvider scopeSemanticListMaterialization(CDORevisionProvider provider, Map<CDOID, Set<EStructuralFeature>> features)
+  {
+    if (provider == null || features.isEmpty())
+    {
+      return provider;
+    }
+
+    return id -> {
+      CDORevision revision = provider.getRevision(id);
+      if (revision instanceof InternalCDORevision)
+      {
+        Set<EStructuralFeature> requiredFeatures = features.get(id);
+        if (requiredFeatures != null)
+        {
+          ensureFeaturesFullyLoaded((InternalCDORevision)revision, requiredFeatures);
+        }
+      }
+
+      return revision;
+    };
+  }
+
+  private void ensureFeaturesFullyLoaded(InternalCDORevision revision, Set<EStructuralFeature> features)
+  {
+    CDORevisionTransitionUtil.ensureFeaturesFullyLoaded(revision, features, getSession());
   }
 
   @Override
@@ -841,7 +964,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
       else
       {
-        planGoalRevision(plan, object, goalRevision, null, targetProvider, keepVersions);
+        planGoalRevision(plan, object, goalRevision, null, targetProvider, keepVersions, null);
       }
     }
   }
@@ -938,6 +1061,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new IllegalStateException("CHANGED goal has no result-base revision: " + id);
       }
 
+      InternalCDOSession session = getSession();
+      CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(resultBaseRevision, resultBaseGoalDelta, session);
+
       InternalCDORevision goalRevision = resultBaseRevision.copy();
       goalRevision.setBranchPoint(this);
       goalRevision.setRevised(UNSPECIFIED_DATE);
@@ -948,17 +1074,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       InternalCDOObject object = getObjectIfExists(id);
       if (plan.detachedIDs.contains(id) || object == null)
       {
-        planReattachedGoalObject(plan, goalRevision, resultBaseRevision);
+        planReattachedGoalObject(plan, goalRevision, resultBaseRevision, getFeatures(resultBaseGoalDelta));
       }
       else
       {
-        planGoalRevision(plan, object, goalRevision, resultBaseRevision, targetProvider, keepVersions);
+        planGoalRevision(plan, object, goalRevision, resultBaseRevision, targetProvider, keepVersions, getFeatures(resultBaseGoalDelta));
       }
     }
   }
 
   private void planGoalRevision(ApplyChangeSetPlan plan, InternalCDOObject object, InternalCDORevision goalRevision, InternalCDORevision resultBaseRevision,
-      CDORevisionProvider targetProvider, boolean keepVersions) throws ChangeSetOutdatedException
+      CDORevisionProvider targetProvider, boolean keepVersions, Set<EStructuralFeature> changedFeatures) throws ChangeSetOutdatedException
   {
     CDOID id = goalRevision.getID();
     plan.rememberOriginalState(object);
@@ -985,7 +1111,13 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     goalRevision.setRevised(UNSPECIFIED_DATE);
 
-    InternalCDORevisionDelta targetGoalDelta = goalRevision.compare(targetRevision);
+    if (changedFeatures == null)
+    {
+      changedFeatures = getAllPersistentFeatures(goalRevision);
+    }
+
+    InternalCDOSession session = getSession();
+    InternalCDORevisionDelta targetGoalDelta = CDORevisionTransitionUtil.compareFeatures(targetRevision, goalRevision, changedFeatures, session);
     targetGoalDelta.setTarget(null);
 
     if (!targetGoalDelta.isEmpty() && keepVersions && resultBaseRevision != null && targetGoalDelta.getVersion() != resultBaseRevision.getVersion())
@@ -1000,17 +1132,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (installTargetRevision || !targetGoalDelta.isEmpty())
     {
-      plan.goalObjects.add(new PlannedGoalObject(object, targetRevision, goalRevision, targetGoalDelta, installTargetRevision, null));
+      plan.goalObjects.add(new PlannedGoalObject(object, targetRevision, goalRevision, targetGoalDelta, installTargetRevision, null, changedFeatures));
     }
   }
 
-  private void planReattachedGoalObject(ApplyChangeSetPlan plan, InternalCDORevision goalRevision, InternalCDORevision resultBaseRevision)
+  private void planReattachedGoalObject(ApplyChangeSetPlan plan, InternalCDORevision goalRevision, InternalCDORevision resultBaseRevision,
+      Set<EStructuralFeature> changedFeatures)
   {
     CDOID id = goalRevision.getID();
-
     SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
-    InternalCDORevisionManager revisionManager = getSession().getRevisionManager();
-    revisionManager.getRevision(id, this, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+
+    InternalCDOSession session = getSession();
+    InternalCDORevisionManager revisionManager = session.getRevisionManager();
+    Request.Config config = new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false,
+        session.getEffectiveLegacyCollectionLoadingInitialChunkSize());
+    revisionManager.getRevision(id, this, config, synthetics);
     InternalCDORevision cleanRevision = synthetics[0] != null ? synthetics[0] : resultBaseRevision;
 
     InternalCDOObject object = newInstance(goalRevision);
@@ -1022,14 +1158,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     effectiveGoalRevision.setVersion(cleanRevision.getVersion());
     effectiveGoalRevision.setRevised(UNSPECIFIED_DATE);
 
-    InternalCDORevisionDelta targetGoalDelta = effectiveGoalRevision.compare(cleanRevision);
+    InternalCDORevisionDelta targetGoalDelta = CDORevisionTransitionUtil.compareFeatures(cleanRevision, effectiveGoalRevision, changedFeatures, session);
     targetGoalDelta.setTarget(null);
     if (!targetGoalDelta.isEmpty())
     {
       plan.result.getChangeSetData().getChangedObjects().add(targetGoalDelta);
     }
 
-    plan.goalObjects.add(new PlannedGoalObject(object, null, goalRevision, targetGoalDelta, false, cleanRevision));
+    plan.goalObjects.add(new PlannedGoalObject(object, null, goalRevision, targetGoalDelta, false, cleanRevision, changedFeatures));
   }
 
   /**
@@ -1160,7 +1296,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     // object must replace that stale registration before it can be registered under the same ID.
     removeObject(id);
     registerObject(object);
-    CDOStateMachine.INSTANCE.internalReattach(object, this);
+    CDOStateMachine.INSTANCE.internalReattach(object, this, application.changedFeatures);
   }
 
   private void abortApplyChangeSetPlan(ApplyChangeSetPlan plan, Throwable failure)
@@ -2537,6 +2673,23 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         collectRevisions(oldRevisions, getDirtyObjects());
         collectRevisions(oldRevisions, getNewObjects());
 
+        // A conflict may cause rollbackCompletely() to restore the current remote revision rather than the local
+        // transaction boundary. Remember this before the state machine clears the conflict state.
+        Set<CDOObject> conflictedObjects = Collections.newSetFromMap(new IdentityHashMap<>());
+
+        for (CDOObject object : oldRevisions.keySet())
+        {
+          if (object.cdoConflict())
+          {
+            conflictedObjects.add(object);
+          }
+        }
+
+        // Keep the semantic information that is already present in the transaction history. In particular, a scalar
+        // SET retains its before-image, so its rollback notification must not be reconstructed by comparing complete
+        // revisions (which would materialize unrelated partial features).
+        Map<CDOObject, CDORevisionDelta> knownRollbackDeltas = deriveKnownRollbackDeltas(boundary, oldRevisions);
+
         // Rollback objects
         Map<CDOObject, CDORevision> newRevisions = new HashMap<>();
         Set<CDOID> idsOfNewObjectWithDeltas = rollbackCompletely(boundary, newRevisions);
@@ -2585,7 +2738,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
           if (newRevision != null)
           {
-            InternalCDORevisionDelta delta = newRevision.compare(oldRevision);
+            InternalCDORevisionDelta delta = conflictedObjects.contains(object) ? null : (InternalCDORevisionDelta)knownRollbackDeltas.get(object);
+            if (delta == null)
+            {
+              // The remaining cases (notably list REMOVE/CLEAR and lifecycle transitions) do not always retain the
+              // complete old value in their delta representation. Preserve their established generic comparison
+              // semantics, but confine this materialization to the objects whose notification cannot be derived.
+              getSession().resolveAllElementProxies(oldRevision);
+              getSession().resolveAllElementProxies(newRevision);
+              delta = newRevision.compare(oldRevision);
+            }
+
             if (!delta.isEmpty())
             {
               Set<CDOObject> detachedObjects = Collections.emptySet();
@@ -2633,6 +2796,105 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         throw new TransactionException(ex);
       }
     });
+  }
+
+  /**
+   * Derives rollback notification deltas for the subset of transaction changes whose inverse is fully represented by
+   * the retained history. The returned deltas describe the transition from the current state to the selected boundary.
+   *
+   * @param boundary the rollback target.
+   * @param oldRevisions the revisions captured before restoration.
+   * @return known rollback deltas, keyed by object identity.
+   */
+  private Map<CDOObject, CDORevisionDelta> deriveKnownRollbackDeltas(TransactionBoundary boundary, Map<CDOObject, CDORevision> oldRevisions)
+  {
+    Map<CDOObject, InternalCDORevisionDelta> deltas = new HashMap<>();
+    Map<CDOObject, Map<EStructuralFeature, CDOFeatureDelta>> inverseFeatures = new HashMap<>();
+    Set<CDOObject> unsupported = Collections.newSetFromMap(new IdentityHashMap<>());
+    Map<CDOID, CDOObject> currentNewObjects = aggregateCurrentNewObjects();
+
+    for (TransactionBoundary itrBoundary = currentBoundary; itrBoundary != null; itrBoundary = itrBoundary.getPrevious())
+    {
+      for (CDORevisionDelta forward : itrBoundary.getSegment().getRevisionDeltas().values())
+      {
+        if (currentNewObjects.containsKey(forward.getID()))
+        {
+          // Object lifecycle rollback has its own notification and bookkeeping contract. Do not let a feature-only
+          // inverse bypass the established NEW-object restoration path.
+          continue;
+        }
+
+        for (CDOFeatureDelta featureDelta : forward.getFeatureDeltas())
+        {
+          CDOObject object = findObjectForRollbackDelta(oldRevisions, forward.getID());
+          if (object == null || unsupported.contains(object))
+          {
+            continue;
+          }
+
+          EStructuralFeature feature = featureDelta.getFeature();
+          if (feature.isMany() || !(featureDelta instanceof CDOSetFeatureDelta))
+          {
+            unsupported.add(object);
+            inverseFeatures.remove(object);
+            continue;
+          }
+
+          CDOSetFeatureDelta setDelta = (CDOSetFeatureDelta)featureDelta;
+          Object oldValue = setDelta.getOldValue();
+          if (oldValue == CDOFeatureDelta.UNKNOWN_VALUE)
+          {
+            unsupported.add(object);
+            inverseFeatures.remove(object);
+            continue;
+          }
+
+          // Walking history backwards means the first value encountered is the value at the rollback boundary. Do
+          // not overwrite it with a later segment's before-image.
+          Map<EStructuralFeature, CDOFeatureDelta> features = inverseFeatures.computeIfAbsent(object, key -> new HashMap<>());
+          if (!features.containsKey(feature))
+          {
+            CDOFeatureDelta inverse = oldValue == null ? new CDOUnsetFeatureDeltaImpl(feature)
+                : new CDOSetFeatureDeltaImpl(feature, setDelta.getIndex(), oldValue, CDOFeatureDelta.UNKNOWN_VALUE);
+            features.put(feature, inverse);
+          }
+        }
+      }
+
+      if (itrBoundary == boundary)
+      {
+        break;
+      }
+    }
+
+    for (Map.Entry<CDOObject, Map<EStructuralFeature, CDOFeatureDelta>> entry : inverseFeatures.entrySet())
+    {
+      if (!unsupported.contains(entry.getKey()))
+      {
+        InternalCDORevisionDelta delta = (InternalCDORevisionDelta)CDORevisionUtil.createDelta(oldRevisions.get(entry.getKey()));
+        for (CDOFeatureDelta featureDelta : entry.getValue().values())
+        {
+          delta.addFeatureDelta(featureDelta, null);
+        }
+
+        deltas.put(entry.getKey(), delta);
+      }
+    }
+
+    return new HashMap<>(deltas);
+  }
+
+  private CDOObject findObjectForRollbackDelta(Map<CDOObject, CDORevision> oldRevisions, CDOID id)
+  {
+    for (CDOObject object : oldRevisions.keySet())
+    {
+      if (id.equals(object.cdoID()))
+      {
+        return object;
+      }
+    }
+
+    return null;
   }
 
   private Set<CDOID> rollbackCompletely(TransactionBoundary boundary, Map<CDOObject, CDORevision> newRevisions)
@@ -2797,6 +3059,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
               {
                 cleanRev = beforeImage.revision;
               }
+            }
+
+            if (cleanRev != null && detachedObject instanceof CDOObjectWrapper)
+            {
+              // Native objects keep partial collections in their store and resolve values on demand. A legacy
+              // wrapper copies every collection slot into the generated EObject during post-load, so it cannot
+              // represent UNLOADED as an application value. Materialize only for that restoration boundary.
+              getSession().resolveAllElementProxies(cleanRev);
             }
 
             cleanObject(detachedObject, cleanRev);
@@ -3505,18 +3775,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
-  private static final class ExportChanges
-  {
-    private final Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
-
-    private final Map<CDOID, CDORevisionDelta> revisionDeltas = CDOIDUtil.createMap();
-
-    private boolean isEmpty()
-    {
-      return newObjects.isEmpty() && revisionDeltas.isEmpty();
-    }
-  }
-
   @Override
   public CDOSavepoint[] importChanges(InputStream stream, boolean reconstructSavepoints) throws IOException
   {
@@ -4117,6 +4375,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           if (reference.isMany())
           {
             CDOList list = revision.getListOrNull(reference);
+            if (list != null && !list.isFullyLoaded())
+            {
+              new CDOCollectionLoadingResolver(getSession()).resolveAllProxies(revision, reference);
+            }
+
             if (list != null)
             {
               int index = 0;
@@ -4458,16 +4721,25 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           if (referencer.cdoState() == CDOState.DIRTY && referencerClassInfo.isPersistent(reference))
           {
             InternalCDORevision cleanRevision = cleanRevisions.get(referencer);
+            boolean wasPresentInCleanRevision = false;
 
             if (reference.isMany())
             {
+              // Clean-revision lookup does not materialize collections. This comparison consumes all original values
+              // of this reference, so load this feature only; unrelated many-valued features remain partial.
               CDOList list = cleanRevision.getListOrNull(reference);
               if (list != null)
               {
+                if (!list.isFullyLoaded())
+                {
+                  new CDOCollectionLoadingResolver(getSession()).resolveAllProxies(cleanRevision, reference);
+                }
+
                 for (Object value : list)
                 {
-                  if (value == referencedCDOObject.cdoID() || value == referencedObject)
+                  if (isSameReferenceValue(value, referencedCDOObject, referencedObject))
                   {
+                    wasPresentInCleanRevision = true;
                     continue;
                   }
                 }
@@ -4476,10 +4748,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
             else
             {
               Object value = cleanRevision.getValue(reference);
-              if (value == referencedCDOObject.cdoID() || value == referencedObject)
-              {
-                continue;
-              }
+              wasPresentInCleanRevision = isSameReferenceValue(value, referencedCDOObject, referencedObject);
+            }
+
+            if (wasPresentInCleanRevision)
+            {
+              continue;
             }
           }
 
@@ -4493,6 +4767,26 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       staleReferenceCleaner.cleanStaleReferences(staleReferencesToClean);
     }
+  }
+
+  private static boolean isSameReferenceValue(Object value, CDOObject referencedCDOObject, EObject referencedObject)
+  {
+    if (value == referencedObject)
+    {
+      return true;
+    }
+
+    if (value instanceof CDOID)
+    {
+      return CDOIDUtil.equals((CDOID)value, referencedCDOObject.cdoID());
+    }
+
+    if (value instanceof EObject)
+    {
+      return CDOUtil.getCDOObject((EObject)value) == referencedCDOObject;
+    }
+
+    return false;
   }
 
   private EContentsEList.FeatureIterator<EObject> getChangeableCrossReferences(EObject object)
@@ -5211,6 +5505,33 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return new CDOChangeSetDataImpl(newList, changedList, detachedList);
   }
 
+  private static Set<EStructuralFeature> getFeatures(CDORevisionDelta delta)
+  {
+    Set<EStructuralFeature> result = new HashSet<>();
+
+    for (CDOFeatureDelta featureDelta : delta.getFeatureDeltas())
+    {
+      if (featureDelta.getFeature() != null)
+      {
+        result.add(featureDelta.getFeature());
+      }
+    }
+
+    return result;
+  }
+
+  private static Set<EStructuralFeature> getAllPersistentFeatures(InternalCDORevision revision)
+  {
+    Set<EStructuralFeature> result = new HashSet<>();
+
+    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
+    {
+      result.add(feature);
+    }
+
+    return result;
+  }
+
   private static TransactionBoundary getBoundary(InternalCDOSavepoint savepoint)
   {
     return ((CDOSavepointImpl)savepoint).getBoundary();
@@ -5269,8 +5590,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
     InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
 
-    InternalCDORevision result = revisionManager.getRevision(id, transaction, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
-
+    InternalCDORevision result = revisionManager.getRevision(id, transaction, NO_CHUNKS_LOADING_CONFIG, synthetics);
     if (result != null)
     {
       throw new IllegalStateException("An object with the same id already exists on this branch");
@@ -5344,6 +5664,21 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @author Eike Stepper
    */
+  private static final class ExportChanges
+  {
+    private final Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
+
+    private final Map<CDOID, CDORevisionDelta> revisionDeltas = CDOIDUtil.createMap();
+
+    private boolean isEmpty()
+    {
+      return newObjects.isEmpty() && revisionDeltas.isEmpty();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private final class CleanRevisionsMap extends HashMap<InternalCDOObject, InternalCDORevision>
   {
     private static final long serialVersionUID = 1L;
@@ -5358,13 +5693,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       if (key instanceof EObject)
       {
         CDOObject cdoObject = CDOUtil.getCDOObject((EObject)key);
-        InternalCDORevision revision = super.get(cdoObject);
-        if (revision != null)
-        {
-          getSession().resolveAllElementProxies(revision);
-        }
-
-        return revision;
+        return super.get(cdoObject);
       }
 
       return null;
@@ -6647,8 +6976,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     private final InternalCDORevision cleanRevision;
 
+    private final Set<EStructuralFeature> changedFeatures;
+
     private PlannedGoalObject(InternalCDOObject object, InternalCDORevision targetRevision, InternalCDORevision goalRevision,
-        InternalCDORevisionDelta targetGoalDelta, boolean installTargetRevision, InternalCDORevision cleanRevision)
+        InternalCDORevisionDelta targetGoalDelta, boolean installTargetRevision, InternalCDORevision cleanRevision, Set<EStructuralFeature> changedFeatures)
     {
       this.object = object;
       this.targetRevision = targetRevision;
@@ -6656,6 +6987,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       this.targetGoalDelta = targetGoalDelta;
       this.installTargetRevision = installTargetRevision;
       this.cleanRevision = cleanRevision;
+      this.changedFeatures = changedFeatures;
     }
   }
 

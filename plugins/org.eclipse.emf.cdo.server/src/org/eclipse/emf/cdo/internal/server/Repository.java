@@ -45,10 +45,17 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfigResolver;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.AuthorizationException;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
@@ -190,9 +197,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private static final List<CDOLockState> NO_LOCK_STATES = Collections.emptyList();
 
-  private static final int UNCHUNKED = CDORevision.UNCHUNKED;
-
-  private static final int NONE = CDORevision.DEPTH_NONE;
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   private static final String PROP_UUID = "org.eclipse.emf.cdo.server.repositoryUUID"; //$NON-NLS-1$
 
@@ -265,6 +270,10 @@ public class Repository extends Container<Object> implements InternalRepository
   private final Semaphore packageRegistryCommitLock = new Semaphore(1);
 
   private InternalCDOPackageRegistry packageRegistry;
+
+  private volatile CDOCollectionLoadingConfig collectionLoadingConfig;
+
+  private final CDOCollectionLoadingConfigResolver collectionLoadingConfigResolver = new CDOCollectionLoadingConfigResolver();
 
   private InternalCDOBranchManager branchManager;
 
@@ -545,7 +554,31 @@ public class Repository extends Container<Object> implements InternalRepository
   public Object processPackage(Object value)
   {
     CDOFactoryImpl.prepareDynamicEPackage(value);
+
+    if (value instanceof EPackage)
+    {
+      collectionLoadingConfigResolver.clearModelCache();
+    }
+
     return value;
+  }
+
+  @Override
+  public CDOCollectionLoadingConfig getCollectionLoadingConfig()
+  {
+    return collectionLoadingConfig;
+  }
+
+  @Override
+  public void setCollectionLoadingConfig(CDOCollectionLoadingConfig config)
+  {
+    collectionLoadingConfig = config == null ? null : new CDOCollectionLoadingConfig(config.getDefaultChunkConfig(), config.getOverrides());
+  }
+
+  @Override
+  public ChunkConfig resolveCollectionLoadingConfig(InternalSession session, EStructuralFeature feature)
+  {
+    return collectionLoadingConfigResolver.resolve(session.getCollectionLoadingConfig(), collectionLoadingConfig, feature);
   }
 
   @Override
@@ -826,6 +859,13 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, Request.Config config)
+  {
+    int referenceChunk = config.getReferenceChunk() == Request.Config.REFERENCE_CHUNK_UNSPECIFIED ? CDORevision.UNCHUNKED : config.getReferenceChunk();
+    return loadRevisions(infos, branchPoint, referenceChunk, config.getPrefetchDepth(), config.isPrefetchLockStates());
+  }
+
+  @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean prefetchLockStates)
   {
@@ -940,11 +980,6 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
-    if (referenceChunk == UNCHUNKED)
-    {
-      revision.setUnchunked();
-    }
-
     return revision;
   }
 
@@ -969,13 +1004,20 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private long loadRevisionRevised(CDOID id, CDOBranch branch)
   {
-    InternalCDORevision revision = loadRevisionByVersion(id, branch.getVersion(CDORevision.FIRST_VERSION), UNCHUNKED);
+    InternalCDORevision revision = loadRevisionByVersion(id, branch.getVersion(CDORevision.FIRST_VERSION), CDORevision.UNCHUNKED);
     if (revision != null)
     {
       return revision.getTimeStamp() - 1;
     }
 
     return CDORevision.UNSPECIFIED_DATE;
+  }
+
+  @Override
+  public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
+  {
+    int referenceChunk = config.getReferenceChunk() == Request.Config.REFERENCE_CHUNK_UNSPECIFIED ? CDORevision.UNCHUNKED : config.getReferenceChunk();
+    return loadRevisionByVersion(id, branchVersion, referenceChunk);
   }
 
   @Override
@@ -988,7 +1030,7 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
-    CDORevision revision = revisionManager.getRevision(id, branchPoint, UNCHUNKED, NONE, true);
+    CDORevision revision = revisionManager.getRevision(id, branchPoint, UNCHUNKED_LOADING_CONFIG);
     if (revision == null)
     {
       return null;
@@ -1010,7 +1052,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     for (int version = revision.getVersion() - 1; version >= CDOBranchVersion.FIRST_VERSION; --version)
     {
-      CDORevision rev = revisionManager.getRevisionByVersion(id, branch.getVersion(version), UNCHUNKED, true);
+      CDORevision rev = revisionManager.getRevisionByVersion(id, branch.getVersion(version), UNCHUNKED_LOADING_CONFIG);
       if (rev == null)
       {
         return revision;
@@ -1022,7 +1064,7 @@ public class Repository extends Container<Object> implements InternalRepository
     if (!branch.isMainBranch())
     {
       CDOBranchPoint base = branch.getBase();
-      CDORevision baseRevision = revisionManager.getRevision(id, base, UNCHUNKED, NONE, true);
+      CDORevision baseRevision = revisionManager.getRevision(id, base, UNCHUNKED_LOADING_CONFIG);
       if (baseRevision != null)
       {
         return getFirstRevision(id, baseRevision);
@@ -1048,7 +1090,7 @@ public class Repository extends Container<Object> implements InternalRepository
         break;
       }
 
-      CDORevision rev = revisionManager.getRevisionByVersion(id, branch.getVersion(version), UNCHUNKED, true);
+      CDORevision rev = revisionManager.getRevisionByVersion(id, branch.getVersion(version), UNCHUNKED_LOADING_CONFIG);
       if (rev == null)
       {
         break;
@@ -1072,7 +1114,7 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public void ensureChunks(InternalCDORevision revision)
   {
-    ensureChunks(revision, UNCHUNKED);
+    ensureChunks(revision, CDORevision.UNCHUNKED);
   }
 
   @Override
@@ -1084,7 +1126,6 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     IStoreAccessor accessor = null;
-    boolean unchunked = true;
     for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
     {
       if (feature.isMany())
@@ -1096,7 +1137,7 @@ public class Repository extends Container<Object> implements InternalRepository
           if (size != 0)
           {
             int chunkSizeToUse = chunkSize;
-            if (chunkSizeToUse == UNCHUNKED)
+            if (chunkSizeToUse == CDORevision.UNCHUNKED)
             {
               chunkSizeToUse = size;
             }
@@ -1104,143 +1145,97 @@ public class Repository extends Container<Object> implements InternalRepository
             int chunkEnd = Math.min(chunkSizeToUse, size);
             accessor = ensureChunk(revision, feature, accessor, list, 0, chunkEnd);
 
-            if (unchunked)
-            {
-              for (int i = chunkEnd; i < size; i++)
-              {
-                if (list.get(i) == InternalCDOList.UNINITIALIZED)
-                {
-                  unchunked = false;
-                  break;
-                }
-              }
-            }
           }
         }
       }
-    }
-
-    if (unchunked)
-    {
-      revision.setUnchunked();
     }
   }
 
   @Override
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart, int chunkEnd)
   {
-    if (!revision.isUnchunked())
-    {
-      MoveableList<Object> list = revision.getListOrNull(feature);
-      if (list == null)
-      {
-        return null;
-      }
-
-      chunkEnd = Math.min(chunkEnd, list.size());
-      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-      ensureChunk(revision, feature, accessor, list, chunkStart, chunkEnd);
-
-      // TODO Expensive: if the revision is unchunked all lists/elements must be visited
-      if (isUnchunked(revision))
-      {
-        revision.setUnchunked();
-      }
-
-      return accessor;
-    }
-
-    return null;
+    return ensureChunks(revision, feature, Collections.singletonList(Pair.create(chunkStart, chunkEnd)));
   }
 
-  private boolean isUnchunked(InternalCDORevision revision)
+  @Override
+  public IStoreAccessor ensureChunks(InternalCDORevision revision, EStructuralFeature feature, List<Pair<Integer, Integer>> ranges)
   {
-    for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
+    if (revision.isUnchunked())
     {
-      if (feature.isMany())
-      {
-        MoveableList<Object> list = revision.getListOrNull(feature);
-        if (list != null)
-        {
-          int size = list.size();
-          for (int i = 0; i < size; i++)
-          {
-            if (list.get(i) == InternalCDOList.UNINITIALIZED)
-            {
-              return false;
-            }
-          }
-        }
-      }
+      return null;
     }
 
-    return true;
+    MoveableList<Object> list = revision.getListOrNull(feature);
+    if (list == null)
+    {
+      return null;
+    }
+
+    IStoreAccessor accessor = StoreThreadLocal.getAccessor();
+    ensureChunks(revision, feature, accessor, list, ranges);
+    return accessor;
   }
 
   protected IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, IStoreAccessor accessor, MoveableList<Object> list,
       int chunkStart, int chunkEnd)
   {
+    return ensureChunks(revision, feature, accessor, list, Collections.singletonList(Pair.create(chunkStart, chunkEnd)));
+  }
+
+  protected IStoreAccessor ensureChunks(InternalCDORevision revision, EStructuralFeature feature, IStoreAccessor accessor, MoveableList<Object> list,
+      List<Pair<Integer, Integer>> ranges)
+  {
     IStoreChunkReader chunkReader = null;
-    int fromIndex = -1;
-    for (int j = chunkStart; j < chunkEnd; j++)
+
+    for (Pair<Integer, Integer> range : ranges)
     {
-      if (list.get(j) == InternalCDOList.UNINITIALIZED)
+      int chunkStart = range.getElement1();
+      int chunkEnd = Math.min(range.getElement2(), list.size());
+      int fromIndex = -1;
+
+      for (int j = chunkStart; j < chunkEnd; j++)
       {
-        if (fromIndex == -1)
+        if (!((CDOList)list).isLoadedAt(j))
         {
-          fromIndex = j;
-        }
-      }
-      else
-      {
-        if (fromIndex != -1)
-        {
-          if (chunkReader == null)
+          if (fromIndex == -1)
           {
-            if (accessor == null)
+            fromIndex = j;
+          }
+        }
+        else
+        {
+          if (fromIndex != -1)
+          {
+            if (chunkReader == null)
             {
-              accessor = StoreThreadLocal.getAccessor();
+              if (accessor == null)
+              {
+                accessor = StoreThreadLocal.getAccessor();
+              }
+
+              chunkReader = accessor.createChunkReader(revision, feature);
             }
 
-            chunkReader = accessor.createChunkReader(revision, feature);
-          }
+            addChunk(chunkReader, fromIndex, j);
 
-          int toIndex = j;
-          if (fromIndex == toIndex - 1)
-          {
-            chunkReader.addSimpleChunk(fromIndex);
+            fromIndex = -1;
           }
-          else
-          {
-            chunkReader.addRangedChunk(fromIndex, toIndex);
-          }
-
-          fromIndex = -1;
         }
       }
-    }
 
-    // Add last chunk
-    if (fromIndex != -1)
-    {
-      if (chunkReader == null)
+      if (fromIndex != -1)
       {
-        if (accessor == null)
+        if (chunkReader == null)
         {
-          accessor = StoreThreadLocal.getAccessor();
+          if (accessor == null)
+          {
+            accessor = StoreThreadLocal.getAccessor();
+          }
+
+          chunkReader = accessor.createChunkReader(revision, feature);
         }
 
-        chunkReader = accessor.createChunkReader(revision, feature);
-      }
-
-      int toIndex = chunkEnd;
-      if (fromIndex == toIndex - 1)
-      {
-        chunkReader.addSimpleChunk(fromIndex);
-      }
-      else
-      {
-        chunkReader.addRangedChunk(fromIndex, toIndex);
+        addChunk(chunkReader, fromIndex, chunkEnd);
       }
     }
 
@@ -1268,6 +1263,18 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return accessor;
+  }
+
+  private static void addChunk(IStoreChunkReader chunkReader, int fromIndex, int toIndex)
+  {
+    if (fromIndex == toIndex - 1)
+    {
+      chunkReader.addSimpleChunk(fromIndex);
+    }
+    else
+    {
+      chunkReader.addRangedChunk(fromIndex, toIndex);
+    }
   }
 
   @Override
@@ -2305,7 +2312,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private InternalCDORevision getRevisionFromBranch(CDOID id, CDOBranchPoint branchPoint)
   {
-    return revisionManager.getRevision(id, branchPoint, UNCHUNKED, NONE, true);
+    return revisionManager.getRevision(id, branchPoint, UNCHUNKED_LOADING_CONFIG);
   }
 
   @Override
@@ -2401,7 +2408,7 @@ public class Repository extends Container<Object> implements InternalRepository
       for (CDORevisionKey revKey : revisionKeys)
       {
         CDOID id = revKey.getID();
-        InternalCDORevision rev = revManager.getRevision(id, viewedBranch.getHead(), UNCHUNKED, NONE, true);
+        InternalCDORevision rev = revManager.getRevision(id, viewedBranch.getHead(), UNCHUNKED_LOADING_CONFIG);
 
         if (rev == null)
         {

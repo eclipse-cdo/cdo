@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -724,8 +723,7 @@ public final class CDOStoreImpl implements CDOStore
         List<CDOID> listOfIDs = policy.loadAhead(revisionManager, view, eObject, feature, list, index, id);
         if (!listOfIDs.isEmpty())
         {
-          int initialChunkSize = view.getSession().options().getCollectionLoadingPolicy().getInitialChunkSize();
-          revisionManager.getRevisions(listOfIDs, view, initialChunkSize, CDORevision.DEPTH_NONE, true);
+          revisionManager.request().getRevisions(listOfIDs, view);
         }
       }
     }

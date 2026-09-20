@@ -16,13 +16,28 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
+import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOMerger;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -31,7 +46,15 @@ import org.eclipse.emf.cdo.util.CommitException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+import org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData;
+import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -44,6 +67,163 @@ public class MergingTest extends AbstractCDOTest
   {
     super.doSetUp();
     skipStoreWithoutChangeSets();
+  }
+
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testPCL012SemanticListFeatureScopedMaterialization() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+    CDOTransaction transaction = session.openTransaction(mainBranch);
+    CDOResource resource = transaction.createResource(getResourcePath("/pcl012-merge"));
+
+    Product1 product = getModel1Factory().createProduct1();
+    for (int i = 0; i < 8; i++)
+    {
+      product.getOrderDetails().add(getModel1Factory().createOrderDetail());
+    }
+
+    product.getOtherVATs().add(VAT.VAT0);
+    product.getOtherVATs().add(VAT.VAT7);
+    product.getOtherVATs().add(VAT.VAT15);
+    resource.getContents().add(product);
+    resource.getContents().addAll(product.getOrderDetails());
+    long baseTime = transaction.commit().getTimeStamp();
+    CDOBranch source = mainBranch.createBranch(getBranchName("pcl012-source"), baseTime);
+
+    transaction.close();
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+
+    session = openSession();
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+    CDOTransaction sourceTransaction = session.openTransaction(source);
+    Product1 sourceProduct = (Product1)sourceTransaction.getResource(getResourcePath("/pcl012-merge")).getContents().get(0);
+    sourceProduct.getOrderDetails().move(0, 3);
+    sourceProduct.getOrderDetails().remove(4);
+    sourceTransaction.commit();
+
+    MergeData mergeData = ((InternalCDOSession)session).getMergeData(mainBranch.getHead(), source.getHead(), null, null, true);
+    CDOID productID = CDOUtil.getCDOObject(sourceProduct).cdoID();
+    EStructuralFeature unrelatedFeature = getModel1Package().getProduct1_OtherVATs();
+    Map<CDOID, InternalCDORevision> observed = new HashMap<>();
+    CDORevisionProvider targetProvider = partialFeatureProvider(mergeData.getTargetBaseInfo(), productID, unrelatedFeature, observed);
+    CDORevisionProvider sourceProvider = partialFeatureProvider(mergeData.getSourceBaseInfo(), productID, unrelatedFeature, observed);
+    CDORevisionProvider resultProvider = partialFeatureProvider(mergeData.getTargetBaseInfo(), productID, unrelatedFeature, observed);
+
+    CDOChangeSetData result = new DefaultCDOMerger.PerFeature.ManyValued().merge(mergeData.getTargetChanges(), mergeData.getSourceChanges(), targetProvider,
+        sourceProvider, resultProvider);
+    assertFalse(result.isEmpty());
+    assertFalse(observed.isEmpty());
+    assertTrue(observed.get(productID).getListOrNull(getModel1Package().getProduct1_OrderDetails()).isFullyLoaded());
+    assertFalse(observed.get(productID).getListOrNull(unrelatedFeature).isFullyLoaded());
+
+    sourceTransaction.close();
+    session.close();
+  }
+
+  /**
+   * Verifies that applying a scalar-only change set does not materialize an unrelated partial collection.
+   */
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testPCL017ApplyScalarPreservesUnrelatedPartialCollection() throws Exception
+  {
+    CDOSession session = openSession();
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+
+    CDOTransaction writer = session.openTransaction();
+    CDOResource resource = writer.createResource(getResourcePath("/pcl017-apply-scalar"));
+    Company company = getModel1Factory().createCompany();
+    company.setName("before");
+    for (int i = 0; i < 8; i++)
+    {
+      company.getCategories().add(getModel1Factory().createCategory());
+    }
+
+    resource.getContents().add(company);
+    writer.commit();
+    writer.close();
+    clearCache(session.getRevisionManager());
+
+    CDOTransaction transaction = session.openTransaction();
+    Company loaded = (Company)transaction.getResource(getResourcePath("/pcl017-apply-scalar")).getContents().get(0);
+    InternalCDORevision targetRevision = (InternalCDORevision)CDOUtil.getCDOObject(loaded).cdoRevision();
+    assertFalse(targetRevision.getListOrNull(getModel1Package().getCompany_Categories()).isFullyLoaded());
+
+    InternalCDORevisionDelta scalarDelta = new CDORevisionDeltaImpl(targetRevision);
+    scalarDelta.addFeatureDelta(new CDOSetFeatureDeltaImpl(getModel1Package().getAddress_Name(), 0, "after", "before"), null);
+    CDOChangeSetData changeSet = new CDOChangeSetDataImpl(null, Collections.singletonList(scalarDelta), null);
+    InternalCDOTransaction internalTransaction = (InternalCDOTransaction)transaction;
+    internalTransaction.applyChangeSet(changeSet, id -> targetRevision, id -> targetRevision, null, false);
+
+    assertEquals("after", loaded.getName());
+    assertFalse(((InternalCDORevision)CDOUtil.getCDOObject(loaded).cdoRevision()).getListOrNull(getModel1Package().getCompany_Categories()).isFullyLoaded());
+
+    transaction.close();
+    session.close();
+  }
+
+  private CDORevisionProvider partialFeatureProvider(CDORevisionProvider delegate, CDOID productID, EStructuralFeature feature,
+      Map<CDOID, InternalCDORevision> observed)
+  {
+    return id -> {
+      CDORevision revision = delegate.getRevision(id);
+      if (id.equals(productID) && revision instanceof InternalCDORevision)
+      {
+        InternalCDORevision partial = copyWithPartialFeature((InternalCDORevision)revision, feature);
+        observed.put(id, partial);
+        return revision;
+      }
+
+      return revision;
+    };
+  }
+
+  private InternalCDORevision copyWithPartialFeature(InternalCDORevision revision, EStructuralFeature feature)
+  {
+    InternalCDORevision copy = new CDORevisionImpl(revision.getEClass());
+    copy.setID(revision.getID());
+    copy.setVersion(revision.getVersion());
+    copy.setBranchPoint(revision.getBranch().getPoint(revision.getTimeStamp()));
+    copy.setRevised(revision.getRevised());
+
+    for (EStructuralFeature currentFeature : revision.getEClass().getEAllStructuralFeatures())
+    {
+      if (!EMFUtil.isPersistent(currentFeature))
+      {
+        continue;
+      }
+
+      if (currentFeature.isMany())
+      {
+        CDOList full = revision.getListOrNull(currentFeature);
+        if (full == null)
+        {
+          continue;
+        }
+
+        int size = full.size();
+        int chunkSize = currentFeature == feature ? 1 : CDORevision.UNCHUNKED;
+        InternalCDOList list = (InternalCDOList)CDOListFactory.DEFAULT.createList(currentFeature, size, size, chunkSize);
+        for (int i = 0; i < size; i++)
+        {
+          if (currentFeature != feature || i == 0)
+          {
+            list.set(i, full.get(i));
+          }
+        }
+
+        list.finishConstruction(true);
+        copy.setList(currentFeature, list);
+      }
+      else
+      {
+        copy.setValue(currentFeature, revision.getValue(currentFeature));
+      }
+    }
+
+    return copy;
   }
 
   public void testFromEmptyBranches() throws Exception
@@ -789,13 +969,20 @@ public class MergingTest extends AbstractCDOTest
     restartRepository();
 
     CDOSession session = openSession();
-    CDOBranch mainBranch = session.getBranchManager().getMainBranch();
-    CDOBranch source1 = mainBranch.getBranch(getBranchName("source1"));
+    try
+    {
+      CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+      CDOBranch source1 = mainBranch.getBranch(getBranchName("source1"));
 
-    CDOTransaction transaction = session.openTransaction(mainBranch);
-    CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo.getTimeStamp()), new DefaultCDOMerger.PerFeature.ManyValued());
-    assertEquals(true, check.isEmpty());
-    assertEquals(false, transaction.isDirty());
+      CDOTransaction transaction = session.openTransaction(mainBranch);
+      CDOChangeSetData check = transaction.merge(source1.getHead(), source1.getPoint(commitInfo.getTimeStamp()), new DefaultCDOMerger.PerFeature.ManyValued());
+      assertEquals(true, check.isEmpty());
+      assertEquals(false, transaction.isDirty());
+    }
+    finally
+    {
+      session.close();
+    }
   }
 
   public void testAutoMerge() throws Exception

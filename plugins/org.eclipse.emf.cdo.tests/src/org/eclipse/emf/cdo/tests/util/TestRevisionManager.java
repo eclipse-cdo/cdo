@@ -36,6 +36,8 @@ public class TestRevisionManager extends CDORevisionManagerImpl
 
   private int additionalCounter;
 
+  private volatile Request.Config lastConfig;
+
   public TestRevisionManager()
   {
   }
@@ -49,9 +51,10 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   }
 
   @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
-      SyntheticCDORevision[] synthetics)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics)
   {
+    lastConfig = config;
+
     if (getRevisionsDelay > 0)
     {
       long start = System.currentTimeMillis();
@@ -68,7 +71,12 @@ public class TestRevisionManager extends CDORevisionManagerImpl
       }
     }
 
-    return super.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
+    return super.getRevisions(ids, branchPoint, config, synthetics);
+  }
+
+  public Request.Config getLastConfig()
+  {
+    return lastConfig;
   }
 
   public void resetLoadCounter()
@@ -104,11 +112,16 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   }
 
   @Override
-  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
-      List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
+  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, Request.Config config, List<CDORevision> additionalRevisions,
+      Consumer<CDORevision> consumer)
   {
-    super.loadRevisions(infosToLoad, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates, additionalRevisions, consumer);
+    super.loadRevisions(infosToLoad, branchPoint, config, additionalRevisions, consumer);
 
+    countLoadedRevisions(infosToLoad, additionalRevisions);
+  }
+
+  private void countLoadedRevisions(List<RevisionInfo> infosToLoad, List<CDORevision> additionalRevisions)
+  {
     synchronized (lock)
     {
       additionalCounter += additionalRevisions == null ? 0 : additionalRevisions.size();

@@ -432,7 +432,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       for (;;)
       {
         // Read singleval-attribute table always (even without modeled attributes!)
-        boolean success = readValuesFromStatement(stmtAttributes, revision, accessor);
+        boolean success = readValuesFromStatement(stmtAttributes, revision, accessor, listChunk);
 
         if (hasLists)
         {

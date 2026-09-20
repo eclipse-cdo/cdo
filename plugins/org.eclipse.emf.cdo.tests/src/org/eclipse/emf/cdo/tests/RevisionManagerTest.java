@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.internal.common.revision.AbstractCDORevisionCache;
 import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
@@ -162,6 +164,11 @@ public class RevisionManagerTest extends AbstractCDOTest
     dumpRevisions(getLocation() + "Cache: Getting " + branchPoint, revisionManager.getCache().getAllRevisions());
   }
 
+  protected CDOBranchPoint getBranchPoint(CDOBranch branch, long timeStamp)
+  {
+    return branch.getPoint(timeStamp);
+  }
+
   private InternalCDORevision[] fillBranch(CDOBranch branch, long offset, long... durations)
   {
     InternalCDORevision[] revisions = new InternalCDORevision[durations.length];
@@ -239,6 +246,7 @@ public class RevisionManagerTest extends AbstractCDOTest
     return timeStamp / 2 + revised / 2;
   }
 
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   protected InternalCDORevision getRevision(CDOBranch branch, long timeStamp)
   {
     CDOBranchPoint branchPoint = branch.getPoint(timeStamp);
@@ -277,6 +285,60 @@ public class RevisionManagerTest extends AbstractCDOTest
   {
     assertEquals(expected, revisionManager.getLoadCounter());
     revisionManager.resetLoadCounter();
+  }
+
+  public void testRevisionRequestLookupModes() throws Exception
+  {
+    assertEquals(LookupMode.CACHE_THEN_LOADER, Request.Config.DEFAULT.getLookupMode());
+    assertEquals(CDORevision.DEPTH_NONE, Request.Config.DEFAULT.getPrefetchDepth());
+    assertFalse(Request.Config.DEFAULT.isPrefetchLockStates());
+
+    CDOBranchPoint branchPoint = getBranchPoint(branch0, getMiddleOfValidity(revisions0[0]));
+    revisionManager.getCache().clear();
+
+    CDORevision missing = revisionManager.request().lookupCacheOnly().getRevision(objectID, branchPoint);
+    assertNull(missing);
+    assertLoads(0);
+
+    CDORevision loaded = revisionManager.request().lookupMode(LookupMode.CACHE_THEN_LOADER).prefetchDepth(CDORevision.DEPTH_NONE).prefetchLockStates(true)
+        .getRevision(objectID, branchPoint);
+    assertNotNull(loaded);
+    assertLoads(1);
+
+    CDORevision cached = revisionManager.request().lookupMode(LookupMode.CACHE_ONLY).getRevision(objectID, branchPoint);
+    assertNotNull(cached);
+    assertLoads(0);
+
+    CDORevision loadedOnly = revisionManager.request().lookupMode(LookupMode.LOADER_ONLY).getRevision(objectID, branchPoint);
+    assertNotNull(loadedOnly);
+    assertLoads(1);
+
+    cached = revisionManager.request().lookupMode(LookupMode.CACHE_ONLY).getRevision(objectID, branchPoint);
+    assertNotNull(cached);
+    assertLoads(0);
+  }
+
+  @SuppressWarnings("deprecation")
+  public void testHistoricalRevisionLookupAdapters()
+  {
+    CDOBranchPoint branchPoint = getBranchPoint(branch0, getMiddleOfValidity(revisions0[0]));
+    revisionManager.getCache().clear();
+
+    assertNull(revisionManager.getRevision(objectID, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, false));
+    assertEquals(LookupMode.CACHE_ONLY, revisionManager.getLastConfig().getLookupMode());
+    assertEquals(CDORevision.UNCHUNKED, revisionManager.getLastConfig().getReferenceChunk());
+    assertLoads(0);
+
+    assertNotNull(revisionManager.getRevision(objectID, branchPoint, 0, CDORevision.DEPTH_NONE, true));
+    assertEquals(LookupMode.CACHE_THEN_LOADER, revisionManager.getLastConfig().getLookupMode());
+    assertEquals(0, revisionManager.getLastConfig().getReferenceChunk());
+    assertLoads(1);
+
+    revisionManager.getCache().clear();
+    assertNotNull(revisionManager.getRevision(objectID, branchPoint, 7, CDORevision.DEPTH_NONE, true));
+    assertEquals(LookupMode.CACHE_THEN_LOADER, revisionManager.getLastConfig().getLookupMode());
+    assertEquals(7, revisionManager.getLastConfig().getReferenceChunk());
+    assertLoads(1);
   }
 
   public void testBranch0_Initial() throws Exception

@@ -53,6 +53,11 @@ public interface CDORevision extends CDORevisionKey, CDORevisable
   public static final int DEPTH_NONE = 0;
 
   /**
+   * @since 4.29
+   */
+  public static final int DEPTH_ONE = 1;
+
+  /**
    * @since 3.0
    */
   public static final int DEPTH_INFINITE = -1;

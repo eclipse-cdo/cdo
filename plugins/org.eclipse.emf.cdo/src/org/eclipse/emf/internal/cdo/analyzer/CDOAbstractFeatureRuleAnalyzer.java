@@ -13,7 +13,6 @@
 package org.eclipse.emf.internal.cdo.analyzer;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
@@ -44,7 +43,8 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
 
   protected long lastLatencyTime;
 
-  private CDOCollectionLoadingPolicy loadCollectionPolicy;
+  @SuppressWarnings("deprecation")
+  private org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy loadCollectionPolicy;
 
   private boolean didFetch;
 
@@ -60,7 +60,8 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
   }
 
   @Override
-  public final CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+  @Deprecated
+  public final org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
   {
     return loadCollectionPolicy;
   }
@@ -73,7 +74,8 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
       TRACER.format("preTraverseFeature: {0}.{1}", cdoObject.eClass(), feature.getName()); //$NON-NLS-1$
     }
 
-    loadCollectionPolicy = cdoObject.cdoView().getSession().options().getCollectionLoadingPolicy();
+    loadCollectionPolicy = getCollectionLoadingPolicy(cdoObject);
+
     lastTraverseFeature = feature;
     lastTraverseCDOObject = cdoObject;
     lastTraverseIndex = index;
@@ -132,5 +134,11 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
   protected final boolean didFetch()
   {
     return didFetch;
+  }
+
+  @SuppressWarnings("deprecation")
+  private org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy getCollectionLoadingPolicy(CDOObject cdoObject)
+  {
+    return cdoObject.cdoView().getSession().options().getCollectionLoadingPolicy();
   }
 }

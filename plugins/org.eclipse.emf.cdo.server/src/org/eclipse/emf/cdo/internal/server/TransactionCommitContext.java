@@ -41,6 +41,8 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -131,6 +133,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private static final LockType[] ALL_LOCK_TYPES = LockType.values();
 
   private static final Map<String, String> NO_COMMIT_PROPERTIES = Collections.emptyMap();
+
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   private final InternalTransaction transaction;
 
@@ -1660,7 +1664,7 @@ public class TransactionCommitContext implements InternalCommitContext
             InternalCDORevisionDelta ancestorDelta = (InternalCDORevisionDelta)revisionKey;
             CDOID id = ancestorDelta.getID();
 
-            InternalCDORevision ancestorRevision = revisionManager.getRevisionByVersion(id, ancestorDelta, CDORevision.UNCHUNKED, true);
+            InternalCDORevision ancestorRevision = revisionManager.getRevisionByVersion(id, ancestorDelta, UNCHUNKED_LOADING_CONFIG);
             InternalCDORevision newRevision = ancestorRevision.copy();
             ancestorDelta.applyTo(newRevision);
 

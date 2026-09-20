@@ -26,6 +26,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -98,11 +99,12 @@ public abstract class ConfigTestSuite implements IConstants
   protected List<Class<? extends ConfigTest>> getTestClasses(OMBundle bundle, String packageName)
   {
     List<Class<? extends ConfigTest>> result = new ArrayList<>();
+    Set<String> classNames = new HashSet<>();
 
     for (Iterator<Class<?>> it = bundle.getClasses(); it.hasNext();)
     {
       Class<?> c = it.next();
-      if (ConfigTest.class.isAssignableFrom(c) && c.getName().startsWith(packageName))
+      if (ConfigTest.class.isAssignableFrom(c) && c.getName().startsWith(packageName) && classNames.add(c.getName()))
       {
         @SuppressWarnings("unchecked")
         Class<? extends ConfigTest> configTest = (Class<? extends ConfigTest>)c;

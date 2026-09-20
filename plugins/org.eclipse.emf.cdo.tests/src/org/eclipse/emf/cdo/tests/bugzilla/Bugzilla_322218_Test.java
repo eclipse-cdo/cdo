@@ -76,6 +76,7 @@ public class Bugzilla_322218_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testMyEnumListPCL() throws Exception
   {
     MyEnumList myEnumList = getModel6Factory().createMyEnumList();
@@ -95,6 +96,7 @@ public class Bugzilla_322218_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testMyEnumList2PCL() throws Exception
   {
     CDOSession session = openSession();
@@ -114,6 +116,7 @@ public class Bugzilla_322218_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testMyEnumList3PCL() throws Exception
   {
     CDOSession session = openSession();
@@ -134,6 +137,7 @@ public class Bugzilla_322218_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testMyEnumList3PCL_Reload() throws Exception
   {
     {
@@ -214,6 +218,7 @@ public class Bugzilla_322218_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testMyEnumListUnsettablePCL() throws Exception
   {
     MyEnumListUnsettable myEnumList = getModel6Factory().createMyEnumListUnsettable();
@@ -233,6 +238,7 @@ public class Bugzilla_322218_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testMyEnumListUnsettable2PCL() throws Exception
   {
     CDOSession session = openSession();
@@ -252,6 +258,7 @@ public class Bugzilla_322218_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testMyEnumListUnsettable3PCL() throws Exception
   {
     CDOSession session = openSession();
@@ -272,6 +279,7 @@ public class Bugzilla_322218_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testMyEnumListUnsettable3PCL_Reload() throws Exception
   {
     {

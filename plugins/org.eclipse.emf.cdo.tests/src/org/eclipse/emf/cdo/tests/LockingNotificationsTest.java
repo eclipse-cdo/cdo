@@ -18,10 +18,15 @@ import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -40,6 +45,61 @@ import java.util.Collections;
  */
 public class LockingNotificationsTest extends AbstractLockingTest
 {
+  @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testRecursiveRemoteLockPreservesPartialUnrelatedList() throws Exception
+  {
+    CDOSession session1 = openSession();
+    session1.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+    CDOTransaction transaction1 = session1.openTransaction();
+    transaction1.options().setLockNotificationEnabled(true);
+
+    CDOResource resource1 = transaction1.createResource(getResourcePath("r1"));
+    Category category1 = getModel1Factory().createCategory();
+    resource1.getContents().add(category1);
+    for (int i = 0; i < 8; i++)
+    {
+      Product1 product = getModel1Factory().createProduct1();
+      product.setName("product" + i);
+      resource1.getContents().add(product);
+      category1.getTopProducts().add(product);
+    }
+    transaction1.commit();
+
+    session1.close();
+    session1 = openSession();
+    session1.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+    transaction1 = session1.openTransaction();
+    transaction1.options().setLockNotificationEnabled(true);
+    category1 = (Category)transaction1.getResource(getResourcePath("r1")).getContents().get(0);
+
+    CDOObject cdoCategory1 = CDOUtil.getCDOObject(category1);
+    category1.getTopProducts().get(0);
+    InternalCDORevision revision = (InternalCDORevision)cdoCategory1.cdoRevision();
+    CDOList topProducts = revision.getListOrNull(getModel1Package().getCategory_TopProducts());
+    assertFalse(topProducts.isFullyLoaded());
+
+    TestListener2 listener = new TestListener2(CDOViewLocksChangedEvent.class);
+    transaction1.addListener(listener);
+
+    CDOSession session2 = openSession();
+    CDOView view2 = openViewWithLockNotifications(session2, transaction1.getBranch());
+    CDOObject cdoCategory2 = CDOUtil.getCDOObject(view2.getObject(cdoCategory1.cdoID()));
+    view2.lockObjects(Collections.singleton(cdoCategory2), LockType.WRITE, DEFAULT_TIMEOUT, true);
+
+    listener.waitFor(1);
+    assertEquals(true, cdoCategory1.cdoWriteLock().isLockedByOthers());
+    assertFalse(topProducts.isFullyLoaded());
+
+    view2.unlockObjects(Collections.singleton(cdoCategory2), LockType.WRITE, true);
+    listener.waitFor(2);
+    assertFalse(topProducts.isFullyLoaded());
+
+    session2.close();
+    session1.close();
+  }
+
   public void testSameBranchDifferentSession_WithoutAutoRelease() throws Exception
   {
     sameBranchDifferentSession(false);

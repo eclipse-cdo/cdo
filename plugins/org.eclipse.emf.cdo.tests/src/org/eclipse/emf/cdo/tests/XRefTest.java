@@ -15,11 +15,17 @@ package org.eclipse.emf.cdo.tests;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.model1.OrderDetail;
+import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
+import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -52,6 +58,50 @@ public class XRefTest extends AbstractCDOTest
   {
     super.doSetUp();
     skipStoreWithoutQueryXRefs();
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testPCL012LocalXRefFeatureScopedMaterialization() throws Exception
+  {
+    CDOSession writerSession = openSession();
+    CDOTransaction writer = writerSession.openTransaction();
+    CDOResource resource = writer.createResource(getResourcePath("/pcl012"));
+
+    Product1 product = getModel1Factory().createProduct1();
+    List<OrderDetail> details = Arrays.asList(getModel1Factory().createOrderDetail(), getModel1Factory().createOrderDetail(),
+        getModel1Factory().createOrderDetail(), getModel1Factory().createOrderDetail());
+    product.getOrderDetails().addAll(details);
+    product.getOtherVATs().addAll(Arrays.asList(VAT.VAT0, VAT.VAT7, VAT.VAT15));
+    resource.getContents().add(product);
+    resource.getContents().addAll(details);
+    writer.commit();
+    writerSession.close();
+    clearCache(getRepository().getRevisionManager());
+
+    CDOSession readerSession = openSession();
+    readerSession.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+    CDOTransaction transaction = readerSession.openTransaction();
+    Product1 loadedProduct = (Product1)transaction.getResource(getResourcePath("/pcl012")).getContents().get(0);
+    InternalCDORevision revision = (InternalCDORevision)CDOUtil.getCDOObject(loadedProduct).cdoRevision();
+    CDOList orderDetails = revision.getListOrNull(getModel1Package().getProduct1_OrderDetails());
+    CDOList otherVATs = revision.getListOrNull(getModel1Package().getProduct1_OtherVATs());
+    assertFalse(orderDetails.isFullyLoaded());
+    assertFalse(otherVATs.isFullyLoaded());
+
+    loadedProduct.setName("dirty");
+    OrderDetail target = loadedProduct.getOrderDetails().get(0);
+    List<CDOObjectReference> references = transaction.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(target)));
+    assertEquals(1, references.size());
+    assertEquals(CDOUtil.getCDOObject(loadedProduct), references.get(0).getSourceObject());
+    revision = (InternalCDORevision)CDOUtil.getCDOObject(loadedProduct).cdoRevision();
+    orderDetails = revision.getListOrNull(getModel1Package().getProduct1_OrderDetails());
+    otherVATs = revision.getListOrNull(getModel1Package().getProduct1_OtherVATs());
+    assertTrue(orderDetails.isFullyLoaded());
+    assertFalse(otherVATs.isFullyLoaded());
+
+    transaction.close();
+    readerSession.close();
   }
 
   public void testCrossReferenceMultivalueEReferenceQuery() throws Exception

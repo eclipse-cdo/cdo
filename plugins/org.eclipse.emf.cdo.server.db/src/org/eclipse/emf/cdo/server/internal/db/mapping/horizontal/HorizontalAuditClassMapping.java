@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
@@ -90,6 +92,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalAuditClassMapping.class);
 
   private static final ContextTracer TRACER_UNITS = new ContextTracer(OM.DEBUG_UNITS, HorizontalAuditClassMapping.class);
+
+  private static final Config BASE_CHUNK_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
 
   private String sqlInsertAttributes;
 
@@ -323,7 +327,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       }
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(stmt, revision, accessor);
+      boolean success = readValuesFromStatement(stmt, revision, accessor, listChunk);
 
       // Read multival tables only if revision exists
       if (success && revision.getVersion() >= CDOBranchVersion.FIRST_VERSION)
@@ -358,7 +362,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       stmt.setInt(2, revision.getVersion());
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      boolean success = readValuesFromStatement(stmt, revision, accessor);
+      boolean success = readValuesFromStatement(stmt, revision, accessor, listChunk);
 
       // Read multival tables only if revision exists
       if (success)
@@ -963,7 +967,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         InternalCDORevision revision = store.createRevision(eClass, null);
         revision.setBranchPoint(head);
 
-        if (!readValuesFromResultSet(resultSet, idHandler, revision, true))
+        if (!readValuesFromResultSet(resultSet, idHandler, revision, true, CDORevision.UNCHUNKED))
         {
           break;
         }
@@ -1216,8 +1220,8 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
         TRACER.format("FeatureDeltaWriter: old version: {0}, new version: {1}", oldVersion, oldVersion + 1); //$NON-NLS-1$
       }
 
-      InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository().getRevisionManager().getRevisionByVersion(id, delta, 0,
-          true);
+      InternalCDORevision originalRevision = (InternalCDORevision)accessor.getStore().getRepository().getRevisionManager().getRevisionByVersion(id, delta,
+          BASE_CHUNK_LOADING_CONFIG);
 
       newRevision = originalRevision.copy();
 

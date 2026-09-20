@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -60,6 +59,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -107,6 +107,25 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
 
   public CDORevisionDeltaImpl(CDORevision sourceRevision, CDORevision targetRevision)
   {
+    this(sourceRevision, targetRevision, null);
+  }
+
+  /**
+   * Creates a revision delta while comparing only the supplied persistent features.
+   * <p>
+   * This constructor is intentionally narrower than {@link InternalCDORevision#compare(CDORevision)}. It is used by
+   * change-set application when the incoming delta already identifies the features whose target-relative changes must
+   * be reported. Unselected features are not inspected, which preserves their partial representation.
+   *
+   * @param sourceRevision
+   *          the source revision
+   * @param targetRevision
+   *          the target revision
+   * @param features
+   *          the features to compare, or {@code null} to compare all features
+   */
+  public CDORevisionDeltaImpl(CDORevision sourceRevision, CDORevision targetRevision, Set<EStructuralFeature> features)
+  {
     if (sourceRevision.getEClass() != targetRevision.getEClass())
     {
       throw new IllegalArgumentException();
@@ -120,7 +139,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
 
     InternalCDORevision internalSourceRevision = (InternalCDORevision)sourceRevision;
     InternalCDORevision internalTargetRevision = (InternalCDORevision)targetRevision;
-    compare(internalSourceRevision, internalTargetRevision);
+    compare(internalSourceRevision, internalTargetRevision, features);
 
     Object dirtyContainerID = internalTargetRevision.getContainerID();
     if (dirtyContainerID instanceof CDOWithID)
@@ -130,9 +149,10 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
 
     CDOID dirtyResourceID = internalTargetRevision.getResourceID();
     int dirtyContainerFeatureID = internalTargetRevision.getContainerFeatureID();
-    if (!compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, internalSourceRevision.getContainerID(), dirtyContainerID)
-        || !compareValue(null, internalSourceRevision.getContainerFeatureID(), dirtyContainerFeatureID)
-        || !compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, internalSourceRevision.getResourceID(), dirtyResourceID))
+
+    if (!compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, internalSourceRevision.getContainerID(), dirtyContainerID) || //
+        !compareValue(null, internalSourceRevision.getContainerFeatureID(), dirtyContainerFeatureID) || //
+        !compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, internalSourceRevision.getResourceID(), dirtyResourceID))
     {
       CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(dirtyResourceID, dirtyContainerID, dirtyContainerFeatureID);
       addFeatureDelta(delta, null);
@@ -402,10 +422,15 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     addFeatureDelta(clearFeatureDelta, originSizeProvider);
   }
 
-  private void compare(InternalCDORevision originRevision, InternalCDORevision dirtyRevision)
+  private void compare(InternalCDORevision originRevision, InternalCDORevision dirtyRevision, Set<EStructuralFeature> features)
   {
     for (EStructuralFeature feature : originRevision.getClassInfo().getAllPersistentFeatures())
     {
+      if (features != null && !features.contains(feature))
+      {
+        continue;
+      }
+
       if (feature.isMany())
       {
         compareLists(originRevision, dirtyRevision, feature, this);
@@ -521,8 +546,8 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
         @Override
         public void analyzeLists(EList<Object> oldList, EList<?> newList, EList<ListChange> listChanges)
         {
-          checkNoProxies(oldList, originRevision);
-          checkNoProxies(newList, dirtyRevision);
+          checkNoProxies((CDOList)oldList, originRevision);
+          checkNoProxies((CDOList)newList, dirtyRevision);
           super.analyzeLists(oldList, newList, listChanges);
         }
 
@@ -578,16 +603,13 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
           return compareValue(feature, originValue, dirtyValue);
         }
 
-        private void checkNoProxies(EList<?> list, CDORevision revision)
+        private void checkNoProxies(CDOList list, CDORevision revision)
         {
           if (list != null && !((InternalCDORevision)revision).isUnchunked())
           {
-            for (Object element : list)
+            if (!list.isFullyLoaded())
             {
-              if (element instanceof CDOElementProxy || element == CDOListImpl.UNINITIALIZED)
-              {
-                throw new PartialCollectionLoadingNotSupportedException("List contains proxy elements");
-              }
+              throw new PartialCollectionLoadingNotSupportedException("List contains unloaded elements");
             }
           }
         }

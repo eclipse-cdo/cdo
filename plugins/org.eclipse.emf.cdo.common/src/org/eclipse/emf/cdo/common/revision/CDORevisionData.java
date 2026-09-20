@@ -154,11 +154,21 @@ public interface CDORevisionData
   public int hashCode(EStructuralFeature feature);
 
   /**
+   * Visits the values that are currently loaded in this revision.
+   * <p>
+   * Unloaded positions of many-valued features are skipped and are not materialized. The index supplied to the
+   * visitor remains the logical list position.
+   *
    * @since 4.2
    */
   public void accept(CDORevisionValueVisitor visitor);
 
   /**
+   * Visits the values that are currently loaded in this revision and whose features pass the filter.
+   * <p>
+   * Unloaded positions of many-valued features are skipped and are not materialized. The index supplied to the
+   * visitor remains the logical list position.
+   *
    * @since 4.9
    */
   public void accept(CDORevisionValueVisitor visitor, java.util.function.Predicate<EStructuralFeature> filter);

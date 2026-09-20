@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
@@ -189,12 +190,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
+  public InternalCDORevision getBaseRevision(CDORevision revision, Request.Config config)
   {
     try
     {
       ServerSession.set(serverSession);
-      return delegate.getBaseRevision(revision, referenceChunk, loadOnDemand);
+      return delegate.getBaseRevision(revision, getRequestConfig(config));
     }
     finally
     {
@@ -203,13 +204,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
-      SyntheticCDORevision[] synthetics)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, Request.Config config)
   {
     try
     {
       ServerSession.set(serverSession);
-      return delegate.getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
+      return delegate.getRevision(id, branchPoint, getRequestConfig(config));
     }
     finally
     {
@@ -218,13 +218,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
-      SyntheticCDORevision[] synthetics)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics)
   {
     try
     {
       ServerSession.set(serverSession);
-      return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
+      return delegate.getRevision(id, branchPoint, getRequestConfig(config), synthetics);
     }
     finally
     {
@@ -233,13 +232,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
-      boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
   {
     try
     {
       ServerSession.set(serverSession);
-      return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates, loadOnDemand, synthetics);
+      return delegate.getRevisionByVersion(id, branchVersion, getRequestConfig(config));
     }
     finally
     {
@@ -248,12 +246,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config)
   {
     try
     {
       ServerSession.set(serverSession);
-      return delegate.getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand);
+      return delegate.getRevisions(ids, branchPoint, getRequestConfig(config));
     }
     finally
     {
@@ -262,12 +260,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics)
   {
     try
     {
       ServerSession.set(serverSession);
-      return delegate.getRevisionByVersion(id, branchVersion, referenceChunk, loadOnDemand);
+      return delegate.getRevisions(ids, branchPoint, getRequestConfig(config), synthetics);
     }
     finally
     {
@@ -276,12 +274,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, List<CDORevision> additionalRevisions)
   {
     try
     {
       ServerSession.set(serverSession);
-      return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand);
+      return delegate.getRevisions(ids, branchPoint, getRequestConfig(config), additionalRevisions);
     }
     finally
     {
@@ -290,13 +288,13 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics,
       List<CDORevision> additionalRevisions)
   {
     try
     {
       ServerSession.set(serverSession);
-      return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, additionalRevisions);
+      return delegate.getRevisions(ids, branchPoint, getRequestConfig(config), synthetics, additionalRevisions);
     }
     finally
     {
@@ -325,21 +323,6 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     {
       ServerSession.set(serverSession);
       delegate.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
-    }
-    finally
-    {
-      ServerSession.unset();
-    }
-  }
-
-  @Deprecated
-  @Override
-  public void addRevision(CDORevision revision)
-  {
-    try
-    {
-      ServerSession.set(serverSession);
-      delegate.addRevision(revision);
     }
     finally
     {
@@ -394,5 +377,156 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     ServerRevisionLoader revisionLoader = (ServerRevisionLoader)delegate.getRevisionLoader();
     return (InternalRepository)revisionLoader.getDelegate();
+  }
+
+  private Request.Config getRequestConfig(Request.Config config)
+  {
+    return config;
+  }
+
+  private Request.Config legacyConfig(int referenceChunk, int prefetchDepth, boolean prefetchLockStates, boolean loadOnDemand)
+  {
+    LookupMode lookupMode = loadOnDemand ? LookupMode.CACHE_THEN_LOADER : LookupMode.CACHE_ONLY;
+    return new Request.Config(lookupMode, prefetchDepth, prefetchLockStates, referenceChunk);
+  }
+
+  @Deprecated
+  @Override
+  public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getBaseRevision(revision, getRequestConfig(legacyConfig(referenceChunk, CDORevision.DEPTH_NONE, false, loadOnDemand)));
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  @Deprecated
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevision(id, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand)), synthetics);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  @Deprecated
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevisions(ids, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand)), synthetics);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  @Deprecated
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
+      boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevisions(ids, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, prefetchLockStates, loadOnDemand)),
+          synthetics);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  @Deprecated
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevision(id, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand)));
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  @Deprecated
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevisionByVersion(id, branchVersion, getRequestConfig(legacyConfig(referenceChunk, CDORevision.DEPTH_NONE, false, loadOnDemand)));
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Override
+  @Deprecated
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevisions(ids, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand)));
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Deprecated
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      List<CDORevision> additionalRevisions)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, additionalRevisions);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
+  }
+
+  @Deprecated
+  @Override
+  public void addRevision(CDORevision revision)
+  {
+    try
+    {
+      ServerSession.set(serverSession);
+      delegate.addRevision(revision);
+    }
+    finally
+    {
+      ServerSession.unset();
+    }
   }
 }

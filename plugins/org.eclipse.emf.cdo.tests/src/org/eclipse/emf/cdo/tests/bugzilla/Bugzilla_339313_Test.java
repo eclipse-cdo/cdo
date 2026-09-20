@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.util.CommitException;
  */
 public class Bugzilla_339313_Test extends AbstractCDOTest
 {
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void test() throws CommitException
   {
     CDOID topObjectID = null;

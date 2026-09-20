@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
@@ -85,6 +87,8 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     implements IClassMappingAuditSupport, IClassMappingDeltaSupport, IBranchDeletionSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalBranchingClassMapping.class);
+
+  private static final Config UNCHUNKED_REVISION_SCAN_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   private String sqlInsertAttributes;
 
@@ -267,7 +271,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       }
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      success = readValuesFromStatement(stmt, revision, accessor);
+      success = readValuesFromStatement(stmt, revision, accessor, listChunk);
     }
     catch (SQLException ex)
     {
@@ -304,7 +308,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       stmt.setInt(3, revision.getVersion());
 
       // Read singleval-attribute table always (even without modeled attributes!)
-      success = readValuesFromStatement(stmt, revision, accessor);
+      success = readValuesFromStatement(stmt, revision, accessor, listChunk);
     }
     catch (SQLException ex)
     {
@@ -947,7 +951,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
           CDOBranchVersion branchVersion = revisionBranch.getVersion(version);
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, UNCHUNKED_REVISION_SCAN_CONFIG);
 
           if (!handler.handleRevision(revision))
           {

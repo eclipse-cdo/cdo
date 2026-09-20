@@ -23,15 +23,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A factory for creating {@link WSClientConnector} instances.
+ *
  * @author Eike Stepper
  */
 public class WSConnectorFactory extends ConnectorFactory
 {
-
-  /** Description token separator. */
+  /**
+   * Description token separator.
+   */
   public static final String TOKEN_SEPARATOR = "\n";
 
-  /** Prefix in description token to signal a cookie definition. */
+  /**
+   * Prefix in description token to signal a cookie definition.
+   */
   public static final String COOKIE_TOKEN_PREFIX = "cookie:";
 
   public WSConnectorFactory()

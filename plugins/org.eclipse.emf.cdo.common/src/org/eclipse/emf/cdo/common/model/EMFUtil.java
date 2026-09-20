@@ -15,6 +15,8 @@
  */
 package org.eclipse.emf.cdo.common.model;
 
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig;
+import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.net4j.util.WrappedException;
@@ -33,6 +35,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -86,6 +89,16 @@ public final class EMFUtil
   public static final String CDO_ANNOTATION_KEY_PERSISTENT = "persistent";
 
   /**
+   * @since 4.38
+   */
+  public static final String CDO_ANNOTATION_KEY_INITIAL_CHUNK_SIZE = "initialChunkSize";
+
+  /**
+   * @since 4.38
+   */
+  public static final String CDO_ANNOTATION_KEY_RESOLVE_CHUNK_SIZE = "resolveChunkSize";
+
+  /**
    * @since 4.2
    */
   public static final EReference EOPERATION_EEXCEPTIONS = EcorePackage.eINSTANCE.getEOperation_EExceptions();
@@ -130,7 +143,7 @@ public final class EMFUtil
    * @deprecated As of 4.9 use {@link EMFPredicates#ATTRIBUTES}.
    */
   @Deprecated
-  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> ATTRIBUTES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> ATTRIBUTES = new org.eclipse.net4j.util.Predicate<>()
   {
     @SuppressWarnings("deprecation")
     @Override
@@ -145,7 +158,7 @@ public final class EMFUtil
    * @deprecated As of 4.9 use {@link EMFPredicates#REFERENCES}.
    */
   @Deprecated
-  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> REFERENCES = new org.eclipse.net4j.util.Predicate<>()
   {
     @SuppressWarnings("deprecation")
     @Override
@@ -160,7 +173,7 @@ public final class EMFUtil
    * @deprecated As of 4.9 use {@link EMFPredicates#CONTAINER_REFERENCES}.
    */
   @Deprecated
-  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CONTAINER_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CONTAINER_REFERENCES = new org.eclipse.net4j.util.Predicate<>()
   {
     @SuppressWarnings("deprecation")
     @Override
@@ -181,7 +194,7 @@ public final class EMFUtil
    * @deprecated As of 4.9 use {@link EMFPredicates#CROSS_REFERENCES}.
    */
   @Deprecated
-  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CROSS_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CROSS_REFERENCES = new org.eclipse.net4j.util.Predicate<>()
   {
     @SuppressWarnings("deprecation")
     @Override
@@ -202,7 +215,7 @@ public final class EMFUtil
    * @deprecated As of 4.9 use {@link EMFPredicates#CONTAINMENT_REFERENCES}.
    */
   @Deprecated
-  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CONTAINMENT_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
+  public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CONTAINMENT_REFERENCES = new org.eclipse.net4j.util.Predicate<>()
   {
     @SuppressWarnings("deprecation")
     @Override
@@ -619,6 +632,68 @@ public final class EMFUtil
     }
 
     return true;
+  }
+
+  /**
+   * Returns the explicitly configured collection-loading dimensions of an EMF model element.
+   * <p>
+   * Invalid details are ignored independently and logged as warnings. A {@code null} result means that the element
+   * does not contain a valid explicitly configured dimension.
+   *
+   * @param modelElement the model element to inspect
+   * @return the explicit chunk configuration, or {@code null}
+   * @since 4.38
+   */
+  public static ChunkConfig getCollectionLoadingChunkConfig(EModelElement modelElement)
+  {
+    EAnnotation annotation = null;
+    for (EAnnotation candidate : modelElement.getEAnnotations())
+    {
+      if (CDO_ANNOTATION_SOURCE.equals(candidate.getSource()))
+      {
+        annotation = candidate;
+        break;
+      }
+    }
+
+    if (annotation == null)
+    {
+      return null;
+    }
+
+    int initialChunkSize = getCollectionLoadingChunkSize(annotation, CDO_ANNOTATION_KEY_INITIAL_CHUNK_SIZE, modelElement);
+    int resolveChunkSize = getCollectionLoadingChunkSize(annotation, CDO_ANNOTATION_KEY_RESOLVE_CHUNK_SIZE, modelElement);
+    if (initialChunkSize == ChunkConfig.INHERIT && resolveChunkSize == ChunkConfig.INHERIT)
+    {
+      return null;
+    }
+
+    return new ChunkConfig(initialChunkSize, resolveChunkSize);
+  }
+
+  private static int getCollectionLoadingChunkSize(EAnnotation annotation, String key, EModelElement modelElement)
+  {
+    String value = annotation.getDetails().get(key);
+    if (value == null)
+    {
+      return ChunkConfig.INHERIT;
+    }
+
+    try
+    {
+      int chunkSize = Integer.parseInt(value);
+      if (chunkSize < ChunkConfig.INHERIT)
+      {
+        throw new IllegalArgumentException("value is below " + ChunkConfig.INHERIT);
+      }
+
+      return chunkSize;
+    }
+    catch (IllegalArgumentException ex)
+    {
+      OM.LOG.warn("Ignoring invalid CDO collection-loading annotation detail " + key + "=" + value + " on " + modelElement, ex);
+      return ChunkConfig.INHERIT;
+    }
   }
 
   public static boolean isDynamicEPackage(Object value)

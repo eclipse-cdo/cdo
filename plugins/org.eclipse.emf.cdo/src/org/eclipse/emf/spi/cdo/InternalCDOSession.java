@@ -83,6 +83,18 @@ public interface InternalCDOSession
   public CDOLockStateCache getLockStateCache();
 
   /**
+   * @since 4.31
+   *
+   * Returns the effective legacy initial collection-loading chunk size.
+   *
+   * @return the effective legacy initial chunk size.
+   */
+  public default int getEffectiveLegacyCollectionLoadingInitialChunkSize()
+  {
+    return CDORevision.UNCHUNKED;
+  }
+
+  /**
    * @since 4.0
    * @deprecated As of 4.2 use {@link #getCredentialsProvider()}
    */

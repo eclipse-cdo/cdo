@@ -20,9 +20,12 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
@@ -38,6 +41,8 @@ import java.util.Map;
  */
 public class RefreshSessionIndication extends CDOServerReadIndication
 {
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
   private Map<CDOBranch, List<CDORevisionKey>> viewedRevisions = new HashMap<>();
 
   private long lastUpdateTime;
@@ -54,6 +59,12 @@ public class RefreshSessionIndication extends CDOServerReadIndication
   protected RefreshSessionIndication(CDOServerProtocol protocol, short signalID)
   {
     super(protocol, signalID);
+  }
+
+  @Override
+  protected boolean isModernInitialCollectionLoadingEnabled()
+  {
+    return true;
   }
 
   public Map<CDOBranch, List<CDORevisionKey>> getViewedRevisions()
@@ -118,8 +129,20 @@ public class RefreshSessionIndication extends CDOServerReadIndication
 
   protected void writeChangedObject(CDODataOutput out, InternalCDORevision revision, CDOBranchPoint securityContext) throws IOException
   {
+    writeChangedObject(out, revision, securityContext, null);
+  }
+
+  protected void writeChangedObject(CDODataOutput out, InternalCDORevision revision, CDOBranchPoint securityContext, InternalCDORevisionDelta delta)
+      throws IOException
+  {
     out.writeByte(CDOProtocolConstants.REFRESH_CHANGED_OBJECT);
     out.writeCDORevision(revision, initialChunkSize, securityContext); // Exposes revision to client side
+
+    out.writeBoolean(delta != null);
+    if (delta != null)
+    {
+      out.writeCDORevisionDelta(delta);
+    }
   }
 
   protected void writeDetachedObject(CDODataOutput out, CDORevisionKey key) throws IOException
@@ -152,7 +175,7 @@ public class RefreshSessionIndication extends CDOServerReadIndication
       {
         CDOID id = key.getID();
         synthetics[0] = null;
-        InternalCDORevision revision = revisionManager.getRevision(id, head, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+        InternalCDORevision revision = revisionManager.getRevision(id, head, UNCHUNKED_LOADING_CONFIG, synthetics);
 
         if (revision == null)
         {
@@ -160,7 +183,19 @@ public class RefreshSessionIndication extends CDOServerReadIndication
         }
         else if (hasChanged(key, revision))
         {
-          writeChangedObject(out, revision, head);
+          InternalCDORevision oldRevision;
+
+          try
+          {
+            oldRevision = revisionManager.getRevisionByVersion(id, branch.getVersion(key.getVersion()), UNCHUNKED_LOADING_CONFIG);
+          }
+          catch (IllegalStateException ex)
+          {
+            oldRevision = null;
+          }
+
+          InternalCDORevisionDelta delta = oldRevision == null ? null : revision.compare(oldRevision);
+          writeChangedObject(out, revision, head, delta);
         }
       }
     }

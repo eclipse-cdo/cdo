@@ -67,8 +67,15 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
       ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(2000L);
     }
 
-    CDOTransaction transaction = session.openTransaction();
-    transaction.getObject(lookupObject);
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      transaction.getObject(lookupObject);
+    }
+    finally
+    {
+      closeSession(session);
+    }
   }
 
   // public void testBugzilla_246442_lookupEClass() throws Exception

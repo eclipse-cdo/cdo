@@ -285,6 +285,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
   protected void doTearDown() throws Exception
   {
     RESOURCE_SET.getResources().clear();
+    PACKAGE_REGISTRY.put(NS_URI, V1);
     super.doTearDown();
   }
 

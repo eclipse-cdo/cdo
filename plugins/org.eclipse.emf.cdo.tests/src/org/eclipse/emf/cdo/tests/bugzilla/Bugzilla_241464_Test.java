@@ -36,6 +36,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
       CDOSession session = openSession();
       if (!(session instanceof org.eclipse.emf.cdo.net4j.CDONet4jSession))
       {
+        closeSession(session);
         return;
       }
 
@@ -73,6 +74,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
     finally
     {
       revisionManager.setGetRevisionsDelay(0L); // Terminate repo
+      closeSession(session);
     }
   }
 }

@@ -33,10 +33,13 @@ import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -102,6 +105,8 @@ public class Session extends Container<IView> implements InternalSession
   private String userID;
 
   private boolean passiveUpdateEnabled = true;
+
+  private volatile CDOCollectionLoadingConfig collectionLoadingConfig;
 
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
@@ -235,6 +240,19 @@ public class Session extends Container<IView> implements InternalSession
   public void setUserID(String userID)
   {
     this.userID = userID;
+  }
+
+  @Override
+  public CDOCollectionLoadingConfig getCollectionLoadingConfig()
+  {
+    return collectionLoadingConfig;
+  }
+
+  @Override
+  public void setCollectionLoadingConfig(CDOCollectionLoadingConfig config)
+  {
+    checkActive();
+    collectionLoadingConfig = config == null ? null : new CDOCollectionLoadingConfig(config.getDefaultChunkConfig(), config.getOverrides());
   }
 
   /**
@@ -570,9 +588,11 @@ public class Session extends Container<IView> implements InternalSession
           CDOID id = (CDOID)value;
           if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
           {
-            InternalCDORevision containedRevision = revisionManager.getRevision(id, branchPoint, referenceChunk, CDORevision.DEPTH_NONE, true);
-            revisions.add(id);
+            Request.Config config = new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, referenceChunk);
+            InternalCDORevision containedRevision = revisionManager.getRevision(id, branchPoint, config);
             additionalRevisions.add(containedRevision);
+
+            revisions.add(id);
 
             // Recurse
             collectContainedRevisions(containedRevision, branchPoint, referenceChunk, revisions, additionalRevisions);
@@ -1046,8 +1066,8 @@ public class Session extends Container<IView> implements InternalSession
     @Override
     public List<CDOIDAndVersion> getNewObjects()
     {
-      final List<CDOIDAndVersion> newObjects = super.getNewObjects();
-      return new IndexedList<CDOIDAndVersion>()
+      List<CDOIDAndVersion> newObjects = super.getNewObjects();
+      return new IndexedList<>()
       {
         @Override
         public CDOIDAndVersion get(int index)
@@ -1088,7 +1108,7 @@ public class Session extends Container<IView> implements InternalSession
     public List<CDORevisionKey> getChangedObjects()
     {
       final List<CDORevisionKey> changedObjects = super.getChangedObjects();
-      return new IndexedList<CDORevisionKey>()
+      return new IndexedList<>()
       {
         @Override
         public CDORevisionKey get(int index)

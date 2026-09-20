@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -129,6 +131,8 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   private static final String PROP_TIME_STAMP = "org.eclipse.emf.cdo.workspace.timeStamp"; //$NON-NLS-1$
 
   private static final String PROP_FIXED = "org.eclipse.emf.cdo.workspace.fixed"; //$NON-NLS-1$
+
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   private IManagedContainer container;
 
@@ -820,7 +824,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
       SyntheticCDORevision[] synthetics = { null };
       InternalCDORevisionManager revisionManager = localSession.getRevisionManager();
-      revisionManager.getRevision(id, localSessionHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetics);
+      revisionManager.getRevision(id, localSessionHead, UNCHUNKED_LOADING_CONFIG, synthetics);
 
       int max = synthetics[0].getVersion();
       EClass eClass = synthetics[0].getEClass();
@@ -1177,7 +1181,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
   {
     InternalCDOSession session = getLocalSession();
     CDORevisionManager revisionManager = session.getRevisionManager();
-    return revisionManager.getRevision(id, localSessionHead, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    return revisionManager.getRevision(id, localSessionHead, UNCHUNKED_LOADING_CONFIG);
   }
 
   @Override

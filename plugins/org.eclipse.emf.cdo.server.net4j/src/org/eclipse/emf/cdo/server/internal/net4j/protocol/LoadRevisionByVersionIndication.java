@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -39,6 +42,12 @@ public class LoadRevisionByVersionIndication extends CDOServerReadIndication
   }
 
   @Override
+  protected boolean isModernInitialCollectionLoadingEnabled()
+  {
+    return true;
+  }
+
+  @Override
   protected void indicating(CDODataInput in) throws IOException
   {
     id = in.readCDOID();
@@ -50,7 +59,8 @@ public class LoadRevisionByVersionIndication extends CDOServerReadIndication
   protected void responding(CDODataOutput out) throws IOException
   {
     InternalCDORevisionManager revisionManager = getRepository().getRevisionManager();
-    InternalCDORevision revision = revisionManager.getRevisionByVersion(id, branchVersion, referenceChunk, true);
+    Request.Config config = new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, referenceChunk);
+    InternalCDORevision revision = revisionManager.getRevisionByVersion(id, branchVersion, config);
     RevisionInfo.writeResult(out, revision, true, referenceChunk, null); // Exposes revision to client side
   }
 }

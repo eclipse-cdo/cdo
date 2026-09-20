@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 
 import org.eclipse.net4j.util.CheckUtil;
 
@@ -147,8 +149,24 @@ public abstract class RevisionInfo
 
   public void execute(InternalCDORevisionManager revisionManager, int referenceChunk)
   {
+    Request.Config config = new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, referenceChunk);
+    execute(revisionManager, config);
+  }
+
+  /**
+   * Executes this revision request with the canonical request configuration.
+   * <p>
+   * This overload lets protocol batches share an immutable configuration across their revision requests while keeping
+   * synthetic revisions on their separate result channel.
+   *
+   * @param revisionManager the manager that loads this revision
+   * @param config the immutable options that control lookup and collection loading
+   * @since 4.37
+   */
+  public void execute(InternalCDORevisionManager revisionManager, Request.Config config)
+  {
     SyntheticCDORevision[] synthetics = new SyntheticCDORevision[1];
-    result = revisionManager.getRevision(id, requestedBranchPoint, referenceChunk, CDORevision.DEPTH_NONE, true, synthetics);
+    result = revisionManager.getRevision(id, requestedBranchPoint, config, synthetics);
     synthetic = synthetics[0];
   }
 

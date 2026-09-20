@@ -64,6 +64,7 @@ public class Bugzilla_369646_Test extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testSetBranchWithPCL() throws Exception
   {
     {

@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
@@ -36,6 +39,9 @@ import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.StringIO;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 
@@ -69,6 +75,11 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     }
 
     return repository;
+  }
+
+  protected boolean isModernInitialCollectionLoadingEnabled()
+  {
+    return false;
   }
 
   protected IStore getStore()
@@ -166,6 +177,65 @@ public abstract class CDOServerIndication extends IndicationWithResponse
       public InternalSession getSession()
       {
         return CDOServerIndication.this.getSession();
+      }
+
+      @Override
+      public int getInitialChunkSize(EClass owner, EStructuralFeature feature, int referenceChunk)
+      {
+        if (isModernInitialCollectionLoadingEnabled() && getSession().getCollectionLoadingConfig() != null)
+        {
+          ChunkConfig config = getRepository().resolveCollectionLoadingConfig(getSession(), feature);
+          if (config != null)
+          {
+            return config.getInitialChunkSize();
+          }
+        }
+
+        return super.getInitialChunkSize(owner, feature, referenceChunk);
+      }
+
+      @Override
+      public void prepareCollection(InternalCDORevision revision, EStructuralFeature feature, int initialChunkSize)
+      {
+        if (!isModernInitialCollectionLoadingEnabled() || getSession().getCollectionLoadingConfig() == null)
+        {
+          return;
+        }
+
+        if (initialChunkSize == ChunkConfig.INHERIT)
+        {
+          throw new IllegalStateException("Resolved collection loading configuration must not contain INHERIT"); //$NON-NLS-1$
+        }
+
+        if (initialChunkSize == ChunkConfig.NONE)
+        {
+          return;
+        }
+
+        CDOList list = revision.getListOrNull(feature);
+        if (list == null || list.isEmpty())
+        {
+          return;
+        }
+
+        int chunkEnd;
+        if (initialChunkSize == ChunkConfig.ALL)
+        {
+          chunkEnd = list.size();
+        }
+        else if (initialChunkSize > 0)
+        {
+          chunkEnd = Math.min(initialChunkSize, list.size());
+        }
+        else
+        {
+          throw new IllegalStateException("Invalid resolved collection loading chunk size: " + initialChunkSize); //$NON-NLS-1$
+        }
+
+        if (chunkEnd > 0)
+        {
+          getRepository().ensureChunk(revision, feature, 0, chunkEnd);
+        }
       }
 
       @Override

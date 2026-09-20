@@ -387,6 +387,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/revision/CDOListFactory.java" type="org.eclipse.emf.cdo.common.revision.CDOListFactory">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.revision.CDOListFactory"/>
+                <message_argument value="createList(EStructuralFeature, int, int, int)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/revision/CDORevisionData.java" type="org.eclipse.emf.cdo.common.revision.CDORevisionData">
         <filter id="1209008130">
             <message_arguments>
@@ -537,29 +545,10 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/revision/AbstractCDORevision.java" type="org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision">
-        <filter id="338792546">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision"/>
-                <message_argument value="setClassInfo(CDOClassInfo)"/>
-            </message_arguments>
-        </filter>
-        <filter id="421654647">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.spi.common.revision.AbstractCDORevision"/>
-                <message_argument value="getEClass()"/>
-            </message_arguments>
-        </filter>
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="InternalCDORevision"/>
                 <message_argument value="AbstractCDORevision"/>
-            </message_arguments>
-        </filter>
-        <filter id="1141899266">
-            <message_arguments>
-                <message_argument value="4.2"/>
-                <message_argument value="4.9"/>
-                <message_argument value="accept(CDORevisionValueVisitor, Predicate&lt;EStructuralFeature&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -576,28 +565,6 @@
             <message_arguments>
                 <message_argument value="InternalCDORevisionManager"/>
                 <message_argument value="DelegatingCDORevisionManager"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.java" type="org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta">
-        <filter id="576778288">
-            <message_arguments>
-                <message_argument value="CDOFeatureDelta"/>
-                <message_argument value="InternalCDOFeatureDelta"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.java" type="org.eclipse.emf.cdo.spi.common.revision.InternalCDOList">
-        <filter id="576778288">
-            <message_arguments>
-                <message_argument value="CDOList"/>
-                <message_argument value="InternalCDOList"/>
-            </message_arguments>
-        </filter>
-        <filter id="576782386">
-            <message_arguments>
-                <message_argument value="CDOList"/>
-                <message_argument value="InternalCDOList"/>
             </message_arguments>
         </filter>
     </resource>

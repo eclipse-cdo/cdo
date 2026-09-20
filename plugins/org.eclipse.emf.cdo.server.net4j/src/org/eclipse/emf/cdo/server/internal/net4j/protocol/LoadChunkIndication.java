@@ -19,31 +19,37 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.collection.MoveableList;
+import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
 public class LoadChunkIndication extends CDOServerReadIndication
 {
+  private static final Config REVISION_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
+
   private CDOID id;
 
   private CDOBranchVersion branchVersion;
 
   private EStructuralFeature feature;
 
-  private int fromIndex;
-
-  private int toIndex;
+  private List<Pair<Integer, Integer>> ranges;
 
   public LoadChunkIndication(CDOServerProtocol protocol)
   {
@@ -60,8 +66,13 @@ public class LoadChunkIndication extends CDOServerReadIndication
     int featureID = in.readXInt();
     feature = eClass.getEStructuralFeature(featureID);
 
-    fromIndex = in.readXInt();
-    toIndex = in.readXInt();
+    int rangeCount = in.readXInt();
+    ranges = new ArrayList<>(rangeCount);
+
+    for (int i = 0; i < rangeCount; i++)
+    {
+      ranges.add(Pair.create(in.readXInt(), in.readXInt() + 1));
+    }
   }
 
   @Override
@@ -70,17 +81,20 @@ public class LoadChunkIndication extends CDOServerReadIndication
     InternalRepository repository = getRepository();
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
 
-    InternalCDORevision revision = revisionManager.getRevisionByVersion(id, branchVersion, 0, true);
-    repository.ensureChunk(revision, feature, fromIndex, toIndex + 1);
+    InternalCDORevision revision = revisionManager.getRevisionByVersion(id, branchVersion, REVISION_LOADING_CONFIG);
+    repository.ensureChunks(revision, feature, ranges);
 
     CDOType type = CDOModelUtil.getType(feature);
+
     MoveableList<Object> list = revision.getListOrNull(feature);
     if (list != null)
     {
-      for (int i = fromIndex; i <= toIndex; i++)
+      for (Pair<Integer, Integer> range : ranges)
       {
-        Object value = list.get(i);
-        type.writeValue(out, value);
+        for (int i = range.getElement1(); i < range.getElement2(); i++)
+        {
+          type.writeValue(out, list.get(i));
+        }
       }
     }
   }

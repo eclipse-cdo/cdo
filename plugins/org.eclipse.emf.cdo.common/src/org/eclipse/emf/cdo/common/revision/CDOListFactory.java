@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 /**
  * Creates {@link CDOList list} instances.
  *
@@ -25,4 +27,12 @@ public interface CDOListFactory
   public static final CDOListFactory DEFAULT = CDOListImpl.FACTORY;
 
   public CDOList createList(int intitialCapacity, int size, int initialChunk);
+
+  /**
+   * Creates a list with equality semantics derived from the feature.
+   */
+  public default CDOList createList(EStructuralFeature feature, int initialCapacity, int size, int initialChunk)
+  {
+    return createList(initialCapacity, size, initialChunk);
+  }
 }

@@ -61,6 +61,12 @@ public abstract class ModelConfig extends Config implements IModelConfig
     }
 
     @Override
+    public boolean isNative()
+    {
+      return true;
+    }
+
+    @Override
     public void initCapabilities(Set<String> capabilities)
     {
       capabilities.add(CAPABILITY_NATIVE);
@@ -183,6 +189,12 @@ public abstract class ModelConfig extends Config implements IModelConfig
     public Legacy()
     {
       super(NAME);
+    }
+
+    @Override
+    public boolean isNative()
+    {
+      return false;
     }
 
     @Override

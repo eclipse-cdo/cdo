@@ -544,8 +544,6 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         instanceToRevisionFeature(viewAndState.view, this, eFeature, setting);
       }
 
-      cdoRevision().setUnchunked();
-
       int newSize = classInfo.getSettingsFeatureCount();
       if (newSize != eSettings.length)
       {

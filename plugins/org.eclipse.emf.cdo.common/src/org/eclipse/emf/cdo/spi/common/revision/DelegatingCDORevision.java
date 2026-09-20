@@ -399,6 +399,18 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   }
 
   @Override
+  public CDOList constructList(EStructuralFeature feature, int size)
+  {
+    return getDelegate().constructList(feature, size);
+  }
+
+  @Override
+  public CDOList constructList(EStructuralFeature feature, int size, int initialChunk)
+  {
+    return getDelegate().constructList(feature, size, initialChunk);
+  }
+
+  @Override
   public void read(CDODataInput in) throws IOException
   {
     getDelegate().read(in);
@@ -583,8 +595,10 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
 
   /**
    * @since 4.1
+   * @deprecated
    */
   @Override
+  @Deprecated
   public void setUnchunked()
   {
     getDelegate().setUnchunked();

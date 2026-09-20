@@ -60,7 +60,7 @@ public class Bugzilla_318876_Test extends AbstractCDOTest
     session.refresh();
 
     CDOState state = CDOUtil.getCDOObject(purchaseOrder).cdoState();
-    assertEquals(CDOState.INVALID_CONFLICT, state);
+    assertEquals(CDOState.INVALID, state);
   }
 
   private void doSecondSession() throws CommitException

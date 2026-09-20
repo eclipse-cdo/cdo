@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitHistoryImpl;
 
 import java.util.List;
@@ -34,6 +36,8 @@ import java.util.List;
  */
 public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObjectHistory
 {
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
   private final CDORevisionManager revisionManager;
 
   private final CDOObject object;
@@ -111,7 +115,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
         if (version > CDOBranchVersion.FIRST_VERSION)
         {
           CDOBranchVersion previous = loadedRevision.getBranch().getVersion(version - 1);
-          loadedRevision = revisionManager.getRevisionByVersion(object.cdoID(), previous, CDORevision.UNCHUNKED, true);
+          loadedRevision = revisionManager.getRevisionByVersion(object.cdoID(), previous, UNCHUNKED_LOADING_CONFIG);
         }
         else
         {
@@ -123,7 +127,7 @@ public class CDOObjectHistoryImpl extends CDOCommitHistoryImpl implements CDOObj
             break;
           }
 
-          CDORevision revision = revisionManager.getRevision(object.cdoID(), base, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+          CDORevision revision = revisionManager.getRevision(object.cdoID(), base, UNCHUNKED_LOADING_CONFIG);
           if (revision == null)
           {
             // Reached branch where the object does not exist anymore.

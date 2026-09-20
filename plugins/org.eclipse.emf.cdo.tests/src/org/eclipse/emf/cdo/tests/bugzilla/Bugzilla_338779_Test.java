@@ -103,7 +103,7 @@ public class Bugzilla_338779_Test extends AbstractCDOTest
     CDOObject obj = CDOUtil.getCDOObject(eObject);
     assertClean(obj, obj.cdoView());
     CDORevision rev1 = obj.cdoRevision();
-    CDORevision rev2 = session.getRevisionManager().getRevisionByVersion(rev1.getID(), rev1, 0, false);
+    CDORevision rev2 = session.getRevisionManager().request().lookupCacheOnly().getRevisionByVersion(rev1.getID(), rev1);
     assertEquals(rev1, rev2);
     assertSame(rev1, rev2);
   }

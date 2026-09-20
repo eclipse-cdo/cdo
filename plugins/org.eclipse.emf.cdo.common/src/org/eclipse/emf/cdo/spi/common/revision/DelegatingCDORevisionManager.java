@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
@@ -169,58 +170,52 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
   }
 
   @Override
-  public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, Request.Config config)
   {
-    return getDelegate().getBaseRevision(revision, referenceChunk, loadOnDemand);
+    return getDelegate().getRevision(id, branchPoint, config);
   }
 
   @Override
-  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics)
   {
-    return getDelegate().getRevisionByVersion(id, branchVersion, referenceChunk, loadOnDemand);
+    return getDelegate().getRevision(id, branchPoint, config, synthetics);
   }
 
   @Override
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config)
   {
-    return getDelegate().getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand);
+    return getDelegate().getRevisions(ids, branchPoint, config);
   }
 
   @Override
-  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
-      SyntheticCDORevision[] synthetics)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics)
   {
-    return getDelegate().getRevision(id, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
+    return getDelegate().getRevisions(ids, branchPoint, config, synthetics);
   }
 
   @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, List<CDORevision> additionalRevisions)
   {
-    return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand);
+    return getDelegate().getRevisions(ids, branchPoint, config, additionalRevisions);
   }
 
   @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
-      SyntheticCDORevision[] synthetics)
-  {
-    return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, synthetics);
-  }
-
-  @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
-      boolean loadOnDemand, SyntheticCDORevision[] synthetics)
-  {
-    return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates, loadOnDemand, synthetics);
-  }
-
-  /**
-   * @since 4.15
-   */
-  @Override
-  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics,
       List<CDORevision> additionalRevisions)
   {
-    return getDelegate().getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, additionalRevisions);
+    return getDelegate().getRevisions(ids, branchPoint, config, synthetics, additionalRevisions);
+  }
+
+  @Override
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
+  {
+    return getDelegate().getRevisionByVersion(id, branchVersion, config);
+  }
+
+  @Override
+  public InternalCDORevision getBaseRevision(CDORevision revision, Request.Config config)
+  {
+    return getDelegate().getBaseRevision(revision, config);
   }
 
   @Override
@@ -272,6 +267,12 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
 
   protected abstract InternalCDORevisionManager getDelegate();
 
+  private static Request.Config legacyConfig(int referenceChunk, int prefetchDepth, boolean prefetchLockStates, boolean loadOnDemand)
+  {
+    LookupMode lookupMode = loadOnDemand ? LookupMode.CACHE_THEN_LOADER : LookupMode.CACHE_ONLY;
+    return new Request.Config(lookupMode, prefetchDepth, prefetchLockStates, referenceChunk);
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -283,5 +284,68 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     {
       return null;
     }
+  }
+
+  @Deprecated
+  @Override
+  public InternalCDORevision getBaseRevision(CDORevision revision, int referenceChunk, boolean loadOnDemand)
+  {
+    return getDelegate().getBaseRevision(revision, legacyConfig(referenceChunk, CDORevision.DEPTH_NONE, false, loadOnDemand));
+  }
+
+  @Deprecated
+  @Override
+  public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
+  {
+    return getDelegate().getRevisionByVersion(id, branchVersion, legacyConfig(referenceChunk, CDORevision.DEPTH_NONE, false, loadOnDemand));
+  }
+
+  @Deprecated
+  @Override
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
+  {
+    return getDelegate().getRevision(id, branchPoint, legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand));
+  }
+
+  @Deprecated
+  @Override
+  public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
+  {
+    return getDelegate().getRevision(id, branchPoint, legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand), synthetics);
+  }
+
+  @Deprecated
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand)
+  {
+    return getDelegate().getRevisions(ids, branchPoint, legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand));
+  }
+
+  @Deprecated
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      SyntheticCDORevision[] synthetics)
+  {
+    return getDelegate().getRevisions(ids, branchPoint, legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand), synthetics);
+  }
+
+  @Deprecated
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean prefetchLockStates,
+      boolean loadOnDemand, SyntheticCDORevision[] synthetics)
+  {
+    return getDelegate().getRevisions(ids, branchPoint, legacyConfig(referenceChunk, prefetchDepth, prefetchLockStates, loadOnDemand), synthetics);
+  }
+
+  /**
+   * @since 4.15
+   */
+  @Deprecated
+  @Override
+  public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth, boolean loadOnDemand,
+      List<CDORevision> additionalRevisions)
+  {
+    return getDelegate().getRevisions(ids, branchPoint, legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand), additionalRevisions);
   }
 }

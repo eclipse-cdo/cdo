@@ -36,6 +36,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -161,6 +163,8 @@ import java.util.function.Predicate;
 public class CDOViewImpl extends AbstractCDOView implements IManagedContainerProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
+
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   private int viewID;
 
@@ -476,7 +480,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
             CDORevision revision = object.cdoRevision(true);
             if (!requiredKey.equals(revision))
             {
-              InternalCDORevision requiredRevision = revisionManager.getRevisionByVersion(id, requiredKey, CDORevision.UNCHUNKED, true);
+              InternalCDORevision requiredRevision = revisionManager.getRevisionByVersion(id, requiredKey, UNCHUNKED_LOADING_CONFIG);
               InternalCDORevisionDelta revisionDelta = requiredRevision.compare(revision);
               CDOStateMachine.INSTANCE.invalidate(object, revisionDelta);
             }
@@ -854,9 +858,10 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   {
     return sync.supply(() -> {
       InternalCDORevisionManager revisionManager = session.getRevisionManager();
-      int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
       CDOBranchPoint branchPoint = getBranchPointForID(id);
-      return revisionManager.getRevision(id, branchPoint, initialChunkSize, CDORevision.DEPTH_NONE, loadOnDemand);
+      int referenceChunk = getInitialReferenceChunk();
+      LookupMode lookupMode = loadOnDemand ? LookupMode.CACHE_THEN_LOADER : LookupMode.CACHE_ONLY;
+      return revisionManager.getRevision(id, branchPoint, new Config(lookupMode, CDORevision.DEPTH_NONE, false, referenceChunk));
     });
   }
 
@@ -992,17 +997,24 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   public void prefetchRevisions(CDOID id, int depth)
   {
     checkArg(depth != CDORevision.DEPTH_NONE, "Prefetch depth must not be zero"); //$NON-NLS-1$
-
-    sync.run(() -> {
-      int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
-      prefetchRevisions(id, depth, initialChunkSize);
-    });
+    sync.run(() -> doPrefetchRevisions(id, depth));
   }
 
-  protected void prefetchRevisions(CDOID id, int depth, int initialChunkSize)
+  private void doPrefetchRevisions(CDOID id, int depth)
   {
     CDORevisionManager revisionManager = session.getRevisionManager();
-    revisionManager.getRevision(id, this, initialChunkSize, depth, true);
+    int referenceChunk = getInitialReferenceChunk();
+    revisionManager.getRevision(id, this, new Config(LookupMode.CACHE_THEN_LOADER, depth, false, referenceChunk));
+  }
+
+  private int getInitialReferenceChunk()
+  {
+    if (session.options().getCollectionLoadingConfig() != null)
+    {
+      return 0;
+    }
+
+    return session.getEffectiveLegacyCollectionLoadingInitialChunkSize();
   }
 
   /*
@@ -2849,7 +2861,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
    */
   private final class CommitInfoDistributor implements IListener, IDeactivateable
   {
-    private final ConcurrentArray<CDOCommitInfoHandler> handlers = new ConcurrentArray<CDOCommitInfoHandler>()
+    private final ConcurrentArray<CDOCommitInfoHandler> handlers = new ConcurrentArray<>()
     {
       @Override
       protected CDOCommitInfoHandler[] newArray(int length)

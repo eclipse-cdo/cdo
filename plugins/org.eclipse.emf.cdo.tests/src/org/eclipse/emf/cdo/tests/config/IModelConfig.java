@@ -38,6 +38,13 @@ public interface IModelConfig extends IConfig
 
   public static final String CAPABILITY_LEGACY = "model.legacy";
 
+  public boolean isNative();
+
+  public default boolean isLegacy()
+  {
+    return !isNative();
+  }
+
   public MangoFactory getMangoFactory();
 
   public MangoPackage getMangoPackage();

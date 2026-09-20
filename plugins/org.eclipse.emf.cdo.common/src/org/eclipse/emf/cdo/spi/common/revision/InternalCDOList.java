@@ -23,10 +23,54 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *
  * @author Simon McDuff
  * @since 2.0
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalCDOList extends CDOList
 {
+  /**
+   * @deprecated As of 4.29 use {@link CDORevisionUtil#UNINITIALIZED} instead.
+   */
+  @Deprecated
   public static final Object UNINITIALIZED = CDORevisionUtil.UNINITIALIZED;
+
+  public default void setOwner(Owner owner)
+  {
+    // Do nothing by default.
+  }
+
+  public default void loadValue(int index, Object value)
+  {
+    setWithoutFrozenCheck(index, value);
+  }
+
+  /**
+   * Returns the server-side index represented by the value at the given current list index.
+   * <p>
+   * The current index is the index in this list. Implementations that represent unloaded values with a server-indexed
+   * proxy override this method to return the source index stored by that representation. For ordinary values, the
+   * current index is also the server-side index.
+   *
+   * @param accessIndex
+   *          the current logical index in this list
+   * @return the server-side index represented by the value at {@code accessIndex}
+   * @since 4.31
+   */
+  public default int getServerIndexAt(int accessIndex)
+  {
+    return accessIndex;
+  }
+
+  /**
+   * Completes the temporary construction phase of this list.
+   *
+   * @param partial
+   *          whether positions that were not read must become unloaded
+   */
+  public default void finishConstruction(boolean partial)
+  {
+    // Do nothing by default.
+  }
 
   /**
    * Adjusts references according to the passed adjuster and resynchronizes indexes.
@@ -49,6 +93,18 @@ public interface InternalCDOList extends CDOList
    * @since 4.0
    */
   public void setWithoutFrozenCheck(int i, Object value);
+
+  /**
+   * Internal owner callbacks used for list/revision loaded-state accounting.
+   *
+   * @author Eike Stepper
+   */
+  public interface Owner
+  {
+    public boolean isFrozen();
+
+    public void unloadedCountChanged(int delta);
+  }
 
   /**
    * A mix-in interface for {@link InternalCDOList} that allows to optimize the speed of equality checks.

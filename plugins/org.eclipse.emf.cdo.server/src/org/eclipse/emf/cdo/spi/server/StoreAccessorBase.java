@@ -25,6 +25,8 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.internal.common.revision.CDOIDAndVersionImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -350,7 +352,9 @@ public abstract class StoreAccessorBase extends Lifecycle implements NewIDSuppor
       if (version > CDOBranchVersion.FIRST_VERSION)
       {
         CDOBranchVersion oldVersion = branch.getVersion(version - 1);
-        InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, oldVersion, CDORevision.UNCHUNKED, true);
+        InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, oldVersion,
+            new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED));
+
         InternalCDORevisionDelta delta = revision.compare(oldRevision);
         changedObjects.add(delta);
       }
@@ -381,7 +385,9 @@ public abstract class StoreAccessorBase extends Lifecycle implements NewIDSuppor
       }
 
       CDOBranchPoint base = branch.getBase();
-      InternalCDORevision revision = revisionManager.getRevision(id, base, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+
+      InternalCDORevision revision = revisionManager.getRevision(id, base,
+          new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED));
       if (revision == null)
       {
         revision = getRevisionFromBase(id, base.getBranch());

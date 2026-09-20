@@ -202,7 +202,6 @@ public final class EObjectCrawler extends Lifecycle
         featureToRevision(object, revision, feature, setting);
       }
 
-      revision.setUnchunked();
       return revision;
     }
 

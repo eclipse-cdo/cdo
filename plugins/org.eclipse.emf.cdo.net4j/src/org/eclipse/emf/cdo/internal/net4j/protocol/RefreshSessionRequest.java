@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
@@ -102,7 +103,8 @@ public class RefreshSessionRequest extends CDOClientRequest<RefreshSessionResult
       case CDOProtocolConstants.REFRESH_CHANGED_OBJECT:
       {
         InternalCDORevision revision = (InternalCDORevision)in.readCDORevision();
-        result.addChangedObject(revision);
+        InternalCDORevisionDelta delta = in.readBoolean() ? (InternalCDORevisionDelta)in.readCDORevisionDelta() : null;
+        result.addChangedObject(revision, delta);
         break;
       }
 

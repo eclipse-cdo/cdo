@@ -78,7 +78,6 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -88,7 +87,6 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -569,12 +567,7 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     CDOType type = CDOModelUtil.getType(feature.getEType());
-
-    InternalCDOList list = (InternalCDOList)getListFactory().createList(size, size, referenceChunk);
-    if (feature instanceof EReference && list instanceof ConfigurableEquality)
-    {
-      ((ConfigurableEquality)list).setUseEquals(false);
-    }
+    InternalCDOList list = (InternalCDOList)getListFactory().createList(feature, size, size, referenceChunk);
 
     for (int j = 0; j < referenceChunk; j++)
     {

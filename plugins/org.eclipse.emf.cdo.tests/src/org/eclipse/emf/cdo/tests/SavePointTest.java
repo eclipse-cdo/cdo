@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
@@ -30,6 +33,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.event.IListener;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
 
@@ -38,11 +42,50 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Simon McDuff
  */
-/**
- * @author Eike Stepper
- */
 public class SavePointTest extends AbstractCDOTest
 {
+  /**
+   * A scalar rollback notification can be derived from the retained before-image without materializing an unrelated
+   * partially loaded list feature.
+   */
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testRollbackScalarPreservesUnrelatedPartialFeature() throws Exception
+  {
+    CDOSession session = openSession();
+    session.getPackageRegistry().putEPackage(getModel1Package());
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+
+    CDOTransaction writer = session.openTransaction();
+    CDOResource resource = writer.createResource(getResourcePath("/testRollbackScalarPreservesUnrelatedPartialFeature"));
+    Company company = getModel1Factory().createCompany();
+    company.setName("before");
+    company.getCategories().add(getModel1Factory().createCategory());
+    company.getCategories().add(getModel1Factory().createCategory());
+    resource.getContents().add(company);
+    writer.commit();
+    writer.close();
+    ((InternalCDORevisionManager)session.getRevisionManager()).getCache().clear();
+
+    CDOTransaction transaction = session.openTransaction();
+    Company loaded = (Company)transaction.getResource(getResourcePath("/testRollbackScalarPreservesUnrelatedPartialFeature")).getContents().get(0);
+    InternalCDORevision revision = (InternalCDORevision)CDOUtil.getCDOObject(loaded).cdoRevision();
+    assertFalse(revision.getListOrNull(getModel1Package().getCompany_Categories()).isFullyLoaded());
+
+    TestAdapter adapter = new TestAdapter(loaded);
+    CDOUserSavepoint savepoint = transaction.setSavepoint();
+    loaded.setName("after");
+    adapter.clearNotifications();
+    savepoint.rollback();
+
+    assertEquals("before", loaded.getName());
+    Notification notification = adapter.assertNotifications(1)[0];
+    assertEquals(Notification.SET, notification.getEventType());
+    assertEquals("after", notification.getOldValue());
+    assertEquals("before", notification.getNewValue());
+    assertFalse(((InternalCDORevision)CDOUtil.getCDOObject(loaded).cdoRevision()).getListOrNull(getModel1Package().getCompany_Categories()).isFullyLoaded());
+  }
+
   /**
    * A retained savepoint reverts only a portion of an active transaction. It
    * must therefore not report the root transaction as finished or invoke the

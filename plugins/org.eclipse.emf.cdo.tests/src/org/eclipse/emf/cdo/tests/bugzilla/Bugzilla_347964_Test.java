@@ -30,6 +30,7 @@ public class Bugzilla_347964_Test extends AbstractCDOTest
   private static final String RESOURCE_NAME = "res347964";
 
   @Requires({ IRepositoryConfig.CAPABILITY_RESTARTABLE, IRepositoryConfig.CAPABILITY_CHUNKING })
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testIndexDeletion() throws Exception
   {
     CDOSession session = openSession();

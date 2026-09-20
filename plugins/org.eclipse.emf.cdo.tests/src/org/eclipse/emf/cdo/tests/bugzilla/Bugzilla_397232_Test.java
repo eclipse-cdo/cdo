@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOState;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 /**
@@ -66,5 +68,59 @@ public class Bugzilla_397232_Test extends AbstractCDOTest
     // Re-load
     g.getDummy();
     assertEquals(6, g.getNotifications().size());
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testLoadNotificationWithPartialList() throws Exception
+  {
+    CDOSession session = openSession();
+    session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 1));
+
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+    G g = getModel6Factory().createG();
+    g.setDummy("g");
+    for (int i = 0; i < 3; i++)
+    {
+      BaseObject bo = getModel6Factory().createBaseObject();
+      bo.setAttributeRequired("required" + i);
+      bo.getAttributeList().add("attribute" + i + "-1");
+      bo.getAttributeList().add("attribute" + i + "-2");
+      bo.getAttributeList().add("attribute" + i + "-3");
+      resource.getContents().add(bo);
+      g.getList().add(bo);
+    }
+
+    resource.getContents().add(0, g);
+    transaction.commit();
+    transaction.close();
+
+    CDOView view = session.openView();
+    view.options().setLoadNotificationEnabled(true);
+    CDOResource loadedResource = view.getResource(getResourcePath("/test1"));
+    G loadedG = (G)loadedResource.getContents().get(0);
+
+    boolean scalarNotification = false;
+    boolean listNotification = false;
+    for (Notification notification : loadedG.getNotifications())
+    {
+      if (notification.getFeature() == getModel6Package().getG_Dummy() && notification.getEventType() == Notification.SET)
+      {
+        scalarNotification = "g".equals(notification.getNewStringValue());
+      }
+
+      if (notification.getFeature() == getModel6Package().getG_List() && notification.getEventType() == Notification.ADD)
+      {
+        listNotification = notification.getNewValue() != CDORevisionUtil.UNLOADED && notification.getNewValue() != null;
+      }
+    }
+
+    assertTrue(scalarNotification);
+    assertTrue(listNotification);
+    assertEquals(3, loadedG.getList().size());
+
+    BaseObject loadedBaseObject = (BaseObject)loadedResource.getContents().get(1);
+    assertEquals(3, loadedBaseObject.getAttributeList().size());
   }
 }

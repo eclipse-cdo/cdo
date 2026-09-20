@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 
 /**
@@ -26,6 +28,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
  */
 public class ManagedRevisionProvider implements CDORevisionProvider
 {
+  private static final Config UNCHUNKED_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false);
+
   /**
    * @since 4.15
    */
@@ -63,7 +67,7 @@ public class ManagedRevisionProvider implements CDORevisionProvider
    */
   public static CDORevision provideRevision(CDORevisionManager revisionManager, CDOID id, CDOBranchPoint branchPoint)
   {
-    return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+    return revisionManager.getRevision(id, branchPoint, UNCHUNKED_CONFIG);
   }
 
   /**
@@ -91,8 +95,9 @@ public class ManagedRevisionProvider implements CDORevisionProvider
     public SyntheticCDORevision getSynthetic(CDOID id)
     {
       SyntheticCDORevision[] synthetic = { null };
-      revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true, synthetic);
+      revisionManager.getRevision(id, branchPoint, UNCHUNKED_CONFIG, synthetic);
       return synthetic[0];
     }
   }
+
 }

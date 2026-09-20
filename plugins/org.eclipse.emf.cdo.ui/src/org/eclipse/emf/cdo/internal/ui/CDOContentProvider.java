@@ -16,6 +16,9 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
@@ -71,6 +74,10 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
   private static final Method GET_CHILDREN_FEATURES_METHOD = getMethod(ItemProviderAdapter.class, "getChildrenFeatures", Object.class);
 
   private static final Method FIND_ITEM_METHOD = getMethod(StructuredViewer.class, "findItem", Object.class);
+
+  private static final Config PREFETCH_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, true, CDORevision.UNCHUNKED);
+
+  private static final Config NO_PREFETCH_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   private final Map<Object, Object[]> childrenCache = new ConcurrentHashMap<>();
 
@@ -345,14 +352,8 @@ public abstract class CDOContentProvider<CONTEXT> implements ITreeContentProvide
                 InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)view.getSession().getRevisionManager();
                 boolean prefetchLockStates = view.options().isLockNotificationEnabled();
 
-                List<CDORevision> revisions = revisionManager.getRevisions( //
-                    missingIDs, //
-                    view, //
-                    CDORevision.UNCHUNKED, //
-                    CDORevision.DEPTH_NONE, //
-                    prefetchLockStates, //
-                    true, //
-                    (SyntheticCDORevision[])null);
+                Request.Config config = prefetchLockStates ? PREFETCH_LOADING_CONFIG : NO_PREFETCH_LOADING_CONFIG;
+                List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, view, config, (SyntheticCDORevision[])null);
 
                 loadedRevisions.addAll(revisions);
               }

@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -44,8 +46,10 @@ import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader4;
 
 import org.eclipse.net4j.util.collection.Entity;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.IContainer;
@@ -82,6 +86,7 @@ public interface InternalRepository extends IRepository, //
     PackageLoader, //
     BranchLoader5, //
     RevisionLoader3, //
+    RevisionLoader4, //
     CommitInfoLoader, //
     CDORevisionUnchunker, //
     OperationAuthorizer<ISession>, //
@@ -154,6 +159,36 @@ public interface InternalRepository extends IRepository, //
    * @since 4.25
    */
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry);
+
+  /**
+   * Returns the repository-wide runtime collection-loading configuration.
+   *
+   * @return the configuration snapshot, or {@code null}
+   * @since 4.38
+   */
+  public CDOCollectionLoadingConfig getCollectionLoadingConfig();
+
+  /**
+   * Replaces the repository-wide runtime collection-loading configuration snapshot.
+   *
+   * @param config the configuration snapshot, or {@code null}
+   * @since 4.38
+   */
+  public void setCollectionLoadingConfig(CDOCollectionLoadingConfig config);
+
+  /**
+   * Resolves the effective modern collection-loading configuration for a feature.
+   * <p>
+   * A {@code null} result means that modern partial collection loading is disabled for the session. Otherwise the
+   * returned configuration is fully resolved and contains no {@link ChunkConfig#INHERIT} values.
+   *
+   * @param session the server session whose configuration controls modern collection-loading enablement and
+   *          session-level overrides
+   * @param feature the structural feature to resolve
+   * @return the effective configuration, or {@code null} if modern partial collection loading is disabled
+   * @since 4.38
+   */
+  public ChunkConfig resolveCollectionLoadingConfig(InternalSession session, EStructuralFeature feature);
 
   @Override
   public InternalCDORevisionManager getRevisionManager();
@@ -274,6 +309,19 @@ public interface InternalRepository extends IRepository, //
   public void ensureChunks(InternalCDORevision revision);
 
   public IStoreAccessor ensureChunk(InternalCDORevision revision, EStructuralFeature feature, int chunkStart, int chunkEnd);
+
+  /**
+   * Ensures multiple ranges of one feature in one store-reader execution where the store supports it.
+   *
+   * @param revision
+   *          the exact revision
+   * @param feature
+   *          the feature whose list is being loaded
+   * @param ranges
+   *          ordered half-open source ranges
+   * @return the accessor used for the read, or {@code null} if no read is needed
+   */
+  public IStoreAccessor ensureChunks(InternalCDORevision revision, EStructuralFeature feature, List<Pair<Integer, Integer>> ranges);
 
   public void notifyReadAccessHandlers(InternalSession session, CDORevision[] revisions, List<CDORevision> additionalRevisions);
 

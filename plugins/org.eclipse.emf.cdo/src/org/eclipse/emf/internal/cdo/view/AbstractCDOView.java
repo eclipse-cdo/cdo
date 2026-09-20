@@ -1635,10 +1635,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     if (!missingIDs.isEmpty())
     {
       InternalCDOSession session = getSession();
-      int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
-
       CDORevisionManager revisionManager = session.getRevisionManager();
-      List<CDORevision> revisions = revisionManager.getRevisions(missingIDs, this, initialChunkSize, CDORevision.DEPTH_NONE, true);
+      List<CDORevision> revisions = revisionManager.request().getRevisions(missingIDs, this);
 
       for (CDORevision revision : revisions)
       {

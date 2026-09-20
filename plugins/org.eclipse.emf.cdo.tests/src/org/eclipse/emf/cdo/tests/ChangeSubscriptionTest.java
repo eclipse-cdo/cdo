@@ -13,16 +13,21 @@
 package org.eclipse.emf.cdo.tests;
 
 import org.eclipse.emf.cdo.CDODeltaNotification;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.VAT;
 import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -619,6 +624,129 @@ public class ChangeSubscriptionTest extends AbstractCDOTest
 
     commitAndSync(transaction1, view);
     adapter2.assertNotifications(details.size());
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testRemoteDeltaOldValueRequirements() throws Exception
+  {
+    Product1 product = getModel1Factory().createProduct1();
+    List<OrderDetail> details = new ArrayList<>();
+    for (int i = 0; i < 10; i++)
+    {
+      details.add(getModel1Factory().createOrderDetail());
+    }
+    product.getOrderDetails().addAll(details);
+    product.getOtherVATs().add(VAT.VAT0);
+    product.getOtherVATs().add(VAT.VAT7);
+    product.getOtherVATs().add(VAT.VAT15);
+
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
+    resource.getContents().add(product);
+    resource.getContents().addAll(details);
+    transaction1.commit();
+
+    CDOSession session2 = openSession();
+    session2.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(5, 1));
+    CDOView view = session2.openView();
+    view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    EObject product2 = view.getResource(getResourcePath("/test1")).getContents().get(0);
+    InternalCDORevision revision2 = (InternalCDORevision)CDOUtil.getCDOObject(product2).cdoRevision();
+    CDOList orderDetails2 = revision2.getListOrNull(getModel1Package().getProduct1_OrderDetails());
+    CDOList otherVATs2 = revision2.getListOrNull(getModel1Package().getProduct1_OtherVATs());
+    assertFalse(orderDetails2.isFullyLoaded());
+    assertTrue(otherVATs2.isFullyLoaded());
+
+    TestAdapter adapter2 = new TestAdapter(product2);
+    OrderDetail removedDetail1 = details.get(2);
+    OrderDetail removedDetail2 = details.get(4);
+    CDOID removedDetail1ID = CDOUtil.getCDOObject(removedDetail1).cdoID();
+    CDOID removedDetail2ID = CDOUtil.getCDOObject(removedDetail2).cdoID();
+    orderDetails2.get(2);
+    orderDetails2.get(4);
+    product.getOrderDetails().remove(4);
+    product.getOrderDetails().remove(2);
+    product.getOtherVATs().clear();
+    commitAndSync(transaction1, view);
+
+    boolean detailRemoval1 = false;
+    boolean detailRemoval2 = false;
+    boolean vatClear = false;
+    for (Notification notification : adapter2.getNotifications())
+    {
+      if (notification.getFeature() == getModel1Package().getProduct1_OrderDetails() && notification.getEventType() == Notification.REMOVE)
+      {
+        Object oldValue = notification.getOldValue();
+        CDOID oldID = oldValue instanceof CDOID ? (CDOID)oldValue : oldValue instanceof CDOObject ? ((CDOObject)oldValue).cdoID() : null;
+        if (removedDetail1ID.equals(oldID))
+        {
+          detailRemoval1 = true;
+        }
+        if (removedDetail2ID.equals(oldID))
+        {
+          detailRemoval2 = true;
+        }
+      }
+      else if (notification.getFeature() == getModel1Package().getProduct1_OtherVATs() && notification.getEventType() == Notification.REMOVE_MANY)
+      {
+        assertEquals(3, ((List<?>)notification.getOldValue()).size());
+        vatClear = true;
+      }
+    }
+
+    assertTrue(detailRemoval1);
+    assertTrue(detailRemoval2);
+    assertTrue(vatClear);
+
+    revision2 = (InternalCDORevision)CDOUtil.getCDOObject(product2).cdoRevision();
+    assertFalse(revision2.getListOrNull(getModel1Package().getProduct1_OrderDetails()).isFullyLoaded());
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
+  public void testRemoteAddDoesNotMaterializeOldFeature() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    for (int i = 0; i < 8; i++)
+    {
+      company.getCategories().add(getModel1Factory().createCategory());
+    }
+
+    CDOSession session1 = openSession();
+    CDOTransaction transaction1 = session1.openTransaction();
+    CDOResource resource = transaction1.createResource(getResourcePath("/test1"));
+    resource.getContents().add(company);
+    transaction1.commit();
+
+    CDOSession session2 = openSession();
+    session2.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(0, 1));
+    CDOView view = session2.openView();
+    view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
+    EObject company2 = view.getResource(getResourcePath("/test1")).getContents().get(0);
+    InternalCDORevision revision2 = (InternalCDORevision)CDOUtil.getCDOObject(company2).cdoRevision();
+    assertFalse(revision2.getListOrNull(getModel1Package().getCompany_Categories()).isFullyLoaded());
+
+    TestAdapter adapter2 = new TestAdapter(company2);
+    Category addedCategory = getModel1Factory().createCategory();
+    company.getCategories().add(addedCategory);
+    commitAndSync(transaction1, view);
+
+    boolean added = false;
+    for (Notification notification : adapter2.getNotifications())
+    {
+      if (notification.getFeature() == getModel1Package().getCompany_Categories() && notification.getEventType() == Notification.ADD)
+      {
+        assertNull(notification.getOldValue());
+        assertEquals(CDOUtil.getCDOObject(addedCategory).cdoID(), CDOUtil.getCDOObject((EObject)notification.getNewValue()).cdoID());
+        added = true;
+      }
+    }
+
+    assertTrue(added);
+    revision2 = (InternalCDORevision)CDOUtil.getCDOObject(company2).cdoRevision();
+    assertFalse(revision2.getListOrNull(getModel1Package().getCompany_Categories()).isFullyLoaded());
   }
 
   /**

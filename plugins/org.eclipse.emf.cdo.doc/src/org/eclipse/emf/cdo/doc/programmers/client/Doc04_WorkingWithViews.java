@@ -385,9 +385,8 @@ public class Doc04_WorkingWithViews
         CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
         CDOBranch mainBranch = session.getBranchManager().getMainBranch();
 
-        CDORevision rootResourceRevision = session.getRevisionManager(). //
-            getRevision(rootResourceID, mainBranch.getHead(), //
-                CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+        CDORevision rootResourceRevision = session.getRevisionManager().request()
+            .getRevision(rootResourceID, mainBranch.getHead());
         System.out.println("Root Resource Revision: " + rootResourceRevision);
       }
     }

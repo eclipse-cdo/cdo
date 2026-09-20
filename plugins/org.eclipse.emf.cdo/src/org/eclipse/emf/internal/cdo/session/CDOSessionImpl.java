@@ -39,12 +39,15 @@ import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
-import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfigResolver;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
+import org.eclipse.emf.cdo.common.revision.CDOListResolver;
 import org.eclipse.emf.cdo.common.revision.CDORevisable;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -55,6 +58,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOPackageNotFoundException;
@@ -66,7 +70,6 @@ import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSingleValueFeatureDeltaImpl;
-import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
@@ -91,7 +94,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -137,7 +139,6 @@ import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -163,13 +164,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
@@ -243,6 +244,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private final SessionInvalidator invalidator = new SessionInvalidator();
 
   private CDORepositoryInfo repositoryInfo;
+
+  /**
+   * Latest repository policy snapshot for local planning; it is not consistency state.
+   */
+  private volatile CDOCollectionLoadingConfig repositoryCollectionLoadingConfig;
+
+  private final CDOCollectionLoadingResolver collectionLoadingResolver = new CDOCollectionLoadingResolver(this);
+
+  private final CDOCollectionLoadingConfigResolver collectionLoadingConfigResolver = new CDOCollectionLoadingConfigResolver();
 
   private CDOFetchRuleManager fetchRuleManager;
 
@@ -388,6 +398,39 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
   {
     this.packageRegistry = packageRegistry;
+    collectionLoadingConfigResolver.clearModelCache();
+  }
+
+  /**
+   * Returns the latest repository policy snapshot received from the server for local planning.
+   *
+   * @return the latest snapshot, or {@code null} before synchronization or when the repository has no policy
+   */
+  public CDOCollectionLoadingConfig getRepositoryCollectionLoadingConfig()
+  {
+    return repositoryCollectionLoadingConfig;
+  }
+
+  /**
+   * Installs the latest repository policy snapshot received from the server.
+   *
+   * @param config the repository policy snapshot, or {@code null}
+   */
+  public void setRepositoryCollectionLoadingConfig(CDOCollectionLoadingConfig config)
+  {
+    repositoryCollectionLoadingConfig = config;
+  }
+
+  /**
+   * Resolves a materialized feature using the current session policy, repository snapshot, and annotations.
+   *
+   * @param feature the materialized structural feature
+   * @return the effective chunk configuration, or {@code null} when modern partial collection loading is disabled
+   */
+  public CDOCollectionLoadingConfig.ChunkConfig resolveCollectionLoadingConfig(EStructuralFeature feature)
+  {
+    CDOCollectionLoadingConfig sessionConfig = options().getCollectionLoadingConfig();
+    return collectionLoadingConfigResolver.resolve(sessionConfig, repositoryCollectionLoadingConfig, feature);
   }
 
   @Override
@@ -494,7 +537,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       fetchRuleManager = new NOOPFetchRuleManager()
       {
         @Override
-        public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+        @Deprecated
+        public org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
         {
           return options().getCollectionLoadingPolicy();
         }
@@ -744,6 +788,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public CDOSession.Options options()
   {
     return options;
+  }
+
+  @Override
+  public int getEffectiveLegacyCollectionLoadingInitialChunkSize()
+  {
+    return getEffectiveLegacyCollectionLoadingStrategy().getInitialChunkSize(null, null);
+  }
+
+  LegacyCollectionLoadingStrategy getEffectiveLegacyCollectionLoadingStrategy()
+  {
+    return ((OptionsImpl)options).getEffectiveLegacyCollectionLoadingStrategy();
   }
 
   @Override
@@ -998,7 +1053,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         CDOSessionProtocol sessionProtocol = getSessionProtocol();
         long lastUpdateTime = getLastUpdateTime();
-        int initialChunkSize = options().getCollectionLoadingPolicy().getInitialChunkSize();
+        int initialChunkSize = getEffectiveLegacyCollectionLoadingStrategy().getInitialChunkSize(null, null);
 
         return sessionProtocol.refresh(lastUpdateTime, viewedRevisions, initialChunkSize, enablePassiveUpdates);
       }
@@ -1021,8 +1076,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
       CDOID id = newRevision.getID();
       InternalCDORevision oldRevision = oldRevisions.get(id);
-      InternalCDORevisionDelta delta = newRevision.compare(oldRevision);
-      changedObjects.add(delta);
+      InternalCDORevisionDelta delta = result.getChangedObjectDelta(branch, id);
+      if (delta == null && !result.hasChangedObjectDelta(branch, id))
+      {
+        delta = newRevision.compare(oldRevision);
+      }
+
+      changedObjects.add(delta == null ? newRevision : delta);
     }
 
     List<CDOIDAndVersion> detachedObjects = result.getDetachedObjects(branch);
@@ -1233,8 +1293,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     if (!((InternalCDORevision)revision).isUnchunked())
     {
-      CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
-      return policy.resolveProxy(revision, feature, accessIndex, serverIndex);
+      return collectionLoadingResolver.resolveProxy(revision, feature, accessIndex, serverIndex);
     }
 
     return revision.data().get(feature, accessIndex);
@@ -1249,29 +1308,24 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
     if (!internalRevision.isUnchunked())
     {
-      CDOCollectionLoadingPolicy policy = options().getCollectionLoadingPolicy();
-
-      for (EReference reference : internalRevision.getClassInfo().getAllPersistentReferences())
+      for (EStructuralFeature feature : internalRevision.getClassInfo().getAllPersistentFeatures())
       {
-        if (reference.isMany())
+        if (feature.isMany())
         {
-          CDOList list = internalRevision.getListOrNull(reference);
+          CDOList list = internalRevision.getListOrNull(feature);
           if (list != null)
           {
-            for (Iterator<Object> it = list.iterator(); it.hasNext();)
+            for (int i = 0; i < list.size(); i++)
             {
-              Object element = it.next();
-              if (element instanceof CDOElementProxy)
+              if (!list.isLoadedAt(i))
               {
-                policy.resolveAllProxies(internalRevision, reference);
+                collectionLoadingResolver.resolveAllProxies(internalRevision, feature);
                 break;
               }
             }
           }
         }
       }
-
-      internalRevision.setUnchunked();
     }
   }
 
@@ -1426,10 +1480,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private void registerPackageUnits(List<CDOPackageUnit> packageUnits)
   {
     InternalCDOPackageRegistry packageRegistry = getPackageRegistry();
+
     for (CDOPackageUnit newPackageUnit : packageUnits)
     {
       packageRegistry.putPackageUnit((InternalCDOPackageUnit)newPackageUnit);
     }
+
+    collectionLoadingConfigResolver.clearModelCache();
   }
 
   /**
@@ -1503,6 +1560,154 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
     {
       featureDelta.accept(visitor);
+    }
+  }
+
+  private OldValueRequirements collectOldValueRequirements(CDORevisionDelta revisionDelta)
+  {
+    OldValueRequirements requirements = new OldValueRequirements();
+    revisionDelta.accept(new CDOFeatureDeltaVisitorImpl()
+    {
+      @Override
+      public void visit(CDORemoveFeatureDelta delta)
+      {
+        requirements.addPosition(delta);
+      }
+
+      @Override
+      public void visit(CDOSetFeatureDelta delta)
+      {
+        if (delta.getFeature().isMany())
+        {
+          requirements.addPosition(delta);
+        }
+        else
+        {
+          requirements.addScalar(delta.getFeature());
+        }
+      }
+
+      @Override
+      public void visit(CDOMoveFeatureDelta delta)
+      {
+        requirements.addPosition(delta);
+      }
+
+      @Override
+      public void visit(CDOClearFeatureDelta delta)
+      {
+        requirements.addFullFeature(delta.getFeature());
+      }
+
+      @Override
+      public void visit(CDOUnsetFeatureDelta delta)
+      {
+        if (delta.getFeature().isMany())
+        {
+          requirements.addFullFeature(delta.getFeature());
+        }
+        else
+        {
+          requirements.addScalar(delta.getFeature());
+        }
+      }
+    });
+
+    return requirements;
+  }
+
+  private void fulfillOldValueRequirements(InternalCDORevision oldRevision, CDORevisionDelta revisionDelta, OldValueRequirements requirements)
+  {
+    for (EStructuralFeature feature : requirements.fullFeatures)
+    {
+      CDOList list = oldRevision.getListOrNull(feature);
+      if (list != null && !list.isFullyLoaded())
+      {
+        collectionLoadingResolver.resolveAllProxies(oldRevision, feature);
+      }
+    }
+
+    revisionDelta.accept(new CDOFeatureDeltaVisitorImpl()
+    {
+      private List<Integer> sourceIndexes;
+
+      @Override
+      public void visit(CDOListFeatureDelta deltas)
+      {
+        EStructuralFeature feature = deltas.getFeature();
+        CDOList list = oldRevision.getListOrNull(feature);
+        if (list != null)
+        {
+          sourceIndexes = new ArrayList<>(list.size());
+          for (int i = 0; i < list.size(); i++)
+          {
+            sourceIndexes.add(i);
+          }
+
+          super.visit(deltas);
+        }
+      }
+
+      @Override
+      public void visit(CDOAddFeatureDelta delta)
+      {
+        sourceIndexes.add(delta.getIndex(), -1);
+      }
+
+      @Override
+      public void visit(CDORemoveFeatureDelta delta)
+      {
+        int sourceIndex = sourceIndexes.remove(delta.getIndex());
+        if (requirements.positionDeltas.contains(delta))
+        {
+          loadPosition(oldRevision, delta.getFeature(), sourceIndex);
+        }
+      }
+
+      @Override
+      public void visit(CDOSetFeatureDelta delta)
+      {
+        if (delta.getFeature().isMany())
+        {
+          int sourceIndex = sourceIndexes.get(delta.getIndex());
+          if (requirements.positionDeltas.contains(delta))
+          {
+            loadPosition(oldRevision, delta.getFeature(), sourceIndex);
+          }
+
+          sourceIndexes.set(delta.getIndex(), -1);
+        }
+      }
+
+      @Override
+      public void visit(CDOMoveFeatureDelta delta)
+      {
+        int sourceIndex = sourceIndexes.get(delta.getOldPosition());
+        if (requirements.positionDeltas.contains(delta))
+        {
+          loadPosition(oldRevision, delta.getFeature(), sourceIndex);
+        }
+
+        ECollections.move(sourceIndexes, delta.getNewPosition(), delta.getOldPosition());
+      }
+
+      @Override
+      public void visit(CDOClearFeatureDelta delta)
+      {
+        sourceIndexes.clear();
+      }
+    });
+  }
+
+  private void loadPosition(InternalCDORevision revision, EStructuralFeature feature, int sourceIndex)
+  {
+    if (sourceIndex >= 0)
+    {
+      CDOList list = revision.getListOrNull(feature);
+      if (list != null && !list.isLoadedAt(sourceIndex))
+      {
+        resolveElementProxy(revision, feature, sourceIndex, sourceIndex);
+      }
     }
   }
 
@@ -1630,7 +1835,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     cacheRevisions2(targetInfo);
     cacheRevisions2(sourceInfo);
 
-    return CDORevisionUtil.createChangeSetData(ids, sourceInfo, targetInfo);
+    return createChangeSetData(ids, sourceInfo, targetInfo);
   }
 
   @Override
@@ -1744,9 +1949,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           revision = null;
         }
 
-        if (revision != null)
+        if (revision != null && ((InternalCDORevision)revision).isUnchunked())
         {
-          resolveAllElementProxies(revision);
           info.addRevision(revision);
         }
       }
@@ -1788,8 +1992,25 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private CDOChangeSet createChangeSet(Set<CDOID> ids, CDORevisionAvailabilityInfo startInfo, CDORevisionAvailabilityInfo endInfo)
   {
-    CDOChangeSetData data = CDORevisionUtil.createChangeSetData(ids, startInfo, endInfo);
+    CDOChangeSetData data = createChangeSetData(ids, startInfo, endInfo);
     return new CDOChangeSetImpl(startInfo.getBranchPoint(), endInfo.getBranchPoint(), data, startInfo);
+  }
+
+  private CDOChangeSetData createChangeSetData(Set<CDOID> ids, CDORevisionProvider startProvider, CDORevisionProvider endProvider)
+  {
+    CDORevisionProvider startProviderWithMaterialization = id -> prepareRevisionForComparison(startProvider.getRevision(id));
+    CDORevisionProvider endProviderWithMaterialization = id -> prepareRevisionForComparison(endProvider.getRevision(id));
+    return CDORevisionUtil.createChangeSetData(ids, startProviderWithMaterialization, endProviderWithMaterialization);
+  }
+
+  private CDORevision prepareRevisionForComparison(CDORevision revision)
+  {
+    if (revision instanceof InternalCDORevision)
+    {
+      resolveAllElementProxies(revision);
+    }
+
+    return revision;
   }
 
   @Override
@@ -1926,7 +2147,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
 
-    private CDOCollectionLoadingPolicy collectionLoadingPolicy;
+    @SuppressWarnings("deprecation")
+    private org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy collectionLoadingPolicy;
+
+    private CDOCollectionLoadingConfig collectionLoadingConfig;
+
+    private LegacyCollectionLoadingStrategy effectiveLegacyCollectionLoadingStrategy = LegacyCollectionLoadingStrategies.FULLY_UNCHUNKED;
 
     private CDOLobStore lobCache = CDOLobStoreImpl.INSTANCE;
 
@@ -1938,7 +2164,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     public OptionsImpl()
     {
-      setCollectionLoadingPolicy(null); // Init default
     }
 
     @Override
@@ -2152,26 +2377,26 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     @Override
-    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+    @Deprecated
+    public org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
     {
       return collectionLoadingPolicy;
     }
 
     @Override
-    public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
+    @Deprecated
+    public void setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy policy)
     {
-      if (policy == null)
+      if (policy != null)
       {
-        policy = CDOUtil.createCollectionLoadingPolicy(CDORevision.UNCHUNKED, CDORevision.UNCHUNKED);
-      }
+        validateLegacyPolicy(policy);
 
-      CDOSession oldSession = policy.getSession();
-      if (oldSession != null)
-      {
-        throw new IllegalArgumentException("Policy is already associated with " + oldSession);
+        CDOSession oldSession = policy.getSession();
+        if (oldSession != null && oldSession != CDOSessionImpl.this)
+        {
+          throw new IllegalArgumentException("Policy is already associated with " + oldSession);
+        }
       }
-
-      policy.setSession(CDOSessionImpl.this);
 
       IEvent event = null;
       IListener[] listeners = getListeners();
@@ -2180,7 +2405,20 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         if (collectionLoadingPolicy != policy)
         {
+          if (collectionLoadingPolicy != null)
+          {
+            collectionLoadingPolicy.setSession(null);
+          }
+
           collectionLoadingPolicy = policy;
+
+          effectiveLegacyCollectionLoadingStrategy = policy == null ? LegacyCollectionLoadingStrategies.FULLY_UNCHUNKED
+              : new CDOLegacyCollectionLoadingPolicyAdapter(policy);
+
+          if (policy != null)
+          {
+            policy.setSession(CDOSessionImpl.this);
+          }
 
           if (listeners.length != 0)
           {
@@ -2190,6 +2428,74 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
 
       fireEvent(event, listeners);
+    }
+
+    @Override
+    public CDOCollectionLoadingConfig getCollectionLoadingConfig()
+    {
+      return collectionLoadingConfig;
+    }
+
+    @Override
+    public void setCollectionLoadingConfig(CDOCollectionLoadingConfig config)
+    {
+      CDOCollectionLoadingConfig snapshot = config == null ? null : new CDOCollectionLoadingConfig(config.getDefaultChunkConfig(), config.getOverrides());
+
+      IEvent event = null;
+      IListener[] listeners = getListeners();
+
+      synchronized (this)
+      {
+        CDOCollectionLoadingConfig repositoryConfig = null;
+
+        CDOSessionProtocol protocol = getSessionProtocol();
+        if (protocol != null)
+        {
+          repositoryConfig = protocol.setCollectionLoadingConfig(snapshot);
+        }
+
+        collectionLoadingConfig = snapshot;
+
+        setRepositoryCollectionLoadingConfig(protocol == null || snapshot == null ? null : repositoryConfig);
+
+        if (listeners.length != 0)
+        {
+          event = new CollectionLoadingConfigEventImpl();
+        }
+      }
+
+      fireEvent(event, listeners);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void validateLegacyPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy policy)
+    {
+      try
+      {
+        if (isCustomExecutionOverride(policy, "resolveProxy", CDORevision.class, EStructuralFeature.class, int.class, int.class) || //
+            isCustomExecutionOverride(policy, "resolveAllProxies", CDORevision.class, EStructuralFeature.class))
+        {
+          throw new IllegalArgumentException("Custom legacy collection loading execution is no longer supported; use collection loading configuration");
+        }
+      }
+      catch (NoSuchMethodException ex)
+      {
+        throw new IllegalArgumentException("Unable to validate legacy collection loading policy", ex);
+      }
+    }
+
+    @SuppressWarnings("deprecation")
+    private boolean isCustomExecutionOverride(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy policy, String name, Class<?>... parameterTypes)
+        throws NoSuchMethodException
+    {
+      Method method = policy.getClass().getMethod(name, parameterTypes);
+      return method.getDeclaringClass() != org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy.class //
+          && method.getDeclaringClass() != CDOListResolver.class;
+    }
+
+    LegacyCollectionLoadingStrategy getEffectiveLegacyCollectionLoadingStrategy()
+    {
+      return effectiveLegacyCollectionLoadingStrategy;
     }
 
     @Override
@@ -2428,6 +2734,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       private static final long serialVersionUID = 1L;
 
       public CollectionLoadingPolicyEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class CollectionLoadingConfigEventImpl extends OptionsEvent implements CollectionLoadingConfigEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public CollectionLoadingConfigEventImpl()
       {
         super(OptionsImpl.this);
       }
@@ -2791,9 +3110,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         {
           CDORevisionDelta revisionDelta = (CDORevisionDelta)key;
 
-          InternalCDORevision oldRevision = revisionManager.getRevisionByVersion(id, revisionDelta, CDORevision.UNCHUNKED, false);
+          OldValueRequirements requirements = collectOldValueRequirements(revisionDelta);
+
+          InternalCDORevision oldRevision = (InternalCDORevision)revisionManager.request().lookupCacheOnly().getRevisionByVersion(id, revisionDelta);
           if (oldRevision != null)
           {
+            fulfillOldValueRequirements(oldRevision, revisionDelta, requirements);
             addOldValuesToDelta(oldRevision, revisionDelta);
 
             InternalCDORevision newRevision = oldRevision.copy();
@@ -3150,6 +3472,41 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     protected String formatEventName()
     {
       return "CDOSessionLocksChangedEvent";
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class OldValueRequirements
+  {
+    private final Set<EStructuralFeature> scalarFeatures = new HashSet<>();
+
+    private final Set<EStructuralFeature> fullFeatures = new HashSet<>();
+
+    private final Set<CDOFeatureDelta> positionDeltas = new HashSet<>();
+
+    private void addScalar(EStructuralFeature feature)
+    {
+      if (!fullFeatures.contains(feature))
+      {
+        scalarFeatures.add(feature);
+      }
+    }
+
+    private void addFullFeature(EStructuralFeature feature)
+    {
+      fullFeatures.add(feature);
+      scalarFeatures.remove(feature);
+      positionDeltas.removeIf(delta -> delta.getFeature() == feature);
+    }
+
+    private void addPosition(CDOFeatureDelta delta)
+    {
+      if (!fullFeatures.contains(delta.getFeature()))
+      {
+        positionDeltas.add(delta);
+      }
     }
   }
 }

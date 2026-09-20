@@ -15,7 +15,6 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
-import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 
 import java.util.Collection;
 import java.util.List;
@@ -69,8 +68,10 @@ public interface CDOFetchRuleManager
    * Returns the collection loading policy that should be used when loading collections.
    *
    * @return the collection loading policy; or <code>null</code> to use {@link CDORevision#UNCHUNKED}.
+   * @deprecated As of 4.31 use {@link org.eclipse.emf.cdo.session.CDOSession.Options#getCollectionLoadingConfig()}.
    */
-  public default CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+  @Deprecated
+  public default org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
   {
     return null;
   }

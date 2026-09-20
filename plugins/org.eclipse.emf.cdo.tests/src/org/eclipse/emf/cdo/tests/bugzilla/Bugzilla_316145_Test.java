@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -67,7 +69,8 @@ public class Bugzilla_316145_Test extends AbstractCDOTest
   {
     CDONet4jSession session = (CDONet4jSession)openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDORevision revision = session.getRevisionManager().getRevision(id, transaction, 0, 0, true);
+    CDORevision revision = session.getRevisionManager().getRevision(id, transaction,
+        new Request.Config(LookupMode.CACHE_THEN_LOADER, 0, false, 0));
     msg(revision);
 
     CDOObject object = transaction.getObject(id);

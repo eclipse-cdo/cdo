@@ -460,7 +460,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(-1);
     }
 
-    public abstract CDOViewProvider createViewProvider(IManagedContainer container);
+    public abstract CDOViewProvider createViewProvider();
 
     @Override
     public void setUp() throws Exception
@@ -470,7 +470,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       IManagedContainer clientContainer = getClientContainer();
       CDONet4jUtil.prepareContainer(clientContainer);
 
-      viewProvider = createViewProvider(clientContainer);
+      viewProvider = createViewProvider();
       if (viewProvider != null)
       {
         CDOViewProviderRegistry.INSTANCE.addViewProvider(viewProvider);
@@ -563,14 +563,14 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
 
       @Override
-      public CDOViewProvider createViewProvider(final IManagedContainer container)
+      public CDOViewProvider createViewProvider()
       {
         return new CDONet4jViewProvider.JVM()
         {
           @Override
           protected IManagedContainer getContainer()
           {
-            return container;
+            return getClientContainer();
           }
         };
       }
@@ -678,14 +678,14 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
 
       @Override
-      public CDOViewProvider createViewProvider(final IManagedContainer container)
+      public CDOViewProvider createViewProvider()
       {
         return new CDONet4jViewProvider.TCP()
         {
           @Override
           protected IManagedContainer getContainer()
           {
-            return container;
+            return getClientContainer();
           }
         };
       }
@@ -747,14 +747,14 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
 
       @Override
-      public CDOViewProvider createViewProvider(final IManagedContainer container)
+      public CDOViewProvider createViewProvider()
       {
         return new CDONet4jViewProvider.SSL()
         {
           @Override
           protected IManagedContainer getContainer()
           {
-            return container;
+            return getClientContainer();
           }
         };
       }
@@ -858,14 +858,14 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
 
       @Override
-      public CDOViewProvider createViewProvider(final IManagedContainer container)
+      public CDOViewProvider createViewProvider()
       {
         return new CDONet4jViewProvider.WS()
         {
           @Override
           protected IManagedContainer getContainer()
           {
-            return container;
+            return getClientContainer();
           }
         };
       }
@@ -991,14 +991,14 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       }
 
       @Override
-      public CDOViewProvider createViewProvider(final IManagedContainer container)
+      public CDOViewProvider createViewProvider()
       {
         return new CDONet4jViewProvider.WSS()
         {
           @Override
           protected IManagedContainer getContainer()
           {
-            return container;
+            return getClientContainer();
           }
         };
       }

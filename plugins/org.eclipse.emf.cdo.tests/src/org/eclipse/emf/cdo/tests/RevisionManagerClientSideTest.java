@@ -44,6 +44,13 @@ public class RevisionManagerClientSideTest extends RevisionManagerTest
   }
 
   @Override
+  protected CDOBranchPoint getBranchPoint(CDOBranch branch, long timeStamp)
+  {
+    branch = session.getBranchManager().getBranch(branch.getID());
+    return branch.getPoint(timeStamp);
+  }
+
+  @Override
   protected InternalCDORevision getRevision(CDOBranch branch, long timeStamp)
   {
     branch = session.getBranchManager().getBranch(branch.getID()); // Make sure that the client-side branch is used!

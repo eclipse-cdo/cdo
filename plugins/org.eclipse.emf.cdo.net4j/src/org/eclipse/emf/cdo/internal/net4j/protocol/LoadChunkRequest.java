@@ -20,25 +20,22 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.ChunkRange;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Eike Stepper
  */
 public class LoadChunkRequest extends CDOClientRequest<Object>
 {
-  private InternalCDORevision revision;
+  private final InternalCDORevision revision;
 
-  private EStructuralFeature feature;
+  private final EStructuralFeature feature;
 
-  private int accessIndex;
-
-  private int fromIndex;
-
-  private int toIndex;
-
-  private int fetchIndex;
+  private final List<ChunkRange> ranges;
 
   public LoadChunkRequest(CDOClientProtocol protocol, InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex,
       int toIndex)
@@ -46,10 +43,15 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_CHUNK);
     this.revision = revision;
     this.feature = feature;
-    this.accessIndex = accessIndex;
-    this.fetchIndex = fetchIndex;
-    this.fromIndex = fromIndex;
-    this.toIndex = toIndex;
+    ranges = Collections.singletonList(new ChunkRange(accessIndex, fetchIndex, fromIndex, toIndex));
+  }
+
+  public LoadChunkRequest(CDOClientProtocol protocol, InternalCDORevision revision, EStructuralFeature feature, List<ChunkRange> ranges)
+  {
+    super(protocol, CDOProtocolConstants.SIGNAL_LOAD_CHUNK);
+    this.revision = revision;
+    this.feature = feature;
+    this.ranges = ranges;
   }
 
   @Override
@@ -61,24 +63,33 @@ public class LoadChunkRequest extends CDOClientRequest<Object>
     out.writeCDOClassifierRef(feature.getEContainingClass());
     out.writeXInt(feature.getFeatureID());
 
-    int diffIndex = accessIndex - fetchIndex;
-    out.writeXInt(fromIndex - diffIndex);
-    out.writeXInt(toIndex - diffIndex);
+    out.writeXInt(ranges.size());
+    for (ChunkRange range : ranges)
+    {
+      int diffIndex = range.getAccessIndex() - range.getFetchIndex();
+      out.writeXInt(range.getFromIndex() - diffIndex);
+      out.writeXInt(range.getToIndex() - diffIndex);
+    }
   }
 
   @Override
   protected Object confirming(CDODataInput in) throws IOException
   {
     CDOType type = CDOModelUtil.getType(feature);
-    Object accessID = null;
     InternalCDOList list = (InternalCDOList)revision.getListOrNull(feature);
-    for (int i = fromIndex; i <= toIndex; i++)
+    Object accessID = null;
+
+    for (ChunkRange range : ranges)
     {
-      Object value = type.readValue(in);
-      list.setWithoutFrozenCheck(i, value);
-      if (i == accessIndex)
+      for (int i = range.getFromIndex(); i <= range.getToIndex(); i++)
       {
-        accessID = value;
+        Object value = type.readValue(in);
+        list.loadValue(i, value);
+
+        if (ranges.size() == 1 && i == range.getAccessIndex())
+        {
+          accessID = value;
+        }
       }
     }
 

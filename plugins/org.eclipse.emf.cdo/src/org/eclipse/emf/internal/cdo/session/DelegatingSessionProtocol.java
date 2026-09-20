@@ -31,10 +31,12 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler;
@@ -736,6 +738,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, List<ChunkRange> ranges)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.loadChunk(revision, feature, ranges);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean prefetchLockStates)
   {
@@ -754,6 +773,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, Request.Config config)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.loadRevisions(infos, branchPoint, config);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
     int attempt = 0;
@@ -762,6 +798,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.loadRevisionByVersion(id, branchVersion, referenceChunk);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
+  public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.loadRevisionByVersion(id, branchVersion, config);
       }
       catch (Exception ex)
       {
@@ -917,6 +970,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  public CDOCollectionLoadingConfig setCollectionLoadingConfig(CDOCollectionLoadingConfig config)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.setCollectionLoadingConfig(config);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
   public RefreshSessionResult refresh(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
       boolean enablePassiveUpdates)
   {
@@ -966,13 +1036,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
         handleException(++attempt, ex);
       }
     }
-  }
-
-  @Override
-  @Deprecated
-  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
-  {
-    return sendRemoteMessage(message, null, recipients);
   }
 
   @Override
@@ -1208,11 +1271,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     hookDelegate();
   }
 
-  private void hookDelegate()
-  {
-    EventUtil.addListener(delegate, delegateListener);
-  }
-
   @Override
   protected void doDeactivate() throws Exception
   {
@@ -1220,6 +1278,11 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     LifecycleUtil.deactivate(delegate);
     delegate = null;
     super.doDeactivate();
+  }
+
+  private void hookDelegate()
+  {
+    EventUtil.addListener(delegate, delegateListener);
   }
 
   private void unhookDelegate()
@@ -1237,6 +1300,13 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     {
       throw WrappedException.wrap(ex);
     }
+  }
+
+  @Override
+  @Deprecated
+  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
+  {
+    return sendRemoteMessage(message, null, recipients);
   }
 
   @Override

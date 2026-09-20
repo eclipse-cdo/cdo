@@ -32,18 +32,25 @@ public class Bugzilla_243310_Test extends AbstractCDOTest
   {
     CDOSession session = openSession();
 
-    CDOTransaction transaction1 = session.openTransaction();
-    CDOResource res = transaction1.createResource(getResourcePath("/test1"));
-    Company companyTx1 = getModel1Factory().createCompany();
-    companyTx1.setName("Company ABC");
-    res.getContents().add(companyTx1);
-    transaction1.commit();
+    try
+    {
+      CDOTransaction transaction1 = session.openTransaction();
+      CDOResource res = transaction1.createResource(getResourcePath("/test1"));
+      Company companyTx1 = getModel1Factory().createCompany();
+      companyTx1.setName("Company ABC");
+      res.getContents().add(companyTx1);
+      transaction1.commit();
 
-    boolean loadOnDemand = false;
+      boolean loadOnDemand = false;
 
-    CDOTransaction transaction2 = session.openTransaction();
-    CDOID id = CDOUtil.getCDOObject(companyTx1).cdoID();
-    Company companyTx2 = (Company)transaction2.getObject(id, loadOnDemand);
-    assertNull(companyTx2);
+      CDOTransaction transaction2 = session.openTransaction();
+      CDOID id = CDOUtil.getCDOObject(companyTx1).cdoID();
+      Company companyTx2 = (Company)transaction2.getObject(id, loadOnDemand);
+      assertNull(companyTx2);
+    }
+    finally
+    {
+      closeSession(session);
+    }
   }
 }

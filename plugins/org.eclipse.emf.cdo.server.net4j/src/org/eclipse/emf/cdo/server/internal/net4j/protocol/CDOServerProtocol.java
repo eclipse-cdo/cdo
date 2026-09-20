@@ -368,6 +368,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     case SIGNAL_AUTHORIZE_OPERATIONS:
       return new AuthorizeOperationsIndication(this);
 
+    case SIGNAL_SET_COLLECTION_LOADING_CONFIG:
+      return new SetCollectionLoadingConfigIndication(this);
+
     default:
       return super.createSignalReactor(signalID);
     }

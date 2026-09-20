@@ -11,7 +11,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
@@ -101,6 +101,7 @@ public class ViewTest extends AbstractCDOTest
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testUniqueResourceContents() throws Exception
   {
     {
@@ -126,21 +127,29 @@ public class ViewTest extends AbstractCDOTest
 
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     EList<EObject> contents = resource.getContents();
+    EObject lastAppended = null;
     for (int i = 100; i < 110; i++)
     {
       Company company = getModel1Factory().createCompany();
       company.setName("Company " + i);
       contents.add(company);
+      lastAppended = company;
     }
 
     CDORevisionData revision = resource.cdoRevision().data();
     EStructuralFeature contentsFeature = EresourcePackage.eINSTANCE.getCDOResource_Contents();
-    assertEquals(true, revision.get(contentsFeature, 99) instanceof CDOElementProxy);
-    assertEquals(false, revision.get(contentsFeature, 100) instanceof CDOElementProxy);
+    CDOList revisionContents = revision.getListOrNull(contentsFeature);
+    assertEquals(110, revisionContents.size());
+    assertEquals(true, revisionContents.isFullyLoaded());
+    assertEquals(true, revisionContents.isLoadedAt(99));
+    assertEquals(true, revisionContents.isLoadedAt(100));
+    assertEquals("Company 99", contents.get(99).eGet(getModel1Package().getAddress_Name()));
+    assertSame(lastAppended, contents.get(109));
     session.close();
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_CHUNKING)
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testNonUniqueResourceContents() throws Exception
   {
     {
@@ -166,20 +175,27 @@ public class ViewTest extends AbstractCDOTest
 
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
     EList<EObject> contents = resource.getContents();
+    EObject lastAppended = null;
     for (int i = 100; i < 110; i++)
     {
       Company company = getModel1Factory().createCompany();
       company.setName("Company " + i);
       contents.add(company);
+      lastAppended = company;
     }
 
     CDORevisionData revision = resource.cdoRevision().data();
     EStructuralFeature contentsFeature = EresourcePackage.eINSTANCE.getCDOResource_Contents();
-    assertEquals(false, revision.get(contentsFeature, 0) instanceof CDOElementProxy);
-    assertEquals(false, revision.get(contentsFeature, 1) instanceof CDOElementProxy);
-    assertEquals(true, revision.get(contentsFeature, 2) instanceof CDOElementProxy);
-    assertEquals(true, revision.get(contentsFeature, 99) instanceof CDOElementProxy);
-    assertEquals(false, revision.get(contentsFeature, 100) instanceof CDOElementProxy);
+    CDOList revisionContents = revision.getListOrNull(contentsFeature);
+    assertEquals(110, revisionContents.size());
+    assertEquals(true, revisionContents.isFullyLoaded());
+    assertEquals(true, revisionContents.isLoadedAt(1));
+    assertEquals(true, revisionContents.isLoadedAt(2));
+    assertEquals(true, revisionContents.isLoadedAt(99));
+    assertEquals(true, revisionContents.isLoadedAt(100));
+    assertEquals("Company 0", contents.get(0).eGet(getModel1Package().getAddress_Name()));
+    assertEquals("Company 99", contents.get(99).eGet(getModel1Package().getAddress_Name()));
+    assertSame(lastAppended, contents.get(109));
     session.close();
   }
 

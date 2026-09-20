@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -100,6 +102,10 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     implements ISchemaPreparable, IListMappingDeltaSupport, IListMappingBatchingSupport, IListMapping4, IBranchDeletionSupport, ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
+
+  private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
+  private static final Config BASE_CHUNK_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
 
   /**
    * Used to clean up lists for detached objects.
@@ -717,7 +723,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     else
     {
       InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)getMappingStrategy().getStore().getRepository().getRevisionManager();
-      InternalCDORevision baseRevision = revisionManager.getBaseRevision(revision, CDORevision.UNCHUNKED, true);
+      InternalCDORevision baseRevision = revisionManager.getBaseRevision(revision, UNCHUNKED_LOADING_CONFIG);
 
       EStructuralFeature feature = getFeature();
       CDOListFeatureDelta delta = CDORevisionUtil.compareLists(baseRevision, revision, feature);
@@ -892,25 +898,16 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         List<CDOFeatureDelta> changes = item.getDelta().getListChanges();
         if (!changes.isEmpty())
         {
-          // The transaction revision supplies the original logical size. It is
-          // needed for position-aware classification even when the eventual
-          // fast path does not read any original or inherited payloads.
-          InternalCDORevision originalRevision = (InternalCDORevision)accessor.getTransaction().getRevision(item.getID());
-          if (originalRevision == null)
-          {
-            throw new IllegalStateException("Original revision not found for " + item.getID()); //$NON-NLS-1$
-          }
-
           // Append-only is checked first because it is the narrowest and
           // cheapest plan: existing local and inherited rows remain untouched.
-          BranchingAppendPlan appendPlan = tryCreateAppendPlan(originalRevision, item);
+          BranchingAppendPlan appendPlan = tryCreateAppendPlan(item);
           if (appendPlan == null)
           {
             // The general planner mutates logical positions as it applies the
             // delta. Its final state can prove that only an explicit suffix
             // needs rewriting, without incorrectly classifying positions up
             // front before Adds, Removes, or Moves have taken effect.
-            BranchingDeltaPlan plan = new BranchingDeltaPlan(accessor, originalRevision, item);
+            BranchingDeltaPlan plan = new BranchingDeltaPlan(accessor, item);
 
             BranchingSuffixPlan suffixPlan = plan.createSuffixRewritePlan();
             if (suffixPlan != null)
@@ -922,7 +919,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
               // A sparse Set plan is restricted to stable original indexes and
               // optional tail appends. Any structural ambiguity goes to the
               // authoritative full snapshot fallback.
-              BranchingSparseSetPlan sparseSetPlan = tryCreateSparseSetPlan(originalRevision, item);
+              BranchingSparseSetPlan sparseSetPlan = tryCreateSparseSetPlan(item);
               if (sparseSetPlan == null)
               {
                 plans.add(plan);
@@ -1025,9 +1022,9 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
   }
 
-  private BranchingAppendPlan tryCreateAppendPlan(InternalCDORevision originalRevision, ListDeltaWork work)
+  private BranchingAppendPlan tryCreateAppendPlan(ListDeltaWork work)
   {
-    int logicalSize = originalRevision.size(getFeature());
+    int logicalSize = work.getDelta().getOriginSize();
     List<Object> values = new ArrayList<>();
 
     for (CDOFeatureDelta delta : work.getDelta().getListChanges())
@@ -1049,9 +1046,9 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     return values.isEmpty() ? null : new BranchingAppendPlan(work, logicalSize, values);
   }
 
-  private BranchingSparseSetPlan tryCreateSparseSetPlan(InternalCDORevision originalRevision, ListDeltaWork work)
+  private BranchingSparseSetPlan tryCreateSparseSetPlan(ListDeltaWork work)
   {
-    int originalSize = originalRevision.size(getFeature());
+    int originalSize = work.getDelta().getOriginSize();
     int logicalSize = originalSize;
 
     Map<Integer, Object> values = new LinkedHashMap<>();
@@ -1541,7 +1538,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
 
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
-    InternalCDORevision baseRevision = revisionManager.getRevision(id, base, 0, CDORevision.DEPTH_NONE, true);
+    InternalCDORevision baseRevision = revisionManager.getRevision(id, base, BASE_CHUNK_LOADING_CONFIG);
 
     return accessor.createChunkReader(baseRevision, getFeature());
   }
@@ -1639,20 +1636,21 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   {
     private final IDBStoreAccessor accessor;
 
-    private final InternalCDORevision originalRevision;
-
     private final ListDeltaWork work;
 
     private final AuditListTableMappingWithRanges.LogicalListPlan logicalListPlan;
 
+    private final int semanticOriginSize;
+
     private List<Object> values;
 
-    private BranchingDeltaPlan(IDBStoreAccessor accessor, InternalCDORevision originalRevision, ListDeltaWork work)
+    public BranchingDeltaPlan(IDBStoreAccessor accessor, ListDeltaWork work)
     {
       this.accessor = accessor;
-      this.originalRevision = originalRevision;
       this.work = work;
-      logicalListPlan = new AuditListTableMappingWithRanges.LogicalListPlan(originalRevision.size(getFeature()));
+
+      semanticOriginSize = work.getDelta().getOriginSize();
+      logicalListPlan = new AuditListTableMappingWithRanges.LogicalListPlan(semanticOriginSize);
 
       for (CDOFeatureDelta delta : work.getDelta().getListChanges())
       {
@@ -1738,7 +1736,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         }
       }
 
-      if (suffixStart == size && size == originalRevision.size(getFeature()))
+      if (suffixStart == size && size == semanticOriginSize)
       {
         return null;
       }
@@ -1754,8 +1752,20 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
     private List<Object> readOriginalValues()
     {
-      int size = originalRevision.size(getFeature());
+      int size = semanticOriginSize;
       List<Object> originalValues = new ArrayList<>(Collections.nCopies(size, null));
+      boolean[] required = new boolean[size];
+
+      for (int index = 0; index < logicalListPlan.size(); index++)
+      {
+        AuditListTableMappingWithRanges.LogicalListPlan.PlanElement element = logicalListPlan.get(index);
+        if (element.isOriginal())
+        {
+          required[element.getOriginalIndex()] = true;
+        }
+      }
+
+      boolean[] found = new boolean[size];
       List<Pair<Integer, Integer>> missingRanges = new ArrayList<>();
 
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
@@ -1770,8 +1780,6 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         stmt.setInt(4, getOldVersion());
         resultSet = stmt.executeQuery();
 
-        int nextIndex = 0;
-
         while (resultSet.next())
         {
           int index = resultSet.getInt(1);
@@ -1780,18 +1788,33 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
             break;
           }
 
-          if (nextIndex < index)
+          if (required[index])
           {
-            missingRanges.add(Pair.create(nextIndex, index));
+            originalValues.set(index, typeMapping.readValue(resultSet));
+            found[index] = true;
           }
-
-          originalValues.set(index, typeMapping.readValue(resultSet));
-          nextIndex = index + 1;
         }
 
-        if (nextIndex < size)
+        int missingStart = -1;
+        for (int index = 0; index < size; index++)
         {
-          missingRanges.add(Pair.create(nextIndex, size));
+          if (required[index] && !found[index])
+          {
+            if (missingStart == -1)
+            {
+              missingStart = index;
+            }
+          }
+          else if (missingStart != -1)
+          {
+            missingRanges.add(Pair.create(missingStart, index));
+            missingStart = -1;
+          }
+        }
+
+        if (missingStart != -1)
+        {
+          missingRanges.add(Pair.create(missingStart, size));
         }
       }
       catch (SQLException ex)

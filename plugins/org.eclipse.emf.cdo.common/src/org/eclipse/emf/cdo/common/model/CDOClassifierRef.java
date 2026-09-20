@@ -22,7 +22,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.text.MessageFormat;
 
 /**
@@ -31,7 +30,7 @@ import java.text.MessageFormat;
  * @author Eike Stepper
  * @since 2.0
  */
-public final class CDOClassifierRef implements Serializable
+public final class CDOClassifierRef implements CDOModelElementRef<EClassifier>
 {
   private static final long serialVersionUID = 1L;
 
@@ -110,6 +109,7 @@ public final class CDOClassifierRef implements Serializable
     return classifierName;
   }
 
+  @Override
   public EClassifier resolve(EPackage.Registry packageRegistry)
   {
     EPackage ePackage = packageRegistry.getEPackage(packageURI);
@@ -147,7 +147,7 @@ public final class CDOClassifierRef implements Serializable
   @Override
   public String toString()
   {
-    return MessageFormat.format("CDOClassifierRef({0}, {1})", packageURI, classifierName); //$NON-NLS-1$
+    return MessageFormat.format("CDOClassifierRef[{0}, {1}]", packageURI, classifierName); //$NON-NLS-1$
   }
 
   /**

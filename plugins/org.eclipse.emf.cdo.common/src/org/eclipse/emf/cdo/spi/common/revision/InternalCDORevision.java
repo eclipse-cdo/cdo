@@ -124,18 +124,6 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public void setList(EStructuralFeature feature, InternalCDOList list);
 
   /**
-   * @deprecated As of 4.7 use either {@link #getListOrNull(EStructuralFeature)} or {@link #getOrCreateList(EStructuralFeature)}.
-   */
-  @Deprecated
-  public CDOList getList(EStructuralFeature feature);
-
-  /**
-   * @deprecated As of 4.7 use either {@link #getListOrNull(EStructuralFeature)} or {@link #getOrCreateList(EStructuralFeature, int)}.
-   */
-  @Deprecated
-  public CDOList getList(EStructuralFeature feature, int initialCapacity);
-
-  /**
    * Same as {@link #getOrCreateList(EStructuralFeature, int) getOrCreateList(feature, 0)}.
    * <p>
    * <b>Warning</b>: Must be used with caution because list creation for an {@link EStructuralFeature#isUnsettable() unsettable}
@@ -159,6 +147,36 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * @since 4.7
    */
   public CDOList getOrCreateList(EStructuralFeature feature, int initialCapacity);
+
+  /**
+   * Constructs a new many-valued feature list for revision loading. Unlike {@link #getOrCreateList(EStructuralFeature,
+   * int)}, this operation never reuses an existing value and creates the requested logical size with internal
+   * construction slots.
+   *
+   * @since 4.28
+   */
+  public default CDOList constructList(EStructuralFeature feature, int size)
+  {
+    throw new UnsupportedOperationException("List construction is not supported");
+  }
+
+  /**
+   * Constructs a list for a DB read with the given initial chunk size.
+   *
+   * @param feature
+   *          the many-valued feature
+   * @param size
+   *          the logical list size
+   * @param initialChunk
+   *          the number of values requested by the read, or
+   *          {@link CDORevision#UNCHUNKED} for a full read
+   * @return the newly constructed list
+   * @since 4.28
+   */
+  public default CDOList constructList(EStructuralFeature feature, int size, int initialChunk)
+  {
+    return constructList(feature, size);
+  }
 
   /**
    * @since 3.0
@@ -271,7 +289,9 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   /**
    * @since 4.1
+   * @deprecated As of 4.29 no longer required, see https://github.com/eclipse-cdo/cdo/issues/195
    */
+  @Deprecated
   public void setUnchunked();
 
   /**
@@ -279,4 +299,16 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    */
   @Deprecated
   public void setContainingFeatureID(int containerFeatureID);
+
+  /**
+   * @deprecated As of 4.7 use either {@link #getListOrNull(EStructuralFeature)} or {@link #getOrCreateList(EStructuralFeature)}.
+   */
+  @Deprecated
+  public CDOList getList(EStructuralFeature feature);
+
+  /**
+   * @deprecated As of 4.7 use either {@link #getListOrNull(EStructuralFeature)} or {@link #getOrCreateList(EStructuralFeature, int)}.
+   */
+  @Deprecated
+  public CDOList getList(EStructuralFeature feature, int initialCapacity);
 }

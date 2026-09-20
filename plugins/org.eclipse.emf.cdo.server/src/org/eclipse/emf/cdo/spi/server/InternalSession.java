@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.server.ISession;
@@ -61,6 +62,22 @@ public interface InternalSession
    * @since 4.2
    */
   public void setUserID(String userID);
+
+  /**
+   * Returns the complete modern collection-loading configuration snapshot.
+   *
+   * @return the configuration, or {@code null}
+   * @since 4.38
+   */
+  public CDOCollectionLoadingConfig getCollectionLoadingConfig();
+
+  /**
+   * Replaces the complete modern collection-loading configuration snapshot.
+   *
+   * @param config the configuration, or {@code null} to disable modern partial collection loading
+   * @since 4.38
+   */
+  public void setCollectionLoadingConfig(CDOCollectionLoadingConfig config);
 
   /**
    * @since 4.12

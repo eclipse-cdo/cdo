@@ -528,6 +528,22 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeCDOList(this, owner, feature, list, referenceChunk, null);
   }
 
+  /**
+   * Provides the class-level fallback for resolving the initial chunk size.
+   * <p>
+   * Subclasses may override this method to apply a more specific, for example
+   * feature-aware, collection loading configuration and delegate to
+   * {@code super} when no such configuration applies.
+   * <p>
+   * The default implementation preserves the historical behavior by returning
+   * the supplied {@code referenceChunk} unchanged.
+   */
+  @Override
+  public int getInitialChunkSize(EClass owner, EStructuralFeature feature, int referenceChunk)
+  {
+    return referenceChunk;
+  }
+
   @Override
   public void writeCDOFeatureValue(EStructuralFeature feature, Object value) throws IOException
   {
@@ -674,7 +690,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       for (int i = 0; i < sizeToLook; i++)
       {
         Object element = list.get(i, false);
-        if (element == CDORevisionUtil.UNINITIALIZED)
+        if (element == CDORevisionUtil.UNLOADED)
         {
           referenceChunk = i;
           break;

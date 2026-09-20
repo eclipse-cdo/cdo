@@ -70,7 +70,7 @@ public class LoadPermissionsRequest extends CDOClientRequest<Map<CDORevision, CD
       }
     }
 
-    int referenceChunk = getSession().options().getCollectionLoadingPolicy().getInitialChunkSize();
+    int referenceChunk = getSession().getEffectiveLegacyCollectionLoadingInitialChunkSize();
     out.writeXInt(referenceChunk);
   }
 

@@ -32,6 +32,7 @@ public class Bugzilla_337054_Test extends AbstractCDOTest
   private static final int LIST_SIZE = 3;
 
   @Requires({ IRepositoryConfig.CAPABILITY_BRANCHING, IRepositoryConfig.CAPABILITY_CHUNKING, IRepositoryConfig.CAPABILITY_RESTARTABLE })
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testCDOElementProxies() throws Exception
   {
     CDOSession session = openSession();

@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -45,7 +44,6 @@ import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.ConfigurableEquality;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -93,8 +91,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   private static final byte WRITE_PERMISSION_FLAG = 1 << 1; // 2
 
   private static final byte FROZEN_FLAG = 1 << 2; // 4
-
-  private static final byte UNCHUNKED_FLAG = 1 << 3; // 8
 
   private static final byte BYPASS_PERMISSION_CHECKS_FLAG = 1 << 4; // 16
 
@@ -169,7 +165,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     readSystemValues(in);
 
     flags = in.readByte(); // Don't set permissions into this.falgs before readValues()
-    flags |= UNCHUNKED_FLAG; // First assume all lists are unchunked; may be revised below
     flags |= BYPASS_PERMISSION_CHECKS_FLAG; // Temporarily disable permission checking to be able to set the read values
 
     if ((flags & PERMISSION_MASK) == CDOPermission.NONE.ordinal())
@@ -184,19 +179,13 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
         if (getClassInfo().isResourceFolder())
         {
-          if (!readValue(in, eClass, features[RESOURCE_FOLDER_NODES_INDEX], RESOURCE_FOLDER_NODES_INDEX, true))
-          {
-            flags &= ~UNCHUNKED_FLAG;
-          }
+          readValue(in, eClass, features[RESOURCE_FOLDER_NODES_INDEX], RESOURCE_FOLDER_NODES_INDEX, true);
         }
       }
     }
     else
     {
-      if (!readValues(in))
-      {
-        flags &= ~UNCHUNKED_FLAG;
-      }
+      readValues(in);
     }
 
     // Enable permission checking
@@ -243,15 +232,14 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   {
     EClass owner = getEClass();
     EStructuralFeature[] features = getAllPersistentFeatures();
-    initValues(features);
+    clearValues();
 
-    boolean unchunked = true;
     for (int i = 0; i < features.length; i++)
     {
-      unchunked = readValue(in, owner, features[i], i, unchunked);
+      readValue(in, owner, features[i], i, true);
     }
 
-    return unchunked;
+    return isUnchunked();
   }
 
   /**
@@ -275,19 +263,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     if (feature.isMany())
     {
       CDOList list = in.readCDOList(owner, feature);
-      if (unchunked)
-      {
-        int size = list.size();
-        if (size != 0)
-        {
-          Object lastElement = list.get(size - 1);
-          if (lastElement == InternalCDOList.UNINITIALIZED || lastElement instanceof CDOElementProxy)
-          {
-            unchunked = false;
-          }
-        }
-      }
-
       value = list;
     }
     else
@@ -432,7 +407,9 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     if (feature.isMany())
     {
       CDOList list = (CDOList)value;
-      out.writeCDOList(owner, feature, list, referenceChunk);
+      int initialChunkSize = out.getInitialChunkSize(owner, feature, referenceChunk);
+      out.prepareCollection(this, feature, initialChunkSize);
+      out.writeCDOList(owner, feature, list, initialChunkSize);
     }
     else
     {
@@ -981,11 +958,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
         return null;
       }
 
-      list = (InternalCDOList)CDOListFactory.DEFAULT.createList(size, 0, 0);
-      if (feature instanceof EReference && list instanceof ConfigurableEquality)
-      {
-        ((ConfigurableEquality)list).setUseEquals(false);
-      }
+      list = (InternalCDOList)CDOListFactory.DEFAULT.createList(feature, size, 0, 0);
 
       synchronized (this)
       {
@@ -1006,6 +979,41 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   }
 
   @Override
+  public CDOList constructList(EStructuralFeature feature, int size)
+  {
+    return constructList(feature, size, CDORevision.UNCHUNKED);
+  }
+
+  @Override
+  public CDOList constructList(EStructuralFeature feature, int size, int initialChunk)
+  {
+    if (!feature.isMany())
+    {
+      throw new IllegalArgumentException("Cannot construct a list for a single-valued feature");
+    }
+
+    int featureIndex = getFeatureIndex(feature);
+    if (doGetValue(featureIndex) != null)
+    {
+      throw new IllegalStateException("A list already exists for feature " + feature.getName());
+    }
+
+    InternalCDOList list = (InternalCDOList)CDOListFactory.DEFAULT.createList(feature, size, size, initialChunk);
+    boolean bypassPermissionChecks = bypassPermissionChecks(true);
+
+    try
+    {
+      setValue(featureIndex, list);
+    }
+    finally
+    {
+      bypassPermissionChecks(bypassPermissionChecks);
+    }
+
+    return list;
+  }
+
+  @Override
   public void setList(EStructuralFeature feature, InternalCDOList list)
   {
     int featureIndex = getFeatureIndex(feature);
@@ -1019,6 +1027,16 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public EStructuralFeature[] clearValues()
   {
     EStructuralFeature[] features = getClassInfo().getAllPersistentFeatures();
+
+    for (int i = 0; i < features.length; i++)
+    {
+      Object value = doGetValue(i);
+      if (value instanceof InternalCDOList)
+      {
+        ((InternalCDOList)value).setOwner(null);
+      }
+    }
+
     initValues(features);
     return features;
   }
@@ -1116,23 +1134,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public void freeze()
   {
     flags |= FROZEN_FLAG;
-
-    if (isReadable())
-    {
-      EStructuralFeature[] features = getAllPersistentFeatures();
-      for (int i = 0; i < features.length; i++)
-      {
-        EStructuralFeature feature = features[i];
-        if (feature.isMany())
-        {
-          InternalCDOList list = (InternalCDOList)doGetValue(i);
-          if (list != null)
-          {
-            list.freeze();
-          }
-        }
-      }
-    }
   }
 
   /**
@@ -1141,24 +1142,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public void unfreeze()
   {
     flags &= ~FROZEN_FLAG;
-
-    if (isReadable())
-    {
-      EStructuralFeature[] features = getAllPersistentFeatures();
-      for (int i = 0; i < features.length; i++)
-      {
-        EStructuralFeature feature = features[i];
-        if (feature.isMany())
-        {
-          Object value = doGetValue(i);
-          if (value instanceof CDOListImpl)
-          {
-            CDOListImpl list = (CDOListImpl)value;
-            list.unfreeze();
-          }
-        }
-      }
-    }
   }
 
   /**
@@ -1176,16 +1159,18 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   @Override
   public boolean isUnchunked()
   {
-    return (flags & UNCHUNKED_FLAG) != 0;
+    return getUnloadedCount() == 0;
   }
 
   /**
    * @since 4.1
+   * @deprecated Compatibility no-op. Loaded state is derived from list contents.
    */
   @Override
+  @Deprecated
   public void setUnchunked()
   {
-    flags |= UNCHUNKED_FLAG;
+    // Compatibility no-op. Loaded state is derived from list contents.
   }
 
   protected Object getValue(int featureIndex)
@@ -1197,7 +1182,43 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   {
     checkUnfrozen(featureIndex, value);
     checkWritable();
-    doSetValue(featureIndex, value);
+    Object oldValue = doGetValue(featureIndex);
+    InternalCDOList oldList = oldValue instanceof InternalCDOList ? (InternalCDOList)oldValue : null;
+    InternalCDOList newList = value instanceof InternalCDOList ? (InternalCDOList)value : null;
+    boolean sameList = oldList == newList;
+    boolean newListBound = false;
+
+    if (newList != null)
+    {
+      newList.setOwner(this);
+      newListBound = !sameList;
+    }
+
+    try
+    {
+      doSetValue(featureIndex, value);
+
+      if (doGetValue(featureIndex) == value)
+      {
+        if (oldList != null && !sameList)
+        {
+          oldList.setOwner(null);
+        }
+      }
+      else if (newList != null && !sameList)
+      {
+        newList.setOwner(null);
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      if (newListBound)
+      {
+        newList.setOwner(null);
+      }
+
+      throw ex;
+    }
   }
 
   protected abstract void initValues(EStructuralFeature[] allPersistentFeatures);
@@ -1314,13 +1335,8 @@ public abstract class BaseCDORevision extends AbstractCDORevision
    */
   public static String formatFlags(BaseCDORevision revision)
   {
-    int flags = revision.flags;
-
     StringBuilder builder = new StringBuilder();
-    if ((flags & UNCHUNKED_FLAG) != 0)
-    {
-      builder.append("UNCHUNKED");
-    }
+    int flags = revision.flags;
 
     if ((flags & FROZEN_FLAG) != 0)
     {

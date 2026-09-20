@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -35,6 +37,8 @@ import java.util.Map;
  */
 public class LoadPermissionsIndication extends CDOServerReadIndication
 {
+  private static final Config REVISION_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
+
   private Map<CDOBranchPoint, Pair<CDOID[], CDOPermission[]>> permissionsBySecurityContext;
 
   private int referenceChunk;
@@ -42,6 +46,12 @@ public class LoadPermissionsIndication extends CDOServerReadIndication
   public LoadPermissionsIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_PERMISSIONS);
+  }
+
+  @Override
+  protected boolean isModernInitialCollectionLoadingEnabled()
+  {
+    return true;
   }
 
   @Override
@@ -92,7 +102,7 @@ public class LoadPermissionsIndication extends CDOServerReadIndication
         CDOID id = ids[i];
         CDOPermission oldPermission = oldPermissions[i];
 
-        InternalCDORevision revision = revisionManager.getRevision(id, securityContext, 0, CDORevision.DEPTH_NONE, true);
+        InternalCDORevision revision = revisionManager.getRevision(id, securityContext, REVISION_LOADING_CONFIG);
         if (revision == null)
         {
           out.writeByte(CDOProtocolConstants.REVISION_DOES_NOT_EXIST);

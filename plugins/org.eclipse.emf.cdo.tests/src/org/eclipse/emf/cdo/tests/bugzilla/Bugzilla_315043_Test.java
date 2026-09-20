@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
@@ -123,11 +125,13 @@ public class Bugzilla_315043_Test extends AbstractCDOTest
       CDOID next = it.next();
       if (timeStampOfHoleCommit != -1)
       {
-        CDORevision revision = revisionManager.getRevision(next, branchPoint, CDORevision.DEPTH_NONE, 0, true);
+        CDORevision revision = revisionManager.getRevision(next, branchPoint, new Request.Config(LookupMode.CACHE_THEN_LOADER, 0, false,
+            CDORevision.UNCHUNKED));
         assertNull(revision);
       }
 
-      CDORevision revision = revisionManager.getRevisionByVersion(next, branchVersion, CDORevision.DEPTH_NONE, true);
+      CDORevision revision = revisionManager.getRevisionByVersion(next, branchVersion, new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE,
+          false, CDORevision.UNCHUNKED));
       assertInstanceOf(DetachedCDORevision.class, revision);
     }
   }

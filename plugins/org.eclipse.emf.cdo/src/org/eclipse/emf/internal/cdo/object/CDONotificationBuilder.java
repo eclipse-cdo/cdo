@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
@@ -27,8 +28,14 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOContainerFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOListFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDOFeatureDeltaVisitorImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -43,8 +50,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -100,7 +109,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
   public synchronized NotificationChain buildNotification(InternalCDOObject object, InternalCDORevision newRevision)
   {
     InternalCDORevision oldRevision = (InternalCDORevision)CDORevisionFactory.DEFAULT.createRevision(object.eClass());
-    CDORevisionDelta revisionDelta = newRevision.compare(oldRevision);
+    CDORevisionDelta revisionDelta = createLoadRevisionDelta(newRevision);
     return buildNotification(object, oldRevision, revisionDelta, null);
   }
 
@@ -128,7 +137,7 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
   public void visit(CDOAddFeatureDelta delta)
   {
     EStructuralFeature feature = delta.getFeature();
-    add(new CDODeltaNotificationImpl(object, Notification.ADD, feature, getOldValue(feature), delta.getValue(), delta.getIndex()));
+    add(new CDODeltaNotificationImpl(object, Notification.ADD, feature, null, delta.getValue(), delta.getIndex()));
   }
 
   @Override
@@ -392,5 +401,57 @@ public class CDONotificationBuilder extends CDOFeatureDeltaVisitorImpl
         previousNotification.add(newNotificaton);
       }
     }
+  }
+
+  /**
+   * Creates the delta used for an initial-load notification.
+   * <p>
+   * Unlike a general revision comparison, load notification construction visits only the values that are present in
+   * the loaded revision. In particular, unloaded positions of a partially loaded list are omitted from the delta;
+   * this preserves the partial state and prevents internal unloaded markers from becoming notification values.
+   */
+  private CDORevisionDelta createLoadRevisionDelta(InternalCDORevision revision)
+  {
+    InternalCDORevisionDelta loadDelta = new CDORevisionDeltaImpl(revision);
+    Map<EStructuralFeature, CDOListFeatureDeltaImpl> listDeltas = new HashMap<>();
+
+    revision.accept(new CDORevisionValueVisitor()
+    {
+      @Override
+      public void visit(EStructuralFeature feature, Object value, int index)
+      {
+        if (feature.isMany())
+        {
+          CDOListFeatureDeltaImpl listDelta = listDeltas.get(feature);
+          if (listDelta == null)
+          {
+            listDelta = new CDOListFeatureDeltaImpl(feature, 0);
+            listDeltas.put(feature, listDelta);
+          }
+
+          listDelta.add(new CDOAddFeatureDeltaImpl(feature, index, value));
+        }
+        else if (value != null)
+        {
+          loadDelta.addFeatureDelta(new CDOSetFeatureDeltaImpl(feature, 0, value, null), null);
+        }
+      }
+    });
+
+    for (CDOListFeatureDeltaImpl listDelta : listDeltas.values())
+    {
+      if (!listDelta.getListChanges().isEmpty())
+      {
+        loadDelta.addFeatureDelta(listDelta, null);
+      }
+    }
+
+    Object containerID = revision.getContainerID();
+    if (revision.getResourceID() != null || containerID != null || revision.getContainerFeatureID() != 0)
+    {
+      loadDelta.addFeatureDelta(new CDOContainerFeatureDeltaImpl(revision.getResourceID(), containerID, revision.getContainerFeatureID()), null);
+    }
+
+    return loadDelta;
   }
 }

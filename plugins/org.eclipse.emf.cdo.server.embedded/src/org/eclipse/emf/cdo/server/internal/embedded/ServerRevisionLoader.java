@@ -16,10 +16,13 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader4;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
@@ -30,7 +33,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public final class ServerRevisionLoader implements RevisionLoader3
+public final class ServerRevisionLoader implements RevisionLoader3, RevisionLoader4
 {
   private final RevisionLoader3 delegate;
 
@@ -42,13 +45,6 @@ public final class ServerRevisionLoader implements RevisionLoader3
   public RevisionLoader3 getDelegate()
   {
     return delegate;
-  }
-
-  @Override
-  @Deprecated
-  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -73,6 +69,36 @@ public final class ServerRevisionLoader implements RevisionLoader3
   }
 
   @Override
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, Request.Config config)
+  {
+    InternalSession serverSession = ServerSession.get();
+    if (serverSession != null)
+    {
+      try
+      {
+        StoreThreadLocal.setSession(serverSession);
+        return loadRevisionsFromDelegate(infos, branchPoint, config);
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    }
+
+    return loadRevisionsFromDelegate(infos, branchPoint, config);
+  }
+
+  private List<RevisionInfo> loadRevisionsFromDelegate(List<RevisionInfo> infos, CDOBranchPoint branchPoint, Request.Config config)
+  {
+    if (delegate instanceof RevisionLoader4)
+    {
+      return ((RevisionLoader4)delegate).loadRevisions(infos, branchPoint, config);
+    }
+
+    return delegate.loadRevisions(infos, branchPoint, CDORevision.UNCHUNKED, config.getPrefetchDepth(), config.isPrefetchLockStates());
+  }
+
+  @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
     InternalSession serverSession = ServerSession.get();
@@ -90,6 +116,36 @@ public final class ServerRevisionLoader implements RevisionLoader3
     }
 
     return delegate.loadRevisionByVersion(id, branchVersion, referenceChunk);
+  }
+
+  @Override
+  public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
+  {
+    InternalSession serverSession = ServerSession.get();
+    if (serverSession != null)
+    {
+      try
+      {
+        StoreThreadLocal.setSession(serverSession);
+        return loadRevisionByVersionFromDelegate(id, branchVersion, config);
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+    }
+
+    return loadRevisionByVersionFromDelegate(id, branchVersion, config);
+  }
+
+  private InternalCDORevision loadRevisionByVersionFromDelegate(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
+  {
+    if (delegate instanceof RevisionLoader4)
+    {
+      return ((RevisionLoader4)delegate).loadRevisionByVersion(id, branchVersion, config);
+    }
+
+    return delegate.loadRevisionByVersion(id, branchVersion, CDORevision.UNCHUNKED);
   }
 
   @Override
@@ -132,5 +188,12 @@ public final class ServerRevisionLoader implements RevisionLoader3
     }
 
     return delegate.loadObjectLifetime(id, branchPoint);
+  }
+
+  @Override
+  @Deprecated
+  public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth)
+  {
+    throw new UnsupportedOperationException();
   }
 }

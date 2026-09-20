@@ -1147,7 +1147,7 @@ public class Doc03_WorkingWithSessions
      * implementing version control tools, custom synchronization, or replication logic.
      * <p>
      * The combination of ID, branch, and version uniquely identifies a revision within the repository. Hence the
-     * {@link CDORevisionManager#getRevisionByVersion(CDOID, CDOBranchVersion, int, boolean) getRevisionByVersion()} method
+     * {@link CDORevisionManager.Request#getRevisionByVersion(CDOID, CDOBranchVersion) getRevisionByVersion()} method
      * can be used to retrieve a specific revision:
      * {@link RevisionManager#getRevisionByVersion(CDOSession) GetRevisionByVersion.java}
      * <p>
@@ -1158,7 +1158,7 @@ public class Doc03_WorkingWithSessions
      * {@link RevisionManager#getRevision(CDOSession) GetRevision.java}
      * <p>
      * The revision manager also supports bulk loading of revisions using the
-     * {@link CDORevisionManager#getRevisions(List, CDOBranchPoint, int, int, boolean) getRevisions()} method. Here is an example:
+     * {@link CDORevisionManager.Request#getRevisions(List, CDOBranchPoint) getRevisions()} method. Here is an example:
      * {@link RevisionManager#getMultipleRevisions(CDOSession, CDORevision) GetMultipleRevisions.java}
      * <p>
      * The above methods assume that you know the IDs of the revisions you want to retrieve.
@@ -1184,10 +1184,9 @@ public class Doc03_WorkingWithSessions
         CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
         CDOBranch mainBranch = session.getBranchManager().getMainBranch();
         CDOBranchVersion firstVersion = mainBranch.getVersion(CDOBranchVersion.FIRST_VERSION);
-        boolean loadOnDemand = true; // Set to false to only consider locally cached revisions.
-
         CDORevisionManager revisionManager = session.getRevisionManager();
-        CDORevision firstRevision = revisionManager.getRevisionByVersion(rootResourceID, firstVersion, CDORevision.UNCHUNKED, loadOnDemand);
+        CDORevisionManager.Request request = revisionManager.request().lookupCacheThenLoader();
+        CDORevision firstRevision = request.getRevisionByVersion(rootResourceID, firstVersion);
         System.out.println("First revision found: " + firstRevision);
       }
 
@@ -1199,10 +1198,9 @@ public class Doc03_WorkingWithSessions
         CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
         CDOBranch mainBranch = session.getBranchManager().getMainBranch();
         CDOBranchPoint tenSecondsAgo = mainBranch.getPoint(System.currentTimeMillis() - 10000); // 10 seconds ago
-        boolean loadOnDemand = true; // Set to false to only consider locally cached revisions.
-
         CDORevisionManager revisionManager = session.getRevisionManager();
-        CDORevision oldRevision = revisionManager.getRevision(rootResourceID, tenSecondsAgo, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, loadOnDemand);
+        CDORevisionManager.Request request = revisionManager.request().lookupCacheThenLoader();
+        CDORevision oldRevision = request.getRevision(rootResourceID, tenSecondsAgo);
         System.out.println("Old revision found: " + oldRevision);
       }
 
@@ -1223,7 +1221,8 @@ public class Doc03_WorkingWithSessions
           CDOBranchPoint head = session.getBranchManager().getMainBranch().getHead();
 
           // Collect available revisions from the local cache and load missing ones from the repository in one batch.
-          List<CDORevision> revisions = revisionManager.getRevisions(ids, head, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+          List<CDORevision> revisions = revisionManager.request()
+              .getRevisions(ids, head);
           System.out.println("Revisions found: " + revisions);
         }
       }

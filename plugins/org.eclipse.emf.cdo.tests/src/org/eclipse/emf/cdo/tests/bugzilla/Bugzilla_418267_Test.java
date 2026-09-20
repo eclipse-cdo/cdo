@@ -12,6 +12,9 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -24,9 +27,11 @@ import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
+import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -35,7 +40,11 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 
+import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
+import java.util.Collections;
 
 /**
  * Bug 418267 - [Security] Cached permissions are not always properly updated after commits.
@@ -60,6 +69,12 @@ public class Bugzilla_418267_Test extends AbstractCDOTest
   public void testMoveFromNoneToRead() throws Exception
   {
     move(CDOPermission.NONE, CDOPermission.READ);
+  }
+
+  @Skips(ModelConfig.CAPABILITY_LEGACY)
+  public void testMoveFromNoneToReadWithModernInitialCollectionLoading() throws Exception
+  {
+    move(CDOPermission.NONE, CDOPermission.READ, true);
   }
 
   public void testMoveFromNoneToWrite() throws Exception
@@ -99,6 +114,11 @@ public class Bugzilla_418267_Test extends AbstractCDOTest
 
   private void move(final CDOPermission from, final CDOPermission to) throws Exception
   {
+    move(from, to, false);
+  }
+
+  private void move(final CDOPermission from, final CDOPermission to, boolean modern) throws Exception
+  {
     final String pathFolder2 = getResourcePath("folder2");
     final String pathFolder1 = getResourcePath("folder1");
     final String pathResource1 = pathFolder1 + "/res";
@@ -112,7 +132,16 @@ public class Bugzilla_418267_Test extends AbstractCDOTest
         transaction.createResourceFolder(pathFolder2);
 
         CDOResource resource = transaction.createResource(pathResource1);
-        resource.getContents().add(getModel1Factory().createCompany());
+        Company company = getModel1Factory().createCompany();
+        if (modern)
+        {
+          for (int i = 0; i < 120; i++)
+          {
+            company.getCategories().add(getModel1Factory().createCategory());
+          }
+        }
+
+        resource.getContents().add(company);
 
         Role role = realm.addRole("Test Role");
 
@@ -151,6 +180,14 @@ public class Bugzilla_418267_Test extends AbstractCDOTest
     CDOSession session = openSession(CREDENTIALS);
     session.options().setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
 
+    if (modern)
+    {
+      EStructuralFeature categories = getModel1Package().getCompany_Categories();
+      session.options().setCollectionLoadingConfig(new CDOCollectionLoadingConfig(
+          new ChunkConfig(ChunkConfig.INHERIT, ChunkConfig.INHERIT),
+          Collections.<EModelElement, ChunkConfig>singletonMap(categories, new ChunkConfig(100, ChunkConfig.INHERIT))));
+    }
+
     CDOTransaction transaction = session.openTransaction();
     assertPermissions(from, transaction, resourceWriter, companyWriter); // Pre check
 
@@ -162,6 +199,15 @@ public class Bugzilla_418267_Test extends AbstractCDOTest
 
     commitAndSync(transactionWriter, transaction); // Commit + invalidate
     assertPermissions(to, transaction, resourceWriter, companyWriter); // Post check
+
+    if (modern)
+    {
+      InternalCDORevision revision = (InternalCDORevision)CDOUtil.getCDOObject(transaction.getObject(companyWriter)).cdoRevision();
+      CDOList list = revision.getListOrNull(getModel1Package().getCompany_Categories());
+      assertEquals(120, list.size());
+      assertTrue(list.isLoadedAt(99));
+      assertFalse(list.isLoadedAt(100));
+    }
   }
 
   private static Access getAccess(CDOPermission permission)

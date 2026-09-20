@@ -65,7 +65,16 @@ import java.util.function.Consumer;
  */
 public final class CDORevisionUtil
 {
-  public static final Object UNINITIALIZED = new Uninitialized();
+  /**
+   * The canonical marker for a list element that has not been loaded.
+   */
+  public static final Object UNLOADED = new Uninitialized();
+
+  /**
+   * @deprecated Use {@link #UNLOADED}.
+   */
+  @Deprecated
+  public static final Object UNINITIALIZED = UNLOADED;
 
   private static EAttribute resourceNodeNameAttribute;
 
@@ -328,6 +337,11 @@ public final class CDORevisionUtil
   }
 
   /**
+   * Visits the currently loaded values of a feature.
+   * <p>
+   * This method is a loaded-only traversal. Unloaded positions of a many-valued feature are skipped and are not
+   * materialized. Direct {@link CDOWithID} values are passed through as loaded values.
+   *
    * @since 4.27
    */
   public static void forEachValue(CDORevision revision, EStructuralFeature feature, Consumer<Object> consumer)
@@ -336,6 +350,10 @@ public final class CDORevisionUtil
   }
 
   /**
+   * Visits the currently loaded values of a feature, up to {@code maxValues} values.
+   * <p>
+   * Unloaded positions of a many-valued feature are skipped and are not materialized.
+   *
    * @since 4.27
    */
   public static void forEachValue(CDORevision revision, EStructuralFeature feature, int maxValues, Consumer<Object> consumer)
@@ -353,10 +371,13 @@ public final class CDORevisionUtil
       if (list != null)
       {
         int toIndex = Math.min(maxValues, list.size()) - 1;
+
         for (int i = 0; i <= toIndex; i++)
         {
-          Object value = list.get(i);
-          consumer.accept(value);
+          if (list.isLoadedAt(i))
+          {
+            consumer.accept(list.get(i, false));
+          }
         }
       }
     }
@@ -481,6 +502,11 @@ public final class CDORevisionUtil
   }
 
   /**
+   * Returns whether a containment feature has at least one logical value.
+   * <p>
+   * This is a structural, non-materializing query. A partially loaded many-valued containment is considered
+   * non-empty based on its logical size alone.
+   *
    * @since 4.21
    */
   public static boolean hasChildRevisions(CDORevision container)
@@ -514,9 +540,6 @@ public final class CDORevisionUtil
     return false;
   }
 
-  /**
-   * @since 4.5
-   */
   /**
    * @since 4.4
    */
@@ -553,6 +576,11 @@ public final class CDORevisionUtil
   }
 
   /**
+   * Visits the currently loaded contained child revisions.
+   * <p>
+   * This is a loaded-only traversal. Unloaded positions are skipped and are not materialized. Native CDO objects
+   * represented directly as values are handled as loaded values through their {@link CDOWithID} identity.
+   *
    * @since 4.18
    */
   public static void forEachChildRevision(CDOID container, CDORevisionProvider provider, boolean onlyProperContents, Consumer<CDORevision> consumer)
@@ -583,9 +611,12 @@ public final class CDORevisionUtil
           CDOList list = revisionData.getListOrNull(feature);
           if (list != null)
           {
-            for (Object value : list)
+            for (int i = 0, size = list.size(); i < size; i++)
             {
-              forChildRevision(value, provider, onlyProperContents, consumer);
+              if (list.isLoadedAt(i))
+              {
+                forChildRevision(list.get(i, false), provider, onlyProperContents, consumer);
+              }
             }
           }
         }
@@ -600,24 +631,34 @@ public final class CDORevisionUtil
 
   private static void forChildRevision(Object value, CDORevisionProvider provider, boolean onlyProperContents, Consumer<CDORevision> consumer)
   {
+    CDOID id;
     if (value instanceof CDOID)
     {
-      CDOID id = (CDOID)value;
-      CDORevision child = provider.getRevision(id);
-      if (child != null)
-      {
-        if (onlyProperContents)
-        {
-          // Check proper contents (i.e., no containment proxy).
-          CDOID resourceID = child.data().getResourceID();
-          if (!CDOIDUtil.isNull(resourceID))
-          {
-            return;
-          }
-        }
+      id = (CDOID)value;
+    }
+    else if (value instanceof CDOWithID)
+    {
+      id = ((CDOWithID)value).cdoID();
+    }
+    else
+    {
+      return;
+    }
 
-        consumer.accept(child);
+    CDORevision child = provider.getRevision(id);
+    if (child != null)
+    {
+      if (onlyProperContents)
+      {
+        // Check proper contents (i.e., no containment proxy).
+        CDOID resourceID = child.data().getResourceID();
+        if (!CDOIDUtil.isNull(resourceID))
+        {
+          return;
+        }
       }
+
+      consumer.accept(child);
     }
   }
 

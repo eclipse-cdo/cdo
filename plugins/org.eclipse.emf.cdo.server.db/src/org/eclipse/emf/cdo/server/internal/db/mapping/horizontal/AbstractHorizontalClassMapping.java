@@ -25,6 +25,9 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
@@ -101,6 +104,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   protected static final int UNSET_LIST = -1;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalClassMapping.class);
+
+  private static final Config UNCHUNKED_REVISION_SCAN_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   protected IDBTable table;
 
@@ -395,7 +400,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
    * @return <code>true</code> if the revision has been read successfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
-  protected final boolean readValuesFromStatement(PreparedStatement stmt, InternalCDORevision revision, IDBStoreAccessor accessor)
+  protected final boolean readValuesFromStatement(PreparedStatement stmt, InternalCDORevision revision, IDBStoreAccessor accessor, int listChunk)
   {
     ResultSet resultSet = null;
 
@@ -410,7 +415,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       resultSet = stmt.executeQuery();
 
       IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      if (!readValuesFromResultSet(resultSet, idHandler, revision, false))
+      if (!readValuesFromResultSet(resultSet, idHandler, revision, false, listChunk))
       {
         if (TRACER.isEnabled())
         {
@@ -438,7 +443,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
    * @return <code>true</code> if the revision has been read successfully.<br>
    *         <code>false</code> if the revision does not exist in the DB.
    */
-  protected final boolean readValuesFromResultSet(ResultSet resultSet, IIDHandler idHandler, InternalCDORevision revision, boolean forUnit)
+  protected final boolean readValuesFromResultSet(ResultSet resultSet, IIDHandler idHandler, InternalCDORevision revision, boolean forUnit, int listChunk)
   {
     try
     {
@@ -490,12 +495,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
               continue;
             }
 
-            // Ensure the list size.
-            CDOList list = revision.getOrCreateList(feature, size);
-            for (int i = 0; i < size; i++)
-            {
-              list.add(InternalCDOList.UNINITIALIZED);
-            }
+            // Ensure the list size with internal construction slots. These slots are not PCL-unloaded values.
+            revision.constructList(feature, size, listChunk);
           }
         }
 
@@ -515,6 +516,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     for (IListMapping listMapping : listMappings)
     {
       listMapping.readValues(accessor, revision, listChunk);
+
+      CDOList list = revision.getListOrNull(listMapping.getFeature());
+      if (list instanceof InternalCDOList)
+      {
+        ((InternalCDOList)list).finishConstruction(listChunk != CDORevision.UNCHUNKED);
+      }
     }
 
     return !hasUninitializedListValues(revision, listChunk);
@@ -534,7 +541,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       {
         for (int i = 0; i < list.size(); i++)
         {
-          if (list.get(i) == InternalCDOList.UNINITIALIZED)
+          if (list.get(i) == CDORevisionUtil.UNLOADED)
           {
             return true;
           }
@@ -1054,7 +1061,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
           CDOBranchVersion branchVersion = mainBranch.getVersion(version);
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, CDORevision.UNCHUNKED, true);
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, UNCHUNKED_REVISION_SCAN_CONFIG);
 
           if (!handler.handleRevision(revision))
           {

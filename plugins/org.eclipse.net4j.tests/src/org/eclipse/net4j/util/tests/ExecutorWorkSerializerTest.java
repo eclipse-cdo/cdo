@@ -29,25 +29,39 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class ExecutorWorkSerializerTest extends AbstractOMTest
 {
-  /** timeout to wait for execution of all work units. */
+  /**
+   * Timeout to wait for execution of all work units.
+   */
   private static final int WORK_COMPLETION_TIMEOUT = 10000;
 
-  /** number of work producer threads. */
+  /**
+   * Number of work producer threads.
+   */
   private static final int NUM_WORKPRODUCER_THREADS = 10;
 
-  /** number of working units to execute. */
+  /**
+   * Number of working units to execute.
+   */
   private static final int NUM_WORK = 40;
 
-  /** the latch to wait on for the execution of all working units. */
+  /**
+   * The latch to wait on for the execution of all working units.
+   */
   private CountDownLatch workConsumedLatch;
 
-  /** The number of working units created. */
+  /**
+   * The number of working units created.
+   */
   private AtomicInteger workProduced;
 
-  /** The thread pool to execute the work unit producers in. */
+  /**
+   * The thread pool to execute the work unit producers in.
+   */
   private ExecutorService threadPool;
 
-  /** The executor to submit the work units to. */
+  /**
+   * The executor to submit the work units to.
+   */
   private SerializingExecutor serializer;
 
   @Override

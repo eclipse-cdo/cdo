@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
@@ -97,6 +99,10 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     implements ISchemaPreparable, IListMappingBatchingSupport, IListMappingDeltaSupport, IListMappingUnitSupport, IListMapping4, ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditListTableMappingWithRanges.class);
+
+  private static final Config UNCHUNKED_REVISION_SCAN_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+
+  private static final Config UNCHUNKED_INITIAL_LIST_REVISION_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
 
   /**
    * Used to clean up lists for detached objects.
@@ -643,7 +649,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     else
     {
       InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)getMappingStrategy().getStore().getRepository().getRevisionManager();
-      InternalCDORevision baseRevision = revisionManager.getBaseRevision(revision, CDORevision.UNCHUNKED, true);
+      InternalCDORevision baseRevision = revisionManager.getBaseRevision(revision, UNCHUNKED_REVISION_SCAN_CONFIG);
 
       EStructuralFeature feature = getFeature();
       CDOListFeatureDelta delta = CDORevisionUtil.compareLists(baseRevision, revision, feature);
@@ -842,7 +848,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     CDOBranch main = repository.getBranchManager().getMainBranch();
 
     // get revision from cache to find out version number
-    CDORevision revision = repository.getRevisionManager().getRevision(id, main.getHead(), 0, CDORevision.DEPTH_NONE, true);
+    CDORevision revision = repository.getRevisionManager().getRevision(id, main.getHead(), UNCHUNKED_INITIAL_LIST_REVISION_CONFIG);
 
     // set cdo_revision_removed for all list items (so we have no NULL values)
     clearList(accessor, id, revision.getVersion(), FINAL_VERSION);
@@ -1175,7 +1181,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     CDORevisionManager revisionManager = repository.getRevisionManager();
     CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
 
-    InternalCDORevision originalRevision = (InternalCDORevision)revisionManager.getRevision(id, head, /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+    InternalCDORevision originalRevision = (InternalCDORevision)revisionManager.getRevision(id, head, UNCHUNKED_INITIAL_LIST_REVISION_CONFIG);
     processDelta(accessor, originalRevision, oldVersion, newVersion, listChanges);
   }
 
@@ -1201,8 +1207,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
         IRepository repository = accessor.getStore().getRepository();
         CDORevisionManager revisionManager = repository.getRevisionManager();
         CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
-        InternalCDORevision originalRevision = (InternalCDORevision)revisionManager.getRevision(item.getID(), head,
-            /* chunksize = */0, CDORevision.DEPTH_NONE, true);
+        InternalCDORevision originalRevision = (InternalCDORevision)revisionManager.getRevision(item.getID(), head, UNCHUNKED_INITIAL_LIST_REVISION_CONFIG);
 
         if (table == null)
         {

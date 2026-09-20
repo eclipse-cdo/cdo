@@ -17,14 +17,17 @@ import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Simon McDuff
  */
-public class CDOListWithElementProxiesImpl extends CDOListImpl
+public class CDOListWithElementProxiesImpl extends CDOPCLListImpl
 {
   public static final CDOListFactory FACTORY = new CDOListFactory()
   {
@@ -33,17 +36,21 @@ public class CDOListWithElementProxiesImpl extends CDOListImpl
     {
       return new CDOListWithElementProxiesImpl(initialCapacity, size, initialChunk);
     }
+
+    @Override
+    public CDOList createList(EStructuralFeature feature, int initialCapacity, int size, int initialChunk)
+    {
+      return feature instanceof EAttribute //
+          ? new CDOListWithElementProxiesWithEqualsImpl(initialCapacity, size, initialChunk) //
+          : new CDOListWithElementProxiesImpl(initialCapacity, size, initialChunk);
+    }
   };
 
   private static final long serialVersionUID = 1L;
 
   public CDOListWithElementProxiesImpl(int initialCapacity, int size, int initialChunk)
   {
-    super(initialCapacity, initialChunk);
-    for (int j = initialChunk; j < size; j++)
-    {
-      this.add(new CDOElementProxyImpl(j));
-    }
+    super(initialCapacity, size, initialChunk);
   }
 
   @Override
@@ -55,8 +62,7 @@ public class CDOListWithElementProxiesImpl extends CDOListImpl
     }
 
     Object element = super.get(index);
-
-    return element instanceof CDOElementProxy ? UNINITIALIZED : element;
+    return element instanceof CDOElementProxy ? CDORevisionUtil.UNLOADED : element;
   }
 
   @Override
@@ -74,8 +80,9 @@ public class CDOListWithElementProxiesImpl extends CDOListImpl
     CDOType type = CDOModelUtil.getType(classifier);
     int size = size();
 
-    CDOListWithElementProxiesImpl list = new CDOListWithElementProxiesImpl(size, 0, 0);
-    list.setUseEquals(useEquals());
+    CDOListWithElementProxiesImpl list = useEquals() //
+        ? new CDOListWithElementProxiesWithEqualsImpl(size, 0, 0) //
+        : new CDOListWithElementProxiesImpl(size, 0, 0);
 
     for (int j = 0; j < size; j++)
     {

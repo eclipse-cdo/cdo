@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchVersionImpl;
@@ -564,11 +566,12 @@ public class Bugzilla_400311b_Test extends AbstractCDOTest
   /**
    * Ensures that the CDOServer does not contain 2 identical Adjacent revisions.
    */
+  @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   private static void assertServerDoesNotContainIdenticalAdjacentRevision(CDOID targetElement, CDOTransaction transaction)
   {
     // Step 1: get all revisions for the given ID through the revision manager
     CDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-    int initialChunkSize = transaction.getSession().options().getCollectionLoadingPolicy().getInitialChunkSize();
+    int initialChunkSize = transaction.getSession().options().getCollectionLoadingPolicy().getInitialChunkSize(null, null);
 
     int version = CDOBranchVersion.FIRST_VERSION;
     List<CDORevision> revisions = new LinkedList<>();
@@ -579,7 +582,8 @@ public class Bugzilla_400311b_Test extends AbstractCDOTest
       CDOBranchVersion branchVersion = new CDOBranchVersionImpl(transaction.getBranch(), version);
       if (revisionManager.containsRevisionByVersion(targetElement, branchVersion))
       {
-        CDORevision fetched = revisionManager.getRevisionByVersion(targetElement, branchVersion, initialChunkSize, true);
+        CDORevision fetched = revisionManager.getRevisionByVersion(targetElement, branchVersion,
+            new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, initialChunkSize));
         if (fetched != null)
         {
           revisions.add(fetched);

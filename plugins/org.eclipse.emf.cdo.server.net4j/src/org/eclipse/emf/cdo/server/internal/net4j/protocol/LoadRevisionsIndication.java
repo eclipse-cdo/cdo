@@ -19,8 +19,11 @@ import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -58,6 +61,8 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
   private int referenceChunk;
 
+  private Request.Config config;
+
   private int prefetchDepth;
 
   private final Map<EClass, CDOFetchRule> fetchRules = new HashMap<>();
@@ -78,13 +83,21 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
   }
 
   @Override
+  protected boolean isModernInitialCollectionLoadingEnabled()
+  {
+    return true;
+  }
+
+  @Override
   protected void indicating(CDODataInput in) throws IOException
   {
     InternalRepository repository = getRepository();
     revisionManager = repository.getRevisionManager();
+    InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry();
 
     branchPoint = in.readCDOBranchPoint();
     referenceChunk = in.readXInt();
+    config = new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, referenceChunk);
 
     boolean prefetchLockStates = in.readBoolean();
     lockStatePrefetcher = CDOServerLockStatePrefetcher.create(repository, branchPoint, prefetchLockStates);
@@ -128,8 +141,6 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       }
 
       contextID = in.readCDOID();
-
-      InternalCDOPackageRegistry packageRegistry = repository.getPackageRegistry();
 
       for (int i = 0; i < fetchRulesCount; i++)
       {
@@ -254,7 +265,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
   private void executeRevisionInfo(RevisionInfo info)
   {
-    info.execute(revisionManager, referenceChunk);
+    info.execute(revisionManager, config);
 
     lockStatePrefetcher.addLockStateKey(() -> {
       CDORevision revision = info.getSynthetic();
@@ -290,6 +301,19 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
     for (EStructuralFeature feature : fetchRule.getFeatures())
     {
+      if (feature.isMany())
+      {
+        CDOList list = revision.getListOrNull(feature);
+        if (list != null)
+        {
+          int chunkEnd = Math.min(loadRevisionCollectionChunkSize, list.size());
+          if (chunkEnd > 0)
+          {
+            getRepository().ensureChunk(revision, feature, 0, chunkEnd);
+          }
+        }
+      }
+
       CDORevisionUtil.forEachValue(revision, feature, loadRevisionCollectionChunkSize, value -> {
         if (value instanceof CDOID)
         {

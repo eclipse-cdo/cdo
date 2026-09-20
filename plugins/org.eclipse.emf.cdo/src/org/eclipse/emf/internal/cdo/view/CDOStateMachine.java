@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
-import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedException;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
@@ -43,6 +42,7 @@ import org.eclipse.emf.cdo.view.CDOInvalidationPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+import org.eclipse.emf.internal.cdo.CDORevisionTransitionUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
@@ -80,6 +80,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -524,7 +525,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void internalReattach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
+    internalReattach(object, transaction, null);
+  }
+
+  public void internalReattach(InternalCDOObject object, InternalCDOTransaction transaction, Set<EStructuralFeature> changedFeatures)
+  {
+    InternalCDOSession session = transaction.getSession();
+    InternalCDORevisionManager revisionManager = session.getRevisionManager();
     Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
     InternalCDORevision cleanRevision = cleanRevisions.get(object).copy();
     CDOID id = cleanRevision.getID();
@@ -536,6 +543,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       CDORevisionDelta delta = savepoint.getRevisionDeltas2().get(id);
       if (delta != null)
       {
+        CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(cleanRevision, delta, session);
         delta.applyTo(cleanRevision);
       }
 
@@ -556,7 +564,10 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     object.cdoInternalPostAttach();
 
     // Compute a revision delta and register it with the tx
-    InternalCDORevisionDelta revisionDelta = revision.compare(cleanRevision);
+    InternalCDORevisionDelta revisionDelta = changedFeatures == null //
+        ? revision.compare(cleanRevision) //
+        : CDORevisionTransitionUtil.compareFeatures(cleanRevision, revision, changedFeatures, session);
+
     if (revisionDelta.isEmpty())
     {
       changeState(object, CDOState.CLEAN);
@@ -579,23 +590,13 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     InternalCDOView view = object.cdoView();
     if (view.options().isLoadNotificationEnabled())
     {
-      try
-      {
-        InternalCDORevision revision = object.cdoRevision();
-        CDONotificationBuilder builder = new CDONotificationBuilder(view);
+      InternalCDORevision revision = object.cdoRevision();
+      CDONotificationBuilder builder = new CDONotificationBuilder(view);
 
-        NotificationChain notification = builder.buildNotification(object, revision);
-        if (notification != null)
-        {
-          notification.dispatch();
-        }
-      }
-      catch (PartialCollectionLoadingNotSupportedException ex)
+      NotificationChain notification = builder.buildNotification(object, revision);
+      if (notification != null)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace(ex);
-        }
+        notification.dispatch();
       }
     }
   }
@@ -1104,6 +1105,9 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       Object result = null;
       if (featureDelta != null)
       {
+        CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(cleanRevision, featureDelta, transaction.getSession());
+
+        revision = cleanRevision.copy();
         result = featureDelta.applyTo(revision);
 
         if (!transaction.hasMultipleSavepoints())
@@ -1139,6 +1143,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       Object result = null;
       if (featureDelta != null)
       {
+        CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(revision, featureDelta, transaction.getSession());
+
         result = featureDelta.applyTo(revision);
 
         if (!transaction.hasMultipleSavepoints())

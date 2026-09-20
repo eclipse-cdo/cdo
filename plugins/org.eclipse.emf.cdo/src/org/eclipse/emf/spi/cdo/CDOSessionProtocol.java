@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -53,7 +54,9 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader4;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.collection.Entity;
@@ -92,7 +95,7 @@ import java.util.function.BiConsumer;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader5, RevisionLoader3, CommitInfoLoader
+public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader5, RevisionLoader3, RevisionLoader4, CommitInfoLoader
 {
   public RepositoryTimeResult getRepositoryTime();
 
@@ -117,6 +120,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public void setLockNotificationMode(LockNotificationMode mode);
 
   /**
+   * Replaces the complete collection-loading configuration of the server session.
+   *
+   * @param config the complete configuration snapshot, or {@code null} to disable modern partial collection loading
+   * @since 4.38
+   */
+  public CDOCollectionLoadingConfig setCollectionLoadingConfig(CDOCollectionLoadingConfig config);
+
+  /**
    * @since 3.0
    */
   public RefreshSessionResult refresh(long lastUpdateTime, Map<CDOBranch, Map<CDOID, InternalCDORevision>> viewedRevisions, int initialChunkSize,
@@ -133,6 +144,23 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    *          Load objects at the client to toIndex (inclusive)
    */
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, int accessIndex, int fetchIndex, int fromIndex, int toIndex);
+
+  /**
+   * Loads one or more ordered ranges of one feature of one exact revision.
+   * <p>
+   * Each range carries both the client/access coordinate and the corresponding server/source coordinate. The ranges
+   * are inclusive at both ends and are returned in the same order.
+   *
+   * @param revision
+   *          the exact revision to load
+   * @param feature
+   *          the many-valued feature to load
+   * @param ranges
+   *          the ordered ranges to load
+   * @return the value at the access coordinate of a single-range request, or {@code null} for a multi-range request
+   * @since 4.32
+   */
+  public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, List<ChunkRange> ranges);
 
   /**
    * @since 4.0
@@ -239,13 +267,6 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public CDOCommitInfo resetTransaction(int transactionID, int commitNumber);
 
   public List<CDORemoteSession> getRemoteSessions(InternalCDORemoteSessionManager manager, boolean subscribe);
-
-  /**
-   * @since 3.0
-   * @deprecated As of 4.8 use {@link #sendRemoteMessage(CDORemoteSessionMessage, CDORemoteTopic, List)}.
-   */
-  @Deprecated
-  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients);
 
   /**
    * @since 4.17
@@ -855,6 +876,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private Map<CDOBranch, List<InternalCDORevision>> changedObjects = new HashMap<>();
 
+    private Map<CDOBranch, Map<CDOID, InternalCDORevisionDelta>> changedObjectDeltas = new HashMap<>();
+
     private Map<CDOBranch, List<CDOIDAndVersion>> detachedObjects = new HashMap<>();
 
     public RefreshSessionResult(long lastUpdateTime)
@@ -881,6 +904,36 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       }
 
       return list;
+    }
+
+    /**
+     * Returns the server-derived revision delta for a changed object, if one was supplied by the refresh protocol.
+     *
+     * @param branch
+     *          the branch of the changed object
+     * @param id
+     *          the ID of the changed object
+     * @return the revision delta, or {@code null} if no delta was supplied
+     */
+    public InternalCDORevisionDelta getChangedObjectDelta(CDOBranch branch, CDOID id)
+    {
+      Map<CDOID, InternalCDORevisionDelta> deltas = changedObjectDeltas.get(branch);
+      return deltas == null ? null : deltas.get(id);
+    }
+
+    /**
+     * Indicates whether the refresh response carried delta metadata for the changed object.
+     *
+     * @param branch
+     *          the branch of the changed object
+     * @param id
+     *          the ID of the changed object
+     * @return {@code true} if the response supplied a delta field, including an explicitly absent delta
+     */
+    public boolean hasChangedObjectDelta(CDOBranch branch, CDOID id)
+    {
+      Map<CDOID, InternalCDORevisionDelta> deltas = changedObjectDeltas.get(branch);
+      return deltas != null && deltas.containsKey(id);
     }
 
     public List<CDOIDAndVersion> getDetachedObjects(CDOBranch branch)
@@ -910,6 +963,34 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       }
 
       list.add(revision);
+    }
+
+    /**
+     * Adds a changed revision and its server-derived delta to this refresh result.
+     *
+     * @param revision
+     *          the refreshed revision
+     * @param delta
+     *          the delta from the viewed revision to the refreshed revision
+     */
+    public void addChangedObject(InternalCDORevision revision, InternalCDORevisionDelta delta)
+    {
+      addChangedObject(revision);
+
+      if (delta != null || !changedObjectDeltas.containsKey(revision.getBranch()))
+      {
+        CDOBranch branch = revision.getBranch();
+
+        Map<CDOID, InternalCDORevisionDelta> deltas = changedObjectDeltas.get(branch);
+        if (deltas == null)
+        {
+          deltas = new HashMap<>();
+          changedObjectDeltas.put(branch, deltas);
+        }
+
+      }
+
+      changedObjectDeltas.get(revision.getBranch()).put(revision.getID(), delta);
     }
 
     public void addDetachedObject(CDORevisionKey revision)
@@ -1624,6 +1705,75 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
   }
 
+  /**
+   * A client/server-coordinate range for a collection chunk request.
+   *
+   * @author Eike Stepper
+   * @since 4.32
+   */
+  public static final class ChunkRange
+  {
+    private final int accessIndex;
+
+    private final int fetchIndex;
+
+    private final int fromIndex;
+
+    private final int toIndex;
+
+    /**
+     * Creates a client/server-coordinate range.
+     *
+     * @param accessIndex
+     *          the first client/access index represented by the range
+     * @param fetchIndex
+     *          the corresponding first server/source index
+     * @param fromIndex
+     *          the first client/access index to load, inclusive
+     * @param toIndex
+     *          the last client/access index to load, inclusive
+     */
+    public ChunkRange(int accessIndex, int fetchIndex, int fromIndex, int toIndex)
+    {
+      this.accessIndex = accessIndex;
+      this.fetchIndex = fetchIndex;
+      this.fromIndex = fromIndex;
+      this.toIndex = toIndex;
+    }
+
+    /**
+     * @return the first client/access index represented by the range
+     */
+    public int getAccessIndex()
+    {
+      return accessIndex;
+    }
+
+    /**
+     * @return the corresponding first server/source index
+     */
+    public int getFetchIndex()
+    {
+      return fetchIndex;
+    }
+
+    /**
+     * @return the first client/access index to load, inclusive
+     */
+    public int getFromIndex()
+    {
+      return fromIndex;
+    }
+
+    /**
+     * @return the last client/access index to load, inclusive
+     */
+    public int getToIndex()
+    {
+      return toIndex;
+    }
+  }
+
   @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
       throws InterruptedException;
@@ -1660,4 +1810,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   @Deprecated
   public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor);
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.8 use {@link #sendRemoteMessage(CDORemoteSessionMessage, CDORemoteTopic, List)}.
+   */
+  @Deprecated
+  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients);
 }

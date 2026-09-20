@@ -35,6 +35,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.DelegatingCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -841,6 +842,79 @@ public class TransactionScopeTest extends AbstractCDOTest
       assertClean(company, transaction);
       assertFalse(transaction.getDetachedObjects().containsKey(id));
     }
+  }
+
+  public void testEffectiveObjectStateAfterNestedScopeCommit() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = openCommittedCompanyTransaction(session, "effectiveNestedCommit"))
+    {
+      CDOResource resource = transaction.getResource(getResourcePath("/effectiveNestedCommit"));
+      Company rootDirty = (Company)resource.getContents().get(0);
+      Company persistent = getModel1Factory().createCompany();
+      resource.getContents().add(persistent);
+      transaction.commit();
+
+      InternalCDOView view = (InternalCDOView)transaction;
+      CDOID rootDirtyID = CDOUtil.getCDOObject(rootDirty).cdoID();
+      CDOID persistentID = CDOUtil.getCDOObject(persistent).cdoID();
+      rootDirty.setName("root dirty");
+      assertEffectiveObjectState(view, transaction, rootDirtyID, false, true, false);
+
+      CDOTransactionScope scope = transaction.openScope();
+      Company nestedNew = getModel1Factory().createCompany();
+      resource.getContents().add(nestedNew);
+      CDOID nestedNewID = CDOUtil.getCDOObject(nestedNew).cdoID();
+      resource.getContents().remove(persistent);
+      assertEffectiveObjectState(view, transaction, persistentID, false, false, true);
+      resource.getContents().add(persistent);
+      assertEffectiveObjectState(view, transaction, persistentID, false, false, false);
+
+      scope.commit();
+      assertEffectiveObjectState(view, transaction, rootDirtyID, false, true, false);
+      assertEffectiveObjectState(view, transaction, nestedNewID, true, false, false);
+      assertEffectiveObjectState(view, transaction, persistentID, false, false, false);
+    }
+  }
+
+  public void testEffectiveObjectStateAfterNestedScopeRollback() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = openCommittedCompanyTransaction(session, "effectiveNestedRollback"))
+    {
+      CDOResource resource = transaction.getResource(getResourcePath("/effectiveNestedRollback"));
+      Company rootDirty = (Company)resource.getContents().get(0);
+      Company persistent = getModel1Factory().createCompany();
+      resource.getContents().add(persistent);
+      transaction.commit();
+
+      InternalCDOView view = (InternalCDOView)transaction;
+      CDOID rootDirtyID = CDOUtil.getCDOObject(rootDirty).cdoID();
+      CDOID persistentID = CDOUtil.getCDOObject(persistent).cdoID();
+      rootDirty.setName("root dirty");
+      CDOTransactionScope scope = transaction.openScope();
+      Company nestedNew = getModel1Factory().createCompany();
+      resource.getContents().add(nestedNew);
+      CDOID nestedNewID = CDOUtil.getCDOObject(nestedNew).cdoID();
+      resource.getContents().remove(persistent);
+      assertEffectiveObjectState(view, transaction, persistentID, false, false, true);
+
+      scope.rollback();
+      assertEffectiveObjectState(view, transaction, rootDirtyID, false, true, false);
+      assertEffectiveObjectState(view, transaction, persistentID, false, false, false);
+      assertEffectiveObjectState(view, transaction, nestedNewID, false, false, false);
+      assertClean(persistent, transaction);
+      assertTransient(nestedNew);
+    }
+  }
+
+  private static void assertEffectiveObjectState(InternalCDOView view, CDOTransaction transaction, CDOID id, boolean expectedNew, boolean expectedDirty,
+      boolean expectedDetached)
+  {
+    assertEquals(expectedNew, view.isObjectNew(id));
+    assertEquals(expectedDirty, view.isObjectDirty(id));
+    assertEquals(expectedDetached, view.isObjectDetached(id));
+    assertEquals(expectedNew, transaction.getNewObjects().containsKey(id));
+    assertEquals(expectedDirty, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(expectedDetached, transaction.getDetachedObjects().containsKey(id));
   }
 
   public void testDeepNestedCommitThenOuterRollbackDiscardsAllHistory() throws Exception

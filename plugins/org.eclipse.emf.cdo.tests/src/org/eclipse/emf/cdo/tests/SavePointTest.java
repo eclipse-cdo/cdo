@@ -36,6 +36,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOSavepoint;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -420,6 +421,54 @@ public class SavePointTest extends AbstractCDOTest
     assertNewState(company, id, transaction);
   }
 
+  public void testEffectiveObjectStateAcrossLifecycleAndSavepointRollback() throws Exception
+  {
+    try (CDOSession session = openSession(); CDOTransaction transaction = session.openTransaction())
+    {
+      CDOResource resource = transaction.createResource(getResourcePath("/effectiveObjectState"));
+      Company clean = getModel1Factory().createCompany();
+      Company dirty = getModel1Factory().createCompany();
+      Company detached = getModel1Factory().createCompany();
+      resource.getContents().add(clean);
+      resource.getContents().add(dirty);
+      resource.getContents().add(detached);
+      transaction.commit();
+
+      InternalCDOView view = (InternalCDOView)transaction;
+      CDOID cleanID = CDOUtil.getCDOObject(clean).cdoID();
+      CDOID dirtyID = CDOUtil.getCDOObject(dirty).cdoID();
+      CDOID detachedID = CDOUtil.getCDOObject(detached).cdoID();
+      assertEffectiveObjectState(view, transaction, cleanID, false, false, false);
+      assertEffectiveObjectState(view, transaction, dirtyID, false, false, false);
+      assertEffectiveObjectState(view, transaction, detachedID, false, false, false);
+
+      dirty.setName("dirty in older segment");
+      assertEffectiveObjectState(view, transaction, dirtyID, false, true, false);
+      CDOUserSavepoint retained = transaction.setSavepoint();
+
+      resource.getContents().remove(detached);
+      assertEffectiveObjectState(view, transaction, detachedID, false, false, true);
+      resource.getContents().add(detached);
+      assertEffectiveObjectState(view, transaction, detachedID, false, false, false);
+
+      Company newObject = getModel1Factory().createCompany();
+      resource.getContents().add(newObject);
+      CDOID newID = CDOUtil.getCDOObject(newObject).cdoID();
+      assertEffectiveObjectState(view, transaction, newID, true, false, false);
+
+      resource.getContents().remove(newObject);
+      assertEffectiveObjectState(view, transaction, newID, false, false, false);
+      resource.getContents().add(newObject);
+      assertEffectiveObjectState(view, transaction, newID, true, false, false);
+
+      retained.rollback();
+      assertEffectiveObjectState(view, transaction, cleanID, false, false, false);
+      assertEffectiveObjectState(view, transaction, dirtyID, false, true, false);
+      assertEffectiveObjectState(view, transaction, detachedID, false, false, false);
+      assertEffectiveObjectState(view, transaction, newID, false, false, false);
+    }
+  }
+
   public void testReattachDoesNotClearGlobalDirtyStateFromOlderSegment() throws Exception
   {
     CDOSession session = openSession();
@@ -798,6 +847,17 @@ public class SavePointTest extends AbstractCDOTest
     assertEquals(transaction, CDOUtil.getCDOObject(company).cdoView());
     assertNotNull(CDOUtil.getCDOObject(company).cdoRevision());
     assertEquals(0, CDOUtil.getCDOObject(company).cdoRevision().getVersion());
+  }
+
+  private static void assertEffectiveObjectState(InternalCDOView view, CDOTransaction transaction, CDOID id, boolean expectedNew, boolean expectedDirty,
+      boolean expectedDetached)
+  {
+    assertEquals(expectedNew, view.isObjectNew(id));
+    assertEquals(expectedDirty, view.isObjectDirty(id));
+    assertEquals(expectedDetached, view.isObjectDetached(id));
+    assertEquals(expectedNew, transaction.getNewObjects().containsKey(id));
+    assertEquals(expectedDirty, transaction.getDirtyObjects().containsKey(id));
+    assertEquals(expectedDetached, transaction.getDetachedObjects().containsKey(id));
   }
 
   /**

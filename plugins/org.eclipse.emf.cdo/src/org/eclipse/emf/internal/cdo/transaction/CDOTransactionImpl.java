@@ -2125,17 +2125,69 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public boolean isObjectNew(CDOID id)
   {
-    return aggregateCurrentNewObjects().containsKey(id);
+    for (TransactionBoundary boundary = currentBoundary; boundary != null; boundary = boundary.getPrevious())
+    {
+      TransactionSegment segment = boundary.getSegment();
+
+      CDOObject object = segment.getReattachedObjects().get(id);
+      if (object != null)
+      {
+        return wasNewBeforeDetach(object, boundary);
+      }
+
+      if (segment.getDetachedObjects().containsKey(id))
+      {
+        return false;
+      }
+
+      if (segment.getNewObjects().containsKey(id))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  private boolean isObjectDirty(CDOID id)
+  @Override
+  public boolean isObjectDirty(CDOID id)
   {
-    return aggregateCurrentDirtyObjects().containsKey(id);
+    for (TransactionBoundary boundary = currentBoundary; boundary != null; boundary = boundary.getPrevious())
+    {
+      if (boundary.getSegment().getDirtyObjects().containsKey(id))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
-  private boolean isObjectDetached(CDOID id)
+  @Override
+  public boolean isObjectDetached(CDOID id)
   {
-    return aggregateCurrentDetachedObjects().containsKey(id);
+    if (isObjectNew(id))
+    {
+      return false;
+    }
+
+    for (TransactionBoundary boundary = currentBoundary; boundary != null; boundary = boundary.getPrevious())
+    {
+      TransactionSegment segment = boundary.getSegment();
+
+      if (segment.getReattachedObjects().containsKey(id))
+      {
+        return false;
+      }
+
+      CDOObject object = segment.getDetachedObjects().get(id);
+      if (object != null)
+      {
+        return !wasNewBeforeDetach(object, boundary);
+      }
+    }
+
+    return false;
   }
 
   /**

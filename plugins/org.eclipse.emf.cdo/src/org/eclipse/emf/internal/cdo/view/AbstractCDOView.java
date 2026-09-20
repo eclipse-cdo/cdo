@@ -1740,6 +1740,18 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return id.isTemporary();
   }
 
+  @Override
+  public boolean isObjectDirty(CDOID id)
+  {
+    return false;
+  }
+
+  @Override
+  public boolean isObjectDetached(CDOID id)
+  {
+    return false;
+  }
+
   /**
    * @since 2.0
    */

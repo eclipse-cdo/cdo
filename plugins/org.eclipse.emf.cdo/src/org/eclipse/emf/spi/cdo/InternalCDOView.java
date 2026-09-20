@@ -158,6 +158,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, I
    */
   public boolean isObjectNew(CDOID id);
 
+  public boolean isObjectDirty(CDOID id);
+
+  public boolean isObjectDetached(CDOID id);
+
   public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter);
 
   public void handleRemoveAdapter(InternalCDOObject eObject, Adapter adapter);

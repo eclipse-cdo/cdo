@@ -19,6 +19,8 @@ import java.text.MessageFormat;
 /**
  * A {@link IContainerEvent container event} with a single element {@link IContainerDelta delta}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
  */

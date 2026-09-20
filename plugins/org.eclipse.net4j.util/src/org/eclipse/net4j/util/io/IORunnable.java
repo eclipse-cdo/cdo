@@ -15,6 +15,8 @@ import java.io.Closeable;
 import java.io.IOException;
 
 /**
+ * @param <IO>
+ *          the I/O type
  * @author Eike Stepper
  */
 @FunctionalInterface

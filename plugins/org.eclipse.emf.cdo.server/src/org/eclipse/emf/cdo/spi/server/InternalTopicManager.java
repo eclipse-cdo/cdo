@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.server.ITopicManager;
 import java.util.List;
 
 /**
+ * Provides the server-internal operations of a topic manager.
+ *
  * @author Eike Stepper
  * @since 4.17
  */

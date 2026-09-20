@@ -21,6 +21,8 @@ import org.eclipse.net4j.util.ObjectUtil;
  * <li> {@link ValueEvent} after value changes.
  * </ul>
  *
+ * @param <VALUE>
+ *          the value type
  * @author Eike Stepper
  * @since 3.1
  */

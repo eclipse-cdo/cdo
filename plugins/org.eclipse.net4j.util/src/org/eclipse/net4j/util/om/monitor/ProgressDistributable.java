@@ -12,8 +12,11 @@
 package org.eclipse.net4j.util.om.monitor;
 
 /**
+ * Distributes progress information to a monitoring context.
+ *
  * @author Eike Stepper
  * @since 2.0
+ * @param <CONTEXT> the monitoring context type
  */
 public interface ProgressDistributable<CONTEXT>
 {
@@ -24,7 +27,10 @@ public interface ProgressDistributable<CONTEXT>
   public void runLoop(int index, CONTEXT context, OMMonitor monitor) throws Exception;
 
   /**
+   * Provides default progress-distribution settings.
+   *
    * @author Eike Stepper
+   * @param <CONTEXT> the monitoring context type
    */
   public static abstract class Default<CONTEXT> implements ProgressDistributable<CONTEXT>
   {

@@ -12,6 +12,8 @@
 package org.eclipse.net4j.util.security.operations;
 
 /**
+ * @param <CONTEXT>
+ *          the context type
  * @author Eike Stepper
  * @since 3.16
  */

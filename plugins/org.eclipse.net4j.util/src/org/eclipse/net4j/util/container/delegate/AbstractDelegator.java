@@ -25,6 +25,8 @@ import java.util.Iterator;
 /**
  * A delegating base class for {@link IContainer containers}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public abstract class AbstractDelegator<E> extends Notifier implements IContainer<E>

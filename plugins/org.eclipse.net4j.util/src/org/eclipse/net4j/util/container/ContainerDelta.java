@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.container;
 /**
  * A default {@link IContainerDelta container delta} implementation.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public class ContainerDelta<E> implements IContainerDelta<E>

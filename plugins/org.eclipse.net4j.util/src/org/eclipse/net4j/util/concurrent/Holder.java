@@ -21,6 +21,8 @@ import java.util.function.Supplier;
  * <p>
  * This class is not thread-safe.
  *
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.16
  */

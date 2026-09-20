@@ -19,6 +19,8 @@ import java.util.Set;
 /**
  * A {@link IContainer container} that is a {@link Set}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @see SetContainer
  */

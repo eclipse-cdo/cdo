@@ -461,6 +461,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   /**
    * Returns a list of the instances of the given type.
    *
+   * @param <T>
+   *          the instance type
    * @since 4.3
    */
   public <T extends EObject> List<T> queryInstances(EClass type);
@@ -468,6 +470,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   /**
    * Returns an iterator over the instances of the given type. The underlying query will be executed asynchronously.
    *
+   * @param <T>
+   *          the instance type
    * @since 4.3
    */
   public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type);
@@ -475,6 +479,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   /**
    * Returns an iterator over the instances of the given type. The underlying query will be executed asynchronously.
    *
+   * @param <T>
+   *          the instance type
    * @since 4.6
    */
   public <T extends EObject> CloseableIterator<T> queryInstancesAsync(EClass type, boolean exact);
@@ -572,6 +578,9 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * thrown.
    * <li>If <code>null</code> is passed <code>null</code> is returned.
    * </ul>
+   *
+   * @param <T>
+   *          the object type
    */
   public <T extends EObject> T getObject(T objectFromDifferentView);
 

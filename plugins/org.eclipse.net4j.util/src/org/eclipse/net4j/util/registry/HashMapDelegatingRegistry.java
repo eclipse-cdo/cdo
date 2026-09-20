@@ -15,6 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public class HashMapDelegatingRegistry<K, V> extends DelegatingRegistry<K, V>

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @param <CONTEXT>
+ *          the context type
  * @author Eike Stepper
  */
 public class Transaction<CONTEXT> implements ITransaction<CONTEXT>

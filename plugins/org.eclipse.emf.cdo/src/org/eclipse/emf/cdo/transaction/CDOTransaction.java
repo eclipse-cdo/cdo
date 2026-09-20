@@ -323,6 +323,8 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public CDOQuery createQuery(String language, String queryString, Object context, boolean considerDirtyState);
 
   /**
+   * @param <T>
+   *          the callable result type
    * @since 4.8
    * @deprecated As of 4.9 use {@link #commit(Callable, java.util.function.Predicate, IProgressMonitor)}.
    */
@@ -331,12 +333,16 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
       throws ConcurrentAccessException, CommitException, Exception;
 
   /**
+   * @param <T>
+   *          the callable result type
    * @since 4.9
    */
   public <T> CommitResult<T> commit(Callable<T> callable, java.util.function.Predicate<Long> retry, IProgressMonitor monitor)
       throws ConcurrentAccessException, CommitException, Exception;
 
   /**
+   * @param <T>
+   *          the callable result type
    * @since 4.8
    */
   public <T> CommitResult<T> commit(Callable<T> callable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException, Exception;

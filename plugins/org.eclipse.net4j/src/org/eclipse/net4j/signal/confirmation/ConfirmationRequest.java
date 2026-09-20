@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 /**
+ * Requests confirmation for a signal operation.
+ *
  * @author Christian W. Damus (CEA LIST)
  *
  * @since 4.3

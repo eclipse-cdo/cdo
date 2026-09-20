@@ -24,7 +24,11 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 /**
+ * A map that associates each key with a collection of values.
+ *
  * @author Eike Stepper
+ * @param <K> the key type
+ * @param <V> the value type
  */
 public abstract class MultiMap<K, V> implements Map<K, V>
 {
@@ -242,6 +246,10 @@ public abstract class MultiMap<K, V> implements Map<K, V>
   protected abstract Map<K, V> doGetDelegate(int index);
 
   /**
+   * @param <K>
+   *          the key type
+   * @param <V>
+   *          the value type
    * @author Eike Stepper
    */
   public static class ListBased<K, V> extends MultiMap<K, V>

@@ -196,6 +196,11 @@ public interface CDOSessionConfiguration extends INotifier
     @Override
     public CDOSessionConfiguration getSource();
 
+    /**
+     * Returns the session that was opened.
+     *
+     * @return the opened session.
+     */
     public CDOSession getOpenedSession();
   }
 }

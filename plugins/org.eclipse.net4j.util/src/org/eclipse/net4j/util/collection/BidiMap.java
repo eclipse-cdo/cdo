@@ -21,6 +21,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  * @since 3.6
  */

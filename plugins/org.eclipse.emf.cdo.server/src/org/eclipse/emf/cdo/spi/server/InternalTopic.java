@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.server.ITopic;
 
 /**
+ * Provides the server-internal operations of a topic.
+ *
  * @author Eike Stepper
  * @since 4.17
  */

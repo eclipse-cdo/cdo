@@ -13,6 +13,9 @@ package org.eclipse.net4j.util.concurrent;
 
 import java.util.concurrent.Executor;
 
+/**
+ * An executor that permits at most one command to be pending at a time.
+ */
 public class OnePendingExecutor implements Executor
 {
   private Runnable command;

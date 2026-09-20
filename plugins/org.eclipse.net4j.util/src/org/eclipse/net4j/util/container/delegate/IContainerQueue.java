@@ -18,6 +18,8 @@ import java.util.Queue;
 /**
  * A {@link IContainer container} that is a {@link Queue}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IContainerQueue<E> extends IContainerCollection<E>, Queue<E>

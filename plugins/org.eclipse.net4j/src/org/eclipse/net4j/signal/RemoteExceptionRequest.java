@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.io.ExtendedIOUtil;
 import java.util.List;
 
 /**
+ * Requests propagation of a remote exception.
+ *
  * @author Eike Stepper
  */
 class RemoteExceptionRequest extends Request

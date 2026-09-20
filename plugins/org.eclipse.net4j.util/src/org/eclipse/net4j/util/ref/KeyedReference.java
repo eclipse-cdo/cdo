@@ -15,6 +15,10 @@ import java.lang.ref.Reference;
 
 /**
  * @see Reference
+ * @param <K>
+ *          the key type
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public interface KeyedReference<K, T>

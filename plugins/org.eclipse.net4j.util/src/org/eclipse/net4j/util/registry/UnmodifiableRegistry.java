@@ -17,6 +17,13 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * A registry view that delegates lookups while preventing modifications.
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
+ */
 public class UnmodifiableRegistry<K, V> implements IRegistry<K, V>
 {
   private IRegistry<K, V> delegate;

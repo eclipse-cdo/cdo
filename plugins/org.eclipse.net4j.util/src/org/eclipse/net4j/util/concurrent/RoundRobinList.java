@@ -19,6 +19,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public final class RoundRobinList<E> extends LinkedList<E>

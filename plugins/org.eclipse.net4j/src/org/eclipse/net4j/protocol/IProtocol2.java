@@ -14,6 +14,8 @@ package org.eclipse.net4j.protocol;
 /**
  * A {@link #getVersion() versioned} {@link IProtocol protocol}.
  *
+ * @param <INFRA_STRUCTURE>
+ *          the infrastructure structure associated with the protocol
  * @author Eike Stepper
  * @since 4.2
  */

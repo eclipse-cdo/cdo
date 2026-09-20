@@ -31,8 +31,10 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import java.util.concurrent.ExecutorService;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Provides the common implementation of a Net4j protocol.
  *
+ * @param <INFRA_STRUCTURE>
+ *          the infrastructure structure associated with the protocol
  * @author Eike Stepper
  * @since 2.0
  */

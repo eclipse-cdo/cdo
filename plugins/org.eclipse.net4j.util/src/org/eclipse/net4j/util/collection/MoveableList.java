@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.collection;
 import java.util.List;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public interface MoveableList<E> extends List<E>

@@ -18,6 +18,8 @@ import java.util.List;
 /**
  * A {@link IContainer container} that is a {@link List}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IContainerList<E> extends IContainerCollection<E>, List<E>

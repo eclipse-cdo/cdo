@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.io.StringCompressor;
 import java.util.Collection;
 
 /**
+ * Receives the acknowledgement for compressed string support.
+ *
  * @author Eike Stepper
  * @since 4.7
  */

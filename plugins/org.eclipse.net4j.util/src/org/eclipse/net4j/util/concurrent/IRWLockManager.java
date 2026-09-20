@@ -18,6 +18,10 @@ import java.util.Collection;
  * {@link LockType#WRITE write} lock at the same time. It will privileges first context that has already a
  * {@link LockType#READ read} lock. If no one has any read lock, it's "first come first serve".
  *
+ * @param <OBJECT>
+ *          the object type
+ * @param <CONTEXT>
+ *          the context type
  * @author Eike Stepper
  * @since 3.0
  */

@@ -27,6 +27,8 @@ import java.util.Set;
  * A queue that asynchronously, but orderly, {@link #execute(Object, IProgressMonitor) executes}
  * tasks that have been {@link #schedule(Object) scheduled} to it.
  *
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.13
  */

@@ -55,6 +55,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * {@link #createSignalReactor(short) createSignalReactor()} method has to be overridden to
  * create appropriate peer instances for incoming {@link Signal signals}.
  *
+ * @param <INFRA_STRUCTURE>
+ *          the infrastructure structure associated with the protocol
  * @author Eike Stepper
  */
 public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
@@ -769,6 +771,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   }
 
   /**
+   * Writes signal data to the underlying channel.
+   *
    * @author Eike Stepper
    * @since 4.10
    */
@@ -863,6 +867,8 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   }
 
   /**
+   * Writes signal data to the underlying channel.
+   *
    * @author Eike Stepper
    */
   class SignalOutputStream extends ChannelOutputStream

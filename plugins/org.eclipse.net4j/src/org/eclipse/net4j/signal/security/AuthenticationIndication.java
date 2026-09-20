@@ -31,6 +31,8 @@ import org.eclipse.internal.net4j.bundle.OM;
 import java.io.ByteArrayOutputStream;
 
 /**
+ * Receives the result of a signal authentication attempt.
+ *
  * @author Eike Stepper
  *
  * @since 4.3

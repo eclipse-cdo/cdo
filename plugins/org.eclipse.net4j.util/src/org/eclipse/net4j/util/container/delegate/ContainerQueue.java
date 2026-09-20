@@ -16,6 +16,8 @@ import java.util.Queue;
 /**
  * A default implementation of a {@link IContainerQueue container queue}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public class ContainerQueue<E> extends ContainerCollection<E> implements IContainerQueue<E>

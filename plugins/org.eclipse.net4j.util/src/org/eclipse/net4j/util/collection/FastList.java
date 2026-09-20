@@ -12,6 +12,8 @@
 package org.eclipse.net4j.util.collection;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 3.0
  * @deprecated As of 3.2 use {@link ConcurrentArray}.

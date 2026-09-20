@@ -19,6 +19,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public class History<T> extends Notifier implements IHistory<T>

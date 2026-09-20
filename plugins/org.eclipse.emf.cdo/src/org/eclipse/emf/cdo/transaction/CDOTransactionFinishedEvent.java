@@ -39,6 +39,11 @@ public interface CDOTransactionFinishedEvent extends CDOViewEvent
    */
   public Cause getCause();
 
+  /**
+   * Returns the mappings from temporary IDs to their committed IDs.
+   *
+   * @return the ID mappings.
+   */
   public Map<CDOID, CDOID> getIDMappings();
 
   /**

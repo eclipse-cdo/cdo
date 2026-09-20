@@ -15,6 +15,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
+ * @param <CORRELATION>
+ *          the correlation type
+ * @param <RESULT>
+ *          the result type
  * @author Eike Stepper
  */
 public class SynchronizingCorrelator<CORRELATION, RESULT> implements ICorrelator<CORRELATION, ISynchronizer<RESULT>>

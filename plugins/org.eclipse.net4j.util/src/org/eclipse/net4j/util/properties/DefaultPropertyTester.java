@@ -18,6 +18,8 @@ import java.util.List;
 /**
  * Tests properties of receiver objects against expected values.
  *
+ * @param <RECEIVER>
+ *          the receiver type
  * @author Eike Stepper
  * @since 3.2
  */

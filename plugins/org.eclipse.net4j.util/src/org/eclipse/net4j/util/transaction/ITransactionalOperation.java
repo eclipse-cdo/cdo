@@ -12,6 +12,8 @@
 package org.eclipse.net4j.util.transaction;
 
 /**
+ * @param <CONTEXT>
+ *          the context type
  * @author Eike Stepper
  */
 public interface ITransactionalOperation<CONTEXT>

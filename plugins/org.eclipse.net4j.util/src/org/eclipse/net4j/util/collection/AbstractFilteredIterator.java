@@ -18,6 +18,7 @@ import java.util.Iterator;
  *
  * @author Eike Stepper
  * @since 3.3
+ * @param <T> the element type
  */
 public abstract class AbstractFilteredIterator<T> extends AbstractIterator<T>
 {
@@ -52,8 +53,11 @@ public abstract class AbstractFilteredIterator<T> extends AbstractIterator<T>
   protected abstract boolean isValid(T element);
 
   /**
+   * Filters elements by applying a predicate.
+   *
    * @author Eike Stepper
    * @since 3.10
+   * @param <T> the element type
    */
   public static class Predicated<T> extends AbstractFilteredIterator<T>
   {

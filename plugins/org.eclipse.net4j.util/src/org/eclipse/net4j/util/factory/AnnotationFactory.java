@@ -33,6 +33,8 @@ import java.util.function.Function;
 /**
  * Creates products reflectively and configures them via product method annotations.
  *
+ * @param <PRODUCT>
+ *          the product type
  * @author Eike Stepper
  * @since 3.23
  */
@@ -367,6 +369,11 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
     return false;
   }
 
+  /**
+   * Marks a method for injection of the containing product's container.
+   *
+   * @author Eike Stepper
+   */
   @Inherited
   @Target(ElementType.METHOD)
   @Retention(RetentionPolicy.RUNTIME)
@@ -374,6 +381,11 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
   {
   }
 
+  /**
+   * Marks a method for injection of the containing product's configuration.
+   *
+   * @author Eike Stepper
+   */
   @Inherited
   @Target(ElementType.METHOD)
   @Retention(RetentionPolicy.RUNTIME)
@@ -381,6 +393,11 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
   {
   }
 
+  /**
+   * Marks a method for injection of a product attribute.
+   *
+   * @author Eike Stepper
+   */
   @Inherited
   @Target(ElementType.METHOD)
   @Retention(RetentionPolicy.RUNTIME)
@@ -399,6 +416,11 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
     public String descriptionAttribute() default "";
   }
 
+  /**
+   * Marks a method for injection of a product element.
+   *
+   * @author Eike Stepper
+   */
   @Inherited
   @Target(ElementType.METHOD)
   @Retention(RetentionPolicy.RUNTIME)

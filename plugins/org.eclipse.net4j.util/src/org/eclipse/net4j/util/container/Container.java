@@ -21,6 +21,8 @@ import java.util.List;
 /**
  * An abstract base implementation of a {@link IContainer container} with a {@link ILifecycle lifecycle}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public abstract class Container<E> extends ShareableLifecycle implements IContainer<E>

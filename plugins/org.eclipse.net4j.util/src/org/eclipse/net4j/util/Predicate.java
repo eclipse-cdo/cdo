@@ -12,7 +12,10 @@
 package org.eclipse.net4j.util;
 
 /**
+ * Evaluates a condition for an element.
+ *
  * @author Eike Stepper
+ * @param <T> the element type
  * @since 3.3
  * @deprecated As of 3.10 use {@link java.util.function.Predicate}.
  */
@@ -23,9 +26,12 @@ public interface Predicate<T>
   public boolean apply(T element);
 
   /**
+   * Delegates predicate evaluation to a Java function.
+   *
    * @author Eike Stepper
    * @since 3.10
    * @deprecated As of 3.10 use {@link java.util.function.Predicate}.
+   * @param <T> the element type
    */
   @Deprecated
   public static final class DelegatingPredicate<T> implements Predicate<T>

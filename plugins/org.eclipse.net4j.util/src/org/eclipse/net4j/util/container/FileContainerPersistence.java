@@ -19,6 +19,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 3.5
  */

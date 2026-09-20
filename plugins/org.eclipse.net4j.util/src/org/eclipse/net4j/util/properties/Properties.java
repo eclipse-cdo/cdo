@@ -21,6 +21,8 @@ import java.util.function.Function;
 /**
  * Contains a list of {@link Property properties}.
  *
+ * @param <RECEIVER>
+ *          the receiver type
  * @author Eike Stepper
  * @since 3.2
  */

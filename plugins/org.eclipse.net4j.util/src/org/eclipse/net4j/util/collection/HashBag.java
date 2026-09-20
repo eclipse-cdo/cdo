@@ -18,6 +18,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public final class HashBag<T> implements Set<T>

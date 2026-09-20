@@ -16,6 +16,8 @@ import java.util.NoSuchElementException;
 /**
  * An abstract base class for custom list iterators that only requires to implement the {@link #computeNextElement()} and {@link #computePreviousElement()} methods.
  *
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.3
  */

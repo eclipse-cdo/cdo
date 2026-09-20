@@ -14,6 +14,8 @@ package org.eclipse.net4j.util;
 import java.util.function.Consumer;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.9
  * @deprecated As of 3.10 use {@link Consumer}.

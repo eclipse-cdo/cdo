@@ -26,6 +26,8 @@ import java.util.concurrent.ConcurrentMap;
  * responsible for applying proper external synchronization!
  *
  * @author Eike Stepper
+ * @param <K> the key type
+ * @param <V> the value type
  */
 public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> implements ConcurrentMap<K, V>
 {
@@ -93,7 +95,11 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
   }
 
   /**
+   * A reference-value map that keeps values strongly reachable.
+   *
    * @author Eike Stepper
+   * @param <K> the key type
+   * @param <V> the value type
    */
   public static class Strong<K, V> extends ReferenceValueMap<K, V>
   {
@@ -120,7 +126,11 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
   }
 
   /**
+   * A reference-value map that keeps values softly reachable.
+   *
    * @author Eike Stepper
+   * @param <K> the key type
+   * @param <V> the value type
    */
   public static class Soft<K, V> extends ReferenceValueMap<K, V>
   {
@@ -141,7 +151,11 @@ public abstract class ReferenceValueMap<K, V> extends ReferenceValueMap2<K, V> i
   }
 
   /**
+   * A reference-value map that keeps values weakly reachable.
+   *
    * @author Eike Stepper
+   * @param <K> the key type
+   * @param <V> the value type
    */
   public static class Weak<K, V> extends ReferenceValueMap<K, V>
   {

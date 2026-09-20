@@ -50,6 +50,8 @@ public interface InternalCDOViewSet extends CDOViewSet, Adapter, IExecutorServic
   public InternalCDOView resolveView(String repositoryUUID);
 
   /**
+   * @param <V>
+   *          the callable result type
    * @since 4.1
    */
   public <V> V executeWithoutNotificationHandling(Callable<V> callable);

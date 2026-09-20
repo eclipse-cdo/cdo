@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.event.IEvent;
  * An {@link IEvent event} fired from a {@link ISignalProtocol signal protocol} when
  * a {@link #getSignal() signal} has been scheduled for local execution.
  *
+ * @param <INFRA_STRUCTURE>
+ *          the infrastructure structure associated with the protocol
  * @author Eike Stepper
  * @since 3.0
  * @noextend This interface is not intended to be extended by clients.

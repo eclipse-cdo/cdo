@@ -20,6 +20,8 @@ import java.util.function.Consumer;
 /**
  * An abstract implementation of a {@link IContainer.Modifiable modifiable container}.
  *
+ * @param <E>
+ *          the element type
  * @since 3.18
  * @author Eike Stepper
  */

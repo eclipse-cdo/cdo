@@ -37,6 +37,8 @@ import java.util.function.BiPredicate;
  *
  * @author Eike Stepper
  * @since 3.3
+ * @param <K> the key type
+ * @param <V> the value type
  */
 public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
 {
@@ -222,7 +224,11 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
   protected abstract KeyedReference<K, V> createReference(K key, V value, ReferenceQueue<V> queue);
 
   /**
+   * A reference-value map that keeps values strongly reachable.
+   *
    * @author Eike Stepper
+   * @param <K> the key type
+   * @param <V> the value type
    */
   public static class Strong<K, V> extends ReferenceValueMap2<K, V>
   {
@@ -249,7 +255,11 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
   }
 
   /**
+   * A reference-value map that keeps values softly reachable.
+   *
    * @author Eike Stepper
+   * @param <K> the key type
+   * @param <V> the value type
    */
   public static class Soft<K, V> extends ReferenceValueMap2<K, V>
   {
@@ -270,7 +280,11 @@ public abstract class ReferenceValueMap2<K, V> extends AbstractMap<K, V>
   }
 
   /**
+   * A reference-value map that keeps values weakly reachable.
+   *
    * @author Eike Stepper
+   * @param <K> the key type
+   * @param <V> the value type
    */
   public static class Weak<K, V> extends ReferenceValueMap2<K, V>
   {

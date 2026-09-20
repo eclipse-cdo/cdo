@@ -22,6 +22,8 @@ import java.util.Arrays;
 import java.util.function.BiConsumer;
 
 /**
+ * Requests an entity from a signal protocol.
+ *
  * @author Eike Stepper
  * @since 4.20
  */

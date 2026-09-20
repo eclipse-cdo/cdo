@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.OM;
 
 /**
+ * Requests a timeout setting for a signal protocol.
+ *
  * @author Eike Stepper
  */
 class SetTimeoutRequest extends RequestWithConfirmation<Boolean>

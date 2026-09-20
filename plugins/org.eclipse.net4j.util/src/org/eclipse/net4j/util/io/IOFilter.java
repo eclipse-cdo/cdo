@@ -12,6 +12,8 @@
 package org.eclipse.net4j.util.io;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IOFilter<T>

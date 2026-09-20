@@ -22,6 +22,8 @@ import java.util.concurrent.ExecutorService;
 /**
  * A {@link #getType() typed} {@link IBufferHandler buffer handler} for a {@link #getChannel() channel}.
  *
+ * @param <INFRA_STRUCTURE>
+ *          the infrastructure structure associated with the protocol
  * @author Eike Stepper
  */
 public interface IProtocol<INFRA_STRUCTURE> extends IUserAware, ILocationAware, IBufferHandler

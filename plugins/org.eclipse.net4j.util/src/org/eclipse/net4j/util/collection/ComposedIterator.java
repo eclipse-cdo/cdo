@@ -20,6 +20,8 @@ import java.util.List;
 /**
  * An iterator that is composed of multiple delegate iterators.
  *
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.4
  */

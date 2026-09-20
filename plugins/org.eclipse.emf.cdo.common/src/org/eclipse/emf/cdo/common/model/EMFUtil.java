@@ -1078,6 +1078,8 @@ public final class EMFUtil
    * A mapping between two {@link EObject}s and their contents based on their URIs
    * as returned by {@link EcoreUtil#getURI(EObject)}.
    *
+   * @param <T>
+   *          the element type
    * @author Eike Stepper
    * @since 4.27
    */

@@ -18,6 +18,10 @@ import java.util.Map;
 /**
  * A {@link IContainer container} (of {@link java.util.Map.Entry map entries}) that is a {@link Map}.
  *
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public interface IContainerMap<K, V> extends IContainer<Map.Entry<K, V>>, Map<K, V>

@@ -19,5 +19,10 @@ package org.eclipse.emf.cdo.session;
  */
 public interface CDOSessionProvider
 {
+  /**
+   * Returns the provided session.
+   *
+   * @return the session.
+   */
   public CDOSession getSession();
 }

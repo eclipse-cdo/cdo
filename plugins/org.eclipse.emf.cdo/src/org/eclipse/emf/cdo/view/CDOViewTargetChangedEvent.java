@@ -29,5 +29,10 @@ public interface CDOViewTargetChangedEvent extends CDOViewEvent
    */
   public CDOBranchPoint getOldBranchPoint();
 
+  /**
+   * Returns the new branch point of the view.
+   *
+   * @return the new branch point.
+   */
   public CDOBranchPoint getBranchPoint();
 }

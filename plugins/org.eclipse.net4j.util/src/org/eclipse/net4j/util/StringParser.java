@@ -80,7 +80,10 @@ public interface StringParser<T> extends Function<String, T>
   }
 
   /**
+   * Parses strings into enum values.
+   *
    * @author Eike Stepper
+   * @param <T> the enum type
    */
   public static final class EnumStringParser<T extends Enum<T>> implements StringParser<T>
   {

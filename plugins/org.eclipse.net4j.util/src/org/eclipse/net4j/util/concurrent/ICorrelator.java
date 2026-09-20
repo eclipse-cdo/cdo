@@ -12,6 +12,10 @@
 package org.eclipse.net4j.util.concurrent;
 
 /**
+ * @param <CORRELATION>
+ *          the correlation type
+ * @param <VALUE>
+ *          the value type
  * @author Eike Stepper
  */
 public interface ICorrelator<CORRELATION, VALUE>

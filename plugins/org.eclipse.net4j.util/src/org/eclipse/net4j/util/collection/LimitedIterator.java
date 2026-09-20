@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.collection;
 import java.util.Iterator;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.3
  */

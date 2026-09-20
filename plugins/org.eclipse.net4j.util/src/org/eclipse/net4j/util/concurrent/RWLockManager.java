@@ -31,6 +31,10 @@ import java.util.Set;
  * {@link IRWLockManager.LockType#WRITE write} lock at the same time. It will privileges first context that has already
  * a {@link IRWLockManager.LockType#READ read} lock. If no one has any read lock, it's "first come first serve".
  *
+ * @param <OBJECT>
+ *          the object type
+ * @param <CONTEXT>
+ *          the context type
  * @author Simon McDuff
  * @since 2.0
  * @deprecated As of 3.2 use {@link RWOLockManager}.

@@ -12,6 +12,8 @@
 package org.eclipse.net4j.util.concurrent;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.3
  */

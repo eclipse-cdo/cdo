@@ -23,6 +23,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implements IRegistry<K, V>

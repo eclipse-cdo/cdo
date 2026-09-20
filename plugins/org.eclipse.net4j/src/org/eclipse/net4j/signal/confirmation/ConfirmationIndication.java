@@ -24,6 +24,10 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.internal.net4j.bundle.OM;
 
 /**
+ * Receives a confirmation response for a signal request.
+ *
+ * @param <PROTOCOL>
+ *          the protocol type used to provide the confirmation
  * @author Christian W. Damus (CEA LIST)
  *
  * @since 4.3

@@ -21,6 +21,8 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
+ * @param <ELEMENT>
+ *          the element type
  * @author Eike Stepper
  * @since 3.26
  */

@@ -14,6 +14,10 @@ package org.eclipse.net4j.util.ref;
 import java.text.MessageFormat;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public class KeyedStrongReference<K, T> implements KeyedReference<K, T>

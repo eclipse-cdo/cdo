@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.OM;
 
 /**
+ * Requests progress reporting for a monitored signal operation.
+ *
  * @author Eike Stepper
  * @since 4.4
  */

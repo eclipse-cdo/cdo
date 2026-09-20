@@ -18,6 +18,8 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 3.14
  */

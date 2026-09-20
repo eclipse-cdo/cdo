@@ -21,6 +21,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
  * A delegating {@link IListener listener} that converts {@link ILifecycleEvent lifecycle events} into
  * {@link IContainerEvent container events}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public class LifecycleEventConverter<E> implements IListener

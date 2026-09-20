@@ -111,9 +111,19 @@ public interface CDOLock extends Lock, AutoCloseable
     unlock();
   }
 
+  /**
+   * The legacy value indicating that a lock operation should wait.
+   *
+   * @deprecated Use the timeout-based lock methods instead.
+   */
   @Deprecated
   public static final int WAIT = IRWLockManager.WAIT;
 
+  /**
+   * The legacy value indicating that a lock operation should not wait.
+   *
+   * @deprecated Use the timeout-based lock methods instead.
+   */
   @Deprecated
   public static final int NO_WAIT = IRWLockManager.NO_WAIT;
 
@@ -126,20 +136,58 @@ public interface CDOLock extends Lock, AutoCloseable
    */
   public interface CDOAcquiredLock extends AutoCloseable
   {
+    /**
+     * Returns the lock represented by this acquired lock.
+     *
+     * @return the lock.
+     */
     public CDOLock getLock();
 
+    /**
+     * Returns the object protected by this lock.
+     *
+     * @return the locked object.
+     */
     public CDOObject getObject();
 
+    /**
+     * Returns the lock type.
+     *
+     * @return the lock type.
+     */
     public LockType getType();
 
+    /**
+     * Returns the owners of the lock.
+     *
+     * @return the lock owners.
+     */
     public Set<CDOLockOwner> getOwners();
 
+    /**
+     * Returns whether the lock is held by the requesting view.
+     *
+     * @return <code>true</code> if the lock is held by the requesting view.
+     */
     public boolean isLocked();
 
+    /**
+     * Returns whether the lock is held by another view.
+     *
+     * @return <code>true</code> if another view holds the lock.
+     */
     public boolean isLockedByOthers();
 
+    /**
+     * Returns whether the lock was acquired recursively.
+     *
+     * @return <code>true</code> if the lock is recursive.
+     */
     public boolean isRecursive();
 
+    /**
+     * Releases the acquired lock.
+     */
     @Override
     public void close();
   }

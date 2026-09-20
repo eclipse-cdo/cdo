@@ -439,6 +439,8 @@ public final class LifecycleUtil
    * The {@link InvocationHandler invocation handler} of the {@link Proxy dynamic proxy} created in
    * {@link LifecycleUtil#delegateLifecycle(ClassLoader, Object, ILifecycle) LifecycleUtil.delegateLifecycle()}.
    *
+   * @param <T>
+   *          the element type
    * @author Eike Stepper
    * @since 2.0
    */

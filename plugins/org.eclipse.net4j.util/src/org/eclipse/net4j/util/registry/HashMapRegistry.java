@@ -15,7 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * A registry backed by a hash map.
+ *
  * @author Eike Stepper
+ * @param <K> the key type
+ * @param <V> the value type
  */
 public class HashMapRegistry<K, V> extends Registry<K, V>
 {
@@ -48,8 +52,12 @@ public class HashMapRegistry<K, V> extends Registry<K, V>
   }
 
   /**
+   * A hash-map registry that commits changes immediately.
+   *
    * @author Eike Stepper
    * @since 3.15
+   * @param <K> the key type
+   * @param <V> the value type
    */
   public static class AutoCommit<K, V> extends HashMapRegistry<K, V>
   {

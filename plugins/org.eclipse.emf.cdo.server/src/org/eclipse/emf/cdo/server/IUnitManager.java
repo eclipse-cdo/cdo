@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * Manages the server-side units of a repository.
+ *
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  * @author Eike Stepper

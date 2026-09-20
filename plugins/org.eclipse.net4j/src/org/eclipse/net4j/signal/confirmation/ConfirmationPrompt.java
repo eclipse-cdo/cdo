@@ -21,6 +21,8 @@ import java.util.EnumSet;
 import java.util.Set;
 
 /**
+ * Represents a prompt that requests user confirmation.
+ *
  * @author Christian W. Damus (CEA LIST)
  *
  * @since 4.3

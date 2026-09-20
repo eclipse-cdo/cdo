@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 3.7
  */

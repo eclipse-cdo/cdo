@@ -481,11 +481,15 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public List<CDOLockState> getLockStates();
 
     /**
+     * @param <T>
+     *          the stored value type
      * @since 4.3
      */
     public <T> T getData(Object key);
 
     /**
+     * @param <T>
+     *          the stored value type
      * @since 4.3
      */
     public <T> T setData(Object key, T data);

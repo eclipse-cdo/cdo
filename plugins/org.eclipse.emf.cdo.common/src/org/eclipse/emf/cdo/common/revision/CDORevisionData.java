@@ -139,6 +139,8 @@ public interface CDORevisionData
   public int lastIndexOf(EStructuralFeature feature, Object value);
 
   /**
+   * @param <T>
+   *          the array element type
    * @since 2.0
    */
   public <T> T[] toArray(EStructuralFeature feature, T[] array);

@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
+ * Manages the topics provided by a CDO server.
+ *
  * @author Eike Stepper
  * @since 4.17
  */

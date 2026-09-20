@@ -14,6 +14,12 @@ package org.eclipse.net4j.util.collection;
 import org.eclipse.net4j.util.ObjectUtil;
 
 /**
+ * @param <T1>
+ *          the t1 type
+ * @param <T2>
+ *          the t2 type
+ * @param <T3>
+ *          the t3 type
  * @author Caspar De Groot
  * @since 3.0
  */

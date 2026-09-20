@@ -14,6 +14,8 @@ package org.eclipse.net4j.connector;
 import org.eclipse.net4j.acceptor.IAcceptor;
 
 /**
+ * A connector that is associated with a server acceptor.
+ *
  * @author Eike Stepper
  * @since 4.5
  * @noimplement This interface is not intended to be implemented by clients.

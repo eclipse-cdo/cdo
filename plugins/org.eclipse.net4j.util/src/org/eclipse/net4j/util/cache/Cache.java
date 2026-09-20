@@ -19,6 +19,8 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public abstract class Cache<E> extends Worker implements ICache

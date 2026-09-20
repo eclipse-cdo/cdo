@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.Predicate;
 import java.util.Iterator;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.3
  * @deprecated As of 3.10 use {@link AbstractFilteredIterator.Predicated}.

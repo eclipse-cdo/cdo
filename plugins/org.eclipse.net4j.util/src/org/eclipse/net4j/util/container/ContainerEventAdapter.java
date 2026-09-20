@@ -23,6 +23,8 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  * A {@link IListener listener} that dispatches container {@link IContainerEvent events} to methods that can be
  * overridden by extenders.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public class ContainerEventAdapter<E> implements IListener

@@ -21,6 +21,8 @@ import java.util.List;
 /**
  * A default {@link IContainerEvent container event} implementation.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
  */

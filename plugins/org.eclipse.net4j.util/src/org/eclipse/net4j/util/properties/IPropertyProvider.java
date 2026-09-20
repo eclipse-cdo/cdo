@@ -16,6 +16,8 @@ import java.util.List;
 /**
  * Provides a list of {@link Property property descriptors}.
  *
+ * @param <RECEIVER>
+ *          the receiver type
  * @author Eike Stepper
  * @since 3.2
  */

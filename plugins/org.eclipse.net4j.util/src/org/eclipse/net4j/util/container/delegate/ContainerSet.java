@@ -16,6 +16,8 @@ import java.util.Set;
 /**
  * A default implementation of a {@link IContainerSet container set}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public class ContainerSet<E> extends ContainerCollection<E> implements IContainerSet<E>

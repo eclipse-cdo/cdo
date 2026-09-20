@@ -12,8 +12,11 @@
 package org.eclipse.net4j.util.collection;
 
 /**
+ * Provides concurrent access to an array of elements.
+ *
  * @author Eike Stepper
  * @since 3.2
+ * @param <E> the element type
  */
 public abstract class ConcurrentArray<E>
 {
@@ -221,7 +224,10 @@ public abstract class ConcurrentArray<E>
   protected abstract E[] newArray(int length);
 
   /**
+   * Maintains an array whose elements are unique.
+   *
    * @author Eike Stepper
+   * @param <E> the element type
    */
   public abstract static class Unique<E> extends ConcurrentArray<E>
   {
@@ -265,7 +271,10 @@ public abstract class ConcurrentArray<E>
   }
 
   /**
+   * Maintains an array together with duplicate counts.
+   *
    * @author Eike Stepper
+   * @param <E> the element type
    */
   public abstract static class DuplicateCounter<E> extends ConcurrentArray<E>
   {

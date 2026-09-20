@@ -17,6 +17,10 @@ import java.text.MessageFormat;
 import java.util.Map;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public class MapEntry<K, V> implements Map.Entry<K, V>

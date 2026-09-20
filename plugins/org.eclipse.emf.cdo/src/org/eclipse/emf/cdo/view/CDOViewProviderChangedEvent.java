@@ -22,7 +22,17 @@ package org.eclipse.emf.cdo.view;
  */
 public interface CDOViewProviderChangedEvent extends CDOViewEvent
 {
+  /**
+   * Returns the provider that was replaced.
+   *
+   * @return the previous provider.
+   */
   public CDOViewProvider getOldProvider();
 
+  /**
+   * Returns the provider currently associated with the view.
+   *
+   * @return the current provider.
+   */
   public CDOViewProvider getProvider();
 }

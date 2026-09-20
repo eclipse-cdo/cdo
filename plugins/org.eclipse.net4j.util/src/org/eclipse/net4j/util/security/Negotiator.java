@@ -16,6 +16,10 @@ import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import java.nio.ByteBuffer;
 
 /**
+ * @param <STATE>
+ *          the state type
+ * @param <EVENT>
+ *          the event type
  * @author Eike Stepper
  */
 public abstract class Negotiator<STATE extends Enum<?>, EVENT extends Enum<?>> extends FiniteStateMachine<STATE, EVENT, INegotiationContext>

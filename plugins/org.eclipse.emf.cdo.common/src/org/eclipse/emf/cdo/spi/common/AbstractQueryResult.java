@@ -21,8 +21,10 @@ import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.net4j.util.WrappedException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Provides the result iterator for a query executed against a common view.
  *
+ * @param <T>
+ *          the query result type
  * @author Simon McDuff
  * @since 2.0
  */

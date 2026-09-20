@@ -17,6 +17,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * @param <RESULT>
+ *          the result type
  * @author Eike Stepper
  */
 public final class ResultSynchronizer<RESULT> implements ISynchronizer<RESULT>

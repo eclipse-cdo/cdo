@@ -15,8 +15,10 @@ import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Creates operation authorizers for a specific context type.
  *
+ * @param <CONTEXT>
+ *          the context type
  * @author Eike Stepper
  * @since 3.16
  */

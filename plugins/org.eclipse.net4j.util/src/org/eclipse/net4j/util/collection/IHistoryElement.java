@@ -12,6 +12,8 @@
 package org.eclipse.net4j.util.collection;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IHistoryElement<T>

@@ -23,6 +23,8 @@ import java.util.concurrent.Future;
 /**
  * Represents the sender side of a two-way {@link SignalActor signal}, i.e., one with a response.
  *
+ * @param <RESULT>
+ *          the response type
  * @author Eike Stepper
  */
 public abstract class RequestWithConfirmation<RESULT> extends SignalActor

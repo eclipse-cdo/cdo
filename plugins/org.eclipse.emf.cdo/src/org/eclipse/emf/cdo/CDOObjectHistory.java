@@ -22,5 +22,10 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
  */
 public interface CDOObjectHistory extends CDOCommitHistory
 {
+  /**
+   * Returns the object whose commit history is represented by this history.
+   *
+   * @return the CDO object.
+   */
   public CDOObject getCDOObject();
 }

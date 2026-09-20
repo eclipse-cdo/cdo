@@ -50,31 +50,61 @@ public class CDOElement extends AdapterImpl implements IAdaptable
 
   private final List<Object> children = new ArrayList<>();
 
+  /**
+   * Creates a CDO element for the given delegate object.
+   *
+   * @param delegate the object to adapt.
+   */
   public CDOElement(EObject delegate)
   {
     this.delegate = (EObject)getInstance(delegate);
   }
 
+  /**
+   * Returns the adapted object represented by this element.
+   *
+   * @return the adapted object.
+   */
   public Object getDelegate()
   {
     return delegate;
   }
 
+  /**
+   * Returns the parent of the adapted object in the CDO element hierarchy.
+   *
+   * @return the parent object, or <code>null</code> if there is no parent.
+   */
   public Object getParent()
   {
     return CDOElement.getParentOf(delegate);
   }
 
+  /**
+   * Returns the children explicitly added to this element.
+   *
+   * @return the child objects.
+   */
   public Object[] getChildren()
   {
     return children.toArray();
   }
 
+  /**
+   * Returns whether this element has any explicitly added children.
+   *
+   * @return <code>true</code> if this element has children, <code>false</code> otherwise.
+   */
   public boolean hasChildren()
   {
     return !children.isEmpty();
   }
 
+  /**
+   * Adds a child to this element.
+   *
+   * @param child the child object to add.
+   */
   public void addChild(Object child)
   {
     child = getInstance(child);
@@ -91,6 +121,9 @@ public class CDOElement extends AdapterImpl implements IAdaptable
     children.add(child);
   }
 
+  /**
+   * Removes all children from this element.
+   */
   public void reset()
   {
     children.clear();
@@ -114,6 +147,12 @@ public class CDOElement extends AdapterImpl implements IAdaptable
     return AdapterUtil.adapt(this, adapter, false);
   }
 
+  /**
+   * Returns a display string for a child object.
+   *
+   * @param child the child object.
+   * @return the display string.
+   */
   public String toString(Object child)
   {
     return child.toString();
@@ -125,6 +164,12 @@ public class CDOElement extends AdapterImpl implements IAdaptable
     return delegate.toString();
   }
 
+  /**
+   * Returns the parent of the given object according to the CDO resource hierarchy.
+   *
+   * @param eObject the object whose parent is requested.
+   * @return the parent object, or <code>null</code> if no parent is available.
+   */
   public static EObject getParentOf(EObject eObject)
   {
     if (eObject == null)
@@ -171,6 +216,12 @@ public class CDOElement extends AdapterImpl implements IAdaptable
     return null;
   }
 
+  /**
+   * Returns the existing CDO element adapter for the given object.
+   *
+   * @param object the object to inspect.
+   * @return the existing CDO element, or <code>null</code> if none is installed.
+   */
   public static CDOElement getFor(Object object)
   {
     if (object instanceof Notifier)
@@ -182,6 +233,12 @@ public class CDOElement extends AdapterImpl implements IAdaptable
     return null;
   }
 
+  /**
+   * Removes CDO element adapters from the given object.
+   *
+   * @param object the object from which adapters are removed.
+   * @return the object's adapter list, or <code>null</code> if the object is not an EObject.
+   */
   public static EList<Adapter> removeFrom(Object object)
   {
     if (object instanceof EObject)
@@ -238,6 +295,12 @@ public class CDOElement extends AdapterImpl implements IAdaptable
    */
   public interface StateProvider
   {
+    /**
+     * Returns the CDO state of the given object.
+     *
+     * @param object the object whose state is requested.
+     * @return the object's CDO state.
+     */
     public CDOState getState(Object object);
   }
 }

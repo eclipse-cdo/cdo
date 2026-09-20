@@ -44,12 +44,17 @@ public interface CDOQuery extends CDOQueryInfo
    * As opposed to the {@link #getResult(Class)} method, this method <b>asynchronously</b> communicates with the server.
    * In other words, the returned iterator can be used immediately, even if the server is still about to send pending
    * result elements.
+   *
+   * @param <T>
+   *          the result element type
    */
   public <T> CloseableIterator<T> getResultAsync(Class<T> classObject);
 
   /**
    * Same as {@link #getResultAsync(Class)} but tries to infer the return type from the static context.
    *
+   * @param <T>
+   *          the result element type
    * @since 4.0
    */
   public <T> CloseableIterator<T> getResultAsync();
@@ -60,22 +65,31 @@ public interface CDOQuery extends CDOQueryInfo
    * As opposed to the {@link #getResultAsync(Class)} method, this method <b>synchronously</b> communicates with the
    * server. In other words, the result list is only returned after all result elements have been received by the
    * client.
+   *
+   * @param <T>
+   *          the result element type
    */
   public <T> List<T> getResult(Class<T> type);
 
   /**
    * Same as {@link #getResult(Class)} but tries to infer the return type from the static context.
    *
+   * @param <T>
+   *          the result element type
    * @since 4.0
    */
   public <T> List<T> getResult();
 
   /**
+   * @param <T>
+   *          the result value type
    * @since 4.2
    */
   public <T> T getResultValue(Class<T> type);
 
   /**
+   * @param <T>
+   *          the result value type
    * @since 4.2
    */
   public <T> T getResultValue();

@@ -186,6 +186,9 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
 
   /**
    * Returns the new element corresponding to the given old element, or <code>null</code> if there is no such mapping.
+   *
+   * @param <T>
+   *          the element type
    */
   public <T extends EObject> T getNewElement(T oldElement)
   {
@@ -226,6 +229,9 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
   /**
    * Handles feature ID changes for the given old class by applying the given feature provider and invoking the given handler
    * for each detected feature ID change.
+   *
+   * @param <F>
+   *          the structural feature type
    */
   public <F extends EStructuralFeature> void handleFeatureIDChanges(EClass oldClass, Function<EClass, Collection<F>> featureProvider,
       BiConsumer<Integer, Integer> handler)

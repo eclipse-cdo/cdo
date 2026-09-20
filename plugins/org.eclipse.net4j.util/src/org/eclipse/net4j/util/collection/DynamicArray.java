@@ -12,6 +12,8 @@
 package org.eclipse.net4j.util.collection;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 2.0
  */

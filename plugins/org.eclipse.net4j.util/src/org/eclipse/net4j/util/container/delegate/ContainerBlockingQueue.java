@@ -21,6 +21,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * A default implementation of a {@link IContainerBlockingQueue container blocking queue}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public class ContainerBlockingQueue<E> extends ContainerQueue<E> implements IContainerBlockingQueue<E>

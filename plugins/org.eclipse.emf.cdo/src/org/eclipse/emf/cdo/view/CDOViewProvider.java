@@ -24,6 +24,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  */
 public interface CDOViewProvider
 {
+  /**
+   * The default priority used when no provider-specific priority is configured.
+   */
   public static final int DEFAULT_PRIORITY = 500;
 
   /**
@@ -62,10 +65,28 @@ public interface CDOViewProvider
    */
   public interface CDOViewProvider2 extends CDOViewProvider
   {
+    /**
+     * Returns the view URI for the given view.
+     *
+     * @param view the view.
+     * @return the view URI.
+     */
     public URI getViewURI(CDOView view);
 
+    /**
+     * Returns the view URI represented by the given URI.
+     *
+     * @param uri the URI.
+     * @return the view URI.
+     */
     public URI getViewURI(URI uri);
 
+    /**
+     * Returns the path component of the given URI.
+     *
+     * @param uri the URI.
+     * @return the path, or <code>null</code> if the URI has no path.
+     */
     public String getPath(URI uri);
   }
 }

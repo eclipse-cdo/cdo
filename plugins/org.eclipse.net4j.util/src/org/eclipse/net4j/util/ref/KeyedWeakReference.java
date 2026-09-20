@@ -16,6 +16,10 @@ import java.lang.ref.WeakReference;
 import java.text.MessageFormat;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public class KeyedWeakReference<K, T> extends WeakReference<T> implements KeyedReference<K, T>

@@ -16,6 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public abstract class CachedFileMap<K extends Comparable<K>, V> extends SortedFileMap<K, V>

@@ -16,6 +16,10 @@ import java.lang.ref.SoftReference;
 import java.text.MessageFormat;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public class KeyedSoftReference<K, T> extends SoftReference<T> implements KeyedReference<K, T>

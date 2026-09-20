@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.container;
 /**
  * Describes the addition or removal of a single element from a {@link IContainer container}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IContainerDelta<E>

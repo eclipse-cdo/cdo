@@ -18,6 +18,8 @@ import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 2.0
  */

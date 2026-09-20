@@ -45,6 +45,13 @@ public interface CDOMerger
 
     private CDOChangeSetData result;
 
+    /**
+     * Creates a conflict exception with the partial merge result.
+     *
+     * @param message the detail message.
+     * @param merger the merger that detected the conflict.
+     * @param result the partial merge result.
+     */
     public ConflictException(String message, CDOMerger merger, CDOChangeSetData result)
     {
       super(message);
@@ -52,6 +59,14 @@ public interface CDOMerger
       this.result = result;
     }
 
+    /**
+     * Creates a conflict exception with a cause and partial merge result.
+     *
+     * @param message the detail message.
+     * @param cause the underlying cause.
+     * @param merger the merger that detected the conflict.
+     * @param result the partial merge result.
+     */
     public ConflictException(String message, Throwable cause, CDOMerger merger, CDOChangeSetData result)
     {
       super(message, cause);
@@ -59,11 +74,21 @@ public interface CDOMerger
       this.result = result;
     }
 
+    /**
+     * Returns the merger that detected the conflict.
+     *
+     * @return the merger.
+     */
     public CDOMerger getMerger()
     {
       return merger;
     }
 
+    /**
+     * Returns the partial merge result.
+     *
+     * @return the partial result.
+     */
     public CDOChangeSetData getResult()
     {
       return result;

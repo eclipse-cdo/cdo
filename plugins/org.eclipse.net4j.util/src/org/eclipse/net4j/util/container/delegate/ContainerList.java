@@ -22,6 +22,8 @@ import java.util.ListIterator;
 /**
  * A default implementation of a {@link IContainerList container list}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public class ContainerList<E> extends ContainerCollection<E> implements IContainerList<E>

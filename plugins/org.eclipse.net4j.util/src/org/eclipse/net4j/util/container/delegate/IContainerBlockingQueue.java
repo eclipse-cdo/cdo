@@ -18,6 +18,8 @@ import java.util.concurrent.BlockingQueue;
 /**
  * A {@link IContainer container} that is a {@link BlockingQueue}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IContainerBlockingQueue<E> extends IContainerQueue<E>, BlockingQueue<E>

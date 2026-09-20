@@ -59,6 +59,8 @@ public final class AuthenticationUtil
    * Encapsulation of an administrative operation requiring (potentially) client
    * authentication to authorize the operation.
    *
+   * @param <V>
+   *          the value type
    * @author Christian W. Damus (CEA LIST)
    *
    * @since 4.3

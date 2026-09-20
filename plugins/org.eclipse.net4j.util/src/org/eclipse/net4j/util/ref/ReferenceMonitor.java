@@ -16,6 +16,8 @@ import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.5
  */

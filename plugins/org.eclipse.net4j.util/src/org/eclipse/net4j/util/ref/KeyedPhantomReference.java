@@ -16,6 +16,10 @@ import java.lang.ref.ReferenceQueue;
 import java.text.MessageFormat;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public class KeyedPhantomReference<K, T> extends PhantomReference<T> implements KeyedReference<K, T>

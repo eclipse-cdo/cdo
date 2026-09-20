@@ -23,6 +23,10 @@ import java.util.function.Supplier;
  * A mapping is automatically removed if its key is just {@link WeakReference weakly reachable},
  * or if its key is an {@link ILifecycle} and is {@link ILifecycle#deactivate() deactivated}.
  *
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  * @since 3.27
  */

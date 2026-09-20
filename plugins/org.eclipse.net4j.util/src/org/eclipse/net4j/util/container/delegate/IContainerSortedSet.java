@@ -18,6 +18,8 @@ import java.util.SortedSet;
 /**
  * A {@link IContainer container} that is a {@link SortedSet}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IContainerSortedSet<E> extends IContainerSet<E>, SortedSet<E>

@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 /**
  * An abstract signal protocol that supports authentication.
  *
+ * @param <INFRA_STRUCTURE>
+ *          the infrastructure structure associated with the protocol
  * @author Christian W. Damus (CEA LIST)
  *
  * @since 4.3

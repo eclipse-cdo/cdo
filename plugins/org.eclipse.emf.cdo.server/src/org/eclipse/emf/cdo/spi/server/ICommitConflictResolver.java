@@ -37,6 +37,8 @@ import java.util.AbstractList;
 import java.util.List;
 
 /**
+ * Resolves conflicts detected while committing a transaction.
+ *
  * @author Eike Stepper
  * @since 4.8
  */

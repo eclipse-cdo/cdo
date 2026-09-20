@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 import java.sql.Connection;
 
 /**
+ * Updates large-object references in database mappings.
+ *
  * @author Eike Stepper
  * @since 4.14
  */

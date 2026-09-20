@@ -16,6 +16,10 @@ import org.eclipse.net4j.util.container.IContainer;
 import java.util.Map;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public interface IRegistry<K, V> extends Map<K, V>, IContainer<Map.Entry<K, V>>

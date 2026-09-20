@@ -22,7 +22,17 @@ package org.eclipse.emf.cdo.view;
  */
 public interface CDOViewDurabilityChangedEvent extends CDOViewEvent
 {
+  /**
+   * Returns the durable-locking identifier before the change.
+   *
+   * @return the previous identifier, or <code>null</code> if the view was volatile.
+   */
   public String getOldDurableLockingID();
 
+  /**
+   * Returns the durable-locking identifier after the change.
+   *
+   * @return the new identifier, or <code>null</code> if the view is volatile.
+   */
   public String getNewDurableLockingID();
 }

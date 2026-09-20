@@ -25,6 +25,8 @@ import java.io.OutputStream;
 import java.util.Collection;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 3.5
  */

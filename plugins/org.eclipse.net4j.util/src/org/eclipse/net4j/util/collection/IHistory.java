@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.collection;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IHistory<T> extends INotifier, Iterable<IHistoryElement<T>>

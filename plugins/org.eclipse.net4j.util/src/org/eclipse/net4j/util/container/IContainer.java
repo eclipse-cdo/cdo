@@ -26,6 +26,7 @@ import java.util.Collection;
  * </ul>
  *
  * @author Eike Stepper
+ * @param <E> the element type
  */
 public interface IContainer<E> extends INotifier
 {
@@ -38,6 +39,7 @@ public interface IContainer<E> extends INotifier
    *
    * @author Eike Stepper
    * @since 2.0
+   * @param <E> the element type
    */
   public interface Modifiable<E> extends IContainer<E>
   {
@@ -55,6 +57,7 @@ public interface IContainer<E> extends INotifier
    *
    * @author Eike Stepper
    * @since 3.5
+   * @param <E> the element type
    */
   public interface Persistable<E> extends IContainer<E>
   {
@@ -68,8 +71,11 @@ public interface IContainer<E> extends INotifier
   }
 
   /**
+   * Loads and stores the elements of a container.
+   *
    * @author Eike Stepper
    * @since 3.5
+   * @param <E> the element type
    */
   public interface Persistence<E>
   {

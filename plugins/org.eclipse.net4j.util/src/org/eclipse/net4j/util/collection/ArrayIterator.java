@@ -17,6 +17,8 @@ import java.util.NoSuchElementException;
 /**
  * An object that iterates over the elements of an array
  *
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.0
  */

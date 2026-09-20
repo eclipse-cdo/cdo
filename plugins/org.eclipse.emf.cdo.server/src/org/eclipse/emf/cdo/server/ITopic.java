@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.server;
 import org.eclipse.net4j.util.container.IContainer;
 
 /**
+ * Represents a server topic to which sessions can subscribe.
+ *
  * @author Eike Stepper
  * @since 4.17
  */

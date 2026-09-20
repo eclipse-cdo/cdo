@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.io.StringCompressor;
 import java.io.IOException;
 
 /**
+ * Receives an entity from a signal protocol.
+ *
  * @author Eike Stepper
  * @since 4.20
  */

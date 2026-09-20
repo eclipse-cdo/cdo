@@ -22,6 +22,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
  *
  * @author Eike Stepper
  * @since 3.2
+ * @param <RECEIVER> the receiver type
  */
 public abstract class Property<RECEIVER>
 {
@@ -203,6 +204,7 @@ public abstract class Property<RECEIVER>
    *
    * @author Eike Stepper
    * @since 3.16
+   * @param <RECEIVER> the receiver type
    */
   public static abstract class WithArguments<RECEIVER> extends Property<RECEIVER>
   {

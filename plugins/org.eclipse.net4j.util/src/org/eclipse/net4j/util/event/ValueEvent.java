@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.event;
 /**
  * An {@link IEvent} fired from {@link ValueNotifier value notifiers} after value changes.
  *
+ * @param <VALUE>
+ *          the value type
  * @author Eike Stepper
  * @since 3.1
  * @noextend This class is not intended to be subclassed by clients.

@@ -14,6 +14,14 @@ package org.eclipse.net4j.util.fsm;
 /**
  * Encapsulates the logic to be executed when an <i>event</i> arrives for a <i>subject</i> in a particular <i>state</i>.
  *
+ * @param <STATE>
+ *          the state type
+ * @param <EVENT>
+ *          the event type
+ * @param <SUBJECT>
+ *          the subject type
+ * @param <DATA>
+ *          the data type
  * @author Eike Stepper
  */
 @FunctionalInterface

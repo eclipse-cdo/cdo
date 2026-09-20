@@ -21,6 +21,8 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
+ * @param <CONTEXT>
+ *          the context type
  * @author Eike Stepper
  * @since 4.15
  */
@@ -53,6 +55,8 @@ public abstract class AbstractOperationAuthorizer<CONTEXT> implements OperationA
   protected abstract String authorizeOperation(CONTEXT context, Map<String, Object> parameters);
 
   /**
+   * @param <CONTEXT>
+   *          the context type
    * @author Eike Stepper
    */
   public static abstract class Factory<CONTEXT> extends OperationAuthorizerFactory<CONTEXT>

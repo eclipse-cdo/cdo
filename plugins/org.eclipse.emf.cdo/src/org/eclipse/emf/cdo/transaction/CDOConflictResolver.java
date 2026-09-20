@@ -47,6 +47,11 @@ public interface CDOConflictResolver
    */
   public interface NonConflictAware extends CDOConflictResolver
   {
+    /**
+     * Handles an invalidation that did not produce a conflict.
+     *
+     * @param updateTime the time of the update.
+     */
     public void handleNonConflict(long updateTime);
   }
 }

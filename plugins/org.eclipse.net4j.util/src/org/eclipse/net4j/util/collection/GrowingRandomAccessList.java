@@ -22,6 +22,8 @@ import java.util.Queue;
 import java.util.RandomAccess;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 3.3
  */

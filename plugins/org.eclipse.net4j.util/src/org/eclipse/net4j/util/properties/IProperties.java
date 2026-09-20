@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.properties;
 /**
  * Contains a list of {@link Property properties}.
  *
+ * @param <RECEIVER>
+ *          the receiver type
  * @author Eike Stepper
  * @since 3.2
  */

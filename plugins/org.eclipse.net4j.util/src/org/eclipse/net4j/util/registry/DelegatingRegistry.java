@@ -25,6 +25,10 @@ import java.util.Set;
  * to them are not applied to their underlying AbstractDelegatingRegistry.
  * <p>
  *
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public abstract class DelegatingRegistry<K, V> extends Registry<K, V>

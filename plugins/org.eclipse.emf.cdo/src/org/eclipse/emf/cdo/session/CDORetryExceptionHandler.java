@@ -24,25 +24,46 @@ import java.text.MessageFormat;
  */
 public class CDORetryExceptionHandler implements CDOSession.ExceptionHandler
 {
+  /**
+   * The value used to retry a failed operation without a retry limit.
+   */
   public static final int RETRY_FOREVER = -1;
 
   private int retries;
 
+  /**
+   * Creates a retry handler with the given retry limit.
+   *
+   * @param retries the maximum number of retries, or a negative value to retry forever.
+   */
   public CDORetryExceptionHandler(int retries)
   {
     this.retries = retries;
   }
 
+  /**
+   * Creates a retry handler that retries forever.
+   */
   public CDORetryExceptionHandler()
   {
     this(RETRY_FOREVER);
   }
 
+  /**
+   * Returns the configured retry limit.
+   *
+   * @return the retry limit.
+   */
   public int getRetries()
   {
     return retries;
   }
 
+  /**
+   * Returns whether this handler retries without a limit.
+   *
+   * @return <code>true</code> if retries are unlimited.
+   */
   public boolean isRetryingForever()
   {
     return retries < 0;
@@ -61,6 +82,11 @@ public class CDORetryExceptionHandler implements CDOSession.ExceptionHandler
     }
   }
 
+  /**
+   * Returns a concise representation of this retry handler.
+   *
+   * @return the handler description.
+   */
   @Override
   public String toString()
   {

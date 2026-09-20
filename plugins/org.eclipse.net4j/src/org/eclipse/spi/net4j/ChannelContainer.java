@@ -28,6 +28,8 @@ import org.eclipse.net4j.util.event.INotifier;
 import java.util.LinkedHashSet;
 
 /**
+ * Provides container support for channels.
+ *
  * @author Eike Stepper
  * @since 4.13
  */

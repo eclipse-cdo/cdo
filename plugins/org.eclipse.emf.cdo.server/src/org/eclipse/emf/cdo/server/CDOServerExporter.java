@@ -72,6 +72,8 @@ import java.util.function.Consumer;
  * <p>
  * Subtypes specify the actual exchange format.
  *
+ * @param <OUT>
+ *          the output type
  * @author Eike Stepper
  * @since 4.0
  */

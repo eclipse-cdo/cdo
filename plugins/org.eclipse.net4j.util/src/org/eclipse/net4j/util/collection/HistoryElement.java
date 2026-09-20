@@ -14,6 +14,8 @@ package org.eclipse.net4j.util.collection;
 import org.eclipse.net4j.util.ObjectUtil;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  */
 public class HistoryElement<T> implements IHistoryElement<T>

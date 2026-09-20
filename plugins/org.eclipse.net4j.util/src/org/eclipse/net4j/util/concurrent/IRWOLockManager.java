@@ -25,6 +25,8 @@ import java.util.function.Consumer;
  * @since 3.2
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
+ * @param <OBJECT> the locked object type
+ * @param <CONTEXT> the lock context type
  */
 public interface IRWOLockManager<OBJECT, CONTEXT> extends IRWLockManager<OBJECT, CONTEXT>
 {
@@ -121,8 +123,12 @@ public interface IRWOLockManager<OBJECT, CONTEXT> extends IRWLockManager<OBJECT,
   public void unlock(CONTEXT context);
 
   /**
+   * Receives notifications about changes to locks.
+   *
    * @author Eike Stepper
    * @since 3.16
+   * @param <OBJECT> the locked object type
+   * @param <CONTEXT> the lock context type
    */
   @FunctionalInterface
   public interface LockDeltaHandler<OBJECT, CONTEXT>

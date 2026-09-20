@@ -19,5 +19,10 @@ package org.eclipse.emf.cdo.session;
  */
 public interface CDOSessionConfigurationFactory
 {
+  /**
+   * Creates a new session configuration.
+   *
+   * @return the new session configuration.
+   */
   public CDOSessionConfiguration createSessionConfiguration();
 }

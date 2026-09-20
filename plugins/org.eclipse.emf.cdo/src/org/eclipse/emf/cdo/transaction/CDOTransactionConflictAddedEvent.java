@@ -24,5 +24,10 @@ import org.eclipse.emf.cdo.view.CDOViewEvent;
  */
 public interface CDOTransactionConflictAddedEvent extends CDOTransactionConflictChangedEvent
 {
+  /**
+   * Returns whether this event represents the first conflict in the transaction.
+   *
+   * @return <code>true</code> if this is the first conflict.
+   */
   public boolean isFirstConflict();
 }

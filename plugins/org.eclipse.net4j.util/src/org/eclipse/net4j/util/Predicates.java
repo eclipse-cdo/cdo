@@ -101,6 +101,8 @@ public final class Predicates
   }
 
   /**
+   * @param <T>
+   *          the element type
    * @author Eike Stepper
    * @since 3.4
    */
@@ -124,6 +126,8 @@ public final class Predicates
   }
 
   /**
+   * @param <T>
+   *          the element type
    * @author Eike Stepper
    * @since 3.4
    */
@@ -147,6 +151,8 @@ public final class Predicates
   }
 
   /**
+   * @param <T>
+   *          the element type
    * @author Eike Stepper
    * @since 3.4
    */

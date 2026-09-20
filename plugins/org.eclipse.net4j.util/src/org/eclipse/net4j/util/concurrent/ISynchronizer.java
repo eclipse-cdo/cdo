@@ -17,6 +17,8 @@ package org.eclipse.net4j.util.concurrent;
  * result value is consumed by the consumer this {@link ISynchronizer} must not be reused.
  * <p>
  *
+ * @param <RESULT>
+ *          the result type
  * @author Eike Stepper
  */
 public interface ISynchronizer<RESULT>

@@ -40,6 +40,8 @@ import java.util.function.Consumer;
  * @author Caspar De Groot
  * @author Eike Stepper
  * @since 3.2
+ * @param <OBJECT> the locked object type
+ * @param <CONTEXT> the lock context type
  */
 public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLockManager<OBJECT, CONTEXT>
 {
@@ -559,6 +561,8 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
    *
    * @author Caspar De Groot
    * @since 3.2
+   * @param <OBJECT> the locked object type
+   * @param <CONTEXT> the lock context type
    */
   public static class LockState<OBJECT, CONTEXT>
   {

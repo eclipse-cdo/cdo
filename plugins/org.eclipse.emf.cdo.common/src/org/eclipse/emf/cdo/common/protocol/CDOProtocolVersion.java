@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.common.protocol;
 
 /**
+ * Identifies a version of the CDO protocol.
+ *
  * @author Eike Stepper
  */
 class CDOProtocolVersion

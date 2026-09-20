@@ -21,6 +21,8 @@ import org.eclipse.net4j.util.io.IStreamWrapper;
 /**
  * A {@link IProtocol protocol} that consists of a number of stream-based {@link Signal signals}.
  *
+ * @param <INFRA_STRUCTURE>
+ *          the infrastructure structure associated with the protocol
  * @author Eike Stepper
  * @since 2.0
  */
@@ -45,6 +47,10 @@ public interface ISignalProtocol<INFRA_STRUCTURE> extends IProtocol<INFRA_STRUCT
   public void close();
 
   /**
+   * A signal protocol that keeps counters for sent and received signals.
+   *
+   * @param <INFRA_STRUCTURE>
+   *          the infrastructure structure associated with the protocol
    * @author Eike Stepper
    * @since 4.13
    */

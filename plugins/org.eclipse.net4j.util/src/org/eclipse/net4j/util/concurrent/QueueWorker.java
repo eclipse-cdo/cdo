@@ -18,6 +18,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 2.0
  */

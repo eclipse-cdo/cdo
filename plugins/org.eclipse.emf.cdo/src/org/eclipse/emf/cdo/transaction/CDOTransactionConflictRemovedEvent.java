@@ -24,5 +24,10 @@ import org.eclipse.emf.cdo.view.CDOViewEvent;
  */
 public interface CDOTransactionConflictRemovedEvent extends CDOTransactionConflictChangedEvent
 {
+  /**
+   * Returns whether this event removed the last conflict in the transaction.
+   *
+   * @return <code>true</code> if this was the last conflict.
+   */
   public boolean wasLastConflict();
 }

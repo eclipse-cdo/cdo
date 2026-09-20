@@ -16,6 +16,8 @@ import java.util.Iterator;
 /**
  * A closeable iterator.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public interface CloseableIterator<E> extends Iterator<E>, Closeable

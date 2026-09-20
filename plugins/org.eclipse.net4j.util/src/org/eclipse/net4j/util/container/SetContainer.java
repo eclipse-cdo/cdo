@@ -18,6 +18,8 @@ import java.util.function.Consumer;
 /**
  * An implementation of a {@link Container container} that stores its {@link #getElements() elements} in a {@link #getSet() set}.
  *
+ * @param <E>
+ *          the element type
  * @since 3.2
  * @author Eike Stepper
  */

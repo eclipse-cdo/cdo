@@ -18,6 +18,8 @@ import java.util.Collection;
 /**
  * A {@link IContainer container} that is a {@link Collection}.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public interface IContainerCollection<E> extends IContainer<E>, Collection<E>

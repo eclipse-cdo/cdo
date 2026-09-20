@@ -18,8 +18,11 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
+ * A list implementation that supports indexed access to its elements.
+ *
  * @author Eike Stepper
  * @since 3.0
+ * @param <E> the element type
  */
 public abstract class IndexedList<E> implements List<E>
 {
@@ -288,7 +291,10 @@ public abstract class IndexedList<E> implements List<E>
   }
 
   /**
+   * Provides an array-backed indexed list.
+   *
    * @author Eike Stepper
+   * @param <E> the element type
    */
   public static abstract class ArrayBacked<E> extends IndexedList<E>
   {

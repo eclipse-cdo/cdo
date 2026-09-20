@@ -16,6 +16,10 @@ import java.util.function.Consumer;
 /**
  * An interface with an {@link #accept(Object)} method that can propagate checked exceptions.
  *
+ * @param <T>
+ *          the element type
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  * @since 3.12
  */

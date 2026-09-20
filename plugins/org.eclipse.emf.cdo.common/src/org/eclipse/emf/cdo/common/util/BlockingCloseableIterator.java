@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.collection.CloseableIterator;
  * A closeable iterator that blocks on {@link #hasNext()} until the next element is available or the end of the
  * iteration is reached.
  *
+ * @param <T>
+ *          the element type
  * @author Simon McDuff
  * @since 2.0
  */

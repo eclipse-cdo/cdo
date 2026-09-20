@@ -65,6 +65,9 @@ public interface AnnotationValidator
    */
   public interface Registry
   {
+    /**
+     * The product-group identifier used to discover annotation validator factories.
+     */
     public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.annotationValidators"; //$NON-NLS-1$
 
     /**
@@ -72,6 +75,11 @@ public interface AnnotationValidator
      */
     public static final Registry INSTANCE = new AnnotationValidatorRegistryImpl();
 
+    /**
+     * Returns the annotation sources registered in this registry.
+     *
+     * @return the registered annotation sources.
+     */
     public Set<String> getAnnotationSources();
 
     /**

@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import java.util.List;
 
 /**
+ * Provides the server-internal operations of a unit manager.
+ *
  * @author Eike Stepper
  * @since 4.5
  * @noextend This interface is not intended to be extended by clients.
@@ -33,6 +35,8 @@ public interface InternalUnitManager extends IUnitManager
   public InternalObjectAttacher attachObjects(InternalCommitContext commitContext);
 
   /**
+   * Receives completion notification for object attachment during a commit.
+   *
    * @author Eike Stepper
    */
   public interface InternalObjectAttacher

@@ -15,6 +15,8 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.8
  */

@@ -36,5 +36,13 @@ public interface CDOMerger2 extends CDOMerger
   @Deprecated
   public CDOChangeSetData merge(CDOChangeSet target, CDOChangeSet source) throws UnsupportedOperationException;
 
+  /**
+   * Merges the affected objects from a remote view into a local transaction.
+   *
+   * @param localTransaction the transaction to update.
+   * @param remoteView the view supplying the remote changes.
+   * @param affectedIDs the IDs whose changes are to be merged.
+   * @throws ConflictException if the changes cannot be merged without conflicts.
+   */
   public void merge(CDOTransaction localTransaction, CDOView remoteView, Set<CDOID> affectedIDs) throws ConflictException;
 }

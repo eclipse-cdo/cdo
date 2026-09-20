@@ -24,6 +24,10 @@ import java.util.Set;
 /**
  * A default implementation of a {@link IContainerMap container map}.
  *
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public class ContainerMap<K, V> extends AbstractDelegator<Map.Entry<K, V>> implements IContainerMap<K, V>

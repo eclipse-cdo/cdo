@@ -12,6 +12,8 @@
 package org.eclipse.emf.cdo.common.branch;
 
 /**
+ * Provides the context needed to create a branch.
+ *
  * @author Eike Stepper
  * @since 4.4
  */

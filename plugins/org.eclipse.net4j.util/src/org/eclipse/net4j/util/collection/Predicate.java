@@ -12,6 +12,8 @@
 package org.eclipse.net4j.util.collection;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.3
  * @deprecated As of 3.5 use {@link org.eclipse.net4j.util.Predicate}.

@@ -16,6 +16,8 @@ import org.eclipse.emf.cdo.common.lob.CDOLob;
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>CDO File Resource</b></em>'.
  *
+ * @param <IO>
+ *          the stream type used to access the resource contents
  * @since 4.1
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients. <!-- end-user-doc -->

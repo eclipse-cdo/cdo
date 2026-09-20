@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Reports an exception raised by a remote signal operation.
+ *
  * @author Eike Stepper
  */
 class RemoteExceptionIndication extends Indication

@@ -18,6 +18,8 @@ import java.util.ArrayList;
  * <p>
  * Whenever possible EMF's BasicEList should be used in favour of this list implementation.
  *
+ * @param <E>
+ *          the element type
  * @author Eike Stepper
  */
 public class MoveableArrayList<E> extends ArrayList<E> implements MoveableList<E>

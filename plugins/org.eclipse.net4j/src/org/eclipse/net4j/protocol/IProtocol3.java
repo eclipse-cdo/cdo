@@ -14,6 +14,8 @@ package org.eclipse.net4j.protocol;
 /**
  * A {@link IProtocol protocol} that is told when it is {@link #doWhenFullyConnected() fully connected}.
  *
+ * @param <INFRA_STRUCTURE>
+ *          the infrastructure structure associated with the protocol
  * @author Eike Stepper
  * @since 4.17
  */

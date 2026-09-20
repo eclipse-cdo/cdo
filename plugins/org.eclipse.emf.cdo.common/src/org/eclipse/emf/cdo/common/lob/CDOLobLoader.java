@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.common.lob;
 import java.io.IOException;
 
 /**
+ * Loads large object data from a CDO repository.
+ *
  * @author Eike Stepper
  * @since 4.26
  */

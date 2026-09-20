@@ -15,6 +15,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * @param <T1>
+ *          the t1 type
+ * @param <T2>
+ *          the t2 type
  * @author Eike Stepper
  * @since 2.0
  * @deprecated As of 3.6 use {@link BidiMap}.

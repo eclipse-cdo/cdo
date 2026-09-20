@@ -20,6 +20,8 @@ import java.util.List;
 /**
  * An abstract implementation of a {@link Container container}.
  *
+ * @param <E>
+ *          the element type
  * @since 3.18
  * @author Eike Stepper
  */

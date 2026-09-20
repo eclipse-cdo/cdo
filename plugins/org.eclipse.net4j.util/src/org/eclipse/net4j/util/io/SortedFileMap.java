@@ -17,6 +17,10 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 /**
+ * @param <K>
+ *          the key type
+ * @param <V>
+ *          the value type
  * @author Eike Stepper
  */
 public abstract class SortedFileMap<K extends Comparable<K>, V> implements Closeable

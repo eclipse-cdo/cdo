@@ -15,6 +15,8 @@ import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 
 /**
+ * Supplies the database context used while executing a batch of statements.
+ *
  * @author Eike Stepper
  * @since 4.15
  */

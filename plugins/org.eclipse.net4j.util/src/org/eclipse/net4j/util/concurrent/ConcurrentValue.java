@@ -38,6 +38,8 @@ package org.eclipse.net4j.util.concurrent;
  * // Thread 2 and 3 are still blocked.
  * </pre>
  *
+ * @param <T>
+ *          the element type
  * @author Simon McDuff
  * @since 2.0
  */

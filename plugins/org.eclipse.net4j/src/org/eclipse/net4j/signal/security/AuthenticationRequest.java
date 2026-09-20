@@ -23,6 +23,8 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
 
 /**
+ * Requests authentication for a signal protocol.
+ *
  * @author Eike Stepper
  *
  * @since 4.3

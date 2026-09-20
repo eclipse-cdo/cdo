@@ -26,6 +26,8 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * The {@link Queue queue} that represents the result of a CDOQuery.
  *
+ * @param <E>
+ *          the element type
  * @author Simon McDuff
  * @since 2.0
  * @noextend This interface is not intended to be extended by clients.

@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.security.DiffieHellman.Client.Response;
 import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 
 /**
+ * Defines the server protocol operations used to authenticate a session.
+ *
  * @author Eike Stepper
  *
  * @since 4.3

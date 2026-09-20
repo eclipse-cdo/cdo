@@ -30,6 +30,12 @@ import java.text.MessageFormat;
  * <li> {@link StateChangedEvent} after state changes of a <i>subject</i>.
  * </ul>
  *
+ * @param <STATE>
+ *          the state type
+ * @param <EVENT>
+ *          the event type
+ * @param <SUBJECT>
+ *          the subject type
  * @author Eike Stepper
  */
 public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT> extends Lifecycle

@@ -25,7 +25,17 @@ import org.eclipse.emf.cdo.view.CDOViewEvent;
  */
 public interface CDOTransactionConflictChangedEvent extends CDOViewEvent
 {
+  /**
+   * Returns the object whose conflict state changed.
+   *
+   * @return the conflicting object.
+   */
   public CDOObject getConflictingObject();
 
+  /**
+   * Returns the number of conflicts currently associated with the object.
+   *
+   * @return the conflict count.
+   */
   public int getConflicts();
 }

@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.internal.net4j.bundle.OM;
 
 /**
+ * Reports cancellation of a monitored signal operation.
+ *
  * @author Eike Stepper
  * @since 4.4
  */

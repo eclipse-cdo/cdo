@@ -18,6 +18,8 @@ import java.lang.ref.ReferenceQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * @param <T>
+ *          the element type
  * @author Eike Stepper
  * @since 3.6
  */

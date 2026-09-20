@@ -1,5 +1,25 @@
 ## Maven / Tycho Validation
 
+Maven/Tycho is **not** the default validation path for normal CDO development tasks.
+
+When the Eclipse MCP server is available, use Eclipse/JDT/PDE MCP for routine
+compilation/build-state verification and Eclipse MCP JUnit for focused test execution.
+
+Do **not** invoke Maven/Tycho merely to:
+- compile or validate Java changes;
+- check affected projects;
+- inspect PDE/OSGi resolution;
+- run ordinary CDO unit/integration tests.
+
+Use Maven/Tycho only when:
+- the user explicitly requests Maven/Tycho or CI-equivalent validation;
+- the task specifically concerns the Tycho build, target definition, features, sites,
+  packaging, publishing, or other Maven/Tycho-specific behavior;
+- a final broad CI-equivalent build has been explicitly requested.
+
+The rules below apply only after Maven/Tycho has intentionally been selected by one
+of these criteria. They do not themselves authorize starting Maven/Tycho.
+
 * CDO is a Tycho/PDE reactor build using Java 21. Never invoke Maven directly from an individual bundle.
 * Start focused builds from `releng/org.eclipse.emf.cdo.releng.parent/pom.xml`.
 * Every focused reactor must include `org.eclipse.emf.cdo:org.eclipse.emf.cdo.releng.tp`.
@@ -19,3 +39,9 @@
 - For external CDO test-scenario selection, do not guess property names, syntax, factory types, or capabilities. Read the canonical test-framework JavaDocs starting at `IScenario`; consult `RepositoryConfigFactory` for repository capabilities and `DBConfigFactory` for DB extensions.
 - The primary system properties are `cdo.test.scenario`, `cdo.test.repository`, `cdo.test.session`, and `cdo.test.model`. For syntax, precedence, valid factory types, and capabilities, consult the canonical JavaDocs above.
 - CDO tests launched through Eclipse MCP are ordinary JUnit tests and must use `pluginTest=false`.
+
+## Installer example mirrors
+
+Do not edit `*/examples.installer/examples/...` directly.
+
+Changes there may be generated automatically from canonical example projects by project builders / Ant scripts. Only flag them if they were edited independently, diverge from the canonical source, or contain unrelated changes.

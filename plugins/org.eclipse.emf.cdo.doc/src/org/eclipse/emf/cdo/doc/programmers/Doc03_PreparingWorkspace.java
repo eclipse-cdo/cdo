@@ -25,7 +25,7 @@ package org.eclipse.emf.cdo.doc.programmers;
  * <li>The CDO SDK and the Net4j SDK are both available from the <a href="https://download.eclipse.org/modeling/emf/cdo/updates/downloads.html">CDO Downloads</a> page.
  *      There you find "Update Site" and  "Floating Update Site" buttons, which link to p2 repositories that contain the respective SDKs.
  * <li>The EMF SDK is available from the <a href="https://download.eclipse.org/modeling/emf/emf/updates/">EMF Updates</a> page.
- *      <a href="https://download.eclipse.org/modeling/emf/emf/builds"></a>contains the necessary libraries and tools for working with EMF models.
+ *      The <a href="https://download.eclipse.org/modeling/emf/emf/builds">EMF builds</a> page contains the necessary libraries and tools for working with EMF models.
  * <li>Depending on what subset of CDO you want to use, you may need additional dependencies, such as database drivers or networking libraries.
  * </ul>
  * <p>
@@ -81,7 +81,7 @@ public class Doc03_PreparingWorkspace
    *     xmlns:xmi="http://www.omg.org/XMI"
    *     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
    *     id="CDO-TP"
-   *     macro="https://download.eclipse.org/modeling/emf/cdo/drops/S20251008-0551/tp-macro.setup#/"/&gt;
+   *     macro="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest/tp-macro.setup#/"/&gt;
    * </pre>
    * <p>
    * You can copy the XML snippet above and paste it into your setup file. The Setup editor will automatically convert the XML snippet into a
@@ -90,13 +90,11 @@ public class Doc03_PreparingWorkspace
    * Of course, you will need to adjust the URL to point to the version of CDO you want to use.
    * You can then save the setup file and perform it via the <i>Perform Setup Tasks</i> action in the <i>Help</i> menu.
    * <p>
-   * CDO also publishes floating versions of the setup macro.
-   * If you want to stay up to date, you can use the following URLs:
+   * CDO publishes floating setup macros for the supported release and integration channels. Use the channel that matches
+   * the repository version you intend to develop against:
    * <ul>
    * <li><a href="https://download.eclipse.org/modeling/emf/cdo/updates/releases/latest/tp-macro.setup">Latest Release</a> (R)</li>
-   * <li><a href="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest/tp-macro.setup">Latest Stable Build</a> (S)</li>
-   * <li><a href="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest/tp-macro.setup">Latest Weekly Build</a> (I)</li>
-   * <li><a href="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest/tp-macro.setup">Latest Integration Build</a> (S or I)</li>
+   * <li><a href="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest/tp-macro.setup">Latest Integration Build</a></li>
    * </ul>
    *
    */

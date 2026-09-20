@@ -58,7 +58,7 @@ public class Doc04_PreparingModels
    * Using the CDO Model Importer
    * <p>
    * The easiest way to create a CDO enabled GenModel is to use the CDO Migrator utility that is shipped with the CDO SDK.
-   * It includes a special Ecore Model Importer that adjusts all the GenModel properties needed to generated CDO native models.
+   * It includes a special Ecore Model Importer that adjusts all the GenModel properties needed to generate CDO native models.
    * Right-click the Ecore model file and select New and Other... and choose the EMF Generator Model New Wizard:
    * <p align="center">{@image Migrator0.png}
    * <p align="center">{@image Migrator1.png}
@@ -106,7 +106,9 @@ public class Doc04_PreparingModels
    * <ul>
    * <li> The <i>Feature Delegation</i> property <b>must be</b> set to <code>Reflective</code>
    * <li> The <i>Model Plug-in Variables</i> property <b>should be</b> set to <code>CDO=org.eclipse.emf.cdo</code>
-   * <li> The <i>Root Extends Class</i> property <b>must be</b> set to {@link CDOObjectImpl org.eclipse.emf.internal.cdo.CDOObjectImpl}
+   * <li> The <i>Root Extends Class</i> property <b>must be</b> set to {@link CDOObjectImpl org.eclipse.emf.internal.cdo.CDOObjectImpl}.
+   *       This generated-model base class is the required exception to the usual rule against depending on CDO internal types;
+   *       application code should continue to use the public {@link CDOObject} API.
    * <li> The <i>Root Extends Interface</i> property <b>can be</b> set to {@link CDOObject org.eclipse.emf.cdo.CDOObject}
    * </ul>
    * <p align="center">{@image GenModel.png}
@@ -121,7 +123,7 @@ public class Doc04_PreparingModels
   public class Doc_MigratingManually
   {
     /**
-     * @snip xml ../../../../../../../../../org.eclipse.emf.cdo.examples.company/model/company.genmodel
+     * @snip xml ../../../../../../../../org.eclipse.emf.cdo.examples.company/model/company.genmodel
      */
     public void companyGenModel()
     {

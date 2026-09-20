@@ -11,6 +11,12 @@
  */
 package org.eclipse.emf.cdo.doc.programmers;
 
+import org.eclipse.emf.cdo.doc.programmers.client.Doc03_WorkingWithSessions;
+import org.eclipse.emf.cdo.doc.programmers.client.Doc04_WorkingWithViews;
+import org.eclipse.emf.cdo.doc.programmers.client.Doc05_WorkingWithTransactions;
+import org.eclipse.emf.cdo.doc.programmers.server.Architecture;
+import org.eclipse.emf.cdo.doc.programmers.server.Doc02_ServerApplicationAndStartup;
+
 /**
  * Introduction
  * <p>
@@ -43,6 +49,15 @@ package org.eclipse.emf.cdo.doc.programmers;
  * <p>
  * Instructions for preparing your EMF models for use with CDO are provided in {@link Doc04_PreparingModels}.
  * This includes creating Ecore models and generating CDO-enabled code.
+ * <p>
+ * For a first client application, continue with the client {@link Doc03_WorkingWithSessions session} chapter,
+ * open a {@link Doc04_WorkingWithViews view} or transaction, and follow the transaction chapter's commit and cleanup
+ * guidance in {@link Doc05_WorkingWithTransactions}. The client guide then provides the detailed topics for the
+ * particular application architecture and integration needs.
+ * <p>
+ * For a first server application, start with {@link Architecture}, continue with
+ * {@link Doc02_ServerApplicationAndStartup}, and then follow the managed-container, application-extension, and
+ * repository setup articles in their displayed order.
  * <p>
  * At the end of this Programmer's Guide, you find the chapter {@link DocXX_InstallingSources} with
  * instructions for installing the CDO sources into your workspace. This is only necessary if you want to

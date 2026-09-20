@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * of EMF models in a distributed environment. CDO achieves this by introducing the concept of a CDO repository, which
  * is a central server that manages the storage and retrieval of EMF models. Clients connect to the repository to
  * access and manipulate the shared model. In a CDO client application, model objects are represented as instances of
- * {@link CDOObject}, which is a subclass of {@link EObject}. This article provides an overview of the anatomy of a CDOObject
+ * {@link CDOObject}, which extends {@link EObject}. This article provides an overview of the anatomy of a CDOObject
  * and its key features.
  * <p>
  * A CDOObject is a specialized EObject that is designed to work with CDO's distributed shared model framework.
@@ -42,7 +42,8 @@ import org.eclipse.emf.ecore.EObject;
  * <li><b>Persistent:</b> CDOObjects are persistent, meaning that they can be stored and retrieved from a CDO repository.
  * <li><b>Transactional:</b> CDOObjects support transactions, which allow multiple changes to be made to the model as a single atomic operation.
  * <li><b>Scalable:</b> CDOObjects are designed to be scalable, allowing large models to be managed efficiently in a distributed environment.
- * <li><b>Thread-safe:</b> CDOObjects are designed to be thread-safe, allowing multiple threads to access and modify the model concurrently.
+ * <li><b>Concurrent access:</b> CDOObjects support concurrent single accesses. Use the view critical section for a sequence
+ * of accesses that must remain consistent; see {@link Doc04_WorkingWithViews}.
  * <li><b>Identifiable:</b> CDOObjects have a unique identifier that is used to identify them in the repository.
  * <li><b>Versioned:</b> CDOObjects support versioning, which allows multiple versions of the same object to exist in the repository.
  * <li><b>Stateful:</b> CDOObjects maintain state information, such as whether they are new, dirty, or deleted.
@@ -105,7 +106,8 @@ public class Doc02_AnatomyModelObject
    * A CDORevision references other model objects by their
    * CDOID, not by direct object references. This indirection allows CDO to manage large object graphs efficiently,
    * as it can load and unload objects from memory as needed. Also, it allows CDO to change the revision of an object
-   * without affecting other objects that reference it. This is essential for supporting versioning and branching.
+   * without affecting other objects that reference it. This is essential for supporting versioning and branching; the
+   * branch and time point provide the historical context described in {@link Doc08_BranchingAndVersioning}.
    * <p>
    * <img src="AnatomyRevision.png"/>
    * <p>
@@ -121,7 +123,7 @@ public class Doc02_AnatomyModelObject
    * CDOObjects are managed by a {@link CDOView}, which provides a context for accessing and manipulating the model.
    * CDOViews are associated with a specific branch and, optionally, a specific point in time. They provide methods for
    * loading and unloading objects, as well as for managing the state of objects (e.g., marking them as dirty or
-   * new).
+   * new). An object and its resources must not be used after the owning view has been closed.
    * <p>
    * The view of a CDOObject can be accessed using the {@link CDOObject#cdoView()} method.
    */

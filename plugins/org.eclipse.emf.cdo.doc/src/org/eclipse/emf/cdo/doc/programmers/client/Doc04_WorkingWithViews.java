@@ -11,6 +11,9 @@
  */
 package org.eclipse.emf.cdo.doc.programmers.client;
 
+import org.eclipse.emf.cdo.doc.programmers.server.Doc08_SecurityQueriesAndSpecializedExtensions;
+import org.eclipse.emf.cdo.server.IQueryHandler;
+
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -108,7 +111,7 @@ public class Doc04_WorkingWithViews
      * safely, such as {@link CriticalSection#run(Runnable)} and {@link CriticalSection#call(Callable)}.
      * <p>
      * Here is an example of using a critical section with a callable to access multiple objects in a view atomically:
-     * {@link #crititicalSectionWithCallable(CDOView, CDOID, CDOID, CDOID) CrititicalSectionWithCallable.java}
+     * {@link #criticalSectionWithCallable(CDOView, CDOID, CDOID, CDOID) CriticalSectionWithCallable.java}
      * <p>
      * The {@link CriticalSection} interface provides the following methods:
      * <ul>
@@ -138,7 +141,7 @@ public class Doc04_WorkingWithViews
        * @snip
        */
       @SuppressWarnings("unused")
-      public void crititicalSectionWithCallable(CDOView view, CDOID id1, CDOID id2, CDOID id3) throws Exception
+      public void criticalSectionWithCallable(CDOView view, CDOID id1, CDOID id2, CDOID id3) throws Exception
       {
         CriticalSection sync = view.sync();
 
@@ -671,8 +674,9 @@ public class Doc04_WorkingWithViews
   /**
    * Querying Resources
    * <p>
-   * CDO supports querying resources using various criteria. This section explains how to construct and execute queries
-   * to locate resources and model objects efficiently.
+   * Queries are created from the view and executed by the repository. Use a query when selecting candidate resources
+   * is cheaper than loading and traversing a broad resource tree; result limits and asynchronous consumption are
+   * covered in {@link Doc11_AdvancedTopics.LargeScaleAccess}.
    */
   public class QueryingResources
   {
@@ -681,8 +685,8 @@ public class Doc04_WorkingWithViews
   /**
    * Querying Model Objects
    * <p>
-   * Learn how to query model objects using CDO's query APIs, including support for OCL, custom queries, and
-   * cross-references.
+   * A client selects a repository-supported query language and supplies its expression and parameters. OCL is one
+   * optional language integration; query-language syntax is not part of the client API contract.
    */
   public class QueryingModelObjects
   {
@@ -691,8 +695,8 @@ public class Doc04_WorkingWithViews
   /**
    * Querying Cross References
    * <p>
-   * Cross references allow navigation between related model objects. This section covers techniques for querying and
-   * resolving cross references in CDO models.
+   * Use normal EMF reference navigation when the relevant objects are already loaded. Use a repository query when
+   * cross-reference discovery would otherwise require loading an unbounded graph.
    */
   public class QueryingCrossReferences
   {
@@ -701,8 +705,9 @@ public class Doc04_WorkingWithViews
   /**
    * Custom Queries
    * <p>
-   * Extend CDO's querying capabilities with custom query implementations. Learn how to define, register, and execute
-   * custom queries for advanced use cases.
+   * Clients execute custom query languages exactly like other CDO queries. Defining and registering the corresponding
+   * {@link IQueryHandler server query handler} is server programming and is covered in
+   * {@link Doc08_SecurityQueriesAndSpecializedExtensions.QueryHandlers}.
    */
   public class CustomQueries
   {

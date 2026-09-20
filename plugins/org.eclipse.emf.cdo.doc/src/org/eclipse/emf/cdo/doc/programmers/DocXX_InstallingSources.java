@@ -23,7 +23,7 @@ package org.eclipse.emf.cdo.doc.programmers;
  * <p>
  * The installation is fully automated and will be performed by the
  * <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/Eclipse_Installer.md">Eclipse Installer</a>.
- * Here are the four steps you need to follow:
+ * Here are the steps you need to follow:
  * <ol>
  *  <li>Download and install a Java Development Kit (JDK) if you don't have one already. Version 21 or greater is required.
  *      You can get it from <a href="https://adoptium.net/">Adoptium</a> or any other JDK provider of your choice.</li>

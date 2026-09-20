@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
@@ -59,7 +60,8 @@ import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.doc.programmers.client.Doc03_WorkingWithSessions.CreatingAndConfiguringSessions.PassiveUpdatesAndRefreshing;
 import org.eclipse.emf.cdo.doc.programmers.client.Doc03_WorkingWithSessions.SessionFacilities.RevisionManager.PrefetchingRevisions;
-import org.eclipse.emf.cdo.doc.programmers.server.Architecture;
+import org.eclipse.emf.cdo.doc.programmers.server.Doc05_CreatingAndConfiguringRepositories;
+import org.eclipse.emf.cdo.doc.programmers.server.Doc08_SecurityQueriesAndSpecializedExtensions;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
@@ -72,7 +74,6 @@ import org.eclipse.emf.cdo.net4j.ReconnectingCDOSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.RecoveringCDOSessionConfiguration;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.net4j.FailoverMonitor;
-import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSession.Options;
@@ -244,7 +245,7 @@ public class Doc03_WorkingWithSessions
      * connectors, refer to the {@link Net4jConnectors} section or the {@link Overview Net4j documentation}.
      * <p>
      * Also note that the repository must already exist on the server. For more information about
-     * repositories, refer to the {@link Architecture Server Programming} section.
+     * repositories, refer to {@link Doc05_CreatingAndConfiguringRepositories}.
      * <p>
      * Once a session is opened, you can still change various options on it, such as enabling or
      * disabling passive updates. For more information about session options, refer to the
@@ -253,6 +254,10 @@ public class Doc03_WorkingWithSessions
     public class SessionConfigurations
     {
       /**
+       * Configures a Net4j session configuration to obtain credentials from application-owned input.
+       *
+       * @param userID the user identity supplied to the repository
+       * @param password the corresponding application-supplied password
        * @snip
        */
       public void createSession(IConnector connector, String repositoryName)
@@ -262,12 +267,16 @@ public class Doc03_WorkingWithSessions
         configuration.setRepositoryName(repositoryName);
 
         CDOSession session = configuration.openNet4jSession();
-        System.out.println("Session opened for repository: " + session.getRepositoryInfo().getName());
+        try
+        {
+          System.out.println("Session opened for repository: " + session.getRepositoryInfo().getName());
 
-        // Use the session...
-
-        // Finally, close the session when done.
-        session.close();
+          // Use the session...
+        }
+        finally
+        {
+          session.close();
+        }
       }
     }
 
@@ -302,10 +311,12 @@ public class Doc03_WorkingWithSessions
         // description.
         IConnector connector = IManagedContainer.INSTANCE.getElementOrNull("org.eclipse.net4j.connectors", "jvm", "acceptor1");
 
-        // Use the connector to create and open a session...
+        CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+        configuration.setConnector(connector);
 
-        // Finally, close the connector when done.
-        connector.close();
+        // Set the repository name and open a session. The shared plugin container owns this connector.
+
+        // The shared plugin container owns this connector. Do not close it from this client code.
       }
 
       /**
@@ -314,20 +325,25 @@ public class Doc03_WorkingWithSessions
       public void createConnectorInStandalone()
       {
         IManagedContainer container = ContainerUtil.createContainer();
-        ContainerUtil.prepareContainer(container); // Register basic Net4j factories.
-        TCPUtil.prepareContainer(container); // Register TCP connector factory.
-        container.activate();
+        try
+        {
+          ContainerUtil.prepareContainer(container); // Register basic Net4j factories.
+          TCPUtil.prepareContainer(container); // Register TCP connector factory.
+          container.activate();
 
-        // Obtain the connector from the container by its product group, factory type, and factory-specific description.
-        IConnector connector = container.getElementOrNull("org.eclipse.net4j.connectors", "tcp", "localhost:2036");
+          // Obtain the connector from the container by its product group, factory type, and factory-specific description.
+          IConnector connector = container.getElementOrNull("org.eclipse.net4j.connectors", "tcp", "localhost:2036");
 
-        // Use the connector to create and open a session...
+          CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
+          configuration.setConnector(connector);
 
-        // Finally, close the connector when done.
-        connector.close();
-
-        // Deactivate the container when done.
-        container.deactivate();
+          // Set the repository name and open a session.
+        }
+        finally
+        {
+          // Deactivate the application-owned container; it deactivates the connector.
+          container.deactivate();
+        }
       }
     }
 
@@ -341,8 +357,8 @@ public class Doc03_WorkingWithSessions
      * appropriate credentials. If the credentials are valid, the server allows the session to be opened; otherwise,
      * the session opening fails.
      * <p>
-     * Here is an example of how to configure a session with fixed credentials:
-     * {@link AuthenticationAndSecurity#configureCredentialsProvider() ConfigureCredentialsProvider.java}
+     * Here is an example of how to configure a session with application-supplied credentials:
+     * {@link AuthenticationAndSecurity#configureCredentialsProvider(String, String) ConfigureCredentialsProvider.java}
      * <p>
      * Here is an example of how to configure a session with an interactive credentials provider that opens a
      * {@link CredentialsDialog} whenever challenged from the server:
@@ -350,15 +366,17 @@ public class Doc03_WorkingWithSessions
      * <p>
      * The actual password is transmitted securely using a cryptographically strong protocol called <i>Diffie-Hellman Key Exchange</i>.
      * It is not sent over the network in clear text, but is restored to clear text on the server side for verification.
+     * Server-side authentication and authorization customization is covered in
+     * {@link Doc08_SecurityQueriesAndSpecializedExtensions}.
      */
     public class AuthenticationAndSecurity
     {
       /**
        * @snip
        */
-      public void configureCredentialsProvider()
+      public void configureCredentialsProvider(String userID, String password)
       {
-        IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider("userID", "password");
+        IPasswordCredentialsProvider credentialsProvider = new PasswordCredentialsProvider(userID, password);
 
         CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
         configuration.setCredentialsProvider(credentialsProvider);
@@ -2406,22 +2424,21 @@ public class Doc03_WorkingWithSessions
     }
 
     /**
-     * Collection Loading Policy
+     * Collection Loading Configuration
      * <p>
      * Defines how large collections are loaded (e.g., all at once or in chunks).
      * Collection loading can impact performance and memory usage. A collection loading policy helps balance
      * performance and memory consumption when dealing with large collections.
      * <p>
-     * You can create custom policies by calling {@link CDOUtil#createCollectionLoadingPolicy(int, int) createCollectionLoadingPolicy(int, int)}
-     * with your desired initial chunk size and resolve chunk size. The initial chunk size defines how many elements are loaded
-     * when the collection is first accessed. The resolve chunk size defines how many additional elements are loaded
-     * when more elements in the collection are accessed. A smaller chunk size reduces memory consumption but may require
-     * more network round-trips. A larger chunk size improves performance but increases memory usage. The optimal chunk sizes
-     * depend on your application's access patterns and resource constraints.
+     * Use the current {@link CDOCollectionLoadingConfig} API to configure partial loading with an initial chunk size and
+     * resolve chunk size. The initial chunk size defines how many elements are loaded when the collection is first accessed;
+     * the resolve chunk size defines how many additional elements are loaded when more elements are accessed. A smaller
+     * chunk size reduces memory consumption but may require more network round-trips. A larger chunk size improves performance
+     * but increases memory usage. The optimal chunk sizes depend on the application's access patterns and resource constraints.
      * <p>
-     * API: {@link CDOSession.Options#getCollectionLoadingPolicy()}, {@link CDOSession.Options#setCollectionLoadingPolicy(CDOCollectionLoadingPolicy)}
+     * API: {@link CDOSession.Options#getCollectionLoadingConfig()}, {@link CDOSession.Options#setCollectionLoadingConfig(CDOCollectionLoadingConfig)}
      */
-    public class CollectionLoadingPolicy
+    public class CollectionLoadingConfiguration
     {
     }
 

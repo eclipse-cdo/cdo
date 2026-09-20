@@ -11,6 +11,10 @@
  */
 package org.eclipse.emf.cdo.doc.programmers;
 
+import org.eclipse.emf.cdo.doc.programmers.client.Doc04_WorkingWithViews;
+import org.eclipse.emf.cdo.doc.programmers.client.Doc08_BranchingAndVersioning;
+import org.eclipse.emf.cdo.doc.programmers.client.Doc09_NotificationsAndEventHandling;
+
 /**
  * Understanding the Key Concepts
  * <p>
@@ -81,8 +85,9 @@ public class Doc02_KeyConcepts
   /**
    * Branches
    * <p>
-   * CDO supports branching, which allows you to create multiple versions of a model. Each branch represents a separate line of development,
-   * allowing you to work on different features or bug fixes without affecting the mainline version of the model.
+   * CDO supports branching, which allows a model to have multiple lines of development. Each branch has its own history,
+   * allowing work on a feature or bug fix to be isolated from the main line. The detailed branch and history operations are
+   * described in {@link Doc08_BranchingAndVersioning}.
    */
   public class ConceptBranches
   {
@@ -91,7 +96,7 @@ public class Doc02_KeyConcepts
   /**
    * Branch Points
    * <p>
-   * A branch point is a specific point in time on a branch. It represents a snapshot of the model at that point in time.
+   * A branch point combines a branch with a timestamp and identifies the model state at that point on that branch.
    * Branch points are used to manage versions of the model and to perform operations such as merging and comparing different versions.
    * In each branch there are two special branch points: <i>BASE</i> and <i>HEAD</i>. BASE represents the fixed point where the branch was created,
    * HEAD represents the latest point in time on the branch, a floating point that moves forward on the branch as time progresses.
@@ -117,7 +122,7 @@ public class Doc02_KeyConcepts
    * <p>
    * A revision represents a specific version of a specific model object. Each time a model object is modified and committed,
    * a new revision is created. Revisions are identified by a combination of the object's CDOID, the branch, and the version number. The version number
-   * of a revision is specific to and unique within the revision's branch. In addition, each revision has a creation time, which is the
+   * of a revision is specific to and unique for that object on its branch. In addition, each revision has a creation time, which is the
    * timestamp of the commit that created it. Unless the revision is the latest one of the object on the branch, it also has a revised time,
    * which is the creation time (minus one millisecond) of the next revision of the same object on the same branch. Revisions are immutable,
    * except for when they represent the dirty state of an object within a client transaction. Revisions are the data transfer objects that CDO uses
@@ -171,8 +176,8 @@ public class Doc02_KeyConcepts
    * It represents the model state at a specific branch point in the repository, allowing you to navigate and query the model objects
    * without modifying them. Views are opened from a session and are associated with an EMF ResourceSet, which is used to manage the
    * loaded model objects. Multiple views can be opened from a single session, each, for example, representing a different branch point.
-   * It is an important aspect of CDO that views, together with model versions they provide, are thread-safe. This means that multiple threads can
-   * use the same view concurrently without causing data corruption or inconsistencies.
+   * Views and their model objects support concurrent single accesses. A sequence of accesses that must form one consistent
+   * observation needs the view's critical section; see {@link Doc04_WorkingWithViews} for the synchronization contract.
    */
   public class ConceptViews
   {
@@ -192,9 +197,9 @@ public class Doc02_KeyConcepts
   /**
    * Change Notifications
    * <p>
-   * All views that target the HEAD of a branch (which includes, by definition, all transactions) receive change notifications
-   * about changes that other clients commit to the same branch. These notifications are used to keep the model objects in the view up to date
-   * and to notify listeners (and EMF Adapters) about changes.
+   * Views configured for passive updates, including transactions targeting the branch head, can receive information about
+   * changes that other clients commit to the same branch. The update mode determines whether the client receives invalidations,
+   * additions, or more detailed information; see {@link Doc09_NotificationsAndEventHandling} for the notification contract.
    */
   public class ConceptChangeNotifications
   {

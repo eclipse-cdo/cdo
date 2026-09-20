@@ -136,7 +136,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color"><code><a href="#UNINITIALIZED" class="member-name-link">UNINITIALIZED</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#UNLOADED"><code>UNLOADED</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#UNLOADED" class="member-name-link">UNLOADED</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The canonical marker for a list element that has not been loaded.</div>
+</div>
 </div>
 </section>
 </li>
@@ -251,7 +260,9 @@ loadScripts(document, 'script');</script>
  <a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;provider,
  boolean&nbsp;onlyProperContents,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Visits the currently loaded contained child revisions.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#forEachChildRevision(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,boolean,java.util.function.Consumer)" class="member-name-link">forEachChildRevision</a><wbr>(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;container,
  <a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;provider,
@@ -263,12 +274,16 @@ loadScripts(document, 'script');</script>
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  int&nbsp;maxValues,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;consumer)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Visits the currently loaded values of a feature, up to <code>maxValues</code> values.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#forEachValue(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,java.util.function.Consumer)" class="member-name-link">forEachValue</a><wbr>(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;consumer)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Visits the currently loaded values of a feature.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#formatRevisionKey(org.eclipse.emf.cdo.common.revision.CDORevisionKey)" class="member-name-link">formatRevisionKey</a><wbr>(<a href="CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
@@ -317,7 +332,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#hasChildRevisions(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">hasChildRevisions</a><wbr>(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;container)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns whether a containment feature has at least one logical value.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isContained(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">isContained</a><wbr>(<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;child,
  <a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;container,
@@ -358,9 +375,20 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="UNLOADED">
+<h3>UNLOADED</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">UNLOADED</span></div>
+<div class="block">The canonical marker for a list element that has not been loaded.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="UNINITIALIZED">
 <h3>UNINITIALIZED</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">UNINITIALIZED</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">UNINITIALIZED</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="#UNLOADED"><code>UNLOADED</code></a>.</div>
+</div>
 </section>
 </li>
 </ul>
@@ -610,6 +638,10 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forEachValue</span><wbr><span class="parameters">(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;consumer)</span></div>
+<div class="block">Visits the currently loaded values of a feature.
+ <p>
+ This method is a loaded-only traversal. Unloaded positions of a many-valued feature are skipped and are not
+ materialized. Direct <a href="../id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOWithID</code></a> values are passed through as loaded values.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.27</dd>
@@ -623,6 +655,9 @@ loadScripts(document, 'script');</script>
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  int&nbsp;maxValues,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;consumer)</span></div>
+<div class="block">Visits the currently loaded values of a feature, up to <code>maxValues</code> values.
+ <p>
+ Unloaded positions of a many-valued feature are skipped and are not materialized.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.27</dd>
@@ -702,6 +737,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="hasChildRevisions(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <h3>hasChildRevisions</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasChildRevisions</span><wbr><span class="parameters">(<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;container)</span></div>
+<div class="block">Returns whether a containment feature has at least one logical value.
+ <p>
+ This is a structural, non-materializing query. A partially loaded many-valued containment is considered
+ non-empty based on its logical size alone.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.21</dd>
@@ -761,6 +800,10 @@ loadScripts(document, 'script');</script>
  <a href="CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;provider,
  boolean&nbsp;onlyProperContents,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</span></div>
+<div class="block">Visits the currently loaded contained child revisions.
+ <p>
+ This is a loaded-only traversal. Unloaded positions are skipped and are not materialized. Native CDO objects
+ represented directly as values are handled as loaded values through their <a href="../id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOWithID</code></a> identity.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.18</dd>

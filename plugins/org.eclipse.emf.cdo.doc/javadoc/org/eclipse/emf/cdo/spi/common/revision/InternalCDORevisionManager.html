@@ -137,11 +137,19 @@ extends <a href="../../../common/revision/CDORevisionManager.html" title="interf
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="InternalCDORevisionManager.RevisionLocker.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></code></div>
+<div class="col-second odd-row-color"><code><a href="InternalCDORevisionManager.RevisionLoader4.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader4</a></code></div>
 <div class="col-last odd-row-color">
+<div class="block">The canonical revision-loading extension.</div>
+</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="InternalCDORevisionManager.RevisionLocker.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
 </div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.common.revision.CDORevisionManager">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></h2>
+<code><a href="../../../common/revision/CDORevisionManager.Request.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request</a></code></div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h2>
 <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></div>
@@ -168,43 +176,81 @@ extends <a href="../../../common/revision/CDORevisionManager.html" title="interf
 <div class="deprecation-comment">As of 4.15 use <a href="../../../common/revision/CDORevisionInterner.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)"><code>CDORevisionInterner.internRevision(CDORevision)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)" class="member-name-link">getBaseRevision</a><wbr>(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)" class="member-name-link">getBaseRevision</a><wbr>(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  int&nbsp;referenceChunk,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCache()" class="member-name-link">getCache</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFactory()" class="member-name-link">getFactory</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)"><code>getBaseRevision(CDORevision, CDORevisionManager.Request.Config)</code></a>.</div>
+</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">getBaseRevision</a><wbr>(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Loads the base revision using the canonical configuration-based path.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCache()" class="member-name-link">getCache</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFactory()" class="member-name-link">getFactory</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns the <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch
- point</code></a> (branch + timestamp), optionally demand loading it if it is not already in the <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)"><code>getRevision(CDOID, CDOBranchPoint, CDORevisionManager.Request.Config)</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>getRevision(CDOID, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">getRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Loads revisions using the canonical request configuration.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)" class="member-name-link">getRevisionByVersion</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevision</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Loads one revision through the canonical configuration-based path.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)" class="member-name-link">getRevisionByVersion</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
  int&nbsp;referenceChunk,
  boolean&nbsp;loadOnDemand)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)"><code>getRevisionByVersion(CDOID, CDOBranchVersion, CDORevisionManager.Request.Config)</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">getRevisionByVersion</a><wbr>(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns the <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch version</code></a> (branch + version), optionally demand loading it if it is not already in the
- <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+<div class="block">Loads a revision by version through the canonical configuration-based path.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionLoader()" class="member-name-link">getRevisionLoader</a>()</code></div>
@@ -212,23 +258,49 @@ extends <a href="../../../common/revision/CDORevisionManager.html" title="interf
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionLocker()" class="member-name-link">getRevisionLocker</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;prefetchLockStates,
  boolean&nbsp;loadOnDemand,
  <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use the configuration-based <a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>getRevisions(List, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>getRevisions(List, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Loads revisions through the canonical configuration-based path.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Loads revisions through the canonical configuration-based path, preserving both result channels separately from
+ the request configuration.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isSupportingAudits()" class="member-name-link">isSupportingAudits</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -279,7 +351,7 @@ extends <a href="../../../common/revision/CDORevisionManager.html" title="interf
 <code><a href="../../../common/revision/CDORevisionInterner.html#internRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">internRevision</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.revision.CDORevisionManager">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></h3>
-<code><a href="../../../common/revision/CDORevisionManager.html#containsRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">containsRevision</a>, <a href="../../../common/revision/CDORevisionManager.html#containsRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)">containsRevisionByVersion</a>, <a href="../../../common/revision/CDORevisionManager.html#getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getObjectLifetime</a>, <a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a>, <a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a>, <a href="../../../common/revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)">getRevisions</a>, <a href="../../../common/revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">getRevisions</a>, <a href="../../../common/revision/CDORevisionManager.html#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></code></div>
+<code><a href="../../../common/revision/CDORevisionManager.html#containsRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">containsRevision</a>, <a href="../../../common/revision/CDORevisionManager.html#containsRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)">containsRevisionByVersion</a>, <a href="../../../common/revision/CDORevisionManager.html#getObjectLifetime(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">getObjectLifetime</a>, <a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID)">getObjectType</a>, <a href="../../../common/revision/CDORevisionManager.html#getObjectType(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchManager)">getObjectType</a>, <a href="../../../common/revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)">getRevisions</a>, <a href="../../../common/revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)">getRevisions</a>, <a href="../../../common/revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)">getRevisions</a>, <a href="../../../common/revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,java.util.List)">getRevisions</a>, <a href="../../../common/revision/CDORevisionManager.html#handleRevisions(org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,boolean,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a>, <a href="../../../common/revision/CDORevisionManager.html#request()">request</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
 <code>activate, deactivate, getLifecycleState, isActive</code></div>
@@ -412,26 +484,171 @@ extends <a href="../../../common/revision/CDORevisionManager.html" title="interf
 </section>
 </li>
 <li>
-<section class="detail" id="getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">
+<section class="detail" id="getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">
 <h3>getRevisions</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</span>&nbsp;<span class="element-name">getRevisions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</span></div>
+<div class="block">Loads revisions through the canonical configuration-based path. Synthetic revisions are a result channel and are
+ deliberately kept separate from the request configuration.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ids</code> - the IDs of the requested objects</dd>
+<dd><code>branchPoint</code> - the branch point at which to load the revisions</dd>
+<dd><code>config</code> - the immutable loading options</dd>
+<dd><code>synthetics</code> - an optional array through which synthetic revisions are supplied</dd>
+<dt>Returns:</dt>
+<dd>the requested revisions, with <code>null</code> entries for revisions that could not be found</dd>
+<dt>Since:</dt>
+<dd>4.37</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[],java.util.List)">
+<h3>getRevisions</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</span>&nbsp;<span class="element-name">getRevisions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</span></div>
+<div class="block">Loads revisions through the canonical configuration-based path, preserving both result channels separately from
+ the request configuration.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ids</code> - the IDs of the requested objects</dd>
+<dd><code>branchPoint</code> - the branch point at which to load the revisions</dd>
+<dd><code>config</code> - the immutable loading options</dd>
+<dd><code>synthetics</code> - an optional array through which synthetic revisions are supplied</dd>
+<dd><code>additionalRevisions</code> - an optional list for revisions prefetched in addition to the requested revisions</dd>
+<dt>Returns:</dt>
+<dd>the requested revisions, with <code>null</code> entries for revisions that could not be found</dd>
+<dt>Since:</dt>
+<dd>4.37</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">
+<h3>getRevision</h3>
+<div class="member-signature"><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevision</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</span></div>
+<div class="block">Loads one revision through the canonical configuration-based path.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>id</code> - the ID of the requested object</dd>
+<dd><code>branchPoint</code> - the branch point at which to load the revision</dd>
+<dd><code>config</code> - the immutable loading options</dd>
+<dd><code>synthetics</code> - an optional array through which a synthetic revision is supplied</dd>
+<dt>Returns:</dt>
+<dd>the revision, or <code>null</code> if it does not exist or lookup is cache-only and the cache misses</dd>
+<dt>Since:</dt>
+<dd>4.37</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)">
+<h3>getRevision</h3>
+<div class="member-signature"><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevision</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)">CDORevisionManager</a></code></span></div>
+<div class="block">Loads revisions using the canonical request configuration.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../../common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)">getRevision</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>id</code> - the ID of the requested object</dd>
+<dd><code>branchPoint</code> - the branch point at which to load the revision</dd>
+<dd><code>config</code> - the immutable loading configuration</dd>
+<dt>Returns:</dt>
+<dd>the revision, or <code>null</code> if it does not exist or lookup is cache-only and the cache misses</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../common/revision/CDORevisionManager.html#request()"><code>for a fluent request API</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)">
+<h3>getRevisionByVersion</h3>
+<div class="member-signature"><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevisionByVersion</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</span></div>
+<div class="block">Loads a revision by version through the canonical configuration-based path.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../../common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)">getRevisionByVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>id</code> - the ID of the requested object</dd>
+<dd><code>branchVersion</code> - the branch version at which to load the revision</dd>
+<dd><code>config</code> - the immutable loading options</dd>
+<dt>Returns:</dt>
+<dd>the revision, or <code>null</code> if it does not exist or lookup is cache-only and the cache misses</dd>
+<dt>Since:</dt>
+<dd>4.37</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../common/revision/CDORevisionManager.html#request()"><code>for a fluent request API</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)">
+<h3>getBaseRevision</h3>
+<div class="member-signature"><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getBaseRevision</span><wbr><span class="parameters">(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="../../../common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</span></div>
+<div class="block">Loads the base revision using the canonical configuration-based path.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>revision</code> - the revision whose base revision is requested</dd>
+<dd><code>config</code> - the immutable loading options</dd>
+<dt>Returns:</dt>
+<dd>the base revision, or <code>null</code> if it does not exist or lookup is cache-only and the cache misses</dd>
+<dt>Since:</dt>
+<dd>4.37</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">
+<h3>getRevisions</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</span>&nbsp;<span class="element-name">getRevisions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>getRevisions(List, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">
 <h3>getRevisions</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</span>&nbsp;<span class="element-name">getRevisions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</span>&nbsp;<span class="element-name">getRevisions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;prefetchLockStates,
  boolean&nbsp;loadOnDemand,
  <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use the configuration-based <a href="#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>getRevisions(List, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
@@ -441,22 +658,30 @@ extends <a href="../../../common/revision/CDORevisionManager.html" title="interf
 <li>
 <section class="detail" id="getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision[])">
 <h3>getRevision</h3>
-<div class="member-signature"><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevision</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevision</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>getRevision(CDOID, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)">
 <h3>getRevision</h3>
-<div class="member-signature"><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevision</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevision</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)"><code>getRevision(CDOID, CDOBranchPoint, CDORevisionManager.Request.Config)</code></a>.</div>
+</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)">CDORevisionManager</a></code></span></div>
 <div class="block">Returns the <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch
  point</code></a> (branch + timestamp), optionally demand loading it if it is not already in the <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
@@ -486,16 +711,20 @@ extends <a href="../../../common/revision/CDORevisionManager.html" title="interf
 <li>
 <section class="detail" id="getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)">
 <h3>getRevisionByVersion</h3>
-<div class="member-signature"><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevisionByVersion</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getRevisionByVersion</span><wbr><span class="parameters">(<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
  int&nbsp;referenceChunk,
  boolean&nbsp;loadOnDemand)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)"><code>getRevisionByVersion(CDOID, CDOBranchVersion, CDORevisionManager.Request.Config)</code></a>.</div>
+</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)">CDORevisionManager</a></code></span></div>
 <div class="block">Returns the <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch version</code></a> (branch + version), optionally demand loading it if it is not already in the
  <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.
  <p>
  Prefetching of nested containment levels is not support by this method because the version of a particular revision
- can not serve as a reasonable baseline criterium for a consistent graph of multiple revisions.</div>
+ can not serve as a reasonable baseline criterion for a consistent graph of multiple revisions.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../../common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)">getRevisionByVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></dd>
@@ -516,9 +745,13 @@ extends <a href="../../../common/revision/CDORevisionManager.html" title="interf
 <li>
 <section class="detail" id="getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,int,boolean)">
 <h3>getBaseRevision</h3>
-<div class="member-signature"><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getBaseRevision</span><wbr><span class="parameters">(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span>&nbsp;<span class="element-name">getBaseRevision</span><wbr><span class="parameters">(<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  int&nbsp;referenceChunk,
  boolean&nbsp;loadOnDemand)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="#getBaseRevision(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)"><code>getBaseRevision(CDORevision, CDORevisionManager.Request.Config)</code></a>.</div>
+</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.8</dd>

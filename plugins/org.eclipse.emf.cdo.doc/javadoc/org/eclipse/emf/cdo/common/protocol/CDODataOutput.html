@@ -135,18 +135,33 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</span></div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIDProvider()" class="member-name-link">getIDProvider</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPackageRegistry()" class="member-name-link">getPackageRegistry</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPermissionProvider()" class="member-name-link">getPermissionProvider</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getInitialChunkSize(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature,int)" class="member-name-link">getInitialChunkSize</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;owner,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;referenceChunk)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Returns the initial reference chunk to use for a many-valued feature while
+ a revision is being serialized.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPackageRegistry()" class="member-name-link">getPackageRegistry</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../spi/common/revision/CDORevisionUnchunker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionUnchunker()" class="member-name-link">getRevisionUnchunker</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPermissionProvider()" class="member-name-link">getPermissionProvider</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSession()" class="member-name-link">getSession</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../spi/common/revision/CDORevisionUnchunker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionUnchunker()" class="member-name-link">getRevisionUnchunker</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSession()" class="member-name-link">getSession</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#prepareCollection(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int)" class="member-name-link">prepareCollection</a><wbr>(<a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;initialChunkSize)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Prepares a many-valued feature for serialization with the selected initial chunk size.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeCDOBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">writeCDOBranch</a><wbr>(<a href="../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -301,32 +316,6 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</span></div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="writeXInt(int)">
-<h3>writeXInt</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">writeXInt</span><wbr><span class="parameters">(int&nbsp;v)</span>
-        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<dl class="notes">
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
-<dt>Since:</dt>
-<dd>4.6</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="writeXLong(long)">
-<h3>writeXLong</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">writeXLong</span><wbr><span class="parameters">(long&nbsp;v)</span>
-         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
-<dl class="notes">
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
-<dt>Since:</dt>
-<dd>4.6</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="getSession()">
 <h3>getSession</h3>
 <div class="member-signature"><span class="return-type"><a href="../CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></span>&nbsp;<span class="element-name">getSession</span>()</div>
@@ -365,6 +354,64 @@ extends org.eclipse.net4j.util.io.ExtendedDataOutput</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getInitialChunkSize(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature,int)">
+<h3>getInitialChunkSize</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getInitialChunkSize</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;owner,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;referenceChunk)</span></div>
+<div class="block">Returns the initial reference chunk to use for a many-valued feature while
+ a revision is being serialized. The default preserves the supplied value.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="prepareCollection(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int)">
+<h3>prepareCollection</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prepareCollection</span><wbr><span class="parameters">(<a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;initialChunkSize)</span></div>
+<div class="block">Prepares a many-valued feature for serialization with the selected initial chunk size. The default implementation
+ preserves the existing behavior.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>revision</code> - the revision that contains the feature</dd>
+<dd><code>feature</code> - the many-valued feature to prepare</dd>
+<dd><code>initialChunkSize</code> - the initial chunk size selected for the feature</dd>
+<dt>Since:</dt>
+<dd>4.38</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="writeXInt(int)">
+<h3>writeXInt</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">writeXInt</span><wbr><span class="parameters">(int&nbsp;v)</span>
+        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
+<dd>4.6</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="writeXLong(long)">
+<h3>writeXLong</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">writeXLong</span><wbr><span class="parameters">(long&nbsp;v)</span>
+         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
+<dd>4.6</dd>
 </dl>
 </section>
 </li>

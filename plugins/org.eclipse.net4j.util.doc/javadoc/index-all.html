@@ -2253,6 +2253,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/om/log/RollingLog.html#createLogLine(java.lang.String)" class="member-name-link">createLogLine(String)</a> - Method in class org.eclipse.net4j.util.om.log.<a href="org/eclipse/net4j/util/om/log/RollingLog.html" title="class in org.eclipse.net4j.util.om.log">RollingLog</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/om/OMPlatform.html#createManagedContainer()" class="member-name-link">createManagedContainer()</a> - Method in interface org.eclipse.net4j.util.om.<a href="org/eclipse/net4j/util/om/OMPlatform.html" title="interface in org.eclipse.net4j.util.om">OMPlatform</a></dt>
+<dd>
+<div class="block">Creates a managed container that is appropriate for this platform.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/util/ui/views/MasterDetailsView.html#createMaster(org.eclipse.swt.widgets.Composite)" class="member-name-link">createMaster(Composite)</a> - Method in class org.eclipse.net4j.util.ui.views.<a href="org/eclipse/net4j/util/ui/views/MasterDetailsView.html" title="class in org.eclipse.net4j.util.ui.views">MasterDetailsView</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/om/monitor/AbstractMonitor.html#createNestedMonitor(double)" class="member-name-link">createNestedMonitor(double)</a> - Method in class org.eclipse.net4j.util.om.monitor.<a href="org/eclipse/net4j/util/om/monitor/AbstractMonitor.html" title="class in org.eclipse.net4j.util.om.monitor">AbstractMonitor</a></dt>
@@ -7219,6 +7223,11 @@ loadScripts(document, 'script');</script>
  awareness of the container that instantiated it, so that the
  factory may reach back into that container for dependencies.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/util/container/IManagedContainerInitializer.html" class="type-name-link" title="interface in org.eclipse.net4j.util.container">IManagedContainerInitializer</a> - Interface in <a href="org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></dt>
+<dd>
+<div class="block">Initializes standalone managed-container contributions discovered through
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ServiceLoader.html" title="class or interface in java.util" class="external-link"><code>ServiceLoader</code></a>.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/util/container/IManagedContainerProvider.html" class="type-name-link" title="interface in org.eclipse.net4j.util.container">IManagedContainerProvider</a> - Interface in <a href="org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/ImplementationError.html" class="type-name-link" title="class in org.eclipse.net4j.util">ImplementationError</a> - Exception Class in <a href="org/eclipse/net4j/util/package-summary.html">org.eclipse.net4j.util</a></dt>
@@ -7361,6 +7370,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/security/IChallengeResponse.State.html#INITIAL" class="member-name-link">INITIAL</a> - Enum constant in enum class org.eclipse.net4j.util.security.<a href="org/eclipse/net4j/util/security/IChallengeResponse.State.html" title="enum class in org.eclipse.net4j.util.security">IChallengeResponse.State</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/container/IManagedContainerInitializer.html#initialize(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">initialize(IManagedContainer)</a> - Method in interface org.eclipse.net4j.util.container.<a href="org/eclipse/net4j/util/container/IManagedContainerInitializer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainerInitializer</a></dt>
+<dd>
+<div class="block">Initializes the supplied standalone managed container.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/util/ui/chat/ChatMessage.Author.Builder.html#initials(java.lang.String)" class="member-name-link">initials(String)</a> - Method in class org.eclipse.net4j.util.ui.chat.<a href="org/eclipse/net4j/util/ui/chat/ChatMessage.Author.Builder.html" title="class in org.eclipse.net4j.util.ui.chat">ChatMessage.Author.Builder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/om/pref/OMPreferences.html#initInteger(java.lang.String)" class="member-name-link">initInteger(String)</a> - Method in interface org.eclipse.net4j.util.om.pref.<a href="org/eclipse/net4j/util/om/pref/OMPreferences.html" title="interface in org.eclipse.net4j.util.om.pref">OMPreferences</a></dt>
@@ -7394,8 +7407,16 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/concurrent/SynchronousExecutor.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in class org.eclipse.net4j.util.concurrent.<a href="org/eclipse/net4j/util/concurrent/SynchronousExecutor.html" title="class in org.eclipse.net4j.util.concurrent">SynchronousExecutor</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/container/IManagedContainer.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in interface org.eclipse.net4j.util.container.<a href="org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></dt>
+<dd>
+<div class="block">The canonical managed container for the current Net4j platform.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/util/container/IPluginContainer.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in interface org.eclipse.net4j.util.container.<a href="org/eclipse/net4j/util/container/IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="org/eclipse/net4j/util/container/IManagedContainer.html#INSTANCE"><code>IManagedContainer.INSTANCE</code></a> instead.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/net4j/util/event/FinishedEvent.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in class org.eclipse.net4j.util.event.<a href="org/eclipse/net4j/util/event/FinishedEvent.html" title="class in org.eclipse.net4j.util.event">FinishedEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html#INSTANCE" class="member-name-link">INSTANCE</a> - Static variable in class org.eclipse.net4j.util.om.log.<a href="org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html" title="class in org.eclipse.net4j.util.om.log">EclipseLoggingBridge</a></dt>
@@ -7550,8 +7571,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/eclipse/net4j/util/container/IPluginContainer.html" class="type-name-link" title="interface in org.eclipse.net4j.util.container">IPluginContainer</a> - Interface in <a href="org/eclipse/net4j/util/container/package-summary.html">org.eclipse.net4j.util.container</a></dt>
 <dd>
-<div class="block">A <a href="org/eclipse/net4j/util/container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> that is configured by the <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExtensionRegistry.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>extension registry</code></a>
- .</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 </dd>
 <dt><a href="org/eclipse/net4j/util/properties/IProperties.html" class="type-name-link" title="interface in org.eclipse.net4j.util.properties">IProperties&lt;RECEIVER&gt;</a> - Interface in <a href="org/eclipse/net4j/util/properties/package-summary.html">org.eclipse.net4j.util.properties</a></dt>
 <dd>
@@ -10950,6 +10970,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/util/concurrent/Sleeper.html#restart()" class="member-name-link">restart()</a> - Method in class org.eclipse.net4j.util.concurrent.<a href="org/eclipse/net4j/util/concurrent/Sleeper.html" title="class in org.eclipse.net4j.util.concurrent">Sleeper</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</dd>
+<dt><a href="org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html#restoreInterrupt(java.lang.Throwable)" class="member-name-link">restoreInterrupt(Throwable)</a> - Static method in class org.eclipse.net4j.util.concurrent.<a href="org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html" title="class in org.eclipse.net4j.util.concurrent">ConcurrencyUtil</a></dt>
+<dd>
+<div class="block">Restores the interrupt status of the current thread when the directly caught exception is an
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link"><code>InterruptedException</code></a>.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/util/concurrent/ResultSynchronizer.html" class="type-name-link" title="class in org.eclipse.net4j.util.concurrent">ResultSynchronizer&lt;RESULT&gt;</a> - Class in <a href="org/eclipse/net4j/util/concurrent/package-summary.html">org.eclipse.net4j.util.concurrent</a></dt>
 <dd>&nbsp;</dd>

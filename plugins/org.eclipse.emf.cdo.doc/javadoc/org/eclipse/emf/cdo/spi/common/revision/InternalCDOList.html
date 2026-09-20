@@ -104,6 +104,10 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <dd>2.0</dd>
 <dt>Author:</dt>
 <dd>Simon McDuff</dd>
+<dt>No Implement</dt>
+<dd>This interface is not intended to be implemented by clients.</dd>
+<dt>No Extend</dt>
+<dd>This interface is not intended to be extended by clients.</dd>
 </dl>
 </section>
 <section class="summary">
@@ -122,6 +126,11 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <div class="col-last even-row-color">
 <div class="block">A mix-in interface for <a href="InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><code>InternalCDOList</code></a> that allows to optimize the speed of equality checks.</div>
 </div>
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="InternalCDOList.Owner.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.Owner</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Internal owner callbacks used for list/revision loaded-state accounting.</div>
+</div>
 </div>
 </section>
 </li>
@@ -136,7 +145,11 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color"><code><a href="#UNINITIALIZED" class="member-name-link">UNINITIALIZED</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.29 use <a href="../../../common/revision/CDORevisionUtil.html#UNINITIALIZED"><code>CDORevisionUtil.UNINITIALIZED</code></a> instead.</div>
+</div>
+</div>
 </div>
 </section>
 </li>
@@ -145,7 +158,7 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
@@ -162,9 +175,26 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Clones the list.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#freeze()" class="member-name-link">freeze</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#finishConstruction(boolean)" class="member-name-link">finishConstruction</a><wbr>(boolean&nbsp;partial)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Completes the temporary construction phase of this list.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#freeze()" class="member-name-link">freeze</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getServerIndexAt(int)" class="member-name-link">getServerIndexAt</a><wbr>(int&nbsp;accessIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Returns the server-side index represented by the value at the given current list index.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#loadValue(int,java.lang.Object)" class="member-name-link">loadValue</a><wbr>(int&nbsp;index,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#setOwner(org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.Owner)" class="member-name-link">setOwner</a><wbr>(<a href="InternalCDOList.Owner.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.Owner</a>&nbsp;owner)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setWithoutFrozenCheck(int,java.lang.Object)" class="member-name-link">setWithoutFrozenCheck</a><wbr>(int&nbsp;i,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
@@ -174,7 +204,7 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.revision.CDOList">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></h3>
-<code><a href="../../../common/revision/CDOList.html#get(int,boolean)">get</a></code></div>
+<code><a href="../../../common/revision/CDOList.html#get(int,boolean)">get</a>, <a href="../../../common/revision/CDOList.html#isFullyLoaded()">isFullyLoaded</a>, <a href="../../../common/revision/CDOList.html#isLoadedAt(int)">isLoadedAt</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.util.Collection">Methods inherited from interface&nbsp;java.util.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#parallelStream()" title="class or interface in java.util" class="external-link">parallelStream</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#removeIf(java.util.function.Predicate)" title="class or interface in java.util" class="external-link">removeIf</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#stream()" title="class or interface in java.util" class="external-link">stream</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html#toArray(java.util.function.IntFunction)" title="class or interface in java.util" class="external-link">toArray</a></code></div>
@@ -204,7 +234,11 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <li>
 <section class="detail" id="UNINITIALIZED">
 <h3>UNINITIALIZED</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">UNINITIALIZED</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">UNINITIALIZED</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.29 use <a href="../../../common/revision/CDORevisionUtil.html#UNINITIALIZED"><code>CDORevisionUtil.UNINITIALIZED</code></a> instead.</div>
+</div>
 </section>
 </li>
 </ul>
@@ -215,6 +249,49 @@ extends <a href="../../../common/revision/CDOList.html" title="interface in org.
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="setOwner(org.eclipse.emf.cdo.spi.common.revision.InternalCDOList.Owner)">
+<h3>setOwner</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setOwner</span><wbr><span class="parameters">(<a href="InternalCDOList.Owner.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.Owner</a>&nbsp;owner)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="loadValue(int,java.lang.Object)">
+<h3>loadValue</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loadValue</span><wbr><span class="parameters">(int&nbsp;index,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getServerIndexAt(int)">
+<h3>getServerIndexAt</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getServerIndexAt</span><wbr><span class="parameters">(int&nbsp;accessIndex)</span></div>
+<div class="block">Returns the server-side index represented by the value at the given current list index.
+ <p>
+ The current index is the index in this list. Implementations that represent unloaded values with a server-indexed
+ proxy override this method to return the source index stored by that representation. For ordinary values, the
+ current index is also the server-side index.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>accessIndex</code> - the current logical index in this list</dd>
+<dt>Returns:</dt>
+<dd>the server-side index represented by the value at <code>accessIndex</code></dd>
+<dt>Since:</dt>
+<dd>4.31</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="finishConstruction(boolean)">
+<h3>finishConstruction</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">finishConstruction</span><wbr><span class="parameters">(boolean&nbsp;partial)</span></div>
+<div class="block">Completes the temporary construction phase of this list.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>partial</code> - whether positions that were not read must become unloaded</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="adjustReferences(org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster,org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>adjustReferences</h3>

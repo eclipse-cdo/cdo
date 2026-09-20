@@ -186,50 +186,52 @@ loadScripts(document, 'script');</script>
  awareness of the container that instantiated it, so that the
  factory may reach back into that container for dependencies.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="IManagedContainerProvider.html" title="interface in org.eclipse.net4j.util.container">IManagedContainerProvider</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">A <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> that is configured by the <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExtensionRegistry.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>extension registry</code></a>
- .</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="ISlow.html" title="interface in org.eclipse.net4j.util.container">ISlow</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="IManagedContainerInitializer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainerInitializer</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Initializes standalone managed-container contributions discovered through
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ServiceLoader.html" title="class or interface in java.util" class="external-link"><code>ServiceLoader</code></a>.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="IManagedContainerProvider.html" title="interface in org.eclipse.net4j.util.container">IManagedContainerProvider</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="IPluginContainer.html" title="interface in org.eclipse.net4j.util.container">IPluginContainer</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">Deprecated.</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="ISlow.html" title="interface in org.eclipse.net4j.util.container">ISlow</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A marker interface to indicate that some method calls may be slow.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="LifecycleEventConverter.html" title="class in org.eclipse.net4j.util.container">LifecycleEventConverter</a>&lt;E&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LifecycleEventConverter.html" title="class in org.eclipse.net4j.util.container">LifecycleEventConverter</a>&lt;E&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A delegating <a href="../event/IListener.html" title="interface in org.eclipse.net4j.util.event"><code>listener</code></a> that converts <a href="../lifecycle/ILifecycleEvent.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycle events</code></a> into
  <a href="IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container events</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ListContainer.html" title="class in org.eclipse.net4j.util.container">ListContainer</a>&lt;E&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ListContainer.html" title="class in org.eclipse.net4j.util.container">ListContainer</a>&lt;E&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of a <a href="Container.html" title="class in org.eclipse.net4j.util.container"><code>container</code></a> that stores its <a href="ModifiableContainer.html#getElements()"><code>elements</code></a> in a <a href="ListContainer.html#getList()"><code>list</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A default implementation of a <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ModifiableContainer.html" title="class in org.eclipse.net4j.util.container">ModifiableContainer</a>&lt;E&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ModifiableContainer.html" title="class in org.eclipse.net4j.util.container">ModifiableContainer</a>&lt;E&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An abstract implementation of a <a href="IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container"><code>modifiable container</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PersistableContainer.html" title="class in org.eclipse.net4j.util.container">PersistableContainer</a>&lt;E&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PersistableContainer.html" title="class in org.eclipse.net4j.util.container">PersistableContainer</a>&lt;E&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An abstract implementation of a <a href="Container.html" title="class in org.eclipse.net4j.util.container"><code>container</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SelfAttachingContainerListener.html" title="class in org.eclipse.net4j.util.container">SelfAttachingContainerListener</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SelfAttachingContainerListener.Delegating.html" title="class in org.eclipse.net4j.util.container">SelfAttachingContainerListener.Delegating</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SelfAttachingContainerListener.html" title="class in org.eclipse.net4j.util.container">SelfAttachingContainerListener</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SelfAttachingContainerListener.DoNotDescend.html" title="interface in org.eclipse.net4j.util.container">SelfAttachingContainerListener.DoNotDescend</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SetContainer.html" title="class in org.eclipse.net4j.util.container">SetContainer</a>&lt;E&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SelfAttachingContainerListener.Delegating.html" title="class in org.eclipse.net4j.util.container">SelfAttachingContainerListener.Delegating</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SelfAttachingContainerListener.DoNotDescend.html" title="interface in org.eclipse.net4j.util.container">SelfAttachingContainerListener.DoNotDescend</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SetContainer.html" title="class in org.eclipse.net4j.util.container">SetContainer</a>&lt;E&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of a <a href="Container.html" title="class in org.eclipse.net4j.util.container"><code>container</code></a> that stores its <a href="ModifiableContainer.html#getElements()"><code>elements</code></a> in a <a href="SetContainer.html#getSet()"><code>set</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">SingleDeltaContainerEvent</a>&lt;E&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SingleDeltaContainerEvent.html" title="class in org.eclipse.net4j.util.container">SingleDeltaContainerEvent</a>&lt;E&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A <a href="IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> with a single element <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>delta</code></a>.</div>
 </div>
 </div>

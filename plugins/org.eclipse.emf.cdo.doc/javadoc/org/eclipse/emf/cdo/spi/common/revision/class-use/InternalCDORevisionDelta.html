@@ -84,6 +84,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Exposes <a href="../../../../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-last even-row-color">
+<div class="block">Client service provider interfaces and useful base implementations.</div>
+</div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
@@ -265,6 +273,54 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&gt;&nbsp;conflicts)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">When this method is called, the <a href="../../../../server/IStoreAccessor.CommitContext.html#getOldRevisions()"><code>IStoreAccessor.CommitContext.getOldRevisions()</code></a> map is filled with the latest valid revisions, chunks ensured.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.internal.cdo">
+<h2>Uses of <a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a> in <a href="../../../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></h2>
+<div class="caption"><span>Methods in <a href="../../../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a> that return <a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionTransitionUtil.</span><code><a href="../../../../../internal/cdo/CDORevisionTransitionUtil.html#compareFeatures(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,java.util.Set,org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">compareFeatures</a><wbr>(<a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;sourceRevision,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;targetRevision,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;features,
+ <a href="../../../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Compares exactly the supplied features after loading only their partially loaded list values.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.spi.cdo">
+<h2>Uses of <a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a> in <a href="../../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a></h2>
+<div class="caption"><span>Methods in <a href="../../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> that return <a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOSessionProtocol.RefreshSessionResult.</span><code><a href="../../../../../spi/cdo/CDOSessionProtocol.RefreshSessionResult.html#getChangedObjectDelta(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getChangedObjectDelta</a><wbr>(<a href="../../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the server-derived revision delta for a changed object, if one was supplied by the refresh protocol.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with parameters of type <a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOSessionProtocol.RefreshSessionResult.</span><code><a href="../../../../../spi/cdo/CDOSessionProtocol.RefreshSessionResult.html#addChangedObject(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta)" class="member-name-link">addChangedObject</a><wbr>(<a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="../InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&nbsp;delta)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Adds a changed revision and its server-derived delta to this refresh result.</div>
 </div>
 </div>
 </section>

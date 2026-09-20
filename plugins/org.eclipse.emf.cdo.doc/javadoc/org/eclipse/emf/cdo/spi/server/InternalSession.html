@@ -168,138 +168,148 @@ extends <a href="../../server/ISession.html" title="interface in org.eclipse.emf
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;revisions,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFirstUpdateTime()" class="member-name-link">getFirstUpdateTime</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalSessionManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSessionManager</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getManager()" class="member-name-link">getManager</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCollectionLoadingConfig()" class="member-name-link">getCollectionLoadingConfig</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the complete modern collection-loading configuration snapshot.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFirstUpdateTime()" class="member-name-link">getFirstUpdateTime</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalSessionManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSessionManager</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getManager()" class="member-name-link">getManager</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getView(int)" class="member-name-link">getView</a><wbr>(int&nbsp;viewID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViews()" class="member-name-link">getViews</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isOpenOnClientSide()" class="member-name-link">isOpenOnClientSide</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openTransaction(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openTransaction</a><wbr>(int&nbsp;viewID,
- <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openTransaction(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">openTransaction</a><wbr>(int&nbsp;viewID,
- <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRepository()" class="member-name-link">getRepository</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openView</a><wbr>(int&nbsp;viewID,
- <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getView(int)" class="member-name-link">getView</a><wbr>(int&nbsp;viewID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">openView</a><wbr>(int&nbsp;viewID,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getViews()" class="member-name-link">getViews</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isOpenOnClientSide()" class="member-name-link">isOpenOnClientSide</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openTransaction(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openTransaction</a><wbr>(int&nbsp;viewID,
+ <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openTransaction(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">openTransaction</a><wbr>(int&nbsp;viewID,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendBranchNotification(org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)" class="member-name-link">sendBranchNotification</a><wbr>(<a href="../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum class in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
- <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)" class="member-name-link">sendBranchNotification</a><wbr>(<a href="../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openView</a><wbr>(int&nbsp;viewID,
+ <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">openView</a><wbr>(int&nbsp;viewID,
+ <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendBranchNotification(org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)" class="member-name-link">sendBranchNotification</a><wbr>(<a href="../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum class in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind,
+ <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>...&nbsp;branches)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)" class="member-name-link">sendBranchNotification</a><wbr>(<a href="../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.3 use <a href="#sendBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)"><code>sendBranchNotification(InternalCDOBranch, ChangeKind)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)" class="member-name-link">sendBranchNotification</a><wbr>(<a href="../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch,org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind)" class="member-name-link">sendBranchNotification</a><wbr>(<a href="../common/branch/InternalCDOBranch.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a>&nbsp;branch,
  <a href="../../common/branch/CDOBranchChangedEvent.ChangeKind.html" title="enum class in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a>&nbsp;changeKind)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.15 use <a href="#sendBranchNotification(org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind,org.eclipse.emf.cdo.common.branch.CDOBranch...)"><code>sendBranchNotification(ChangeKind, CDOBranch...)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 use <a href="#sendCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)"><code>sendCommitNotification(CDOCommitInfo, boolean)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
  boolean&nbsp;clearResourcePathCache)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.3 use <a href="#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)"><code>sendCommitNotification(CommitNotificationInfo)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="../../common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a>&nbsp;info)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../../common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="../../common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a>&nbsp;info)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../../common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  <a href="../../common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
  <a href="../../common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" class="member-name-link">sendRemoteMessageNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" class="member-name-link">sendRemoteMessageNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
  <a href="../../session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.8 use <a href="#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.server.InternalTopic,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)"><code>sendRemoteMessageNotification(InternalSession, InternalTopic, CDORemoteSessionMessage)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.server.InternalTopic,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" class="member-name-link">sendRemoteMessageNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRemoteMessageNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.server.InternalTopic,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" class="member-name-link">sendRemoteMessageNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
  <a href="InternalTopic.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTopic</a>&nbsp;topic,
  <a href="../../session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,byte)" class="member-name-link">sendRemoteSessionNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,byte)" class="member-name-link">sendRemoteSessionNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
  byte&nbsp;opcode)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.8 use <a href="#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.server.InternalTopic,byte)"><code>sendRemoteSessionNotification(InternalSession, InternalTopic, byte)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.server.InternalTopic,byte)" class="member-name-link">sendRemoteSessionNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRemoteSessionNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.spi.server.InternalTopic,byte)" class="member-name-link">sendRemoteSessionNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
  <a href="InternalTopic.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTopic</a>&nbsp;topic,
  byte&nbsp;opcode)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
  <a href="../../common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">use
              <a href="#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)"><code>sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State, CDOID)</code></a>
              instead</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
  <a href="../../common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState,
  <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRepositoryTypeNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.Type,org.eclipse.emf.cdo.common.CDOCommonRepository.Type)" class="member-name-link">sendRepositoryTypeNotification</a><wbr>(<a href="../../common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;oldType,
- <a href="../../common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;newType)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendTagNotification(int,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">sendTagNotification</a><wbr>(int&nbsp;modCount,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRepositoryTypeNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.Type,org.eclipse.emf.cdo.common.CDOCommonRepository.Type)" class="member-name-link">sendRepositoryTypeNotification</a><wbr>(<a href="../../common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;oldType,
+ <a href="../../common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;newType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendTagNotification(int,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">sendTagNotification</a><wbr>(int&nbsp;modCount,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;oldName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;newName,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)" class="member-name-link">setCollectionLoadingConfig</a><wbr>(<a href="../../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Replaces the complete modern collection-loading configuration snapshot.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFirstUpdateTime(long)" class="member-name-link">setFirstUpdateTime</a><wbr>(long&nbsp;firstUpdateTime)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -436,6 +446,32 @@ extends <a href="../../server/ISession.html" title="interface in org.eclipse.emf
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getCollectionLoadingConfig()">
+<h3>getCollectionLoadingConfig</h3>
+<div class="member-signature"><span class="return-type"><a href="../../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a></span>&nbsp;<span class="element-name">getCollectionLoadingConfig</span>()</div>
+<div class="block">Returns the complete modern collection-loading configuration snapshot.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the configuration, or <code>null</code></dd>
+<dt>Since:</dt>
+<dd>4.38</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)">
+<h3>setCollectionLoadingConfig</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setCollectionLoadingConfig</span><wbr><span class="parameters">(<a href="../../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a>&nbsp;config)</span></div>
+<div class="block">Replaces the complete modern collection-loading configuration snapshot.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>config</code> - the configuration, or <code>null</code> to disable modern partial collection loading</dd>
+<dt>Since:</dt>
+<dd>4.38</dd>
 </dl>
 </section>
 </li>

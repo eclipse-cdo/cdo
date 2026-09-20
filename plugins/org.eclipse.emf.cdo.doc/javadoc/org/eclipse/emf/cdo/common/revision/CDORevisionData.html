@@ -140,11 +140,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor)" class="member-name-link">accept</a><wbr>(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Visits the values that are currently loaded in this revision.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,java.util.function.Predicate)" class="member-name-link">accept</a><wbr>(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;filter)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Visits the values that are currently loaded in this revision and whose features pass the filter.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,org.eclipse.net4j.util.Predicate)" class="member-name-link">accept</a><wbr>(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
  org.eclipse.net4j.util.Predicate&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;filter)</code></div>
@@ -485,6 +489,10 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor)">
 <h3>accept</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">accept</span><wbr><span class="parameters">(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor)</span></div>
+<div class="block">Visits the values that are currently loaded in this revision.
+ <p>
+ Unloaded positions of many-valued features are skipped and are not materialized. The index supplied to the
+ visitor remains the logical list position.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
@@ -496,6 +504,10 @@ loadScripts(document, 'script');</script>
 <h3>accept</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">accept</span><wbr><span class="parameters">(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;filter)</span></div>
+<div class="block">Visits the values that are currently loaded in this revision and whose features pass the filter.
+ <p>
+ Unloaded positions of many-valued features are skipped and are not materialized. The index supplied to the
+ visitor remains the logical list position.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.9</dd>

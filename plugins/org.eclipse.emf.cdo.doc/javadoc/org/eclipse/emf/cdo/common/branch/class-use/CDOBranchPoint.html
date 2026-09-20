@@ -489,8 +489,22 @@ loadScripts(document, 'script');</script>
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Returns the <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> with the given <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>ID</code></a> at the given <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch
- point</code></a> (branch + timestamp), optionally demand loading it if it is not already in the <a href="../../revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="../../revision/CDORevisionManager.html#request()"><code>CDORevisionManager.request()</code></a> to configure and execute a revision request.</div>
+</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Loads revisions using the canonical request configuration.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionManager.Request.</span><code><a href="../../revision/CDORevisionManager.Request.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Executes a single-revision request at a branch point.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
@@ -499,8 +513,9 @@ loadScripts(document, 'script');</script>
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Returns the <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> with the given <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> at the given <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp), optionally demand loading them if they are not already in the
- <a href="../../revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="../../revision/CDORevisionManager.html#request()"><code>CDORevisionManager.request()</code></a> to configure and execute a revision request.</div>
+</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
@@ -510,12 +525,35 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;loadOnDemand,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Returns the <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> with the given <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> at the given <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a> (branch + timestamp), optionally demand loading them if they are not already in the
- <a href="../../revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>cache</code></a>.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="../../revision/CDORevisionManager.html#request()"><code>CDORevisionManager.request()</code></a> to configure and execute a revision request.</div>
 </div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDORevision.</span><code><a href="../../revision/CDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">isValid</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Loads revisions using the canonical request configuration.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionManager.</span><code><a href="../../revision/CDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Loads revisions using the canonical request configuration and collects additionally prefetched revisions in the
+ supplied result channel.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionManager.Request.</span><code><a href="../../revision/CDORevisionManager.Request.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Executes a multi-revision request at a branch point.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevision.</span><code><a href="../../revision/CDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">isValid</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -1429,13 +1467,28 @@ loadScripts(document, 'script');</script>
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
+ <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
  <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
@@ -1444,7 +1497,11 @@ loadScripts(document, 'script');</script>
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)"><code>InternalCDORevisionManager.getRevision(CDOID, CDOBranchPoint, CDORevisionManager.Request.Config)</code></a>.</div>
+</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -1452,14 +1509,33 @@ loadScripts(document, 'script');</script>
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>InternalCDORevisionManager.getRevision(CDOID, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Loads one revision through the canonical configuration-based path.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;referenceChunk,
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -1468,7 +1544,9 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;prefetchLockStates,
  boolean&nbsp;loadOnDemand,
  <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -1476,7 +1554,9 @@ loadScripts(document, 'script');</script>
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -1484,6 +1564,32 @@ loadScripts(document, 'script');</script>
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionCache.</span><code><a href="../../../spi/common/revision/InternalCDORevisionCache.html#getRevisions(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">getRevisions</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
@@ -1496,7 +1602,11 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;prefetchLockStates,
  boolean&nbsp;loadOnDemand,
  <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use the configuration-based <a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>InternalCDORevisionManager.getRevisions(List, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -1504,7 +1614,29 @@ loadScripts(document, 'script');</script>
  int&nbsp;prefetchDepth,
  boolean&nbsp;loadOnDemand,
  <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.37 use <a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)"><code>InternalCDORevisionManager.getRevisions(List, CDOBranchPoint, CDORevisionManager.Request.Config, SyntheticCDORevision[])</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Loads revisions through the canonical configuration-based path.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#getRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config,org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision%5B%5D,java.util.List)" class="member-name-link">getRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config,
+ <a href="../../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a>[]&nbsp;synthetics,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;additionalRevisions)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Loads revisions through the canonical configuration-based path, preserving both result channels separately from
+ the request configuration.</div>
+</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractCDORevision.</span><code><a href="../../../spi/common/revision/AbstractCDORevision.html#isValid(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">isValid</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -1532,93 +1664,100 @@ loadScripts(document, 'script');</script>
  int&nbsp;prefetchDepth,
  boolean&nbsp;prefetchLockStates)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,boolean,java.util.function.Consumer)" class="member-name-link">prefetchRevisions</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../../spi/common/revision/RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionManager.RevisionLoader4.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.RevisionLoader4.html#loadRevisions(java.util.List,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config)" class="member-name-link">loadRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../spi/common/revision/RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a>&gt;&nbsp;infos,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
- int&nbsp;prefetchDepth,
- boolean&nbsp;prefetchLockStates,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+ <a href="../../revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a>&nbsp;config)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Loads the supplied revision infos using the loading-related values in <code>config</code>.</div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,boolean,java.util.function.Consumer)" class="member-name-link">prefetchRevisions</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,boolean,java.util.function.Consumer)" class="member-name-link">prefetchRevisions</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;prefetchDepth,
  boolean&nbsp;prefetchLockStates,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ManagedRevisionProvider.</span><code><a href="../../../spi/common/revision/ManagedRevisionProvider.html#provideRevision(org.eclipse.emf.cdo.common.revision.CDORevisionManager,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">provideRevision</a><wbr>(<a href="../../revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#prefetchRevisions(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,boolean,java.util.function.Consumer)" class="member-name-link">prefetchRevisions</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ int&nbsp;prefetchDepth,
+ boolean&nbsp;prefetchLockStates,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ManagedRevisionProvider.</span><code><a href="../../../spi/common/revision/ManagedRevisionProvider.html#provideRevision(org.eclipse.emf.cdo.common.revision.CDORevisionManager,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">provideRevision</a><wbr>(<a href="../../revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager,
  <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../../../spi/common/revision/RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">read</a><wbr>(<a href="../../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../../../spi/common/revision/RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">read</a><wbr>(<a href="../../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;requestedBranchPoint)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
- int&nbsp;referenceChunk,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second even-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second odd-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
- <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
- boolean&nbsp;writePointerTarget,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ boolean&nbsp;writePointerTarget,
+ int&nbsp;referenceChunk,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.15 call <a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>RevisionInfo.writeResult(CDODataOutput, InternalCDORevision, boolean, int, CDOBranchPoint)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.Available.</span><code><a href="../../../spi/common/revision/RevisionInfo.Available.html#writeRevision(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeRevision</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
- int&nbsp;referenceChunk,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeRevision(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeRevision</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.Available.</span><code><a href="../../../spi/common/revision/RevisionInfo.Available.html#writeRevision(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeRevision</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeRevision(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeRevision</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+ int&nbsp;referenceChunk,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../../spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a> with parameters of type <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></span></div>
 <div class="summary-table three-column-summary">

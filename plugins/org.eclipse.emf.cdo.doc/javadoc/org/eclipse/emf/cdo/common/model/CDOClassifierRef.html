@@ -92,12 +92,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code>, <code><a href="CDOModelElementRef.html" title="interface in org.eclipse.emf.cdo.common.model">CDOModelElementRef</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&gt;</code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">CDOClassifierRef</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></span></div>
+implements <a href="CDOModelElementRef.html" title="interface in org.eclipse.emf.cdo.common.model">CDOModelElementRef</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&gt;</span></div>
 <div class="block">References an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EClassifier</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -196,7 +196,9 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClassifier</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#resolve(org.eclipse.emf.ecore.EPackage.Registry)" class="member-name-link">resolve</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EPackage.Registry</a>&nbsp;packageRegistry)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Resolves this reference against the supplied package registry.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -331,6 +333,17 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="resolve(org.eclipse.emf.ecore.EPackage.Registry)">
 <h3>resolve</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClassifier</a></span>&nbsp;<span class="element-name">resolve</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EPackage.Registry</a>&nbsp;packageRegistry)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="CDOModelElementRef.html#resolve(org.eclipse.emf.ecore.EPackage.Registry)">CDOModelElementRef</a></code></span></div>
+<div class="block">Resolves this reference against the supplied package registry.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="CDOModelElementRef.html#resolve(org.eclipse.emf.ecore.EPackage.Registry)">resolve</a></code>&nbsp;in interface&nbsp;<code><a href="CDOModelElementRef.html" title="interface in org.eclipse.emf.cdo.common.model">CDOModelElementRef</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&gt;</code></dd>
+<dt>Parameters:</dt>
+<dd><code>packageRegistry</code> - the registry to use for explicit resolution</dd>
+<dt>Returns:</dt>
+<dd>the referenced model element, or <code>null</code> if the symbolic
+         element is not present in the resolved package</dd>
+</dl>
 </section>
 </li>
 <li>

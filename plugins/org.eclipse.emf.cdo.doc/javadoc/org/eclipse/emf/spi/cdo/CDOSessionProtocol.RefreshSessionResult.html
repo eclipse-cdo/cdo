@@ -152,11 +152,23 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addChangedObject(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">addChangedObject</a><wbr>(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addDetachedObject(org.eclipse.emf.cdo.common.revision.CDORevisionKey)" class="member-name-link">addDetachedObject</a><wbr>(<a href="../../cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addChangedObject(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta)" class="member-name-link">addChangedObject</a><wbr>(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="../../cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&nbsp;delta)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a changed revision and its server-derived delta to this refresh result.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPackageUnit(org.eclipse.emf.cdo.common.model.CDOPackageUnit)" class="member-name-link">addPackageUnit</a><wbr>(<a href="../../cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&nbsp;packageUnit)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addDetachedObject(org.eclipse.emf.cdo.common.revision.CDORevisionKey)" class="member-name-link">addDetachedObject</a><wbr>(<a href="../../cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&nbsp;revision)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addPackageUnit(org.eclipse.emf.cdo.common.model.CDOPackageUnit)" class="member-name-link">addPackageUnit</a><wbr>(<a href="../../cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&nbsp;packageUnit)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getChangedObjectDelta(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getChangedObjectDelta</a><wbr>(<a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the server-derived revision delta for a changed object, if one was supplied by the refresh protocol.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getChangedObjects(org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">getChangedObjects</a><wbr>(<a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -169,6 +181,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPackageUnits()" class="member-name-link">getPackageUnits</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasChangedObjectDelta(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">hasChangedObjectDelta</a><wbr>(<a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Indicates whether the refresh response carried delta metadata for the changed object.</div>
+</div>
 </div>
 </div>
 </div>
@@ -219,6 +237,36 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getChangedObjectDelta(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.id.CDOID)">
+<h3>getChangedObjectDelta</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></span>&nbsp;<span class="element-name">getChangedObjectDelta</span><wbr><span class="parameters">(<a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
+<div class="block">Returns the server-derived revision delta for a changed object, if one was supplied by the refresh protocol.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>branch</code> - the branch of the changed object</dd>
+<dd><code>id</code> - the ID of the changed object</dd>
+<dt>Returns:</dt>
+<dd>the revision delta, or <code>null</code> if no delta was supplied</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="hasChangedObjectDelta(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.id.CDOID)">
+<h3>hasChangedObjectDelta</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasChangedObjectDelta</span><wbr><span class="parameters">(<a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
+<div class="block">Indicates whether the refresh response carried delta metadata for the changed object.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>branch</code> - the branch of the changed object</dd>
+<dd><code>id</code> - the ID of the changed object</dd>
+<dt>Returns:</dt>
+<dd><code>true</code> if the response supplied a delta field, including an explicitly absent delta</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getDetachedObjects(org.eclipse.emf.cdo.common.branch.CDOBranch)">
 <h3>getDetachedObjects</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;</span>&nbsp;<span class="element-name">getDetachedObjects</span><wbr><span class="parameters">(<a href="../../cdo/common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</span></div>
@@ -234,6 +282,19 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="addChangedObject(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">
 <h3>addChangedObject</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addChangedObject</span><wbr><span class="parameters">(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="addChangedObject(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta)">
+<h3>addChangedObject</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addChangedObject</span><wbr><span class="parameters">(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="../../cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&nbsp;delta)</span></div>
+<div class="block">Adds a changed revision and its server-derived delta to this refresh result.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>revision</code> - the refreshed revision</dd>
+<dd><code>delta</code> - the delta from the viewed revision to the refreshed revision</dd>
+</dl>
 </section>
 </li>
 <li>

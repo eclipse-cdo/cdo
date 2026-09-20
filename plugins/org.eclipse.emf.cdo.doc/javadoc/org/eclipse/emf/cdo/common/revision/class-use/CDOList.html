@@ -119,9 +119,17 @@ loadScripts(document, 'script');</script>
  int&nbsp;size,
  int&nbsp;initialChunk)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionData.</span><code><a href="../CDORevisionData.html#getListOrNull(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getListOrNull</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>default <a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOListFactory.</span><code><a href="../CDOListFactory.html#createList(org.eclipse.emf.ecore.EStructuralFeature,int,int,int)" class="member-name-link">createList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;initialCapacity,
+ int&nbsp;size,
+ int&nbsp;initialChunk)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a list with equality semantics derived from the feature.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionData.</span><code><a href="../CDORevisionData.html#getListOrNull(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getListOrNull</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -184,6 +192,37 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#constructList(org.eclipse.emf.ecore.EStructuralFeature,int)" class="member-name-link">constructList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;size)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#constructList(org.eclipse.emf.ecore.EStructuralFeature,int,int)" class="member-name-link">constructList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;size,
+ int&nbsp;initialChunk)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#constructList(org.eclipse.emf.ecore.EStructuralFeature,int)" class="member-name-link">constructList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;size)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#constructList(org.eclipse.emf.ecore.EStructuralFeature,int,int)" class="member-name-link">constructList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;size,
+ int&nbsp;initialChunk)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>default <a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#constructList(org.eclipse.emf.ecore.EStructuralFeature,int)" class="member-name-link">constructList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;size)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a new many-valued feature list for revision loading.</div>
+</div>
+<div class="col-first odd-row-color"><code>default <a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#constructList(org.eclipse.emf.ecore.EStructuralFeature,int,int)" class="member-name-link">constructList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;size,
+ int&nbsp;initialChunk)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs a list for a DB read with the given initial chunk size.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractCDORevision.</span><code><a href="../../../spi/common/revision/AbstractCDORevision.html#getList(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last even-row-color">

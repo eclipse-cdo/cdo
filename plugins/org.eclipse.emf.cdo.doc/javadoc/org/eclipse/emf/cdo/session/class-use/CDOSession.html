@@ -118,8 +118,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></div>
 <div class="col-last even-row-color">
+<div class="block">Exposes <a href="../../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </div>
 </div>
@@ -374,7 +378,11 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOCollectionLoadingPolicy.</span><code><a href="../CDOCollectionLoadingPolicy.html#getSession()" class="member-name-link">getSession</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDORepositoryInfo.</span><code><a href="../CDORepositoryInfo.html#getSession()" class="member-name-link">getSession</a>()</code></div>
 <div class="col-last odd-row-color">
@@ -432,7 +440,11 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOCollectionLoadingPolicy.</span><code><a href="../CDOCollectionLoadingPolicy.html#setSession(org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">setSession</a><wbr>(<a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+</div>
 </div>
 </section>
 </li>
@@ -681,6 +693,46 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">CDOView.</span><code><a href="../../view/CDOView.html#getSession()" class="member-name-link">getSession</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Returns the <a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> this view was opened by.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.internal.cdo">
+<h2>Uses of <a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a> in <a href="../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></h2>
+<div class="caption"><span>Methods in <a href="../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a> with parameters of type <a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionTransitionUtil.</span><code><a href="../../../internal/cdo/CDORevisionTransitionUtil.html#compareFeatures(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,java.util.Set,org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">compareFeatures</a><wbr>(<a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;sourceRevision,
+ <a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;targetRevision,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;features,
+ <a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Compares exactly the supplied features after loading only their partially loaded list values.</div>
+</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionTransitionUtil.</span><code><a href="../../../internal/cdo/CDORevisionTransitionUtil.html#ensureCoordinateChangingFeaturesFullyLoaded(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">ensureCoordinateChangingFeaturesFullyLoaded</a><wbr>(<a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;delta,
+ <a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Ensures that every many-valued feature whose list coordinates are changed by the given delta is fully loaded.</div>
+</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionTransitionUtil.</span><code><a href="../../../internal/cdo/CDORevisionTransitionUtil.html#ensureCoordinateChangingFeaturesFullyLoaded(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">ensureCoordinateChangingFeaturesFullyLoaded</a><wbr>(<a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="../../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta,
+ <a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Ensures that every many-valued feature whose list coordinates are changed by the given delta is fully loaded.</div>
+</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionTransitionUtil.</span><code><a href="../../../internal/cdo/CDORevisionTransitionUtil.html#ensureFeaturesFullyLoaded(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,java.util.Set,org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">ensureFeaturesFullyLoaded</a><wbr>(<a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;features,
+ <a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Ensures that the specified many-valued features are fully loaded.</div>
 </div>
 </div>
 </section>

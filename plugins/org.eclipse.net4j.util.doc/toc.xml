@@ -205,6 +205,7 @@
         <topic label="IManagedContainer" href="javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" icon="interface" />
         <topic label="IManagedContainer.ContainerAware" href="javadoc/org/eclipse/net4j/util/container/IManagedContainer.ContainerAware.html" icon="interface" />
         <topic label="IManagedContainerFactory" href="javadoc/org/eclipse/net4j/util/container/IManagedContainerFactory.html" icon="interface" />
+        <topic label="IManagedContainerInitializer" href="javadoc/org/eclipse/net4j/util/container/IManagedContainerInitializer.html" icon="interface" />
         <topic label="IManagedContainerProvider" href="javadoc/org/eclipse/net4j/util/container/IManagedContainerProvider.html" icon="interface" />
         <topic label="IPluginContainer" href="javadoc/org/eclipse/net4j/util/container/IPluginContainer.html" icon="interface" />
         <topic label="ISlow" href="javadoc/org/eclipse/net4j/util/container/ISlow.html" icon="interface" />

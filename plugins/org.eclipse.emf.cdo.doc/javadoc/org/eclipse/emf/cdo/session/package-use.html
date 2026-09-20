@@ -134,8 +134,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Concepts to checkout, open and further operate CDO <a href="../workspace/CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspaces</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></div>
 <div class="col-last even-row-color">
+<div class="block">Exposes <a href="../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </div>
 </div>
@@ -302,8 +306,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="class-use/CDOCollectionLoadingPolicy.html#org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></div>
 <div class="col-last even-row-color">
-<div class="block">A strategy that specifies which list elements must be present (loaded) in a <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
- <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> when a certain list index is accessed.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/CDORepositoryInfo.html#org.eclipse.emf.cdo.session">CDORepositoryInfo</a></div>
 <div class="col-last odd-row-color">
@@ -458,8 +463,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="class-use/CDOCollectionLoadingPolicy.html#org.eclipse.emf.cdo.util">CDOCollectionLoadingPolicy</a></div>
 <div class="col-last even-row-color">
-<div class="block">A strategy that specifies which list elements must be present (loaded) in a <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
- <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> when a certain list index is accessed.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/CDOSession.html#org.eclipse.emf.cdo.util">CDOSession</a></div>
 <div class="col-last odd-row-color">
@@ -477,8 +483,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="class-use/CDOCollectionLoadingPolicy.html#org.eclipse.emf.cdo.view">CDOCollectionLoadingPolicy</a></div>
 <div class="col-last even-row-color">
-<div class="block">A strategy that specifies which list elements must be present (loaded) in a <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
- <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> when a certain list index is accessed.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/CDOSession.html#org.eclipse.emf.cdo.view">CDOSession</a></div>
 <div class="col-last odd-row-color">
@@ -497,6 +504,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><a href="class-use/CDOSessionConfigurationFactory.html#org.eclipse.emf.cdo.workspace">CDOSessionConfigurationFactory</a></div>
 <div class="col-last even-row-color">
 <div class="block">Creates <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session"><code>session configuration</code></a> instances.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.internal.cdo">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.eclipse.emf.cdo.session</a> used by <a href="../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/CDOSession.html#org.eclipse.emf.internal.cdo">CDOSession</a></div>
+<div class="col-last even-row-color">
+<div class="block">Represents and controls the connection to a model repository in addition to the inherited <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>
+ management functions.</div>
 </div>
 </div>
 </section>

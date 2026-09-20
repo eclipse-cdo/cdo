@@ -109,6 +109,7 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
  <li> <a href="CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.Options.GeneratedPackageEmulationEvent</code></a> after the <a href="#setGeneratedPackageEmulationEnabled(boolean)"><code>generated
  package emulation mode</code></a> has changed.
  <li> <a href="CDOSession.Options.CollectionLoadingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.Options.CollectionLoadingPolicyEvent</code></a> after the <a href="#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><code>collection loading policy</code></a> has changed.
+ <li> <a href="CDOSession.Options.CollectionLoadingConfigEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.Options.CollectionLoadingConfigEvent</code></a> after the <a href="#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)"><code>collection loading configuration</code></a> has changed.
  <li> <a href="CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession.Options.LobCacheEvent</code></a> after the <a href="#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)"><code>large object cache</code></a> has changed.
  </ul></div>
 <dl class="notes">
@@ -132,40 +133,46 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="CDOSession.Options.CollectionLoadingPolicyEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.CollectionLoadingPolicyEvent</a></code></div>
+<div class="col-second even-row-color"><code><a href="CDOSession.Options.CollectionLoadingConfigEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.CollectionLoadingConfigEvent</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">An <code>options event</code> fired after the complete modern collection-loading configuration of a
+ session has changed.</div>
+</div>
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="CDOSession.Options.CollectionLoadingPolicyEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.CollectionLoadingPolicyEvent</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">An <code>options event</code> fired when the
  <a href="#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><code>collection loading policy</code></a> option of a
  <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="CDOSession.Options.DelegableViewLockEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.DelegableViewLockEvent</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDOSession.Options.DelegableViewLockEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.DelegableViewLockEvent</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">An <code>options event</code> fired when the <a href="#setDelegableViewLockEnabled(boolean)"><code>delegable view lock enabled</code></a>
  option of a <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="CDOSession.Options.GeneratedPackageEmulationEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.GeneratedPackageEmulationEvent</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="CDOSession.Options.GeneratedPackageEmulationEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.GeneratedPackageEmulationEvent</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">An <code>options event</code> fired when the
  <a href="#setGeneratedPackageEmulationEnabled(boolean)"><code>generated package emulation enabled</code></a> option of a
  <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="CDOSession.Options.LobCacheEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.LobCacheEvent</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDOSession.Options.LobCacheEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.LobCacheEvent</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">An <code>options event</code> fired when the <a href="#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)"><code>large object cache</code></a>
  option of a <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="CDOSession.Options.PermissionUpdaterEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PermissionUpdaterEvent</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="CDOSession.Options.PermissionUpdaterEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PermissionUpdaterEvent</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">An <code>options event</code> fired when the <a href="#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)"><code>permission updater</code></a>
  option of a <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="CDOSession.Options.PrefetchSendMaxRevisionKeysEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PrefetchSendMaxRevisionKeysEvent</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDOSession.Options.PrefetchSendMaxRevisionKeysEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PrefetchSendMaxRevisionKeysEvent</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">An <code>options event</code> fired when the <a href="#setPrefetchSendMaxRevisionKeys(int)"><code>prefetch send max revision keys</code></a>
  option of a <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
@@ -183,46 +190,60 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCollectionLoadingPolicy()" class="member-name-link">getCollectionLoadingPolicy</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">The <a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading policy</code></a> of this <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> controls how
- a list gets populated.</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getCollectionLoadingConfig()" class="member-name-link">getCollectionLoadingConfig</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Returns the modern session-wide collection-loading configuration, or <code>null</code> if modern partial collection
+ loading is disabled.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContainer()" class="member-name-link">getContainer</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getCollectionLoadingPolicy()" class="member-name-link">getCollectionLoadingPolicy</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="#getCollectionLoadingConfig()"><code>getCollectionLoadingConfig()</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContainer()" class="member-name-link">getContainer</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> of this options object.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLobCache()" class="member-name-link">getLobCache</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLobCache()" class="member-name-link">getLobCache</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <a href="../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob"><code>large object cache</code></a> currently being used by this session.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo">CDOPermissionUpdater</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPermissionUpdater()" class="member-name-link">getPermissionUpdater</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo">CDOPermissionUpdater</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPermissionUpdater()" class="member-name-link">getPermissionUpdater</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <a href="../../spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo"><code>permission updater</code></a> currently being used by this session.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPrefetchSendMaxRevisionKeys()" class="member-name-link">getPrefetchSendMaxRevisionKeys</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isDelegableViewLockEnabled()" class="member-name-link">isDelegableViewLockEnabled</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPrefetchSendMaxRevisionKeys()" class="member-name-link">getPrefetchSendMaxRevisionKeys</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isGeneratedPackageEmulationEnabled()" class="member-name-link">isGeneratedPackageEmulationEnabled</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isDelegableViewLockEnabled()" class="member-name-link">isDelegableViewLockEnabled</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)" class="member-name-link">setCollectionLoadingPolicy</a><wbr>(<a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a>&nbsp;policy)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Sets the <a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading</code></a> to be used by this session.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isGeneratedPackageEmulationEnabled()" class="member-name-link">isGeneratedPackageEmulationEnabled</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)" class="member-name-link">setCollectionLoadingConfig</a><wbr>(<a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Replaces the complete modern session-wide collection-loading configuration snapshot.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)" class="member-name-link">setCollectionLoadingPolicy</a><wbr>(<a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a>&nbsp;policy)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)"><code>setCollectionLoadingConfig(CDOCollectionLoadingConfig)</code></a>.</div>
+</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDelegableViewLockEnabled(boolean)" class="member-name-link">setDelegableViewLockEnabled</a><wbr>(boolean&nbsp;delegableViewLockEnabled)</code></div>
@@ -295,7 +316,11 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <li>
 <section class="detail" id="getCollectionLoadingPolicy()">
 <h3>getCollectionLoadingPolicy</h3>
-<div class="member-signature"><span class="return-type"><a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></span>&nbsp;<span class="element-name">getCollectionLoadingPolicy</span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></span>&nbsp;<span class="element-name">getCollectionLoadingPolicy</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="#getCollectionLoadingConfig()"><code>getCollectionLoadingConfig()</code></a>.</div>
+</div>
 <div class="block">The <a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading policy</code></a> of this <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> controls how
  a list gets populated. By default, when an object is fetched, all its elements are filled with the proper values.
  <p>
@@ -316,8 +341,39 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <li>
 <section class="detail" id="setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)">
 <h3>setCollectionLoadingPolicy</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setCollectionLoadingPolicy</span><wbr><span class="parameters">(<a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a>&nbsp;policy)</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type">void</span>&nbsp;<span class="element-name">setCollectionLoadingPolicy</span><wbr><span class="parameters">(<a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a>&nbsp;policy)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)"><code>setCollectionLoadingConfig(CDOCollectionLoadingConfig)</code></a>.</div>
+</div>
 <div class="block">Sets the <a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading</code></a> to be used by this session.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getCollectionLoadingConfig()">
+<h3>getCollectionLoadingConfig</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a></span>&nbsp;<span class="element-name">getCollectionLoadingConfig</span>()</div>
+<div class="block">Returns the modern session-wide collection-loading configuration, or <code>null</code> if modern partial collection
+ loading is disabled.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the immutable configuration snapshot, or <code>null</code></dd>
+<dt>Since:</dt>
+<dd>4.38</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)">
+<h3>setCollectionLoadingConfig</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCollectionLoadingConfig</span><wbr><span class="parameters">(<a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a>&nbsp;config)</span></div>
+<div class="block">Replaces the complete modern session-wide collection-loading configuration snapshot.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>config</code> - the new immutable configuration, or <code>null</code> to disable modern partial collection loading</dd>
+<dt>Since:</dt>
+<dd>4.38</dd>
+</dl>
 </section>
 </li>
 <li>

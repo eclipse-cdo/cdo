@@ -108,8 +108,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Exposes <a href="../../../../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-last even-row-color">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </div>
 </div>
@@ -419,6 +423,29 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">CDOViewInvalidationEvent.</span><code><a href="../../../../view/CDOViewInvalidationEvent.html#getRevisionDeltas()" class="member-name-link">getRevisionDeltas</a>()</code></div>
 <div class="col-last even-row-color">
 <div class="block">Returns a map with the <a href="../CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>change deltas</code></a> per object.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.internal.cdo">
+<h2>Uses of <a href="../CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a> in <a href="../../../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></h2>
+<div class="caption"><span>Methods in <a href="../../../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a> with parameters of type <a href="../CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionTransitionUtil.</span><code><a href="../../../../../internal/cdo/CDORevisionTransitionUtil.html#ensureCoordinateChangingFeaturesFullyLoaded(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta,org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">ensureCoordinateChangingFeaturesFullyLoaded</a><wbr>(<a href="../../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="../CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta,
+ <a href="../../../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Ensures that every many-valued feature whose list coordinates are changed by the given delta is fully loaded.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORevisionTransitionUtil.</span><code><a href="../../../../../internal/cdo/CDORevisionTransitionUtil.html#getCoordinateChangingFeatures(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)" class="member-name-link">getCoordinateChangingFeatures</a><wbr>(<a href="../CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the many-valued features whose unresolved positions can change coordinates when the delta is applied.</div>
 </div>
 </div>
 </section>

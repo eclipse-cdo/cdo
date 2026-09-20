@@ -82,8 +82,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOSession.Options.</span><code><a href="../CDOSession.Options.html#getCollectionLoadingPolicy()" class="member-name-link">getCollectionLoadingPolicy</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">The <a href="../CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading policy</code></a> of this <a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> controls how
- a list gets populated.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../CDOSession.Options.html#getCollectionLoadingConfig()"><code>CDOSession.Options.getCollectionLoadingConfig()</code></a>.</div>
+</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.session</a> with parameters of type <a href="../CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></span></div>
@@ -94,7 +95,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOSession.Options.</span><code><a href="../CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)" class="member-name-link">setCollectionLoadingPolicy</a><wbr>(<a href="../CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a>&nbsp;policy)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Sets the <a href="../CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading</code></a> to be used by this session.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../CDOSession.Options.html#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)"><code>CDOSession.Options.setCollectionLoadingConfig(CDOCollectionLoadingConfig)</code></a>.</div>
+</div>
 </div>
 </div>
 </section>
@@ -110,7 +113,11 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static <a href="../CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOUtil.</span><code><a href="../../util/CDOUtil.html#createCollectionLoadingPolicy(int,int)" class="member-name-link">createCollectionLoadingPolicy</a><wbr>(int&nbsp;initialChunkSize,
  int&nbsp;resolveChunkSize)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use collection loading configuration.</div>
+</div>
+</div>
 </div>
 </section>
 </li>
@@ -125,7 +132,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>default <a href="../CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOFetchRuleManager.</span><code><a href="../../view/CDOFetchRuleManager.html#getCollectionLoadingPolicy()" class="member-name-link">getCollectionLoadingPolicy</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Returns the collection loading policy that should be used when loading collections.</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../CDOSession.Options.html#getCollectionLoadingConfig()"><code>CDOSession.Options.getCollectionLoadingConfig()</code></a>.</div>
+</div>
 </div>
 </div>
 </section>

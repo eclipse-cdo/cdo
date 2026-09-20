@@ -92,9 +92,15 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../common/revision/CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOCollectionLoadingPolicy</span><span class="extends-implements">
+<div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOCollectionLoadingPolicy</span><span class="extends-implements">
 extends <a href="../common/revision/CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</a></span></div>
-<div class="block">A strategy that specifies which list elements must be present (loaded) in a <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>. Legacy
+ <a href="#resolveProxy(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,int)"><code>execution methods</code></a> are no longer
+ supported and policies overriding them are rejected when installed in a session.</div>
+</div>
+<div class="block">A legacy strategy that specifies which list elements must be present (loaded) in a <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
  <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> when a certain list index is accessed. Implementations of this interface can control the
  exact characteristics of a certain <em>partial collection loading</em> strategy.</div>
 <dl class="notes">
@@ -111,35 +117,77 @@ extends <a href="../common/revision/CDOListResolver.html" title="interface in or
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getInitialChunkSize()" class="member-name-link">getInitialChunkSize</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns the maximum number of CDOIDs to be loaded for collections when the owning object is loaded initially, i.e.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getResolveChunkSize()" class="member-name-link">getResolveChunkSize</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns the maximum number of CDOIDs to be loaded for collections when the owning object is already loaded but the
- actually accessed element is still a <a href="../common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>proxy</code></a>.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSession()" class="member-name-link">getSession</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setSession(org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">setSession</a><wbr>(<a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getInitialChunkSize()" class="member-name-link">getInitialChunkSize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
 </div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code>default int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code><a href="#getInitialChunkSize(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getInitialChunkSize</a><wbr>(<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.revision.CDOListResolver">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../common/revision/CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</a></h3>
-<code><a href="../common/revision/CDOListResolver.html#resolveAllProxies(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)">resolveAllProxies</a>, <a href="../common/revision/CDOListResolver.html#resolveProxy(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,int)">resolveProxy</a></code></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getResolveChunkSize()" class="member-name-link">getResolveChunkSize</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code>default int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code><a href="#getResolveChunkSize(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getResolveChunkSize</a><wbr>(<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getSession()" class="member-name-link">getSession</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code>default void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code><a href="#resolveAllProxies(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">resolveAllProxies</a><wbr>(<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 the policy is declarative and must not execute collection loading.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code>default <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code><a href="#resolveProxy(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,int)" class="member-name-link">resolveProxy</a><wbr>(<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;accessIndex,
+ int&nbsp;serverIndex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 the policy is declarative and must not execute collection loading.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#setSession(org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">setSession</a><wbr>(<a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 </li>
 </ul>
@@ -152,9 +200,49 @@ extends <a href="../common/revision/CDOListResolver.html" title="interface in or
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="resolveProxy(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,int)">
+<h3>resolveProxy</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">resolveProxy</span><wbr><span class="parameters">(<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;accessIndex,
+ int&nbsp;serverIndex)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 the policy is declarative and must not execute collection loading.</div>
+</div>
+<div class="block">Retained for source compatibility with policies written before collection loading execution was moved to the
+ session resolver. New code must use the session's resolver instead.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../common/revision/CDOListResolver.html#resolveProxy(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,int)">resolveProxy</a></code>&nbsp;in interface&nbsp;<code><a href="../common/revision/CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="resolveAllProxies(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>resolveAllProxies</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">resolveAllProxies</span><wbr><span class="parameters">(<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 the policy is declarative and must not execute collection loading.</div>
+</div>
+<div class="block">Retained for source compatibility with policies written before collection loading execution was moved to the
+ session resolver.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../common/revision/CDOListResolver.html#resolveAllProxies(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)">resolveAllProxies</a></code>&nbsp;in interface&nbsp;<code><a href="../common/revision/CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getSession()">
 <h3>getSession</h3>
-<div class="member-signature"><span class="return-type"><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></span>&nbsp;<span class="element-name">getSession</span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></span>&nbsp;<span class="element-name">getSession</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
@@ -164,7 +252,11 @@ extends <a href="../common/revision/CDOListResolver.html" title="interface in or
 <li>
 <section class="detail" id="setSession(org.eclipse.emf.cdo.session.CDOSession)">
 <h3>setSession</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setSession</span><wbr><span class="parameters">(<a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type">void</span>&nbsp;<span class="element-name">setSession</span><wbr><span class="parameters">(<a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
@@ -174,21 +266,78 @@ extends <a href="../common/revision/CDOListResolver.html" title="interface in or
 <li>
 <section class="detail" id="getInitialChunkSize()">
 <h3>getInitialChunkSize</h3>
-<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getInitialChunkSize</span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type">int</span>&nbsp;<span class="element-name">getInitialChunkSize</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
 <div class="block">Returns the maximum number of CDOIDs to be loaded for collections when the owning object is loaded initially, i.e.
  <b>before</b> any of the collection elements is actually accessed. The remaining elements will be initialized as
  <a href="../common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>proxies</code></a>.</div>
 </section>
 </li>
 <li>
+<section class="detail" id="getInitialChunkSize(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>getInitialChunkSize</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getInitialChunkSize</span><wbr><span class="parameters">(<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+<div class="block">Returns the maximum number of CDOIDs to be loaded initially for the given many-valued feature. The default
+ implementation preserves the revision-independent policy represented by <a href="#getInitialChunkSize()"><code>getInitialChunkSize()</code></a>.
+
+ <p>
+ Current revision loading requests carry one initial chunk size for the complete revision. Consequently, this
+ feature-aware form is available for policy composition and future per-feature initial loading, but it is not used
+ to split a single revision request into different initial chunks.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>revision</code> - the revision that owns the feature</dd>
+<dd><code>feature</code> - the many-valued feature</dd>
+<dt>Returns:</dt>
+<dd>the maximum number of initially loaded elements</dd>
+<dt>Since:</dt>
+<dd>4.30</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getResolveChunkSize()">
 <h3>getResolveChunkSize</h3>
-<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getResolveChunkSize</span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type">int</span>&nbsp;<span class="element-name">getResolveChunkSize</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
 <div class="block">Returns the maximum number of CDOIDs to be loaded for collections when the owning object is already loaded but the
  actually accessed element is still a <a href="../common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>proxy</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getResolveChunkSize(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>getResolveChunkSize</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getResolveChunkSize</span><wbr><span class="parameters">(<a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 legacy policy API; use <a href="../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+<div class="block">Returns the maximum number of CDOIDs to be loaded around an accessed proxy in the given many-valued feature. This
+ is the feature-aware policy decision used by lazy collection resolution.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>revision</code> - the revision that owns the feature</dd>
+<dd><code>feature</code> - the many-valued feature</dd>
+<dt>Returns:</dt>
+<dd>the maximum number of elements to load around the accessed element</dd>
+<dt>Since:</dt>
+<dd>4.30</dd>
 </dl>
 </section>
 </li>

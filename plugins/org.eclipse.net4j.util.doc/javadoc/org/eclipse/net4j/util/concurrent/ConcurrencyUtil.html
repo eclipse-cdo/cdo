@@ -128,19 +128,25 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#log(java.lang.String)" class="member-name-link">log</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;msg)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setThreadName(java.lang.String)" class="member-name-link">setThreadName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#restoreInterrupt(java.lang.Throwable)" class="member-name-link">restoreInterrupt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;ex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Restores the interrupt status of the current thread when the directly caught exception is an
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link"><code>InterruptedException</code></a>.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setThreadName(java.lang.Thread,java.lang.String)" class="member-name-link">setThreadName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="class or interface in java.lang" class="external-link">Thread</a>&nbsp;thread,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setThreadName(java.lang.String)" class="member-name-link">setThreadName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sleep(long)" class="member-name-link">sleep</a><wbr>(long&nbsp;millis)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setThreadName(java.lang.Thread,java.lang.String)" class="member-name-link">setThreadName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="class or interface in java.lang" class="external-link">Thread</a>&nbsp;thread,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sleep(long,int)" class="member-name-link">sleep</a><wbr>(long&nbsp;millis,
- int&nbsp;nanos)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sleep(long)" class="member-name-link">sleep</a><wbr>(long&nbsp;millis)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sleep(long,int)" class="member-name-link">sleep</a><wbr>(long&nbsp;millis,
+ int&nbsp;nanos)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -243,6 +249,40 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/OperationCanceledException.html" title="class or interface in org.eclipse.core.runtime" class="external-link">OperationCanceledException</a></code></dd>
 <dt>Since:</dt>
 <dd>3.13</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="restoreInterrupt(java.lang.Throwable)">
+<h3>restoreInterrupt</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">restoreInterrupt</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;ex)</span></div>
+<div class="block">Restores the interrupt status of the current thread when the directly caught exception is an
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link"><code>InterruptedException</code></a>.
+ <p>
+ Interruptible operations such as <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html#sleep(long)" title="class or interface in java.lang" class="external-link"><code>Thread.sleep(long)</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link"><code>Object.wait()</code></a>,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html#join()" title="class or interface in java.lang" class="external-link"><code>Thread.join()</code></a>, <code>CountDownLatch.await()</code>, and interruptible queue or lock
+ operations clear the current thread's interrupt status before throwing <code>InterruptedException</code>.
+ This helper is intended for a broader catch boundary that cannot propagate that checked
+ exception and instead translates it or otherwise terminates the current operation, when the
+ surrounding thread-ownership and cancellation policy requires the status to remain observable.
+ <p>
+ Callers must not use this as a blanket action for every broad catch, as a substitute for
+ propagating <code>InterruptedException</code>, or without analyzing continuing loops, retry logic,
+ worker lifecycle code, ordinary-result translations, and intentional interrupt-consumption
+ policies. Those contexts may require a different policy, because retaining the status can
+ change subsequent waits, retries, shutdown behavior, or worker termination.
+ <p>
+ Only the directly caught value is inspected. Causes are deliberately not traversed: a wrapper
+ that merely contains an <code>InterruptedException</code> does not establish that this catch
+ consumed the current thread's interrupt status, and restoring from a nested historical cause
+ could spuriously interrupt unrelated execution.
+ <p>
+ For a non-<code>InterruptedException</code> value this method does nothing. For an
+ <code>InterruptedException</code> it sets the current thread's interrupt status and otherwise
+ leaves the supplied exception untouched. It does not throw, wrap, log, or inspect causes.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>ex</code> - the exception directly caught by the caller</dd>
 </dl>
 </section>
 </li>

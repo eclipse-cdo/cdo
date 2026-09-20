@@ -807,459 +807,475 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Writer.html" title="class or interface in java.io" class="external-link"><code>Writer</code></a> that produces a <a href="org/eclipse/emf/cdo/common/lob/CDOClobWriter.html#getClob()"><code>CDOClob</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
-<div class="block">A strategy that specifies which list elements must be present (loaded) in a <a href="org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
- <a href="org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> when a certain list index is accessed.</div>
-</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.CommandException.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.CommandException</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.CommandParameter.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.CommandParameter</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.WithAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.WithAccessor</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.WithRepository.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.WithRepository</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOCommitCommentPrompter.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">An immutable collection-loading configuration snapshot.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.ChunkConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig.ChunkConfig</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">The two independent collection-loading dimensions at one configuration level.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfigResolver.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfigResolver</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Resolves effective collection-loading configuration for concrete model features.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">Deprecated.
+<div class="deprecation-comment">As of 4.31 use <a href="org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.CommandException.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.CommandException</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab5">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.CommandParameter.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.CommandParameter</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.WithAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.WithAccessor</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/server/CDOCommand.WithRepository.html" title="class in org.eclipse.emf.cdo.spi.server">CDOCommand.WithRepository</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOCommitCommentPrompter.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Attaches to a given <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and pops up a <a href="org/eclipse/emf/cdo/ui/CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui"><code>dialog</code></a>
  for a commit comment whenever this transaction is <a href="org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()"><code>committed</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter.CommentDialog</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter.CommentDialog</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A dialog for commit comments.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOCommitContext.html" title="interface in org.eclipse.emf.cdo.transaction">CDOCommitContext</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Provides a context for commit operations.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block"><a href="org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Change set data</code></a> with detailed information about new <a href="org/eclipse/emf/cdo/common/commit/CDOCommitData.html#getNewPackageUnits()"><code>package
  units</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A cache for the <a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a> of a branch or of an entire repository.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider&lt;KEY,<wbr>HISTORY&gt;</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider&lt;KEY,<wbr>HISTORY&gt;</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Provides consumers with <a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>histories</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.TriggerLoadElement.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.TriggerLoadElement</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A virtual <a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>history</code></a> element that can be returned from <code>IContainer.getElements()</code>
  if <a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isAppendingTriggerLoadElement()"><code>CDOCommitHistory.isAppendingTriggerLoadElement()</code></a> is <code>true</code> to indicate that
  the history is not <a href="org/eclipse/emf/cdo/common/commit/CDOCommitHistory.html#isFull()"><code>fully</code></a> loaded, yet.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>Commit data</code></a> in the context of a <a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info manager</code></a> with
  additional commit informations.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A call-back interface that indicates the ability to <i>handle</i> <a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a> that are passed
  from other entities.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Provides access to <a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a> objects.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Calls registered <a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit info handlers</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOCommitInfoUtil</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/commit/CDOCommitInfoUtil.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOCommitInfoUtil</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/util/CDOCommonEventAdapter.html" title="class in org.eclipse.emf.cdo.common.util">CDOCommonEventAdapter</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/util/CDOCommonEventAdapter.html" title="class in org.eclipse.emf.cdo.common.util">CDOCommonEventAdapter</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A convenience adapter for common CDO <code>events</code>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Abstracts the information about CDO repositories that is common to both client and server side.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.CommitInfoStorage</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.CommitInfoStorage</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()"><code>ID generation locations</code></a> of a CDO
+ repository.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()"><code>ID generation locations</code></a> of a CDO
  repository.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
-<div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()"><code>ID generation locations</code></a> of a CDO
- repository.</div>
-</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Mode</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.ListOrdering.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Mode</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()"><code>types</code></a> of a CDO repository.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState()"><code>states</code></a> of a CDO repository.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.StateChangedEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.StateChangedEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>event</code> fired when the <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common"><code>state</code></a> of a CDO repository has changed.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()"><code>types</code></a> of a CDO repository.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.TypeChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.TypeChangedEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonRepository.TypeChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.TypeChangedEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>event</code> fired when the <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common"><code>type</code></a> of a CDO repository has changed.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Abstracts the information about CDO sessions that is common to both client and server side.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Encapsulates the configuration options of CDO sessions that are common to both client and server side.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationEvent</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationEvent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the <a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common"><code>lock notification mode</code></a> of a
  CDO session has changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()"><code>lock notification modes</code></a> of a
  CDO session.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationModeEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationModeEvent</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationModeEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationModeEvent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the <a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common"><code>lock notification mode</code></a> of a
  CDO session has changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the <a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common"><code>passive update mode</code></a> of a CDO
  session has changed.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()"><code>passive update modes</code></a> of a CDO
  session.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonTransaction.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonTransaction</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonTransaction.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonTransaction</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Abstracts the information about CDO transactions that is common to both client and server side.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/util/CDOCommonUtil.html" title="class in org.eclipse.emf.cdo.common.util">CDOCommonUtil</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/util/CDOCommonUtil.html" title="class in org.eclipse.emf.cdo.common.util">CDOCommonUtil</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Various static methods that may help with I/O and time stamps.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Abstracts the information about CDO views that is common to both client and server side.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonView.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Encapsulates the configuration options of CDO views that are common to both client and server side.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonView.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options.LockNotificationEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/CDOCommonView.Options.LockNotificationEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonView.Options.LockNotificationEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired from common view <a href="org/eclipse/emf/cdo/common/CDOCommonView.html#options()"><code>options</code></a> when the
  <a href="org/eclipse/emf/cdo/common/CDOCommonView.Options.html#setLockNotificationEnabled(boolean)"><code>lock notification enabled</code></a> option has changed.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A class with many overridable factory methods that help to create EMF <code>comparisons</code>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDODiffEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDODiffEngine</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDODiffEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDODiffEngine</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A <code>diff engine</code> that <a href="org/eclipse/emf/cdo/compare/CDOCompare.CDODiffEngine.html#createFeatureFilter()"><code>creates</code></a> and uses CDO-specific <code>feature filters</code>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOFeatureFilter.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOFeatureFilter</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOFeatureFilter.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOFeatureFilter</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A CDO-specific <code>feature filter</code> that uses <a href="org/eclipse/emf/cdo/common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>EMFUtil.isPersistent()</code></a>
  to determine whether a <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>feature</code></a> is <a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOFeatureFilter.html#isTransient(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a>, or not.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An <a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A <code>match engine</code> that treats <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>resources</code></a> as <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObjects</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.Factory.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine.Factory</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.Factory.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine.Factory</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Creates <a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare"><code>match engine</code></a> instances.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOMatcher.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatcher</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOMatcher.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatcher</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A <code>matcher</code> that treats <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>resources</code></a> as <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObjects</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Static methods to open an EMF Compare dialog.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.ContentsCreator.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.ContentsCreator</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.ContentsCreator.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.ContentsCreator</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An optional mix-in interface for <a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#setInputConsumer(java.util.function.Consumer)"><code>input consumers</code></a> that want to
  customize the creation of the visual controls of the Compare UI.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.EditorConsumer.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.EditorConsumer</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.EditorConsumer.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.EditorConsumer</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An optional mix-in interface for <a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#setInputConsumer(java.util.function.Consumer)"><code>input consumers</code></a> that need to be
  notified when an associated Compare <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html" title="class or interface in org.eclipse.ui" class="external-link"><code>editor</code></a> was opened.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.InputHolder.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.InputHolder</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.InputHolder.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.InputHolder</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A default implementation of an <a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.html#setInputConsumer(java.util.function.Consumer)"><code>input consumer</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.TransactionOpenerAndEditorCloser.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.TransactionOpenerAndEditorCloser</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/compare/CDOCompareEditorUtil.TransactionOpenerAndEditorCloser.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.TransactionOpenerAndEditorCloser</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A <a href="org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction opener</code></a> that automatically closes the editor of a transaction
  when the transaction is closed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompareUtil.html" title="class in org.eclipse.emf.cdo.compare">CDOCompareUtil</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOCompareUtil.html" title="class in org.eclipse.emf.cdo.compare">CDOCompareUtil</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Provides static factory methods that return CDO-scoped <code>comparisons</code>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOComparisonScope.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A CDO-specific base implementation of a <code>comparison scope</code>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.AllContents</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.AllContents</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Takes an arbitrary <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="org/eclipse/emf/cdo/eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>)
  and returns <code>matches</code> for <b>all</b> elements of its <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eAllContents--" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>content tree</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.Minimal</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/compare/CDOComparisonScope.Minimal.html" title="class in org.eclipse.emf.cdo.compare">CDOComparisonScope.Minimal</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Takes a <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
  and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="org/eclipse/emf/cdo/view/CDOView.html#getRootResource()"><code>root resource</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A strategy used to customize the default conflict resolution behavior of <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transactions</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver.NonConflictAware.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver.NonConflictAware</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver.NonConflictAware.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver.NonConflictAware</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A mix-in interface for <a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction"><code>conflict resolvers</code></a> that need to know about non-conflicting invalidations.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver2</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
-<div class="block">A strategy used to customize the default conflict resolution behavior of <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transactions</code></a>.</div>
-</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver3.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver3</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver2.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver2</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A strategy used to customize the default conflict resolution behavior of <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transactions</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOContainerFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOContainerFeatureDelta</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDOConflictResolver3.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver3</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">A strategy used to customize the default conflict resolution behavior of <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transactions</code></a>.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOContainerFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOContainerFeatureDelta</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A <a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>feature delta</code></a> that represents a modification of the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainer--" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>eContainer</code></a>
  feature.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/util/CDOCrossReferenceAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOCrossReferenceAdapter</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/util/CDOCrossReferenceAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOCrossReferenceAdapter</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/ECrossReferenceAdapter.html" title="class or interface in org.eclipse.emf.ecore.util" class="external-link"><code>ECrossReferenceAdapter</code></a> that does instanceof checks of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link"><code>Notifier</code></a> instances
  in the order <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>Resource</code></a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObject</code></a>, and <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>ResourceSet</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Provides I/O methods for reading various CDO data types and concepts from streams.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.Default.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl.Default</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.Default.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl.Default</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A concrete subclass of <a href="org/eclipse/emf/cdo/spi/common/protocol/CDODataInputImpl.html" title="class in org.eclipse.emf.cdo.spi.common.protocol"><code>CDODataInputImpl</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Provides I/O methods for writing various CDO data types and concepts to streams.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/protocol/CDODataOutputImpl.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataOutputImpl</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/protocol/CDODataOutputImpl.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataOutputImpl</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/db/CDODBUtil.html" title="class in org.eclipse.emf.cdo.server.db">CDODBUtil</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/db/CDODBUtil.html" title="class in org.eclipse.emf.cdo.server.db">CDODBUtil</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Various static methods that may help in setting up and dealing with <a href="org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db"><code>DB stores</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An empty default implementation of <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionHandler1</code></a> and <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionHandler2</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler1</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler1.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler1</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An empty default implementation of <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler1.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionHandler1</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler2</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler2.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler2</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An empty default implementation of <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler2.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionHandler2</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler3</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html" title="class in org.eclipse.emf.cdo.transaction">CDODefaultTransactionHandler3</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An empty default implementation of <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler3.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionHandler3</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDODeltaNotification.html" title="interface in org.eclipse.emf.cdo">CDODeltaNotification</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDODeltaNotification.html" title="interface in org.eclipse.emf.cdo">CDODeltaNotification</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">This class behaves like the usual EMF Notification except for the following:
  
  It doesn't provide the old value, only the new index or new value.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/view/CDODirtyStateAdapter.html" title="class in org.eclipse.emf.cdo.view">CDODirtyStateAdapter</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/view/CDODirtyStateAdapter.html" title="class in org.eclipse.emf.cdo.view">CDODirtyStateAdapter</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A <code>listener</code> that calls the <a href="org/eclipse/emf/cdo/view/CDODirtyStateAdapter.html#onDirtyStateChanged(boolean)"><code>CDODirtyStateAdapter.onDirtyStateChanged(boolean)</code></a> method when the <a href="org/eclipse/emf/cdo/view/CDOView.html#isDirty()"><code>dirty</code></a> state
  of the <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> this listener is <code>registered</code> with has changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/common/branch/CDODuplicateBranchException.html" title="class in org.eclipse.emf.cdo.common.branch">CDODuplicateBranchException</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab5">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/common/branch/CDODuplicateBranchException.html" title="class in org.eclipse.emf.cdo.common.branch">CDODuplicateBranchException</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab5">
 <div class="block">A CDO <a href="org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>exception</code></a> thrown from <a href="org/eclipse/emf/cdo/common/branch/CDOBranch.html#createBranch(java.lang.String,long)"><code>CDOBranch.createBranch()</code></a>
  if the <a href="org/eclipse/emf/cdo/common/branch/CDOBranch.html#getPathName()"><code>path name</code></a> of the branch to be created already exists.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/common/util/CDODuplicateResourceException.html" title="class in org.eclipse.emf.cdo.common.util">CDODuplicateResourceException</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab5">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/common/util/CDODuplicateResourceException.html" title="class in org.eclipse.emf.cdo.common.util">CDODuplicateResourceException</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab5">
 <div class="block">A CDO <a href="org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>exception</code></a> thrown from a <code>CDOResourceNode</code> to indicate
  an illegal attempt to change the path of the node to a path that already exists.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A specialized <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorInput.html" title="class or interface in org.eclipse.ui" class="external-link"><code>IEditorInput</code></a> for the CDO editor.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/CDOEditorInput2.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput2</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/CDOEditorInput2.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput2</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An extension to <a href="org/eclipse/emf/cdo/ui/CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides input object information.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/CDOEditorInput3.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput3</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/CDOEditorInput3.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput3</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An extension to <a href="org/eclipse/emf/cdo/ui/CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides long-running <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> opening.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Opens an <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html" title="class or interface in org.eclipse.ui" class="external-link"><code>editor</code></a> for a given <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="class or interface in org.eclipse.emf.common.util" class="external-link"><code>URI</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.Default.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An abstract default <a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorOpener</code></a> implementation.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A registry for <a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>editor openers</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An <a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>editor opener</code></a> descriptor registered with the <a href="org/eclipse/emf/cdo/ui/CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui"><code>registry</code></a>
  for contributions to the <code>"org.eclipse.emf.cdo.ui.editorOpeners"</code> extension point.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEditorUtil.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorUtil</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEditorUtil.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorUtil</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Some utility methods to cope with CDOEditor and CDOEditorInput</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/edit/CDOEditPlugin.html" title="class in org.eclipse.emf.cdo.edit">CDOEditPlugin</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/edit/CDOEditPlugin.html" title="class in org.eclipse.emf.cdo.edit">CDOEditPlugin</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">This is the central singleton for the Etypes edit plugin.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/edit/CDOEditPlugin.Implementation.html" title="class in org.eclipse.emf.cdo.edit">CDOEditPlugin.Implementation</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/edit/CDOEditPlugin.Implementation.html" title="class in org.eclipse.emf.cdo.edit">CDOEditPlugin.Implementation</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">The actual implementation of the Eclipse <b>Plugin</b>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/CDOElement.html" title="class in org.eclipse.emf.cdo">CDOElement</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/CDOElement.html" title="class in org.eclipse.emf.cdo">CDOElement</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link"><code>adapter</code></a> for <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObjects</code></a> that is able to
  impose an alternative contents tree structure.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDOElement.StateProvider.html" title="interface in org.eclipse.emf.cdo">CDOElement.StateProvider</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDOElement.StateProvider.html" title="interface in org.eclipse.emf.cdo">CDOElement.StateProvider</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Provides the consumer with the <a href="org/eclipse/emf/cdo/CDOState.html" title="enum class in org.eclipse.emf.cdo"><code>states</code></a> of objects such as <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObjects</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOElementProxy</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDOElementProxy.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOElementProxy</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A moveable placeholder for the element of a <a href="org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>list</code></a> at a specified <a href="org/eclipse/emf/cdo/common/revision/CDOElementProxy.html#getIndex()"><code>index</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html" title="class in org.eclipse.emf.cdo.server.embedded">CDOEmbeddedRepositoryConfig</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEventHandler.html" title="class in org.eclipse.emf.cdo.ui">CDOEventHandler</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/embedded/CDOEmbeddedRepositoryConfig.html" title="class in org.eclipse.emf.cdo.server.embedded">CDOEmbeddedRepositoryConfig</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/ui/CDOEventHandler.html" title="class in org.eclipse.emf.cdo.ui">CDOEventHandler</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A class that handles <code>events</code> on
  <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>TreeViewer</code></a>-based editors or views.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util">CDOException</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab5">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util">CDOException</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab5">
 <div class="block">An unchecked exception for general CDO purposes.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerElement.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerElement</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerElement.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerElement</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A common base interface for <a href="org/eclipse/emf/cdo/explorer/repositories/CDORepository.html" title="interface in org.eclipse.emf.cdo.explorer.repositories"><code>repositories</code></a> and <a href="org/eclipse/emf/cdo/explorer/checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerElement.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerElement.StateChangedEvent</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerElement.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerElement.StateChangedEvent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>event</code> fired from <a href="org/eclipse/emf/cdo/explorer/CDOExplorerElement.html" title="interface in org.eclipse.emf.cdo.explorer"><code>explorer elements</code></a> when their state has changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager&lt;T&gt;</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager&lt;T&gt;</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A common base interface for <a href="org/eclipse/emf/cdo/explorer/repositories/CDORepositoryManager.html" title="interface in org.eclipse.emf.cdo.explorer.repositories"><code>repository managers</code></a> and
  <a href="org/eclipse/emf/cdo/explorer/checkouts/CDOCheckoutManager.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkout managers</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.ElementsChangedEvent.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager.ElementsChangedEvent</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.ElementsChangedEvent.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager.ElementsChangedEvent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>event</code> fired from <a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer"><code>explorer managers</code></a> when their
  <a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.ElementsChangedEvent.html#getChangedElements()"><code>elements</code></a> have changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.ElementsChangedEvent.StructuralImpact.html" title="enum class in org.eclipse.emf.cdo.explorer">CDOExplorerManager.ElementsChangedEvent.StructuralImpact</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.ElementsChangedEvent.StructuralImpact.html" title="enum class in org.eclipse.emf.cdo.explorer">CDOExplorerManager.ElementsChangedEvent.StructuralImpact</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the possible <a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.ElementsChangedEvent.html#getStructuralImpact()"><code>structural impacts</code></a>
  that <a href="org/eclipse/emf/cdo/explorer/CDOExplorerManager.ElementsChangedEvent.html#getChangedElements()"><code>element changes</code></a> can have.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerUtil.html" title="class in org.eclipse.emf.cdo.explorer">CDOExplorerUtil</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/explorer/CDOExplorerUtil.html" title="class in org.eclipse.emf.cdo.explorer">CDOExplorerUtil</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Various static methods that may help in CDO explorer applications.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentCreator</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentCreator</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An OCL <a href="org/eclipse/emf/cdo/server/ocl/OCLExtentCreator.html" title="interface in org.eclipse.emf.cdo.server.ocl"><code>extent creator</code></a> implementation for CDO.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.Lazy.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentCreator.Lazy</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.Lazy.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentCreator.Lazy</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An <a href="org/eclipse/emf/cdo/server/ocl/CDOExtentCreator.html" title="class in org.eclipse.emf.cdo.server.ocl"><code>extent creator</code></a> that creates extent sets which support a lazy populating iterator.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/ocl/CDOExtentMap.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentMap</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/ocl/CDOExtentMap.html" title="class in org.eclipse.emf.cdo.server.ocl">CDOExtentMap</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Maps <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>classes</code></a> to their extents.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/util/CDOFactory.html" title="interface in org.eclipse.emf.cdo.util">CDOFactory</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/util/CDOFactory.html" title="interface in org.eclipse.emf.cdo.util">CDOFactory</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Creates CDO <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html" title="interface in org.eclipse.emf.cdo.view">CDOFeatureAnalyzer</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A call-back interface that is called by a <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> on each model read access.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Represents a change delta between two values of a single <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>feature</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.Type.html" title="enum class in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta.Type</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.Type.html" title="enum class in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta.Type</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab3">
 <div class="block">Enumerates the possible types of <a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>feature deltas</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDeltaVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDeltaVisitor</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDeltaVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDeltaVisitor</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Visits <a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>feature deltas</code></a> of a <a href="org/eclipse/emf/cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>revision delta</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/revision/CDOFeatureDeltaVisitorImpl.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureDeltaVisitorImpl</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/revision/CDOFeatureDeltaVisitorImpl.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureDeltaVisitorImpl</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/CDOFeatureMapEntry.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureMapEntry</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">Deprecated.
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/CDOFeatureMapEntry.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureMapEntry</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">Deprecated.
 <div class="deprecation-comment">As of 4.5 <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html" title="class or interface in org.eclipse.emf.ecore.util" class="external-link"><code>feature maps</code></a> are no longer supported.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/model/CDOFeatureRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOFeatureRef</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A symbolic reference to an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EStructuralFeature</code></a>, identified by its
+ declaring classifier and feature name.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/model/CDOFeatureType.html" title="enum class in org.eclipse.emf.cdo.common.model">CDOFeatureType</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab3">
@@ -1467,7 +1483,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
-<div class="block">A <code>moveable</code> <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link"><code>EList</code></a>.</div>
+<div class="block">A <code>movable</code> <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link"><code>EList</code></a>.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
@@ -1480,7 +1496,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDOListResolver.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListResolver</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
-<div class="block">A strategy that specifies which list elememts must be present (loaded) in a <a href="org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
+<div class="block">A strategy that specifies which list elements must be present (loaded) in a <a href="org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> list of a
  <a href="org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> when a certain list index is accessed.</div>
 </div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/view/CDOListWrapper.html" title="interface in org.eclipse.emf.cdo.view">CDOListWrapper&lt;E&gt;</a></div>
@@ -1619,118 +1635,126 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Symbolic model constants commonly used in CDO.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/model/CDOModelUtil.html" title="class in org.eclipse.emf.cdo.common.model">CDOModelUtil</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/model/CDOModelElementRef.html" title="interface in org.eclipse.emf.cdo.common.model">CDOModelElementRef&lt;T&gt;</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">A symbolic reference to an EMF model element.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/model/CDOModelUtil.html" title="class in org.eclipse.emf.cdo.common.model">CDOModelUtil</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Various static helper methods for dealing with CDO meta models.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/util/CDOModificationTrackingAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOModificationTrackingAdapter</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/util/CDOModificationTrackingAdapter.html" title="class in org.eclipse.emf.cdo.util">CDOModificationTrackingAdapter</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Maintains the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#isModified--" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>modified state</code></a> of a CDO <a href="org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource</code></a> with the help of a
  <a href="org/eclipse/emf/cdo/transaction/CDOTransactionHandler.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction handler</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/mongodb/CDOMongoDBUtil.html" title="class in org.eclipse.emf.cdo.server.mongodb">CDOMongoDBUtil</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/mongodb/CDOMongoDBUtil.html" title="class in org.eclipse.emf.cdo.server.mongodb">CDOMongoDBUtil</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Various static methods that may help in setting up and dealing with <a href="org/eclipse/emf/cdo/server/mongodb/IMongoDBStore.html" title="interface in org.eclipse.emf.cdo.server.mongodb"><code>MongoDB stores</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOMoveFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOMoveFeatureDelta</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOMoveFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOMoveFeatureDelta</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A <a href="org/eclipse/emf/cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>feature delta</code></a> that represents a move of one element of a many-valued
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>feature</code></a> to a different list position.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/util/CDONameProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDONameProvider</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/util/CDONameProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDONameProvider</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Has a name.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDONestedTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDONestedTransaction</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/transaction/CDONestedTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDONestedTransaction</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A transaction-compatible facade for a <a href="org/eclipse/emf/cdo/transaction/CDOTransactionScope.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction scope</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/net4j/CDONet4jServerUtil.html" title="class in org.eclipse.emf.cdo.server.net4j">CDONet4jServerUtil</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/server/net4j/CDONet4jServerUtil.html" title="class in org.eclipse.emf.cdo.server.net4j">CDONet4jServerUtil</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Various static methods that may help with the server-side setup to support Net4j-specific CDO <a href="org/eclipse/emf/cdo/common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common"><code>sessions</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A Net4j-specific CDO <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession.Options</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/net4j/CDONet4jSession.Options.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession.Options</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Encapsulates a set of notifying <a href="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session</code></a> configuration options.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Configures and opens new Net4j-specific CDO <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>sessions</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jUtil</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jUtil.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jUtil</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">Various static methods that may help with Net4j-specific CDO <a href="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A <a href="org/eclipse/emf/cdo/view/CDOViewProvider.html" title="interface in org.eclipse.emf.cdo.view"><code>view provider</code></a> that uses Net4j-specific CDO <a href="org/eclipse/emf/cdo/net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j"><code>sessions</code></a> to open views.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.JVM.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.JVM</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A JVM-based <a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.SSL.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.SSL</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">An SSL-based <a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.TCP.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.TCP</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A TCP-based <a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.WS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WS</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.WS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WS</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A WS-based <a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.WSS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WSS</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.WSS.html" title="class in org.eclipse.emf.cdo.net4j">CDONet4jViewProvider.WSS</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">A WSS-based <a href="org/eclipse/emf/cdo/net4j/CDONet4jViewProvider.html" title="class in org.eclipse.emf.cdo.net4j"><code>view provider</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDONotification.html" title="interface in org.eclipse.emf.cdo">CDONotification</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDONotification.html" title="interface in org.eclipse.emf.cdo">CDONotification</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A base interface for all CDO specific notifications.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A specialized subinterface of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObject</code></a> that is exposed by all CDO objects and allows access to special CDO
  properties and features of those objects.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/view/CDOObjectHandler.html" title="interface in org.eclipse.emf.cdo.view">CDOObjectHandler</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/view/CDOObjectHandler.html" title="interface in org.eclipse.emf.cdo.view">CDOObjectHandler</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Call-back handler used by <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a> to tell implementors of this interface about <a href="org/eclipse/emf/cdo/CDOState.html" title="enum class in org.eclipse.emf.cdo"><code>state</code></a>
  changes of <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDOObjectHistory.html" title="interface in org.eclipse.emf.cdo">CDOObjectHistory</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A cache for the <a href="org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit infos</code></a> of an <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo">CDOObjectImpl</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">The base class of all <em>native</em> <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/CDOObjectReference.html" title="interface in org.eclipse.emf.cdo">CDOObjectReference</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Represents a <a href="org/eclipse/emf/cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> typed reference from one object to another object.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/CDOOperationAuthorizer.html" title="interface in org.eclipse.emf.spi.cdo">CDOOperationAuthorizer</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/CDOOperationAuthorizer.html" title="interface in org.eclipse.emf.spi.cdo">CDOOperationAuthorizer</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An operation authorizer for CDO sessions.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOOriginSizeProvider.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOOriginSizeProvider</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/delta/CDOOriginSizeProvider.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOOriginSizeProvider</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Describes a single <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>package</code></a> instance of the nested package tree strucure represented by the
  containing <a href="org/eclipse/emf/cdo/common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/common/util/CDOPackageNotFoundException.html" title="class in org.eclipse.emf.cdo.common.util">CDOPackageNotFoundException</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab5">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab5"><a href="org/eclipse/emf/cdo/common/util/CDOPackageNotFoundException.html" title="class in org.eclipse.emf.cdo.common.util">CDOPackageNotFoundException</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab5">
 <div class="block">A <a href="org/eclipse/emf/cdo/common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>CDOException</code></a> to indicate that an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EPackage</code></a> is not available in the current <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EPackage.Registry</code></a>.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/model/CDOPackageRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageRef</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A symbolic reference to an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EPackage</code></a>, identified by its namespace URI.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
@@ -2197,27 +2221,43 @@ loadScripts(document, 'script');</script>
 <div class="block">Provides access to <a href="org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a CDO <a href="org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repository</code></a> by demand loading
  and caching them.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/revision/CDORevisionMerger.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDORevisionMerger</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">A fluent, manager-bound request for loading one or more revisions.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.Config.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Immutable loading options shared by revision manager operations and modern revision loaders.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.Config.LookupMode.html" title="enum class in org.eclipse.emf.cdo.common.revision">CDORevisionManager.Request.Config.LookupMode</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab3">
+<div class="block">Controls whether a revision manager consults its cache before invoking its loader.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/cdo/spi/common/revision/CDORevisionMerger.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDORevisionMerger</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/view/CDORevisionPrefetchingPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDORevisionPrefetchingPolicy</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A strategy interface to customize the <a href="org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> prefetching behavior of a <a href="org/eclipse/emf/cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Provides consumers with the <a href="org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of <a href="org/eclipse/emf/cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>identifiable</code></a> CDO objects by selecting a
  particular one from several possible <a href="org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch points</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/CDORevisionProviderWithSynthetics.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionProviderWithSynthetics</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/CDORevisionProviderWithSynthetics.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionProviderWithSynthetics</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A revision provider that can also provide <a href="org/eclipse/emf/cdo/spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision"><code>synthetic revisions</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDORevisionsLoadedEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionsLoadedEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/common/revision/CDORevisionsLoadedEvent.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionsLoadedEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>event</code> fired from a <a href="org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a> when a new <a href="org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a> has
  been loaded.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/internal/cdo/CDORevisionTransitionUtil.html" title="class in org.eclipse.emf.internal.cdo">CDORevisionTransitionUtil</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">Semantic helpers for protecting partially loaded list representations while revisions are structurally derived.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/CDORevisionUnchunker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
@@ -2391,84 +2431,93 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Encapsulates a set of notifying <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> configuration options.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.CollectionLoadingPolicyEvent</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingConfigEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.CollectionLoadingConfigEvent</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">An <code>options event</code> fired after the complete modern collection-loading configuration of a
+ session has changed.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingPolicyEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.CollectionLoadingPolicyEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the
  <a href="org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><code>collection loading policy</code></a> option of a
  <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.DelegableViewLockEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.DelegableViewLockEvent</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.DelegableViewLockEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.DelegableViewLockEvent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the <a href="org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled(boolean)"><code>delegable view lock enabled</code></a>
  option of a <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.GeneratedPackageEmulationEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.GeneratedPackageEmulationEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the
  <a href="org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled(boolean)"><code>generated package emulation enabled</code></a> option of a
  <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.LobCacheEvent</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.LobCacheEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.LobCacheEvent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the <a href="org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)"><code>large object cache</code></a>
  option of a <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.PermissionUpdaterEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PermissionUpdaterEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.PermissionUpdaterEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PermissionUpdaterEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the <a href="org/eclipse/emf/cdo/session/CDOSession.Options.html#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)"><code>permission updater</code></a>
  option of a <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.PrefetchSendMaxRevisionKeysEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PrefetchSendMaxRevisionKeysEvent</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSession.Options.PrefetchSendMaxRevisionKeysEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PrefetchSendMaxRevisionKeysEvent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">An <code>options event</code> fired when the <a href="org/eclipse/emf/cdo/session/CDOSession.Options.html#setPrefetchSendMaxRevisionKeys(int)"><code>prefetch send max revision keys</code></a>
  option of a <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">Deprecated.
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">Deprecated.
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>CDONet4jSessionConfiguration</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Configures and opens new <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>sessions</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration.SessionOpenedEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration.SessionOpenedEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Fired from a <a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session"><code>session configuration</code></a> after a new <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has been
  opened.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Creates <a href="org/eclipse/emf/cdo/session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session"><code>session configuration</code></a> instances.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A generic <code>event</code> fired from a <a href="org/eclipse/emf/cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a>.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationAggregator.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionInvalidationAggregator</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">Deprecated.
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationAggregator.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionInvalidationAggregator</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">Deprecated.
 <div class="deprecation-comment">As of 4.2 use <a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html" title="class in org.eclipse.emf.spi.cdo"><code>CDOSessionInvalidationEventQueue</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionInvalidationEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A <a href="org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session event</code></a> fired when passive updates (commit notifications) are being received from a
  remote repository.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionInvalidationEventQueue</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionInvalidationEventQueue</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionLocksChangedEvent</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionLocksChangedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionLocksChangedEvent</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A <a href="org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session event</code></a> fired when lock-change notifications are received from a remote repository.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionPermissionsChangedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionPermissionsChangedEvent</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/session/CDOSessionPermissionsChangedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionPermissionsChangedEvent</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A <a href="org/eclipse/emf/cdo/session/CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>session event</code></a> fired when <a href="org/eclipse/emf/cdo/common/security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security"><code>permissions</code></a> of the
  <a href="org/eclipse/emf/cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> of this session have changed.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.ChunkRange.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.ChunkRange</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A client/server-coordinate range for a collection chunk request.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
@@ -4301,81 +4350,89 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">A mix-in interface for <a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><code>InternalCDOList</code></a> that allows to optimize the speed of equality checks.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDOLoadable.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOLoadable</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.Owner.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.Owner</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal owner callbacks used for list/revision loaded-state accounting.</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html" title="interface in org.eclipse.emf.cdo.spi.common.lock">InternalCDOLockState</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDOLoadable.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOLoadable</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/lock/InternalCDOLockState.html" title="interface in org.eclipse.emf.cdo.spi.common.lock">InternalCDOLockState</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageInfo</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSession</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSessionManager</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSession</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteTopic.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteTopic</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSessionManager</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteTopic.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteTopic</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">Internal protocol for the <a href="org/eclipse/emf/cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a>.</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a></div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader3</a></div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader3</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab1">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader4.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader4</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">The canonical revision-loading extension.</div>
 </div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab1">

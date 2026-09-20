@@ -281,17 +281,24 @@ loadScripts(document, 'script');</script>
  int&nbsp;chunkEnd)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCommitContext.</span><code><a href="../../spi/server/InternalCommitContext.html#getAccessor()" class="member-name-link">getAccessor</a>()</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../../spi/server/InternalRepository.html#ensureChunks(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,java.util.List)" class="member-name-link">ensureChunks</a><wbr>(<a href="../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;org.eclipse.net4j.util.collection.Pair&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&gt;&nbsp;ranges)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Ensures multiple ranges of one feature in one store-reader execution where the store supports it.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StoreChunkReader.</span><code><a href="../../spi/server/StoreChunkReader.html#getAccessor()" class="member-name-link">getAccessor</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCommitContext.</span><code><a href="../../spi/server/InternalCommitContext.html#getAccessor()" class="member-name-link">getAccessor</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Store.</span><code><a href="../../spi/server/Store.html#getReader(org.eclipse.emf.cdo.server.ISession)" class="member-name-link">getReader</a><wbr>(<a href="../ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StoreChunkReader.</span><code><a href="../../spi/server/StoreChunkReader.html#getAccessor()" class="member-name-link">getAccessor</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Store.</span><code><a href="../../spi/server/Store.html#getWriter(org.eclipse.emf.cdo.server.ITransaction)" class="member-name-link">getWriter</a><wbr>(<a href="../ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Store.</span><code><a href="../../spi/server/Store.html#getReader(org.eclipse.emf.cdo.server.ISession)" class="member-name-link">getReader</a><wbr>(<a href="../ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Store.</span><code><a href="../../spi/server/Store.html#getWriter(org.eclipse.emf.cdo.server.ITransaction)" class="member-name-link">getWriter</a><wbr>(<a href="../ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor</a></span></div>
 <div class="summary-table three-column-summary">

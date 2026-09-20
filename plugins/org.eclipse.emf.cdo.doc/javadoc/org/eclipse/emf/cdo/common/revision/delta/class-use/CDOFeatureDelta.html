@@ -80,8 +80,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></div>
 <div class="col-last even-row-color">
+<div class="block">Exposes <a href="../../../../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </div>
 </div>
@@ -340,6 +344,24 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOViewEventProducer.CDOModifyingObjectEvent.</span><code><a href="../../../../view/CDOViewEventProducer.CDOModifyingObjectEvent.html#getFeatureDelta()" class="member-name-link">getFeatureDelta</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.internal.cdo">
+<h2>Uses of <a href="../CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a> in <a href="../../../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a></h2>
+<div class="caption"><span>Methods in <a href="../../../../../internal/cdo/package-summary.html">org.eclipse.emf.internal.cdo</a> with parameters of type <a href="../CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORevisionTransitionUtil.</span><code><a href="../../../../../internal/cdo/CDORevisionTransitionUtil.html#ensureCoordinateChangingFeaturesFullyLoaded(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">ensureCoordinateChangingFeaturesFullyLoaded</a><wbr>(<a href="../../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ <a href="../CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;delta,
+ <a href="../../../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Ensures that every many-valued feature whose list coordinates are changed by the given delta is fully loaded.</div>
+</div>
 </div>
 </section>
 </li>

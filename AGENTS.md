@@ -45,3 +45,7 @@ of these criteria. They do not themselves authorize starting Maven/Tycho.
 Do not edit `*/examples.installer/examples/...` directly.
 
 Changes there may be generated automatically from canonical example projects by project builders / Ant scripts. Only flag them if they were edited independently, diverge from the canonical source, or contain unrelated changes.
+
+## CDO Documentation
+
+For every task that reads or modifies files under `plugins/org.eclipse.emf.cdo.doc`, first read `plugins/org.eclipse.emf.cdo.doc/DOC-FRAMEWORK.md`. Treat that file as the repository-local reference for the documentation framework and established CDO documentation authoring conventions.

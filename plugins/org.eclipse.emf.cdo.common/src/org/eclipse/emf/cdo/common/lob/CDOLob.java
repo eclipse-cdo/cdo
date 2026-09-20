@@ -23,6 +23,7 @@ import java.util.Objects;
 /**
  * A identifiable large object with streaming support.
  *
+ * @param <IO> the type of the input/output stream used to access the large object
  * @author Eike Stepper
  * @since 4.0
  * @noextend This interface is not intended to be extended by clients.

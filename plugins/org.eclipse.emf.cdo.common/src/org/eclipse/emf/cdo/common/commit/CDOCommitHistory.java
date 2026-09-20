@@ -65,6 +65,8 @@ public interface CDOCommitHistory extends IContainer<CDOCommitInfo>, CDOBranchPr
   /**
    * Provides consumers with {@link CDOCommitHistory histories}.
    *
+   * @param <KEY> the type of the keys used to select histories
+   * @param <HISTORY> the type of the histories provided for keys
    * @author Eike Stepper
    */
   public interface Provider<KEY, HISTORY extends CDOCommitHistory>

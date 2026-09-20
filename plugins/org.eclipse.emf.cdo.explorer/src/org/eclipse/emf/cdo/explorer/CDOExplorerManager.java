@@ -23,6 +23,7 @@ import org.eclipse.core.runtime.IAdaptable;
  * A common base interface for {@link CDORepositoryManager repository managers} and
  * {@link CDOCheckoutManager checkout managers}.
  *
+ * @param <T> the type of the explorer elements managed by this manager
  * @author Eike Stepper
  * @since 4.4
  * @noextend This interface is not intended to be extended by clients.

@@ -722,6 +722,7 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
    * of the final {@link CDOTransaction#commit() transaction commit}. A persistable computation is a {@link Callable} that
    * operates on and possibly modifies the {@link CDOObject objects} of a {@link CDOTransaction transaction}.
    *
+   * @param <T> the type of the computation result
    * @see CDOTransaction#commit(Callable, int, IProgressMonitor)
    * @see CDOTransaction#commit(Callable, java.util.function.Predicate, IProgressMonitor)
    * @author Eike Stepper

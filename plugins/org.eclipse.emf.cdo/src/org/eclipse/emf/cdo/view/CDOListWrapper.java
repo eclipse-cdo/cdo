@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
 /**
  * Can wrap given lists in order to augment the behavior of those given lists with custom behavior.
  *
+ * @param <E> the type of the elements in the wrapped lists
  * @author Eike Stepper
  * @since 4.19
  * @see CDOView.Options#getClearAdapterPolicy()

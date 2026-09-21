@@ -114,7 +114,7 @@ public class ExpectedFileReader extends FileReader
 
         try
         {
-          wait(Math.max(100L, restTime));
+          wait(Math.min(100L, restTime));
         }
         catch (InterruptedException ex)
         {

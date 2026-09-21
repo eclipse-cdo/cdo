@@ -65,8 +65,8 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     container1.getElements().add(container2);
     container2.getElements().add(container3);
 
-    s1Tr1.commit();
-    sleep(1000L);
+    long commitTime = s1Tr1.commit().getTimeStamp();
+    assertEquals(true, session1.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
 
     // setup another branch.
     final CDOBranch otherBranch = s1Tr1.getBranch().createBranch(getBranchName("other"));
@@ -90,11 +90,11 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     // re-attach detached's child container.
     otherContainer1.getElements().add(otherContainer3);
 
-    s1Tr3.commit();
+    commitTime = s1Tr3.commit().getTimeStamp();
     assertEquals(false, s1Tr3.isDirty());
 
     // merge the other branch to main.
-    sleep(1000L);
+    assertEquals(true, session1.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
     s1Tr1.merge(s1Tr3.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     s1Tr1.commit();
@@ -122,8 +122,8 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     container1.getElements().add(container4);
     container4.getElements().add(container5);
 
-    s1Tr1.commit();
-    sleep(1000L);
+    long commitTime = s1Tr1.commit().getTimeStamp();
+    assertEquals(true, session1.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
 
     // setup another branch.
     final CDOBranch otherBranch = s1Tr1.getBranch().createBranch(getBranchName("other"));
@@ -152,12 +152,11 @@ public class Bugzilla_325866_Test extends AbstractCDOTest
     // re-attach container1 child.
     otherContainer3.getElements().add(otherContainer5);
 
-    s1Tr3.commit();
+    commitTime = s1Tr3.commit().getTimeStamp();
     assertEquals(false, s1Tr3.isDirty());
 
-    sleep(1000L);
-
     // merge the other branch to main.
+    assertEquals(true, session1.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
     CDOBranchPoint head = s1Tr3.getBranch().getHead();
     CDOMerger merger = new DefaultCDOMerger.PerFeature.ManyValued();
     s1Tr1.merge(head, merger);

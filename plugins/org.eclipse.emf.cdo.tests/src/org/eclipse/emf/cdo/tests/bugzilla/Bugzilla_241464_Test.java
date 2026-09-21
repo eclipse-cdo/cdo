@@ -30,6 +30,10 @@ import java.util.concurrent.TimeoutException;
  */
 public class Bugzilla_241464_Test extends AbstractCDOTest
 {
+  private static final long PROTOCOL_TIMEOUT = 250L;
+
+  private static final long REVISION_DELAY = 500L;
+
   public void testBugzilla_241464() throws Exception
   {
     {
@@ -55,10 +59,10 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
-    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(2000L);
+    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(PROTOCOL_TIMEOUT);
 
     TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
-    revisionManager.setGetRevisionsDelay(10000L); // Make the protocol time out
+    revisionManager.setGetRevisionsDelay(REVISION_DELAY); // Make the protocol time out
 
     try
     {

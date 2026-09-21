@@ -31,6 +31,10 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.OperationCanceledException;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Bug 377173 : test commit progress/cancel.
  *
@@ -59,12 +63,23 @@ public class Bugzilla_377173_Test extends AbstractCDOTest
     ProgressMonitorAsserter progressMonitorAsserter = new ProgressMonitorAsserter();
     try
     {
-      transaction1.commit(progressMonitorAsserter);
-      fail("An OperationCanceledException should be thrown as the commit has been canceled");
-    }
-    catch (Exception ex)
-    {
-      assertTrue(ex instanceof OperationCanceledException);
+      Future<Exception> commit = getExecutorService().submit(() -> {
+        try
+        {
+          transaction1.commit(progressMonitorAsserter);
+          return null;
+        }
+        catch (Exception ex)
+        {
+          return ex;
+        }
+      });
+
+      await(commitWaiter.getEntered());
+      await(progressMonitorAsserter.getProgressed());
+
+      Exception exception = commit.get(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      assertTrue(exception instanceof OperationCanceledException);
     }
     finally
     {
@@ -77,11 +92,19 @@ public class Bugzilla_377173_Test extends AbstractCDOTest
    */
   private static class ProgressMonitorAsserter extends NullProgressMonitor
   {
+    private final CountDownLatch progressed = new CountDownLatch(1);
+
+    public CountDownLatch getProgressed()
+    {
+      return progressed;
+    }
+
     @Override
     public void internalWorked(double work)
     {
       super.internalWorked(work);
       setCanceled(true);
+      progressed.countDown();
     }
   }
 
@@ -90,10 +113,29 @@ public class Bugzilla_377173_Test extends AbstractCDOTest
    */
   private static class CommitWaiter implements IRepository.WriteAccessHandler
   {
+    private final CountDownLatch entered = new CountDownLatch(1);
+
+    public CountDownLatch getEntered()
+    {
+      return entered;
+    }
+
     @Override
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
-      sleep(2000);
+      entered.countDown();
+      monitor.worked();
+
+      long timeout = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(10);
+      while (!monitor.isCanceled())
+      {
+        if (System.currentTimeMillis() > timeout)
+        {
+          throw new IllegalStateException("Commit monitor was not canceled");
+        }
+
+        Thread.yield();
+      }
     }
 
     @Override

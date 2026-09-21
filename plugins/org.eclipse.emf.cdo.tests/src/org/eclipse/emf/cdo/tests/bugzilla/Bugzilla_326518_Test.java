@@ -66,8 +66,8 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
     container.getElements().add(element1);
     container.getElements().add(element2);
 
-    transaction1.commit();
-    sleep(1000L);
+    long commitTime = transaction1.commit().getTimeStamp();
+    assertEquals(true, session.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
 
     // setup another branch.
     final CDOBranch branch2 = transaction1.getBranch().createBranch(getBranchName("branch2"));
@@ -91,11 +91,11 @@ public class Bugzilla_326518_Test extends AbstractCDOTest
     // add a new element on main at index0.
     container.getElements().add(0, getModel4Factory().createContainedElementNoOpposite());
 
-    transaction1.commit();
+    commitTime = transaction1.commit().getTimeStamp();
     assertEquals(false, transaction1.isDirty());
 
     // merge the other branch to main.
-    sleep(1000L);
+    assertEquals(true, session.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
     CDOChangeSetData changes = transaction1.merge(transaction2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
 
     printChangeSetData(changes);

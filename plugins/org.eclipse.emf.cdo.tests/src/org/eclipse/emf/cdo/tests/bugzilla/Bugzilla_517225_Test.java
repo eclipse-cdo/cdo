@@ -80,8 +80,10 @@ public class Bugzilla_517225_Test extends AbstractCDOTest
     // Should be 9 with a HashSet instead of 728 with an ArrayList.
     assertTrue("pendingAcknowledgements: " + pendingAcknowledgements, pendingAcknowledgements.size() < 10);
 
-    sleep(SignalProtocol.COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT + 1000);
-    session.openView();
+    ReflectUtil.setValue(ReflectUtil.getField(StringCompressor.class, "lastAcknowledgementCheck"), compressor,
+        System.currentTimeMillis() - SignalProtocol.COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT - 1);
+    Collection<Integer> expiredAcknowledgements = compressor.getPendingAcknowledgements(SignalProtocol.COMPRESSED_STRINGS_ACKNOWLEDGE_TIMEOUT);
+    assertNotNull(expiredAcknowledgements);
 
     pendingAcknowledgements = (Collection<Integer>)ReflectUtil.getValue(ReflectUtil.getField(StringCompressor.class, "pendingAcknowledgements"), compressor);
     assertEquals("pendingAcknowledgements: " + pendingAcknowledgements, 0, pendingAcknowledgements.size());

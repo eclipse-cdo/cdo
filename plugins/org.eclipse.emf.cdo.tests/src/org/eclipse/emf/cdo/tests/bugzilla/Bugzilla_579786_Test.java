@@ -31,7 +31,7 @@ public class Bugzilla_579786_Test extends AbstractCDOTest
 
   private static final int RESULT = 4711;
 
-  private static final int TIMEOUT = 1500; // Must be greater than 1000.
+  private static final int TIMEOUT = 1200; // Must be greater than 1000.
 
   @CleanRepositoriesBefore(reason = "Needs special query handler")
   @CleanRepositoriesAfter(reason = "Needs special query handler")

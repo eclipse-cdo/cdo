@@ -39,8 +39,19 @@ public class AbstractLockingTest extends AbstractCDOTest
   {
   }
 
+  /**
+   * Called immediately before a received invalidation is applied.
+   * <p>
+   * Locking tests can override this hook to coordinate notification handling without relying on elapsed time.
+   */
+  protected void beforeInvalidation()
+  {
+  }
+
+  @Deprecated
   protected long getInvalidationDelay()
   {
+    beforeInvalidation();
     return NO_DELAY;
   }
 

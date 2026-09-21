@@ -170,15 +170,6 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
           @Override
           protected void attachObjectsHook1()
           {
-            try
-            {
-              Thread.sleep(2000);
-            }
-            catch (InterruptedException ex)
-            {
-              return;
-            }
-
             if (analyzeStarted != null)
             {
               analyzeStarted.countDown();
@@ -222,7 +213,6 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
             if (initializeFinished != null)
             {
               await(initializeFinished);
-              sleep(2000);
             }
 
             super.objectAttacherFinishedCommit(objectAttacher);

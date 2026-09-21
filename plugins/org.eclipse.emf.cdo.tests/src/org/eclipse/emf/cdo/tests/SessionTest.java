@@ -467,10 +467,21 @@ public class SessionTest extends AbstractCDOTest
     }
 
     assertEquals(null, session);
-    sleep(500);
 
     Net4j sessionConfig = (Net4j)getSessionConfig();
     IAcceptor acceptor = sessionConfig.getAcceptor();
+    assertNoTimeout(() -> {
+      for (IConnector connector : acceptor.getAcceptedConnectors())
+      {
+        if (!connector.getChannels().isEmpty())
+        {
+          return false;
+        }
+      }
+
+      return true;
+    });
+
     for (IConnector connector : acceptor.getAcceptedConnectors())
     {
       Collection<IChannel> channels = connector.getChannels();

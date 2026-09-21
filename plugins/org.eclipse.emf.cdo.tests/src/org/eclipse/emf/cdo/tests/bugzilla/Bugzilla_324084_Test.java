@@ -62,8 +62,8 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     RefSingleContained container = getModel4Factory().createRefSingleContained();
     resource.getContents().add(container);
 
-    tr1.commit();
-    sleep(1000);
+    long commitTime = tr1.commit().getTimeStamp();
+    assertEquals(true, session.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
 
     final CDOBranch otherBranch = tr1.getBranch().createBranch(getBranchName("other"));
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
@@ -74,10 +74,8 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     // set a new element.
     otherContainer.setElement(getModel4Factory().createSingleContainedElement());
 
-    tr2.commit();
-
-    // sleep to have the merger see the changes.
-    sleep(1000);
+    commitTime = tr2.commit().getTimeStamp();
+    assertEquals(true, session.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());
@@ -98,8 +96,8 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     RefMultiContained container = getModel4Factory().createRefMultiContained();
     resource.getContents().add(container);
 
-    tr1.commit();
-    sleep(1000);
+    long commitTime = tr1.commit().getTimeStamp();
+    assertEquals(true, session.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
 
     final CDOBranch otherBranch = tr1.getBranch().createBranch(getBranchName("other"));
     final CDOTransaction tr2 = session.openTransaction(otherBranch);
@@ -110,10 +108,8 @@ public class Bugzilla_324084_Test extends AbstractCDOTest
     // add a new element on other branch at index 0.
     otherContainer.getElements().add(0, getModel4Factory().createMultiContainedElement());
 
-    tr2.commit();
-
-    // sleep to have the merger see the changes.
-    sleep(1000);
+    commitTime = tr2.commit().getTimeStamp();
+    assertEquals(true, session.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
 
     // merge the other branch to main.
     tr1.merge(tr2.getBranch().getHead(), new DefaultCDOMerger.PerFeature.ManyValued());

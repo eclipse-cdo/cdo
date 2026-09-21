@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -46,38 +48,44 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
     CDOObject cdoCategory = CDOUtil.getCDOObject(category);
     msg(cdoCategory.cdoRevision().getVersion());
 
-    long delay = 2000L;
-
     TestSessionManager sessionManager = (TestSessionManager)getRepository().getSessionManager();
-    sessionManager.setCommitNotificationDelay(delay);
+    sessionManager.blockCommitNotifications();
 
     try
     {
-      doSecondSessionAsync();
-      await(sessionManager.getDelayLatch()); // Wait until the delay commences
+      Future<?> commit = doSecondSessionAsync();
+      await(sessionManager.getCommitNotificationEntered());
 
-      long time1 = System.currentTimeMillis();
+      CountDownLatch lockAttempted = new CountDownLatch(1);
+      Future<?> lock = getExecutorService().submit(() -> {
+        lockAttempted.countDown();
+        try
+        {
+          cdoCategory.cdoWriteLock().lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+        }
+        catch (Exception ex)
+        {
+          throw new RuntimeException(ex);
+        }
+      });
 
-      // Attempt the lock; this must block for a while, because it needs to receive
-      // the commitNotification from the commit in the other session, which we are
-      // artificially delaying
-      cdoCategory.cdoWriteLock().lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      await(lockAttempted);
+      assertFalse(lock.isDone());
+      sessionManager.releaseCommitNotifications();
 
-      long timeTaken = System.currentTimeMillis() - time1;
-
-      // We verify that there really was a delay
-      assertEquals("timeTaken == " + timeTaken, true, timeTaken >= delay - 10);
+      lock.get(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      commit.get(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
 
       transaction.close();
       session.close();
     }
     finally
     {
-      sessionManager.setCommitNotificationDelay(0L);
+      sessionManager.releaseCommitNotifications();
     }
   }
 
-  private void doSecondSessionAsync() throws CommitException
+  private Future<?> doSecondSessionAsync()
   {
     Runnable r = new Runnable()
     {
@@ -109,8 +117,6 @@ public class Bugzilla_341995_Test extends AbstractCDOTest
       }
     };
 
-    Thread thread = new Thread(r);
-    thread.setDaemon(true);
-    thread.start();
+    return getExecutorService().submit(r);
   }
 }

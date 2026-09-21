@@ -56,6 +56,7 @@ public class Bugzilla_377212_Test extends AbstractCDOTest
 
     CDOBalancedTree tree = new CDOBalancedTree(root);
     tree.setLockAttempts(3);
+    tree.setLockTimeout(100L);
 
     EObject object = getModel1Factory().createSupplier();
 

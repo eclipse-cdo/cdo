@@ -67,6 +67,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class TransactionTest extends AbstractCDOTest
 {
+  private static final long COMMIT_HANDLER_DELAY = 1200L;
+
   @Override
   protected void doSetUp() throws Exception
   {
@@ -605,7 +607,7 @@ public class TransactionTest extends AbstractCDOTest
       @Override
       public void handleCommitInfo(CDOCommitInfo commitInfo)
       {
-        sleep(3000L);
+        sleep(COMMIT_HANDLER_DELAY);
       }
     };
 

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * @author Martin Fluegge
@@ -55,23 +56,28 @@ public class Bugzilla_318518_Test extends AbstractCDOTest
     }
     tr1.commit();
 
-    sleep(500);
-
     final CDOTransaction tr2 = session.openTransaction();
 
+    CountDownLatch conflictResolved = new CountDownLatch(1);
     tr2.options().addConflictResolver(new org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver()
     {
       @Override
       protected void resolveConflict(CDOObject conflict, CDORevision oldRevision, CDORevisionDelta localDelta, CDORevisionDelta remoteDelta,
           List<CDORevisionDelta> deltas)
       {
-        CDOListFeatureDelta list = (CDOListFeatureDelta)localDelta.getFeatureDeltas().get(0);
-
-        int size = list.getListChanges().size();
-        if (size != 1)
+        try
         {
-          exceptions.add(new Exception("Size of list changes should be 1 but is " + size));
-          return;
+          CDOListFeatureDelta list = (CDOListFeatureDelta)localDelta.getFeatureDeltas().get(0);
+
+          int size = list.getListChanges().size();
+          if (size != 1)
+          {
+            exceptions.add(new Exception("Size of list changes should be 1 but is " + size));
+          }
+        }
+        finally
+        {
+          conflictResolved.countDown();
         }
       }
     });
@@ -86,8 +92,7 @@ public class Bugzilla_318518_Test extends AbstractCDOTest
     otherContainer.getTasks().remove(1);
 
     tr1.commit();
-
-    sleep(1000);
+    await(conflictResolved);
 
     if (exceptions.size() > 0)
     {

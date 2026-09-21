@@ -428,8 +428,8 @@ public class PackageRegistryTest extends AbstractCDOTest
         Company company = getModel1Factory().createCompany();
         company.setName("Company1");
         res.getContents().add(company);
-        transaction.commit();
-        sleep(1000); // Give session2 a chance to react
+        long commitTime = transaction.commit().getTimeStamp();
+        assertEquals(true, session2.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
       }
 
       CDOPackageRegistry packageRegistry = session2.getPackageRegistry();
@@ -510,8 +510,8 @@ public class PackageRegistryTest extends AbstractCDOTest
         Company company = getModel1Factory().createCompany();
         company.setName("Company1");
         res.getContents().add(company);
-        transaction.commit();
-        sleep(1000); // Give session2 a chance to react
+        long commitTime = transaction.commit().getTimeStamp();
+        assertEquals(true, session2.waitForUpdate(commitTime, DEFAULT_TIMEOUT));
       }
 
       CDOPackageRegistry packageRegistry = session2.getPackageRegistry();

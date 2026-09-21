@@ -63,7 +63,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -74,6 +76,8 @@ import junit.framework.AssertionFailedError;
  */
 public class LockingManagerTest extends AbstractLockingTest
 {
+  private static final long LOCK_TIMEOUT = 100L;
+
   public void testAutoReleaseLocks() throws Exception
   {
     CDOSession session = openSession();
@@ -219,6 +223,7 @@ public class LockingManagerTest extends AbstractLockingTest
   public void testBasicUpgradeFromReadToWriteLock() throws Exception
   {
     RWOLockManager<Integer, Integer> lockingManager = new RWOLockManager<>();
+    CountDownLatch attempting = new CountDownLatch(2);
 
     Runnable step1 = new Runnable()
     {
@@ -229,6 +234,7 @@ public class LockingManagerTest extends AbstractLockingTest
         keys.add(1);
         try
         {
+          attempting.countDown();
           lockingManager.lock(1, keys, LockType.WRITE, 1, 50000, null, null);
         }
         catch (InterruptedException ex)
@@ -286,10 +292,9 @@ public class LockingManagerTest extends AbstractLockingTest
     {
     }
 
-    executors.execute(step1);
-    executors.execute(step1);
-
-    sleep(1000);
+    Future<?> firstAttempt = executors.submit(step1);
+    Future<?> secondAttempt = executors.submit(step1);
+    await(attempting);
 
     keys.clear();
     keys.add(1);
@@ -297,6 +302,8 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(3);
     lockingManager.unlock(2, keys, LockType.READ, 1, null, null);
 
+    firstAttempt.get(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+    secondAttempt.get(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
     assertNoTimeout(() -> lockingManager.hasLock(LockType.WRITE, 1, 1));
   }
 
@@ -332,8 +339,8 @@ public class LockingManagerTest extends AbstractLockingTest
     assertEquals(true, System.currentTimeMillis() - start < 300);
 
     start = System.currentTimeMillis();
-    assertEquals(false, CDOUtil.getCDOObject(company2).cdoWriteLock().tryLock(1000, TimeUnit.MILLISECONDS));
-    assertEquals(true, System.currentTimeMillis() - start >= 1000);
+    assertEquals(false, CDOUtil.getCDOObject(company2).cdoWriteLock().tryLock(LOCK_TIMEOUT, TimeUnit.MILLISECONDS));
+    assertEquals(true, System.currentTimeMillis() - start >= LOCK_TIMEOUT);
   }
 
   public void testReadLockByOthers() throws Exception
@@ -456,7 +463,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     try
     {
-      transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, 1000);
+      transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, LOCK_TIMEOUT);
       fail("LockTimeoutException expected");
     }
     catch (LockTimeoutException expected)
@@ -557,7 +564,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     try
     {
-      transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, 1000);
+      transaction2.lockObjects(Collections.singletonList(cdoCompany2), LockType.WRITE, LOCK_TIMEOUT);
       fail("LockTimeoutException expected");
     }
     catch (LockTimeoutException expected)
@@ -1762,7 +1769,7 @@ public class LockingManagerTest extends AbstractLockingTest
   {
     InternalRepository repository = getRepository();
     long oldTimeout = repository.getOptimisticLockingTimeout();
-    repository.setOptimisticLockingTimeout(1000);
+    repository.setOptimisticLockingTimeout(LOCK_TIMEOUT);
 
     try
     {

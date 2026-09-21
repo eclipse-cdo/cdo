@@ -34,6 +34,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class Bugzilla_273565_Test extends AbstractCDOTest
 {
+  private static final long LOCK_TIMEOUT = 100L;
+
   /**
    * Thread A: Update the value to 3 and 2 only if the value is at 1.<br>
    * Thread B: Update the value to 1 only if the value is at 2.
@@ -277,7 +279,7 @@ public class Bugzilla_273565_Test extends AbstractCDOTest
     CDOUtil.getCDOObject(orderDetail).cdoWriteLock().lock(DEFAULT_TIMEOUT);
     orderDetail.setPrice(2);
 
-    boolean locked = CDOUtil.getCDOObject(orderDetail2).cdoWriteLock().tryLock(DEFAULT_TIMEOUT_EXPECTED, TimeUnit.MILLISECONDS);
+    boolean locked = CDOUtil.getCDOObject(orderDetail2).cdoWriteLock().tryLock(LOCK_TIMEOUT, TimeUnit.MILLISECONDS);
     assertEquals(false, locked);
   }
 }

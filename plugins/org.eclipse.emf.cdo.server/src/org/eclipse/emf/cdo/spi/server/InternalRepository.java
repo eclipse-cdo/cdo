@@ -164,7 +164,7 @@ public interface InternalRepository extends IRepository, //
    * Returns the repository-wide runtime collection-loading configuration.
    *
    * @return the configuration snapshot, or {@code null}
-   * @since 4.38
+   * @since 4.27
    */
   public CDOCollectionLoadingConfig getCollectionLoadingConfig();
 
@@ -172,7 +172,7 @@ public interface InternalRepository extends IRepository, //
    * Replaces the repository-wide runtime collection-loading configuration snapshot.
    *
    * @param config the configuration snapshot, or {@code null}
-   * @since 4.38
+   * @since 4.27
    */
   public void setCollectionLoadingConfig(CDOCollectionLoadingConfig config);
 
@@ -186,7 +186,7 @@ public interface InternalRepository extends IRepository, //
    *          session-level overrides
    * @param feature the structural feature to resolve
    * @return the effective configuration, or {@code null} if modern partial collection loading is disabled
-   * @since 4.38
+   * @since 4.27
    */
   public ChunkConfig resolveCollectionLoadingConfig(InternalSession session, EStructuralFeature feature);
 
@@ -320,6 +320,7 @@ public interface InternalRepository extends IRepository, //
    * @param ranges
    *          ordered half-open source ranges
    * @return the accessor used for the read, or {@code null} if no read is needed
+   * @since 4.27
    */
   public IStoreAccessor ensureChunks(InternalCDORevision revision, EStructuralFeature feature, List<Pair<Integer, Integer>> ranges);
 

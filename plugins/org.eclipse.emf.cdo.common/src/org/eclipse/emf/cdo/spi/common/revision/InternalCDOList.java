@@ -34,11 +34,17 @@ public interface InternalCDOList extends CDOList
   @Deprecated
   public static final Object UNINITIALIZED = CDORevisionUtil.UNINITIALIZED;
 
+  /**
+   * @since 4.29
+   */
   public default void setOwner(Owner owner)
   {
     // Do nothing by default.
   }
 
+  /**
+   * @since 4.29
+   */
   public default void loadValue(int index, Object value)
   {
     setWithoutFrozenCheck(index, value);
@@ -54,7 +60,7 @@ public interface InternalCDOList extends CDOList
    * @param accessIndex
    *          the current logical index in this list
    * @return the server-side index represented by the value at {@code accessIndex}
-   * @since 4.31
+   * @since 4.29
    */
   public default int getServerIndexAt(int accessIndex)
   {
@@ -66,6 +72,7 @@ public interface InternalCDOList extends CDOList
    *
    * @param partial
    *          whether positions that were not read must become unloaded
+   * @since 4.29
    */
   public default void finishConstruction(boolean partial)
   {
@@ -98,6 +105,7 @@ public interface InternalCDOList extends CDOList
    * Internal owner callbacks used for list/revision loaded-state accounting.
    *
    * @author Eike Stepper
+   * @since 4.29
    */
   public interface Owner
   {

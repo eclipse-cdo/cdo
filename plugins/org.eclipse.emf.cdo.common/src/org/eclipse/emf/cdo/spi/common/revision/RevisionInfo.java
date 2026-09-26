@@ -161,7 +161,7 @@ public abstract class RevisionInfo
    *
    * @param revisionManager the manager that loads this revision
    * @param config the immutable options that control lookup and collection loading
-   * @since 4.37
+   * @since 4.29
    */
   public void execute(InternalCDORevisionManager revisionManager, Request.Config config)
   {

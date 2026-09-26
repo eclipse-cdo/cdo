@@ -98,7 +98,7 @@ public interface CDOCollectionLoadingPolicy extends CDOListResolver
    * @param feature
    *          the many-valued feature
    * @return the maximum number of initially loaded elements
-   * @since 4.30
+   * @since 4.31
    * @deprecated As of 4.31 legacy policy API; use {@link CDOCollectionLoadingConfig}.
    */
   @Deprecated
@@ -126,7 +126,7 @@ public interface CDOCollectionLoadingPolicy extends CDOListResolver
    * @param feature
    *          the many-valued feature
    * @return the maximum number of elements to load around the accessed element
-   * @since 4.30
+   * @since 4.31
    * @deprecated As of 4.31 legacy policy API; use {@link CDOCollectionLoadingConfig}.
    */
   @Deprecated

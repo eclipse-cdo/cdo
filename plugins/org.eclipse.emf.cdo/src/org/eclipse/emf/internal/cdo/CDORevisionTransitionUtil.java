@@ -25,6 +25,7 @@ import java.util.Set;
  * Semantic helpers for protecting partially loaded list representations while revisions are structurally derived.
  *
  * @author Eike Stepper
+ * @since 4.31
  */
 public final class CDORevisionTransitionUtil
 {

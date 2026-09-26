@@ -30,6 +30,7 @@ public interface CDOListFactory
 
   /**
    * Creates a list with equality semantics derived from the feature.
+   * @since 4.29
    */
   public default CDOList createList(EStructuralFeature feature, int initialCapacity, int size, int initialChunk)
   {

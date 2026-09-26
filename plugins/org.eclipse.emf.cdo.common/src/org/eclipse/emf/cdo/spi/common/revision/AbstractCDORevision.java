@@ -108,6 +108,9 @@ public abstract class AbstractCDORevision implements InternalCDORevision, Intern
     }
   }
 
+  /**
+   * @since 4.29
+   */
   protected final int getUnloadedCount()
   {
     return pclState == null ? 0 : pclState.unloadedCount;

@@ -153,7 +153,7 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * int)}, this operation never reuses an existing value and creates the requested logical size with internal
    * construction slots.
    *
-   * @since 4.28
+   * @since 4.29
    */
   public default CDOList constructList(EStructuralFeature feature, int size)
   {
@@ -171,7 +171,7 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    *          the number of values requested by the read, or
    *          {@link CDORevision#UNCHUNKED} for a full read
    * @return the newly constructed list
-   * @since 4.28
+   * @since 4.29
    */
   public default CDOList constructList(EStructuralFeature feature, int size, int initialChunk)
   {

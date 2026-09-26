@@ -40,7 +40,7 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
   /**
    * The canonical managed container for the current Net4j platform.
    *
-   * @since 3.30
+   * @since 3.31
    */
   public static final IManagedContainer INSTANCE = ManagedContainerFactory.createGlobalContainer();
 

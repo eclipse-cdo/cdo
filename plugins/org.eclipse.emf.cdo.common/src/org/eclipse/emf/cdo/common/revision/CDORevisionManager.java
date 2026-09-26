@@ -63,7 +63,7 @@ public interface CDORevisionManager extends INotifier
    * @param config the immutable loading configuration
    * @return the revision, or {@code null} if it does not exist or lookup is cache-only and the cache misses
    * @see #request() for a fluent request API
-   * @since 4.37
+   * @since 4.29
    */
   public CDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, Request.Config config);
 
@@ -75,7 +75,7 @@ public interface CDORevisionManager extends INotifier
    * @param config the immutable loading configuration
    * @return the requested revisions, with {@code null} entries for revisions that could not be found
    * @see #request() for a fluent request API
-   * @since 4.37
+   * @since 4.29
    */
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config);
 
@@ -89,7 +89,7 @@ public interface CDORevisionManager extends INotifier
    * @param additionalRevisions the optional result channel for additionally prefetched revisions
    * @return the requested revisions, with {@code null} entries for revisions that could not be found
    * @see #request() for a fluent request API
-   * @since 4.37
+   * @since 4.29
    */
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, List<CDORevision> additionalRevisions);
 
@@ -102,7 +102,7 @@ public interface CDORevisionManager extends INotifier
    * @param config the immutable loading configuration
    * @return the revision, or {@code null} if it does not exist or lookup is cache-only and the cache misses
    * @see #request() for a fluent request API
-   * @since 4.37
+   * @since 4.29
    */
   public CDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config);
 
@@ -162,7 +162,7 @@ public interface CDORevisionManager extends INotifier
    * Creates a manager-bound fluent request for loading revisions. Each terminal operation takes an immutable snapshot of
    * the current options, so subsequent changes to the request do not affect an operation already in progress.
    *
-   * @since 4.37
+   * @since 4.29
    */
   public default Request request()
   {
@@ -224,7 +224,7 @@ public interface CDORevisionManager extends INotifier
    * A fluent, manager-bound request for loading one or more revisions.
    *
    * @author Eike Stepper
-   * @since 4.37
+   * @since 4.29
    */
   public interface Request
   {

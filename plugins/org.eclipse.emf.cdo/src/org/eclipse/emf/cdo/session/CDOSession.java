@@ -337,7 +337,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      * loading is disabled.
      *
      * @return the immutable configuration snapshot, or {@code null}
-     * @since 4.38
+     * @since 4.31
      */
     public default CDOCollectionLoadingConfig getCollectionLoadingConfig()
     {
@@ -348,7 +348,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      * Replaces the complete modern session-wide collection-loading configuration snapshot.
      *
      * @param config the new immutable configuration, or {@code null} to disable modern partial collection loading
-     * @since 4.38
+     * @since 4.31
      */
     public default void setCollectionLoadingConfig(CDOCollectionLoadingConfig config)
     {
@@ -363,7 +363,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      * session has changed.
      *
      * @author Eike Stepper
-     * @since 4.38
+     * @since 4.31
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.
      */

@@ -350,7 +350,7 @@ public interface CDOProtocolConstants
   public static final short SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION = 70;
 
   /**
-   * @since 4.38
+   * @since 4.29
    */
   public static final short SIGNAL_SET_COLLECTION_LOADING_CONFIG = 71;
 

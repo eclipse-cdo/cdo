@@ -95,7 +95,7 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    * @param config the immutable loading options
    * @param synthetics an optional array through which synthetic revisions are supplied
    * @return the requested revisions, with {@code null} entries for revisions that could not be found
-   * @since 4.37
+   * @since 4.29
    */
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics);
 
@@ -109,7 +109,7 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    * @param synthetics an optional array through which synthetic revisions are supplied
    * @param additionalRevisions an optional list for revisions prefetched in addition to the requested revisions
    * @return the requested revisions, with {@code null} entries for revisions that could not be found
-   * @since 4.37
+   * @since 4.29
    */
   public List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics,
       List<CDORevision> additionalRevisions);
@@ -122,10 +122,13 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    * @param config the immutable loading options
    * @param synthetics an optional array through which a synthetic revision is supplied
    * @return the revision, or {@code null} if it does not exist or lookup is cache-only and the cache misses
-   * @since 4.37
+   * @since 4.29
    */
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics);
 
+  /**
+   * @since 4.29
+   */
   @Override
   public InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint, Request.Config config);
 
@@ -136,7 +139,7 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    * @param branchVersion the branch version at which to load the revision
    * @param config the immutable loading options
    * @return the revision, or {@code null} if it does not exist or lookup is cache-only and the cache misses
-   * @since 4.37
+   * @since 4.29
    */
   @Override
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config);
@@ -147,7 +150,7 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    * @param revision the revision whose base revision is requested
    * @param config the immutable loading options
    * @return the base revision, or {@code null} if it does not exist or lookup is cache-only and the cache misses
-   * @since 4.37
+   * @since 4.29
    */
   public InternalCDORevision getBaseRevision(CDORevision revision, Request.Config config);
 
@@ -257,7 +260,7 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    * selection has already been made by the revision manager and must not be interpreted by this loader.
    *
    * @author Eike Stepper
-   * @since 4.37
+   * @since 4.29
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
    */

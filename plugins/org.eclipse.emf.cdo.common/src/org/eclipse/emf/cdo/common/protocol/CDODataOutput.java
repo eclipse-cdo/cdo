@@ -89,7 +89,7 @@ public interface CDODataOutput extends ExtendedDataOutput
    * Returns the initial reference chunk to use for a many-valued feature while
    * a revision is being serialized. The default preserves the supplied value.
    *
-   * @since 4.31
+   * @since 4.29
    */
   public default int getInitialChunkSize(EClass owner, EStructuralFeature feature, int referenceChunk)
   {
@@ -106,7 +106,7 @@ public interface CDODataOutput extends ExtendedDataOutput
    *          the many-valued feature to prepare
    * @param initialChunkSize
    *          the initial chunk size selected for the feature
-   * @since 4.38
+   * @since 4.29
    */
   public default void prepareCollection(InternalCDORevision revision, EStructuralFeature feature, int initialChunkSize)
   {

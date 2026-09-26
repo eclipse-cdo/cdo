@@ -38,7 +38,7 @@ public interface OMPlatform
   /**
    * Creates a managed container that is appropriate for this platform.
    *
-   * @since 3.30
+   * @since 3.31
    */
   public IManagedContainer createManagedContainer();
 

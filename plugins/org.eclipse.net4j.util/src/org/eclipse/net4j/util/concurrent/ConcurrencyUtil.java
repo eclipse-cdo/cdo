@@ -184,6 +184,7 @@ public final class ConcurrencyUtil
    *
    * @param ex
    *          the exception directly caught by the caller
+   * @since 3.31
    */
   public static void restoreInterrupt(Throwable ex)
   {

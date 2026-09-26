@@ -28,7 +28,7 @@ import java.util.Objects;
  * has no dependency on a package registry and owns its annotation cache for use by both clients and servers.
  *
  * @author Eike Stepper
- * @since 4.38
+ * @since 4.29
  */
 public class CDOCollectionLoadingConfigResolver
 {

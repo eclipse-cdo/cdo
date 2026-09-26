@@ -17,7 +17,7 @@ package org.eclipse.net4j.util.container;
  * been published while initialization is in progress.
  *
  * @author Eike Stepper
- * @since 3.30
+ * @since 3.31
  */
 public interface IManagedContainerInitializer
 {

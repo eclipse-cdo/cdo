@@ -123,7 +123,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * Replaces the complete collection-loading configuration of the server session.
    *
    * @param config the complete configuration snapshot, or {@code null} to disable modern partial collection loading
-   * @since 4.38
+   * @since 4.31
    */
   public CDOCollectionLoadingConfig setCollectionLoadingConfig(CDOCollectionLoadingConfig config);
 
@@ -158,7 +158,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @param ranges
    *          the ordered ranges to load
    * @return the value at the access coordinate of a single-range request, or {@code null} for a multi-range request
-   * @since 4.32
+   * @since 4.31
    */
   public Object loadChunk(InternalCDORevision revision, EStructuralFeature feature, List<ChunkRange> ranges);
 
@@ -914,6 +914,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @param id
      *          the ID of the changed object
      * @return the revision delta, or {@code null} if no delta was supplied
+     * @since 4.31
      */
     public InternalCDORevisionDelta getChangedObjectDelta(CDOBranch branch, CDOID id)
     {
@@ -929,6 +930,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      * @param id
      *          the ID of the changed object
      * @return {@code true} if the response supplied a delta field, including an explicitly absent delta
+     * @since 4.31
      */
     public boolean hasChangedObjectDelta(CDOBranch branch, CDOID id)
     {
@@ -972,6 +974,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
      *          the refreshed revision
      * @param delta
      *          the delta from the viewed revision to the refreshed revision
+     * @since 4.31
      */
     public void addChangedObject(InternalCDORevision revision, InternalCDORevisionDelta delta)
     {
@@ -1709,7 +1712,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * A client/server-coordinate range for a collection chunk request.
    *
    * @author Eike Stepper
-   * @since 4.32
+   * @since 4.31
    */
   public static final class ChunkRange
   {

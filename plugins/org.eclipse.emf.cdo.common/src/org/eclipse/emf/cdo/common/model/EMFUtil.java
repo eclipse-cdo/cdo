@@ -89,12 +89,12 @@ public final class EMFUtil
   public static final String CDO_ANNOTATION_KEY_PERSISTENT = "persistent";
 
   /**
-   * @since 4.38
+   * @since 4.29
    */
   public static final String CDO_ANNOTATION_KEY_INITIAL_CHUNK_SIZE = "initialChunkSize";
 
   /**
-   * @since 4.38
+   * @since 4.29
    */
   public static final String CDO_ANNOTATION_KEY_RESOLVE_CHUNK_SIZE = "resolveChunkSize";
 
@@ -642,7 +642,7 @@ public final class EMFUtil
    *
    * @param modelElement the model element to inspect
    * @return the explicit chunk configuration, or {@code null}
-   * @since 4.38
+   * @since 4.29
    */
   public static ChunkConfig getCollectionLoadingChunkConfig(EModelElement modelElement)
   {

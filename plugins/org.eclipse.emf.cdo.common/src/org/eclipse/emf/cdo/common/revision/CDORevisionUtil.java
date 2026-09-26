@@ -67,6 +67,7 @@ public final class CDORevisionUtil
 {
   /**
    * The canonical marker for a list element that has not been loaded.
+   * @since 4.29
    */
   public static final Object UNLOADED = new Uninitialized();
 

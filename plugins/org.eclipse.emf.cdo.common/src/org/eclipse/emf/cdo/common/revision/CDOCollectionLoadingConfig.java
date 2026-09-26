@@ -33,7 +33,7 @@ import java.util.Objects;
  * explicit model-element overrides; it does not evaluate metamodel annotations or perform collection loading.
  *
  * @author Eike Stepper
- * @since 4.38
+ * @since 4.29
  */
 public final class CDOCollectionLoadingConfig
 {

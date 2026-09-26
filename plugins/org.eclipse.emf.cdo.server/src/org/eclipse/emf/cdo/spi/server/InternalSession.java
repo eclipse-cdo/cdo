@@ -67,7 +67,7 @@ public interface InternalSession
    * Returns the complete modern collection-loading configuration snapshot.
    *
    * @return the configuration, or {@code null}
-   * @since 4.38
+   * @since 4.27
    */
   public CDOCollectionLoadingConfig getCollectionLoadingConfig();
 
@@ -75,7 +75,7 @@ public interface InternalSession
    * Replaces the complete modern collection-loading configuration snapshot.
    *
    * @param config the configuration, or {@code null} to disable modern partial collection loading
-   * @since 4.38
+   * @since 4.27
    */
   public void setCollectionLoadingConfig(CDOCollectionLoadingConfig config);
 

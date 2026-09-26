@@ -28,6 +28,7 @@ public interface CDOList extends MoveableList<Object>, EList<Object>
 {
   /**
    * Returns whether the element at {@code index} is loaded.
+   * @since 4.29
    */
   public default boolean isLoadedAt(int index)
   {
@@ -42,6 +43,7 @@ public interface CDOList extends MoveableList<Object>, EList<Object>
    * Implementations with unloaded-state bookkeeping should override this method to provide a constant-time result.
    *
    * @return {@code true} if every position in this list is loaded, or if the list is empty
+   * @since 4.29
    */
   public default boolean isFullyLoaded()
   {

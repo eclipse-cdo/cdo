@@ -53,7 +53,6 @@ import org.eclipse.emf.internal.cdo.transaction.TransactionSegment;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.Access;
-import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -284,7 +283,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void detach(InternalCDOObject object)
   {
-    sync(object).run(() -> {
+    try (Access access = access(object))
+    {
       if (TRACER.isEnabled())
       {
         trace(object, CDOEvent.DETACH);
@@ -314,12 +314,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         content.cdoInternalSetView(null);
         content.cdoInternalSetID(null);
       }
-    });
+    }
   }
 
   public InternalCDORevision read(InternalCDOObject object)
   {
-    return sync(object).supply(() -> readUnsynced(object));
+    try (Access access = access(object))
+    {
+      return readUnsynced(object);
+    }
   }
 
   // Requires the owning view lock when the object belongs to a view.
@@ -336,7 +339,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public InternalCDORevision readNoLoad(InternalCDOObject object)
   {
-    return sync(object).supply(() -> {
+    try (Access access = access(object))
+    {
       switch (object.cdoState())
       {
       case TRANSIENT:
@@ -350,14 +354,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       }
 
       return object.cdoRevision();
-    });
+    }
   }
 
   public Object write(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
-    return sync(object).supply(() -> {
+    try (Access access = access(object))
+    {
       return writeUnsynced(object, featureDelta);
-    });
+    }
   }
 
   public Object writeUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta)
@@ -381,7 +386,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       return;
     }
 
-    sync(objects[0]).run(() -> {
+    try (Access access = access(objects[0]))
+    {
       for (InternalCDOObject object : objects)
       {
         CDOState state = object.cdoState();
@@ -392,31 +398,33 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           read(object);
         }
       }
-    });
+    }
   }
 
   public void invalidate(InternalCDOObject object, CDORevisionKey key)
   {
-    sync(object).run(() -> {
+    try (Access access = access(object))
+    {
       if (TRACER.isEnabled())
       {
         trace(object, CDOEvent.INVALIDATE);
       }
 
       process(object, CDOEvent.INVALIDATE, key);
-    });
+    }
   }
 
   public void detachRemote(InternalCDOObject object)
   {
-    sync(object).run(() -> {
+    try (Access access = access(object))
+    {
       if (TRACER.isEnabled())
       {
         trace(object, CDOEvent.DETACH_REMOTE);
       }
 
       process(object, CDOEvent.DETACH_REMOTE, null);
-    });
+    }
   }
 
   public void commit(Map<CDOID, CDOObject> objects, CommitTransactionResult result)
@@ -434,26 +442,28 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   private void commitObject(InternalCDOObject object, CommitTransactionResult result)
   {
-    sync(object).run(() -> {
+    try (Access access = access(object))
+    {
       if (TRACER.isEnabled())
       {
         trace(object, CDOEvent.COMMIT);
       }
 
       process(object, CDOEvent.COMMIT, result);
-    });
+    }
   }
 
   public void rollback(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    sync(object).run(() -> {
+    try (Access access = access(object))
+    {
       if (TRACER.isEnabled())
       {
         trace(object, CDOEvent.ROLLBACK);
       }
 
       process(object, CDOEvent.ROLLBACK, transaction);
-    });
+    }
   }
 
   @Override
@@ -497,16 +507,16 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  private CriticalSection sync(InternalCDOObject object)
+  private Access access(InternalCDOObject object)
   {
     InternalCDOView view = object.cdoView();
     if (view != null)
     {
-      return view.sync();
+      return view.access();
     }
 
     // In TRANSIENT and PREPARED the object is not yet attached to a view
-    return CriticalSection.UNSYNCHRONIZED;
+    return null;
   }
 
   /**

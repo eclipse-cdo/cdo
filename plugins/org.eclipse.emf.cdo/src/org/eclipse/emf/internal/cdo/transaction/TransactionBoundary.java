@@ -29,9 +29,9 @@ import java.util.Map;
  */
 public final class TransactionBoundary
 {
-  /*
+  /**
    * Boundary links and the associated savepoint are transaction-owned state. Their callers mutate them only from code
-   * already executing under InternalCDOTransaction.sync(); this class intentionally does not add a second lock.
+   * already executing under the owning transaction's lock; this class intentionally does not add a second lock.
    */
   private final TransactionSegment segment;
 

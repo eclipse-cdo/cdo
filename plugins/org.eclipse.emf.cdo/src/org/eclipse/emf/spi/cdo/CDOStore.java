@@ -41,6 +41,71 @@ import org.eclipse.emf.ecore.InternalEObject.EStore;
 public interface CDOStore extends EStore
 {
   /**
+   * Returns the number of values in a many-valued feature without acquiring the view lock.
+   * <p>
+   * The calling thread must already hold the owning view's access lock for the complete operation that uses this
+   * result. This method exists for composite list operations that keep that lock while performing their own index
+   * validation and subsequent store operation. Call {@link #size(InternalEObject, EStructuralFeature)} when no such
+   * outer lock is held.
+   *
+   * @param eObject the object that owns the feature.
+   * @param feature the many-valued feature whose size is requested.
+   * @return the current number of values in the feature.
+   * @see #size(InternalEObject, EStructuralFeature)
+   * @since 4.31
+   */
+  public int sizeUnsynced(InternalEObject eObject, EStructuralFeature feature);
+
+  /**
+   * Moves a value in a many-valued feature without acquiring the view lock.
+   * <p>
+   * The calling thread must already hold the owning view's access lock for the complete operation. This method
+   * performs the same backing-store update and returns the same former value as {@link #move(InternalEObject,
+   * EStructuralFeature, int, int)}. Call the synchronized method when no such outer lock is held.
+   *
+   * @param eObject the object that owns the feature.
+   * @param feature the many-valued feature to update.
+   * @param target the index to which the value is moved.
+   * @param source the index from which the value is moved.
+   * @return the value formerly at {@code source}.
+   * @see #move(InternalEObject, EStructuralFeature, int, int)
+   * @since 4.31
+   */
+  public Object moveUnsynced(InternalEObject eObject, EStructuralFeature feature, int target, int source);
+
+  /**
+   * Removes a value from a many-valued feature using the same backing-store operation as
+   * {@link #remove(InternalEObject, EStructuralFeature, int)}, without acquiring the owning view's access lock.
+   * <p>
+   * The calling thread must already hold that lock for the complete operation. Call the synchronized method when no
+   * such outer lock is held.
+   *
+   * @param eObject the object that owns the feature.
+   * @param feature the many-valued feature to update.
+   * @param index the index of the value to remove.
+   * @return the removed value.
+   * @see #remove(InternalEObject, EStructuralFeature, int)
+   * @since 4.31
+   */
+  public Object removeUnsynced(InternalEObject eObject, EStructuralFeature feature, int index);
+
+  /**
+   * Adds a value to a many-valued feature using the same backing-store operation as
+   * {@link #add(InternalEObject, EStructuralFeature, int, Object)}, without acquiring the owning view's access lock.
+   * <p>
+   * The calling thread must already hold that lock for the complete operation. The synchronized {@code add(...)}
+   * method remains the independently safe EStore entry point and must be used when no such outer lock is held.
+   *
+   * @param eObject the object that owns the feature.
+   * @param feature the many-valued feature to update.
+   * @param index the index at which the value is added.
+   * @param value the value to add.
+   * @see #add(InternalEObject, EStructuralFeature, int, Object)
+   * @since 4.31
+   */
+  public void addUnsynced(InternalEObject eObject, EStructuralFeature feature, int index, Object value);
+
+  /**
    * @since 2.0
    */
   public InternalCDOView getView();

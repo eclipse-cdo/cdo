@@ -3454,8 +3454,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     try (Access access = access())
     {
-      registerFeatureDelta(object, featureDelta, null);
+      registerFeatureDeltaUnsynced(object, featureDelta, null);
     }
+  }
+
+  /**
+   * Clears the resource path cache for a revision delta recorded by a transaction segment.
+   * The owning transaction lock must already be held.
+   */
+  final void clearResourcePathCacheFromSegmentUnsynced(CDORevisionDelta delta)
+  {
+    clearResourcePathCacheIfNecessaryUnsynced(delta);
   }
 
   @Override
@@ -3463,46 +3472,85 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     try (Access access = access())
     {
-      CDOID id = object.cdoID();
-      boolean needToSaveFeatureDelta = true;
+      registerFeatureDeltaUnsynced(object, featureDelta, cleanRevision);
+    }
+  }
 
-      if (object.cdoState() == CDOState.NEW)
+  @Override
+  public final void registerFeatureDeltaUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision)
+  {
+    CDOID id = object.cdoID();
+    boolean needToSaveFeatureDelta = true;
+
+    if (object.cdoState() == CDOState.NEW)
+    {
+      // Register Delta for new objects only if objectA doesn't belong to this savepoint
+      if (lastSavepoint.getPreviousSavepoint() == null || featureDelta == null)
       {
-        // Register Delta for new objects only if objectA doesn't belong to this savepoint
-        if (lastSavepoint.getPreviousSavepoint() == null || featureDelta == null)
-        {
-          needToSaveFeatureDelta = false;
-        }
-        else
-        {
-          Map<CDOID, CDOObject> map = currentSegment().getNewObjects();
-          needToSaveFeatureDelta = !map.containsKey(id);
-        }
+        needToSaveFeatureDelta = false;
       }
-
-      if (needToSaveFeatureDelta)
+      else
       {
-        Map<CDOID, CDORevisionDelta> revisionDeltas = currentSegment().getRevisionDeltas();
-        InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(id);
-        if (revisionDelta == null)
-        {
-          InternalCDORevision revision = object.cdoRevision();
-
-          revisionDelta = (InternalCDORevisionDelta)CDORevisionUtil.createDelta(revision);
-          revisionDeltas.put(id, revisionDelta);
-        }
-
-        CDOOriginSizeProvider originSizeProvider = getOriginSizeProvider(object, featureDelta, cleanRevision);
-        revisionDelta.addFeatureDelta(featureDelta, originSizeProvider);
-      }
-
-      CDOTransactionHandler1[] handlers = getTransactionHandlers1();
-      for (int i = 0; i < handlers.length; i++)
-      {
-        CDOTransactionHandler1 handler = handlers[i];
-        handler.modifyingObject(this, object, featureDelta);
+        Map<CDOID, CDOObject> map = currentSegment().getNewObjects();
+        needToSaveFeatureDelta = !map.containsKey(id);
       }
     }
+
+    if (needToSaveFeatureDelta)
+    {
+      Map<CDOID, CDORevisionDelta> revisionDeltas = currentSegment().getRevisionDeltas();
+      InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(id);
+      if (revisionDelta == null)
+      {
+        InternalCDORevision revision = object.cdoRevision();
+
+        revisionDelta = (InternalCDORevisionDelta)CDORevisionUtil.createDelta(revision);
+        revisionDeltas.put(id, revisionDelta);
+      }
+
+      CDOOriginSizeProvider originSizeProvider = getOriginSizeProvider(object, featureDelta, cleanRevision);
+      revisionDelta.addFeatureDelta(featureDelta, originSizeProvider);
+    }
+
+    CDOTransactionHandler1[] handlers = getTransactionHandlers1();
+    for (int i = 0; i < handlers.length; i++)
+    {
+      CDOTransactionHandler1 handler = handlers[i];
+      handler.modifyingObject(this, object, featureDelta);
+    }
+  }
+
+  /**
+   * Registers the first dirty transition of a persistent object without reacquiring the owning transaction lock.
+   * This operation is intended for the built-in state-machine path after it has established that lock ownership.
+   * It stores the clean revision, replaces the object's revision, registers the feature delta and synchronously
+   * notifies transaction handlers before registering the object as dirty.
+   * <p>
+   * The owning transaction/view lock must already be held for the entire operation. Transaction-handler callbacks
+   * execute synchronously under that same lock, and exceptions from them are propagated to the caller.
+   *
+   * @param object the persistent object making its first transition to the dirty state
+   * @param featureDelta the feature change to register, or {@code null} if the transition has no feature change
+   * @param cleanRevision the revision of the object before the transition
+   * @param revision the replacement revision containing the change
+   */
+  public final void registerFirstDirtyUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision,
+      InternalCDORevision revision)
+  {
+    cleanRevisions.put(object, cleanRevision);
+    object.cdoInternalSetRevision(revision);
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Registering dirty object {0}", object); //$NON-NLS-1$
+    }
+
+    if (featureDelta != null)
+    {
+      registerFeatureDeltaUnsynced(object, featureDelta, cleanRevision);
+    }
+
+    registerDirtyObject(object);
   }
 
   @Override
@@ -3538,6 +3586,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       registerFeatureDelta(object, featureDelta, cleanRevision);
     }
 
+    registerDirtyObject(object);
+  }
+
+  private void registerDirtyObject(InternalCDOObject object)
+  {
     Map<CDOID, CDOObject> dirtyObjects = currentSegment().getDirtyObjects();
     registerNew(dirtyObjects, object);
   }
@@ -4599,40 +4652,37 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  protected CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
+  protected CDOID getIDUnsynced(InternalCDOObject object, boolean onlyPersistedID)
   {
-    try (Access access = access())
+    CDOID id = super.getIDUnsynced(object, onlyPersistedID);
+    if (id != null)
     {
-      CDOID id = super.getID(object, onlyPersistedID);
-      if (id != null)
-      {
-        return id;
-      }
+      return id;
+    }
 
-      // Don't perform the trickery that follows later in this method, if we are being called
-      // indirectly through provideCDOID. This occurs when deltas or revisions are
-      // being written out to a stream; in which case null must be returned (for transients) so that
-      // the caller will detect a dangling reference
-      if (providingCDOID.get() == Boolean.TRUE)
-      {
-        return null;
-      }
-
-      // The super implementation returns null for a transient (unattached) object;
-      // but in a transaction, a transient object may have been attached previously.
-      // So we consult the cleanRevisions if that's the case.
-      CDORevisionKey revisionKey = cleanRevisions.get(object);
-      if (revisionKey != null)
-      {
-        CDOID revisionID = revisionKey.getID();
-        if (isObjectDetached(revisionID))
-        {
-          return revisionID;
-        }
-      }
-
+    // Don't perform the trickery that follows later in this method, if we are being called
+    // indirectly through provideCDOID. This occurs when deltas or revisions are
+    // being written out to a stream; in which case null must be returned (for transients) so that
+    // the caller will detect a dangling reference
+    if (providingCDOID.get() == Boolean.TRUE)
+    {
       return null;
     }
+
+    // The super implementation returns null for a transient (unattached) object;
+    // but in a transaction, a transient object may have been attached previously.
+    // So we consult the cleanRevisions if that's the case.
+    CDORevisionKey revisionKey = cleanRevisions.get(object);
+    if (revisionKey != null)
+    {
+      CDOID revisionID = revisionKey.getID();
+      if (isObjectDetached(revisionID))
+      {
+        return revisionID;
+      }
+    }
+
+    return null;
   }
 
   @Override
@@ -5086,8 +5136,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   {
     try (Access access = access())
     {
-      return cleanRevisions;
+      return getCleanRevisionsUnsynced();
     }
+  }
+
+  @Override
+  public final Map<InternalCDOObject, InternalCDORevision> getCleanRevisionsUnsynced()
+  {
+    return cleanRevisions;
   }
 
   @Override

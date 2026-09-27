@@ -124,6 +124,7 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(TransactionTest.class);
     testClasses.add(UnsetTest.class);
     testClasses.add(ViewProviderTest.class);
+    testClasses.add(ViewSynchronizationTest.class);
     testClasses.add(ViewTest.class);
     testClasses.add(WorkspaceTest.class);
     testClasses.add(XATransactionTest.class);

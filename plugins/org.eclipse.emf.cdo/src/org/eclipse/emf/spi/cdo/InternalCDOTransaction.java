@@ -144,12 +144,6 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public InternalCDORevision getLifecycleBeforeImageRevision(InternalCDOObject object);
 
   /**
-   * @deprecated {@link #createIDForNewObject(EObject)} is called since 4.1.
-   */
-  @Deprecated
-  public CDOIDTemp getNextTemporaryID();
-
-  /**
    * @since 4.1
    */
   public CDOID createIDForNewObject(EObject object);
@@ -169,6 +163,17 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta);
 
   /**
+   * Registers a feature delta without acquiring the transaction/view lock. The caller must already hold the owning
+   * transaction/view lock. This method is intended for internal call paths already inside that synchronization
+   * boundary, and has the same registration and callback semantics as
+   * {@link #registerFeatureDelta(InternalCDOObject, CDOFeatureDelta, InternalCDORevision)}.
+   *
+   * @see #registerFeatureDelta(InternalCDOObject, CDOFeatureDelta, InternalCDORevision)
+   * @since 4.31
+   */
+  public void registerFeatureDeltaUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision);
+
+  /**
    * @since 4.3
    */
   public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision);
@@ -186,19 +191,6 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    * @since 4.4
    */
   public void removeConflict(InternalCDOObject object);
-
-  /**
-   * @param source
-   *          May be <code>null</code> if changeSetData does not result from a
-   *          {@link #merge(CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger) merge} or if the merge was not in
-   *          a {@link CDOBranch#isLocal() local} branch.
-   * @since 4.0
-   * @deprecated Use
-   *             {@link #applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)}
-   */
-  @Deprecated
-  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider resultBaseProvider,
-      CDORevisionProvider targetProvider, CDOBranchPoint source);
 
   /**
    * Applies a goal change set whose NEW, CHANGED, and DETACHED classifications are defined relative to
@@ -222,6 +214,16 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    * @since 4.0
    */
   public Map<InternalCDOObject, InternalCDORevision> getCleanRevisions();
+
+  /**
+   * Returns the same live clean-revisions map as {@link #getCleanRevisions()} without acquiring the transaction/view
+   * lock. The caller must already hold the owning transaction/view lock. This method is intended for internal call
+   * paths already inside that synchronization boundary.
+   *
+   * @see #getCleanRevisions()
+   * @since 4.31
+   */
+  public Map<InternalCDOObject, InternalCDORevision> getCleanRevisionsUnsynced();
 
   /**
    * Provides a context for a commit operation.
@@ -289,4 +291,23 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
       super("Change set is outdated");
     }
   }
+
+  /**
+   * @deprecated {@link #createIDForNewObject(EObject)} is called since 4.1.
+   */
+  @Deprecated
+  public CDOIDTemp getNextTemporaryID();
+
+  /**
+   * @param source
+   *          May be <code>null</code> if changeSetData does not result from a
+   *          {@link #merge(CDOBranchPoint, org.eclipse.emf.cdo.transaction.CDOMerger) merge} or if the merge was not in
+   *          a {@link CDOBranch#isLocal() local} branch.
+   * @since 4.0
+   * @deprecated Use
+   *             {@link #applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)}
+   */
+  @Deprecated
+  public Pair<CDOChangeSetData, Pair<Map<CDOID, CDOID>, List<CDOID>>> applyChangeSetData(CDOChangeSetData changeSetData, CDORevisionProvider resultBaseProvider,
+      CDORevisionProvider targetProvider, CDOBranchPoint source);
 }

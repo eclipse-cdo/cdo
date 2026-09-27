@@ -46,6 +46,7 @@ import org.eclipse.emf.internal.cdo.CDORevisionTransitionUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.transaction.TransactionHistory;
 import org.eclipse.emf.internal.cdo.transaction.TransactionSegment;
 
@@ -318,15 +319,19 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public InternalCDORevision read(InternalCDOObject object)
   {
-    return sync(object).supply(() -> {
-      if (TRACER.isEnabled())
-      {
-        trace(object, CDOEvent.READ);
-      }
+    return sync(object).supply(() -> readUnsynced(object));
+  }
 
-      process(object, CDOEvent.READ, null);
-      return object.cdoRevision();
-    });
+  // Requires the owning view lock when the object belongs to a view.
+  public InternalCDORevision readUnsynced(InternalCDOObject object)
+  {
+    if (TRACER.isEnabled())
+    {
+      trace(object, CDOEvent.READ);
+    }
+
+    process(object, CDOEvent.READ, null);
+    return object.cdoRevision();
   }
 
   public InternalCDORevision readNoLoad(InternalCDOObject object)
@@ -627,18 +632,23 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     dispatchLoadNotification(object);
   }
 
-  private static TransactionSegment currentSegment(InternalCDOTransaction transaction)
+  private static TransactionHistory transactionHistory(InternalCDOTransaction transaction)
   {
-    return ((TransactionHistory)transaction).getCurrentSegment();
+    return (TransactionHistory)transaction;
   }
 
-  private static void unsetTransactionDirtyIfEmpty(InternalCDOTransaction transaction, Map<CDOID, CDORevisionDelta> revisionDeltas)
+  private static TransactionSegment currentSegment(InternalCDOTransaction transaction)
+  {
+    return transactionHistory(transaction).getCurrentSegment();
+  }
+
+  private static void unsetTransactionDirtyIfEmpty(TransactionHistory history, InternalCDOTransaction transaction, Map<CDOID, CDORevisionDelta> revisionDeltas)
   {
     if (revisionDeltas.isEmpty() //
-        && transaction.getDirtyObjects().isEmpty() //
-        && transaction.getRevisionDeltas().isEmpty() //
-        && transaction.getNewObjects().isEmpty() //
-        && transaction.getDetachedObjects().isEmpty())
+        && history.aggregateCurrentDirtyObjects().isEmpty() //
+        && history.aggregateCurrentRevisionDeltas().isEmpty() //
+        && history.aggregateCurrentNewObjects().isEmpty() //
+        && history.aggregateCurrentDetachedObjects().isEmpty())
     {
       transaction.setDirty(false);
     }
@@ -885,7 +895,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
       }
 
-      unsetTransactionDirtyIfEmpty(transaction, revisionDeltas);
+      unsetTransactionDirtyIfEmpty(transactionHistory(transaction), transaction, revisionDeltas);
     }
 
     private void processFeatureDeltas(CDOID reattachedObject, Map<EStructuralFeature, CDOFeatureDelta> map)
@@ -1071,7 +1081,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         result = featureDelta.applyTo(revision);
       }
 
-      transaction.registerFeatureDelta(object, featureDelta);
+      transaction.registerFeatureDeltaUnsynced(object, featureDelta, null);
       return result;
     }
   }
@@ -1122,10 +1132,17 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
       }
 
-      transaction.getCleanRevisions().put(object, cleanRevision);
-      object.cdoInternalSetRevision(revision);
+      if (transaction instanceof CDOTransactionImpl)
+      {
+        ((CDOTransactionImpl)transaction).registerFirstDirtyUnsynced(object, featureDelta, cleanRevision, revision);
+      }
+      else
+      {
+        transaction.getCleanRevisions().put(object, cleanRevision);
+        object.cdoInternalSetRevision(revision);
+        transaction.registerDirty(object, featureDelta, cleanRevision);
+      }
 
-      transaction.registerDirty(object, featureDelta, cleanRevision);
       changeState(object, CDOState.DIRTY);
       return result;
     }
@@ -1139,7 +1156,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     @Override
     protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction, CDOFeatureDelta featureDelta, InternalCDORevision revision)
     {
-      Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
+      Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisionsUnsynced();
       InternalCDORevision cleanRevision = cleanRevisions.get(object);
 
       Object result = null;
@@ -1156,7 +1173,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           {
             CDOID id = revision.getID();
 
-            TransactionSegment currentSegment = currentSegment(transaction);
+            TransactionHistory history = transactionHistory(transaction);
+            TransactionSegment currentSegment = history.getCurrentSegment();
             Map<CDOID, CDORevisionDelta> revisionDeltas = currentSegment.getRevisionDeltas();
 
             InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(id);
@@ -1177,14 +1195,14 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
                 }
 
                 object.cdoInternalSetRevision(cleanRevision);
-                if (!transaction.getDirtyObjects().containsKey(id) && !transaction.getRevisionDeltas().containsKey(id))
+                if (!history.aggregateCurrentDirtyObjects().containsKey(id) && !history.aggregateCurrentRevisionDeltas().containsKey(id))
                 {
                   changeState(object, CDOState.CLEAN);
                 }
               }
             }
 
-            unsetTransactionDirtyIfEmpty(transaction, revisionDeltas);
+            unsetTransactionDirtyIfEmpty(history, transaction, revisionDeltas);
 
             CDOTransactionHandler1[] handlers = transaction.getTransactionHandlers1();
             for (int i = 0; i < handlers.length; i++)
@@ -1202,7 +1220,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
       }
 
-      transaction.registerFeatureDelta(object, featureDelta, cleanRevision);
+      transaction.registerFeatureDeltaUnsynced(object, featureDelta, cleanRevision);
       return result;
     }
   }

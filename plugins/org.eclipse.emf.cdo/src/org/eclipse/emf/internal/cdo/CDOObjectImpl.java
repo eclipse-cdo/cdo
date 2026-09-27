@@ -55,6 +55,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener;
+import org.eclipse.emf.common.notify.impl.NotificationImpl;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
 import org.eclipse.emf.common.util.DelegatingEList;
@@ -2577,6 +2578,70 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     @Override
+    protected void delegateAdd(Object object)
+    {
+      if (eStore() instanceof CDOStore)
+      {
+        CDOStore store = (CDOStore)eStore();
+        int index = store.sizeUnsynced(owner, eStructuralFeature);
+        store.addUnsynced(owner, eStructuralFeature, index, object);
+      }
+      else
+      {
+        super.delegateAdd(delegateSize(), object);
+      }
+    }
+
+    @Override
+    protected void delegateAdd(int index, Object object)
+    {
+      if (eStore() instanceof CDOStore)
+      {
+        ((CDOStore)eStore()).addUnsynced(owner, eStructuralFeature, index, object);
+      }
+      else
+      {
+        super.delegateAdd(index, object);
+      }
+    }
+
+    @Override
+    public Object move(int targetIndex, int sourceIndex)
+    {
+      try (Access access = access())
+      {
+        ++modCount;
+
+        CDOStore store = (CDOStore)eStore();
+        int size = store.sizeUnsynced(owner, eStructuralFeature);
+
+        if (targetIndex >= size || targetIndex < 0)
+        {
+          throw new IndexOutOfBoundsException("targetIndex=" + targetIndex + ", size=" + size);
+        }
+
+        if (sourceIndex >= size || sourceIndex < 0)
+        {
+          throw new IndexOutOfBoundsException("sourceIndex=" + sourceIndex + ", size=" + size);
+        }
+
+        Object object;
+        if (targetIndex != sourceIndex)
+        {
+          object = store.moveUnsynced(owner, eStructuralFeature, targetIndex, sourceIndex);
+          didMove(targetIndex, object, sourceIndex);
+          didChange();
+        }
+        else
+        {
+          object = delegateGet(sourceIndex);
+        }
+
+        return object;
+      }
+    }
+
+    @Override
     public void unset()
     {
       try (Access access = access())
@@ -2590,8 +2655,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       try (Access access = access())
       {
-        return super.inverseAdd(object, notifications);
+        return inverseAddUnsynced(object, notifications);
       }
+    }
+
+    private NotificationChain inverseAddUnsynced(Object object, NotificationChain notifications)
+    {
+      return super.inverseAdd(object, notifications);
     }
 
     @Override
@@ -2599,8 +2669,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       try (Access access = access())
       {
-        return super.inverseRemove(object, notifications);
+        return inverseRemoveUnsynced(object, notifications);
       }
+    }
+
+    private NotificationChain inverseRemoveUnsynced(Object object, NotificationChain notifications)
+    {
+      return super.inverseRemove(object, notifications);
     }
 
     @Override
@@ -2617,7 +2692,56 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       try (Access access = access())
       {
-        super.addUnique(object);
+        addUniqueUnsynced(object);
+      }
+    }
+
+    private void addUniqueUnsynced(Object object)
+    {
+      if (isNotificationRequired())
+      {
+        int index = size();
+        boolean oldIsSet = isSet();
+
+        doAddUnique(index, object);
+
+        NotificationImpl notification = createNotification(Notification.ADD, null, object, index, oldIsSet);
+
+        if (hasInverse())
+        {
+          NotificationChain notifications = inverseAddUnsynced(object, null);
+          if (hasShadow())
+          {
+            notifications = shadowAdd(object, notifications);
+          }
+
+          if (notifications == null)
+          {
+            dispatchNotification(notification);
+          }
+          else
+          {
+            notifications.add(notification);
+            notifications.dispatch();
+          }
+        }
+        else
+        {
+          dispatchNotification(notification);
+        }
+      }
+      else
+      {
+        doAddUnique(object);
+
+        if (hasInverse())
+        {
+          NotificationChain notifications = inverseAddUnsynced(object, null);
+          if (notifications != null)
+          {
+            notifications.dispatch();
+          }
+        }
       }
     }
 
@@ -2626,7 +2750,56 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       try (Access access = access())
       {
-        super.addUnique(index, object);
+        addUniqueUnsynced(index, object);
+      }
+    }
+
+    private void addUniqueUnsynced(int index, Object object)
+    {
+      if (isNotificationRequired())
+      {
+        boolean oldIsSet = isSet();
+
+        doAddUnique(index, object);
+
+        NotificationImpl notification = createNotification(Notification.ADD, null, object, index, oldIsSet);
+
+        if (hasInverse())
+        {
+          NotificationChain notifications = inverseAddUnsynced(object, null);
+
+          if (hasShadow())
+          {
+            notifications = shadowAdd(object, notifications);
+          }
+
+          if (notifications == null)
+          {
+            dispatchNotification(notification);
+          }
+          else
+          {
+            notifications.add(notification);
+            notifications.dispatch();
+          }
+        }
+        else
+        {
+          dispatchNotification(notification);
+        }
+      }
+      else
+      {
+        doAddUnique(index, object);
+
+        if (hasInverse())
+        {
+          NotificationChain notifications = inverseAddUnsynced(object, null);
+          if (notifications != null)
+          {
+            notifications.dispatch();
+          }
+        }
       }
     }
 
@@ -2680,8 +2853,82 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       try (Access access = access())
       {
-        return super.remove(index);
+        return removeWithNotificationsUnsynced(index);
       }
+    }
+
+    private Object removeUnsynced(int index)
+    {
+      ++modCount;
+
+      Object oldObject;
+      if (eStore() instanceof CDOStore)
+      {
+        oldObject = ((CDOStore)eStore()).removeUnsynced(owner, eStructuralFeature, index);
+      }
+      else
+      {
+        oldObject = eStore().remove(owner, eStructuralFeature, index);
+      }
+
+      didRemove(index, oldObject);
+      didChange();
+      return oldObject;
+    }
+
+    private Object removeWithNotificationsUnsynced(int index)
+    {
+      if (isNotificationRequired())
+      {
+        boolean oldIsSet = isSet();
+
+        NotificationChain notifications = null;
+        if (hasShadow())
+        {
+          notifications = shadowRemove(basicGet(index), null);
+        }
+
+        Object oldObject = removeUnsynced(index);
+
+        Notification notification = createNotification(Notification.REMOVE, oldObject, null, index, oldIsSet);
+
+        if (hasInverse() && oldObject != null)
+        {
+          notifications = inverseRemoveUnsynced(oldObject, notifications);
+          if (notifications == null)
+          {
+            dispatchNotification(notification);
+          }
+          else
+          {
+            notifications.add(notification);
+            notifications.dispatch();
+          }
+        }
+        else if (notifications == null)
+        {
+          dispatchNotification(notification);
+        }
+        else
+        {
+          notifications.add(notification);
+          notifications.dispatch();
+        }
+
+        return oldObject;
+      }
+
+      Object oldObject = removeUnsynced(index);
+      if (hasInverse() && oldObject != null)
+      {
+        NotificationChain notifications = inverseRemoveUnsynced(oldObject, null);
+        if (notifications != null)
+        {
+          notifications.dispatch();
+        }
+      }
+
+      return oldObject;
     }
 
     @Override
@@ -2730,20 +2977,18 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     @Override
-    public Object move(int targetIndex, int sourceIndex)
-    {
-      try (Access access = access())
-      {
-        return super.move(targetIndex, sourceIndex);
-      }
-    }
-
-    @Override
     public boolean remove(Object object)
     {
       try (Access access = access())
       {
-        return super.remove(object);
+        int index = indexOf(object);
+        if (index >= 0)
+        {
+          removeWithNotificationsUnsynced(index);
+          return true;
+        }
+
+        return false;
       }
     }
 
@@ -2770,7 +3015,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       try (Access access = access())
       {
-        return super.add(object);
+        if (isUnique() && contains(object))
+        {
+          return false;
+        }
+
+        addUniqueUnsynced(object);
+        return true;
       }
     }
 
@@ -2779,7 +3030,18 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       try (Access access = access())
       {
-        super.add(index, object);
+        int size = size();
+        if (index > size)
+        {
+          throw new BasicIndexOutOfBoundsException(index, size);
+        }
+
+        if (isUnique() && contains(object))
+        {
+          throw new IllegalArgumentException("The 'no duplicates' constraint is violated");
+        }
+
+        addUniqueUnsynced(index, object);
       }
     }
 

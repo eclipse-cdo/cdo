@@ -3110,9 +3110,9 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Deprecated
     private CDOLockStatePrefetcher lockStatePrefetcher;
 
-    private CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
+    private volatile CDORevisionPrefetchingPolicy revisionPrefetchingPolicy = CDOUtil.createRevisionPrefetchingPolicy(NO_REVISION_PREFETCHING);
 
-    private CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
+    private volatile CDOFeatureAnalyzer featureAnalyzer = CDOFeatureAnalyzer.NOOP;
 
     private CDOStaleReferencePolicy staleReferencePolicy = CDOStaleReferencePolicy.DEFAULT;
 
@@ -3439,10 +3439,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy()
     {
-      try (Access access = access())
-      {
-        return revisionPrefetchingPolicy;
-      }
+      return revisionPrefetchingPolicy;
     }
 
     @Override
@@ -3468,10 +3465,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDOFeatureAnalyzer getFeatureAnalyzer()
     {
-      try (Access access = access())
-      {
-        return featureAnalyzer;
-      }
+      return featureAnalyzer;
     }
 
     @Override

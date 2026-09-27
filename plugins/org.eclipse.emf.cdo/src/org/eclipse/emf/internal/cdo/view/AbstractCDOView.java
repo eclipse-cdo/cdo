@@ -367,10 +367,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected final void setObjects(Map<CDOID, InternalCDOObject> objects)
   {
-    try (Access access = access())
-    {
-      this.objects = objects;
-    }
+    // Runtime replacements are performed by initObjectsMap() while holding the view lock.
+    this.objects = objects;
   }
 
   protected boolean initObjectsMap(ReferenceType referenceType)
@@ -592,14 +590,19 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     try (Access access = access())
     {
-      if (rootResource == null)
-      {
-        getObject(rootResourceID);
-        CheckUtil.checkState(rootResource, "rootResource"); //$NON-NLS-1$
-      }
-
-      return rootResource;
+      return getRootResourceUnsynced();
     }
+  }
+
+  private CDOResourceImpl getRootResourceUnsynced()
+  {
+    if (rootResource == null)
+    {
+      getObjectUnsynced(rootResourceID, true);
+      CheckUtil.checkState(rootResource, "rootResource"); //$NON-NLS-1$
+    }
+
+    return rootResource;
   }
 
   private void setRootResource(CDOResourceImpl resource)
@@ -640,7 +643,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     try (Access access = access())
     {
-      CDOResource rootResource = getRootResource();
+      CDOResource rootResource = getRootResourceUnsynced();
       if (rootResource.cdoPermission() == CDOPermission.NONE)
       {
         return true;
@@ -661,7 +664,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     {
       if (isActive())
       {
-        CDOResource rootResource = getRootResource();
+        CDOResource rootResource = getRootResourceUnsynced();
         EList<EObject> contents = rootResource.getContents();
 
         for (EObject object : contents)
@@ -885,7 +888,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       CDOID id = getResourceNodeID(path);
       if (id != null) // Should always be true
       {
-        InternalCDOObject object = getObject(id);
+        InternalCDOObject object = getObjectUnsynced(id, true);
         if (object instanceof CDOResourceNode)
         {
           return (CDOResourceNode)object;
@@ -938,23 +941,30 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
    * If <code>delta != null</code> the cache is cleared only if the delta can have an impact on the resource tree structure.
    */
   @Override
-  public void clearResourcePathCacheIfNecessary(CDORevisionDelta delta)
+  public final void clearResourcePathCacheIfNecessary(CDORevisionDelta delta)
   {
     try (Access access = access())
     {
-      if (resourcePathCache != null && !resourcePathCache.isEmpty())
+      clearResourcePathCacheIfNecessaryUnsynced(delta);
+    }
+  }
+
+  /**
+   * Clears the resource path cache if the given revision delta can affect it.
+   * The owning view lock must already be held.
+   */
+  @Override
+  public final void clearResourcePathCacheIfNecessaryUnsynced(CDORevisionDelta delta)
+  {
+    if (resourcePathCache != null && !resourcePathCache.isEmpty())
+    {
+      if (delta == null)
       {
-        if (delta == null)
-        {
-          resourcePathCache.clear();
-        }
-        else
-        {
-          if (canHaveResourcePathImpact(delta, rootResourceID))
-          {
-            resourcePathCache.clear();
-          }
-        }
+        resourcePathCache.clear();
+      }
+      else if (canHaveResourcePathImpact(delta, rootResourceID))
+      {
+        resourcePathCache.clear();
       }
     }
   }
@@ -1033,7 +1043,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       try
       {
         CDOID id = getResourceNodeID(folderID, name);
-        return (CDOResourceNode)getObject(id);
+        return (CDOResourceNode)getObjectUnsynced(id, true);
       }
       catch (CDOException ex)
       {
@@ -1185,7 +1195,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   private InternalCDORevision getLocalRevision(CDOID id)
   {
     InternalCDORevision revision = null;
-    InternalCDOObject object = getObject(id, false);
+
+    InternalCDOObject object = getObjectUnsynced(id, false);
     if (object != null && object.cdoState() != CDOState.PROXY)
     {
       revision = object.cdoRevision();
@@ -1799,7 +1810,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         }
 
         CDOID id = object.cdoID();
-        InternalCDOObject contextified = getObject(id, true);
+        InternalCDOObject contextified = getObjectUnsynced(id, true);
 
         if (objectFromDifferentView instanceof CDOLegacyAdapter)
         {
@@ -2076,68 +2087,84 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     try (Access access = access())
     {
-      if (potentialObject instanceof InternalEObject)
+      return convertObjectToIDUnsynced(potentialObject, onlyPersistedID);
+    }
+  }
+
+  @Override
+  public Object convertObjectToIDUnsynced(Object potentialObject, boolean onlyPersistedID)
+  {
+    if (potentialObject instanceof CDOID)
+    {
+      return potentialObject;
+    }
+
+    if (potentialObject instanceof InternalEObject)
+    {
+      if (potentialObject instanceof InternalCDOObject)
       {
-        if (potentialObject instanceof InternalCDOObject)
+        InternalCDOObject object = (InternalCDOObject)potentialObject;
+        CDOID id = getIDUnsynced(object, onlyPersistedID);
+        if (id != null)
         {
-          InternalCDOObject object = (InternalCDOObject)potentialObject;
-          CDOID id = getID(object, onlyPersistedID);
+          return id;
+        }
+      }
+      else
+      {
+        InternalCDOObject object = (InternalCDOObject)EcoreUtil.getAdapter(((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
+        if (object != null)
+        {
+          CDOID id = getIDUnsynced(object, onlyPersistedID);
           if (id != null)
           {
             return id;
           }
-        }
-        else
-        {
-          InternalCDOObject object = (InternalCDOObject)EcoreUtil.getAdapter(((InternalEObject)potentialObject).eAdapters(), CDOLegacyAdapter.class);
-          if (object != null)
-          {
-            CDOID id = getID(object, onlyPersistedID);
-            if (id != null)
-            {
-              return id;
-            }
 
-            return object;
-          }
+          return object;
         }
       }
-
-      return potentialObject;
     }
+
+    return potentialObject;
   }
 
   protected CDOID getID(InternalCDOObject object, boolean onlyPersistedID)
   {
     try (Access access = access())
     {
-      if (onlyPersistedID)
-      {
-        if (FSMUtil.isTransient(object) || FSMUtil.isNew(object))
-        {
-          return null;
-        }
-      }
+      return getIDUnsynced(object, onlyPersistedID);
+    }
+  }
 
-      CDOView view = object.cdoView();
-      if (view == this)
+  protected CDOID getIDUnsynced(InternalCDOObject object, boolean onlyPersistedID)
+  {
+    if (onlyPersistedID)
+    {
+      if (FSMUtil.isTransient(object) || FSMUtil.isNew(object))
+      {
+        return null;
+      }
+    }
+
+    CDOView view = object.cdoView();
+    if (view == this)
+    {
+      return object.cdoID();
+    }
+
+    if (view != null && view.getSession() == getSession())
+    {
+      boolean sameTarget = view.getBranch() == getBranch() && view.getTimeStamp() == getTimeStamp();
+      if (sameTarget)
       {
         return object.cdoID();
       }
 
-      if (view != null && view.getSession() == getSession())
-      {
-        boolean sameTarget = view.getBranch() == getBranch() && view.getTimeStamp() == getTimeStamp();
-        if (sameTarget)
-        {
-          return object.cdoID();
-        }
-
-        throw new IllegalArgumentException("Object " + object + " is managed by a view with different target: " + view);
-      }
-
-      return null;
+      throw new IllegalArgumentException("Object " + object + " is managed by a view with different target: " + view);
     }
+
+    return null;
   }
 
   @Override
@@ -2152,22 +2179,38 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
       try (Access access = access())
       {
-        CDOID id = (CDOID)potentialID;
-        if (id.isExternal())
-        {
-          ResourceSet resourceSet = getResourceSet();
-          URI uri = URI.createURI(id.toURIFragment());
-          return resourceSet.getEObject(uri, true);
-        }
-
-        InternalCDOObject result = getObject(id, true);
-        if (result == null)
-        {
-          throw new ImplementationError(MessageFormat.format(Messages.getString("CDOViewImpl.17"), id)); //$NON-NLS-1$
-        }
-
-        return result.cdoInternalInstance();
+        return convertIDToObjectUnsynced(potentialID);
       }
+    }
+
+    return potentialID;
+  }
+
+  @Override
+  public final Object convertIDToObjectUnsynced(Object potentialID)
+  {
+    if (potentialID instanceof CDOID)
+    {
+      if (potentialID == CDOID.NULL)
+      {
+        return null;
+      }
+
+      CDOID id = (CDOID)potentialID;
+      if (id.isExternal())
+      {
+        ResourceSet resourceSet = getResourceSet();
+        URI uri = URI.createURI(id.toURIFragment());
+        return resourceSet.getEObject(uri, true);
+      }
+
+      InternalCDOObject result = getObjectUnsynced(id, true);
+      if (result == null)
+      {
+        throw new ImplementationError(MessageFormat.format(Messages.getString("CDOViewImpl.17"), id)); //$NON-NLS-1$
+      }
+
+      return result.cdoInternalInstance();
     }
 
     return potentialID;

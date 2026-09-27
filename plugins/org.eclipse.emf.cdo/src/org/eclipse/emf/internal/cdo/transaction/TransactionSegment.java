@@ -82,7 +82,7 @@ public final class TransactionSegment
       @Override
       public CDORevisionDelta put(CDOID id, CDORevisionDelta delta)
       {
-        transaction.clearResourcePathCacheIfNecessary(delta);
+        transaction.clearResourcePathCacheIfNecessaryUnsynced(delta);
         return super.put(id, delta);
       }
 

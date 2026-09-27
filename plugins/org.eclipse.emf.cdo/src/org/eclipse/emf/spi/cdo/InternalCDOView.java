@@ -143,6 +143,18 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, I
    */
   public void clearResourcePathCacheIfNecessary(CDORevisionDelta delta);
 
+  /**
+   * Clears the resource-path cache using the same logic as {@link #clearResourcePathCacheIfNecessary(CDORevisionDelta)}.
+   * This method does not acquire the view lock; the caller must already hold this view's internal lock. It is intended
+   * for internal call paths that are already inside the owning view/transaction synchronization boundary. A
+   * <code>null</code> delta clears the cache unconditionally; a non-null delta clears it only if it can affect the
+   * resource tree structure.
+   *
+   * @see #clearResourcePathCacheIfNecessary(CDORevisionDelta)
+   * @since 4.31
+   */
+  public void clearResourcePathCacheIfNecessaryUnsynced(CDORevisionDelta delta);
+
   public CDOID getResourceNodeID(String path);
 
   public void registerObject(InternalCDOObject object);
@@ -160,7 +172,27 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, I
 
   public Object convertObjectToID(Object potentialObject, boolean onlyPersistedID);
 
+  /**
+   * Performs the same conversion as {@link #convertObjectToID(Object, boolean)} without acquiring this view's
+   * internal lock. The caller must already hold this view's internal lock. This method is intended for internal paths
+   * that are already inside the owning view synchronization boundary.
+   *
+   * @see #convertObjectToID(Object, boolean)
+   * @since 4.31
+   */
+  public Object convertObjectToIDUnsynced(Object potentialObject, boolean onlyPersistedID);
+
   public Object convertIDToObject(Object potentialID);
+
+  /**
+   * Performs the same ID-to-object conversion as {@link #convertIDToObject(Object)} without acquiring this view's
+   * internal lock. The caller must already hold this view's internal lock. This method is intended for internal paths
+   * that are already inside the owning view synchronization boundary.
+   *
+   * @see #convertIDToObject(Object)
+   * @since 4.31
+   */
+  public Object convertIDToObjectUnsynced(Object potentialID);
 
   /**
    * @since 4.1

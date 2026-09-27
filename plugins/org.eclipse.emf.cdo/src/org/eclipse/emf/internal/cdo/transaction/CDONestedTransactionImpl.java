@@ -16,7 +16,10 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionScopeClosedEvent;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
+import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.event.IEvent;
+
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
@@ -136,12 +139,13 @@ public final class CDONestedTransactionImpl extends DelegatingCDOTransactionImpl
   @Override
   protected synchronized void firstListenerAdded()
   {
-    delegate.sync().run(() -> {
+    try (Access access = ((InternalCDOView)delegate).access())
+    {
       if (scope.isOpen() && !delegate.isClosed())
       {
         super.firstListenerAdded();
       }
-    });
+    }
   }
 
   @Override

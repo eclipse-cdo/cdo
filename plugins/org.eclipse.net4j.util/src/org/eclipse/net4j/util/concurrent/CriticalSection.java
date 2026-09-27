@@ -200,7 +200,7 @@ public interface CriticalSection
     @Override
     public <V> V call(Callable<V> callable) throws Exception
     {
-      lock.lock();
+      lockAccess();
 
       try
       {
@@ -215,7 +215,7 @@ public interface CriticalSection
     @Override
     public void run(Runnable runnable)
     {
-      lock.lock();
+      lockAccess();
 
       try
       {
@@ -230,7 +230,7 @@ public interface CriticalSection
     @Override
     public <V> V supply(Supplier<V> supplier)
     {
-      lock.lock();
+      lockAccess();
 
       try
       {
@@ -245,7 +245,7 @@ public interface CriticalSection
     @Override
     public boolean supply(BooleanSupplier supplier)
     {
-      lock.lock();
+      lockAccess();
 
       try
       {
@@ -260,7 +260,7 @@ public interface CriticalSection
     @Override
     public int supply(IntSupplier supplier)
     {
-      lock.lock();
+      lockAccess();
 
       try
       {
@@ -275,7 +275,7 @@ public interface CriticalSection
     @Override
     public long supply(LongSupplier supplier)
     {
-      lock.lock();
+      lockAccess();
 
       try
       {
@@ -290,7 +290,7 @@ public interface CriticalSection
     @Override
     public double supply(DoubleSupplier supplier)
     {
-      lock.lock();
+      lockAccess();
 
       try
       {
@@ -306,6 +306,23 @@ public interface CriticalSection
     public Condition newCondition()
     {
       return lock.newCondition();
+    }
+
+    /**
+     * Called immediately before a critical-section operation acquires the lock. The hook has returned before the
+     * supplied code is invoked.
+     *
+     * @since 3.31
+     */
+    protected void beforeAccess()
+    {
+      // Do nothing.
+    }
+
+    private void lockAccess()
+    {
+      beforeAccess();
+      lock.lock();
     }
   }
 

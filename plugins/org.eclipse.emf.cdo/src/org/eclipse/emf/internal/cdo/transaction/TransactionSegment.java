@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 
+import org.eclipse.net4j.util.concurrent.Access;
+
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import java.util.HashMap;
@@ -61,14 +63,15 @@ public final class TransactionSegment
       @Override
       public CDOObject put(CDOID key, CDOObject object)
       {
-        return transaction.sync().supply(() -> {
+        try (Access access = transaction.access())
+        {
           baseNewObjects.remove(key);
           newObjects.remove(key);
           reattachedObjects.remove(key);
           dirtyObjects.remove(key);
           revisionDeltas.remove(key);
           return super.put(key, object);
-        });
+        }
       }
     };
 

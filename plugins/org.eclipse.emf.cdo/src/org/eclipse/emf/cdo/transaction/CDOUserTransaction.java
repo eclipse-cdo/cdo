@@ -44,6 +44,9 @@ public interface CDOUserTransaction extends CDORollbackable
    * Various kinds of problems <b>can</b> cause the commit to fail and not all of them can be avoided by acquiring pessimistic {@link CDOObject#cdoWriteLock() locks}
    * on the modified objects. In particular you <b>must</b> expect and handle {@link ContainmentCycleException containment cycle exceptions}. The following example shows how
    * write robust transactions:
+   * <p>
+   * The legacy locking methods used below are disabled by default. This example requires
+   * <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code>.
    * <pre>
     CDOTransaction transaction = null;
 

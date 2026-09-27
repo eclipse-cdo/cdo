@@ -331,7 +331,8 @@ public class Doc03_WorkingWithSessions
           TCPUtil.prepareContainer(container); // Register TCP connector factory.
           container.activate();
 
-          // Obtain the connector from the container by its product group, factory type, and factory-specific description.
+          // Obtain the connector from the container by its product group, factory type, and factory-specific
+          // description.
           IConnector connector = container.getElementOrNull("org.eclipse.net4j.connectors", "tcp", "localhost:2036");
 
           CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
@@ -1239,8 +1240,7 @@ public class Doc03_WorkingWithSessions
           CDOBranchPoint head = session.getBranchManager().getMainBranch().getHead();
 
           // Collect available revisions from the local cache and load missing ones from the repository in one batch.
-          List<CDORevision> revisions = revisionManager.request()
-              .getRevisions(ids, head);
+          List<CDORevision> revisions = revisionManager.request().getRevisions(ids, head);
           System.out.println("Revisions found: " + revisions);
         }
       }
@@ -2476,8 +2476,10 @@ public class Doc03_WorkingWithSessions
      * Delegable View Lock Enabled
      * <p>
      * Specifies whether the session supports delegable view locks. All view methods
-     * are protected from concurrent access by the view's <i>view lock</i>. By default, the view lock is the constant object
-     * returned by {@link CDOView#getViewLock()}. This lock is reentrant, but it is not delegable. This means that if a thread
+     * are protected from concurrent access by the view's internal reentrant <i>view lock</i>. The deprecated
+     * {@link CDOView#getViewLock()} accessor exposes that lock only when
+     * <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code> is set; use {@link CDOView#sync()} for
+     * supported synchronization. By default, the view lock is non-fair and not delegable. This means that if a thread
      * holds the view lock and <b>calls</b> a method that tries to acquire the same view lock again, it will succeed. However,
      * if the thread that holds the view lock schedules a task to be executed asynchronously (e.g., using
      * {@link Display#syncExec(Runnable) Display.syncExec(Runnable)}) and waits for its completion, the task will not be able

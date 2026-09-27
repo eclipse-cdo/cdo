@@ -44,7 +44,7 @@ import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.concurrent.CriticalSection;
+import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -1537,7 +1537,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         @SuppressWarnings("deprecation")
         public ListIterator<Adapter> listIterator()
         {
-          return new EListIterator<Adapter>()
+          return new EListIterator<>()
           {
             @Override
             public void add(Adapter adapter)
@@ -1557,7 +1557,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
             throw new BasicIndexOutOfBoundsException(index, size);
           }
 
-          return new EListIterator<Adapter>(index)
+          return new EListIterator<>(index)
           {
 
             @Override
@@ -1688,15 +1688,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     return new CDOStoreEcoreEMap(eStructuralFeature);
   }
 
-  private CriticalSection sync()
+  private Access access()
   {
     InternalCDOView view = viewAndState.view;
     if (view == null)
     {
-      return CriticalSection.UNSYNCHRONIZED;
+      return null;
     }
 
-    return view.sync();
+    return view.access();
   }
 
   private boolean isRootResource()
@@ -2183,7 +2183,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     public CDOStoreEcoreEMap(EStructuralFeature eStructuralFeature)
     {
       super((EClass)eStructuralFeature.getEType(), BasicEMap.Entry.class, null);
-      delegateEList = new EStoreEObjectImpl.BasicEStoreEList<BasicEMap.Entry<Object, Object>>(CDOObjectImpl.this, eStructuralFeature)
+      delegateEList = new EStoreEObjectImpl.BasicEStoreEList<>(CDOObjectImpl.this, eStructuralFeature)
       {
         private static final long serialVersionUID = 1L;
 
@@ -2264,151 +2264,226 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     @Override
     public NotificationChain basicRemove(Object object, NotificationChain notifications)
     {
-      return sync().supply(() -> super.basicRemove(object, notifications));
+      try (Access access = access())
+      {
+        return super.basicRemove(object, notifications);
+      }
     }
 
     @Override
     public NotificationChain basicAdd(Map.Entry<Object, Object> object, NotificationChain notifications)
     {
-      return sync().supply(() -> super.basicAdd(object, notifications));
+      try (Access access = access())
+      {
+        return super.basicAdd(object, notifications);
+      }
     }
 
     @Override
     public void addUnique(Map.Entry<Object, Object> object)
     {
-      sync().run(() -> super.addUnique(object));
+      try (Access access = access())
+      {
+        super.addUnique(object);
+      }
     }
 
     @Override
     public void addUnique(int index, Map.Entry<Object, Object> object)
     {
-      sync().run(() -> super.addUnique(index, object));
+      try (Access access = access())
+      {
+        super.addUnique(index, object);
+      }
     }
 
     @Override
     public boolean addAllUnique(Collection<? extends Map.Entry<Object, Object>> collection)
     {
-      return sync().supply(() -> super.addAllUnique(collection));
+      try (Access access = access())
+      {
+        return super.addAllUnique(collection);
+      }
     }
 
     @Override
     public boolean addAllUnique(int index, Collection<? extends Map.Entry<Object, Object>> collection)
     {
-      return sync().supply(() -> super.addAllUnique(index, collection));
+      try (Access access = access())
+      {
+        return super.addAllUnique(index, collection);
+      }
     }
 
     @Override
     public Map.Entry<Object, Object> setUnique(int index, Map.Entry<Object, Object> object)
     {
-      return sync().supply(() -> super.setUnique(index, object));
+      try (Access access = access())
+      {
+        return super.setUnique(index, object);
+      }
     }
 
     @Override
     public void set(Object value)
     {
-      sync().run(() -> super.set(value));
+      try (Access access = access())
+      {
+        super.set(value);
+      }
     }
 
     @Override
     public void unset()
     {
-      sync().run(() -> super.unset());
+      try (Access access = access())
+      {
+        super.unset();
+      }
     }
 
     @Override
     public Object put(Object key, Object value)
     {
-      return sync().supply(() -> super.put(key, value));
+      try (Access access = access())
+      {
+        return super.put(key, value);
+      }
     }
 
     @Override
     public Object removeKey(Object key)
     {
-      return sync().supply(() -> super.removeKey(key));
+      try (Access access = access())
+      {
+        return super.removeKey(key);
+      }
     }
 
     @Override
     public void putAll(Map<? extends Object, ? extends Object> map)
     {
-      sync().run(() -> super.putAll(map));
+      try (Access access = access())
+      {
+        super.putAll(map);
+      }
     }
 
     @Override
     public void putAll(EMap<? extends Object, ? extends Object> map)
     {
-      sync().run(() -> super.putAll(map));
+      try (Access access = access())
+      {
+        super.putAll(map);
+      }
     }
 
     @Override
     public Map.Entry<Object, Object> set(int index, Map.Entry<Object, Object> object)
     {
-      return sync().supply(() -> super.set(index, object));
+      try (Access access = access())
+      {
+        return super.set(index, object);
+      }
     }
 
     @Override
     public boolean add(Map.Entry<Object, Object> object)
     {
-      return sync().supply(() -> super.add(object));
+      try (Access access = access())
+      {
+        return super.add(object);
+      }
     }
 
     @Override
     public void add(int index, Map.Entry<Object, Object> object)
     {
-      sync().run(() -> super.add(index, object));
+      try (Access access = access())
+      {
+        super.add(index, object);
+      }
     }
 
     @Override
     public boolean addAll(Collection<? extends Map.Entry<Object, Object>> collection)
     {
-      return sync().supply(() -> super.addAll(collection));
+      try (Access access = access())
+      {
+        return super.addAll(collection);
+      }
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends Map.Entry<Object, Object>> collection)
     {
-      return sync().supply(() -> super.addAll(index, collection));
+      try (Access access = access())
+      {
+        return super.addAll(index, collection);
+      }
     }
 
     @Override
     public boolean remove(Object object)
     {
-      return sync().supply(() -> super.remove(object));
+      try (Access access = access())
+      {
+        return super.remove(object);
+      }
     }
 
     @Override
     public boolean removeAll(Collection<?> collection)
     {
-      return sync().supply(() -> super.removeAll(collection));
+      try (Access access = access())
+      {
+        return super.removeAll(collection);
+      }
     }
 
     @Override
     public Map.Entry<Object, Object> remove(int index)
     {
-      return sync().supply(() -> super.remove(index));
+      try (Access access = access())
+      {
+        return super.remove(index);
+      }
     }
 
     @Override
     public boolean retainAll(Collection<?> collection)
     {
-      return sync().supply(() -> super.retainAll(collection));
+      try (Access access = access())
+      {
+        return super.retainAll(collection);
+      }
     }
 
     @Override
     public void clear()
     {
-      sync().run(() -> super.clear());
+      try (Access access = access())
+      {
+        super.clear();
+      }
     }
 
     @Override
     public void move(int index, Map.Entry<Object, Object> object)
     {
-      sync().run(() -> super.move(index, object));
+      try (Access access = access())
+      {
+        super.move(index, object);
+      }
     }
 
     @Override
     public Map.Entry<Object, Object> move(int targetIndex, int sourceIndex)
     {
-      return sync().supply(() -> super.move(targetIndex, sourceIndex));
+      try (Access access = access())
+      {
+        return super.move(targetIndex, sourceIndex);
+      }
     }
 
     @Override
@@ -2504,157 +2579,235 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     @Override
     public void unset()
     {
-      sync().run(() -> super.unset());
+      try (Access access = access())
+      {
+        super.unset();
+      }
     }
 
     @Override
     public NotificationChain inverseAdd(Object object, NotificationChain notifications)
     {
-      return sync().supply(() -> super.inverseAdd(object, notifications));
+      try (Access access = access())
+      {
+        return super.inverseAdd(object, notifications);
+      }
     }
 
     @Override
     public NotificationChain inverseRemove(Object object, NotificationChain notifications)
     {
-      return sync().supply(() -> super.inverseRemove(object, notifications));
+      try (Access access = access())
+      {
+        return super.inverseRemove(object, notifications);
+      }
     }
 
     @Override
     public void set(Object newValue)
     {
-      sync().run(() -> super.set(newValue));
+      try (Access access = access())
+      {
+        super.set(newValue);
+      }
     }
 
     @Override
     public void addUnique(Object object)
     {
-      sync().run(() -> super.addUnique(object));
+      try (Access access = access())
+      {
+        super.addUnique(object);
+      }
     }
 
     @Override
     public void addUnique(int index, Object object)
     {
-      sync().run(() -> super.addUnique(index, object));
+      try (Access access = access())
+      {
+        super.addUnique(index, object);
+      }
     }
 
     @Override
     public boolean addAllUnique(Collection<? extends Object> collection)
     {
-      return sync().supply(() -> super.addAllUnique(collection));
+      try (Access access = access())
+      {
+        return super.addAllUnique(collection);
+      }
     }
 
     @Override
     public boolean addAllUnique(int index, Collection<? extends Object> collection)
     {
-      return sync().supply(() -> super.addAllUnique(index, collection));
+      try (Access access = access())
+      {
+        return super.addAllUnique(index, collection);
+      }
     }
 
     @Override
     public boolean addAllUnique(Object[] objects, int start, int end)
     {
-      return sync().supply(() -> super.addAllUnique(objects, start, end));
+      try (Access access = access())
+      {
+        return super.addAllUnique(objects, start, end);
+      }
     }
 
     @Override
     public boolean addAllUnique(int index, Object[] objects, int start, int end)
     {
-      return sync().supply(() -> super.addAllUnique(index, objects, start, end));
+      try (Access access = access())
+      {
+        return super.addAllUnique(index, objects, start, end);
+      }
     }
 
     @Override
     public NotificationChain basicAdd(Object object, NotificationChain notifications)
     {
-      return sync().supply(() -> super.basicAdd(object, notifications));
+      try (Access access = access())
+      {
+        return super.basicAdd(object, notifications);
+      }
     }
 
     @Override
     public Object remove(int index)
     {
-      return sync().supply(() -> super.remove(index));
+      try (Access access = access())
+      {
+        return super.remove(index);
+      }
     }
 
     @Override
     public boolean removeAll(Collection<?> collection)
     {
-      return sync().supply(() -> super.removeAll(collection));
+      try (Access access = access())
+      {
+        return super.removeAll(collection);
+      }
     }
 
     @Override
     public NotificationChain basicRemove(Object object, NotificationChain notifications)
     {
-      return sync().supply(() -> super.basicRemove(object, notifications));
+      try (Access access = access())
+      {
+        return super.basicRemove(object, notifications);
+      }
     }
 
     @Override
     public void clear()
     {
-      sync().run(() -> super.clear());
+      try (Access access = access())
+      {
+        super.clear();
+      }
     }
 
     @Override
     public Object setUnique(int index, Object object)
     {
-      return sync().supply(() -> super.setUnique(index, object));
+      try (Access access = access())
+      {
+        return super.setUnique(index, object);
+      }
     }
 
     @Override
     public NotificationChain basicSet(int index, Object object, NotificationChain notifications)
     {
-      return sync().supply(() -> super.basicSet(index, object, notifications));
+      try (Access access = access())
+      {
+        return super.basicSet(index, object, notifications);
+      }
     }
 
     @Override
     public Object move(int targetIndex, int sourceIndex)
     {
-      return sync().supply(() -> super.move(targetIndex, sourceIndex));
+      try (Access access = access())
+      {
+        return super.move(targetIndex, sourceIndex);
+      }
     }
 
     @Override
     public boolean remove(Object object)
     {
-      return sync().supply(() -> super.remove(object));
+      try (Access access = access())
+      {
+        return super.remove(object);
+      }
     }
 
     @Override
     public boolean retainAll(Collection<?> collection)
     {
-      return sync().supply(() -> super.retainAll(collection));
+      try (Access access = access())
+      {
+        return super.retainAll(collection);
+      }
     }
 
     @Override
     public Object set(int index, Object object)
     {
-      return sync().supply(() -> super.set(index, object));
+      try (Access access = access())
+      {
+        return super.set(index, object);
+      }
     }
 
     @Override
     public boolean add(Object object)
     {
-      return sync().supply(() -> super.add(object));
+      try (Access access = access())
+      {
+        return super.add(object);
+      }
     }
 
     @Override
     public void add(int index, Object object)
     {
-      sync().run(() -> super.add(index, object));
+      try (Access access = access())
+      {
+        super.add(index, object);
+      }
     }
 
     @Override
     public boolean addAll(Collection<? extends Object> collection)
     {
-      return sync().supply(() -> super.addAll(collection));
+      try (Access access = access())
+      {
+        return super.addAll(collection);
+      }
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends Object> collection)
     {
-      return sync().supply(() -> super.addAll(index, collection));
+      try (Access access = access())
+      {
+        return super.addAll(index, collection);
+      }
     }
 
     @Override
     public void move(int index, Object object)
     {
-      sync().run(() -> super.move(index, object));
+      try (Access access = access())
+      {
+        super.move(index, object);
+      }
     }
   }
 
@@ -2676,7 +2829,10 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     @Override
     public E remove(int index)
     {
-      return sync().supply(() -> internalRemove(index));
+      try (Access access = access())
+      {
+        return internalRemove(index);
+      }
     }
 
     private E internalRemove(int index)

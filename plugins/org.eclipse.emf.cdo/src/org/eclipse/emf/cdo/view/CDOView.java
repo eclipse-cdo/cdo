@@ -173,8 +173,13 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * There are some other useful methods in CriticalSection that can be used to execute a block of code,
    * such as {@link CriticalSection#run(Runnable) run(Runnable)} or {@link CriticalSection#supply(Supplier) supply(Supplier)}.
    * <p>
-   * By default the critical section uses the monitor lock of this view to synchronize. If you need a different locking
-   * strategy you can override this by calling {@link CDOUtil#setNextViewLock(Lock)} before opening the view.
+   * The critical section uses a reentrant lock. Synchronizing directly on the view object is unsupported; by default,
+   * attempts to enter the view lock while holding that intrinsic monitor fail with {@link UnsupportedOperationException}.
+   * Use this method instead. The check is enabled by default and can be disabled with
+   * <code>-Dorg.eclipse.emf.cdo.view.DISABLE_INTRINSIC_MONITOR_CHECK=true</code>.
+   * <p>
+   * If you need a different locking strategy you can override this by calling {@link CDOUtil#setNextViewLock(Lock)}
+   * before opening the view.
    * <p>
    * In particular you can use a {@link DelegableReentrantLock}, which allows to delegate the lock ownership to a
    * different thread. This is useful in scenarios where you need to hold the lock while waiting for an
@@ -216,6 +221,10 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public CriticalSection sync();
 
   /**
+   * Returns the underlying view lock for deprecated direct-locking code. Disabled by default; enable
+   * <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code> for best-effort compatibility. Use
+   * {@link #sync()} for supported synchronization.
+   *
    * @since 4.5
    * @deprecated As of 4.29 use {@link #sync()}.
    */

@@ -19,6 +19,9 @@ import org.eclipse.net4j.util.transaction.TransactionException;
  * A checked exception being thrown from {@link CDOTransaction#commit()} in case of commit problems such as commit conflicts.
  * <p>
  * This class is the root of an exception hierarchy that allows to determine and handle specific causes of commit problems:
+ * <p>
+ * The legacy locking methods used below are disabled by default. This example requires
+ * <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code>.
  *
  * <pre>
     CDOTransaction transaction = session.openTransaction();

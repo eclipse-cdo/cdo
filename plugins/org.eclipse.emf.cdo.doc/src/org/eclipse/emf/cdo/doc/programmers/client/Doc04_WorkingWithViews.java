@@ -11,20 +11,19 @@
  */
 package org.eclipse.emf.cdo.doc.programmers.client;
 
-import org.eclipse.emf.cdo.doc.programmers.server.Doc08_SecurityQueriesAndSpecializedExtensions;
-import org.eclipse.emf.cdo.server.IQueryHandler;
-
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.doc.programmers.server.Doc08_SecurityQueriesAndSpecializedExtensions;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
+import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -126,8 +125,17 @@ public class Doc04_WorkingWithViews
      * <li>{@link CriticalSection#newCondition() newCondition()} - Creates a new Condition associated with the critical section.
      * </ul>
      * <p>
-     * By default the critical section of a view uses the monitor lock of that view to synchronize. If you need a different locking
-     * strategy you can override this by calling {@link CDOUtil#setNextViewLock(Lock)} before opening the view.
+     * A view's critical section uses a real reentrant lock. The default is a non-fair lock; a lock supplied with
+     * {@link CDOUtil#setNextViewLock(Lock)} or the session's delegable-lock option is used when configured. Synchronizing
+     * directly on the view object is unsupported. By default, CDO detects this when a view lock is next entered and throws
+     * {@link UnsupportedOperationException}, directing the caller to {@link CDOView#sync()}. Set
+     * <code>-Dorg.eclipse.emf.cdo.view.DISABLE_INTRINSIC_MONITOR_CHECK=true</code> to disable that safety check.
+     * <p>
+     * Deprecated monitor and lock methods fail fast by default. Set
+     * <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code> to re-enable their best-effort behavior.
+     * The compatibility monitor returned by <code>getViewMonitor()</code> coordinates only callers that synchronize on
+     * that returned object; it does not coordinate by itself with CDO's internal view lock. The deprecated lock methods
+     * use the real view lock when enabled.
      * <p>
      * Here's an example of setting a custom lock for the next view to be opened:
      * {@link #customLockForNextView(CDOSession) CustomLockForNextView.java}
@@ -388,8 +396,7 @@ public class Doc04_WorkingWithViews
         CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
         CDOBranch mainBranch = session.getBranchManager().getMainBranch();
 
-        CDORevision rootResourceRevision = session.getRevisionManager().request()
-            .getRevision(rootResourceID, mainBranch.getHead());
+        CDORevision rootResourceRevision = session.getRevisionManager().request().getRevision(rootResourceID, mainBranch.getHead());
         System.out.println("Root Resource Revision: " + rootResourceRevision);
       }
     }

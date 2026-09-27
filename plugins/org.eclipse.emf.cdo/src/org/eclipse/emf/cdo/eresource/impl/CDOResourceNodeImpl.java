@@ -28,7 +28,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.concurrent.CriticalSection;
+import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.URI;
@@ -295,7 +295,10 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   @Override
   public void setExtension(String extension)
   {
-    sync().run(() -> setExtensionUnsynced(extension));
+    try (Access access = access())
+    {
+      setExtensionUnsynced(extension);
+    }
   }
 
   private void setExtensionUnsynced(String extension)
@@ -349,7 +352,10 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   @Override
   public void setBasename(String basename)
   {
-    sync().run(() -> setBasenameUnsynced(basename));
+    try (Access access = access())
+    {
+      setBasenameUnsynced(basename);
+    }
   }
 
   private void setBasenameUnsynced(String basename)
@@ -477,15 +483,15 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     return string;
   }
 
-  private CriticalSection sync()
+  private Access access()
   {
     InternalCDOView view = cdoView();
     if (view == null)
     {
-      return CriticalSection.UNSYNCHRONIZED;
+      return null;
     }
 
-    return view.sync();
+    return view.access();
   }
 
   /**

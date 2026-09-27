@@ -51,6 +51,7 @@ import org.eclipse.emf.internal.cdo.transaction.TransactionSegment;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
@@ -214,7 +215,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    transaction.sync().run(() -> {
+    try (Access access = transaction.access())
+    {
       object.cdoInternalPreAttach();
 
       List<InternalCDOObject> contents = new ArrayList<>();
@@ -225,7 +227,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         attachOrReattach(content, transaction);
       }
-    });
+    }
   }
 
   private void attachOrReattach(InternalCDOObject object, InternalCDOTransaction transaction)

@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 
+import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -54,6 +55,14 @@ import java.util.function.Consumer;
  */
 public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, ILifecycle, IExecutorServiceProvider
 {
+  /**
+   * Acquires this view's internal reentrant lock and returns a reusable lexical access handle. Close the returned handle
+   * exactly once for each successful acquisition.
+   *
+   * @since 4.31
+   */
+  public Access access();
+
   public void setViewID(int viewId);
 
   /**
@@ -200,6 +209,10 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, I
   public ViewAndState getViewAndState(CDOState state);
 
   /**
+   * Returns a per-view compatibility monitor. The monitor does not coordinate with CDO's internal view lock; use
+   * {@link #sync()} instead. This method is disabled by default and requires
+   * <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code>.
+   *
    * @since 4.5
    * @deprecated As of 4.29 use {@link #sync()}
    */
@@ -207,6 +220,9 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, I
   public Object getViewMonitor();
 
   /**
+   * Acquires the underlying view lock for deprecated compatibility code. This method is disabled by default and
+   * requires <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code>. Use {@link #sync()} instead.
+   *
    * @since 4.5
    * @deprecated As of 4.29 use {@link #sync()}
    */

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -55,6 +56,7 @@ import java.util.Map;
  */
 @CleanRepositoriesBefore(reason = "Model evolution")
 @CleanRepositoriesAfter(reason = "Model evolution")
+@Requires(DBConfig.CAPABILITY)
 public class ModelEvolutionTest extends AbstractCDOTest
 {
   private static final boolean LOG = true;
@@ -155,6 +157,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
 
   public void testAddStringAfterBlob() throws Exception
   {
+    CDOBlob persistedBlob;
     {
       CDOSession session = openSession();
       CDOTransaction transaction = session.openTransaction();
@@ -165,8 +168,8 @@ public class ModelEvolutionTest extends AbstractCDOTest
 
       try (InputStream inputStream = org.eclipse.emf.cdo.tests.bundle.OM.BUNDLE.getInputStream("backup-tests/Ecore.uml"))
       {
-        CDOBlob blob = new CDOBlob(inputStream);
-        c.eSet(c.eClass().getEStructuralFeature("blob"), blob);
+        persistedBlob = new CDOBlob(inputStream);
+        c.eSet(c.eClass().getEStructuralFeature("blob"), persistedBlob);
 
         transaction.commit();
       }
@@ -197,6 +200,85 @@ public class ModelEvolutionTest extends AbstractCDOTest
     c.eSet(v2Cname, "Eike Stepper");
 
     transaction.commit();
+
+    CDOSession verifySession = openSession();
+    CDOTransaction verifyTransaction = verifySession.openTransaction();
+    CDOResource verifyResource = verifyTransaction.getResource(getResourcePath("test"));
+    EObject evolvedC = verifyResource.getContents().get(0);
+    assertEquals("Eike Stepper", evolvedC.eGet(v2Cname));
+    assertEquals(persistedBlob.getString(), ((CDOBlob)evolvedC.eGet(v2C.getEStructuralFeature("blob"))).getString());
+  }
+
+  public void testAddFeatureToNeverInstantiatedClass() throws Exception
+  {
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("test"));
+      resource.getContents().add(create(V1, "A"));
+      transaction.commit();
+    }
+
+    EPackage v2 = registerPackage(EcoreUtil.copy(V1));
+    EClass v2B = (EClass)v2.getEClassifier("B");
+    EAttribute v2Bname = EcoreFactory.eINSTANCE.createEAttribute();
+    v2Bname.setName("name");
+    v2Bname.setEType(EcorePackage.Literals.ESTRING);
+    v2B.getEStructuralFeatures().add(v2Bname);
+
+    restartWithEvolution(v2);
+
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.getResource(getResourcePath("test"));
+    EObject b = create(v2, "B");
+    b.eSet(v2Bname, "first instance");
+    resource.getContents().add(b);
+    transaction.commit();
+
+    CDOSession verifySession = openSession();
+    CDOTransaction verifyTransaction = verifySession.openTransaction();
+    EObject verifiedB = verifyTransaction.getResource(getResourcePath("test")).getContents().get(1);
+    assertEquals("first instance", verifiedB.eGet(v2Bname));
+  }
+
+  public void testEnumEvolutionAfterBlob() throws Exception
+  {
+    CDOBlob persistedBlob;
+    {
+      CDOSession session = openSession();
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("test"));
+      EObject c = create(V1, "C");
+      resource.getContents().add(c);
+      c.eSet(c.eClass().getEStructuralFeature("shape"), ((EEnum)V1.getEClassifier("Shape")).getEEnumLiteral("RECTANGLE"));
+
+      try (InputStream inputStream = org.eclipse.emf.cdo.tests.bundle.OM.BUNDLE.getInputStream("backup-tests/Ecore.uml"))
+      {
+        persistedBlob = new CDOBlob(inputStream);
+        c.eSet(c.eClass().getEStructuralFeature("blob"), persistedBlob);
+        transaction.commit();
+      }
+    }
+
+    EPackage v2 = registerPackage(EcoreUtil.copy(V1));
+    EEnum v2Shape = (EEnum)v2.getEClassifier("Shape");
+    for (EEnumLiteral literal : v2Shape.getELiterals())
+    {
+      if (literal.getValue() >= 3)
+      {
+        literal.setValue(literal.getValue() + 1);
+      }
+    }
+
+    EMFUtil.createEEnumLiteral(v2Shape, "PENTAGON", 3);
+    restartWithEvolution(v2);
+
+    CDOSession verifySession = openSession();
+    CDOTransaction verifyTransaction = verifySession.openTransaction();
+    EObject evolvedC = verifyTransaction.getResource(getResourcePath("test")).getContents().get(0);
+    assertEquals("RECTANGLE", ((EEnumLiteral)evolvedC.eGet(evolvedC.eClass().getEStructuralFeature("shape"))).getName());
+    assertEquals(persistedBlob.getString(), ((CDOBlob)evolvedC.eGet(evolvedC.eClass().getEStructuralFeature("blob"))).getString());
   }
 
   public void testRemoveAndAddFeature() throws Exception
@@ -413,6 +495,9 @@ public class ModelEvolutionTest extends AbstractCDOTest
 
     // Attribute C.blob
     EMFUtil.createEAttribute(C, "blob", EtypesPackage.Literals.BLOB);
+
+    // Attribute C.shape
+    EMFUtil.createEAttribute(C, "shape", Shape);
 
     return registerPackage(model);
   }

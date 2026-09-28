@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.server.db.evolution.phased.ISchemaMigration;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
-import org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategyBatchingSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategySchemaPreflight;
@@ -51,6 +50,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.DeserializeRowHandler;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.StatementBatcher;
 import org.eclipse.net4j.db.ddl.IDBField;
@@ -787,6 +787,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     private final Context context;
 
+    private final IDBDatabase database;
+
     private final PropertiesEvent event = new PropertiesEvent(AbstractHorizontalMappingStrategy.this)
     {
       @Override
@@ -810,7 +812,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     public ModelEvolutionHelper(Context context)
     {
       this.context = context;
-
+      database = context.getSupport().getStore().getDatabase();
     }
 
     public void evolveSchema() throws SQLException
@@ -819,7 +821,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
       Holder<IDBSchemaTransaction> schemaTransactionHolder = new Holder<>(() -> {
         event.setType("OpeningSchemaTransaction").fire();
-        IDBSchemaTransaction schemaTransaction = context.getSupport().getStore().getDatabase().openSchemaTransaction();
+        IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
         event.setType("OpenedSchemaTransaction").addProperty("schemaTransaction", schemaTransaction).fire();
         return schemaTransaction;
       });
@@ -855,8 +857,14 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
                 continue;
               }
 
-              IClassMapping classMapping = doCreateClassMapping(oldClass);
-              String tableName = classMapping.getTable().getName();
+              String tableName = getTableName(oldClass);
+              IDBTable existingTable = database.getSchema().getTable(tableName);
+              if (existingTable == null)
+              {
+                // A class without instances has no table to migrate.
+                continue;
+              }
+
               IDBTable table = workingCopySupplier.get().getTable(tableName);
 
               context.log("Creating new feature mappings for class " + EMFUtil.getFullyQualifiedName(oldClass) + " in table " + table + ": "
@@ -903,7 +911,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     {
       event.setType("EvolvingUsedClass").addProperty("usedClass", usedClass).fire();
 
-      Holder<IClassMapping> classMappingHolder = new Holder<>(() -> Objects.requireNonNull(getClassMapping(usedClass)));
+      IDBTable table = Objects.requireNonNull(database.getSchema().getTable(getTableName(usedClass)));
 
       // Change container IDs
       Map<Integer, Integer> containerChanges = new HashMap<>();
@@ -913,7 +921,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       if (!containerChanges.isEmpty())
       {
         context.log("Adjusting container reference IDs for class " + EMFUtil.getFullyQualifiedName(usedClass));
-        IDChanger.changeIDs(containerChanges, new ContainerIDChanger(batcher, classMappingHolder.get()));
+        IDChanger.changeIDs(containerChanges, new BatchingIDChanger(batcher, Objects.requireNonNull(table.getField(MappingNames.ATTRIBUTES_FEATURE))));
       }
 
       // Change opposite container IDs (containments with no navigable opposite).
@@ -929,7 +937,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
         {
           context.log("Adjusting containment reference IDs for class " + EMFUtil.getFullyQualifiedName(usedClass));
           String rawContainerTypeID = usedClasses.get(containerClass);
-          IDChanger.changeIDs(containmentChanges, new ContainmentIDChanger(batcher, classMappingHolder.get(), objects, rawContainerTypeID));
+          IDChanger.changeIDs(containmentChanges, new ContainmentIDChanger(batcher, table, objects, rawContainerTypeID));
         }
       });
 
@@ -945,9 +953,20 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
           if (!ObjectUtil.isEmpty(changes))
           {
             context.log("Adjusting enum literal IDs for attribute " + EMFUtil.getFullyQualifiedName(usedClass) + "." + attribute.getName());
-            IClassMapping classMapping = classMappingHolder.get();
-            IFeatureMapping featureMapping = classMapping.getFeatureMapping(attribute);
-            IDBField valueField = featureMapping.getField();
+            IDBTable valueTable = table;
+            String valueFieldName = getFieldName(attribute);
+            if (attribute.isMany())
+            {
+              valueTable = database.getSchema().getTable(getTableName(usedClass, attribute));
+              if (valueTable == null)
+              {
+                continue;
+              }
+
+              valueFieldName = MappingNames.LIST_VALUE;
+            }
+
+            IDBField valueField = Objects.requireNonNull(valueTable.getField(valueFieldName));
             IDChanger.changeIDs(changes, new BatchingIDChanger(batcher, valueField));
           }
         }
@@ -1010,18 +1029,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     /**
      * @author Eike Stepper
      */
-    private class ContainerIDChanger extends BatchingIDChanger
-    {
-      public ContainerIDChanger(StatementBatcher batcher, IClassMapping classMapping)
-      {
-        super(batcher, classMapping.getTable().getField(MappingNames.ATTRIBUTES_FEATURE));
-      }
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    private final class ContainmentIDChanger extends ContainerIDChanger
+    private final class ContainmentIDChanger extends BatchingIDChanger
     {
       private final ObjectTypeTable objects;
 
@@ -1029,9 +1037,9 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
       private final IDBField containerField;
 
-      public ContainmentIDChanger(StatementBatcher batcher, IClassMapping classMapping, ObjectTypeTable objects, String rawContainerTypeID)
+      public ContainmentIDChanger(StatementBatcher batcher, IDBTable table, ObjectTypeTable objects, String rawContainerTypeID)
       {
-        super(batcher, classMapping);
+        super(batcher, Objects.requireNonNull(table.getField(MappingNames.ATTRIBUTES_FEATURE)));
         this.objects = objects;
         this.rawContainerTypeID = rawContainerTypeID;
         containerField = Objects.requireNonNull(table.getField(MappingNames.ATTRIBUTES_CONTAINER));

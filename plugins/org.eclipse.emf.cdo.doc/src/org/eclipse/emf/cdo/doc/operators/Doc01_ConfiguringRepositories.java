@@ -202,7 +202,29 @@ public class Doc01_ConfiguringRepositories
   /**
    * Element securityManager
    * <p>
-   * Example: &lt;securityManager type="default" description="/security:annotation:home(/home)"/>
+   * Example:
+   * <pre>
+   * {@code
+   * <securityManager type="default" description="/security:annotation:home(/home)">
+   *   <permissionCache type="default"/>
+   * </securityManager>
+   * }
+   * </pre>
+   * <p>
+   * The optional {@code permissionCache} child selects the permission-cache creator used by the security manager.
+   * At most one such child is allowed. Omitting it does not disable caching: unless another creator is selected by
+   * repository properties or programmatic configuration, the built-in {@code default} creator is used. Its
+   * {@code type} attribute defaults to {@code default} when empty or omitted, and its optional {@code description}
+   * attribute supplies implementation-specific configuration.
+   * <p>
+   * The equivalent repository properties are {@code security.permissionCache.type},
+   * {@code security.permissionCache.description}, and
+   * {@code security.permissionCache.default.capacity}. The default type is {@code default}; the default capacity is
+   * {@code 100000} ({@code PermissionCacheFactory.Default.DEFAULT_CAPACITY}).
+   * This capacity limits the built-in creator's bounded backing store as a whole, rather than reserving that many
+   * entries for each user or branch. A configured default capacity must be a positive integer; invalid values cause repository startup/configuration to
+   * fail. The corresponding API constants are {@code PermissionCacheFactory.PROP_TYPE},
+   * {@code PermissionCacheFactory.PROP_DESCRIPTION}, and {@code PermissionCacheFactory.Default.PROP_CAPACITY}.
    * <p>
    * See also: <a href="https://wiki.eclipse.org/CDO/Security_Manager">https://wiki.eclipse.org/CDO/Security_Manager</a>
    */

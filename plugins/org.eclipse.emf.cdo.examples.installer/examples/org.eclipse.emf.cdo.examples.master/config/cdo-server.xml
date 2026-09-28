@@ -150,7 +150,9 @@
     -->
 
     <!-- Example https://wiki.eclipse.org/CDO/Security_Manager
-		  <securityManager type="default" description="/security:annotation:home(/home)"/>
+      <securityManager type="default" description="/security:annotation:home(/home)">
+        <permissionCache type="default"/>
+      </securityManager>
     -->
 
     <!-- Example https://bugs.eclipse.org/418454

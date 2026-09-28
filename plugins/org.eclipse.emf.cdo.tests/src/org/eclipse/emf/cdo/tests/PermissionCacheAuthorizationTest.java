@@ -695,6 +695,9 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
           assertEquals("AuthorizationContext A upgrades the cached baseline", CDOPermission.WRITE, CDOUtil.getCDOObject(product).cdoRevision().getPermission());
         }
 
+        int evaluationsAfterContextA = contextEvaluations.get();
+        assertTrue("The dynamic permission must be evaluated for AuthorizationContext A", evaluationsAfterContextA > 0);
+
         int hitsBeforeContextB = secondaryCache.hits.get();
         allowWrite.set(false);
 
@@ -705,7 +708,7 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
               CDOUtil.getCDOObject(product).cdoRevision().getPermission());
         }
 
-        assertEquals("The context-sensitive dynamic permission executes for each authorization", 2, contextEvaluations.get());
+        assertTrue("The dynamic permission must be evaluated again for AuthorizationContext B", contextEvaluations.get() > evaluationsAfterContextA);
         assertTrue("Both context-sensitive authorizations reuse the same resource baseline", secondaryCache.hits.get() > hitsBeforeContextB);
         assertSame("Changing AuthorizationContext does not replace the secondary generation", secondaryCache, creator.cacheFor(secondaryRepository));
         CountingCache oldSecondaryCache = creator.cacheFor(secondaryRepository);

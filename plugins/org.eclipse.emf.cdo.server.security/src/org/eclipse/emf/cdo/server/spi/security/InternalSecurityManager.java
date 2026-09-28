@@ -33,15 +33,26 @@ public interface InternalSecurityManager extends ISecurityManager, IManagedConta
   public void setRepository(InternalRepository repository);
 
   /**
-   * Returns the configured permission-cache generation creator.
+   * Returns the permission-cache generation creator used by this manager.
+   * <p>
+   * A creator explicitly supplied through {@link #setPermissionCacheCreator(PermissionCache.Creator)} takes
+   * precedence over repository properties. Otherwise, the creator is resolved from the repository properties when a
+   * repository is assigned. If no permission-cache type is configured, the built-in default type is used.
    *
    * @since 4.13
    */
   public PermissionCache.Creator getPermissionCacheCreator();
 
   /**
-   * Sets the permission-cache generation creator while this manager is inactive.
+   * Sets an explicit permission-cache generation creator while this manager is inactive.
+   * <p>
+   * An explicitly supplied creator takes precedence over creator type and description configured in the repository
+   * properties. If no explicit creator is supplied, the manager resolves its creator from the repository properties
+   * when a repository is assigned; an omitted cache type selects the built-in default type.
+   * <p>
+   * This method may only be called while the manager is inactive.
    *
+   * @param creator the creator to use for this manager
    * @since 4.13
    */
   public void setPermissionCacheCreator(PermissionCache.Creator creator);

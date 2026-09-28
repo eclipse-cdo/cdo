@@ -5,11 +5,11 @@
  */
 package org.eclipse.emf.cdo.doc.programmers.server;
 
-import org.eclipse.emf.cdo.doc.operators.Doc03_ManagingSecurity;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
+import org.eclipse.emf.cdo.doc.operators.Doc03_ManagingSecurity;
+import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IQueryContext;
 import org.eclipse.emf.cdo.server.IQueryHandler;
-import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.UserAuthenticator;
 import org.eclipse.emf.cdo.spi.server.QueryHandlerFactory;
@@ -44,6 +44,33 @@ public class Doc08_SecurityQueriesAndSpecializedExtensions
    * when that module is intentionally part of an application, without coupling to its internal realm implementation.
    */
   public class SecurityModel
+  {
+  }
+
+  /**
+   * Permission Cache SPI
+   * <p>
+   * The optional {@code org.eclipse.emf.cdo.server.security} module provides the {@code PermissionCache} and
+   * {@code PermissionCacheFactory} SPIs for applications that need an alternative resource-permission cache. The
+   * module's {@code InternalSecurityManager} exposes the creator configuration point.
+   * The security manager conservatively separates resource-stable permissions, which can contribute to a cached
+   * resource baseline, from dynamic or context-sensitive permissions, which are evaluated for each authorization. Custom
+   * {@code Permission} and {@code PermissionFilter} implementations are dynamic by default. A security-manager
+   * subclass can opt a custom permission or filter into resource caching through its protected
+   * {@code isResourceCacheable(...)} hooks only when its result does not depend on request-local state, transaction
+   * state, arbitrary object contents, or {@code AuthorizationContext}.
+   * <p>
+   * Cached authorization applies only to reads at the current branch head. Historical reads and commit authorization
+   * remain uncached. Cache generations are isolated by repository, user, and branch, and relevant realm or
+   * resource-tree changes replace affected generations. This also applies independently to secondary repositories.
+   * A dynamic permission that depends on {@code AuthorizationContext} is evaluated outside the cached resource
+   * baseline on each authorization.
+   * <p>
+   * A custom {@code PermissionCache.Creator} must return a fresh logical generation for each repository/user/branch
+   * scope and keep late writes to an obsolete generation from becoming visible through its replacement. The cache
+   * implementation must support concurrent authorization access.
+   */
+  public class PermissionCacheSPI
   {
   }
 

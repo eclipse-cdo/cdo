@@ -45,11 +45,11 @@ public class AllConfigs extends ConfigTestSuite
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-    // testClasses.add(ConflictResolverExtendedTest.class);
-    // testClasses.add(CommitPerformanceTest.class);
-    // testClasses.add(BigModelTest.class);
 
     // General
+    // testClasses.add(BigModelTest.class);
+    // testClasses.add(CommitPerformanceTest.class);
+    // testClasses.add(ConflictResolverExtendedTest.class);
     testClasses.add(AdapterManagerTest.class);
     testClasses.add(AttributeTest.class);
     testClasses.add(AuditEMapTest.class);
@@ -103,9 +103,11 @@ public class AllConfigs extends ConfigTestSuite
     testClasses.add(OCLQueryTest.class);
     testClasses.add(PackageRegistryTest.class);
     testClasses.add(PartialCommitTest.class);
+    testClasses.add(PermissionCacheAuthorizationTest.class);
     testClasses.add(ReconnectingSessionTest.class);
     testClasses.add(RepositoryTest.class);
     testClasses.add(ResourceModificationTrackingTest.class);
+    testClasses.add(ResourceNodeBranchRenameTest.class);
     testClasses.add(ResourceTest.class);
     testClasses.add(RevisionDeltaCascadingBranchesTest.class);
     testClasses.add(RevisionDeltaInBranchTest.class);

@@ -33,6 +33,20 @@ public interface InternalSecurityManager extends ISecurityManager, IManagedConta
   public void setRepository(InternalRepository repository);
 
   /**
+   * Returns the configured permission-cache generation creator.
+   *
+   * @since 4.13
+   */
+  public PermissionCache.Creator getPermissionCacheCreator();
+
+  /**
+   * Sets the permission-cache generation creator while this manager is inactive.
+   *
+   * @since 4.13
+   */
+  public void setPermissionCacheCreator(PermissionCache.Creator creator);
+
+  /**
    * @since 4.6
    */
   @Override

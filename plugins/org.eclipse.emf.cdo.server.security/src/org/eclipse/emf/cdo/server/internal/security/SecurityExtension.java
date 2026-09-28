@@ -14,6 +14,7 @@
 package org.eclipse.emf.cdo.server.internal.security;
 
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
+import org.eclipse.emf.cdo.server.spi.security.PermissionCacheFactory;
 import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
 import org.eclipse.emf.cdo.spi.server.AbstractAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension2;
@@ -131,6 +132,32 @@ public class SecurityExtension extends AbstractAppExtension implements IAppExten
     if (securityManagers.getLength() == 1)
     {
       Element securityManagerElement = (Element)securityManagers.item(0);
+
+      NodeList cacheElements = securityManagerElement.getElementsByTagName("permissionCache"); //$NON-NLS-1$
+      if (cacheElements.getLength() > 1)
+      {
+        throw new IllegalStateException("A maximum of one permissionCache can be configured for repository " + repository); //$NON-NLS-1$
+      }
+
+      if (cacheElements.getLength() == 1)
+      {
+        Element cacheElement = (Element)cacheElements.item(0);
+
+        String cacheType = getAttribute(cacheElement, "type"); //$NON-NLS-1$
+        if (StringUtil.isEmpty(cacheType))
+        {
+          cacheType = PermissionCacheFactory.Default.TYPE;
+        }
+
+        repository.getProperties().put(PermissionCacheFactory.PROP_TYPE, cacheType);
+
+        String cacheDescription = getAttribute(cacheElement, "description"); //$NON-NLS-1$
+        if (!StringUtil.isEmpty(cacheDescription))
+        {
+          repository.getProperties().put(PermissionCacheFactory.PROP_DESCRIPTION, cacheDescription);
+        }
+      }
+
       String type = getAttribute(securityManagerElement, "type");
       if (StringUtil.isEmpty(type))
       {

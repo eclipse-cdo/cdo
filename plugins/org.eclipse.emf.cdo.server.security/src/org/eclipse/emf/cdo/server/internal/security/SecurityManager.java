@@ -15,6 +15,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.security;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
@@ -25,6 +26,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -35,17 +37,29 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Access;
+import org.eclipse.emf.cdo.security.CombinedFilter;
 import org.eclipse.emf.cdo.security.Directory;
+import org.eclipse.emf.cdo.security.FilterPermission;
 import org.eclipse.emf.cdo.security.Group;
 import org.eclipse.emf.cdo.security.PatternStyle;
 import org.eclipse.emf.cdo.security.Permission;
+import org.eclipse.emf.cdo.security.PermissionFilter;
 import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
+import org.eclipse.emf.cdo.security.impl.AndFilterImpl;
+import org.eclipse.emf.cdo.security.impl.ClassFilterImpl;
+import org.eclipse.emf.cdo.security.impl.FilterPermissionImpl;
+import org.eclipse.emf.cdo.security.impl.LinkedFilterImpl;
+import org.eclipse.emf.cdo.security.impl.NotFilterImpl;
+import org.eclipse.emf.cdo.security.impl.OrFilterImpl;
+import org.eclipse.emf.cdo.security.impl.PackageFilterImpl;
 import org.eclipse.emf.cdo.security.impl.PermissionImpl;
+import org.eclipse.emf.cdo.security.impl.ResourceFilterImpl;
+import org.eclipse.emf.cdo.security.impl.ResourcePermissionImpl;
 import org.eclipse.emf.cdo.security.util.AuthorizationContext;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IPermissionManager;
@@ -59,6 +73,8 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
+import org.eclipse.emf.cdo.server.spi.security.PermissionCache;
+import org.eclipse.emf.cdo.server.spi.security.PermissionCacheFactory;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -103,7 +119,9 @@ import org.eclipse.emf.common.util.BasicDiagnostic;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
 
@@ -242,9 +260,9 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private CDOID realmID;
 
-  private volatile Long lastRealmModification;
+  private final RealmUpdateTracker realmUpdateTracker = new RealmUpdateTracker();
 
-  private Object lastRealmModificationLock = new Object();
+  private volatile PermissionCache.Creator permissionCacheCreator;
 
   private boolean firstTime;
 
@@ -276,10 +294,58 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
+
+    if (permissionCacheCreator == null)
+    {
+      permissionCacheCreator = createPermissionCacheCreator(repository);
+    }
+
     if (isActive())
     {
       init();
     }
+  }
+
+  @Override
+  public PermissionCache.Creator getPermissionCacheCreator()
+  {
+    return permissionCacheCreator;
+  }
+
+  @Override
+  public void setPermissionCacheCreator(PermissionCache.Creator creator)
+  {
+    checkInactive();
+    permissionCacheCreator = creator;
+  }
+
+  private PermissionCache.Creator createPermissionCacheCreator(InternalRepository repository)
+  {
+    Map<String, String> properties = repository.getProperties();
+
+    String type = properties.get(PermissionCacheFactory.PROP_TYPE);
+    if (StringUtil.isEmpty(type))
+    {
+      type = PermissionCacheFactory.Default.TYPE;
+    }
+
+    String description = properties.get(PermissionCacheFactory.PROP_DESCRIPTION);
+    String capacity = properties.get(PermissionCacheFactory.Default.PROP_CAPACITY);
+
+    if (PermissionCacheFactory.Default.TYPE.equals(type) && capacity != null)
+    {
+      description = (description == null ? "" : description) + "|capacity=" + capacity; //$NON-NLS-1$
+    }
+
+    String qualifiedDescription = repository.getName() + (StringUtil.isEmpty(description) ? "" : ":" + description); //$NON-NLS-1$
+
+    PermissionCache.Creator creator = PermissionCacheFactory.get(container, type, qualifiedDescription);
+    if (creator == null)
+    {
+      throw new IllegalStateException("No permission cache creator for type " + type);
+    }
+
+    return creator;
   }
 
   @Override
@@ -789,7 +855,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     try
     {
-      CDOPermission permission = authorize(revision, revisionProvider, securityContext, session, null, null);
+      CDOPermission permission = authorizeRead(revision, revisionProvider, securityContext, session);
       // System.out.println("Loading from " + session + ": " + permission + " --> " + revision);
       return permission;
     }
@@ -797,6 +863,208 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       PermissionUtil.doneViewCreation();
     }
+  }
+
+  private CDOPermission authorizeRead(CDORevision revision, CDORevisionProvider provider, CDOBranchPoint context, ISession session)
+  {
+    for (;;)
+    {
+      waitForRealmUpdate(context);
+
+      UserInfo userInfo = getUserInfo(session);
+      User user = userInfo.getUser();
+      Permission[] resourcePermissions = userInfo.getResourcePermissions();
+
+      if (context.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE //
+          || resourcePermissions.length == 0 //
+          || permissionCacheCreator == null //
+          || user.getDefaultAccess() == Access.WRITE)
+      {
+        return authorize(revision, provider, context, session, null, null);
+      }
+
+      CDOID resourceNodeID = getResourceNodeID(revision, provider);
+      if (resourceNodeID == null)
+      {
+        return authorize(revision, provider, context, session, null, null);
+      }
+
+      CDOBranch branch = context.getBranch();
+      PermissionCache cache = userInfo.getPermissionCache(session.getRepository(), branch, permissionCacheCreator);
+      boolean resourceNode = ResourceNodeIDResolver.isResourceNode(revision.getEClass());
+      CDOPermission baseline = cache.get(resourceNodeID, resourceNode);
+
+      if (baseline == null)
+      {
+        baseline = evaluate(user.getDefaultAccess(), resourcePermissions, revision, provider, context, user.getId());
+        cache.put(resourceNodeID, resourceNode, baseline);
+      }
+
+      if (user.getDefaultAccess() == Access.WRITE || baseline == CDOPermission.WRITE)
+      {
+        if (userInfo.isCurrentCache(branch, cache))
+        {
+          return CDOPermission.WRITE;
+        }
+      }
+      else
+      {
+        CDOPermission result = evaluate(baseline, userInfo.getDynamicPermissions(), revision, provider, context, user.getId());
+        if (userInfo.isCurrentCache(branch, cache))
+        {
+          return result;
+        }
+      }
+
+      // The captured generation was invalidated; retry with fresh UserInfo and cache state.
+    }
+  }
+
+  private CDOPermission evaluate(Access defaultAccess, Permission[] permissions, CDORevision revision, CDORevisionProvider provider, CDOBranchPoint context,
+      String userID)
+  {
+    PermissionUtil.setUser(userID);
+
+    try
+    {
+      CDOPermission result = convertPermission(defaultAccess);
+
+      for (Permission permission : permissions)
+      {
+        CDOPermission candidate = convertPermission(permission.getAccess());
+        if (candidate.ordinal() > result.ordinal() && permission.isApplicable(revision, provider, context))
+        {
+          result = candidate;
+
+          if (result == CDOPermission.WRITE)
+          {
+            return result;
+          }
+        }
+      }
+      return result;
+    }
+    finally
+    {
+      PermissionUtil.setUser(null);
+    }
+  }
+
+  private CDOPermission evaluate(CDOPermission initial, Permission[] permissions, CDORevision revision, CDORevisionProvider provider, CDOBranchPoint context,
+      String userID)
+  {
+    PermissionUtil.setUser(userID);
+
+    try
+    {
+      CDOPermission result = initial;
+
+      for (Permission permission : permissions)
+      {
+        CDOPermission candidate = convertPermission(permission.getAccess());
+        if (candidate.ordinal() > result.ordinal() && permission.isApplicable(revision, provider, context))
+        {
+          result = candidate;
+
+          if (result == CDOPermission.WRITE)
+          {
+            return result;
+          }
+        }
+      }
+      return result;
+    }
+    finally
+    {
+      PermissionUtil.setUser(null);
+    }
+  }
+
+  private CDOID getResourceNodeID(CDORevision revision, CDORevisionProvider provider)
+  {
+    return ResourceNodeIDResolver.resolve(revision, provider);
+  }
+
+  /**
+   * Determines whether a permission is stable within a user, repository/branch, and resource-node cache scope.
+   * Subclasses that opt custom permissions into caching must ensure they do not depend on request-local state,
+   * transaction state, object contents, or {@link AuthorizationContext}.
+   */
+  @SuppressWarnings("deprecation")
+  protected boolean isResourceCacheable(Permission permission)
+  {
+    if (permission.getClass() == ResourcePermissionImpl.class)
+    {
+      return true;
+    }
+
+    if (permission.getClass() == FilterPermissionImpl.class)
+    {
+      for (PermissionFilter filter : ((FilterPermission)permission).getFilters())
+      {
+        if (!isResourceCacheable(filter))
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Determines whether a filter is stable within a user, repository/branch, and resource-node cache scope.
+   * Subclasses that opt custom filters into caching assume responsibility for excluding request-local state,
+   * transaction state, object contents, and {@link AuthorizationContext} dependencies.
+   */
+  protected boolean isResourceCacheable(PermissionFilter filter)
+  {
+    Class<?> filterClass = filter.getClass();
+    if (filterClass == ResourceFilterImpl.class)
+    {
+      return true;
+    }
+
+    if (filterClass == LinkedFilterImpl.class)
+    {
+      PermissionFilter linked = ((LinkedFilterImpl)filter).getFilter();
+      return linked != null && isResourceCacheable(linked);
+    }
+
+    if (filterClass == AndFilterImpl.class || filterClass == OrFilterImpl.class)
+    {
+      for (PermissionFilter operand : ((CombinedFilter)filter).getOperands())
+      {
+        if (!isResourceCacheable(operand))
+        {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    if (filterClass == NotFilterImpl.class)
+    {
+      List<PermissionFilter> operands = ((NotFilterImpl)filter).getOperands();
+      return operands.size() == 1 && isResourceCacheable(operands.get(0));
+    }
+
+    if (filterClass == PackageFilterImpl.class)
+    {
+      EPackage applicable = ((PackageFilterImpl)filter).getApplicablePackage();
+      return applicable == EresourcePackage.eINSTANCE;
+    }
+
+    if (filterClass == ClassFilterImpl.class)
+    {
+      EClass applicable = ((ClassFilterImpl)filter).getApplicableClass();
+      return applicable != null && applicable.getEPackage() == EresourcePackage.eINSTANCE;
+    }
+
+    return false;
   }
 
   protected CDOPermission authorize(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, ISession session,
@@ -1036,6 +1304,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         for (UserInfo userInfo : userInfos.values())
         {
           userInfo.rebuildPermissions();
+          userInfo.clearPermissionCaches();
           updatePermissions(userInfo, false);
         }
 
@@ -1191,43 +1460,48 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private void rememberRealmCommit(CDOBranchPoint commitBranchPoint)
   {
-    synchronized (lastRealmModificationLock)
+    realmUpdateTracker.remember(commitBranchPoint.getTimeStamp());
+  }
+
+  private void invalidatePermissionCaches(CommitContext commitContext)
+  {
+    CDOBranch branch = commitContext.getBranchPoint().getBranch();
+
+    try
     {
-      lastRealmModification = commitBranchPoint.getTimeStamp();
+      InternalCDORevision[] revisions = commitContext.getDirtyObjects();
+      InternalCDORevisionDelta[] deltas = commitContext.getDirtyObjectDeltas();
+
+      for (int i = 0; i < revisions.length; i++)
+      {
+        if (ResourceNodeIDResolver.isResourceNode(revisions[i].getEClass()) //
+            && (deltas[i].getFeatureDelta(CDOContainerFeatureDelta.CONTAINER_FEATURE) != null //
+                || deltas[i].getFeatureDelta(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME) != null))
+        {
+          clearPermissionCaches(branch);
+          return;
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      clearPermissionCaches(branch);
+      OM.LOG.error(ex);
+    }
+  }
+
+  private void clearPermissionCaches(CDOBranch branch)
+  {
+    for (UserInfo userInfo : userInfos.values())
+    {
+      userInfo.removePermissionCache(branch);
     }
   }
 
   private void waitForRealmUpdate(CDOBranchPoint securityContext)
   {
-    if (lastRealmModification != null)
-    {
-      long updateTime;
-
-      synchronized (lastRealmModificationLock)
-      {
-        if (lastRealmModification != null)
-        {
-          updateTime = lastRealmModification;
-          lastRealmModification = null;
-        }
-        else
-        {
-          updateTime = CDOBranchPoint.UNSPECIFIED_DATE;
-        }
-      }
-
-      if (updateTime != CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        long contextTime = securityContext.getTimeStamp();
-        if (contextTime == CDOBranchPoint.UNSPECIFIED_DATE || contextTime < updateTime)
-        {
-          if (!realmView.waitForUpdate(updateTime, REALM_UPDATE_TIMEOUT))
-          {
-            throw new TimeoutRuntimeException();
-          }
-        }
-      }
-    }
+    realmUpdateTracker.waitForUpdate(securityContext.getTimeStamp(), //
+        updateTime -> realmView.waitForUpdate(updateTime, REALM_UPDATE_TIMEOUT));
   }
 
   private void register(InternalRepository repository)
@@ -1251,13 +1525,19 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   /**
    * @author Eike Stepper
    */
-  private static final class UserInfo extends AtomicInteger
+  private final class UserInfo extends AtomicInteger
   {
     private static final long serialVersionUID = 1L;
 
     private final User user;
 
-    private Permission[] permissions;
+    private volatile Permission[] permissions;
+
+    private volatile Permission[] resourcePermissions;
+
+    private volatile Permission[] dynamicPermissions;
+
+    private final ConcurrentMap<CDOBranch, PermissionCache> permissionCaches = new ConcurrentHashMap<>();
 
     public UserInfo(User user)
     {
@@ -1285,10 +1565,57 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       return permissions;
     }
 
+    public Permission[] getResourcePermissions()
+    {
+      return resourcePermissions;
+    }
+
+    public Permission[] getDynamicPermissions()
+    {
+      return dynamicPermissions;
+    }
+
+    public PermissionCache getPermissionCache(IRepository repository, CDOBranch branch, PermissionCache.Creator creator)
+    {
+      return permissionCaches.computeIfAbsent(branch, key -> creator.create(repository, getUserId(), key));
+    }
+
+    public void clearPermissionCaches()
+    {
+      permissionCaches.clear();
+    }
+
+    public void removePermissionCache(CDOBranch branch)
+    {
+      permissionCaches.remove(branch);
+    }
+
+    public boolean isCurrentCache(CDOBranch branch, PermissionCache cache)
+    {
+      return permissionCaches.get(branch) == cache;
+    }
+
     public void rebuildPermissions()
     {
       EList<Permission> allPermissions = user.getAllPermissions();
       permissions = allPermissions.toArray(new Permission[allPermissions.size()]);
+
+      List<Permission> resource = new ArrayList<>();
+      List<Permission> dynamic = new ArrayList<>();
+
+      for (Permission permission : permissions)
+      {
+        List<Permission> list = isResourceCacheable(permission) ? resource : dynamic;
+        list.add(permission);
+      }
+
+      resourcePermissions = resource.toArray(new Permission[resource.size()]);
+      dynamicPermissions = dynamic.toArray(new Permission[dynamic.size()]);
+    }
+
+    private boolean isResourceCacheable(Permission permission)
+    {
+      return SecurityManager.this.isResourceCacheable(permission);
     }
 
     public synchronized void addSessionRef()
@@ -1307,40 +1634,6 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       return "UserInfo[user=" + getUserId() + ", refs=" + super.toString() + "]";
     }
   }
-
-  // /**
-  // * @author Eike Stepper
-  // */
-  // private final class Authenticator implements IAuthenticator2
-  // {
-  // public Authenticator()
-  // {
-  // }
-  //
-  // @Override
-  // public void authenticate(String userID, char[] password) throws SecurityException
-  // {
-  // SecurityManager.this.authenticate(userID, password);
-  // }
-  //
-  // @Override
-  // public void updatePassword(String userID, char[] oldPassword, char[] newPassword)
-  // {
-  // SecurityManager.this.updatePassword(userID, oldPassword, newPassword);
-  // }
-  //
-  // @Override
-  // public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword)
-  // {
-  // SecurityManager.this.resetPassword(adminID, adminPassword, userID, newPassword);
-  // }
-  //
-  // @Override
-  // public boolean isAdministrator(String userID)
-  // {
-  // return SecurityManager.this.isAdministrator(userID);
-  // }
-  // }
 
   /**
    * @author Eike Stepper
@@ -1441,10 +1734,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     @Override
     public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
+      invalidatePermissionCaches(commitContext);
+
       if (commitContext.getSecurityImpact() == CommitNotificationInfo.IMPACT_REALM)
       {
         CDOBranchPoint commitBranchPoint = commitContext.getBranchPoint();
-
         rememberRealmCommit(commitBranchPoint);
       }
 
@@ -1616,7 +1910,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     @Override
     public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
-      // Do nothing.
+      invalidatePermissionCaches(commitContext);
     }
 
     public void dispose()

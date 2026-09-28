@@ -474,7 +474,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   @Override
   public int hashCode()
   {
-    return id;
+    return System.identityHashCode(this);
   }
 
   @Override

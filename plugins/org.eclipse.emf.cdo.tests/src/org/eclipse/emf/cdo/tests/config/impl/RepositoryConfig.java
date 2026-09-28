@@ -59,6 +59,7 @@ import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.server.ocl.OCLQueryHandler;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
+import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -390,6 +391,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     Net4jUtil.prepareContainer(container);
     CDOCommonUtil.prepareContainer(container);
     CDONet4jServerUtil.prepareContainer(container);
+    SecurityManagerUtil.prepareContainer(container);
 
     container.registerFactory(new ExecutorServiceFactory()
     {

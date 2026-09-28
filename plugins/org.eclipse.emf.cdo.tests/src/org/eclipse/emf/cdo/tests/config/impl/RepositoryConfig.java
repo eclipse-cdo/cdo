@@ -1055,14 +1055,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     boolean sameProps = repoProps.equals(lastRepoProps);
     lastRepoProps = repoProps;
 
-    if (!sameScenario)
-    {
-      // New scenario is an indication for a new TestSuite with a similar set of test cases.
-      // Same test cases would probably use duplicate resource paths, so start with fresh repos.
-      return true;
-    }
-
-    if (!sameProps)
+    if (!sameScenario || !sameProps)
     {
       // If the props have changed (or if there are no lastRepoProps, which means
       // this is the first test of a run) we definitely want a clean repo.

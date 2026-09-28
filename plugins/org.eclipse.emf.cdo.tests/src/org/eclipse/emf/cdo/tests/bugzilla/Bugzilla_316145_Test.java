@@ -69,8 +69,7 @@ public class Bugzilla_316145_Test extends AbstractCDOTest
   {
     CDONet4jSession session = (CDONet4jSession)openSession();
     CDOTransaction transaction = session.openTransaction();
-    CDORevision revision = session.getRevisionManager().getRevision(id, transaction,
-        new Request.Config(LookupMode.CACHE_THEN_LOADER, 0, false, 0));
+    CDORevision revision = session.getRevisionManager().getRevision(id, transaction, new Request.Config(LookupMode.CACHE_THEN_LOADER, 0, false, 0));
     msg(revision);
 
     CDOObject object = transaction.getObject(id);

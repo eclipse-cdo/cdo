@@ -40,7 +40,7 @@ import java.util.concurrent.TimeoutException;
  */
 public class Bugzilla_421287_Test extends AbstractCDOTest
 {
-  private static final ThreadLocal<Boolean> IS_RUNNING_IN_BACKGROUND = new ThreadLocal<Boolean>()
+  private static final ThreadLocal<Boolean> IS_RUNNING_IN_BACKGROUND = new ThreadLocal<>()
   {
     @Override
     protected Boolean initialValue()

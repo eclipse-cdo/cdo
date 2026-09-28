@@ -1,0 +1,31 @@
+/*
+ * Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License 2.0
+ * which is available at https://www.eclipse.org/legal/epl-2.0
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *    Eike Stepper - initial API and implementation
+ */
+package org.eclipse.emf.cdo.tests.general;
+
+import org.eclipse.emf.cdo.transaction.CDOFileTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
+
+import java.io.File;
+import java.io.IOException;
+
+/**
+ * @author Eike Stepper
+ */
+public class FileTransactionWithoutReconstructSavepointsTest extends FileTransactionTest
+{
+  @Override
+  protected CDOFileTransaction openFileTransaction(CDOTransaction transaction, File file) throws IOException
+  {
+    return CDOUtil.createFileTransaction(transaction, file, false);
+  }
+}

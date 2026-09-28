@@ -125,13 +125,13 @@ public class Bugzilla_315043_Test extends AbstractCDOTest
       CDOID next = it.next();
       if (timeStampOfHoleCommit != -1)
       {
-        CDORevision revision = revisionManager.getRevision(next, branchPoint, new Request.Config(LookupMode.CACHE_THEN_LOADER, 0, false,
-            CDORevision.UNCHUNKED));
+        CDORevision revision = revisionManager.getRevision(next, branchPoint,
+            new Request.Config(LookupMode.CACHE_THEN_LOADER, 0, false, CDORevision.UNCHUNKED));
         assertNull(revision);
       }
 
-      CDORevision revision = revisionManager.getRevisionByVersion(next, branchVersion, new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE,
-          false, CDORevision.UNCHUNKED));
+      CDORevision revision = revisionManager.getRevisionByVersion(next, branchVersion,
+          new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED));
       assertInstanceOf(DetachedCDORevision.class, revision);
     }
   }

@@ -183,9 +183,8 @@ public class Bugzilla_418267_Test extends AbstractCDOTest
     if (modern)
     {
       EStructuralFeature categories = getModel1Package().getCompany_Categories();
-      session.options().setCollectionLoadingConfig(new CDOCollectionLoadingConfig(
-          new ChunkConfig(ChunkConfig.INHERIT, ChunkConfig.INHERIT),
-          Collections.<EModelElement, ChunkConfig>singletonMap(categories, new ChunkConfig(100, ChunkConfig.INHERIT))));
+      session.options().setCollectionLoadingConfig(new CDOCollectionLoadingConfig(new ChunkConfig(ChunkConfig.INHERIT, ChunkConfig.INHERIT),
+          Collections.<EModelElement, ChunkConfig> singletonMap(categories, new ChunkConfig(100, ChunkConfig.INHERIT))));
     }
 
     CDOTransaction transaction = session.openTransaction();

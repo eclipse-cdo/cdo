@@ -76,7 +76,7 @@ public class BaseAdapterFactory extends AdapterFactoryImpl
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
-  protected BaseSwitch<Adapter> modelSwitch = new BaseSwitch<Adapter>()
+  protected BaseSwitch<Adapter> modelSwitch = new BaseSwitch<>()
   {
     @Override
     public Adapter caseBaseClass(BaseClass object)

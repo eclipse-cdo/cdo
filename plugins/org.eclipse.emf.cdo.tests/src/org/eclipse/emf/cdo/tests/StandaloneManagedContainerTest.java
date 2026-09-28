@@ -33,8 +33,7 @@ public class StandaloneManagedContainerTest extends AbstractCDOTest
   {
     ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
     File root = findRepositoryRoot();
-    URL[] urls = {
-        new File(root, "plugins/org.eclipse.net4j.util").toURI().toURL(), //$NON-NLS-1$
+    URL[] urls = { new File(root, "plugins/org.eclipse.net4j.util").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j.util/bin").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j/bin").toURI().toURL(), //$NON-NLS-1$
@@ -67,8 +66,7 @@ public class StandaloneManagedContainerTest extends AbstractCDOTest
   {
     ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
     File root = findRepositoryRoot();
-    URL[] urls = {
-        new File(root, "plugins/org.eclipse.net4j.util").toURI().toURL(), //$NON-NLS-1$
+    URL[] urls = { new File(root, "plugins/org.eclipse.net4j.util").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j.util/bin").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j/bin").toURI().toURL(), //$NON-NLS-1$
@@ -100,7 +98,8 @@ public class StandaloneManagedContainerTest extends AbstractCDOTest
   {
     File root = new File(StandaloneManagedContainerTest.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getCanonicalFile();
 
-    while (root != null && !new File(root, "plugins/org.eclipse.net4j/META-INF/services/org.eclipse.net4j.util.container.IManagedContainerInitializer").isFile()) //$NON-NLS-1$
+    while (root != null
+        && !new File(root, "plugins/org.eclipse.net4j/META-INF/services/org.eclipse.net4j.util.container.IManagedContainerInitializer").isFile()) //$NON-NLS-1$
     {
       root = root.getParentFile();
     }

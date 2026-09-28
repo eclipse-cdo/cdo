@@ -53,12 +53,7 @@ public class Bugzilla_396743_Test extends AbstractCDOTest
 
   private void awaitReadValues()
   {
-    if (readValueLatch == null)
-    {
-      return;
-    }
-
-    if (StoreThreadLocal.getCommitContext() != null)
+    if ((readValueLatch == null) || (StoreThreadLocal.getCommitContext() != null))
     {
       // Don't block reads that are triggered from commit processing
       return;

@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.tests.bundle.OM;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTestSuite;
+import org.eclipse.emf.cdo.tests.config.impl.PlainTest;
 
 import java.util.List;
 
@@ -42,97 +43,33 @@ public class AllConfigs extends ConfigTestSuite
     return getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.issues");
   }
 
+  /**
+   * Discovers the general config tests stored in the general test package. The returned classes are sorted by fully
+   * qualified name by the inherited {@link ConfigTestSuite#getTestClasses} discovery helper.
+   *
+   * @return the config-test classes in {@code org.eclipse.emf.cdo.tests.general}
+   */
+  public List<Class<? extends ConfigTest>> getGeneralTests()
+  {
+    return getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.general");
+  }
+
+  /**
+   * Discovers plain config tests stored in the plain test package. Package membership is a storage convention; plain
+   * execution is determined by {@link PlainTest} inheritance.
+   *
+   * @return the config-test classes in {@code org.eclipse.emf.cdo.tests.plain}
+   */
+  public List<Class<? extends ConfigTest>> getPlainTests()
+  {
+    return getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.plain");
+  }
+
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
-
-    // General
-    // testClasses.add(BigModelTest.class);
-    // testClasses.add(CommitPerformanceTest.class);
-    // testClasses.add(ConflictResolverExtendedTest.class);
-    testClasses.add(AdapterManagerTest.class);
-    testClasses.add(AttributeTest.class);
-    testClasses.add(AuditEMapTest.class);
-    testClasses.add(AuditSameSessionTest.class);
-    testClasses.add(AuditTest.class);
-    testClasses.add(AutoAttacherTest.class);
-    testClasses.add(BackupBinaryTest.class);
-    testClasses.add(BackupTest.class);
-    testClasses.add(BranchingSameSessionTest.class);
-    testClasses.add(BranchingTest.class);
-    testClasses.add(BranchingWithCacheClearTest.class);
-    testClasses.add(CDOIDTest.class);
-    testClasses.add(CDOStaleReferencePolicyTest.class);
-    testClasses.add(ChangeSubscriptionTest.class);
-    testClasses.add(ChunkingClearCachedRevisionTest.class);
-    testClasses.add(ChunkingTest.class);
-    testClasses.add(CommitInfoTest.class);
-    testClasses.add(CompareTest.class);
-    testClasses.add(ComplexTest.class);
-    testClasses.add(ConflictResolverExtendedTest.class);
-    testClasses.add(ConflictResolverTest.class);
-    testClasses.add(ContainmentTest.class);
-    testClasses.add(CrossReferenceTest.class);
-    testClasses.add(DetachTest.class);
-    testClasses.add(DynamicPackageTest.class);
-    testClasses.add(DynamicXSDTest.class);
-    testClasses.add(EMFCompareTest.class);
-    testClasses.add(EMapTest.class);
-    testClasses.add(EnumTest.class);
-    testClasses.add(ExternalReferenceTest.class);
-    testClasses.add(FileTransactionTest.class);
-    testClasses.add(FileTransactionWithoutReconstructSavepointsTest.class);
-    testClasses.add(IndexReconstructionTest.class);
-    testClasses.add(InitialTest.class);
-    testClasses.add(InvalidationTest.class);
-    testClasses.add(LobTest.class);
-    testClasses.add(LockStateCacheTest.WithSubBranch.class);
-    testClasses.add(LockStateCacheTest.class);
-    testClasses.add(LockingManagerRestartRepositoryTest.class);
-    testClasses.add(LockingManagerRestartSessionTest.class);
-    testClasses.add(LockingManagerRestartTransactionTest.class);
-    testClasses.add(LockingManagerTest.class);
-    testClasses.add(LockingNotificationsTest.class);
-    testClasses.add(LockingSequenceTest.class);
-    testClasses.add(MEMStoreQueryTest.class);
-    testClasses.add(MapTest.class);
-    testClasses.add(MergingTest.class);
-    testClasses.add(MetaTest.class);
-    testClasses.add(MultiValuedOfAttributeTest.class);
-    testClasses.add(OCLQueryTest.Lazy.class);
-    testClasses.add(OCLQueryTest.class);
-    testClasses.add(PackageRegistryTest.class);
-    testClasses.add(PartialCommitTest.class);
-    testClasses.add(PermissionCacheAuthorizationTest.class);
-    testClasses.add(ReconnectingSessionTest.class);
-    testClasses.add(RepositoryTest.class);
-    testClasses.add(ResourceModificationTrackingTest.class);
-    testClasses.add(ResourceNodeBranchRenameTest.class);
-    testClasses.add(ResourceTest.class);
-    testClasses.add(RevisionDeltaCascadingBranchesTest.class);
-    testClasses.add(RevisionDeltaInBranchTest.class);
-    testClasses.add(RevisionDeltaTest.class);
-    testClasses.add(RevisionManagerClientSideTest.class);
-    testClasses.add(RevisionManagerTest.class);
-    testClasses.add(RollbackTest.class);
-    testClasses.add(SavePointTest.class);
-    testClasses.add(SecurityTest.class);
-    testClasses.add(SessionTest.class);
-    testClasses.add(SetFeatureTest.class);
-    testClasses.add(StateMachineTest.class);
-    testClasses.add(StickyViewsTest.class);
-    testClasses.add(TransactionHandlerTest.class);
-    testClasses.add(TransactionScopeTest.class);
-    testClasses.add(TransactionTest.class);
-    testClasses.add(UnsetTest.class);
-    testClasses.add(ViewProviderTest.class);
-    testClasses.add(ViewSynchronizationTest.class);
-    testClasses.add(ViewTest.class);
-    testClasses.add(WorkspaceTest.class);
-    testClasses.add(XATransactionTest.class);
-    testClasses.add(XRefTest.class);
-
-    // Bugzilla verifications
+    testClasses.addAll(getPlainTests());
+    testClasses.addAll(getGeneralTests());
     testClasses.addAll(getBugzillaTests());
     testClasses.addAll(getIssueTests());
   }

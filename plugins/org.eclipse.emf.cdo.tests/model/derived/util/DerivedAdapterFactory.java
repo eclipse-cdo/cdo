@@ -76,7 +76,7 @@ public class DerivedAdapterFactory extends AdapterFactoryImpl
    *
    * @generated
    */
-  protected DerivedSwitch<Adapter> modelSwitch = new DerivedSwitch<Adapter>()
+  protected DerivedSwitch<Adapter> modelSwitch = new DerivedSwitch<>()
   {
     @Override
     public Adapter caseDerivedClass(DerivedClass object)

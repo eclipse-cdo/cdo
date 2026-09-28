@@ -70,6 +70,29 @@ When adding or generating tests, preserve this abstraction consistently. Never a
 - Construct test resource paths with `getResourcePath(String path)` so that the test framework can provide the test-specific resource location.
 - Use a literal full resource path only when a test intentionally needs a specific globally fixed path and that requirement is explicit.
 
+## CDO Test Placement and Base Classes
+
+Tests in `org.eclipse.emf.cdo.tests` must use the established config-test hierarchy and package-based suite discovery.
+
+- **Scenario-independent tests** must:
+  - extend `org.eclipse.emf.cdo.tests.config.impl.PlainTest`;
+  - be placed in `org.eclipse.emf.cdo.tests.plain`;
+  - run through the synthetic `Scenario[PLAIN]` exactly once.
+
+- **General scenario-dependent CDO tests** must be placed in `org.eclipse.emf.cdo.tests.general` and use the normal `ConfigTest` hierarchy, typically through `AbstractCDOTest` or another appropriate config-test base class.
+
+- Do not add concrete general test classes directly to the root `org.eclipse.emf.cdo.tests` package.
+
+- Keep tests in established special-purpose packages when that package is itself part of the suite organization, in particular `org.eclipse.emf.cdo.tests.bugzilla` and `org.eclipse.emf.cdo.tests.issues`.
+
+- `org.eclipse.emf.cdo.tests.plain` and `org.eclipse.emf.cdo.tests.general` are discovered automatically by the test-suite infrastructure. Do not add explicit per-class registrations when package discovery already covers the test.
+
+- `PlainTest` inheritance is the semantic criterion for plain-test routing. A registered `PlainTest` is excluded from normal configured scenarios and runs exactly once under `Scenario[PLAIN]`.
+
+- Do not create new tests that directly extend JUnit `TestCase` when they can participate in the CDO config-test infrastructure. A direct `TestCase` is only appropriate for an exceptional test that cannot reasonably use `PlainTest`, for example because package-private production access requires the test to remain in a specific production package. Do not widen production API merely to satisfy this placement rule.
+
+Before adding a new test, determine whether it needs repository/session/model scenario configuration. If it does not, use `PlainTest` in `.plain`; otherwise use the appropriate config-test base class and package.
+
 ## CDO Test Scenario Selection
 
 - For external CDO test-scenario selection, do not guess property names, syntax, factory types, or capabilities. Read the canonical test-framework JavaDocs starting at `IScenario`; consult `RepositoryConfigFactory` for repository capabilities and `DBConfigFactory` for DB extensions.

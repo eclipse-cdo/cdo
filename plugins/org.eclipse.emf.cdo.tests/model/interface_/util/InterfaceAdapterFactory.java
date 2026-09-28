@@ -75,7 +75,7 @@ public class InterfaceAdapterFactory extends AdapterFactoryImpl
    *
    * @generated
    */
-  protected InterfaceSwitch<Adapter> modelSwitch = new InterfaceSwitch<Adapter>()
+  protected InterfaceSwitch<Adapter> modelSwitch = new InterfaceSwitch<>()
   {
     @Override
     public Adapter caseIInterface(IInterface object)

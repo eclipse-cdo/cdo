@@ -26,8 +26,10 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -56,8 +58,23 @@ public abstract class ConfigTestSuite implements IConstants
 
   public Test getTestSuite(String name)
   {
+    MainSuite discoveredSuite = new MainSuite(name);
+    initConfigSuites(discoveredSuite);
+
+    if (discoveredSuite.getRegisteredPlainTests().isEmpty())
+    {
+      return discoveredSuite;
+    }
+
     TestSuite suite = new MainSuite(name);
-    initConfigSuites(suite);
+    addPlainScenario(suite, discoveredSuite.getRegisteredPlainTests());
+
+    Enumeration<?> tests = discoveredSuite.tests();
+    while (tests.hasMoreElements())
+    {
+      suite.addTest((Test)tests.nextElement());
+    }
+
     return suite;
   }
 
@@ -68,15 +85,48 @@ public abstract class ConfigTestSuite implements IConstants
     scenario.setSessionConfig(sessionConfig);
     scenario.setModelConfig(modelConfig);
 
+    List<Class<? extends ConfigTest>> testClasses = new ArrayList<>();
+    initTestClasses(testClasses, scenario);
+    addScenario(parent, scenario, testClasses, false);
+  }
+
+  /**
+   * Adds one synthetic scenario containing the registered plain config-test classes.
+   *
+   * @param parent the suite that receives the scenario node
+   */
+  private void addPlainScenario(TestSuite parent, List<Class<? extends ConfigTest>> testClasses)
+  {
+    if (!testClasses.isEmpty())
+    {
+      addScenario(parent, new PlainScenario(), testClasses, true);
+    }
+  }
+
+  private void addScenario(TestSuite parent, IScenario scenario, List<Class<? extends ConfigTest>> testClasses, boolean plain)
+  {
+    if (!plain)
+    {
+      for (Class<? extends ConfigTest> testClass : testClasses)
+      {
+        if (PlainTest.class.isAssignableFrom(testClass))
+        {
+          ((MainSuite)parent).registerPlainTestClass(testClass);
+        }
+      }
+    }
+
     if (scenario.isValid())
     {
       TestSuite scenarioSuite = new TestSuite(scenario.toString());
 
-      List<Class<? extends ConfigTest>> testClasses = new ArrayList<>();
-      initTestClasses(testClasses, scenario);
-
       for (Class<? extends ConfigTest> testClass : testClasses)
       {
+        if (PlainTest.class.isAssignableFrom(testClass) != plain)
+        {
+          continue;
+        }
+
         try
         {
           TestClassWrapper testClassWrapper = new TestClassWrapper(testClass, scenario, this);
@@ -158,9 +208,21 @@ public abstract class ConfigTestSuite implements IConstants
    */
   private final class MainSuite extends TestSuite
   {
+    private final Set<Class<? extends ConfigTest>> registeredPlainTests = new LinkedHashSet<>();
+
     public MainSuite(String name)
     {
       super(name);
+    }
+
+    private void registerPlainTestClass(Class<? extends ConfigTest> testClass)
+    {
+      registeredPlainTests.add(testClass);
+    }
+
+    private List<Class<? extends ConfigTest>> getRegisteredPlainTests()
+    {
+      return new ArrayList<>(registeredPlainTests);
     }
 
     @Override

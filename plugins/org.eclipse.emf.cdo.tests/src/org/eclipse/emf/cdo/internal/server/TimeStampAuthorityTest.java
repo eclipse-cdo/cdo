@@ -125,8 +125,7 @@ public class TimeStampAuthorityTest extends TestCase
   {
     InternalStore store = (InternalStore)Proxy.newProxyInstance(InternalStore.class.getClassLoader(), new Class<?>[] { InternalStore.class },
         (proxy, method, args) -> null);
-    InvocationHandler handler = (proxy, method, args) ->
-    {
+    InvocationHandler handler = (proxy, method, args) -> {
       if (method.getName().equals("getTimeStamp"))
       {
         return timeProvider.getTimeStamp();

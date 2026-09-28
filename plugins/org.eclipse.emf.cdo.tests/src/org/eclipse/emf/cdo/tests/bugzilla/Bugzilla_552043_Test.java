@@ -11,8 +11,6 @@
  */
 package org.eclipse.emf.cdo.tests.bugzilla;
 
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -57,7 +55,7 @@ public class Bugzilla_552043_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     if (withAttachedRevisionsMap)
     {
-      transaction.options().setAttachedRevisionsMap(new HashMap<CDOID, CDORevision>());
+      transaction.options().setAttachedRevisionsMap(new HashMap<>());
     }
 
     CDOResource resource = transaction.createResource(getResourcePath("/res"));
@@ -144,7 +142,7 @@ public class Bugzilla_552043_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     if (withAttachedRevisionsMap)
     {
-      transaction.options().setAttachedRevisionsMap(new HashMap<CDOID, CDORevision>());
+      transaction.options().setAttachedRevisionsMap(new HashMap<>());
     }
 
     CDOResource resource = transaction.createResource(getResourcePath("/res"));
@@ -199,7 +197,7 @@ public class Bugzilla_552043_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     if (withAttachedRevisionsMap)
     {
-      transaction.options().setAttachedRevisionsMap(new HashMap<CDOID, CDORevision>());
+      transaction.options().setAttachedRevisionsMap(new HashMap<>());
     }
 
     CDOResource resource = transaction.createResource(getResourcePath("/res"));

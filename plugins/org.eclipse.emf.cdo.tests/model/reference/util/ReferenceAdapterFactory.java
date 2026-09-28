@@ -75,7 +75,7 @@ public class ReferenceAdapterFactory extends AdapterFactoryImpl
    *
    * @generated
    */
-  protected ReferenceSwitch<Adapter> modelSwitch = new ReferenceSwitch<Adapter>()
+  protected ReferenceSwitch<Adapter> modelSwitch = new ReferenceSwitch<>()
   {
     @Override
     public Adapter caseReference(Reference object)

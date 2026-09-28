@@ -45,9 +45,9 @@ public class Bugzilla_491859_Test extends AbstractCDOTest
   {
     skipStoreWithoutQueryXRefs();
 
-    //////////
+    /////////
     // Init //
-    //////////
+    /////////
 
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
@@ -82,9 +82,9 @@ public class Bugzilla_491859_Test extends AbstractCDOTest
 
     transaction.commit();
 
-    //////////
+    /////////
     // Test //
-    //////////
+    /////////
 
     // Now replace root by root_new
     replace(root);

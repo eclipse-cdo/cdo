@@ -13,19 +13,19 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
-import org.eclipse.emf.cdo.tests.AuditEMapTest;
-import org.eclipse.emf.cdo.tests.AuditSameSessionTest;
-import org.eclipse.emf.cdo.tests.AuditTest;
-import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
-import org.eclipse.emf.cdo.tests.BranchingTest;
-import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
-import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_252214_Test;
 import org.eclipse.emf.cdo.tests.bugzilla.Bugzilla_303807_Test;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
 import org.eclipse.emf.cdo.tests.db.bugzilla.Bugzilla_527002_Test;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
+import org.eclipse.emf.cdo.tests.general.AuditEMapTest;
+import org.eclipse.emf.cdo.tests.general.AuditSameSessionTest;
+import org.eclipse.emf.cdo.tests.general.AuditTest;
+import org.eclipse.emf.cdo.tests.general.BranchingSameSessionTest;
+import org.eclipse.emf.cdo.tests.general.BranchingTest;
+import org.eclipse.emf.cdo.tests.general.MEMStoreQueryTest;
+import org.eclipse.emf.cdo.tests.general.MergingTest;
 
 import java.util.List;
 

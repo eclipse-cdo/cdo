@@ -13,11 +13,11 @@
 package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
-import org.eclipse.emf.cdo.tests.BranchingSameSessionTest;
-import org.eclipse.emf.cdo.tests.BranchingTest;
-import org.eclipse.emf.cdo.tests.MergingTest;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.general.BranchingSameSessionTest;
+import org.eclipse.emf.cdo.tests.general.BranchingTest;
+import org.eclipse.emf.cdo.tests.general.MergingTest;
 
 import java.util.List;
 

@@ -308,8 +308,8 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testRemoteTopicSubscription() throws Exception
   {
-    AsyncResult<Boolean> session2Subscribed = new AsyncResult<Boolean>();
-    AsyncResult<Boolean> session2Unsubscribed = new AsyncResult<Boolean>();
+    AsyncResult<Boolean> session2Subscribed = new AsyncResult<>();
+    AsyncResult<Boolean> session2Unsubscribed = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     assertEquals(false, session1.getRemoteSessionManager().isSubscribed());
@@ -351,8 +351,8 @@ public class RemoteSessionManagerTest extends AbstractCDOTest
 
   public void testRemoteTopicMessage() throws Exception
   {
-    AsyncResult<Boolean> messageReceived = new AsyncResult<Boolean>();
-    AsyncResult<Boolean> unsubscribeReceived = new AsyncResult<Boolean>();
+    AsyncResult<Boolean> messageReceived = new AsyncResult<>();
+    AsyncResult<Boolean> unsubscribeReceived = new AsyncResult<>();
 
     CDOSession session1 = openSession();
     CDORemoteTopic topic1 = session1.getRemoteSessionManager().subscribeTopic("my.special.topic");

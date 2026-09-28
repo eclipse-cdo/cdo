@@ -80,7 +80,7 @@ public class Testmodel562011AdapterFactory extends AdapterFactoryImpl
    * <!-- end-user-doc -->
    * @generated
    */
-  protected Testmodel562011Switch<Adapter> modelSwitch = new Testmodel562011Switch<Adapter>()
+  protected Testmodel562011Switch<Adapter> modelSwitch = new Testmodel562011Switch<>()
   {
     @Override
     public Adapter caseDocumentRoot(DocumentRoot object)

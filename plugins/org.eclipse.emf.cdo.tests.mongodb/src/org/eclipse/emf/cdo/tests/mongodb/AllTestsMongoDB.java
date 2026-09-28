@@ -13,9 +13,9 @@
 package org.eclipse.emf.cdo.tests.mongodb;
 
 import org.eclipse.emf.cdo.tests.AllConfigs;
-import org.eclipse.emf.cdo.tests.MEMStoreQueryTest;
 import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest;
+import org.eclipse.emf.cdo.tests.general.MEMStoreQueryTest;
 
 import java.util.List;
 

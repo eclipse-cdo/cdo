@@ -35,13 +35,6 @@ public interface OMPlatform
 
   public OMBundle bundle(String bundleID, Class<?> accessor);
 
-  /**
-   * Creates a managed container that is appropriate for this platform.
-   *
-   * @since 3.31
-   */
-  public IManagedContainer createManagedContainer();
-
   public boolean isOSGiRunning();
 
   /**
@@ -128,4 +121,21 @@ public interface OMPlatform
    * @since 3.2
    */
   public String[] getCommandLineArgs() throws IllegalStateException;
+
+  /**
+   * Creates a named managed container that is appropriate for this platform.
+   *
+   * @since 3.31
+   */
+  public IManagedContainer createManagedContainer(String name);
+
+  /**
+   * Creates a  managed container that is appropriate for this platform.
+   *
+   * @since 3.31
+   */
+  public default IManagedContainer createManagedContainer()
+  {
+    return createManagedContainer(null);
+  }
 }

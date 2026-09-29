@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.container.PluginContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.properties.PropertiesContainerUtil;
 
 /**
@@ -32,7 +33,7 @@ public final class ContainerUtil
 
   private static final Object[] NO_ELEMENTS = {};
 
-  private static final IContainer<Object> EMPTY = new IContainer<Object>()
+  private static final IContainer<Object> EMPTY = new IContainer<>()
   {
     @Override
     public Object[] getElements()
@@ -135,7 +136,9 @@ public final class ContainerUtil
    * registrations in plug-in extensions.
    *
    * @since 3.3
+   * @deprecated As of 3.31 use {@link OMPlatform#createManagedContainer()}.
    */
+  @Deprecated
   public static IManagedContainer createPluginContainer()
   {
     return new PluginContainer();

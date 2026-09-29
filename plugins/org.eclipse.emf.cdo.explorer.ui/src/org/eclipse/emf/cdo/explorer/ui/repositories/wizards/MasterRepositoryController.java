@@ -31,7 +31,6 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.DelayingExecutor;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
-import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -176,8 +175,7 @@ public class MasterRepositoryController
   {
     this.parent = parent;
 
-    container = ContainerUtil.createPluginContainer();
-    LifecycleUtil.activate(container);
+    container = OMPlatform.INSTANCE.createManagedContainer();
 
     adminManager = CDOAdminClientUtil.createAdminManager(container);
     adminManager.addListener(adminManagerListener);

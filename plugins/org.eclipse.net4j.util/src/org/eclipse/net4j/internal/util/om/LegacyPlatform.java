@@ -133,10 +133,10 @@ public class LegacyPlatform extends AbstractPlatform
   }
 
   @Override
-  public IManagedContainer createManagedContainer()
+  public IManagedContainer createManagedContainer(String name)
   {
     StandaloneContainer container = new StandaloneContainer();
-    container.setName("INSTANCE");
+    container.setName(name);
     container.activate();
     return container;
   }

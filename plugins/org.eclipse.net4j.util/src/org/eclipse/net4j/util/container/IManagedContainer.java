@@ -11,7 +11,7 @@
  */
 package org.eclipse.net4j.util.container;
 
-import org.eclipse.net4j.internal.util.container.ManagedContainerFactory;
+import org.eclipse.net4j.internal.util.container.GlobalManagedContainerBootstrap;
 import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
@@ -42,7 +42,7 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
    *
    * @since 3.31
    */
-  public static final IManagedContainer INSTANCE = ManagedContainerFactory.createGlobalContainer();
+  public static final IManagedContainer INSTANCE = GlobalManagedContainerBootstrap.createGlobalContainer();
 
   /**
    * Returns the name of this container, or <code>null</code> if no name has been set.

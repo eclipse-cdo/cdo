@@ -11,13 +11,14 @@
  */
 package org.eclipse.net4j.util.tests;
 
-import org.eclipse.net4j.internal.util.container.PluginContainer;
 import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.internal.util.container.PluginContainer;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.security.RandomizerFactory;
+
 import org.eclipse.internal.net4j.buffer.BufferPoolFactory;
 
 import java.io.File;
@@ -70,7 +71,7 @@ public class ManagedContainerTest extends AbstractOMTest
 
   public void testPrivatePluginContainerRemainsIndependent()
   {
-    IManagedContainer container = ContainerUtil.createPluginContainer();
+    IManagedContainer container = OMPlatform.INSTANCE.createManagedContainer();
 
     assertNotSame(IManagedContainer.INSTANCE, container);
     LifecycleUtil.deactivate(container);
@@ -80,8 +81,7 @@ public class ManagedContainerTest extends AbstractOMTest
   {
     ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
     File root = findRepositoryRoot();
-    URL[] urls = {
-        new File(root, "plugins/org.eclipse.net4j.util").toURI().toURL(), //$NON-NLS-1$
+    URL[] urls = { new File(root, "plugins/org.eclipse.net4j.util").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j.util/bin").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j").toURI().toURL(), //$NON-NLS-1$
         new File(root, "plugins/org.eclipse.net4j/bin").toURI().toURL() //$NON-NLS-1$
@@ -112,7 +112,8 @@ public class ManagedContainerTest extends AbstractOMTest
   {
     File root = new File(ManagedContainerTest.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getCanonicalFile();
 
-    while (root != null && !new File(root, "plugins/org.eclipse.net4j/META-INF/services/org.eclipse.net4j.util.container.IManagedContainerInitializer").isFile()) //$NON-NLS-1$
+    while (root != null
+        && !new File(root, "plugins/org.eclipse.net4j/META-INF/services/org.eclipse.net4j.util.container.IManagedContainerInitializer").isFile()) //$NON-NLS-1$
     {
       root = root.getParentFile();
     }

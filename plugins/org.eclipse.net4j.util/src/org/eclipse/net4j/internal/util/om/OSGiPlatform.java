@@ -58,10 +58,10 @@ public class OSGiPlatform extends AbstractPlatform
   }
 
   @Override
-  public IManagedContainer createManagedContainer()
+  public IManagedContainer createManagedContainer(String name)
   {
     PluginContainer container = new PluginContainer();
-    container.setName("GLOBAL");
+    container.setName(name);
     container.activate();
     return container;
   }

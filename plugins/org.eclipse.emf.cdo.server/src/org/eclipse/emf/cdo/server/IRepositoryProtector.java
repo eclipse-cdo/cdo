@@ -27,6 +27,10 @@ import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.registry.ScopedRegistry;
 import org.eclipse.net4j.util.security.AdministrationPredicate;
 
 import java.util.Objects;
@@ -181,12 +185,49 @@ public interface IRepositoryProtector extends IContainer<UserInfo>, IManagedCont
   /**
    * @author Eike Stepper
    */
-  public static class Element extends Lifecycle implements IManagedContainerProvider
+  public static class Element extends Lifecycle implements IManagedContainerProvider, IPropertiesContainer
   {
     private IRepositoryProtector repositoryProtector;
 
+    private volatile IRegistry<String, Object> properties;
+
     private Element()
     {
+    }
+
+    /**
+     * Returns this element's properties registry.
+     * <p>
+     * The registry is created lazily on first access. If this element's
+     * {@link #getRepositoryProtector() repository protector} provides a
+     * {@link org.eclipse.net4j.util.registry.ScopedRegistry.Store ScopedRegistry.Store},
+     * the registry shares that store with other
+     * elements of the protector. Otherwise, an independent registry is used.
+     * The returned registry is stable for the lifetime of this element.
+     *
+     * @return this element's properties registry
+     * @since 4.27
+     */
+    @Override
+    public final IRegistry<String, Object> properties()
+    {
+      IRegistry<String, Object> properties = this.properties;
+
+      if (properties == null)
+      {
+        synchronized (this)
+        {
+          properties = this.properties;
+
+          if (properties == null)
+          {
+            properties = createProperties();
+            this.properties = properties;
+          }
+        }
+      }
+
+      return properties;
     }
 
     @Override
@@ -218,6 +259,25 @@ public interface IRepositoryProtector extends IContainer<UserInfo>, IManagedCont
     protected boolean checkRepositoryProtector()
     {
       return true;
+    }
+
+    @SuppressWarnings("unchecked")
+    private IRegistry<String, Object> createProperties()
+    {
+      IRepositoryProtector protector = repositoryProtector;
+
+      if (protector instanceof ScopedRegistry.Store.Provider<?, ?>)
+      {
+        ScopedRegistry.Store.Provider<String, Object> provider = (ScopedRegistry.Store.Provider<String, Object>)protector;
+
+        ScopedRegistry.Store<String, Object> store = provider.getRegistryStore();
+        if (store != null)
+        {
+          return store.createRegistry();
+        }
+      }
+
+      return new HashMapRegistry<>();
     }
   }
 

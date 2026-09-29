@@ -32,13 +32,15 @@
        <productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers" name="%productGroup.name.8"/>
        <productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorCommitHandlers" name="%productGroup.name.9"/>
        <productGroup id="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" name="%productGroup.name.10"/>
+       <productGroup id="org.eclipse.emf.cdo.server.matchCaches" name="%productGroup.name.11"/>
     </extension>
 
 		<extension point="org.eclipse.net4j.util.factories">
       	<factory productGroup="org.eclipse.emf.cdo.server.repositoryConfigurators" type="default" class="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator$Factory$Default"/>
       	<simpleFactory productGroup="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" type="protector" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector$RepositoryConfiguratorExtension"/>
       	<simpleFactory productGroup="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" type="entity" productClass="org.eclipse.emf.cdo.internal.server.Repository$EntityExtension"/>
-      	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectors" type="default" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector"/>
+       <annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectors" type="default" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector"/>
+       <annotationFactory productGroup="org.eclipse.emf.cdo.server.matchCaches" type="default" productClass="org.eclipse.emf.cdo.internal.server.DefaultMatchCache"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators" type="file" productClass="org.eclipse.emf.cdo.internal.server.FileUserAuthenticator"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators" type="ldap" productClass="org.eclipse.emf.cdo.internal.server.LDAPUserAuthenticator"/>
         <annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies" type="none" productClass="org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Constant$None"/>

@@ -59,6 +59,10 @@ public class ScopedRegistry<K, V> extends Registry<K, V>
   {
     private final Map<ScopedKey<K>, V> entries = new HashMap<>();
 
+    public Store()
+    {
+    }
+
     /**
      * Creates a new registry with an independent scope in this store.
      *
@@ -68,6 +72,16 @@ public class ScopedRegistry<K, V> extends Registry<K, V>
     {
       return new ScopedRegistry<>(this);
     }
+
+    /**
+     * Provides a {@link Store} that creates logical {@link ScopedRegistry} instances.
+     *
+     * @author Eike Stepper
+     */
+    public interface Provider<K, V>
+    {
+      public Store<K, V> getRegistryStore();
+    }
   }
 
   private static final class ScopedKey<K>
@@ -76,7 +90,7 @@ public class ScopedRegistry<K, V> extends Registry<K, V>
 
     private final K key;
 
-    ScopedKey(Object scope, K key)
+    public ScopedKey(Object scope, K key)
     {
       this.scope = scope;
       this.key = key;

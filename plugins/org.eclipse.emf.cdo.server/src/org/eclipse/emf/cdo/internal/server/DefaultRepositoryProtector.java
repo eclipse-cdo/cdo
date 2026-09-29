@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.MatchCache;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator.TreeExtension;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -59,6 +60,10 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
+import org.eclipse.net4j.util.properties.PropertiesContainerUtil;
+import org.eclipse.net4j.util.registry.IRegistry;
+import org.eclipse.net4j.util.registry.ScopedRegistry;
 import org.eclipse.net4j.util.security.IAuthenticator2;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
@@ -79,9 +84,16 @@ import java.util.function.Consumer;
  * @since 4.20
  */
 public class DefaultRepositoryProtector extends Container<UserInfo>
-    implements IRepositoryProtector, IAuthenticator2, IPermissionManager, IRepository.WriteAccessHandler
+    implements IRepositoryProtector, IAuthenticator2, IPermissionManager, IRepository.WriteAccessHandler, IPropertiesContainer, //
+    ScopedRegistry.Store.Provider<String, Object>
 {
+  public static final String PROP_MATCH_CACHE = DefaultRepositoryProtector.class.getName() + ".matchCache"; //$NON-NLS-1$
+
   private static final String PROP_PROTECTOR_INITIALIZED = "org.eclipse.emf.cdo.server.protectorInitialized";
+
+  private final ScopedRegistry.Store<String, Object> elementPropertyStore = new ScopedRegistry.Store<>();
+
+  private final IRegistry<String, Object> properties = elementPropertyStore.createRegistry();
 
   private IRepository repository;
 
@@ -112,7 +124,7 @@ public class DefaultRepositoryProtector extends Container<UserInfo>
 
   private AuthorizationStrategy authorizationStrategy;
 
-  private final ConcurrentArray<RevisionAuthorizer> revisionAuthorizers = new ConcurrentArray<RevisionAuthorizer>()
+  private final ConcurrentArray<RevisionAuthorizer> revisionAuthorizers = new ConcurrentArray<>()
   {
     @Override
     protected RevisionAuthorizer[] newArray(int length)
@@ -121,7 +133,7 @@ public class DefaultRepositoryProtector extends Container<UserInfo>
     }
   };
 
-  private final ConcurrentArray<CommitHandler> commitHandlers = new ConcurrentArray<CommitHandler>()
+  private final ConcurrentArray<CommitHandler> commitHandlers = new ConcurrentArray<>()
   {
     @Override
     protected CommitHandler[] newArray(int length)
@@ -157,6 +169,24 @@ public class DefaultRepositoryProtector extends Container<UserInfo>
   public final IManagedContainer getContainer()
   {
     return repository == null ? null : ((InternalRepository)repository).getContainer();
+  }
+
+  @Override
+  public final ScopedRegistry.Store<String, Object> getRegistryStore()
+  {
+    return elementPropertyStore;
+  }
+
+  /**
+   * Returns the registry containing properties for this protector.
+   * The registry has its own scope in the store shared with this protector's elements.
+   *
+   * @return this protector's stable properties registry
+   */
+  @Override
+  public final IRegistry<String, Object> properties()
+  {
+    return properties;
   }
 
   @Override
@@ -206,6 +236,19 @@ public class DefaultRepositoryProtector extends Container<UserInfo>
   {
     checkInactive();
     this.userAuthenticator = userAuthenticator;
+  }
+
+  /**
+   * Configures the matcher-result cache shared by this protector's revision authorizers.
+   *
+   * @param matchCache
+   *          the cache implementation to use
+   */
+  @InjectElement(name = "matchCache", productGroup = MatchCache.PRODUCT_GROUP, defaultFactoryType = IFactoryKey.DEFAULT_FACTORY_TYPE)
+  public final void setMatchCache(MatchCache matchCache)
+  {
+    checkInactive();
+    properties.put(PROP_MATCH_CACHE, matchCache);
   }
 
   @Override
@@ -546,6 +589,11 @@ public class DefaultRepositoryProtector extends Container<UserInfo>
   {
     checkState(repository, "repository"); //$NON-NLS-1$
     checkState(userAuthenticator, "userAuthenticator"); //$NON-NLS-1$
+
+    if (PropertiesContainerUtil.getProperty(this, PROP_MATCH_CACHE, MatchCache.class) == null)
+    {
+      properties.put(PROP_MATCH_CACHE, new DefaultMatchCache());
+    }
 
     if (authorizationStrategy == null)
     {

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.server.IRepositoryProtector.UserAuthenticator;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.MatchCache;
 
 import org.eclipse.net4j.util.StringTester;
 import org.eclipse.net4j.util.StringUtil;
@@ -34,6 +35,7 @@ import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectElement;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.properties.PropertiesContainerUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.util.EList;
@@ -59,6 +61,8 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
   private CDOPermission permission;
 
   private Matcher matcher;
+
+  private volatile MatchCache matchCache;
 
   public DefaultRevisionAuthorizer()
   {
@@ -92,7 +96,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
   public CDOPermission authorizeRevision(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, //
       CDORevisionProvider revisionProvider, CDORevision revision)
   {
-    if (matcher.matches(session, userInfo, securityContext, revisionProvider, revision))
+    if (matcher.matchesCached(session, userInfo, securityContext, revisionProvider, revision))
     {
       return permission;
     }
@@ -118,8 +122,64 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
   @Override
   protected void doDeactivate() throws Exception
   {
-    matcher.deactivate();
-    matcher.setRevisionAuthorizer(null);
+    try
+    {
+      matcher.deactivate();
+      matcher.setRevisionAuthorizer(null);
+    }
+    finally
+    {
+      matchCache = null;
+    }
+  }
+
+  private MatchCache getMatchCache()
+  {
+    MatchCache matchCache = this.matchCache;
+    if (matchCache == null)
+    {
+      matchCache = PropertiesContainerUtil.getProperty(getRepositoryProtector(), DefaultRepositoryProtector.PROP_MATCH_CACHE, MatchCache.class);
+      this.matchCache = matchCache;
+    }
+
+    return matchCache;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class MatchKey
+  {
+    private final Matcher matcher;
+
+    private final Object subject;
+
+    private final int hashCode;
+
+    public MatchKey(Matcher matcher, Object subject)
+    {
+      this.matcher = matcher;
+      this.subject = subject;
+      hashCode = 31 * System.identityHashCode(matcher) + System.identityHashCode(subject);
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return hashCode;
+    }
+
+    @Override
+    public boolean equals(Object object)
+    {
+      if (object instanceof MatchKey)
+      {
+        MatchKey other = (MatchKey)object;
+        return matcher == other.matcher && subject == other.subject;
+      }
+
+      return false;
+    }
   }
 
   /**
@@ -173,6 +233,61 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
     public abstract boolean matches(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, CDORevisionProvider revisionProvider,
         CDORevision revision);
 
+    /**
+     * Evaluates this matcher, using the owning repository protector's match cache when this matcher has a stable model subject.
+     * Matchers without a cacheable subject, or without an available cache, are evaluated normally.
+     *
+     * @param session
+     *          the session being authorized
+     * @param userInfo
+     *          the authenticated user
+     * @param securityContext
+     *          the branch point used for authorization
+     * @param revisionProvider
+     *          the provider for revisions needed by the matcher
+     * @param revision
+     *          the revision being authorized
+     * @return whether this matcher matches
+     */
+    public final boolean matchesCached(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, CDORevisionProvider revisionProvider,
+        CDORevision revision)
+    {
+      DefaultRevisionAuthorizer owner = revisionAuthorizer;
+      if (owner != null && revision != null)
+      {
+        Object subject = null;
+        try
+        {
+          subject = getCacheSubject(revision);
+        }
+        catch (RuntimeException ex)
+        {
+          // Ignore key-extraction failures and use the normal matching path.
+        }
+
+        if (subject != null)
+        {
+          MatchCache cache = owner.getMatchCache();
+          if (cache != null)
+          {
+            MatchKey key = new MatchKey(this, subject);
+
+            Boolean result = cache.get(key);
+            if (result != null)
+            {
+              return result.booleanValue();
+            }
+
+            boolean match = matches(session, userInfo, securityContext, revisionProvider, revision);
+            cache.put(key, match);
+            return match;
+          }
+        }
+      }
+
+      return matches(session, userInfo, securityContext, revisionProvider, revision);
+    }
+
     @Override
     public String toString()
     {
@@ -184,6 +299,11 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
       }
 
       return str;
+    }
+
+    protected Object getCacheSubject(CDORevision revision)
+    {
+      return null;
     }
 
     /**
@@ -247,7 +367,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
     @Override
     public boolean matches(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, CDORevisionProvider revisionProvider, CDORevision revision)
     {
-      return target.matches(session, userInfo, securityContext, revisionProvider, revision);
+      return target.matchesCached(session, userInfo, securityContext, revisionProvider, revision);
     }
 
     @Override
@@ -291,7 +411,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
    */
   public static abstract class OperationMatcher extends Matcher
   {
-    private final ConcurrentArray<Matcher> arguments = new ConcurrentArray<Matcher>()
+    private final ConcurrentArray<Matcher> arguments = new ConcurrentArray<>()
     {
       @Override
       protected Matcher[] newArray(int length)
@@ -384,7 +504,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
       {
         for (Matcher argument : getArguments())
         {
-          if (!argument.matches(session, userInfo, securityContext, revisionProvider, revision))
+          if (!argument.matchesCached(session, userInfo, securityContext, revisionProvider, revision))
           {
             return false;
           }
@@ -408,7 +528,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
       {
         for (Matcher argument : getArguments())
         {
-          if (!argument.matches(session, userInfo, securityContext, revisionProvider, revision))
+          if (!argument.matchesCached(session, userInfo, securityContext, revisionProvider, revision))
           {
             return false;
           }
@@ -432,7 +552,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
       {
         for (Matcher argument : getArguments())
         {
-          if (argument.matches(session, userInfo, securityContext, revisionProvider, revision))
+          if (argument.matchesCached(session, userInfo, securityContext, revisionProvider, revision))
           {
             return true;
           }
@@ -458,7 +578,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
 
         for (Matcher argument : getArguments())
         {
-          if (argument.matches(session, userInfo, securityContext, revisionProvider, revision))
+          if (argument.matchesCached(session, userInfo, securityContext, revisionProvider, revision))
           {
             if (++count > 1)
             {
@@ -891,6 +1011,12 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
         EList<EClass> superTypes = ((EClass)object).getESuperTypes();
         return superTypes.isEmpty() ? null : superTypes;
       }
+
+      @Override
+      protected Object getCacheSubject(CDORevision revision)
+      {
+        return revision.getEClass();
+      }
     }
 
     /**
@@ -942,6 +1068,13 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
       {
         EObject container = ((EPackage)object).eContainer();
         return container instanceof EPackage ? container : null;
+      }
+
+      @Override
+      protected Object getCacheSubject(CDORevision revision)
+      {
+        EClass eClass = revision.getEClass();
+        return eClass == null ? null : eClass.getEPackage();
       }
     }
 
@@ -1220,7 +1353,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
           return false;
         }
 
-        if (instanceOfMatcher != null && !instanceOfMatcher.matches(session, userInfo, securityContext, revisionProvider, revision))
+        if (instanceOfMatcher != null && !instanceOfMatcher.matchesCached(session, userInfo, securityContext, revisionProvider, revision))
         {
           return false;
         }
@@ -1245,6 +1378,12 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
       protected void doActivate() throws Exception
       {
         super.doActivate();
+
+        if (instanceOfMatcher != null)
+        {
+          instanceOfMatcher.setRevisionAuthorizer(getRevisionAuthorizer());
+        }
+
         LifecycleUtil.activate(instanceOfMatcher);
       }
 
@@ -1252,6 +1391,12 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
       protected void doDeactivate() throws Exception
       {
         LifecycleUtil.deactivate(instanceOfMatcher);
+
+        if (instanceOfMatcher != null)
+        {
+          instanceOfMatcher.setRevisionAuthorizer(null);
+        }
+
         super.doDeactivate();
       }
     }
@@ -1297,7 +1442,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
           return null;
         }
 
-        Iterator<String> iterator = new Iterator<String>()
+        Iterator<String> iterator = new Iterator<>()
         {
           @Override
           public boolean hasNext()

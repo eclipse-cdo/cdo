@@ -28,8 +28,8 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -85,9 +85,9 @@ public class EmbeddedRepository extends Repository.Default
   @SuppressWarnings("deprecation")
   protected void doBeforeActivate() throws Exception
   {
-    if (!OMPlatform.INSTANCE.isExtensionRegistryAvailable())
+    IManagedContainer container = getContainer();
+    if (!(container instanceof IPluginContainer))
     {
-      IManagedContainer container = getContainer();
       Net4jUtil.prepareContainer(container);
       JVMUtil.prepareContainer(container);
       CDONet4jServerUtil.prepareContainer(container);

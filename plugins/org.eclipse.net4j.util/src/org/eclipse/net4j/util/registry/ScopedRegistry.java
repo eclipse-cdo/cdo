@@ -84,6 +84,9 @@ public class ScopedRegistry<K, V> extends Registry<K, V>
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static final class ScopedKey<K>
   {
     private final Object scope;

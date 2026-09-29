@@ -64,6 +64,8 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
 
   private volatile MatchCache matchCache;
 
+  private volatile Object matchCacheGeneration = new Object();
+
   public DefaultRevisionAuthorizer()
   {
   }
@@ -115,6 +117,8 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
   @Override
   protected void doActivate() throws Exception
   {
+    matchCacheGeneration = new Object();
+
     matcher.setRevisionAuthorizer(this);
     matcher.activate();
   }
@@ -145,22 +149,30 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
     return matchCache;
   }
 
+  private Object getMatchCacheGeneration()
+  {
+    return matchCacheGeneration;
+  }
+
   /**
    * @author Eike Stepper
    */
   private static final class MatchKey
   {
+    private final Object generation;
+
     private final Matcher matcher;
 
     private final Object subject;
 
     private final int hashCode;
 
-    public MatchKey(Matcher matcher, Object subject)
+    MatchKey(Object generation, Matcher matcher, Object subject)
     {
+      this.generation = generation;
       this.matcher = matcher;
       this.subject = subject;
-      hashCode = 31 * System.identityHashCode(matcher) + System.identityHashCode(subject);
+      hashCode = 31 * (31 * System.identityHashCode(generation) + System.identityHashCode(matcher)) + System.identityHashCode(subject);
     }
 
     @Override
@@ -175,7 +187,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
       if (object instanceof MatchKey)
       {
         MatchKey other = (MatchKey)object;
-        return matcher == other.matcher && subject == other.subject;
+        return generation == other.generation && matcher == other.matcher && subject == other.subject;
       }
 
       return false;
@@ -253,34 +265,35 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
         CDORevision revision)
     {
       DefaultRevisionAuthorizer owner = revisionAuthorizer;
-      if (owner != null && revision != null)
+      if (owner != null)
       {
-        Object subject = null;
-        try
+        if (revision != null)
         {
-          subject = getCacheSubject(revision);
-        }
-        catch (RuntimeException ex)
-        {
-          // Ignore key-extraction failures and use the normal matching path.
-        }
-
-        if (subject != null)
-        {
-          MatchCache cache = owner.getMatchCache();
-          if (cache != null)
+          Object subject = null;
+          try
           {
-            MatchKey key = new MatchKey(this, subject);
+            subject = getCacheSubject(revision);
+          }
+          catch (RuntimeException ex)
+          {
+            // Ignore key-extraction failures and use the normal matching path.
+          }
 
-            Boolean result = cache.get(key);
-            if (result != null)
+          if (subject != null)
+          {
+            MatchCache cache = owner.getMatchCache();
+            if (cache != null)
             {
+              MatchKey key = new MatchKey(owner.getMatchCacheGeneration(), this, subject);
+              Boolean result = cache.get(key);
+              if (result == null)
+              {
+                result = matches(session, userInfo, securityContext, revisionProvider, revision);
+                cache.put(key, result.booleanValue());
+              }
+
               return result.booleanValue();
             }
-
-            boolean match = matches(session, userInfo, securityContext, revisionProvider, revision);
-            cache.put(key, match);
-            return match;
           }
         }
       }

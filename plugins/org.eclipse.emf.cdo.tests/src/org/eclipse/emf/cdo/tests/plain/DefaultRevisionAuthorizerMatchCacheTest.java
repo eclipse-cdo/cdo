@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer;
 import org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer.KeyValueMatcher.RevisionFeature;
 import org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer.Matcher;
 import org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer.OperationMatcher.And;
+import org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer.RefMatcher;
 import org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer.ValueMatcher.RevisionClass;
 import org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer.ValueMatcher.RevisionPackage;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -29,10 +30,13 @@ import org.eclipse.emf.cdo.spi.server.MatchCache;
 import org.eclipse.emf.cdo.tests.config.impl.PlainTest;
 
 import org.eclipse.net4j.util.StringTester;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.lang.reflect.Proxy;
@@ -160,19 +164,111 @@ public class DefaultRevisionAuthorizerMatchCacheTest extends PlainTest
     assertEquals(2, matcher.evaluations.get());
   }
 
-  public void testAuthorizersShareTheProtectorCache()
+  public void testCacheEntriesDoNotCrossAuthorizerActivations() throws Exception
   {
     EClass eClass = createEClass("ClassA"); //$NON-NLS-1$
     CountingRevisionClass matcher = new CountingRevisionClass();
     matcher.setTest(StringTester.EQ);
     matcher.setValue(EcoreUtil.getURI(eClass).toString());
-    DefaultRepositoryProtector protector = protector(new DefaultMatchCache());
-    DefaultRevisionAuthorizer first = authorizer(protector, matcher);
-    DefaultRevisionAuthorizer second = authorizer(protector, matcher);
+    CountingMatchCache cache = new CountingMatchCache();
+    DefaultRevisionAuthorizer authorizer = authorizer(protector(cache), matcher);
+
+    LifecycleUtil.activate(authorizer);
+    assertTrue(matches(authorizer, eClass));
+    assertEquals(1, matcher.evaluations.get());
+    LifecycleUtil.deactivate(authorizer);
+
+    matcher.setValue("no-such-class"); //$NON-NLS-1$
+    LifecycleUtil.activate(authorizer);
+    assertFalse(matches(authorizer, eClass));
+    assertEquals(2, matcher.evaluations.get());
+    assertEquals(2, cache.puts.get());
+    LifecycleUtil.deactivate(authorizer);
+  }
+
+  public void testAuthorizersShareTheProtectorCache()
+  {
+    EClass eClass = createEClass("ClassA"); //$NON-NLS-1$
+    CountingMatchCache cache = new CountingMatchCache();
+    DefaultRepositoryProtector protector = protector(cache);
+    CountingRevisionClass firstMatcher = revisionClassMatcher(eClass);
+    CountingRevisionClass secondMatcher = revisionClassMatcher(eClass);
+    DefaultRevisionAuthorizer first = authorizer(protector, firstMatcher);
+    DefaultRevisionAuthorizer second = authorizer(protector, secondMatcher);
 
     assertTrue(matches(first, eClass));
+    assertTrue(matches(first, eClass));
     assertTrue(matches(second, eClass));
-    assertEquals(1, matcher.evaluations.get());
+    assertTrue(matches(second, eClass));
+    assertEquals(1, firstMatcher.evaluations.get());
+    assertEquals(1, secondMatcher.evaluations.get());
+    assertEquals(2, cache.puts.get());
+    assertEquals(4, cache.gets.get());
+  }
+
+  public void testRefMatcherUsesReferencedMatcherCache() throws Exception
+  {
+    EClass eClass = createEClass("ClassA"); //$NON-NLS-1$
+    CountingMatchCache cache = new CountingMatchCache();
+    DefaultRepositoryProtector protector = protector(cache);
+    CountingRevisionClass targetMatcher = revisionClassMatcher(eClass);
+    targetMatcher.setID("target"); //$NON-NLS-1$
+    DefaultRevisionAuthorizer targetAuthorizer = authorizer(protector, targetMatcher);
+    RefMatcher refMatcher = new RefMatcher();
+    refMatcher.setRef("target"); //$NON-NLS-1$
+    DefaultRevisionAuthorizer refAuthorizer = authorizer(protector, refMatcher);
+    protector.addRevisionAuthorizer(targetAuthorizer);
+    protector.addRevisionAuthorizer(refAuthorizer);
+
+    try
+    {
+      LifecycleUtil.activate(targetAuthorizer);
+      LifecycleUtil.activate(refAuthorizer);
+
+      assertTrue(matches(refAuthorizer, eClass));
+      assertTrue(matches(refAuthorizer, eClass));
+      assertEquals(1, targetMatcher.evaluations.get());
+      assertEquals(1, cache.puts.get());
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(refAuthorizer);
+      LifecycleUtil.deactivate(targetAuthorizer);
+    }
+  }
+
+  public void testRevisionFeatureCachesNestedInstanceOfMatcher() throws Exception
+  {
+    EPackage ePackage = EcoreFactory.eINSTANCE.createEPackage();
+    ePackage.setNsURI("urn:test"); //$NON-NLS-1$
+    EClass eClass = createEClass("ClassA", ePackage); //$NON-NLS-1$
+    EAttribute feature = EcoreFactory.eINSTANCE.createEAttribute();
+    feature.setName("name"); //$NON-NLS-1$
+    feature.setEType(EcorePackage.Literals.ESTRING);
+    eClass.getEStructuralFeatures().add(feature);
+
+    CountingRevisionFeature matcher = new CountingRevisionFeature();
+    matcher.setKey("name"); //$NON-NLS-1$
+    matcher.setTest(StringTester.EQ);
+    matcher.setValue("expected"); //$NON-NLS-1$
+    matcher.setInstanceOf(EcoreUtil.getURI(eClass).toString());
+    CountingMatchCache cache = new CountingMatchCache();
+    DefaultRevisionAuthorizer authorizer = authorizer(protector(cache), matcher);
+    CDORevision revision = revisionWithValue(eClass, feature, "expected"); //$NON-NLS-1$
+
+    LifecycleUtil.activate(authorizer);
+    try
+    {
+      assertTrue(authorizer.authorizeRevision(null, (UserInfo)null, null, null, revision) != null);
+      assertTrue(authorizer.authorizeRevision(null, (UserInfo)null, null, null, revision) != null);
+      assertEquals(2, matcher.evaluations.get());
+      assertEquals(1, cache.puts.get());
+      assertEquals(2, cache.gets.get());
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(authorizer);
+    }
   }
 
   public void testConfiguredCacheIsUsed()
@@ -249,6 +345,14 @@ public class DefaultRevisionAuthorizerMatchCacheTest extends PlainTest
     return authorizer;
   }
 
+  private static CountingRevisionClass revisionClassMatcher(EClass eClass)
+  {
+    CountingRevisionClass matcher = new CountingRevisionClass();
+    matcher.setTest(StringTester.EQ);
+    matcher.setValue(EcoreUtil.getURI(eClass).toString());
+    return matcher;
+  }
+
   private static DefaultRepositoryProtector protector(MatchCache matchCache)
   {
     DefaultRepositoryProtector protector = new DefaultRepositoryProtector();
@@ -259,6 +363,13 @@ public class DefaultRevisionAuthorizerMatchCacheTest extends PlainTest
   private static CDORevision revision(EClass eClass)
   {
     return new CDORevisionImpl(eClass);
+  }
+
+  private static CDORevision revisionWithValue(EClass eClass, EAttribute feature, Object value)
+  {
+    CDORevisionImpl revision = new CDORevisionImpl(eClass);
+    revision.setValue(feature, value);
+    return revision;
   }
 
   private static EClass createEClass(String name)

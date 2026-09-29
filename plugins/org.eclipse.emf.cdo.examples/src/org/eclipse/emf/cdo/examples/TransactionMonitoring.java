@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -41,11 +40,7 @@ public class TransactionMonitoring
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
 
-    IManagedContainer container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container);
-    TCPUtil.prepareContainer(container);
-    CDONet4jUtil.prepareContainer(container);
-    container.activate();
+    IManagedContainer container = ContainerUtil.createInitializedContainer();
 
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(TCPUtil.getConnector(container, "localhost"));

@@ -12,7 +12,6 @@
  */
 package org.eclipse.net4j.tests.bugzilla;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -54,11 +53,8 @@ public class Bugzilla_262875_Test extends AbstractOMTest
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
-    container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container);
-    JVMUtil.prepareContainer(container);
+    container = ContainerUtil.createInitializedContainer();
     container.registerFactory(new TestProtocol.Factory());
-    container.activate();
 
     JVMUtil.getAcceptor(container, "default");
     connector = JVMUtil.getConnector(container, "default");

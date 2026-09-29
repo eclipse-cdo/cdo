@@ -18,10 +18,8 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.mem.IMEMStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -115,11 +113,7 @@ public class Session extends Lifecycle
 
   private CDOSession createSession()
   {
-    clientContainer = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(clientContainer);
-    JVMUtil.prepareContainer(clientContainer);
-    CDONet4jUtil.prepareContainer(clientContainer);
-    LifecycleUtil.activate(clientContainer);
+    clientContainer = ContainerUtil.createInitializedContainer();
 
     // Create configuration
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
@@ -139,11 +133,7 @@ public class Session extends Lifecycle
    */
   protected void createRepository(String repositoryName)
   {
-    serverContainer = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(serverContainer); // Register Net4j factories
-    JVMUtil.prepareContainer(serverContainer);
-    CDONet4jServerUtil.prepareContainer(serverContainer);
-    LifecycleUtil.activate(serverContainer);
+    serverContainer = ContainerUtil.createInitializedContainer();
 
     acceptor = JVMUtil.getAcceptor(serverContainer, CONNECTOR_NAME);
     store = MEMStoreUtil.createMEMStore();

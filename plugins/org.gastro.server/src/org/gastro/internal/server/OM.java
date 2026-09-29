@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.db.IDBAdapter;
@@ -94,7 +93,6 @@ public abstract class OM
 
       repository = CDOServerUtil.createRepository("gastro", store, props);
       CDOServerUtil.addRepository(IManagedContainer.INSTANCE, repository);
-      CDONet4jServerUtil.prepareContainer(IManagedContainer.INSTANCE);
 
       String description = "0.0.0.0:" + serverPort;
       acceptor = (IAcceptor)IManagedContainer.INSTANCE.getElement("org.eclipse.net4j.acceptors", "tcp", description);

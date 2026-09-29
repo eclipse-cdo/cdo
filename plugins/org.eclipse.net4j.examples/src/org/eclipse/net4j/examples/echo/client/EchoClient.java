@@ -13,7 +13,6 @@ package org.eclipse.net4j.examples.echo.client;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -35,10 +34,7 @@ public class EchoClient
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
 
     // Use this container to create and wire the components
-    IManagedContainer container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container);
-    TCPUtil.prepareContainer(container);
-    container.activate();
+    IManagedContainer container = ContainerUtil.createInitializedContainer();
 
     try
     {

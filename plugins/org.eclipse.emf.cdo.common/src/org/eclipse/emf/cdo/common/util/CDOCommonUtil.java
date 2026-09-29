@@ -110,7 +110,11 @@ public final class CDOCommonUtil
 
   /**
    * @since 4.26
+   * @deprecated Containers created via {@link org.eclipse.net4j.util.container.ContainerUtil#createInitializedContainer()} or
+   *             {@link org.eclipse.net4j.util.om.OMPlatform#createManagedContainer()} are initialized automatically. Advanced callers
+   *             configuring a raw container can use {@link org.eclipse.net4j.util.om.OMBundle#prepareContainer(IManagedContainer)}.
    */
+  @Deprecated
   public static void prepareContainer(IManagedContainer container)
   {
     OM.BUNDLE.prepareContainer(container);

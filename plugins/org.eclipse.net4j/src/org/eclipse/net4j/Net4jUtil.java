@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.buffer.BufferFactory;
@@ -60,9 +61,15 @@ public final class Net4jUtil
   {
   }
 
+  /**
+   * @deprecated Containers created via {@link org.eclipse.net4j.util.container.ContainerUtil#createInitializedContainer()} or
+   *             {@link org.eclipse.net4j.util.om.OMPlatform#createManagedContainer()} are initialized automatically. Advanced callers
+   *             configuring a raw container can use {@link org.eclipse.net4j.util.om.OMBundle#prepareContainer(IManagedContainer)}.
+   */
+  @Deprecated
   public static void prepareContainer(IManagedContainer container)
   {
-    ContainerUtil.prepareContainer(container);
+    OMPlatform.INSTANCE.bundle("org.eclipse.net4j.util", ContainerUtil.class).prepareContainer(container); //$NON-NLS-1$
     OM.BUNDLE.prepareContainer(container);
   }
 

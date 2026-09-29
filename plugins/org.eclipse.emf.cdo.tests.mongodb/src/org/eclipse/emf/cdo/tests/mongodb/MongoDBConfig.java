@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.server.mongodb.CDOMongoDBUtil;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.container.IManagedContainer;
 
 import com.mongodb.DB;
 import com.mongodb.Mongo;
@@ -46,7 +45,6 @@ public class MongoDBConfig extends RepositoryConfig
   @Override
   public void setUp() throws Exception
   {
-    CDOMongoDBUtil.prepareContainer(IManagedContainer.INSTANCE);
     super.setUp();
   }
 

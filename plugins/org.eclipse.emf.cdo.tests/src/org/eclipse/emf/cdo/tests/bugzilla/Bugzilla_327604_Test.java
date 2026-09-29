@@ -39,7 +39,6 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceConfiguration;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
-import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -115,7 +114,6 @@ public class Bugzilla_327604_Test extends AbstractCDOTest
     assertEquals(SALES_ORDERS, salesOrders.size());
     assertEquals(ORDER_DETAILS, orderDetails.size());
 
-    JVMUtil.prepareContainer(getClientContainer());
     localStore = createLocalStore();
   }
 

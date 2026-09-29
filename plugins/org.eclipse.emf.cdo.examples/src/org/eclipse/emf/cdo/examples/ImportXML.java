@@ -20,12 +20,10 @@ import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
@@ -52,12 +50,7 @@ public class ImportXML
     OMPlatform.INSTANCE.setDebugging(true);
 
     // Prepare the standalone infra structure (not needed when running inside Eclipse)
-    IManagedContainer container = ContainerUtil.createContainer(); // Create a wiring container
-    Net4jUtil.prepareContainer(container); // Prepare the Net4j kernel
-    JVMUtil.prepareContainer(container); // Prepare the JVM transport
-    CDONet4jServerUtil.prepareContainer(container); // Prepare the CDO server
-    CDONet4jUtil.prepareContainer(container); // Prepare the CDO client
-    container.activate();
+    IManagedContainer container = ContainerUtil.createInitializedContainer("xml-import"); //$NON-NLS-1$
 
     // Start the transport and create a repository
     JVMUtil.getAcceptor(container, "default"); // Start the JVM transport

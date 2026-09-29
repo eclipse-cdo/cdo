@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -29,7 +28,6 @@ import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -282,11 +280,5 @@ public class UnitManagerMain
   static
   {
     Model1Package.eINSTANCE.getClass();
-
-    Net4jUtil.prepareContainer(IManagedContainer.INSTANCE);
-    TCPUtil.prepareContainer(IManagedContainer.INSTANCE);
-    CDONet4jServerUtil.prepareContainer(IManagedContainer.INSTANCE);
-    CDONet4jUtil.prepareContainer(IManagedContainer.INSTANCE);
-    IManagedContainer.INSTANCE.activate();
   }
 }

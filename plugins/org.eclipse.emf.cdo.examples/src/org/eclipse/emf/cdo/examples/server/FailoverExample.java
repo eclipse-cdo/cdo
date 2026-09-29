@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.ISynchronizableRepository;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.server.net4j.FailoverAgent;
 import org.eclipse.emf.cdo.server.net4j.FailoverMonitor;
 import org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol;
@@ -46,7 +45,6 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
@@ -96,13 +94,7 @@ public abstract class FailoverExample
 
   public static IManagedContainer createContainer()
   {
-    IManagedContainer container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container); // Register Net4j factories
-    TCPUtil.prepareContainer(container); // Register TCP factories
-    CDONet4jUtil.prepareContainer(container); // Register CDO client factories
-    CDONet4jServerUtil.prepareContainer(container); // Register CDO server factories
-    container.activate();
-    return container;
+    return ContainerUtil.createInitializedContainer();
   }
 
   public void init()

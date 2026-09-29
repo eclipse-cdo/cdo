@@ -16,13 +16,11 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
-import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -45,10 +43,6 @@ public class Server
     OMPlatform.INSTANCE.setDebugging(true);
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-
-    Net4jUtil.prepareContainer(IManagedContainer.INSTANCE); // Prepare the Net4j kernel
-    TCPUtil.prepareContainer(IManagedContainer.INSTANCE); // Prepare the TCP support
-    CDONet4jServerUtil.prepareContainer(IManagedContainer.INSTANCE); // Prepare the CDO server
 
     String name = "demo";
     IStore store = createStore(name);

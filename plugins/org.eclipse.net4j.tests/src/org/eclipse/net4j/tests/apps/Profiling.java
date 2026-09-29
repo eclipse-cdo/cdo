@@ -12,7 +12,6 @@
  */
 package org.eclipse.net4j.tests.apps;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
@@ -29,12 +28,8 @@ public class Profiling extends AbstractConfigTest
 {
   public static void main(String[] args) throws Exception
   {
-    IManagedContainer container = ContainerUtil.createContainer();
-    ContainerUtil.prepareContainer(container);
-    Net4jUtil.prepareContainer(container);
-    TCPUtil.prepareContainer(container);
+    IManagedContainer container = ContainerUtil.createInitializedContainer();
     container.registerFactory(new TestSignalProtocol.Factory());
-    container.activate();
 
     TCPUtil.getAcceptor(container, "0.0.0.0:2036");
 

@@ -11,7 +11,9 @@
  */
 package org.eclipse.net4j.util.om;
 
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerInitializer;
 import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
@@ -90,6 +92,19 @@ public interface OMBundle extends ClassResolver
   public Class<?> loadClass(String pluginID, String className) throws ClassNotFoundException;
 
   /**
+   * Registers this bundle's declarative managed-container contributions in the supplied container. This is the
+   * low-level preparation primitive used primarily by {@link IManagedContainerInitializer} implementations. It may
+   * also be used when intentionally configuring a raw container, for example one created by
+   * {@link ContainerUtil#createContainer()}. Applications using {@link ContainerUtil#createInitializedContainer()} or
+   * {@link OMPlatform#createManagedContainer()} generally do not need to prepare individual bundles themselves.
+   * Preparation is idempotent for a given bundle/container pair. This method does not activate the container.
+   *
+   * @param container
+   *          the container to receive this bundle's declarative contributions.
+   * @see IManagedContainerInitializer
+   * @see ContainerUtil#createContainer()
+   * @see ContainerUtil#createInitializedContainer()
+   * @see OMPlatform#createManagedContainer()
    * @since 3.23
    */
   public void prepareContainer(IManagedContainer container);

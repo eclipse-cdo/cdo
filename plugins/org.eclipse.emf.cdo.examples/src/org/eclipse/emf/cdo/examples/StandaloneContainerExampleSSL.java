@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
@@ -46,11 +45,7 @@ public class StandaloneContainerExampleSSL
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
 
     // Prepare container
-    IManagedContainer container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container); // Register Net4j factories
-    SSLUtil.prepareContainer(container);
-    CDONet4jUtil.prepareContainer(container); // Register CDO factories
-    container.activate();
+    IManagedContainer container = ContainerUtil.createInitializedContainer();
 
     // Create connector
     IConnector connector = SSLUtil.getConnector(container, "localhost:2036");

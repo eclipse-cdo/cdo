@@ -16,6 +16,7 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.container.PluginContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.properties.PropertiesContainerUtil;
 
@@ -81,14 +82,6 @@ public final class ContainerUtil
   }
 
   /**
-   * @since 2.0
-   */
-  public static void prepareContainer(IManagedContainer container)
-  {
-    OM.BUNDLE.prepareContainer(container);
-  }
-
-  /**
    * @since 3.15
    */
   public static IManagedContainer getContainer(Object object)
@@ -106,9 +99,45 @@ public final class ContainerUtil
     return EMPTY;
   }
 
+  /**
+   * Creates a new plain {@link ManagedContainer}. The container is platform-neutral, initially empty except for
+   * contributions explicitly registered or prepared by the caller, and is not automatically initialized or
+   * activated. Applications that need a normally initialized, ready-to-use Net4j/CDO container should use
+   * {@link #createInitializedContainer()} or {@link org.eclipse.net4j.util.om.OMPlatform#createManagedContainer()} instead.
+   *
+   * @return a new inactive, uninitialized managed container.
+   */
   public static IManagedContainer createContainer()
   {
     return new ManagedContainer();
+  }
+
+  /**
+   * Creates and returns a new independent, platform-aware managed container initialized with available platform and
+   * declarative contributions and activated for immediate use. This delegates to
+   * {@link org.eclipse.net4j.util.om.OMPlatform#createManagedContainer()}.
+   *
+   * @return a new active managed container, independent of {@link IManagedContainer#INSTANCE}.
+   * @since 3.31
+   */
+  public static IManagedContainer createInitializedContainer()
+  {
+    return OMPlatform.INSTANCE.createManagedContainer();
+  }
+
+  /**
+   * Creates and returns a new independent, platform-aware managed container with the given name, initialized with
+   * available platform and declarative contributions and activated for immediate use. This delegates to
+   * {@link OMPlatform#createManagedContainer(String)}.
+   *
+   * @param name
+   *          the container name, or {@code null} for the platform default name.
+   * @return a new active managed container, independent of {@link IManagedContainer#INSTANCE}.
+   * @since 3.31
+   */
+  public static IManagedContainer createInitializedContainer(String name)
+  {
+    return OMPlatform.INSTANCE.createManagedContainer(name);
   }
 
   public static boolean isEmpty(Object container)
@@ -132,11 +161,24 @@ public final class ContainerUtil
   }
 
   /**
+   * @since 2.0
+   * @deprecated Containers created by {@link #createInitializedContainer()} or
+   *             {@link org.eclipse.net4j.util.om.OMPlatform#createManagedContainer()} are initialized automatically. Use
+   *             {@link OMBundle#prepareContainer(IManagedContainer)} only when intentionally configuring a raw
+   *             container.
+   */
+  @Deprecated
+  public static void prepareContainer(IManagedContainer container)
+  {
+    OM.BUNDLE.prepareContainer(container);
+  }
+
+  /**
    * Creates a new managed container that discovers factory and element processor
    * registrations in plug-in extensions.
    *
    * @since 3.3
-   * @deprecated As of 3.31 use {@link OMPlatform#createManagedContainer()}.
+   * @deprecated As of 3.31 use {@link org.eclipse.net4j.util.om.OMPlatform#createManagedContainer()}.
    */
   @Deprecated
   public static IManagedContainer createPluginContainer()

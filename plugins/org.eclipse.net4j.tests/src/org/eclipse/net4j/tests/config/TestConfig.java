@@ -30,11 +30,9 @@ import org.eclipse.net4j.internal.ws.WSConnectorFactory;
 import org.eclipse.net4j.internal.wss.WSSAcceptorFactory;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
-import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
-import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -68,8 +66,6 @@ import java.net.URL;
 public abstract class TestConfig
 {
   public abstract boolean needsSeparateContainers();
-
-  public abstract void prepareContainer(IManagedContainer container);
 
   public IAcceptor getAcceptor(IManagedContainer container)
   {
@@ -129,12 +125,6 @@ public abstract class TestConfig
         }
 
         @Override
-        public void prepareContainer(IManagedContainer container)
-        {
-          JVMUtil.prepareContainer(container);
-        }
-
-        @Override
         public IAcceptor getAcceptor(IManagedContainer container, boolean activate)
         {
           return (IJVMAcceptor)container.getElement(JVMAcceptorFactory.PRODUCT_GROUP, JVMAcceptorFactory.TYPE, NAME, activate);
@@ -171,12 +161,6 @@ public abstract class TestConfig
         public boolean needsSeparateContainers()
         {
           return false;
-        }
-
-        @Override
-        public void prepareContainer(IManagedContainer container)
-        {
-          TCPUtil.prepareContainer(container);
         }
 
         @Override
@@ -234,12 +218,6 @@ public abstract class TestConfig
         }
 
         @Override
-        public void prepareContainer(IManagedContainer container)
-        {
-          SSLUtil.prepareContainer(container);
-        }
-
-        @Override
         public IAcceptor getAcceptor(IManagedContainer container, boolean activate)
         {
           return (ITCPAcceptor)container.getElement(TCPAcceptorFactory.PRODUCT_GROUP, SSLAcceptorFactory.TYPE, null, activate);
@@ -288,12 +266,6 @@ public abstract class TestConfig
         public boolean needsSeparateContainers()
         {
           return false;
-        }
-
-        @Override
-        public void prepareContainer(IManagedContainer container)
-        {
-          WSUtil.prepareContainer(container);
         }
 
         @Override
@@ -378,12 +350,6 @@ public abstract class TestConfig
         public boolean needsSeparateContainers()
         {
           return false;
-        }
-
-        @Override
-        public void prepareContainer(IManagedContainer container)
-        {
-          WSSUtil.prepareContainer(container);
         }
 
         @Override

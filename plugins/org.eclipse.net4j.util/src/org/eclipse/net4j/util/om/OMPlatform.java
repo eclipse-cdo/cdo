@@ -12,13 +12,16 @@
 package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerInitializer;
 import org.eclipse.net4j.util.om.log.OMLogFilter;
 import org.eclipse.net4j.util.om.log.OMLogHandler;
 import org.eclipse.net4j.util.om.trace.OMTraceHandler;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.ServiceLoader;
 
 /**
  * Represents the platform that {@link OMBundle bundles} are deployed into, whether OSGi {@link #isOSGiRunning() is
@@ -123,15 +126,30 @@ public interface OMPlatform
   public String[] getCommandLineArgs() throws IllegalStateException;
 
   /**
-   * Creates a named managed container that is appropriate for this platform.
+   * Creates a new independent managed container appropriate for the current runtime platform, initializes it with
+   * the platform and declarative contributions available to it, activates it, and returns it ready for use. In OSGi
+   * this is a {@code PluginContainer}; outside OSGi it is a {@code StandaloneContainer}, which discovers
+   * {@link IManagedContainerInitializer} providers through {@link ServiceLoader} during activation. Each
+   * invocation creates a new container; it is distinct from the canonical global {@link IManagedContainer#INSTANCE}.
+   * See also {@link ContainerUtil#createInitializedContainer()} and the raw
+   * {@link ContainerUtil#createContainer()}.
    *
+   * @param name
+   *          the name to assign to the container, or {@code null} to use the platform default name.
+   * @return a newly created active container, independent of {@link IManagedContainer#INSTANCE}.
    * @since 3.31
    */
   public IManagedContainer createManagedContainer(String name);
 
   /**
-   * Creates a  managed container that is appropriate for this platform.
+   * Creates a new independent managed container appropriate for the current runtime platform, initializes it with
+   * available platform and declarative contributions, activates it, and returns it ready for use. In OSGi this is a
+   * {@code PluginContainer}; outside OSGi it is a {@code StandaloneContainer} whose activation discovers
+   * {@link IManagedContainerInitializer} providers through {@link ServiceLoader}. Each invocation returns
+   * a new container distinct from the canonical global {@link IManagedContainer#INSTANCE}. See also
+   * {@link ContainerUtil#createInitializedContainer()} and the raw {@link ContainerUtil#createContainer()}.
    *
+   * @return a newly created active container, independent of {@link IManagedContainer#INSTANCE}.
    * @since 3.31
    */
   public default IManagedContainer createManagedContainer()

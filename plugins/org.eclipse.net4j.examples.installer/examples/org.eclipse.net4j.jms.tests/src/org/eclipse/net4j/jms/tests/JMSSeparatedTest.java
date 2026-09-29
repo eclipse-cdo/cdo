@@ -11,7 +11,6 @@
  */
 package org.eclipse.net4j.jms.tests;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter;
@@ -25,7 +24,7 @@ import org.eclipse.net4j.jms.server.jdbc.JDBCUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.ManagedContainer;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
@@ -96,9 +95,7 @@ public class JMSSeparatedTest
     Server.INSTANCE.setStore(store);
     Server.INSTANCE.activate();
 
-    IManagedContainer serverContainer = new ManagedContainer();
-    Net4jUtil.prepareContainer(serverContainer);
-    TCPUtil.prepareContainer(serverContainer);
+    IManagedContainer serverContainer = ContainerUtil.createInitializedContainer();
     JMSServerUtil.prepareContainer(serverContainer);
 
     TCPUtil.getAcceptor(serverContainer, null);
@@ -106,9 +103,7 @@ public class JMSSeparatedTest
 
   private static Context initClient() throws NamingException
   {
-    IManagedContainer clientContainer = new ManagedContainer();
-    Net4jUtil.prepareContainer(clientContainer);
-    TCPUtil.prepareContainer(clientContainer);
+    IManagedContainer clientContainer = ContainerUtil.createInitializedContainer();
 
     IConnector connector = TCPUtil.getConnector(clientContainer, "localhost"); //$NON-NLS-1$
 

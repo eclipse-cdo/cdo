@@ -25,7 +25,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CountedTimeProvider;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
@@ -52,14 +51,11 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.admin.CDOAdminServerUtil;
 import org.eclipse.emf.cdo.server.internal.embedded.ServerBranchLoader;
 import org.eclipse.emf.cdo.server.internal.embedded.ServerRevisionLoader;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
-import org.eclipse.emf.cdo.server.ocl.OCLQueryHandler;
+import org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
-import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -85,7 +81,6 @@ import org.eclipse.emf.cdo.tests.util.TestSessionManager;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -375,7 +370,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     if (serverContainer == null)
     {
       serverContainer = createServerContainer();
-      LifecycleUtil.activate(serverContainer);
     }
 
     return serverContainer;
@@ -385,13 +379,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   {
     ReflectUtil.setValue(ReflectUtil.getField(Repository.class, "disableFeatureMapChecks"), null, true);
 
-    IManagedContainer container = ContainerUtil.createContainer();
-    container.setName("server");
-
-    Net4jUtil.prepareContainer(container);
-    CDOCommonUtil.prepareContainer(container);
-    CDONet4jServerUtil.prepareContainer(container);
-    SecurityManagerUtil.prepareContainer(container);
+    IManagedContainer container = ContainerUtil.createInitializedContainer("server"); //$NON-NLS-1$
 
     container.registerFactory(new ExecutorServiceFactory()
     {
@@ -626,16 +614,14 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     IManagedContainer serverContainer = getCurrentTest().getServerContainer();
-    OCLQueryHandler.prepareContainer(serverContainer);
-    CDOAdminServerUtil.prepareContainer(serverContainer);
-    CDONet4jServerUtil.prepareContainer(serverContainer, new IRepositoryProvider()
+    serverContainer.registerFactory(new CDOServerProtocolFactory(new IRepositoryProvider()
     {
       @Override
       public IRepository getRepository(String name)
       {
         return repositories.get(name);
       }
-    });
+    }));
 
     if (enableServerBrowser || Boolean.TRUE.equals(getTestProperty(PROP_TEST_ENABLE_SERVER_BROWSER)) || getCurrentTest().hasDefaultScenario())
     {
@@ -957,8 +943,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     InternalSecurityManager securityManager = (InternalSecurityManager)getTestSecurityManager();
     if (securityManager != null)
     {
-      JVMUtil.prepareContainer(getCurrentTest().getServerContainer()); // Needed in SecurityManager.init()
-
       securityManager.setRepository(repository);
       LifecycleUtil.activate(securityManager);
     }
@@ -1161,7 +1145,6 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     @Override
     public void setUp() throws Exception
     {
-      JVMUtil.prepareContainer(getCurrentTest().getServerContainer());
       super.setUp();
 
       // Start default repository

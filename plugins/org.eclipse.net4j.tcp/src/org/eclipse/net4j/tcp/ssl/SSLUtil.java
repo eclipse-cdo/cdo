@@ -18,8 +18,8 @@ import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPConnector;
-import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import javax.net.ssl.SSLEngine;
 
@@ -164,9 +164,15 @@ public class SSLUtil
     SSLUtil.defaultHandShakeWaitTime = defaultHandShakeWaitTime;
   }
 
+  /**
+   * @deprecated Containers created via {@link org.eclipse.net4j.util.container.ContainerUtil#createInitializedContainer()} or
+   *             {@link org.eclipse.net4j.util.om.OMPlatform#createManagedContainer()} are initialized automatically. Advanced callers
+   *             configuring a raw container can use {@link org.eclipse.net4j.util.om.OMBundle#prepareContainer(IManagedContainer)}.
+   */
+  @Deprecated
   public static void prepareContainer(IManagedContainer container)
   {
-    TCPUtil.prepareContainer(container);
+    OMPlatform.INSTANCE.bundle("org.eclipse.net4j.tcp", SSLUtil.class).prepareContainer(container); //$NON-NLS-1$
   }
 
   public static ITCPAcceptor getAcceptor(IManagedContainer container, String description)

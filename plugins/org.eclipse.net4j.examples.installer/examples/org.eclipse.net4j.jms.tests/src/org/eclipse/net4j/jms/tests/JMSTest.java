@@ -11,7 +11,6 @@
  */
 package org.eclipse.net4j.jms.tests;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter;
@@ -25,7 +24,7 @@ import org.eclipse.net4j.jms.server.jdbc.JDBCUtil;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.ManagedContainer;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.log.PrintLogHandler;
@@ -89,9 +88,7 @@ public class JMSTest
     Server.INSTANCE.setStore(store);
     Server.INSTANCE.activate();
 
-    IManagedContainer container = new ManagedContainer();
-    Net4jUtil.prepareContainer(container);
-    TCPUtil.prepareContainer(container);
+    IManagedContainer container = ContainerUtil.createInitializedContainer();
     JMSServerUtil.prepareContainer(container);
 
     TCPUtil.getAcceptor(container, null);

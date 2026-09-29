@@ -15,10 +15,8 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
-import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
-import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jViewProvider;
 import org.eclipse.emf.cdo.server.internal.embedded.ClientBranchManager;
 import org.eclipse.emf.cdo.server.internal.embedded.ClientRevisionManager;
@@ -33,7 +31,6 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -148,7 +145,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     if (clientContainer == null)
     {
       clientContainer = createClientContainer();
-      LifecycleUtil.activate(clientContainer);
     }
 
     return clientContainer;
@@ -156,11 +152,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   protected IManagedContainer createClientContainer()
   {
-    IManagedContainer container = ContainerUtil.createContainer();
-    container.setName("client");
-
-    Net4jUtil.prepareContainer(container);
-    CDOCommonUtil.prepareContainer(container);
+    IManagedContainer container = ContainerUtil.createInitializedContainer("client"); //$NON-NLS-1$
 
     container.registerFactory(new ExecutorServiceFactory()
     {
@@ -467,9 +459,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     {
       super.setUp();
 
-      IManagedContainer clientContainer = getClientContainer();
-      CDONet4jUtil.prepareContainer(clientContainer);
-
+      getClientContainer();
       viewProvider = createViewProvider();
       if (viewProvider != null)
       {
@@ -553,7 +543,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public void setUp() throws Exception
       {
         super.setUp();
-        JVMUtil.prepareContainer(getClientContainer());
       }
 
       @Override
@@ -669,12 +658,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public void setUp() throws Exception
       {
         super.setUp();
-        TCPUtil.prepareContainer(getClientContainer());
-
-        if (!usesServerContainer())
-        {
-          TCPUtil.prepareContainer(getServerContainer());
-        }
       }
 
       @Override
@@ -738,12 +721,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public void setUp() throws Exception
       {
         super.setUp();
-        SSLUtil.prepareContainer(getClientContainer());
-
-        if (!usesServerContainer())
-        {
-          SSLUtil.prepareContainer(getServerContainer());
-        }
       }
 
       @Override
@@ -820,13 +797,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public void setUp() throws Exception
       {
         super.setUp();
-        WSUtil.prepareContainer(getClientContainer());
-
-        if (!usesServerContainer())
-        {
-          WSUtil.prepareContainer(getServerContainer());
-        }
-
         if (server == null)
         {
           System.out.println("Starting Jetty...");
@@ -936,13 +906,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public void setUp() throws Exception
       {
         super.setUp();
-        WSSUtil.prepareContainer(getClientContainer());
-
-        if (!usesServerContainer())
-        {
-          WSSUtil.prepareContainer(getServerContainer());
-        }
-
         if (server == null)
         {
           System.out.println("Starting Jetty...");

@@ -56,7 +56,6 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceConfiguration;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil;
 
-import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -139,7 +138,6 @@ public class WorkspaceTest extends AbstractCDOTest
     assertEquals(SALES_ORDERS, salesOrders.size());
     assertEquals(ORDER_DETAILS, orderDetails.size());
 
-    JVMUtil.prepareContainer(getClientContainer());
     localStore = createLocalStore();
   }
 

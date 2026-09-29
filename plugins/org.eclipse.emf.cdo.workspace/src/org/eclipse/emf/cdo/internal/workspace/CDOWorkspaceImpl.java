@@ -44,7 +44,6 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
@@ -78,7 +77,6 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.workspace.CDOWorkspace;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
@@ -1234,12 +1232,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
 
   protected IManagedContainer createContainer(IStore store)
   {
-    IManagedContainer container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container);
-    JVMUtil.prepareContainer(container);
-    CDONet4jServerUtil.prepareContainer(container);
-    container.activate();
-    return container;
+    return ContainerUtil.createInitializedContainer();
   }
 
   protected String getLocalAcceptorName()

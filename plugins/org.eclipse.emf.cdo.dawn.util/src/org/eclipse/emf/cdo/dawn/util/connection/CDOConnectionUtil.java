@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.dawn.util.connection;
 
 import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
 import org.eclipse.emf.cdo.dawn.util.exceptions.DawnInvalidIdException;
-import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -23,9 +22,7 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -56,16 +53,6 @@ public class CDOConnectionUtil
   private Map<String, CDOTransaction> transactions;
 
   private IConnector connector;
-
-  static
-  {
-    if (!OMPlatform.INSTANCE.isOSGiRunning())
-    {
-      Net4jUtil.prepareContainer(IManagedContainer.INSTANCE);
-      TCPUtil.prepareContainer(IManagedContainer.INSTANCE);
-      CDONet4jUtil.prepareContainer(IManagedContainer.INSTANCE);
-    }
-  }
 
   public CDOConnectionUtil()
   {

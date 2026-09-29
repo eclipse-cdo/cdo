@@ -26,6 +26,7 @@ import org.eclipse.net4j.signal.confirmation.ConfirmationRequest;
 import org.eclipse.net4j.signal.security.AuthenticationRequest;
 import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerFactory;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -158,52 +159,96 @@ public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> imple
   /**
    * @author Eike Stepper
    */
-  public static class Factory extends ServerProtocolFactory implements IManagedContainerProvider
+  public static class Factory extends ServerProtocolFactory implements IManagedContainerFactory, IManagedContainerProvider
   {
     public static final String TYPE = CDOAdminProtocolConstants.PROTOCOL_NAME;
 
-    private IManagedContainer container;
+    private IManagedContainer managedContainer = IManagedContainer.INSTANCE;
 
-    public Factory(IManagedContainer container)
+    private final IManagedContainer repositoriesContainer;
+
+    /**
+     * Creates a factory that initially falls back to the canonical global container. Registration in a managed
+     * container replaces this fallback with the actual owning container.
+     */
+    public Factory()
     {
-      super(TYPE);
-      this.container = container;
+      this(null);
     }
 
+    /**
+     * Creates a factory that uses an explicit repositories container, if supplied. The container in which the factory
+     * is registered is tracked separately and is used as the repositories container when this argument is {@code null}.
+     *
+     * @param repositoriesContainer
+     *          the explicit container from which repositories and related dependencies are obtained, or {@code null}
+     *          to use the owning managed container
+     */
+    public Factory(IManagedContainer repositoriesContainer)
+    {
+      super(TYPE);
+      this.repositoriesContainer = repositoriesContainer;
+    }
+
+    /**
+     * Obtains the container that owns this factory, or {@code null} after it has been removed from its factory
+     * registry.
+     *
+     * @return the owning managed container
+     */
+    @Override
+    public IManagedContainer getManagedContainer()
+    {
+      return managedContainer;
+    }
+
+    /**
+     * Records the container that owns this factory. Managed containers pass {@code null} when removing the factory.
+     *
+     * @param managedContainer
+     *          the owning container, or {@code null} when the factory is no longer registered
+     */
+    @Override
+    public void setManagedContainer(IManagedContainer managedContainer)
+    {
+      this.managedContainer = managedContainer;
+    }
+
+    /**
+     * Obtains the effective repositories container. An explicit repositories container takes precedence; otherwise the
+     * current owning container is used.
+     *
+     * @return the explicit repositories container or the current owning container
+     */
     @Override
     public IManagedContainer getContainer()
     {
-      return container;
+      return getRepositoriesContainer();
+    }
+
+    private IManagedContainer getRepositoriesContainer()
+    {
+      return repositoriesContainer != null ? repositoriesContainer : managedContainer;
     }
 
     @Override
     public CDOAdminServerProtocol create(String description)
     {
+      IManagedContainer repositoriesContainer = getRepositoriesContainer();
       CDOAdminServer admin = getAdmin();
-      return new CDOAdminServerProtocol(container, admin);
+      return new CDOAdminServerProtocol(repositoriesContainer, admin);
     }
 
     protected CDOAdminServer getAdmin()
     {
       String productGroup = CDOAdminServer.Factory.PRODUCT_GROUP;
       String type = CDOAdminServer.Factory.TYPE;
-      return (CDOAdminServer)container.getElement(productGroup, type, null);
+      return (CDOAdminServer)getRepositoriesContainer().getElement(productGroup, type, null);
     }
 
     public static CDOAdminServerProtocol get(IManagedContainer container, String description)
     {
       return (CDOAdminServerProtocol)container.getElement(PRODUCT_GROUP, TYPE, description);
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    public static final class Plugin extends Factory
-    {
-      public Plugin()
-      {
-        super(IManagedContainer.INSTANCE);
-      }
     }
   }
 }

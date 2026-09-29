@@ -21,11 +21,9 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.ManagedContainer;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -80,10 +78,7 @@ public class Doc99_ViewProviders
         {
           if (container == null)
           {
-            container = new ManagedContainer();
-            Net4jUtil.prepareContainer(container);
-            TCPUtil.prepareContainer(container);
-            container.activate();
+            container = ContainerUtil.createInitializedContainer();
           }
 
           int startIndex = uri.toString().indexOf(':');

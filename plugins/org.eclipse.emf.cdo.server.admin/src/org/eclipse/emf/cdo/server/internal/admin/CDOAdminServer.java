@@ -35,6 +35,7 @@ import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerFactory;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -59,7 +60,7 @@ public class CDOAdminServer extends AbstractCDOAdmin implements IManagedContaine
 
   private final IManagedContainer container;
 
-  private final IListener containerListener = new ContainerEventAdapter<Object>(true)
+  private final IListener containerListener = new ContainerEventAdapter<>(true)
   {
     @Override
     protected void onAdded(IContainer<Object> container, Object element)
@@ -409,32 +410,95 @@ public class CDOAdminServer extends AbstractCDOAdmin implements IManagedContaine
   /**
    * @author Eike Stepper
    */
-  public static class Factory extends org.eclipse.net4j.util.factory.Factory implements IManagedContainerProvider
+  public static class Factory extends org.eclipse.net4j.util.factory.Factory implements IManagedContainerFactory, IManagedContainerProvider
   {
     public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.admin.adminServers"; //$NON-NLS-1$
 
     public static final String TYPE = "default"; //$NON-NLS-1$
 
-    private final IManagedContainer container;
+    private IManagedContainer managedContainer = IManagedContainer.INSTANCE;
+
+    private final IManagedContainer repositoriesContainer;
 
     private final long timeout;
 
-    public Factory(IManagedContainer container)
+    /**
+     * Creates a factory that initially falls back to the canonical global container. Registration in a managed
+     * container replaces this fallback with the actual owning container.
+     */
+    public Factory()
     {
-      this(container, ISignalProtocol.DEFAULT_TIMEOUT);
+      this(null);
     }
 
-    public Factory(IManagedContainer container, long timeout)
+    /**
+     * Creates a factory that uses an explicit repositories container, if supplied. The container in which the factory
+     * is registered is tracked separately and is used as the repositories container when this argument is {@code null}.
+     *
+     * @param repositoriesContainer
+     *          the explicit container from which repositories and related dependencies are obtained, or {@code null}
+     *          to use the owning managed container
+     */
+    public Factory(IManagedContainer repositoriesContainer)
+    {
+      this(repositoriesContainer, ISignalProtocol.DEFAULT_TIMEOUT);
+    }
+
+    /**
+     * Creates a factory with an explicit repositories container and an Admin request timeout.
+     *
+     * @param repositoriesContainer
+     *          the explicit container from which repositories and related dependencies are obtained, or {@code null}
+     *          to use the owning managed container
+     * @param timeout
+     *          the Admin request timeout in milliseconds
+     */
+    public Factory(IManagedContainer repositoriesContainer, long timeout)
     {
       super(PRODUCT_GROUP, TYPE);
-      this.container = container;
+      this.repositoriesContainer = repositoriesContainer;
       this.timeout = timeout;
     }
 
+    /**
+     * Obtains the container that owns this factory, or {@code null} after it has been removed from its factory
+     * registry.
+     *
+     * @return the owning managed container
+     */
+    @Override
+    public final IManagedContainer getManagedContainer()
+    {
+      return managedContainer;
+    }
+
+    /**
+     * Records the container that owns this factory. Managed containers pass {@code null} when removing the factory.
+     *
+     * @param managedContainer
+     *          the owning container, or {@code null} when the factory is no longer registered
+     */
+    @Override
+    public final void setManagedContainer(IManagedContainer managedContainer)
+    {
+      this.managedContainer = managedContainer;
+    }
+
+    /**
+     * Obtains the effective repositories container. An explicit repositories container takes precedence; otherwise the
+     * current owning container is used.
+     *
+     * @return the explicit repositories container or the current owning container
+     */
     @Override
     public final IManagedContainer getContainer()
     {
-      return container;
+      return getRepositoriesContainer();
+    }
+
+    private IManagedContainer getRepositoriesContainer()
+    {
+      return repositoriesContainer != null ? repositoriesContainer : managedContainer;
     }
 
     public final long getTimeout()
@@ -445,23 +509,12 @@ public class CDOAdminServer extends AbstractCDOAdmin implements IManagedContaine
     @Override
     public CDOAdminServer create(String description)
     {
-      return new CDOAdminServer(container, timeout);
+      return new CDOAdminServer(getRepositoriesContainer(), timeout);
     }
 
     public static CDOAdminServer get(IManagedContainer container, String description)
     {
       return (CDOAdminServer)container.getElement(PRODUCT_GROUP, TYPE, description);
-    }
-
-    /**
-     * @author Eike Stepper
-     */
-    public static final class Plugin extends Factory
-    {
-      public Plugin()
-      {
-        super(IManagedContainer.INSTANCE);
-      }
     }
   }
 }

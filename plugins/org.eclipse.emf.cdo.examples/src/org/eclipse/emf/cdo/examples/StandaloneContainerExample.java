@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
@@ -44,11 +43,7 @@ public class StandaloneContainerExample
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
 
     // Prepare container
-    IManagedContainer container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container); // Register Net4j factories
-    TCPUtil.prepareContainer(container); // Register TCP factories
-    CDONet4jUtil.prepareContainer(container); // Register CDO factories
-    container.activate();
+    IManagedContainer container = ContainerUtil.createInitializedContainer();
 
     // Create connector
     IConnector connector = TCPUtil.getConnector(container, "localhost:2036"); //$NON-NLS-1$

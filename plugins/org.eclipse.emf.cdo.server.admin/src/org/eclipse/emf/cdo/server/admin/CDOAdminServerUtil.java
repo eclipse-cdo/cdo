@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer;
 import org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.om.OMBundle;
 
 /**
  * Various static methods that may help with CDO remote administration.
@@ -27,12 +28,32 @@ public final class CDOAdminServerUtil
   {
   }
 
+  /**
+   * Registers Admin factories in a container while configuring a separate container from which the resulting Admin
+   * infrastructure obtains repositories and other dependencies. The two containers may be the same or different.
+   *
+   * @param container
+   *          the container that owns the registered Admin factories
+   * @param repositoriesContainer
+   *          the container from which Admin infrastructure obtains repositories and related dependencies
+   */
   public static void prepareContainer(IManagedContainer container, IManagedContainer repositoriesContainer)
   {
     container.registerFactory(new CDOAdminServer.Factory(repositoriesContainer));
     container.registerFactory(new CDOAdminServerProtocol.Factory(repositoriesContainer));
   }
 
+  /**
+   * Manually registers the CDO Admin factories in a raw container, using it both as the factory owner and as the
+   * repositories container.
+   *
+   * @param container
+   *          the raw container to configure
+   * @deprecated Automatically initialized containers discover the Admin factories through their declarative
+   *             contributions. Use {@link OMBundle#prepareContainer(IManagedContainer)} only when intentionally
+   *             preparing a raw container manually.
+   */
+  @Deprecated
   public static void prepareContainer(IManagedContainer container)
   {
     prepareContainer(container, container);

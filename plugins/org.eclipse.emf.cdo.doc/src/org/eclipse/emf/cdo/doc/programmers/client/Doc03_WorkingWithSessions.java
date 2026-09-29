@@ -112,7 +112,6 @@ import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.doc.Overview;
-import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
@@ -324,13 +323,9 @@ public class Doc03_WorkingWithSessions
        */
       public void createConnectorInStandalone()
       {
-        IManagedContainer container = ContainerUtil.createContainer();
+        IManagedContainer container = ContainerUtil.createInitializedContainer();
         try
         {
-          ContainerUtil.prepareContainer(container); // Register basic Net4j factories.
-          TCPUtil.prepareContainer(container); // Register TCP connector factory.
-          container.activate();
-
           // Obtain the connector from the container by its product group, factory type, and factory-specific
           // description.
           IConnector connector = container.getElementOrNull("org.eclipse.net4j.connectors", "tcp", "localhost:2036");

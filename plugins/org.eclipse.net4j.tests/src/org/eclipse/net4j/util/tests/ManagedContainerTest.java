@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.tests;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.internal.util.container.PluginContainer;
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -40,7 +41,8 @@ public class ManagedContainerTest extends AbstractOMTest
   public void testCountElements() throws Exception
   {
     IManagedContainer container = ContainerUtil.createContainer();
-    ContainerUtil.prepareContainer(container);
+    assertFalse(container.isActive());
+    OM.BUNDLE.prepareContainer(container);
     container.activate();
     assertEquals(0, container.countElements(RandomizerFactory.PRODUCT_GROUP));
     assertEquals(0, container.countElements(RandomizerFactory.PRODUCT_GROUP, RandomizerFactory.TYPE));
@@ -51,9 +53,31 @@ public class ManagedContainerTest extends AbstractOMTest
     assertEquals(1, container.countElements(RandomizerFactory.PRODUCT_GROUP, RandomizerFactory.TYPE));
   }
 
-  public void testPlatformFactoryCreatesIndependentContainers()
+  public void testRawContainerIsUninitializedAndInactive()
   {
-    IManagedContainer first = OMPlatform.INSTANCE.createManagedContainer();
+    IManagedContainer container = ContainerUtil.createContainer();
+    assertFalse(container.isActive());
+    assertTrue(container.getFactoryRegistry().isEmpty());
+  }
+
+  public void testInitializedContainerIsActiveAndNamed()
+  {
+    IManagedContainer container = ContainerUtil.createInitializedContainer("named-container");
+    try
+    {
+      assertTrue(container.isActive());
+      assertEquals("named-container", container.getName());
+      assertNotSame(IManagedContainer.INSTANCE, container);
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(container);
+    }
+  }
+
+  public void testInitializedFactoryCreatesIndependentContainers()
+  {
+    IManagedContainer first = ContainerUtil.createInitializedContainer();
     IManagedContainer second = OMPlatform.INSTANCE.createManagedContainer();
 
     try
@@ -77,7 +101,8 @@ public class ManagedContainerTest extends AbstractOMTest
     LifecycleUtil.deactivate(container);
   }
 
-  public void testStandaloneServiceLoaderPreparesNet4jBundle() throws Exception
+  @SuppressWarnings("deprecation")
+  public void testExplicitURLClassLoaderPreparesNet4jBundle() throws Exception
   {
     ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
     File root = findRepositoryRoot();
@@ -93,7 +118,6 @@ public class ManagedContainerTest extends AbstractOMTest
       Thread.currentThread().setContextClassLoader(classLoader);
       assertNotNull(classLoader.getResource("META-INF/services/org.eclipse.net4j.util.container.IManagedContainerInitializer")); //$NON-NLS-1$
       container = OMPlatform.INSTANCE.createManagedContainer();
-      container.activate();
       assertNotNull(container.getFactory(BufferPoolFactory.PRODUCT_GROUP, BufferPoolFactory.TYPE));
       assertNotNull(container.getElement(BufferPoolFactory.PRODUCT_GROUP, BufferPoolFactory.TYPE, null));
       assertEquals(1, container.countElements(BufferPoolFactory.PRODUCT_GROUP, BufferPoolFactory.TYPE));
@@ -113,7 +137,7 @@ public class ManagedContainerTest extends AbstractOMTest
     File root = new File(ManagedContainerTest.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getCanonicalFile();
 
     while (root != null
-        && !new File(root, "plugins/org.eclipse.net4j/META-INF/services/org.eclipse.net4j.util.container.IManagedContainerInitializer").isFile()) //$NON-NLS-1$
+        && !new File(root, "plugins/org.eclipse.net4j/src/META-INF/services/org.eclipse.net4j.util.container.IManagedContainerInitializer").isFile()) //$NON-NLS-1$
     {
       root = root.getParentFile();
     }

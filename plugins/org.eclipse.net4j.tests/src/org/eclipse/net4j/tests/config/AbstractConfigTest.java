@@ -11,7 +11,6 @@
  */
 package org.eclipse.net4j.tests.config;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.connector.IServerConnector;
@@ -112,13 +111,11 @@ public abstract class AbstractConfigTest extends AbstractOMTest
   private void initContainers()
   {
     acceptorContainer = createContainer();
-    LifecycleUtil.activate(acceptorContainer);
 
     if (config.needsSeparateContainers())
     {
       // the SSL need separate container between client and server
       connectorContainer = createContainer();
-      LifecycleUtil.activate(connectorContainer);
     }
     else
     {
@@ -128,11 +125,8 @@ public abstract class AbstractConfigTest extends AbstractOMTest
 
   protected IManagedContainer createContainer()
   {
-    IManagedContainer container = ContainerUtil.createContainer();
+    IManagedContainer container = ContainerUtil.createInitializedContainer();
     container.registerFactory(new TestSignalProtocol.Factory());
-
-    Net4jUtil.prepareContainer(container);
-    config.prepareContainer(container);
 
     return container;
   }

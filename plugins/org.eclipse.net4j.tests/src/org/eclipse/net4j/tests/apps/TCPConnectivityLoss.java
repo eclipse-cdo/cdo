@@ -11,10 +11,10 @@
  */
 package org.eclipse.net4j.tests.apps;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
-import org.eclipse.net4j.util.container.ManagedContainer;
+import org.eclipse.net4j.util.container.ContainerUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -30,17 +30,13 @@ public class TCPConnectivityLoss
 {
   private static boolean stop;
 
-  public static ManagedContainer createContainer()
+  public static IManagedContainer createContainer()
   {
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
     OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.setDebugging(true);
 
-    ManagedContainer container = new ManagedContainer();
-    Net4jUtil.prepareContainer(container);
-    TCPUtil.prepareContainer(container);
-    container.activate();
-    return container;
+    return ContainerUtil.createInitializedContainer();
   }
 
   public static void sleep() throws Exception
@@ -71,7 +67,7 @@ public class TCPConnectivityLoss
   {
     public static void main(String[] args) throws Exception
     {
-      ManagedContainer container = createContainer();
+      IManagedContainer container = createContainer();
       TCPUtil.getAcceptor(container, null);
       sleep();
       container.deactivate();
@@ -85,7 +81,7 @@ public class TCPConnectivityLoss
   {
     public static void main(String[] args) throws Exception
     {
-      ManagedContainer container = createContainer();
+      IManagedContainer container = createContainer();
       ITCPConnector connector = TCPUtil.getConnector(container, "192.168.1.35"); //$NON-NLS-1$
       connector.addListener(new LifecycleEventAdapter()
       {

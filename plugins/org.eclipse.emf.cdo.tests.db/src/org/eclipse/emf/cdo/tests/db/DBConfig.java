@@ -179,7 +179,6 @@ public abstract class DBConfig extends RepositoryConfig
   public void setUp() throws Exception
   {
     System.setProperty("org.eclipse.emf.cdo.server.db.DISABLE_LOG_SQL_QUERY_HANDLER", "true");
-    CDODBUtil.prepareContainer(IManagedContainer.INSTANCE);
     super.setUp();
     ((TypeMappingRegistry)ITypeMapping.Registry.INSTANCE).init();
   }
@@ -194,7 +193,6 @@ public abstract class DBConfig extends RepositoryConfig
   protected IManagedContainer createServerContainer()
   {
     IManagedContainer container = super.createServerContainer();
-    CDODBUtil.prepareContainer(container);
     return container;
   }
 

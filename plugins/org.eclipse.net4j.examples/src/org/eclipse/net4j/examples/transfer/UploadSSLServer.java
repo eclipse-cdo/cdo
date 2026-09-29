@@ -11,13 +11,11 @@
  */
 package org.eclipse.net4j.examples.transfer;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.internal.examples.bundle.OM;
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -53,11 +51,8 @@ public class UploadSSLServer implements UploadProtocol
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
 
     // Use this container to create and wire the components
-    IManagedContainer container = ContainerUtil.createContainer();
-    Net4jUtil.prepareContainer(container);
-    SSLUtil.prepareContainer(container);
+    IManagedContainer container = ContainerUtil.createInitializedContainer();
     container.registerFactory(new ProtocolFactory());
-    container.activate();
 
     try
     {

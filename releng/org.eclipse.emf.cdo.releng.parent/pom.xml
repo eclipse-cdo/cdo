@@ -24,8 +24,8 @@ Eike Stepper - initial API and implementation
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <tycho.scmUrl>scm:git:https://github.com/eclipse-cdo/cdo.git</tycho.scmUrl>
-    <tycho-version>4.0.8</tycho-version>
-    <jarsigner-version>1.5.0</jarsigner-version>
+    <tycho-version>5.0.4</tycho-version>
+    <jarsigner-version>1.5.7</jarsigner-version>
     <os-jvm-flags/>
   </properties>
 
@@ -176,11 +176,24 @@ Eike Stepper - initial API and implementation
               <version>1.0.0-SNAPSHOT</version>
             </artifact>
           </target>
-            <!--<executionEnvironment>JavaSE-21</executionEnvironment>-->
-            <!--<executionEnvironment>org.eclipse.justj.openjdk.hotspot.jre.minimal-17</executionEnvironment>-->
-            <!--  This is needed for Tycho 2.0.0, but breaks 1.7.0 because the compiler source/target levels are not set properly.-->
-            <!--<executionEnvironmentDefault>JavaSE-${javaVersion}</executionEnvironmentDefault>-->
-            <!--<includePackedArtifacts>true</includePackedArtifacts>-->
+            <!--
+              Use a fixed execution environment for dependency resolution.
+
+              CDO bundles intentionally use different Bundle-RequiredExecutionEnvironment
+              values, including JavaSE-11. With Tycho 5, these bundle-specific BREEs are
+              also considered when resolving the target platform. For example,
+              org.eclipse.net4j.util declares JavaSE-11, while current Eclipse Platform
+              dependencies such as org.eclipse.core.jobs require JavaSE-17. Resolving the
+              dependency graph in a JavaSE-11 context therefore fails even though the
+              build itself runs on a newer JDK.
+
+              executionEnvironmentDefault is not sufficient here because a bundle's BREE
+              takes precedence over that default. executionEnvironment, on the other hand,
+              establishes JavaSE-21 as the execution environment for dependency resolution
+              without changing the individual bundles' BREEs, source levels, or bytecode
+              compatibility.
+            -->
+            <executionEnvironment>JavaSE-21</executionEnvironment>
             <environments>
               <environment>
                 <os>win32</os>

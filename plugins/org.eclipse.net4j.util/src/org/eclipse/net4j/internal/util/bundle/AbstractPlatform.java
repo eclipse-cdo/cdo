@@ -27,6 +27,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.om.trace.OMTraceHandler;
 import org.eclipse.net4j.util.om.trace.OMTraceHandlerEvent;
 
+import org.osgi.framework.FrameworkUtil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -48,7 +50,7 @@ public abstract class AbstractPlatform implements OMPlatform
 
   public static final String SYSTEM_PROPERTY_NET4J_USER_DIR = "net4j.user.dir"; //$NON-NLS-1$
 
-  static Object systemContext;
+  static volatile Object systemContext;
 
   private static ContextTracer __TRACER__;
 
@@ -490,24 +492,38 @@ public abstract class AbstractPlatform implements OMPlatform
    */
   public static synchronized OMPlatform createPlatform()
   {
+    boolean osgiBundle = isOSGiBundle(AbstractPlatform.class);
+    return createPlatform(osgiBundle, systemContext);
+  }
+
+  /**
+   * Selects the platform implementation from the class' actual runtime ownership.
+   *
+   * @param osgiBundle whether the platform classes belong to an OSGi bundle
+   * @param context the OSGi system context, which can be {@code null} before bundle activation
+   * @return the platform implementation for the runtime
+   */
+  protected static OMPlatform createPlatform(boolean osgiBundle, Object context)
+  {
+    if (osgiBundle)
+    {
+      return new OSGiPlatform(context);
+    }
+
+    return new LegacyPlatform();
+  }
+
+  private static boolean isOSGiBundle(Class<?> type)
+  {
     try
     {
-      if (systemContext != null)
-      {
-        return new OSGiPlatform(systemContext);
-      }
-
-      return new LegacyPlatform();
+      return FrameworkUtil.getBundle(type) != null;
     }
-    catch (Exception ex)
+    catch (LinkageError ex)
     {
-      if (TRACER().isEnabled())
-      {
-        TRACER().trace(ex);
-      }
+      // OSGi APIs are optional; ordinary classpath use must work without them.
+      return false;
     }
-
-    return null;
   }
 
   private static ContextTracer TRACER()

@@ -36,7 +36,7 @@ public class OSGiPlatform extends AbstractPlatform
 {
   private final Map<InternalOMJob, Job> eclipseJobs = Collections.synchronizedMap(new HashMap<>());
 
-  BundleContext systemContext;
+  private volatile BundleContext systemContext;
 
   public OSGiPlatform(Object systemContext)
   {
@@ -49,6 +49,16 @@ public class OSGiPlatform extends AbstractPlatform
     catch (Throwable ignore)
     {
     }
+  }
+
+  /**
+   * Binds or clears the system context as the bundle activator starts or stops.
+   *
+   * @param systemContext the active OSGi system context, or {@code null} after stop
+   */
+  public void setSystemContext(BundleContext systemContext)
+  {
+    this.systemContext = systemContext;
   }
 
   @Override

@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.util.bundle;
 
 import org.eclipse.net4j.internal.util.container.PluginContainer;
 import org.eclipse.net4j.internal.util.om.OSGiBundle;
+import org.eclipse.net4j.internal.util.om.OSGiPlatform;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -65,6 +66,7 @@ public abstract class OM
     public void start(BundleContext context) throws Exception
     {
       AbstractPlatform.systemContext = context;
+      ((OSGiPlatform)OMPlatform.INSTANCE).setSystemContext(context);
       setBundleContext(context);
       ((OSGiBundle)OM.BUNDLE).start();
 
@@ -97,6 +99,7 @@ public abstract class OM
       ((OSGiBundle)OM.BUNDLE).stop();
       PluginContainer.dispose();
       setBundleContext(null);
+      ((OSGiPlatform)OMPlatform.INSTANCE).setSystemContext(null);
       AbstractPlatform.systemContext = null;
     }
 

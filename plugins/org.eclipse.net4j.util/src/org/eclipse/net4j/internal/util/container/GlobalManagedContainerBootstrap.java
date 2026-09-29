@@ -8,7 +8,6 @@
  */
 package org.eclipse.net4j.internal.util.container;
 
-import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -55,7 +54,7 @@ public final class GlobalManagedContainerBootstrap
     }
     catch (Exception exception)
     {
-      OM.LOG.error(exception);
+      exception.printStackTrace();
     }
 
     IManagedContainer container = ContainerUtil.createContainer();

@@ -37,6 +37,15 @@ public final class WSSUtil
   {
   }
 
+  /**
+   * Manually prepares a raw container with the WSS acceptor and connector factories.
+   * Initialized containers receive these factories automatically through declarative
+   * container initialization. Manual preparation remains appropriate for containers
+   * created with {@code ContainerUtil.createContainer()}.
+   *
+   * @deprecated Initialized containers are prepared automatically.
+   */
+  @Deprecated
   public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new WSSAcceptorFactory());

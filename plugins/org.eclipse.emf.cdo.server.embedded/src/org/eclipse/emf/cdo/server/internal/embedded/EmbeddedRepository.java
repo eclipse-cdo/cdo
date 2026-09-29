@@ -17,15 +17,19 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.embedded.CDOEmbeddedRepositoryConfig;
+import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -78,8 +82,17 @@ public class EmbeddedRepository extends Repository.Default
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   protected void doBeforeActivate() throws Exception
   {
+    if (!OMPlatform.INSTANCE.isExtensionRegistryAvailable())
+    {
+      IManagedContainer container = getContainer();
+      Net4jUtil.prepareContainer(container);
+      JVMUtil.prepareContainer(container);
+      CDONet4jServerUtil.prepareContainer(container);
+    }
+
     super.doBeforeActivate();
 
     InternalCDOBranchManager branchManager = getBranchManager();

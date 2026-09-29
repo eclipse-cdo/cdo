@@ -538,6 +538,15 @@ public class OCLQueryHandler implements IQueryHandler
     throw new CDOException("OCL is missing");
   }
 
+  /**
+   * Manually prepares a raw container with the OCL query handler factory.
+   * Initialized containers receive this factory automatically through declarative
+   * container initialization. Manual preparation remains appropriate for containers
+   * created with {@code ContainerUtil.createContainer()}.
+   *
+   * @deprecated Initialized containers are prepared automatically.
+   */
+  @Deprecated
   public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new Factory());

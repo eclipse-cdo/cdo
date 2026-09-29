@@ -359,6 +359,7 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin
       }
       catch (InterruptedException ex)
       {
+        Thread.currentThread().interrupt();
         return;
       }
       catch (Throwable ex)
@@ -376,11 +377,12 @@ public class CDOAdminClientImpl extends AbstractCDOAdmin
     private void sleep() throws InterruptedException
     {
       long now = System.currentTimeMillis();
+
       if (connectAttempt != 0)
       {
         long passed = now - connectAttempt;
         long timeout = getTimeout();
-        long sleep = Math.max(timeout - passed, timeout);
+        long sleep = Math.max(timeout - passed, 0L);
         Thread.sleep(sleep);
       }
 

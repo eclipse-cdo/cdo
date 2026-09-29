@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.tests.RWOLockManagerTest;
 import org.eclipse.net4j.util.tests.ReflectUtilTest;
 import org.eclipse.net4j.util.tests.RollingLogTest;
 import org.eclipse.net4j.util.tests.RoundRobinBlockingQueueTest;
+import org.eclipse.net4j.util.tests.ScopedRegistryTest;
 import org.eclipse.net4j.util.tests.SecurityTest;
 import org.eclipse.net4j.util.tests.SortedFileMapTest;
 import org.eclipse.net4j.util.tests.StringCompressorTest;
@@ -56,6 +57,7 @@ public class AllTests
     suite.addTestSuite(UUIDGeneratorTest.class);
     suite.addTestSuite(MultiMapTest.class);
     suite.addTestSuite(SortedFileMapTest.class);
+    suite.addTestSuite(ScopedRegistryTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
     suite.addTestSuite(BufferPoolTest.class);
     suite.addTestSuite(BufferStreamTest.class);

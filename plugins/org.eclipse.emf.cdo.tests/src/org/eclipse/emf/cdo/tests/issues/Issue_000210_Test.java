@@ -6,7 +6,7 @@
  *
  * SPDX-License-Identifier: EPL-2.0
  */
-package org.eclipse.emf.cdo.tests.bugzilla;
+package org.eclipse.emf.cdo.tests.issues;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 
@@ -34,7 +35,7 @@ import java.util.concurrent.locks.Lock;
  *
  * @author Eike Stepper
  */
-public class LockingManagerCommitAtomicityTest extends AbstractCDOTest
+public class Issue_000210_Test extends AbstractCDOTest
 {
   private static final String REPOSITORY_NAME = "repo1";
 
@@ -43,6 +44,10 @@ public class LockingManagerCommitAtomicityTest extends AbstractCDOTest
   private final CountDownLatch continueCommit = new CountDownLatch(1);
 
   private volatile boolean pauseAtLockMutationBoundary;
+
+  private final AtomicInteger commitContextsCreated = new AtomicInteger();
+
+  private Repository testRepository;
 
   private TestLockingManager testLockingManager;
 
@@ -55,7 +60,7 @@ public class LockingManagerCommitAtomicityTest extends AbstractCDOTest
 
   private void createRepository()
   {
-    Repository repository = new Repository.Default()
+    testRepository = new Repository.Default()
     {
       @Override
       public LockingManager createLockingManager()
@@ -67,6 +72,7 @@ public class LockingManagerCommitAtomicityTest extends AbstractCDOTest
       @Override
       public InternalCommitContext createCommitContext(InternalTransaction transaction)
       {
+        commitContextsCreated.incrementAndGet();
         return new TransactionCommitContext(transaction)
         {
           @Override
@@ -87,16 +93,21 @@ public class LockingManagerCommitAtomicityTest extends AbstractCDOTest
       }
     };
 
-    repository.setProperties(getRepositoryProperties());
-    repository.setName(REPOSITORY_NAME);
+    testRepository.setProperties(getRepositoryProperties());
+    testRepository.setName(REPOSITORY_NAME);
 
     Map<String, Object> testProperties = getTestProperties();
-    testProperties.put(RepositoryConfig.PROP_TEST_REPOSITORY, repository);
+    testProperties.put(RepositoryConfig.PROP_TEST_REPOSITORY, testRepository);
   }
 
+  @CleanRepositoriesBefore(reason = "Isolated repository needed")
+  @CleanRepositoriesAfter(reason = "Isolated repository needed")
   public void testCommitLockChangesAreAtomic() throws Exception
   {
     CDOTransaction transaction = openSession(REPOSITORY_NAME).openTransaction();
+    assertSame("Session is not connected to the instrumented repository", testRepository, serverTransaction(transaction).getRepository());
+    assertNotNull("Instrumented LockingManager was not created", testLockingManager);
+
     CDOResource resource = transaction.createResource(getResourcePath("/atomicity"));
     Company existingCompany = getModel1Factory().createCompany();
     resource.getContents().add(existingCompany);
@@ -112,6 +123,7 @@ public class LockingManagerCommitAtomicityTest extends AbstractCDOTest
     newObject.cdoWriteLock().lock();
     transaction.options().setAutoReleaseLocksEnabled(true);
     transaction.options().addAutoReleaseLocksExemptions(true, newCategory);
+    int commitContextCount = commitContextsCreated.get();
 
     AtomicReference<Throwable> commitFailure = new AtomicReference<>();
     Thread commitThread = new Thread(() -> {
@@ -145,21 +157,30 @@ public class LockingManagerCommitAtomicityTest extends AbstractCDOTest
       commitThread.join(DEFAULT_TIMEOUT);
     }
 
-    assertTrue("Commit did not reach the boundary between lock phases", reachedBoundary);
-    assertFalse("Another thread acquired lock-manager write access inside the commit lock transition", acquiredWriteAccessAtBoundary);
     assertFalse("Commit thread did not finish", commitThread.isAlive());
     if (commitFailure.get() != null)
     {
       throw new AssertionError("Commit failed", commitFailure.get());
     }
 
+    assertTrue("Repository.createCommitContext() was not used for the target commit", commitContextsCreated.get() > commitContextCount);
+    assertTrue("Commit did not reach the boundary between lock phases", reachedBoundary);
+    assertFalse("Another thread acquired lock-manager write access inside the commit lock transition", acquiredWriteAccessAtBoundary);
+
     assertFalse("The existing explicit lock was not auto-released", existingObject.cdoWriteLock().isLocked());
     assertTrue("The lock on the committed new object was not transferred", newObject.cdoWriteLock().isLocked());
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static final class TestLockingManager extends LockingManager
   {
-    boolean tryWriteAccess()
+    public TestLockingManager()
+    {
+    }
+
+    public boolean tryWriteAccess()
     {
       Lock lock = rwAccess.getLock().writeLock();
       if (!lock.tryLock())

@@ -131,11 +131,7 @@ public class SerializingExecutor extends Lifecycle implements Executor, Runnable
       {
         delegate.execute(this);
       }
-      catch (RuntimeException ex)
-      {
-        cleanup(task);
-      }
-      catch (Error ex)
+      catch (RuntimeException | Error ex)
       {
         cleanup(task);
       }

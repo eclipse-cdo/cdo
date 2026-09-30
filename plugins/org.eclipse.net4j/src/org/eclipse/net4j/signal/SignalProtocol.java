@@ -22,6 +22,8 @@ import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.collection.Entity.Store;
+import org.eclipse.net4j.util.concurrent.OrderedExecution;
+import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -46,6 +48,9 @@ import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
@@ -130,7 +135,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
 
   private IStreamWrapper streamWrapper;
 
-  private Map<Integer, Signal> signals = new HashMap<>();
+  private final Map<Integer, Signal> signals = new HashMap<>();
+
+  private volatile ConcurrentMap<Object, Executor> signalReactorExecutors;
 
   private int nextCorrelationID = MIN_CORRELATION_ID;
 
@@ -333,8 +340,9 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   }
 
   /**
-   * Handles a given (incoming) buffer. Creates a signal to act upon the given buffer or uses a previously created
-   * signal.
+   * Handles a given (incoming) buffer.
+   * <p>
+   * Creates a signal to act upon the given buffer or uses a previously created signal.
    */
   @Override
   public void handleBuffer(IBuffer buffer)
@@ -382,13 +390,17 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
           {
             signal.setCorrelationID(-correlationID);
             signal.setBufferInputStream(new SignalInputStream(getTimeout()));
+
             if (signal instanceof IndicationWithResponse)
             {
               signal.setBufferOutputStream(new SignalOutputStream(-correlationID, signalID, false));
             }
 
             signals.put(-correlationID, signal);
-            getExecutorService().execute(signal);
+
+            Executor executor = getSignalReactorExecutor((SignalReactor)signal);
+            executor.execute(signal);
+
             newSignalScheduled = true;
           }
         }
@@ -471,7 +483,23 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
     }
     finally
     {
-      super.doDeactivate();
+      try
+      {
+        super.doDeactivate();
+      }
+      finally
+      {
+        ConcurrentMap<Object, Executor> executors = signalReactorExecutors;
+        signalReactorExecutors = null;
+
+        if (executors != null)
+        {
+          for (Executor executor : executors.values())
+          {
+            LifecycleUtil.deactivate(executor, OMLogger.Level.WARN);
+          }
+        }
+      }
     }
   }
 
@@ -560,6 +588,112 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
   protected long getDeactivationTimeout()
   {
     return DEFAULT_DEACTIVATION_TIMEOUT;
+  }
+
+  /**
+   * Returns the execution-order key for an incoming signal reactor.
+   * <p>
+   * Equal non-null keys, according to {@link Object#equals(Object)} and {@link Object#hashCode()}, select one execution
+   * lane. Signals in that lane execute sequentially in the order this protocol receives their begin-of-signal buffers.
+   * Different keys may execute concurrently, and signals with a {@code null} key use the normal executor and may run
+   * concurrently with both ordered lanes and each other. This preserves receiver-side reception order only; it does not
+   * establish semantic ordering between signals produced independently by senders.
+   * <p>
+   * Keys should normally be stable and low-cardinality. A signal class is often a natural key, and different signal
+   * classes may deliberately return the same key when they must share a lane. Keys and their executors are retained for
+   * this protocol's active lifetime.
+   * <p>
+   * For example:
+   * <pre>
+   * if (signal instanceof MySensibleIndication)
+   * {
+   *   return MySensibleIndication.class;
+   * }
+   * </pre>
+   *
+   * @param signal the incoming signal reactor
+   * @return the order key, or {@code null} for normal unordered execution
+   * @since 4.23
+   */
+  protected Object getSignalReactorOrderKey(SignalReactor signal)
+  {
+    if (signal instanceof OrderedExecution)
+    {
+      return ((OrderedExecution)signal).getExecutionOrderKey();
+    }
+
+    return null;
+  }
+
+  /**
+   * Returns the executor for an incoming signal reactor. The default preserves the direct executor fast path for
+   * unordered signals and uses a protocol-owned serial executor for a non-null order key.
+   *
+   * @param signal the incoming signal reactor
+   * @return the executor that will run the signal
+   *
+   * @since 4.23
+   */
+  protected Executor getSignalReactorExecutor(SignalReactor signal)
+  {
+    Object orderKey = getSignalReactorOrderKey(signal);
+    if (orderKey != null)
+    {
+      Executor executor = getSignalReactorExecutor(signal, orderKey);
+      if (executor != null)
+      {
+        return executor;
+      }
+    }
+
+    return getExecutorService();
+  }
+
+  /**
+   * Returns the serial executor associated with an order key, creating it on first use. Keys are compared using normal
+   * {@code equals()} and {@code hashCode()} semantics. The executor is retained for the active lifetime of this protocol
+   * and deactivated with it.
+   *
+   * @param signal the first signal reactor that caused this lane to be created, or a later signal assigned to the lane
+   * @param orderKey the non-null key identifying the lane
+   * @return the executor for the lane
+   *
+   * @since 4.23
+   */
+  protected Executor getSignalReactorExecutor(SignalReactor signal, Object orderKey)
+  {
+    ConcurrentMap<Object, Executor> executors = signalReactorExecutors;
+    if (executors == null)
+    {
+      synchronized (this)
+      {
+        executors = signalReactorExecutors;
+        if (executors == null)
+        {
+          executors = new ConcurrentHashMap<>();
+          signalReactorExecutors = executors;
+        }
+      }
+    }
+
+    return executors.computeIfAbsent(orderKey, k -> createSignalReactorExecutor(signal, orderKey));
+  }
+
+  /**
+   * Creates the serial executor for a newly encountered order key. The {@code signal} argument is the first reactor
+   * that caused this lane to be created; it does not imply that the lane is dedicated to that reactor's class.
+   *
+   * @param signal the first signal reactor assigned to the lane
+   * @param orderKey the non-null key identifying the lane
+   * @return a serial executor for the lane
+   *
+   * @since 4.23
+   */
+  protected Executor createSignalReactorExecutor(SignalReactor signal, Object orderKey)
+  {
+    SerializingExecutor executor = new SerializingExecutor(getExecutorService());
+    executor.activate();
+    return executor;
   }
 
   synchronized int getNextCorrelationID()

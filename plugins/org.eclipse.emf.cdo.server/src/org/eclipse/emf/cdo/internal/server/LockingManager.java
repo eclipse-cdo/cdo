@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -60,6 +59,7 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.concurrent.Access;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
@@ -89,7 +89,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -119,6 +123,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       return new DurableViewHandler[length];
     }
   };
+
+  private final Map<String, ReentrantLock> durablePersistenceLocks = new ConcurrentHashMap<>();
 
   @ExcludeFromDump
   private transient IListener sessionManagerListener = new ContainerEventAdapter<ISession>()
@@ -177,18 +183,6 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
-  }
-
-  @Override
-  public Access accessRead()
-  {
-    return read.access();
-  }
-
-  @Override
-  public Access accessWrite()
-  {
-    return write.access();
   }
 
   @Override
@@ -301,41 +295,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       LockDeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) //
       throws InterruptedException, TimeoutRuntimeException
   {
-    long modCount;
-    try (Access access = write.access())
-    {
-      if (recursive)
-      {
-        objects = createContentSet(objects, view);
-      }
-
-      modCount = super.lock(view, objects, lockType, count, timeout, deltaHandler, stateHandler);
-    }
-
-    if (explicit)
-    {
-      try
-      {
-        lockDurably(view, objects, lockType);
-      }
-      catch (Exception | Error ex)
-      {
-        super.unlock(view, objects, lockType, count, null, null);
-        throw ex;
-      }
-    }
-
-    return modCount;
-  }
-
-  private void lockDurably(IView view, Collection<? extends Object> objects, LockType lockType)
-  {
-    String durableLockingID = view.getDurableLockingID();
-    if (durableLockingID != null)
-    {
-      DurableLocking accessor = getDurableLocking();
-      accessor.lock(durableLockingID, lockType, objects);
-    }
+    LockChange<Object> change = LockChange.lock(objects, lockType, count, timeout);
+    return changeLocks(view, Collections.singletonList(change), recursive, explicit, adapt(deltaHandler), stateHandler);
   }
 
   /**
@@ -346,33 +307,158 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       boolean recursive, boolean explicit, //
       LockDeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler)
   {
-    long modCount;
-    try (Access access = write.access())
+    LockChange<Object> change = LockChange.unlock(objects, lockType, count);
+
+    try
     {
-      if (recursive)
+      return changeLocks(view, Collections.singletonList(change), recursive, explicit, adapt(deltaHandler), stateHandler);
+    }
+    catch (InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  @Override
+  public long changeLocks(IView view, List<? extends LockChange<Object>> changes, boolean recursive, boolean explicit, //
+      DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) throws InterruptedException, TimeoutRuntimeException
+  {
+    List<LockChange<Object>> normalizedChanges = new ArrayList<>(changes.size());
+
+    for (LockChange<Object> change : changes)
+    {
+      Collection<? extends Object> objects = change.getObjects();
+
+      if (recursive && objects != null)
       {
         objects = createContentSet(objects, view);
       }
 
-      modCount = super.unlock(view, objects, lockType, count, deltaHandler, stateHandler);
+      normalizedChanges.add(new LockChange<>(change.getOperation(), objects, change.getLockType(), change.getCount(), change.getTimeout()));
     }
 
-    if (explicit)
+    String durableLockingID = explicit ? view.getDurableLockingID() : null;
+    ReentrantLock persistenceLock = durableLockingID == null || normalizedChanges.isEmpty() //
+        ? null //
+        : durablePersistenceLocks.computeIfAbsent(durableLockingID, id -> new ReentrantLock());
+
+    if (persistenceLock != null)
     {
-      unlockDurably(view, objects, lockType);
+      persistenceLock.lockInterruptibly();
     }
 
-    return modCount;
+    try
+    {
+      AtomicReference<Map<CDOID, LockGrade>> durableSnapshot = new AtomicReference<>();
+      AtomicInteger persistedChangeCount = new AtomicInteger();
+      DeltaHandler<Object, IView> capturingHandler = durableLockingID == null //
+          ? deltaHandler //
+          : (operation, context, object, lockType, oldCount, newCount) -> {
+            if (durableSnapshot.get() == null)
+            {
+              durableSnapshot.set(getLocks(view));
+            }
+
+            if (deltaHandler != null)
+            {
+              deltaHandler.handleLockDelta(operation, context, object, lockType, oldCount, newCount);
+            }
+          };
+
+      long modCount = super.changeLocks(view, normalizedChanges, capturingHandler, stateHandler);
+      if (durableLockingID == null || durableSnapshot.get() == null)
+      {
+        return modCount;
+      }
+
+      try
+      {
+        persistDurableChanges(view, durableLockingID, normalizedChanges, durableSnapshot.get(), persistedChangeCount);
+      }
+      catch (RuntimeException | Error ex)
+      {
+        rollbackNewLocks(view, normalizedChanges.subList(persistedChangeCount.get(), normalizedChanges.size()), ex);
+        throw ex;
+      }
+
+      return modCount;
+    }
+    finally
+    {
+      if (persistenceLock != null)
+      {
+        persistenceLock.unlock();
+      }
+    }
   }
 
-  private void unlockDurably(IView view, Collection<? extends Object> objects, LockType lockType)
+  protected void persistDurableChanges(IView view, String durableLockingID, List<? extends LockChange<Object>> changes, Map<CDOID, LockGrade> durableSnapshot,
+      AtomicInteger persistedChangeCount)
   {
-    String durableLockingID = view.getDurableLockingID();
-    if (durableLockingID != null)
+    DurableLocking accessor = getDurableLocking();
+    if (accessor instanceof DurableLocking2)
     {
-      DurableLocking accessor = getDurableLocking();
-      accessor.unlock(durableLockingID, lockType, objects);
+      DurableLocking2 accessor2 = (DurableLocking2)accessor;
+      LockArea oldArea = accessor2.getLockArea(durableLockingID);
+      LockArea newArea = CDOLockUtil.createLockArea(durableLockingID, oldArea.getUserID(), oldArea, oldArea.isReadOnly(), durableSnapshot);
+      accessor2.updateLockArea(newArea);
+      return;
     }
+
+    for (LockChange<Object> change : changes)
+    {
+      if (change.isLock())
+      {
+        accessor.lock(durableLockingID, change.getLockType(), change.getObjects());
+      }
+      else
+      {
+        accessor.unlock(durableLockingID, change.getLockType(), change.getObjects());
+      }
+
+      persistedChangeCount.incrementAndGet();
+    }
+  }
+
+  private void rollbackNewLocks(IView view, List<? extends LockChange<Object>> changes, Throwable failure)
+  {
+    List<LockChange<Object>> rollback = new ArrayList<>();
+
+    for (LockChange<Object> change : changes)
+    {
+      if (change.isLock())
+      {
+        rollback.add(LockChange.unlock(change.getObjects(), change.getLockType(), change.getCount()));
+      }
+    }
+
+    if (rollback.isEmpty())
+    {
+      return;
+    }
+
+    try
+    {
+      super.changeLocks(view, rollback, null, null);
+    }
+    catch (InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+      failure.addSuppressed(ex);
+    }
+    catch (RuntimeException | Error ex)
+    {
+      failure.addSuppressed(ex);
+    }
+  }
+
+  private DeltaHandler<Object, IView> adapt(LockDeltaHandler<Object, IView> handler)
+  {
+    return handler == null //
+        ? null //
+        : (operation, context, object, lockType, oldCount, newCount) //
+        -> handler.handleLockDelta(context, object, lockType, oldCount, newCount);
   }
 
   @Override
@@ -1200,13 +1286,13 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   /**
    * @author Eike Stepper
    */
-  public static final class LockDeltaCollector extends ArrayList<CDOLockDelta> implements LockDeltaHandler<Object, IView>
+  public static final class LockDeltaCollector extends ArrayList<CDOLockDelta> implements LockDeltaHandler<Object, IView>, DeltaHandler<Object, IView>
   {
     private static final long serialVersionUID = 1L;
 
-    private Operation operation;
+    private LockChange.Operation operation;
 
-    public LockDeltaCollector(Operation operation)
+    public LockDeltaCollector(LockChange.Operation operation)
     {
       this.operation = operation;
     }
@@ -1215,18 +1301,30 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     {
     }
 
-    public Operation getOperation()
+    public LockChange.Operation getOperation()
     {
       return operation;
     }
 
-    public void setOperation(Operation operation)
+    public void setOperation(LockChange.Operation operation)
     {
       this.operation = operation;
     }
 
     @Override
     public void handleLockDelta(IView context, Object object, LockType lockType, int oldCount, int newCount)
+    {
+      addLockDelta(operation, context, object, lockType, oldCount, newCount);
+    }
+
+    @Override
+    public void handleLockDelta(LockChange.Operation operation, IView context, Object object, LockType lockType, int oldCount, int newCount)
+    {
+      addLockDelta(operation == LockChange.Operation.LOCK ? LockChange.Operation.LOCK : LockChange.Operation.UNLOCK, context, object, lockType, oldCount,
+          newCount);
+    }
+
+    private void addLockDelta(LockChange.Operation operation, IView context, Object object, LockType lockType, int oldCount, int newCount)
     {
       switch (operation)
       {

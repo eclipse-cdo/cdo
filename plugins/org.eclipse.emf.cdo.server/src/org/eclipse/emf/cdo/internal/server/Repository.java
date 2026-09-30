@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -139,6 +138,7 @@ import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -2451,7 +2451,7 @@ public class Repository extends Container<Object> implements InternalRepository
   protected LockObjectsResult doLock(InternalView view, LockType lockType, List<Object> lockables, List<CDORevisionKey> loadedRevs, boolean recursive,
       long timeout)
   {
-    LockDeltaCollector lockDeltas = new LockDeltaCollector(Operation.LOCK);
+    LockDeltaCollector lockDeltas = new LockDeltaCollector(LockChange.Operation.LOCK);
     LockStateCollector lockStates = new LockStateCollector();
 
     try
@@ -2544,7 +2544,7 @@ public class Repository extends Container<Object> implements InternalRepository
   protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables, boolean recursive, int count,
       boolean notifyAllSessions)
   {
-    LockDeltaCollector lockDeltas = new LockDeltaCollector(Operation.UNLOCK);
+    LockDeltaCollector lockDeltas = new LockDeltaCollector(LockChange.Operation.UNLOCK);
     LockStateCollector lockStates = new LockStateCollector();
 
     lockingManager.unlock(view, unlockables, lockType, count, recursive, true, lockDeltas, lockStates);

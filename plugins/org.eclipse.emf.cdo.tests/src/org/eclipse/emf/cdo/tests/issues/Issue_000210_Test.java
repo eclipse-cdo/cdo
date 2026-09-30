@@ -9,11 +9,13 @@
 package org.eclipse.emf.cdo.tests.issues;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.LockingManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -23,12 +25,24 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler;
+import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
+import java.util.function.Consumer;
 
 /**
  * Verifies that the server keeps a commit's visible lock changes atomic with respect to other lock operations.
@@ -46,6 +60,24 @@ public class Issue_000210_Test extends AbstractCDOTest
   private volatile boolean pauseAtLockMutationBoundary;
 
   private final AtomicInteger commitContextsCreated = new AtomicInteger();
+
+  private final AtomicBoolean pauseNextDurablePersistence = new AtomicBoolean();
+
+  private final AtomicBoolean failNextDurablePersistence = new AtomicBoolean();
+
+  private volatile boolean recordOnlyDurablePersistence;
+
+  private volatile int persistedChangesBeforeFailure;
+
+  private final List<Map<CDOID, LockGrade>> durableSnapshots = Collections.synchronizedList(new ArrayList<>());
+
+  private volatile CountDownLatch durablePersistenceStarted = new CountDownLatch(0);
+
+  private volatile CountDownLatch continueDurablePersistence = new CountDownLatch(0);
+
+  private volatile Object observedChangeKey;
+
+  private volatile CountDownLatch observedChange = new CountDownLatch(0);
 
   private Repository testRepository;
 
@@ -73,23 +105,7 @@ public class Issue_000210_Test extends AbstractCDOTest
       public InternalCommitContext createCommitContext(InternalTransaction transaction)
       {
         commitContextsCreated.incrementAndGet();
-        return new TransactionCommitContext(transaction)
-        {
-          @Override
-          protected void autoReleaseExplicitLocks(CDOLockOwner lockOwner) throws InterruptedException
-          {
-            if (pauseAtLockMutationBoundary)
-            {
-              atLockMutationBoundary.countDown();
-              if (!continueCommit.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
-              {
-                throw new AssertionError("Timed out waiting to continue the commit");
-              }
-            }
-
-            super.autoReleaseExplicitLocks(lockOwner);
-          }
-        };
+        return new TransactionCommitContext(transaction);
       }
     };
 
@@ -171,11 +187,190 @@ public class Issue_000210_Test extends AbstractCDOTest
     assertTrue("The lock on the committed new object was not transferred", newObject.cdoWriteLock().isLocked());
   }
 
+  public void testDurableLockPersistenceRunsOutsideWriteAccess() throws Exception
+  {
+    skipStoreWithoutDurableLocking();
+
+    CDOTransaction transaction = openSession(REPOSITORY_NAME).openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/durable-locking"));
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+    transaction.enableDurableLocking();
+
+    CDOUtil.getCDOObject(company).cdoWriteLock().lock();
+
+    assertEquals(1, testLockingManager.durablePersistenceCount);
+    assertTrue("Durable store I/O ran while another thread could not acquire the write access", testLockingManager.writeAccessAvailableDuringPersistence);
+  }
+
+  @CleanRepositoriesBefore(reason = "Isolated repository needed")
+  @CleanRepositoriesAfter(reason = "Isolated repository needed")
+  public void testDurableChangesPersistInLinearizationOrder() throws Exception
+  {
+    skipStoreWithoutDurableLocking();
+
+    CDOTransaction transaction = openSession(REPOSITORY_NAME).openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/durable-order"));
+    Company first = getModel1Factory().createCompany();
+    Company second = getModel1Factory().createCompany();
+    resource.getContents().add(first);
+    resource.getContents().add(second);
+    transaction.commit();
+    transaction.enableDurableLocking();
+
+    IView view = serverTransaction(transaction);
+    Object firstKey = testLockingManager.getLockKey(CDOUtil.getCDOObject(first).cdoID());
+    Object secondKey = testLockingManager.getLockKey(CDOUtil.getCDOObject(second).cdoID());
+    durableSnapshots.clear();
+    recordOnlyDurablePersistence = true;
+    durablePersistenceStarted = new CountDownLatch(1);
+    continueDurablePersistence = new CountDownLatch(1);
+    pauseNextDurablePersistence.set(true);
+    observedChangeKey = secondKey;
+    observedChange = new CountDownLatch(1);
+    AtomicReference<Throwable> firstFailure = new AtomicReference<>();
+    AtomicReference<Throwable> secondFailure = new AtomicReference<>();
+    Thread firstChange = durableChangeThread(view, firstKey, firstFailure, "DurableChange-First");
+    Thread secondChange = durableChangeThread(view, secondKey, secondFailure, "DurableChange-Second");
+
+    firstChange.start();
+    assertTrue("First durable persistence did not pause", durablePersistenceStarted.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+    secondChange.start();
+    try
+    {
+      assertTrue("Second change did not reach the lock manager", observedChange.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+      assertNull("Second durable mutation became visible before the first area write completed", testLockingManager.getLockState(secondKey));
+    }
+    finally
+    {
+      continueDurablePersistence.countDown();
+    }
+
+    firstChange.join(DEFAULT_TIMEOUT);
+    secondChange.join(DEFAULT_TIMEOUT);
+    assertFalse("First durable change did not finish", firstChange.isAlive());
+    assertFalse("Second durable change did not finish", secondChange.isAlive());
+    assertNull(firstFailure.get());
+    assertNull(secondFailure.get());
+    assertEquals("Durable area snapshots were persisted in a different order from their mutations", 2, durableSnapshots.size());
+    assertTrue("First snapshot omitted its lock", durableSnapshots.get(0).containsKey(CDOUtil.getCDOObject(first).cdoID()));
+    assertFalse("First snapshot included a later mutation", durableSnapshots.get(0).containsKey(CDOUtil.getCDOObject(second).cdoID()));
+    assertTrue("Second snapshot omitted the first lock", durableSnapshots.get(1).containsKey(CDOUtil.getCDOObject(first).cdoID()));
+    assertTrue("Second snapshot omitted its own lock", durableSnapshots.get(1).containsKey(CDOUtil.getCDOObject(second).cdoID()));
+  }
+
+  @CleanRepositoriesBefore(reason = "Isolated repository needed")
+  @CleanRepositoriesAfter(reason = "Isolated repository needed")
+  public void testDurablePersistenceFailureReleasesAreaSequence() throws Exception
+  {
+    skipStoreWithoutDurableLocking();
+
+    CDOTransaction transaction = openSession(REPOSITORY_NAME).openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/durable-failure"));
+    Company company = getModel1Factory().createCompany();
+    Company otherCompany = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    resource.getContents().add(otherCompany);
+    transaction.commit();
+    transaction.enableDurableLocking();
+    IView view = serverTransaction(transaction);
+    Object firstKey = testLockingManager.getLockKey(CDOUtil.getCDOObject(company).cdoID());
+    Object secondKey = testLockingManager.getLockKey(CDOUtil.getCDOObject(otherCompany).cdoID());
+    recordOnlyDurablePersistence = true;
+    testLockingManager.changeLocks(view,
+        Collections.singletonList(LockChange.lock(Collections.singleton(firstKey), LockType.WRITE, 1, IRWOLockManager.NO_TIMEOUT)), false, true, null, null);
+    failNextDurablePersistence.set(true);
+
+    try
+    {
+      testLockingManager.changeLocks(view, List.of( //
+          LockChange.lock(Collections.singleton(secondKey), LockType.WRITE, 1, IRWOLockManager.NO_TIMEOUT),
+          LockChange.unlock(Collections.singleton(firstKey), null, IRWOLockManager.ALL_LOCKS)), false, true, null, null);
+      fail("Injected durable persistence failure was not reported");
+    }
+    catch (IllegalStateException expected)
+    {
+      assertNull("Failed mixed batch unexpectedly restored the released lock", testLockingManager.getLockState(firstKey));
+      assertNull("Failed new lock was not compensated in memory", testLockingManager.getLockState(secondKey));
+      assertTrue("Initial durable snapshot omitted the lock", durableSnapshots.get(0).containsKey(CDOUtil.getCDOObject(company).cdoID()));
+      assertFalse("Failed mixed batch snapshot incorrectly retained its released lock",
+          durableSnapshots.get(1).containsKey(CDOUtil.getCDOObject(company).cdoID()));
+      assertTrue("Failed mixed batch snapshot omitted its requested lock", durableSnapshots.get(1).containsKey(CDOUtil.getCDOObject(otherCompany).cdoID()));
+    }
+
+    testLockingManager.changeLocks(view,
+        Collections.singletonList(LockChange.lock(Collections.singleton(secondKey), LockType.WRITE, 1, IRWOLockManager.NO_TIMEOUT)), false, true, null, null);
+    assertTrue("Persistence sequencing remained blocked after failure", testLockingManager.getLockState(secondKey).hasLock(LockType.WRITE, view, false));
+  }
+
+  @CleanRepositoriesBefore(reason = "Isolated repository needed")
+  @CleanRepositoriesAfter(reason = "Isolated repository needed")
+  public void testDurablePersistenceFailurePreservesPersistedPrefix() throws Exception
+  {
+    skipStoreWithoutDurableLocking();
+
+    CDOTransaction transaction = openSession(REPOSITORY_NAME).openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/durable-prefix"));
+    Company first = getModel1Factory().createCompany();
+    Company second = getModel1Factory().createCompany();
+    resource.getContents().add(first);
+    resource.getContents().add(second);
+    transaction.commit();
+    transaction.enableDurableLocking();
+
+    IView view = serverTransaction(transaction);
+    Object firstKey = testLockingManager.getLockKey(CDOUtil.getCDOObject(first).cdoID());
+    Object secondKey = testLockingManager.getLockKey(CDOUtil.getCDOObject(second).cdoID());
+    recordOnlyDurablePersistence = true;
+    testLockingManager.changeLocks(view,
+        Collections.singletonList(LockChange.lock(Collections.singleton(firstKey), LockType.WRITE, 1, IRWOLockManager.NO_TIMEOUT)), false, true, null, null);
+    persistedChangesBeforeFailure = 1;
+    failNextDurablePersistence.set(true);
+
+    try
+    {
+      testLockingManager.changeLocks(view, List.of( //
+          LockChange.lock(Collections.singleton(secondKey), LockType.WRITE, 1, IRWOLockManager.NO_TIMEOUT),
+          LockChange.unlock(Collections.singleton(firstKey), null, IRWOLockManager.ALL_LOCKS)), false, true, null, null);
+      fail("Injected later durable operation failure was not reported");
+    }
+    catch (IllegalStateException expected)
+    {
+      assertNull("Earlier successful unlock was unexpectedly restored", testLockingManager.getLockState(firstKey));
+      assertTrue("Successfully persisted lock prefix was incorrectly compensated",
+          testLockingManager.getLockState(secondKey).hasLock(LockType.WRITE, view, false));
+    }
+
+    testLockingManager.changeLocks(view, Collections.singletonList(LockChange.unlock(Collections.singleton(secondKey), null, IRWOLockManager.ALL_LOCKS)), false,
+        true, null, null);
+    assertNull("Persistence sequencing remained blocked after the later-operation failure", testLockingManager.getLockState(secondKey));
+  }
+
+  private Thread durableChangeThread(IView view, Object key, AtomicReference<Throwable> failure, String name)
+  {
+    return new Thread(() -> {
+      try
+      {
+        testLockingManager.changeLocks(view,
+            Collections.singletonList(LockChange.lock(Collections.singleton(key), LockType.WRITE, 1, IRWOLockManager.NO_TIMEOUT)), false, true, null, null);
+      }
+      catch (Throwable ex)
+      {
+        failure.set(ex);
+      }
+    }, name);
+  }
+
   /**
    * @author Eike Stepper
    */
-  private static final class TestLockingManager extends LockingManager
+  private final class TestLockingManager extends LockingManager
   {
+    private int durablePersistenceCount;
+
+    private boolean writeAccessAvailableDuringPersistence;
+
     public TestLockingManager()
     {
     }
@@ -190,6 +385,110 @@ public class Issue_000210_Test extends AbstractCDOTest
 
       lock.unlock();
       return true;
+    }
+
+    @Override
+    protected void persistDurableChanges(IView view, String durableLockingID, List<? extends LockChange<Object>> changes, Map<CDOID, LockGrade> durableSnapshot,
+        AtomicInteger persistedChangeCount)
+    {
+      ++durablePersistenceCount;
+      durableSnapshots.add(new HashMap<>(durableSnapshot));
+      if (pauseNextDurablePersistence.compareAndSet(true, false))
+      {
+        durablePersistenceStarted.countDown();
+        try
+        {
+          if (!continueDurablePersistence.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
+          {
+            throw new AssertionError("Timed out pausing durable persistence");
+          }
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+          throw new AssertionError("Interrupted while pausing durable persistence", ex);
+        }
+      }
+
+      if (failNextDurablePersistence.compareAndSet(true, false))
+      {
+        persistedChangeCount.set(persistedChangesBeforeFailure);
+        throw new IllegalStateException("Injected durable persistence failure");
+      }
+
+      if (recordOnlyDurablePersistence)
+      {
+        persistedChangeCount.set(changes.size());
+        return;
+      }
+
+      CountDownLatch checked = new CountDownLatch(1);
+      AtomicReference<Boolean> available = new AtomicReference<>();
+      Thread checker = new Thread(() -> {
+        available.set(tryWriteAccess());
+        checked.countDown();
+      }, "DurableLockWriteAccessCheck");
+      checker.start();
+      try
+      {
+        if (!checked.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
+        {
+          throw new AssertionError("Timed out checking lock-manager write access");
+        }
+
+        checker.join(DEFAULT_TIMEOUT);
+      }
+      catch (InterruptedException ex)
+      {
+        Thread.currentThread().interrupt();
+        throw new AssertionError("Interrupted checking lock-manager write access", ex);
+      }
+
+      writeAccessAvailableDuringPersistence = Boolean.TRUE.equals(available.get());
+      super.persistDurableChanges(view, durableLockingID, changes, durableSnapshot, persistedChangeCount);
+    }
+
+    @Override
+    public long changeLocks(IView view, List<? extends LockChange<Object>> changes, boolean recursive, boolean explicit,
+        DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) throws InterruptedException, TimeoutRuntimeException
+    {
+      boolean observed = observedChangeKey != null
+          && changes.stream().anyMatch(change -> change.getObjects() != null && change.getObjects().contains(observedChangeKey));
+      if (observed)
+      {
+        observedChange.countDown();
+      }
+
+      boolean locks = changes.stream().anyMatch(LockChange::isLock);
+      boolean unlocks = changes.stream().anyMatch(LockChange::isUnlock);
+      if (!locks || !unlocks || !pauseAtLockMutationBoundary)
+      {
+        return super.changeLocks(view, changes, recursive, explicit, deltaHandler, stateHandler);
+      }
+
+      Consumer<LockState<Object, IView>> pausingHandler = state -> {
+        if (pauseAtLockMutationBoundary)
+        {
+          pauseAtLockMutationBoundary = false;
+          atLockMutationBoundary.countDown();
+          try
+          {
+            if (!continueCommit.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS))
+            {
+              throw new AssertionError("Timed out waiting to continue the commit");
+            }
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.currentThread().interrupt();
+            throw new AssertionError("Interrupted while waiting to continue the commit", ex);
+          }
+        }
+
+        stateHandler.accept(state);
+      };
+
+      return super.changeLocks(view, changes, recursive, explicit, deltaHandler, pausingHandler);
     }
   }
 }

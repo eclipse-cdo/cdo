@@ -18,8 +18,8 @@ import org.eclipse.emf.cdo.server.ILockingManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 
-import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 
@@ -104,6 +104,24 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
       LockDeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler);
 
   /**
+   * Applies one ordered set of lock changes under one in-memory write-access scope, then persists explicit durable
+   * lock changes after releasing that access.
+   *
+   * @param view the lock owner
+   * @param changes the ordered lock and unlock requests
+   * @param recursive whether object collections are expanded to their contained objects
+   * @param explicit whether changes must also be persisted for a durable view
+   * @param deltaHandler receives the effective lock-count changes
+   * @param stateHandler receives the final state of affected objects
+   * @return the generic lock-manager modification count
+   * @throws InterruptedException if a requested lock wait is interrupted
+   * @throws TimeoutRuntimeException if a requested lock cannot be acquired before its timeout
+   * @since 4.27
+   */
+  public long changeLocks(IView view, List<? extends LockChange<Object>> changes, boolean recursive, boolean explicit, //
+      DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) throws InterruptedException, TimeoutRuntimeException;
+
+  /**
    * @since 4.0
    */
   public LockArea createLockArea(InternalView view);
@@ -170,23 +188,6 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
    * @since 4.1
    */
   public void reloadLocks();
-
-  /**
-   * Acquires the read access used by getLocks and getLockGrade operations.
-   *
-   * @since 4.27
-   */
-  public Access accessRead();
-
-  /**
-   * Acquires the write access used by lock and unlock operations.
-   * <p>
-   * This allows server operations that aggregate several lock changes into one externally visible change to hold
-   * the same reentrant write access across all of their mutations.
-   *
-   * @since 4.27
-   */
-  public Access accessWrite();
 
   @Deprecated
   public List<LockState<Object, IView>> getLockStates();

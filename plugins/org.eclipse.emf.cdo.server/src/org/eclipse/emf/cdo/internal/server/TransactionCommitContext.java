@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.common.id.CDOIDObject;
 import org.eclipse.emf.cdo.common.id.CDOIDReference;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
-import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -93,9 +92,9 @@ import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
-import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -1859,19 +1858,19 @@ public class TransactionCommitContext implements InternalCommitContext
 
       CDOLockOwner lockOwner = CDOLockUtil.createLockOwner(transaction);
 
-      try (Access access = lockManager.accessWrite())
+      List<LockChange<Object>> lockChanges = new ArrayList<>();
+      collectLocksOnNewObjects(lockOwner, lockChanges);
+      monitor.worked();
+
+      collectAutoReleaseExplicitLocks(lockOwner, lockChanges);
+      monitor.worked();
+
+      lockManager.changeLocks(transaction, lockChanges, false, true, lockDeltas, lockStates);
+
+      if (!lockDeltas.isEmpty())
       {
-        acquireLocksOnNewObjects(lockOwner);
-        monitor.worked();
-
-        autoReleaseExplicitLocks(lockOwner);
-        monitor.worked();
-
-        if (!lockDeltas.isEmpty())
-        {
-          CDOBranchPoint branchPoint = getBranchPoint();
-          lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
-        }
+        CDOBranchPoint branchPoint = getBranchPoint();
+        lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
       }
 
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());
@@ -1896,10 +1895,9 @@ public class TransactionCommitContext implements InternalCommitContext
     }
   }
 
-  protected void acquireLocksOnNewObjects(CDOLockOwner lockOwner) throws InterruptedException
+  protected void collectLocksOnNewObjects(CDOLockOwner lockOwner, List<LockChange<Object>> changes)
   {
     boolean mapIDs = transaction.getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE;
-    lockDeltas.setOperation(Operation.LOCK);
 
     for (CDOLockState lockStateOnNewObject : locksOnNewObjects)
     {
@@ -1920,13 +1918,13 @@ public class TransactionCommitContext implements InternalCommitContext
         if (lockStateOnNewObject.isLocked(type, lockOwner, false))
         {
           Set<Object> objects = Collections.singleton(target);
-          lockManager.lock(transaction, objects, type, 1, IRWOLockManager.NO_TIMEOUT, false, true, lockDeltas, lockStates);
+          changes.add(LockChange.lock(objects, type, 1, IRWOLockManager.NO_TIMEOUT));
         }
       }
     }
   }
 
-  protected void autoReleaseExplicitLocks(CDOLockOwner lockOwner) throws InterruptedException
+  protected void collectAutoReleaseExplicitLocks(CDOLockOwner lockOwner, List<LockChange<Object>> changes)
   {
     List<Object> targets = new ArrayList<>();
 
@@ -1948,8 +1946,7 @@ public class TransactionCommitContext implements InternalCommitContext
       }
     }
 
-    lockDeltas.setOperation(Operation.UNLOCK);
-    lockManager.unlock(transaction, targets, null, IRWOLockManager.ALL_LOCKS, false, true, lockDeltas, lockStates);
+    changes.add(LockChange.unlock(targets, null, IRWOLockManager.ALL_LOCKS));
   }
 
   protected void addNewPackageUnits(OMMonitor monitor)

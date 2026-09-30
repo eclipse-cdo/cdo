@@ -14,7 +14,10 @@ package org.eclipse.net4j.util.concurrent;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.HashBag;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler;
+import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.Operation;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import java.util.ArrayList;
@@ -22,7 +25,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -104,57 +108,178 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       LockDeltaHandler<OBJECT, CONTEXT> deltaHandler, Consumer<LockState<OBJECT, CONTEXT>> stateHandler) //
       throws InterruptedException, TimeoutRuntimeException
   {
-    CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
-    CheckUtil.checkArg(objects, "objects"); //$NON-NLS-1$
-    CheckUtil.checkArg(lockType, "lockType"); //$NON-NLS-1$
-    CheckUtil.checkArg(count >= 0, "count >= 0"); //$NON-NLS-1$
+    LockChange<OBJECT> change = new LockChange<>(Operation.LOCK, objects, lockType, count, timeout);
+    return changeLocks(context, Collections.singletonList(change), adapt(deltaHandler, Operation.LOCK), stateHandler, ExecutionMode.PROGRESSIVE);
+  }
 
-    long deadline = timeout == NO_TIMEOUT ? Long.MAX_VALUE : currentTimeMillis() + timeout;
+  @Override
+  public long changeLocks(CONTEXT context, List<? extends LockChange<OBJECT>> changes, DeltaHandler<OBJECT, CONTEXT> deltaHandler,
+      Consumer<LockState<OBJECT, CONTEXT>> stateHandler) throws InterruptedException, TimeoutRuntimeException
+  {
+    return changeLocks(context, changes, deltaHandler, stateHandler, ExecutionMode.ATOMIC);
+  }
+
+  private long changeLocks(CONTEXT context, List<? extends LockChange<OBJECT>> changes, DeltaHandler<OBJECT, CONTEXT> deltaHandler,
+      Consumer<LockState<OBJECT, CONTEXT>> stateHandler, ExecutionMode executionMode) throws InterruptedException, TimeoutRuntimeException
+  {
+    CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
+    CheckUtil.checkArg(changes, "changes"); //$NON-NLS-1$
+
+    if (changes.isEmpty())
+    {
+      return getModCount();
+    }
+
+    if (executionMode == ExecutionMode.PROGRESSIVE)
+    {
+      return lockProgressively(context, changes.get(0), deltaHandler, stateHandler);
+    }
 
     try (Access access = write.access())
     {
-      if (ObjectUtil.isEmpty(objects) || count == 0)
+      long deadline = getDeadline(changes);
+      Map<OBJECT, LockState<OBJECT, CONTEXT>> simulatedStates;
+      Set<OBJECT> stateObjects;
+      List<LockDeltaRecord<OBJECT>> deltas;
+
+      for (;;)
       {
-        // Nothing to do.
+        simulatedStates = createSimulation(context);
+        stateObjects = new LinkedHashSet<>();
+        deltas = new ArrayList<>();
+
+        if (simulateChanges(context, changes, simulatedStates, stateObjects, deltas))
+        {
+          break;
+        }
+
+        long waitTime = deadline == Long.MAX_VALUE ? Long.MAX_VALUE : deadline - currentTimeMillis();
+        if (waitTime <= 0)
+        {
+          throw createTimeoutException(changes, simulatedStates);
+        }
+
+        unlocked.await(waitTime, TimeUnit.MILLISECONDS);
+      }
+
+      deltas.clear();
+      stateObjects.clear();
+      boolean effectiveRequest = false;
+      boolean hasUnlock = false;
+      Map<OBJECT, LockState<OBJECT, CONTEXT>> affectedStates = new LinkedHashMap<>();
+
+      for (LockChange<OBJECT> change : changes)
+      {
+        boolean effectiveChange = isEffectiveRequest(context, change);
+        effectiveRequest |= effectiveChange;
+        hasUnlock |= change.getOperation() == Operation.UNLOCK && effectiveChange;
+        applyChange(context, change, stateObjects, deltas, affectedStates);
+      }
+
+      for (Map.Entry<OBJECT, LockState<OBJECT, CONTEXT>> entry : affectedStates.entrySet())
+      {
+        LockState<OBJECT, CONTEXT> lockState = entry.getValue();
+        if (lockState.hasLocks(context))
+        {
+          addContextToLockStateMapping(context, lockState);
+        }
+        else
+        {
+          Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
+          if (lockStates != null)
+          {
+            lockStates.remove(lockState);
+            if (lockStates.isEmpty())
+            {
+              contextToLockStates.remove(context);
+            }
+          }
+        }
+
+        if (lockState.hasNoLocks())
+        {
+          objectToLockStateMap.remove(entry.getKey());
+        }
+      }
+
+      if (deltaHandler != null)
+      {
+        for (LockDeltaRecord<OBJECT> delta : deltas)
+        {
+          deltaHandler.handleLockDelta(delta.operation, context, delta.object, delta.lockType, delta.oldCount, delta.newCount);
+        }
+      }
+
+      if (stateHandler != null)
+      {
+        for (OBJECT object : stateObjects)
+        {
+          LockState<OBJECT, CONTEXT> lockState = affectedStates.get(object);
+          if (lockState != null)
+          {
+            stateHandler.accept(lockState);
+          }
+        }
+      }
+
+      if (hasUnlock)
+      {
+        unlocked.signalAll();
+      }
+
+      return effectiveRequest ? ++modCount : modCount;
+    }
+  }
+
+  private long lockProgressively(CONTEXT context, LockChange<OBJECT> change, DeltaHandler<OBJECT, CONTEXT> deltaHandler,
+      Consumer<LockState<OBJECT, CONTEXT>> stateHandler) throws InterruptedException, TimeoutRuntimeException
+  {
+    Collection<? extends OBJECT> objects = change.getObjects();
+    CheckUtil.checkArg(objects, "objects"); //$NON-NLS-1$
+    CheckUtil.checkArg(change.getLockType(), "lockType"); //$NON-NLS-1$
+    CheckUtil.checkArg(change.getCount() >= 0, "count >= 0"); //$NON-NLS-1$
+
+    try (Access access = write.access())
+    {
+      if (ObjectUtil.isEmpty(objects) || change.getCount() == 0)
+      {
         return modCount;
       }
 
-      // Populate a mutable list of objects to lock. This list will shrink while objects are successfully locked below.
+      long deadline = change.getTimeout() == NO_TIMEOUT ? Long.MAX_VALUE : currentTimeMillis() + change.getTimeout();
       List<OBJECT> objectsToLock = new ArrayList<>(objects);
-
-      // Remember the locked objects for the case that an exception occurs, so that their locks can be removed again.
       List<OBJECT> lockedObjects = new ArrayList<>(objectsToLock.size());
 
       for (;;)
       {
-        for (Iterator<OBJECT> it = objectsToLock.iterator(); it.hasNext();)
+        for (int i = 0; i < objectsToLock.size();)
         {
-          OBJECT lockedObject = it.next();
-          LockState<OBJECT, CONTEXT> lockState = getOrCreateLockState(lockedObject);
-
-          if (lockState.canLock(lockType, context))
+          OBJECT object = objectsToLock.get(i);
+          LockState<OBJECT, CONTEXT> state = getOrCreateLockState(object);
+          if (!state.canLock(change.getLockType(), context))
           {
-            int oldCount = lockState.getLockCount(lockType, context);
-            int newCount = lockState.lock(lockType, context, count);
-
-            if (newCount != oldCount)
-            {
-              addContextToLockStateMapping(context, lockState);
-
-              if (deltaHandler != null)
-              {
-                deltaHandler.handleLockDelta(context, lockedObject, lockType, oldCount, newCount);
-              }
-            }
-
-            if (stateHandler != null)
-            {
-              stateHandler.accept(lockState);
-            }
-
-            lockedObjects.add(lockedObject);
-            it.remove();
+            ++i;
+            continue;
           }
+
+          int oldCount = state.getLockCount(change.getLockType(), context);
+          int newCount = state.lock(change.getLockType(), context, change.getCount());
+          if (newCount != oldCount)
+          {
+            addContextToLockStateMapping(context, state);
+            if (deltaHandler != null)
+            {
+              deltaHandler.handleLockDelta(Operation.LOCK, context, object, change.getLockType(), oldCount, newCount);
+            }
+          }
+
+          if (stateHandler != null)
+          {
+            stateHandler.accept(state);
+          }
+
+          lockedObjects.add(object);
+          objectsToLock.remove(i);
         }
 
         if (objectsToLock.isEmpty())
@@ -162,41 +287,339 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
           return ++modCount;
         }
 
+        long waitTime = deadline == Long.MAX_VALUE ? Long.MAX_VALUE : deadline - currentTimeMillis();
+        if (waitTime <= 0)
+        {
+          TimeoutRuntimeException ex = createTimeoutException(Collections.singletonList(change), createSimulation(context));
+          rollbackProgressive(context, change, lockedObjects);
+          throw ex;
+        }
+
         try
         {
-          long waitTime = deadline - currentTimeMillis();
-          if (waitTime <= 0)
-          {
-            StringBuilder builder = new StringBuilder();
-            builder.append("Could not lock objects within ");
-            builder.append(timeout);
-            builder.append(" milliseconds: ");
-
-            StringJoiner joiner = new StringJoiner(", ", "Could not lock objects within " + timeout + " milliseconds: ", "");
-            for (OBJECT objectToLock : objectsToLock)
-            {
-              LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(objectToLock);
-              if (lockState != null)
-              {
-                joiner.add(lockState.toString());
-              }
-            }
-
-            throw new TimeoutRuntimeException(builder.toString());
-          }
-
-          // Give others a chance to unlock objects.
           unlocked.await(waitTime, TimeUnit.MILLISECONDS);
         }
         catch (InterruptedException | TimeoutRuntimeException ex)
         {
-          unlock(context, lockedObjects, lockType, count, null, null);
-
-          --modCount; // Fix the modCount that was increased by unlock();
+          rollbackProgressive(context, change, lockedObjects);
           throw ex;
         }
       }
     }
+  }
+
+  private void rollbackProgressive(CONTEXT context, LockChange<OBJECT> change, List<OBJECT> lockedObjects)
+  {
+    for (OBJECT object : lockedObjects)
+    {
+      LockState<OBJECT, CONTEXT> state = objectToLockStateMap.get(object);
+      if (state == null)
+      {
+        continue;
+      }
+
+      state.unlock(change.getLockType(), context, change.getCount());
+      if (!state.hasLocks(context))
+      {
+        Set<LockState<OBJECT, CONTEXT>> states = contextToLockStates.get(context);
+        if (states != null)
+        {
+          states.remove(state);
+          if (states.isEmpty())
+          {
+            contextToLockStates.remove(context);
+          }
+        }
+      }
+
+      if (state.hasNoLocks())
+      {
+        objectToLockStateMap.remove(object);
+      }
+    }
+
+    unlocked.signalAll();
+  }
+
+  private Map<OBJECT, LockState<OBJECT, CONTEXT>> createSimulation(CONTEXT context)
+  {
+    Map<OBJECT, LockState<OBJECT, CONTEXT>> result = new HashMap<>();
+    Set<LockState<OBJECT, CONTEXT>> states = contextToLockStates.get(context);
+    if (states != null)
+    {
+      for (LockState<OBJECT, CONTEXT> state : states)
+      {
+        result.put(state.getLockedObject(), state.copy());
+      }
+    }
+
+    return result;
+  }
+
+  private boolean simulateChanges(CONTEXT context, List<? extends LockChange<OBJECT>> changes, Map<OBJECT, LockState<OBJECT, CONTEXT>> states,
+      Set<OBJECT> stateObjects, List<LockDeltaRecord<OBJECT>> deltas)
+  {
+    for (LockChange<OBJECT> change : changes)
+    {
+      if (change.getCount() == 0)
+      {
+        continue;
+      }
+
+      List<OBJECT> targets = new ArrayList<>();
+
+      Collection<? extends OBJECT> objects = change.getObjects();
+      if (objects == null)
+      {
+        for (Map.Entry<OBJECT, LockState<OBJECT, CONTEXT>> entry : states.entrySet())
+        {
+          if (entry.getValue().hasLocks(context))
+          {
+            targets.add(entry.getKey());
+          }
+        }
+
+        Set<LockState<OBJECT, CONTEXT>> existing = contextToLockStates.get(context);
+        if (existing != null)
+        {
+          for (LockState<OBJECT, CONTEXT> state : existing)
+          {
+            if (!states.containsKey(state.getLockedObject()))
+            {
+              targets.add(state.getLockedObject());
+              states.put(state.getLockedObject(), state.copy());
+            }
+          }
+        }
+      }
+      else
+      {
+        targets.addAll(objects);
+      }
+
+      for (OBJECT object : targets)
+      {
+        LockState<OBJECT, CONTEXT> state = states.get(object);
+        if (state == null)
+        {
+          LockState<OBJECT, CONTEXT> currentState = objectToLockStateMap.get(object);
+          if (currentState != null)
+          {
+            state = currentState.copy();
+            states.put(object, state);
+          }
+          else if (change.getOperation() == Operation.UNLOCK)
+          {
+            continue;
+          }
+          else
+          {
+            state = new LockState<>(object);
+            states.put(object, state);
+          }
+        }
+
+        if (change.getOperation() == Operation.LOCK)
+        {
+          if (!state.canLock(change.getLockType(), context))
+          {
+            return false;
+          }
+
+          int oldCount = state.getLockCount(change.getLockType(), context);
+          int newCount = state.lock(change.getLockType(), context, change.getCount());
+
+          stateObjects.add(object);
+
+          if (newCount != oldCount)
+          {
+            deltas.add(new LockDeltaRecord<>(change.getOperation(), object, change.getLockType(), oldCount, newCount));
+          }
+        }
+        else
+        {
+          LockType[] types = change.getLockType() == null ? ALL_LOCK_TYPES_ARRAY : LOCK_TYPE_ARRAYS[change.getLockType().ordinal()];
+
+          for (LockType type : types)
+          {
+            if (state.canUnlock(type, context))
+            {
+              int oldCount = state.getLockCount(type, context);
+              int newCount = state.unlock(type, context, change.getCount());
+
+              stateObjects.add(object);
+
+              if (newCount != oldCount)
+              {
+                deltas.add(new LockDeltaRecord<>(change.getOperation(), object, type, oldCount, newCount));
+              }
+            }
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+
+  private void applyChange(CONTEXT context, LockChange<OBJECT> change, Set<OBJECT> stateObjects, List<LockDeltaRecord<OBJECT>> deltas,
+      Map<OBJECT, LockState<OBJECT, CONTEXT>> affectedStates)
+  {
+    if (change.getCount() == 0)
+    {
+      return;
+    }
+
+    List<OBJECT> targets = new ArrayList<>();
+
+    Collection<? extends OBJECT> objects = change.getObjects();
+    if (objects == null)
+    {
+      Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
+      if (lockStates != null)
+      {
+        for (LockState<OBJECT, CONTEXT> state : new ArrayList<>(lockStates))
+        {
+          targets.add(state.getLockedObject());
+        }
+      }
+    }
+    else
+    {
+      targets.addAll(objects);
+    }
+
+    for (OBJECT object : targets)
+    {
+      LockState<OBJECT, CONTEXT> state = change.getOperation() == Operation.LOCK ? getOrCreateLockState(object) : objectToLockStateMap.get(object);
+      if (state == null)
+      {
+        continue;
+      }
+
+      if (change.getOperation() == Operation.LOCK)
+      {
+        int oldCount = state.getLockCount(change.getLockType(), context);
+        int newCount = state.lock(change.getLockType(), context, change.getCount());
+
+        stateObjects.add(object);
+
+        if (newCount != oldCount)
+        {
+          deltas.add(new LockDeltaRecord<>(change.getOperation(), object, change.getLockType(), oldCount, newCount));
+        }
+
+        addContextToLockStateMapping(context, state);
+      }
+      else
+      {
+        LockType[] types = change.getLockType() == null ? ALL_LOCK_TYPES_ARRAY : LOCK_TYPE_ARRAYS[change.getLockType().ordinal()];
+
+        for (LockType type : types)
+        {
+          if (state.canUnlock(type, context))
+          {
+            int oldCount = state.getLockCount(type, context);
+            int newCount = state.unlock(type, context, change.getCount());
+
+            stateObjects.add(object);
+
+            if (newCount != oldCount)
+            {
+              deltas.add(new LockDeltaRecord<>(change.getOperation(), object, type, oldCount, newCount));
+            }
+          }
+        }
+
+        if (state.hasLocks(context))
+        {
+          addContextToLockStateMapping(context, state);
+        }
+        else
+        {
+          Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
+          if (lockStates != null)
+          {
+            lockStates.remove(state);
+            if (lockStates.isEmpty())
+            {
+              contextToLockStates.remove(context);
+            }
+          }
+        }
+      }
+
+      affectedStates.put(object, state);
+    }
+  }
+
+  private boolean isEffectiveRequest(CONTEXT context, LockChange<OBJECT> change)
+  {
+    Collection<? extends OBJECT> objects = change.getObjects();
+    if (change.getOperation() == Operation.UNLOCK && objects != null && !objects.isEmpty())
+    {
+      return true;
+    }
+
+    if (change.getCount() == 0)
+    {
+      return false;
+    }
+
+    if (objects == null)
+    {
+      return !ObjectUtil.isEmpty(contextToLockStates.get(context));
+    }
+
+    return !objects.isEmpty();
+  }
+
+  private long getDeadline(List<? extends LockChange<OBJECT>> changes)
+  {
+    long now = currentTimeMillis();
+    long deadline = Long.MAX_VALUE;
+
+    for (LockChange<OBJECT> change : changes)
+    {
+      if (change.getOperation() == Operation.LOCK && change.getTimeout() != NO_TIMEOUT)
+      {
+        deadline = Math.min(deadline, now + change.getTimeout());
+      }
+    }
+
+    return deadline;
+  }
+
+  private TimeoutRuntimeException createTimeoutException(List<? extends LockChange<OBJECT>> changes, Map<OBJECT, LockState<OBJECT, CONTEXT>> states)
+  {
+    long timeout = Long.MAX_VALUE;
+
+    for (LockChange<OBJECT> change : changes)
+    {
+      if (change.getOperation() == Operation.LOCK && change.getTimeout() != NO_TIMEOUT)
+      {
+        timeout = Math.min(timeout, change.getTimeout());
+      }
+    }
+
+    StringJoiner joiner = new StringJoiner(", ", "Could not lock objects within " + timeout + " milliseconds: ", "");
+
+    for (LockChange<OBJECT> change : changes)
+    {
+      if (change.getOperation() == Operation.LOCK && change.getObjects() != null)
+      {
+        for (OBJECT object : change.getObjects())
+        {
+          LockState<OBJECT, CONTEXT> state = states.get(object);
+          if (state != null)
+          {
+            joiner.add(state.toString());
+          }
+        }
+      }
+    }
+
+    return new TimeoutRuntimeException(joiner.toString());
   }
 
   private LockState<OBJECT, CONTEXT> getOrCreateLockState(OBJECT object)
@@ -216,123 +639,25 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
   public long unlock(CONTEXT context, Collection<? extends OBJECT> objects, LockType lockType, int count, //
       LockDeltaHandler<OBJECT, CONTEXT> deltaHandler, Consumer<LockState<OBJECT, CONTEXT>> stateHandler)
   {
-    CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
-    CheckUtil.checkArg(count >= -1, "count >= -1"); //$NON-NLS-1$
+    LockChange<OBJECT> change = new LockChange<>(Operation.UNLOCK, objects, lockType, count, NO_TIMEOUT);
 
-    LockType[] lockTypes = lockType == null ? ALL_LOCK_TYPES_ARRAY : LOCK_TYPE_ARRAYS[lockType.ordinal()];
-    List<LockState<OBJECT, CONTEXT>> modifiedLockStates = new ArrayList<>();
-
-    try (Access access = write.access())
+    try
     {
-      if (objects == null)
-      {
-        if (count == 0)
-        {
-          // Nothing to do.
-          return modCount;
-        }
-
-        Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
-        if (lockStates == null)
-        {
-          // We have no locks, nothing to do.
-          return modCount;
-        }
-
-        for (LockState<OBJECT, CONTEXT> lockState : lockStates)
-        {
-          OBJECT object = lockState.getLockedObject();
-          doUnlock(context, object, lockTypes, count, deltaHandler, stateHandler, lockState, modifiedLockStates);
-        }
-      }
-      else
-      {
-        if (objects.isEmpty())
-        {
-          return modCount;
-        }
-
-        for (OBJECT object : objects)
-        {
-          LockState<OBJECT, CONTEXT> lockState = objectToLockStateMap.get(object);
-          if (lockState != null)
-          {
-            doUnlock(context, object, lockTypes, count, deltaHandler, stateHandler, lockState, modifiedLockStates);
-          }
-        }
-      }
-
-      removeLockStates(context, modifiedLockStates);
-
-      // Wake up blocked lockers.
-      unlocked.signalAll();
-
-      return ++modCount;
+      return changeLocks(context, Collections.singletonList(change), adapt(deltaHandler, Operation.UNLOCK), stateHandler);
+    }
+    catch (InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
     }
   }
 
-  private void doUnlock(CONTEXT context, OBJECT object, LockType[] lockTypes, int count, //
-      LockDeltaHandler<OBJECT, CONTEXT> deltaHandler, Consumer<LockState<OBJECT, CONTEXT>> stateHandler, //
-      LockState<OBJECT, CONTEXT> lockState, List<LockState<OBJECT, CONTEXT>> modifiedLockStates)
+  private DeltaHandler<OBJECT, CONTEXT> adapt(LockDeltaHandler<OBJECT, CONTEXT> handler, Operation operation)
   {
-    for (LockType lockType : lockTypes)
-    {
-      if (lockState.canUnlock(lockType, context))
-      {
-        int oldCount = lockState.getLockCount(lockType, context);
-        int newCount = lockState.unlock(lockType, context, count);
-
-        if (newCount != oldCount)
-        {
-          modifiedLockStates.add(lockState);
-
-          if (deltaHandler != null)
-          {
-            deltaHandler.handleLockDelta(context, lockState.getLockedObject(), lockType, oldCount, newCount);
-          }
-        }
-
-        if (stateHandler != null)
-        {
-          stateHandler.accept(lockState);
-        }
-      }
-    }
-  }
-
-  private void removeLockStates(CONTEXT context, List<LockState<OBJECT, CONTEXT>> modifiedLockStates)
-  {
-    for (LockState<OBJECT, CONTEXT> lockState : modifiedLockStates)
-    {
-      if (!lockState.hasLocks(context))
-      {
-        removeLockStateForContext(context, lockState);
-      }
-
-      if (lockState.hasNoLocks())
-      {
-        objectToLockStateMap.remove(lockState.getLockedObject());
-      }
-    }
-  }
-
-  /**
-   * Removes a lockState from the set of all lockStates that the given context is involved in. If the lockState being
-   * removed is the last one for the given context, then the set becomes empty, and is therefore removed from the
-   * contextToLockStates map.
-   */
-  private void removeLockStateForContext(CONTEXT context, LockState<OBJECT, CONTEXT> lockState)
-  {
-    Set<LockState<OBJECT, CONTEXT>> lockStates = contextToLockStates.get(context);
-    if (lockStates != null)
-    {
-      lockStates.remove(lockState);
-
-      if (lockStates.isEmpty())
-      {
-        contextToLockStates.remove(context);
-      }
-    }
+    return handler == null //
+        ? null //
+        : (op, context, object, lockType, oldCount, newCount) //
+        -> handler.handleLockDelta(context, object, lockType, oldCount, newCount);
   }
 
   /**
@@ -447,102 +772,37 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     return System.currentTimeMillis();
   }
 
-  @Deprecated
-  public List<LockState<OBJECT, CONTEXT>> getLockStates()
+  /**
+   * @author Eike Stepper
+   */
+  private enum ExecutionMode
   {
-    throw new UnsupportedOperationException();
+    ATOMIC, PROGRESSIVE
   }
 
   /**
-   * @category Write Access
+   * @author Eike Stepper
    */
-  @Deprecated
-  public void setLockState(OBJECT key, LockState<OBJECT, CONTEXT> lockState)
+  private static final class LockDeltaRecord<OBJECT>
   {
-    try (Access access = write.access())
+    private final Operation operation;
+
+    private final OBJECT object;
+
+    private final LockType lockType;
+
+    private final int oldCount;
+
+    private final int newCount;
+
+    public LockDeltaRecord(Operation operation, OBJECT object, LockType lockType, int oldCount, int newCount)
     {
-      objectToLockStateMap.put(key, lockState);
-
-      for (CONTEXT readLockOwner : lockState.getReadLockOwners())
-      {
-        addContextToLockStateMapping(readLockOwner, lockState);
-      }
-
-      CONTEXT writeLockOwner = lockState.getWriteLockOwner();
-      if (writeLockOwner != null)
-      {
-        addContextToLockStateMapping(writeLockOwner, lockState);
-      }
-
-      CONTEXT writeOptionOwner = lockState.getWriteOptionOwner();
-      if (writeOptionOwner != null)
-      {
-        addContextToLockStateMapping(writeOptionOwner, lockState);
-      }
+      this.operation = operation;
+      this.object = object;
+      this.lockType = lockType;
+      this.oldCount = oldCount;
+      this.newCount = newCount;
     }
-  }
-
-  @Override
-  @Deprecated
-  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
-      throws InterruptedException
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void unlock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void unlock(CONTEXT context)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public List<LockState<OBJECT, CONTEXT>> unlock2(LockType lockType, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Deprecated
-  public static void setUnlockAll(boolean on)
-  {
-    throw new UnsupportedOperationException();
   }
 
   /**
@@ -578,6 +838,32 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
     {
       CheckUtil.checkArg(lockedObject, "lockedObject");
       this.lockedObject = lockedObject;
+    }
+
+    private LockState<OBJECT, CONTEXT> copy()
+    {
+      LockState<OBJECT, CONTEXT> copy = new LockState<>(lockedObject);
+
+      if (readLockOwners != null)
+      {
+        copy.readLockOwners = new HashBag<>();
+        for (CONTEXT context : readLockOwners)
+        {
+          copy.readLockOwners.add(context, readLockOwners.getCounterFor(context));
+        }
+      }
+
+      if (writeLockOwner != null)
+      {
+        copy.writeLockOwner = writeLockOwner.copy();
+      }
+
+      if (writeOptionOwner != null)
+      {
+        copy.writeOptionOwner = writeOptionOwner.copy();
+      }
+
+      return copy;
     }
 
     public OBJECT getLockedObject()
@@ -1084,6 +1370,13 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
         this.context = context;
       }
 
+      public ReentrantOwner<CONTEXT> copy()
+      {
+        ReentrantOwner<CONTEXT> copy = new ReentrantOwner<>(context);
+        copy.count = count;
+        return copy;
+      }
+
       public CONTEXT getContext()
       {
         return context;
@@ -1104,5 +1397,103 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
         return count += delta;
       }
     }
+  }
+
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> getLockStates()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @category Write Access
+   */
+  @Deprecated
+  public void setLockState(OBJECT key, LockState<OBJECT, CONTEXT> lockState)
+  {
+    try (Access access = write.access())
+    {
+      objectToLockStateMap.put(key, lockState);
+
+      for (CONTEXT readLockOwner : lockState.getReadLockOwners())
+      {
+        addContextToLockStateMapping(readLockOwner, lockState);
+      }
+
+      CONTEXT writeLockOwner = lockState.getWriteLockOwner();
+      if (writeLockOwner != null)
+      {
+        addContextToLockStateMapping(writeLockOwner, lockState);
+      }
+
+      CONTEXT writeOptionOwner = lockState.getWriteOptionOwner();
+      if (writeOptionOwner != null)
+      {
+        addContextToLockStateMapping(writeOptionOwner, lockState);
+      }
+    }
+  }
+
+  @Override
+  @Deprecated
+  public void lock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> lock2(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToLock, long timeout)
+      throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void lock(LockType type, CONTEXT context, OBJECT objectToLock, long timeout) throws InterruptedException
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(LockType type, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlock(CONTEXT context)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> unlock2(CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public List<LockState<OBJECT, CONTEXT>> unlock2(LockType lockType, CONTEXT context, Collection<? extends OBJECT> objectsToUnlock)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  public static void setUnlockAll(boolean on)
+  {
+    throw new UnsupportedOperationException();
   }
 }

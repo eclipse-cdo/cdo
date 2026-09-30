@@ -180,6 +180,18 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
+  public Access accessRead()
+  {
+    return read.access();
+  }
+
+  @Override
+  public Access accessWrite()
+  {
+    return write.access();
+  }
+
+  @Override
   public Object getLockKey(CDOID id)
   {
     return getLockKey(id, null);

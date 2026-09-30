@@ -93,6 +93,7 @@ import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.IndexedList;
+import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
@@ -1858,16 +1859,19 @@ public class TransactionCommitContext implements InternalCommitContext
 
       CDOLockOwner lockOwner = CDOLockUtil.createLockOwner(transaction);
 
-      acquireLocksOnNewObjects(lockOwner);
-      monitor.worked();
-
-      autoReleaseExplicitLocks(lockOwner);
-      monitor.worked();
-
-      if (!lockDeltas.isEmpty())
+      try (Access access = lockManager.accessWrite())
       {
-        CDOBranchPoint branchPoint = getBranchPoint();
-        lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
+        acquireLocksOnNewObjects(lockOwner);
+        monitor.worked();
+
+        autoReleaseExplicitLocks(lockOwner);
+        monitor.worked();
+
+        if (!lockDeltas.isEmpty())
+        {
+          CDOBranchPoint branchPoint = getBranchPoint();
+          lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
+        }
       }
 
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());

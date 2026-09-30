@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.ILockingManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 
+import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
@@ -169,6 +170,23 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
    * @since 4.1
    */
   public void reloadLocks();
+
+  /**
+   * Acquires the read access used by getLocks and getLockGrade operations.
+   *
+   * @since 4.27
+   */
+  public Access accessRead();
+
+  /**
+   * Acquires the write access used by lock and unlock operations.
+   * <p>
+   * This allows server operations that aggregate several lock changes into one externally visible change to hold
+   * the same reentrant write access across all of their mutations.
+   *
+   * @since 4.27
+   */
+  public Access accessWrite();
 
   @Deprecated
   public List<LockState<Object, IView>> getLockStates();

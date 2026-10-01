@@ -48,6 +48,13 @@ public class AbstractLockingTest extends AbstractCDOTest
   {
   }
 
+  /**
+   * Called after a received lock notification has been submitted for client processing.
+   */
+  protected void afterLockNotificationSubmitted(long lockModCount)
+  {
+  }
+
   @Deprecated
   protected long getInvalidationDelay()
   {
@@ -161,7 +168,7 @@ public class AbstractLockingTest extends AbstractCDOTest
       return new CDONet4jSessionImpl()
       {
         @Override
-        public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
+        public void handleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
         {
           synchronized (activeLockNotifications)
           {
@@ -169,23 +176,29 @@ public class AbstractLockingTest extends AbstractCDOTest
             activeLockNotifications.notifyAll();
           }
 
-          super.handleLockNotification(lockChangeInfo, sender, async);
+          super.handleLockNotification(lockModCount, lockChangeInfo, sender, async);
+          afterLockNotificationSubmitted(lockModCount);
         }
 
         @Override
-        protected void doHandleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
+        protected void doHandleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
         {
-          super.doHandleLockNotification(lockChangeInfo, sender, notifyViews);
-
-          synchronized (activeLockNotifications)
+          try
           {
-            activeLockNotifications.decrementAndGet();
-            activeLockNotifications.notifyAll();
+            super.doHandleLockNotification(lockModCount, lockChangeInfo, sender, notifyViews);
+          }
+          finally
+          {
+            synchronized (activeLockNotifications)
+            {
+              activeLockNotifications.decrementAndGet();
+              activeLockNotifications.notifyAll();
+            }
           }
         }
 
         @Override
-        public void invalidate(InvalidationData invalidationData)
+        public void invalidate(InvalidationData invalidationData, Runnable lockCacheUpdate)
         {
           long delay = getInvalidationDelay();
           if (delay != NO_DELAY)
@@ -193,9 +206,8 @@ public class AbstractLockingTest extends AbstractCDOTest
             sleep(delay); // Delay the invalidation handling to give lock notifications a chance to overtake.
           }
 
-          super.invalidate(invalidationData);
+          super.invalidate(invalidationData, lockCacheUpdate);
         }
-
       };
     }
   }

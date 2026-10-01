@@ -22,8 +22,9 @@ class CDOProtocolVersion
 
   static
   {
-    VALUE = 56; // Modernize Partial Collection Loading (PCL) across CDO #195
+    VALUE = 57; // Lock notifications can be processed out of order #209
 
+    // VALUE = 56; // Modernize Partial Collection Loading (PCL) across CDO #195
     // VALUE = 55; // Restrict ObjectInputStream.readObject() when sender is not trusted #161
     // VALUE = 54; // Provide administrative unlocking #124
     // VALUE = 53; // Make digest algorithm configurable for CDOLob IDs #106

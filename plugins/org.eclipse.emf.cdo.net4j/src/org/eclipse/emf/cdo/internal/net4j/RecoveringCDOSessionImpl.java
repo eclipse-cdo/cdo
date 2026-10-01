@@ -38,6 +38,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateSnapshotResult;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.ArrayList;
@@ -133,25 +135,48 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
 
   protected void recover()
   {
-    CDOSessionProtocol oldSessionProtocol = getSessionProtocol();
-    unhookSessionProtocol();
-    List<AfterRecoveryRunnable> runnables = recoverSession();
+    suspendLockChanges(0L);
 
-    // Check if the sessionProtocol was replaced. (This may not be the case
-    // if the protocol is wrapped inside a DelegatingSessionProtocol.)
-    CDOSessionProtocol newSessionProtocol = getSessionProtocol();
-    if (newSessionProtocol != oldSessionProtocol)
+    try
     {
-      handleProtocolChange(oldSessionProtocol, newSessionProtocol);
-    }
+      CDOSessionProtocol oldSessionProtocol = getSessionProtocol();
+      unhookSessionProtocol();
+      List<AfterRecoveryRunnable> runnables = recoverSession();
 
-    for (AfterRecoveryRunnable runnable : runnables)
+      // Check if the sessionProtocol was replaced. (This may not be the case
+      // if the protocol is wrapped inside a DelegatingSessionProtocol.)
+      CDOSessionProtocol newSessionProtocol = getSessionProtocol();
+      if (newSessionProtocol != oldSessionProtocol)
+      {
+        handleProtocolChange(oldSessionProtocol, newSessionProtocol);
+      }
+
+      for (AfterRecoveryRunnable runnable : runnables)
+      {
+        runnable.run(newSessionProtocol);
+      }
+
+      boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
+      refresh(passiveUpdateEnabled);
+
+      LockStateSnapshotResult snapshot = getSessionProtocol().getLockStateSnapshot();
+      installLockStateSnapshot(snapshot);
+    }
+    catch (RuntimeException ex)
     {
-      runnable.run(newSessionProtocol);
-    }
+      OM.LOG.error(ex);
 
-    boolean passiveUpdateEnabled = options().isPassiveUpdateEnabled();
-    refresh(passiveUpdateEnabled);
+      try
+      {
+        close();
+      }
+      catch (RuntimeException closeFailure)
+      {
+        ex.addSuppressed(closeFailure);
+      }
+
+      throw ex;
+    }
   }
 
   protected void handleProtocolChange(CDOSessionProtocol oldProtocol, CDOSessionProtocol newProtocol)
@@ -232,7 +257,9 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
       }
 
       updateConnectorAndRepositoryName();
-      openSession();
+
+      OpenSessionResult result = openSession();
+      suspendLockChanges(result.getLockModCount());
 
       CDOSessionProtocol sessionProtocol = getSessionProtocol();
       sessionProtocol.openedSession();

@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
@@ -103,6 +104,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.AbstractLocksChangedEvent;
+import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -148,6 +150,7 @@ import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater2;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater3;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateSnapshotResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
@@ -177,6 +180,8 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -210,6 +215,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private CDOUserInfoManager userInfoManager;
 
   private CDOLockStateCache lockStateCache;
+
+  private final LockChangeSequencer lockChangeSequencer = new LockChangeSequencer();
+
+  private final AtomicBoolean lockResyncScheduled = new AtomicBoolean();
+
+  private final Object lockResyncLifecycleLock = new Object();
 
   private CDOSessionProtocol sessionProtocol;
 
@@ -491,6 +502,169 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return lockStateCache;
   }
 
+  /**
+   * Applies a server-authoritative lock change at its session sequence position.
+   *
+   * @param lockModCount the positive server lock modification count
+   * @param action the cache and event update for this count
+   * @param wait whether to wait for this count to be applied
+   */
+  public void sequenceLockChange(long lockModCount, Runnable action, boolean wait)
+  {
+    if (wait)
+    {
+      LockChangeSequencer.Completion completion = lockChangeSequencer.enqueue(lockModCount, action);
+
+      if (lockChangeSequencer.isSuspended())
+      {
+        getExecutorService().submit(lockChangeSequencer::drain);
+        return;
+      }
+
+      try
+      {
+        assertNoViewAccessHeld();
+      }
+      catch (IllegalStateException ex)
+      {
+        getExecutorService().submit(lockChangeSequencer::drain);
+        throw ex;
+      }
+
+      lockChangeSequencer.drain();
+      completion.awaitUninterruptibly();
+    }
+    else
+    {
+      lockChangeSequencer.enqueueAndDrain(lockModCount, action);
+    }
+  }
+
+  /**
+   * Enqueues a lock change without starting the drainer. This is used while a caller still holds view Access.
+   *
+   * @param lockModCount the positive server lock modification count
+   * @param action the cache and event update for this count
+   */
+  public void enqueueLockChange(long lockModCount, Runnable action)
+  {
+    lockChangeSequencer.enqueue(lockModCount, action);
+  }
+
+  /**
+   * Enqueues a lock change and schedules the drainer on the session executor.
+   *
+   * @param lockModCount the positive server lock modification count
+   * @param action the cache and event update for this count
+   */
+  public void enqueueLockChangeAsync(long lockModCount, Runnable action)
+  {
+    enqueueLockChangeAsync(lockModCount, action, null);
+  }
+
+  public void enqueueLockChangeAsync(long lockModCount, Runnable action, Runnable snapshotCoveredAction)
+  {
+    lockChangeSequencer.enqueue(lockModCount, action, snapshotCoveredAction);
+    getExecutorService().submit(lockChangeSequencer::drain);
+  }
+
+  /**
+   * Drains and waits until the given lock change has completed.
+   *
+   * @param lockModCount the positive server lock modification count
+   */
+  public void awaitLockChange(long lockModCount)
+  {
+    try
+    {
+      assertNoViewAccessHeld();
+    }
+    catch (IllegalStateException ex)
+    {
+      getExecutorService().submit(lockChangeSequencer::drain);
+      throw ex;
+    }
+
+    lockChangeSequencer.await(lockModCount);
+  }
+
+  public void suspendLockChanges(long staleCutoff)
+  {
+    lockChangeSequencer.suspend(staleCutoff);
+  }
+
+  public void installLockStateSnapshot(LockStateSnapshotResult snapshot)
+  {
+    synchronized (lockResyncLifecycleLock)
+    {
+      if (isClosed())
+      {
+        return;
+      }
+
+      if (!(lockStateCache instanceof CDOLockStateCacheImpl))
+      {
+        throw new IllegalStateException("Unsupported lock-state cache implementation"); //$NON-NLS-1$
+      }
+
+      List<Runnable> snapshotCoveredActions = lockChangeSequencer.installSnapshotAndCollect(snapshot.getLockModCount(),
+          () -> ((CDOLockStateCacheImpl)lockStateCache).replaceSnapshot(snapshot.getLockStates()));
+
+      for (Runnable action : snapshotCoveredActions)
+      {
+        action.run();
+      }
+
+      lockChangeSequencer.resume();
+      lockResyncScheduled.set(false);
+      getExecutorService().submit(lockChangeSequencer::drain);
+    }
+  }
+
+  private void scheduleLockStateResynchronization(Throwable cause)
+  {
+    if (!lockResyncScheduled.compareAndSet(false, true))
+    {
+      return;
+    }
+
+    getExecutorService().submit(() -> {
+      try
+      {
+        LockStateSnapshotResult snapshot = getSessionProtocol().getLockStateSnapshot();
+        installLockStateSnapshot(snapshot);
+      }
+      catch (Throwable ex)
+      {
+        ex.addSuppressed(cause);
+        try
+        {
+          close();
+        }
+        catch (Throwable closeFailure)
+        {
+          ex.addSuppressed(closeFailure);
+        }
+      }
+    });
+  }
+
+  private void assertNoViewAccessHeld()
+  {
+    for (InternalCDOView view : getViews())
+    {
+      if (view instanceof AbstractCDOView && ((AbstractCDOView)view).isAccessHeldByCurrentThread())
+      {
+        throw new IllegalStateException("Cannot wait for a lock change while holding view Access: " + view); //$NON-NLS-1$
+      }
+    }
+  }
+
+  long getCurrentLockModCount()
+  {
+    return lockChangeSequencer.getCurrentLockModCount();
+  }
+
   @Override
   public CDOSessionProtocol getSessionProtocol()
   {
@@ -769,7 +943,10 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public void close()
   {
-    LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
+    synchronized (lockResyncLifecycleLock)
+    {
+      LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
+    }
   }
 
   /**
@@ -1383,6 +1560,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       sessionInvalidationData.setSecurityImpact(info.getSecurityImpact());
       sessionInvalidationData.setNewPermissions(info.getNewPermissions());
       sessionInvalidationData.setLockChangeInfo(info.getLockChangeInfo());
+      sessionInvalidationData.setLockModCount(info.getLockModCount());
 
       invalidate(sessionInvalidationData);
     }
@@ -1417,20 +1595,98 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
   {
+    handleLockNotification(0L, lockChangeInfo, sender, async);
+  }
+
+  @Override
+  public void handleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
+  {
+    if (lockModCount <= 0L && lockChangeSequencer.isSuspended())
+    {
+      return;
+    }
+
+    if (lockModCount > 0L)
+    {
+      ExecutorService executorService = getExecutorService();
+      executorService.submit(() -> doHandleLockNotification(lockModCount, lockChangeInfo, sender, true));
+      return;
+    }
+
     if (async)
     {
       ExecutorService executorService = getExecutorService();
-      executorService.submit(() -> doHandleLockNotification(lockChangeInfo, sender, true));
+      executorService.submit(() -> doHandleLockNotification(lockModCount, lockChangeInfo, sender, true));
     }
     else
     {
-      doHandleLockNotification(lockChangeInfo, sender, true);
+      doHandleLockNotification(lockModCount, lockChangeInfo, sender, true);
+    }
+  }
+
+  @Override
+  public void handleLockOwnerRemappedNotification(long lockModCount, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner)
+  {
+    if (lockModCount <= 0L && lockChangeSequencer.isSuspended())
+    {
+      return;
+    }
+
+    Runnable action = () -> getLockStateCache().remapOwner(branch, oldOwner, newOwner);
+    if (lockModCount > 0L)
+    {
+      enqueueLockChangeAsync(lockModCount, action);
+    }
+    else
+    {
+      action.run();
     }
   }
 
   protected void doHandleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
+  {
+    doHandleLockNotification(0L, lockChangeInfo, sender, notifyViews);
+  }
+
+  protected void doHandleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
+  {
+    processLockNotification(lockModCount, lockChangeInfo, sender, notifyViews);
+  }
+
+  private void processLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
+  {
+    if (lockModCount > 0L)
+    {
+      if (lockChangeSequencer.isExecuting(lockModCount))
+      {
+        if (lockChangeInfo != null)
+        {
+          applyLockNotification(lockModCount, lockChangeInfo, sender, notifyViews);
+        }
+
+        return;
+      }
+
+      sequenceLockChange(lockModCount, () -> {
+        if (lockChangeInfo != null)
+        {
+          applyLockNotification(lockModCount, lockChangeInfo, sender, notifyViews);
+        }
+      }, false);
+    }
+    else
+    {
+      if (lockChangeInfo != null)
+      {
+        applyLockNotification(lockModCount, lockChangeInfo, sender, notifyViews);
+      }
+    }
+  }
+
+  private void applyLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
   {
     // Only update the lockStateCache if the changes come from remote, i.e., either from commit notifications or
     // from lock notifications. Then the sender is null. Local senders have updated the lockStateCache already.
@@ -1450,7 +1706,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
-    fireEvent(new SessionLocksChangedEvent(sender, lockChangeInfo));
+    fireEvent(new SessionLocksChangedEvent(sender, lockChangeInfo, lockModCount));
 
     if (notifyViews)
     {
@@ -1754,7 +2010,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public void invalidate(InvalidationData invalidationData)
   {
-    invalidator.scheduleInvalidationAndProcess(invalidationData);
+    invalidate(invalidationData, null);
+  }
+
+  /**
+   * Schedules a local commit invalidation whose lock cache update belongs to the same sequenced action.
+   *
+   * @param invalidationData the commit invalidation data
+   * @param lockCacheUpdate the shared lock cache update for the commit result
+   */
+  @Override
+  public void invalidate(InvalidationData invalidationData, Runnable lockCacheUpdate)
+  {
+    invalidator.scheduleInvalidationAndProcess(invalidationData, lockCacheUpdate);
   }
 
   @Override
@@ -2018,6 +2286,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     super.doActivate();
 
+    lockChangeSequencer.setFailureHandler(this::scheduleLockStateResynchronization);
+
     Runnable runnable = SessionUtil.getTestDelayInSessionActivation();
     if (runnable != null)
     {
@@ -2047,6 +2317,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   protected void doDeactivate() throws Exception
   {
     CDOSessionRegistryImpl.INSTANCE.deregister(this);
+
+    lockChangeSequencer.close(null);
 
     super.doDeactivate();
 
@@ -2909,9 +3181,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       unfinishedLocalCommits.remove(token);
     }
 
-    public void scheduleInvalidationAndProcess(InvalidationData invalidationData)
+    public void scheduleInvalidationAndProcess(InvalidationData invalidationData, Runnable lockCacheUpdate)
     {
-      SessionInvalidation invalidation = new SessionInvalidation(invalidationData);
+      SessionInvalidation invalidation = new SessionInvalidation(invalidationData, lockCacheUpdate);
       scheduleInvalidation(invalidation); // Synchronized.
 
       while (isActive())
@@ -2978,11 +3250,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     private final InvalidationData invalidationData;
 
+    private final Runnable lockCacheUpdate;
+
     private final CDOCommitInfo commitInfo;
 
-    public SessionInvalidation(InvalidationData invalidationData)
+    public SessionInvalidation(InvalidationData invalidationData, Runnable lockCacheUpdate)
     {
       this.invalidationData = invalidationData;
+      this.lockCacheUpdate = lockCacheUpdate;
       commitInfo = invalidationData.getCommitInfo();
     }
 
@@ -3037,25 +3312,31 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
         Map<CDOID, InternalCDORevision> oldRevisionsFinal = oldRevisions;
 
-        return () -> {
+        Consumer<Boolean> processInvalidation = lockCoveredBySnapshot -> {
           Map<CDORevision, CDOPermission> oldPermissions = null;
           CDOLockChangeInfo lockChangeInfo = invalidationData.getLockChangeInfo();
           InternalCDOTransaction sender = invalidationData.getSender();
 
           if (success)
           {
+            if (!lockCoveredBySnapshot && lockCacheUpdate != null)
+            {
+              lockCacheUpdate.run();
+            }
+
             if (invalidationData.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE)
             {
               oldPermissions = updatePermissions(commitInfo);
             }
 
-            if (lockChangeInfo != null)
+            if (!lockCoveredBySnapshot && lockChangeInfo != null)
             {
               // Do not notify views because that will happen in invalidateView() below.
-              doHandleLockNotification(lockChangeInfo, sender, false);
+              doHandleLockNotification(invalidationData.getLockModCount(), lockChangeInfo, sender, false);
             }
 
-            fireEvent(new SessionInvalidationEvent(sender, commitInfo, invalidationData.getSecurityImpact(), oldPermissions));
+            fireEvent(
+                new SessionInvalidationEvent(sender, commitInfo, invalidationData.getSecurityImpact(), oldPermissions, invalidationData.getLockModCount()));
             commitInfoManager.notifyCommitInfoHandlers(commitInfo);
           }
 
@@ -3065,7 +3346,22 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           {
             // The sender (committing view) is already valid, just the timestamp must be set "in sequence".
             // Setting the sender's timestamp synchronously can lead to deadlock.
-            invalidateView(commitInfo, view, sender, oldRevisionsFinal, clearResourcePathCache, lockChangeInfo, oldPermissions);
+            invalidateView(commitInfo, view, sender, oldRevisionsFinal, clearResourcePathCache, lockCoveredBySnapshot ? null : lockChangeInfo, oldPermissions);
+          }
+        };
+
+        Runnable invalidationRunnable = () -> processInvalidation.accept(false);
+        Runnable snapshotCoveredInvalidationRunnable = () -> processInvalidation.accept(true);
+
+        return () -> {
+          long lockModCount = invalidationData.getLockModCount();
+          if (lockModCount > 0L)
+          {
+            enqueueLockChangeAsync(lockModCount, invalidationRunnable, snapshotCoveredInvalidationRunnable);
+          }
+          else
+          {
+            invalidationRunnable.run();
           }
         };
       }
@@ -3241,13 +3537,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private final byte securityImpact;
 
+    private final long lockModCount;
+
     public SessionInvalidationEvent(InternalCDOTransaction sender, CDOCommitInfo commitInfo, byte securityImpact,
-        Map<CDORevision, CDOPermission> oldPermissions)
+        Map<CDORevision, CDOPermission> oldPermissions, long lockModCount)
     {
       super(oldPermissions);
       this.sender = sender;
       this.commitInfo = commitInfo;
       this.securityImpact = securityImpact;
+      this.lockModCount = lockModCount;
     }
 
     @Override
@@ -3273,6 +3572,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     public boolean isRemote()
     {
       return sender == null;
+    }
+
+    @Override
+    public long getLockModCount()
+    {
+      return lockModCount;
     }
 
     @Override
@@ -3451,15 +3756,24 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     private static final long serialVersionUID = 1L;
 
-    public SessionLocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo)
+    private final long lockModCount;
+
+    public SessionLocksChangedEvent(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo, long lockModCount)
     {
       super(CDOSessionImpl.this, sender, lockChangeInfo);
+      this.lockModCount = lockModCount;
     }
 
     @Override
     public CDOSession getSource()
     {
       return (CDOSession)super.getSource();
+    }
+
+    @Override
+    public long getLockModCount()
+    {
+      return lockModCount;
     }
 
     @Override

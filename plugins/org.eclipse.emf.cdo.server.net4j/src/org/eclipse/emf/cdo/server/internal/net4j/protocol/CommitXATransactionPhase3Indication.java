@@ -39,6 +39,11 @@ public class CommitXATransactionPhase3Indication extends CommitTransactionIndica
   {
     commitContext.commit(monitor);
     boolean success = respondingException(out, CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN, commitContext.getRollbackMessage(), null);
+    if (success)
+    {
+      out.writeXLong(commitContext.getLockModCount());
+    }
+
     commitContext.postCommit(success);
   }
 

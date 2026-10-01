@@ -246,6 +246,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       {
         entity.write(out);
       }
+
+      out.writeXLong(session.getLockModCount());
     }
     finally
     {

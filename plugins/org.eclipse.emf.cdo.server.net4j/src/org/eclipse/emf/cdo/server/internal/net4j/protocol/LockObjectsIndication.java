@@ -84,5 +84,6 @@ public class LockObjectsIndication extends CDOServerWriteIndication
 
     out.writeCDOLockDeltas(result.getLockDeltas(), null);
     out.writeCDOLockStates(result.getLockStates(), null);
+    out.writeXLong(result.getLockModCount());
   }
 }

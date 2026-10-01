@@ -222,6 +222,17 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public String changeLockArea(CDOView view, boolean create);
 
   /**
+   * Changes durable locking and returns the sequence number of the resulting
+   * owner remap for this session.
+   *
+   * @since 4.31
+   */
+  public default ChangeLockAreaResult changeLockArea2(CDOView view, boolean create)
+  {
+    return new ChangeLockAreaResult(changeLockArea(view, create), 0L);
+  }
+
+  /**
    * @since 4.0
    */
   public List<byte[]> queryLobs(Set<byte[]> ids);
@@ -310,6 +321,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth);
 
   /**
+   * Returns an authoritative lock-state snapshot and the exact session lock
+   * sequence baseline represented by that snapshot.
+   *
+   * @since 4.31
+   */
+  public LockStateSnapshotResult getLockStateSnapshot();
+
+  /**
    * @since 4.1
    */
   public void enableLockNotifications(int viewID, boolean enable);
@@ -390,6 +409,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     private long openingTime;
 
     private int tagModCount;
+
+    private long lockModCount;
 
     private RepositoryTimeResult repositoryTimeResult;
 
@@ -478,6 +499,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       {
         clientEntities[i] = Entity.read(in);
       }
+
+      lockModCount = in.readXLong();
     }
 
     /**
@@ -704,6 +727,18 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public int getTagModCount()
     {
       return tagModCount;
+    }
+
+    /**
+     * Returns the server-side lock sequence cutoff inherited by this session.
+     * This is a stale-carrier cutoff and does not imply that a client cache is
+     * synchronized to that count.
+     *
+    * @since 4.31
+     */
+    public long getLockModCount()
+    {
+      return lockModCount;
     }
 
     /**
@@ -1178,6 +1213,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private List<CDOLockState> lockStates;
 
+    private long lockModCount;
+
     private boolean clearResourcePathCache;
 
     private byte securityImpact;
@@ -1434,6 +1471,27 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
+     * Returns the exact per-session sequence number of the commit's lock
+     * change, or zero if the commit contains no visible lock change.
+     *
+     * @since 4.31
+     */
+    public long getLockModCount()
+    {
+      return lockModCount;
+    }
+
+    /**
+     * Sets the exact per-session sequence number of the commit's lock change.
+     *
+     * @since 4.31
+     */
+    public void setLockModCount(long lockModCount)
+    {
+      this.lockModCount = lockModCount;
+    }
+
+    /**
      * @since 4.3
      */
     public Map<CDOID, CDOPermission> getNewPermissions()
@@ -1550,6 +1608,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private final long timestamp;
 
+    private final long lockModCount;
+
     private final CDORevisionKey[] staleRevisions;
 
     private final List<CDOLockDelta> lockDeltas;
@@ -1562,6 +1622,18 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp, CDORevisionKey[] staleRevisions,
         List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, long timestamp)
     {
+      this(successful, timedOut, waitForUpdate, requiredTimestamp, staleRevisions, lockDeltas, lockStates, timestamp, 0L);
+    }
+
+    /**
+     * Creates a lock result with the sequence number of its authoritative lock
+     * change.
+     *
+     * @since 4.31
+     */
+    public LockObjectsResult(boolean successful, boolean timedOut, boolean waitForUpdate, long requiredTimestamp, CDORevisionKey[] staleRevisions,
+        List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, long timestamp, long lockModCount)
+    {
       this.successful = successful;
       this.timedOut = timedOut;
       this.waitForUpdate = waitForUpdate;
@@ -1570,6 +1642,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       this.lockDeltas = lockDeltas;
       this.lockStates = lockStates;
       this.timestamp = timestamp;
+      this.lockModCount = lockModCount;
     }
 
     public boolean isSuccessful()
@@ -1598,6 +1671,17 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public long getTimestamp()
     {
       return timestamp;
+    }
+
+    /**
+     * Returns the exact per-session sequence number of this lock change, or
+     * zero if the result contains no visible lock change.
+     *
+     * @since 4.31
+     */
+    public long getLockModCount()
+    {
+      return lockModCount;
     }
 
     public CDORevisionKey[] getStaleRevisions()
@@ -1661,19 +1745,44 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private final List<CDOLockState> lockStates;
 
+    private final long lockModCount;
+
     /**
      * @since 4.15
      */
     public UnlockObjectsResult(long timestamp, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
     {
+      this(timestamp, lockDeltas, lockStates, 0L);
+    }
+
+    /**
+     * Creates an unlock result with the sequence number of its authoritative
+     * lock change.
+     *
+     * @since 4.31
+     */
+    public UnlockObjectsResult(long timestamp, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, long lockModCount)
+    {
       this.timestamp = timestamp;
       this.lockDeltas = lockDeltas;
       this.lockStates = lockStates;
+      this.lockModCount = lockModCount;
     }
 
     public long getTimestamp()
     {
       return timestamp;
+    }
+
+    /**
+     * Returns the exact per-session sequence number of this unlock change, or
+     * zero if the result contains no visible lock change.
+     *
+     * @since 4.31
+     */
+    public long getLockModCount()
+    {
+      return lockModCount;
     }
 
     /**
@@ -1774,6 +1883,64 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public int getToIndex()
     {
       return toIndex;
+    }
+  }
+
+  /**
+   * The result of changing durable locking for a view.
+   *
+   * @author Eike Stepper
+   * @since 4.31
+   */
+  public static final class ChangeLockAreaResult
+  {
+    private final String durableLockingID;
+
+    private final long lockModCount;
+
+    public ChangeLockAreaResult(String durableLockingID, long lockModCount)
+    {
+      this.durableLockingID = durableLockingID;
+      this.lockModCount = lockModCount;
+    }
+
+    public String getDurableLockingID()
+    {
+      return durableLockingID;
+    }
+
+    public long getLockModCount()
+    {
+      return lockModCount;
+    }
+  }
+
+  /**
+   * An authoritative lock-state snapshot paired with its sequence baseline.
+   *
+   * @author Eike Stepper
+   * @since 4.31
+   */
+  public static final class LockStateSnapshotResult
+  {
+    private final long lockModCount;
+
+    private final List<CDOLockState> lockStates;
+
+    public LockStateSnapshotResult(long lockModCount, List<CDOLockState> lockStates)
+    {
+      this.lockModCount = lockModCount;
+      this.lockStates = Collections.unmodifiableList(new ArrayList<>(lockStates));
+    }
+
+    public long getLockModCount()
+    {
+      return lockModCount;
+    }
+
+    public List<CDOLockState> getLockStates()
+    {
+      return lockStates;
     }
   }
 

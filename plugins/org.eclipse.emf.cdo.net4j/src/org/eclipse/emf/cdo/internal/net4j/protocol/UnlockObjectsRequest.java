@@ -81,8 +81,9 @@ public class UnlockObjectsRequest extends CDOClientRequest<UnlockObjectsResult>
     long timestamp = in.readXLong();
     List<CDOLockDelta> lockDeltas = in.readCDOLockDeltas();
     List<CDOLockState> lockStates = in.readCDOLockStates();
+    long lockModCount = in.readXLong();
 
-    return new UnlockObjectsResult(timestamp, lockDeltas, lockStates);
+    return new UnlockObjectsResult(timestamp, lockDeltas, lockStates, lockModCount);
   }
 
   @Override

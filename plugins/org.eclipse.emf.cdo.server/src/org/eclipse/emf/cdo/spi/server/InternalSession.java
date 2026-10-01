@@ -129,12 +129,6 @@ public interface InternalSession
   public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint, String durableLockingID);
 
   /**
-   * @deprecated As of 4.15 use {@link #viewClosed(InternalView, boolean)}.
-   */
-  @Deprecated
-  public void viewClosed(InternalView view);
-
-  /**
    * @since 4.15
    */
   public void viewClosed(InternalView view, boolean inverse);
@@ -147,17 +141,68 @@ public interface InternalSession
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType) throws Exception;
 
   /**
+   * @since 4.1
+   */
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception;
+
+  /**
+   * @since 4.15
+   */
+  public void sendBranchNotification(ChangeKind changeKind, CDOBranch... branches) throws Exception;
+
+  /**
+   * @since 4.10
+   */
+  public void sendTagNotification(int modCount, String oldName, String newName, CDOBranchPoint branchPoint) throws Exception;
+
+  /**
+   * @since 4.3
+   */
+  public void sendCommitNotification(CommitNotificationInfo info) throws Exception;
+
+  /**
+   * @since 4.17
+   */
+  public void sendRemoteSessionNotification(InternalSession sender, InternalTopic topic, byte opcode) throws Exception;
+
+  /**
+   * @since 4.17
+   */
+  public void sendRemoteMessageNotification(InternalSession sender, InternalTopic topic, CDORemoteSessionMessage message) throws Exception;
+
+  /**
+   * @since 4.1
+   */
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception;
+
+  /**
+   * Sends an owner remap with the sequence number assigned to this exact
+   * change for this session.
+   *
+   * @since 4.27
+   */
+  public void sendLockOwnerRemappedNotification(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner, long lockModCount) throws Exception;
+
+  /**
+   * Returns the last lock modification count assigned to this server session.
+   *
+   * @since 4.27
+   */
+  public long getLockModCount();
+
+  /**
+   * @deprecated As of 4.15 use {@link #viewClosed(InternalView, boolean)}.
+   */
+  @Deprecated
+  public void viewClosed(InternalView view);
+
+  /**
    * @deprecated use
    *             {@link #sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State, CDOID)}
    *             instead
    */
   @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception;
-
-  /**
-   * @since 4.1
-   */
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception;
 
   /**
    * @deprecated As of 4.3 use {@link #sendBranchNotification(InternalCDOBranch, ChangeKind)}.
@@ -173,16 +218,6 @@ public interface InternalSession
   public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception;
 
   /**
-   * @since 4.15
-   */
-  public void sendBranchNotification(ChangeKind changeKind, CDOBranch... branches) throws Exception;
-
-  /**
-   * @since 4.10
-   */
-  public void sendTagNotification(int modCount, String oldName, String newName, CDOBranchPoint branchPoint) throws Exception;
-
-  /**
    * @deprecated As of 4.2 use {@link #sendCommitNotification(CDOCommitInfo, boolean)}.
    */
   @Deprecated
@@ -196,20 +231,10 @@ public interface InternalSession
   public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception;
 
   /**
-   * @since 4.3
-   */
-  public void sendCommitNotification(CommitNotificationInfo info) throws Exception;
-
-  /**
    *@deprecated As of 4.8 use {@link #sendRemoteSessionNotification(InternalSession, InternalTopic, byte)}.
    */
   @Deprecated
   public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception;
-
-  /**
-   * @since 4.17
-   */
-  public void sendRemoteSessionNotification(InternalSession sender, InternalTopic topic, byte opcode) throws Exception;
 
   /**
    * @deprecated As of 4.8 use {@link #sendRemoteMessageNotification(InternalSession, InternalTopic, CDORemoteSessionMessage)}.
@@ -218,17 +243,9 @@ public interface InternalSession
   public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception;
 
   /**
-   * @since 4.17
-   */
-  public void sendRemoteMessageNotification(InternalSession sender, InternalTopic topic, CDORemoteSessionMessage message) throws Exception;
-
-  /**
-   * @since 4.1
-   */
-  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception;
-
-  /**
    * @since 4.19
+   * @deprecated As of 4.27 use {@link #sendLockOwnerRemappedNotification(CDOBranch, CDOLockOwner, CDOLockOwner, long)}.
    */
+  @Deprecated
   public void sendLockOwnerRemappedNotification(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner) throws Exception;
 }

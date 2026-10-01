@@ -380,6 +380,7 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
 
     List<CDOLockState> lockStates = commitContext.getLockStates();
     out.writeCDOLockStates(lockStates, null);
+    out.writeXLong(commitContext.getLockModCount());
   }
 
   protected void respondingNewPermissions(CDODataOutput out) throws Exception

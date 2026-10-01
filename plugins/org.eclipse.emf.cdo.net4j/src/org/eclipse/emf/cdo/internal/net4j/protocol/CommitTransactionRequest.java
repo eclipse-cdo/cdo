@@ -406,6 +406,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
     List<CDOLockState> lockStates = in.readCDOLockStates();
     result.setLockStates(lockStates);
+    result.setLockModCount(in.readXLong());
   }
 
   protected void confirmingNewPermissions(CDODataInput in, CommitTransactionResult result) throws IOException

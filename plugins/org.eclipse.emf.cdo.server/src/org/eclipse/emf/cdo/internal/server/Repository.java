@@ -1674,12 +1674,17 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public void sendCommitNotification(CommitNotificationInfo info)
   {
+    sendCommitNotification(info, null);
+  }
+
+  void sendCommitNotification(CommitNotificationInfo info, LockingManager.LockChangeReservation reservation)
+  {
     CDOCommitInfo commitInfo = info.getCommitInfo();
     boolean isFailureCommitInfo = commitInfo.getBranch() == null;
 
     if (isFailureCommitInfo || !commitInfo.isEmpty() || info.getLockChangeInfo() != null)
     {
-      sessionManager.sendCommitNotification(info);
+      ((SessionManager)sessionManager).sendCommitNotification(info, reservation);
       commitInfoManager.notifyCommitInfoHandlers(commitInfo);
     }
   }
@@ -2431,14 +2436,40 @@ public class Repository extends Container<Object> implements InternalRepository
     return staleRevisionsArray;
   }
 
-  private void sendLockNotifications(IView view, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, boolean administrative)
+  private long sendLockNotifications(IView view, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, boolean administrative)
   {
     CDOBranchPoint branchPoint = view.getBranch().getPoint(getTimeStamp());
     CDOLockOwner lockOwner = view.getLockOwner();
-    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates, administrative);
+    CDOLockChangeInfo lockChangeInfo;
+    try
+    {
+      lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates, administrative);
+    }
+    catch (RuntimeException | Error ex)
+    {
+      if (!lockDeltas.isEmpty())
+      {
+        ((LockingManager)lockingManager).cancelLastLockChange();
+      }
+
+      throw ex;
+    }
+
+    LockingManager.LockChangeReservation reservation = null;
+    if (!lockDeltas.isEmpty())
+    {
+      reservation = ((LockingManager)lockingManager).completeLastLockChange(lockChangeInfo);
+    }
 
     InternalSession sender = administrative ? null : (InternalSession)view.getSession();
-    sessionManager.sendLockNotification(sender, lockChangeInfo);
+    ((SessionManager)sessionManager).sendLockNotification(sender, lockChangeInfo, reservation);
+    if (reservation != null && sender instanceof Session)
+    {
+      LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)sender);
+      return result == null ? 0L : result.getLockModCount();
+    }
+
+    return 0L;
   }
 
   @Override
@@ -2477,7 +2508,21 @@ public class Repository extends Container<Object> implements InternalRepository
     }
     catch (IllegalArgumentException ex)
     {
+      if (!lockDeltas.isEmpty())
+      {
+        ((LockingManager)lockingManager).cancelLastLockChange();
+      }
+
       lockingManager.unlock(view, lockables, lockType, 1, recursive, true, null, null);
+      throw ex;
+    }
+    catch (RuntimeException | Error ex)
+    {
+      if (!lockDeltas.isEmpty())
+      {
+        sendLockNotifications(view, lockDeltas, lockStates, false);
+      }
+
       throw ex;
     }
 
@@ -2488,14 +2533,19 @@ public class Repository extends Container<Object> implements InternalRepository
     boolean staleNoUpdate = staleRevisionsArray.length > 0 && !session.isPassiveUpdateEnabled();
     if (staleNoUpdate)
     {
+      if (!lockDeltas.isEmpty())
+      {
+        ((LockingManager)lockingManager).cancelLastLockChange();
+      }
+
       lockingManager.unlock(view, lockables, lockType, 1, recursive, true, null, null);
       return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, NO_LOCK_DELTAS, NO_LOCK_STATES, getTimeStamp());
     }
 
-    sendLockNotifications(view, lockDeltas, lockStates, false);
+    long lockModCount = sendLockNotifications(view, lockDeltas, lockStates, false);
 
     boolean waitForUpdate = staleRevisionsArray.length > 0;
-    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, lockDeltas, lockStates, getTimeStamp());
+    return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, lockDeltas, lockStates, getTimeStamp(), lockModCount);
   }
 
   @Override
@@ -2507,7 +2557,7 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public UnlockObjectsResult unlock(InternalView view)
   {
-    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, false);
+    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, false, true);
   }
 
   @Override
@@ -2519,7 +2569,7 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public UnlockObjectsResult unlockAdministratively(InternalView view)
   {
-    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, true);
+    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, true, false);
   }
 
   protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive, boolean notifyAllSessions)
@@ -2538,21 +2588,49 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
-    return doUnlock(view, lockType, unlockables, recursive, 1, notifyAllSessions);
+    return doUnlock(view, lockType, unlockables, recursive, 1, notifyAllSessions, false);
   }
 
   protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables, boolean recursive, int count,
-      boolean notifyAllSessions)
+      boolean notifyAllSessions, boolean viewClose)
   {
     LockDeltaCollector lockDeltas = new LockDeltaCollector(LockChange.Operation.UNLOCK);
     LockStateCollector lockStates = new LockStateCollector();
 
     lockingManager.unlock(view, unlockables, lockType, count, recursive, true, lockDeltas, lockStates);
 
-    sendLockNotifications(view, lockDeltas, lockStates, notifyAllSessions);
+    CDOLockChangeInfo lockChangeInfo;
+    try
+    {
+      lockChangeInfo = CDOLockUtil.createLockChangeInfo(view.getBranch().getPoint(getTimeStamp()), view.getLockOwner(), lockDeltas, lockStates, notifyAllSessions);
+    }
+    catch (RuntimeException | Error ex)
+    {
+      if (!lockDeltas.isEmpty())
+      {
+        ((LockingManager)lockingManager).cancelLastLockChange();
+      }
+
+      throw ex;
+    }
+    Session excludedSession = viewClose ? (Session)view.getSession() : null;
+    LockingManager.LockChangeReservation reservation = null;
+    if (!lockDeltas.isEmpty())
+    {
+      reservation = ((LockingManager)lockingManager).completeLastLockChange(lockChangeInfo, excludedSession);
+    }
+    InternalSession sender = notifyAllSessions ? null : (InternalSession)view.getSession();
+    ((SessionManager)sessionManager).sendLockNotification(sender, lockChangeInfo, reservation);
 
     long timestamp = getTimeStamp();
-    return new UnlockObjectsResult(timestamp, lockDeltas, lockStates);
+    long lockModCount = 0L;
+    if (reservation != null && !viewClose && view.getSession() instanceof Session)
+    {
+      LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)view.getSession());
+      lockModCount = result == null ? 0L : result.getLockModCount();
+    }
+
+    return new UnlockObjectsResult(timestamp, lockDeltas, lockStates, lockModCount);
   }
 
   @Override

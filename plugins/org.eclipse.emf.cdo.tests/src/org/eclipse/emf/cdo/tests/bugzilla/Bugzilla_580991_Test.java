@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -35,12 +36,16 @@ public class Bugzilla_580991_Test extends AbstractCDOTest
     tx.commit();
     resFromTX.cdoWriteLock().lock(100);
 
-    String durableLockID = tx.enableDurableLocking();
-
-    CDOView view = openSession().openView();
+    CDOSession observerSession = openSession();
+    CDOView view = observerSession.openView();
     view.options().addChangeSubscriptionPolicy(CDOAdapterPolicy.ALL);
     view.options().setLockNotificationEnabled(true);
     CDOResource resFromView = view.getResource(path);
+
+    Session observerServerSession = (Session)serverSession(observerSession);
+    long lockModCountBeforeEnable = observerServerSession.getLockModCount();
+    String durableLockID = tx.enableDurableLocking();
+    assertEquals(lockModCountBeforeEnable + 1, observerServerSession.getLockModCount());
 
     // Reopen transaction
     tx.close();
@@ -69,7 +74,11 @@ public class Bugzilla_580991_Test extends AbstractCDOTest
     resFromTX.cdoWriteLock().lock(100);
     assertNoTimeout(() -> resFromView.cdoWriteLock().isLockedByOthers());
 
+    long lockModCountBeforeDisable = observerServerSession.getLockModCount();
+
     tx.disableDurableLocking(true);
+
+    assertEquals(lockModCountBeforeDisable + 2, observerServerSession.getLockModCount());
     assertNoTimeout(() -> !resFromView.cdoWriteLock().isLockedByOthers());
   }
 }

@@ -16,8 +16,6 @@ import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
-import org.eclipse.emf.spi.cdo.CDOLockStateCache;
-
 import java.io.IOException;
 
 /**
@@ -36,8 +34,8 @@ public class LockOwnerRemappedNotificationIndication extends CDOClientIndication
     CDOBranch branch = in.readCDOBranch();
     CDOLockOwner oldOwner = in.readCDOLockOwner();
     CDOLockOwner newOwner = in.readCDOLockOwner();
+    long lockModCount = in.readXLong();
 
-    CDOLockStateCache cache = getSession().getLockStateCache();
-    cache.remapOwner(branch, oldOwner, newOwner);
+    getSession().handleLockOwnerRemappedNotification(lockModCount, branch, oldOwner, newOwner);
   }
 }

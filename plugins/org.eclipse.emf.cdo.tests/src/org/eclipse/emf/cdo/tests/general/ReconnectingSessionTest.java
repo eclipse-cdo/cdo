@@ -14,24 +14,32 @@ package org.eclipse.emf.cdo.tests.general;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchDoesNotExistException;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
 import org.eclipse.emf.cdo.net4j.ReconnectingCDOSessionConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.SessionConfig;
+import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
+
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.RemoteException;
@@ -41,18 +49,23 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.tests.TestListener;
 
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Eike Stepper
@@ -188,6 +201,183 @@ public class ReconnectingSessionTest extends AbstractCDOTest
 
       LifecycleUtil.deactivate(reconnectingSession);
       LifecycleUtil.deactivate(acceptor);
+    }
+  }
+
+  public void testLockChangesWhileDisconnectedAreRecoveredFromSnapshot() throws Exception
+  {
+    CDOSession changingSession = openSession();
+    CDOTransaction changingTransaction = changingSession.openTransaction();
+    CDOResource resource = changingTransaction.createResource(getResourcePath("lockRecovery"));
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    changingTransaction.commit();
+
+    ITCPAcceptor acceptor = null;
+    CDONet4jSession reconnectingSession = null;
+
+    try
+    {
+      IManagedContainer serverContainer = getServerContainer();
+      acceptor = TCPUtil.getAcceptor(serverContainer, ADDRESS2);
+      String repositoryName = changingSession.getRepositoryInfo().getName();
+      IManagedContainer clientContainer = getClientContainer();
+      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2, repositoryName, clientContainer);
+      configuration.setHeartBeatEnabled(true);
+      reconnectingSession = (CDONet4jSession)openSession(configuration);
+
+      CDOView view = reconnectingSession.openView();
+      view.options().setLockNotificationEnabled(true);
+      CDOResource remoteResource = view.getResource(getResourcePath("lockRecovery"));
+      Company remoteCompany = (Company)remoteResource.getContents().get(0);
+      InternalCDOSession internalSession = (InternalCDOSession)reconnectingSession;
+      CountDownLatch initialLockNotification = new CountDownLatch(1);
+      reconnectingSession.addListener(new IListener()
+      {
+        @Override
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof CDOSessionLocksChangedEvent)
+          {
+            initialLockNotification.countDown();
+          }
+        }
+      });
+
+      CDOBranch branch = view.getBranch();
+      CDOID objectID = CDOUtil.getCDOObject(remoteCompany).cdoID();
+      CDOUtil.getCDOObject(company).cdoWriteLock().lock();
+      await(initialLockNotification);
+      CDOLockState cachedState = internalSession.getLockStateCache().getLockState(branch, objectID);
+      assertNotNull(cachedState);
+      assertNotNull(cachedState.getWriteLockOwner());
+
+      CountDownLatch recoveryStarted = new CountDownLatch(1);
+      CountDownLatch recoveryFinished = new CountDownLatch(1);
+      reconnectingSession.addListener(new IListener()
+      {
+        @Override
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof CDOSessionRecoveryEvent)
+          {
+            CDOSessionRecoveryEvent recoveryEvent = (CDOSessionRecoveryEvent)event;
+            if (recoveryEvent.getType() == CDOSessionRecoveryEvent.Type.STARTED)
+            {
+              recoveryStarted.countDown();
+            }
+            else if (recoveryEvent.getType() == CDOSessionRecoveryEvent.Type.FINISHED)
+            {
+              recoveryFinished.countDown();
+            }
+          }
+        }
+      });
+
+      LifecycleUtil.deactivate(acceptor);
+      await(recoveryStarted);
+      CDOUtil.getCDOObject(company).cdoWriteLock().unlock();
+
+      acceptor = TCPUtil.getAcceptor(serverContainer, ADDRESS2);
+      await(recoveryFinished);
+
+      CDOLockState recoveredState = internalSession.getLockStateCache().getLockState(branch, objectID);
+      assertTrue(recoveredState == null || recoveredState.getWriteLockOwner() == null);
+      InternalSession serverSession = getRepository().getSessionManager().getSession(reconnectingSession.getSessionID());
+      assertNotNull(serverSession);
+      Method currentLockModCount = CDOSessionImpl.class.getDeclaredMethod("getCurrentLockModCount");
+      currentLockModCount.setAccessible(true);
+      assertEquals(serverSession.getLockModCount(), currentLockModCount.invoke(internalSession));
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(reconnectingSession);
+      LifecycleUtil.deactivate(acceptor);
+      changingSession.close();
+    }
+  }
+
+  public void testRecoveryFailureClosesSessionWithoutResumingSequencer() throws Exception
+  {
+    CDOSession sourceSession = openSession();
+    ITCPAcceptor acceptor = null;
+    CDONet4jSession reconnectingSession = null;
+
+    try
+    {
+      IManagedContainer serverContainer = getServerContainer();
+      acceptor = TCPUtil.getAcceptor(serverContainer, ADDRESS2);
+      String repositoryName = sourceSession.getRepositoryInfo().getName();
+      ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2, repositoryName, getClientContainer());
+      configuration.setHeartBeatEnabled(true);
+      reconnectingSession = (CDONet4jSession)openSession(configuration);
+      Method setMaxReconnectAttempts = reconnectingSession.getClass().getMethod("setMaxReconnectAttempts", int.class);
+      setMaxReconnectAttempts.invoke(reconnectingSession, 0);
+
+      CDOSession session = reconnectingSession;
+      CountDownLatch recoveryStarted = new CountDownLatch(1);
+      CountDownLatch sessionClosed = new CountDownLatch(1);
+      CountDownLatch recoveryFinished = new CountDownLatch(1);
+      session.addListener(new IListener()
+      {
+        @Override
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof CDOSessionRecoveryEvent)
+          {
+            CDOSessionRecoveryEvent recoveryEvent = (CDOSessionRecoveryEvent)event;
+            if (recoveryEvent.getType() == CDOSessionRecoveryEvent.Type.STARTED)
+            {
+              recoveryStarted.countDown();
+            }
+            else if (recoveryEvent.getType() == CDOSessionRecoveryEvent.Type.FINISHED)
+            {
+              recoveryFinished.countDown();
+            }
+          }
+        }
+      });
+
+      session.addListener(new LifecycleEventAdapter()
+      {
+        @Override
+        protected void onDeactivated(ILifecycle lifecycle)
+        {
+          sessionClosed.countDown();
+        }
+      });
+
+      CDOSessionImpl implementation = (CDOSessionImpl)reconnectingSession;
+      implementation.suspendLockChanges(0L);
+      AtomicBoolean bufferedActionApplied = new AtomicBoolean();
+      implementation.enqueueLockChangeAsync(1L, () -> bufferedActionApplied.set(true), null);
+
+      LifecycleUtil.deactivate(acceptor);
+      await(recoveryStarted);
+
+      try
+      {
+        implementation.awaitLockChange(1L);
+        fail("A pending synchronous sequence waiter must fail when recovery closes the session"); //$NON-NLS-1$
+      }
+      catch (RuntimeException expected)
+      {
+        // The recovery failure closes the sequencer and releases the waiter with failure.
+      }
+
+      await(sessionClosed);
+      assertTrue(reconnectingSession.isClosed());
+      assertEquals(1L, recoveryFinished.getCount());
+      assertFalse(bufferedActionApplied.get());
+      Method currentLockModCount = CDOSessionImpl.class.getDeclaredMethod("getCurrentLockModCount");
+      currentLockModCount.setAccessible(true);
+      assertEquals(0L, currentLockModCount.invoke(implementation));
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(reconnectingSession);
+      LifecycleUtil.deactivate(acceptor);
+      sourceSession.close();
     }
   }
 

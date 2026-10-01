@@ -34,4 +34,13 @@ public interface CDOSessionLocksChangedEvent extends CDOSessionEvent, CDOLockCha
    * Returns the view that caused the lock changes if this view is local, or <code>null</code> if the view was remote.
    */
   public CDOView getSender();
+
+  /**
+   * Returns the per-session sequence number of the lock change carried by this
+   * event, or zero when the event was not produced by an authoritative remote
+   * change carrier.
+   *
+   * @since 4.31
+   */
+  public long getLockModCount();
 }

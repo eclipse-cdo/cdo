@@ -30,4 +30,12 @@ public interface InternalCDOSessionInvalidationEvent extends CDOSessionInvalidat
    * @see CommitNotificationInfo#IMPACT_REALM
    */
   public byte getSecurityImpact();
+
+  /**
+   * Returns the per-session sequence number of the lock change carried by this
+   * invalidation event, or zero when the commit contains no lock change.
+   *
+   * @since 4.31
+   */
+  public long getLockModCount();
 }

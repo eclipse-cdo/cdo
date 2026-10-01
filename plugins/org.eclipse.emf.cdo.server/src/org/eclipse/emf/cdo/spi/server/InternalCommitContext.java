@@ -165,6 +165,17 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   public void setIDsToUnlock(CDOID[] idsToUnlock);
 
   /**
+   * Returns the exact per-session sequence number assigned to this commit's
+   * lock change.
+   *
+   * @since 4.27
+   */
+  public default long getLockModCount()
+  {
+    return 0L;
+  }
+
+  /**
    * @since 4.5
    */
   public void setCommitNumber(int commitNumber);

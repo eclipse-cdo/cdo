@@ -1435,6 +1435,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     @Override
     public void invalidate(InvalidationData invalidationData)
     {
+      invalidate(invalidationData, null);
+    }
+
+    @Override
+    public void invalidate(InvalidationData invalidationData, Runnable lockCacheUpdate)
+    {
       throw new UnsupportedOperationException();
     }
 
@@ -1445,7 +1451,20 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void handleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void handleLockOwnerRemappedNotification(long lockModCount, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner)
     {
       throw new UnsupportedOperationException();
     }

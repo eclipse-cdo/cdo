@@ -55,6 +55,7 @@ public class CommitXATransactionPhase3Request extends CommitXATransactionRequest
     }
 
     InternalCDOXACommitContext context = getCommitContext();
+    context.getResult().setLockModCount(in.readXLong());
     return context.getResult();
   }
 }

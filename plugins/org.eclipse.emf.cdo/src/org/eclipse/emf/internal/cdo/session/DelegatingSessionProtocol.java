@@ -479,6 +479,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  public LockStateSnapshotResult getLockStateSnapshot()
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.getLockStateSnapshot();
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
   public void enableLockNotifications(int viewID, boolean enable)
   {
     int attempt = 0;
@@ -521,7 +538,24 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
     {
       try
       {
-        return delegate.changeLockArea(view, create);
+        return changeLockArea2(view, create).getDurableLockingID();
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
+  public ChangeLockAreaResult changeLockArea2(CDOView view, boolean create)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.changeLockArea2(view, create);
       }
       catch (Exception ex)
       {

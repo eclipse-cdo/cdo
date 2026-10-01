@@ -28,16 +28,25 @@ public class LockNotificationRequest extends CDOServerRequest
 
   private Set<CDOID> filter;
 
+  private long lockModCount;
+
   public LockNotificationRequest(CDOServerProtocol serverProtocol, CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter)
+  {
+    this(serverProtocol, lockChangeInfo, filter, 0L);
+  }
+
+  public LockNotificationRequest(CDOServerProtocol serverProtocol, CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter, long lockModCount)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_LOCK_NOTIFICATION);
     this.lockChangeInfo = lockChangeInfo;
     this.filter = filter;
+    this.lockModCount = lockModCount;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
     out.writeCDOLockChangeInfo(lockChangeInfo, filter);
+    out.writeXLong(lockModCount);
   }
 }

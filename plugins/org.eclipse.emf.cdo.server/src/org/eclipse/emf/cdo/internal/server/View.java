@@ -175,6 +175,11 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   @Override
   public void setDurableLockingID(String durableLockingID)
   {
+    ((LockingManager)repository.getLockingManager()).setDurableLockingID(this, durableLockingID);
+  }
+
+  void setDurableLockingIDInternal(String durableLockingID)
+  {
     this.durableLockingID = durableLockingID;
     lockOwner = CDOLockUtil.createLockOwner(this);
   }

@@ -81,7 +81,9 @@ import org.eclipse.emf.internal.cdo.object.CDODeltaNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDOInvalidationNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapperBase;
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.AbstractLocksChangedEvent;
 
 import org.eclipse.net4j.util.CheckUtil;
@@ -127,6 +129,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.ChangeLockAreaResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -407,6 +410,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     List<CDOLockDelta> resultLockDeltas = null;
     List<CDOLockState> resultLockStates = null;
 
+    long resultLockModCount = 0L;
     long timeStamp;
 
     try (Access access = access())
@@ -495,11 +499,16 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       if (result != null)
       {
         resultLockDeltas = result.getLockDeltas();
+        resultLockModCount = result.getLockModCount();
 
         if (!ObjectUtil.isEmpty(resultLockDeltas))
         {
           resultLockStates = result.getLockStates();
-          updateLockStates(resultLockDeltas, resultLockStates);
+
+          if (resultLockModCount == 0L)
+          {
+            updateLockStates(resultLockDeltas, resultLockStates);
+          }
         }
 
         timeStamp = result.getTimestamp();
@@ -516,7 +525,28 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       fireLocksChangedEvent(this, lockChangeInfo);
     }
 
-    if (!ObjectUtil.isEmpty(resultLockDeltas))
+    if (resultLockModCount > 0L)
+    {
+      long lockModCount = resultLockModCount;
+      long lockTimeStamp = timeStamp;
+
+      List<CDOLockDelta> lockDeltas = resultLockDeltas;
+      List<CDOLockState> lockStates = resultLockStates;
+
+      Runnable action = () -> {
+        if (!ObjectUtil.isEmpty(lockDeltas))
+        {
+          updateLockStates(lockDeltas, lockStates);
+          notifyLockChanges(lockTimeStamp, lockDeltas, lockStates);
+        }
+      };
+
+      if (!(this instanceof CDOTransactionImpl) || !((CDOTransactionImpl)this).deferLockChangeWait(lockModCount, action))
+      {
+        ((CDOSessionImpl)session).sequenceLockChange(lockModCount, action, true);
+      }
+    }
+    else if (!ObjectUtil.isEmpty(resultLockDeltas))
     {
       notifyLockChanges(timeStamp, resultLockDeltas, resultLockStates);
     }
@@ -549,7 +579,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       if (!ObjectUtil.isEmpty(lockDeltas) || lockChangeInfo.isInvalidateAll())
       {
         // Do not call out from the current thread to other views while this view is holding its view lock!
-        session.handleLockNotification(lockChangeInfo, this, true);
+        session.handleLockNotification(0L, lockChangeInfo, this, true);
 
         if (isActive())
         {
@@ -633,6 +663,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     List<CDOLockDelta> resultLockDeltas = null;
     List<CDOLockState> resultLockStates = null;
 
+    long resultLockModCount = 0L;
     long timeStamp;
 
     try (Access access = access())
@@ -686,10 +717,16 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       if (result != null)
       {
         resultLockDeltas = result.getLockDeltas();
+        resultLockModCount = result.getLockModCount();
+
         if (!ObjectUtil.isEmpty(resultLockDeltas))
         {
           resultLockStates = result.getLockStates();
-          updateLockStates(resultLockDeltas, resultLockStates);
+
+          if (resultLockModCount == 0L)
+          {
+            updateLockStates(resultLockDeltas, resultLockStates);
+          }
         }
 
         timeStamp = result.getTimestamp();
@@ -706,7 +743,28 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       fireLocksChangedEvent(this, lockChangeInfo);
     }
 
-    if (!ObjectUtil.isEmpty(resultLockDeltas))
+    if (resultLockModCount > 0L)
+    {
+      long lockModCount = resultLockModCount;
+      long lockTimeStamp = timeStamp;
+
+      List<CDOLockDelta> lockDeltas = resultLockDeltas;
+      List<CDOLockState> lockStates = resultLockStates;
+
+      Runnable action = () -> {
+        if (!ObjectUtil.isEmpty(lockDeltas))
+        {
+          updateLockStates(lockDeltas, lockStates);
+          notifyLockChanges(lockTimeStamp, lockDeltas, lockStates);
+        }
+      };
+
+      if (!(this instanceof CDOTransactionImpl) || !((CDOTransactionImpl)this).deferLockChangeWait(lockModCount, action))
+      {
+        ((CDOSessionImpl)session).sequenceLockChange(lockModCount, action, true);
+      }
+    }
+    else if (!ObjectUtil.isEmpty(resultLockDeltas))
     {
       notifyLockChanges(timeStamp, resultLockDeltas, resultLockStates);
     }
@@ -777,6 +835,8 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   {
     String oldID;
     String newID;
+    long lockModCount = 0L;
+    Runnable lockOwnerRemap = null;
 
     try (Access access = access())
     {
@@ -784,10 +844,14 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       if (durableLockingID == null)
       {
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        String id = sessionProtocol.changeLockArea(this, true);
+        ChangeLockAreaResult result = sessionProtocol.changeLockArea2(this, true);
 
+        String id = result.getDurableLockingID();
         durableLockingID = id;
-        adjustLockOwner();
+
+        lockModCount = result.getLockModCount();
+        lockOwnerRemap = prepareLockOwnerRemap(lockModCount);
+
         newID = id;
       }
       else
@@ -795,6 +859,8 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
         newID = durableLockingID;
       }
     }
+
+    applyLockOwnerRemap(lockModCount, lockOwnerRemap);
 
     fireDurabilityChangedEvent(oldID, newID);
     return newID;
@@ -804,6 +870,8 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   public void disableDurableLocking(boolean releaseLocks)
   {
     String oldID;
+    long lockModCount = 0L;
+    Runnable lockOwnerRemap = null;
 
     try (Access access = access())
     {
@@ -811,24 +879,38 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       if (id != null)
       {
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        sessionProtocol.changeLockArea(this, false);
+        ChangeLockAreaResult result = sessionProtocol.changeLockArea2(this, false);
 
         durableLockingID = null;
-        adjustLockOwner();
-
-        if (releaseLocks)
-        {
-          unlockObjects();
-        }
+        lockModCount = result.getLockModCount();
+        lockOwnerRemap = prepareLockOwnerRemap(lockModCount);
       }
 
       oldID = id;
+    }
+
+    applyLockOwnerRemap(lockModCount, lockOwnerRemap);
+
+    if (releaseLocks && oldID != null)
+    {
+      unlockObjects();
     }
 
     fireDurabilityChangedEvent(oldID, null);
   }
 
   protected void adjustLockOwner()
+  {
+    adjustLockOwner(0L);
+  }
+
+  protected void adjustLockOwner(long lockModCount)
+  {
+    Runnable action = prepareLockOwnerRemap(lockModCount);
+    applyLockOwnerRemap(lockModCount, action);
+  }
+
+  protected Runnable prepareLockOwnerRemap(long lockModCount)
   {
     // Recreate lockOwner with new durableLockingID.
     CDOLockOwner oldOwner = lockOwner;
@@ -837,10 +919,22 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     if (newOwner != oldOwner)
     {
       lockOwner = newOwner;
-
       CDOBranch branch = getBranch();
-      CDOLockStateCache lockStateCache = session.getLockStateCache();
-      lockStateCache.remapOwner(branch, oldOwner, newOwner);
+      return () -> session.getLockStateCache().remapOwner(branch, oldOwner, newOwner);
+    }
+
+    return null;
+  }
+
+  private void applyLockOwnerRemap(long lockModCount, Runnable action)
+  {
+    if (lockModCount > 0L)
+    {
+      ((CDOSessionImpl)session).sequenceLockChange(lockModCount, ConcurrencyUtil.safe(action), true);
+    }
+    else if (action != null)
+    {
+      action.run();
     }
   }
 

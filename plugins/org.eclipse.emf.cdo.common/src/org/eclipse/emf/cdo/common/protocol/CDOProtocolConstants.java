@@ -355,6 +355,11 @@ public interface CDOProtocolConstants
   public static final short SIGNAL_SET_COLLECTION_LOADING_CONFIG = 71;
 
   /**
+   * @since 4.29
+   */
+  public static final short SIGNAL_LOCK_STATE_SNAPSHOT = 72;
+
+  /**
    * @since 4.20
    */
   public static final short SIGNAL_USER_OFFSET = 1000;

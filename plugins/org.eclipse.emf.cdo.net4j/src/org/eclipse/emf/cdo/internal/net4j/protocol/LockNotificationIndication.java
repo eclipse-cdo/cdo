@@ -33,7 +33,8 @@ public class LockNotificationIndication extends CDOClientIndication
   protected void indicating(CDODataInput in) throws IOException
   {
     CDOLockChangeInfo lockChangeInfo = in.readCDOLockChangeInfo();
+    long lockModCount = in.readXLong();
     InternalCDOSession session = getSession();
-    session.handleLockNotification(lockChangeInfo, null, false);
+    session.handleLockNotification(lockModCount, lockChangeInfo, null, false);
   }
 }

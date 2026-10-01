@@ -72,6 +72,8 @@ public interface CDOProtocol extends CDOProtocolConstants
 
     private CDOLockChangeInfo lockChangeInfo;
 
+    private long lockModCount;
+
     public CommitNotificationInfo()
     {
     }
@@ -102,6 +104,8 @@ public interface CDOProtocol extends CDOProtocolConstants
       {
         lockChangeInfo = in.readCDOLockChangeInfo();
       }
+
+      lockModCount = in.readXLong();
     }
 
     public void write(CDODataOutput out) throws IOException
@@ -141,6 +145,8 @@ public interface CDOProtocol extends CDOProtocolConstants
       {
         out.writeBoolean(false);
       }
+
+      out.writeXLong(lockModCount);
     }
 
     public int getSenderID()
@@ -249,6 +255,28 @@ public interface CDOProtocol extends CDOProtocolConstants
     public void setLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
     {
       this.lockChangeInfo = lockChangeInfo;
+    }
+
+    /**
+     * Returns the exact per-session sequence number of the lock change in this
+     * notification, or zero if no lock change is included.
+     *
+     * @since 4.29
+     */
+    public long getLockModCount()
+    {
+      return lockModCount;
+    }
+
+    /**
+     * Sets the exact per-session sequence number of the lock change in this
+     * notification.
+     *
+     * @since 4.29
+     */
+    public void setLockModCount(long lockModCount)
+    {
+      this.lockModCount = lockModCount;
     }
   }
 

@@ -255,6 +255,10 @@ public class TransactionCommitContext implements InternalCommitContext
    */
   private CDOLockChangeInfo lockChangeInfo;
 
+  private LockingManager.LockChangeReservation lockChangeReservation;
+
+  private long lockModCount;
+
   private Map<Object, Object> data;
 
   private CommitNotificationInfo commitNotificationInfo = new CommitNotificationInfo();
@@ -1029,6 +1033,12 @@ public class TransactionCommitContext implements InternalCommitContext
   }
 
   @Override
+  public long getLockModCount()
+  {
+    return lockModCount;
+  }
+
+  @Override
   public void postCommit(boolean success)
   {
     try
@@ -1085,7 +1095,7 @@ public class TransactionCommitContext implements InternalCommitContext
       commitNotificationInfo.setCommitInfo(createFailureCommitInfo());
     }
 
-    repository.sendCommitNotification(commitNotificationInfo);
+    ((Repository)repository).sendCommitNotification(commitNotificationInfo, lockChangeReservation);
   }
 
   @Override
@@ -1869,8 +1879,25 @@ public class TransactionCommitContext implements InternalCommitContext
 
       if (!lockDeltas.isEmpty())
       {
-        CDOBranchPoint branchPoint = getBranchPoint();
-        lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
+        try
+        {
+          CDOBranchPoint branchPoint = getBranchPoint();
+          lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
+          lockChangeReservation = ((LockingManager)lockManager).completeLastLockChange(lockChangeInfo);
+          if (lockChangeReservation != null && transaction.getSession() instanceof Session)
+          {
+            LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = lockChangeReservation.getResult((Session)transaction.getSession());
+            lockModCount = result == null ? 0L : result.getLockModCount();
+          }
+        }
+        catch (RuntimeException | Error ex)
+        {
+          if (lockChangeReservation == null)
+          {
+            ((LockingManager)lockManager).cancelLastLockChange();
+          }
+          throw ex;
+        }
       }
 
       repository.notifyWriteAccessHandlers(transaction, this, false, monitor.fork());

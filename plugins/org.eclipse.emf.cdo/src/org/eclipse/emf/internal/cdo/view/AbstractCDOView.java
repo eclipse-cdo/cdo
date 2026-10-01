@@ -528,6 +528,26 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return viewAccess.access();
   }
 
+  /**
+   * Returns whether the current thread holds this view's access lock.
+   *
+   * @since 4.31
+   */
+  public final boolean isAccessHeldByCurrentThread()
+  {
+    return viewLock instanceof NonFairReentrantLock && ((NonFairReentrantLock)viewLock).isHeldByCurrentThread();
+  }
+
+  /**
+   * Returns whether the given thread holds this view's access lock.
+   *
+   * @since 4.31
+   */
+  public final boolean isAccessHeldBy(Thread thread)
+  {
+    return viewLock instanceof NonFairReentrantLock && ((NonFairReentrantLock)viewLock).getOwner() == thread;
+  }
+
   @Override
   public CDOViewProvider getProvider()
   {

@@ -29,12 +29,21 @@ public class LockOwnerRemappedNotificationRequest extends CDOServerRequest
 
   private CDOLockOwner newOwner;
 
+  private long lockModCount;
+
   public LockOwnerRemappedNotificationRequest(CDOServerProtocol serverProtocol, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner)
+  {
+    this(serverProtocol, branch, oldOwner, newOwner, 0L);
+  }
+
+  public LockOwnerRemappedNotificationRequest(CDOServerProtocol serverProtocol, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner,
+      long lockModCount)
   {
     super(serverProtocol, CDOProtocolConstants.SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION);
     this.branch = branch;
     this.oldOwner = oldOwner;
     this.newOwner = newOwner;
+    this.lockModCount = lockModCount;
   }
 
   @Override
@@ -43,5 +52,6 @@ public class LockOwnerRemappedNotificationRequest extends CDOServerRequest
     out.writeCDOBranch(branch);
     out.writeCDOLockOwner(oldOwner);
     out.writeCDOLockOwner(newOwner);
+    out.writeXLong(lockModCount);
   }
 }

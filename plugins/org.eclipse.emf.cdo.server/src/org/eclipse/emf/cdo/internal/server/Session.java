@@ -29,8 +29,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
-import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
-import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
@@ -54,7 +53,6 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
-import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -71,6 +69,7 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
@@ -83,6 +82,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -110,7 +111,9 @@ public class Session extends Container<IView> implements InternalSession
 
   private PassiveUpdateMode passiveUpdateMode = PassiveUpdateMode.INVALIDATIONS;
 
-  private LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
+  private volatile LockNotificationMode lockNotificationMode = LockNotificationMode.IF_REQUIRED_BY_VIEWS;
+
+  private final LockChangeDispatcher<LockNotificationContext, CDOLockChangeInfo> lockChangeDispatcher = new LockChangeDispatcher<>();
 
   private boolean openOnClientSide;
 
@@ -759,15 +762,13 @@ public class Session extends Container<IView> implements InternalSession
     sessionNotificationInfo.setClearResourcePathCache(notificationInfo.isClearResourcePathCache());
     sessionNotificationInfo.setNewPermissions(sessionCommitInfo.getNewPermissions());
     sessionNotificationInfo.setSecurityImpact(securityImpact);
+    sessionNotificationInfo.setModifiedByServer(notificationInfo.isModifiedByServer());
 
     CDOLockChangeInfo lockChangeInfo = notificationInfo.getLockChangeInfo();
-    if (lockChangeInfo != null)
+    if (lockChangeInfo != null && notificationInfo.getLockModCount() > 0)
     {
-      Object lockNotificationRequired = isLockNotificationRequired(lockChangeInfo);
-      if (lockNotificationRequired != null)
-      {
-        sessionNotificationInfo.setLockChangeInfo(lockChangeInfo);
-      }
+      sessionNotificationInfo.setLockChangeInfo(lockChangeInfo);
+      sessionNotificationInfo.setLockModCount(notificationInfo.getLockModCount());
     }
 
     protocol.sendCommitNotification(sessionNotificationInfo);
@@ -779,6 +780,7 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  @SuppressWarnings("deprecation")
   @Override
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception
   {
@@ -814,7 +816,32 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
+  void sendLockNotification(CDOLockChangeInfo lockChangeInfo, LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result) throws Exception
+  {
+    if (protocol == null || result == null || result.getLockModCount() == 0)
+    {
+      return;
+    }
+
+    LockChangeDispatcher.Projection<CDOLockChangeInfo> projection = result.getProjection();
+    if (projection == null || !projection.isVisible())
+    {
+      return;
+    }
+
+    Set<CDOID> filteredIDs = null;
+    if (projection.getFilteredIDs() != null)
+    {
+      @SuppressWarnings("unchecked")
+      Set<CDOID> ids = (Set<CDOID>)projection.getFilteredIDs();
+      filteredIDs = ids;
+    }
+
+    protocol.sendLockNotification(projection.getValue(), filteredIDs, result.getLockModCount());
+  }
+
   @Override
+  @SuppressWarnings("deprecation")
   public void sendLockOwnerRemappedNotification(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner) throws Exception
   {
     if (protocol != null)
@@ -823,60 +850,237 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
-  private Object isLockNotificationRequired(CDOLockChangeInfo lockChangeInfo)
+  @Override
+  public void sendLockOwnerRemappedNotification(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner, long lockModCount) throws Exception
   {
-    LockNotificationMode lockNotificationMode = options().getLockNotificationMode();
-    if (lockNotificationMode == LockNotificationMode.ALWAYS)
+    if (protocol != null)
     {
-      return Boolean.TRUE;
+      protocol.sendLockOwnerRemappedNotification(branch, oldOwner, newOwner, lockModCount);
+    }
+  }
+
+  LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> reserveLockChange(boolean forceFull)
+  {
+    if (isClosed())
+    {
+      return null;
     }
 
-    if (lockNotificationMode == LockNotificationMode.IF_REQUIRED_BY_VIEWS)
+    LockNotificationContext context;
+    try
     {
-      // We send the lockChangeInfo only if this session has one (or more) views configured for this branch.
-      for (InternalView view : getViews())
+      context = captureLockNotificationContext(forceFull);
+    }
+    catch (LifecycleException ex)
+    {
+      if (!isClosed())
       {
-        if (view.options().isLockNotificationEnabled())
-        {
-          CDOBranch affectedBranch = lockChangeInfo.getBranch();
-          if (affectedBranch == null || affectedBranch == view.getBranch())
-          {
-            return view;
-          }
-        }
+        throw ex;
       }
+
+      return null;
     }
 
-    Set<CDOID> lockedIDs = new HashSet<>();
-    InternalLockManager lockingManager = getRepository().getLockingManager();
+    return lockChangeDispatcher.reserve(context);
+  }
+
+  private LockNotificationContext captureLockNotificationContext()
+  {
+    return captureLockNotificationContext(false);
+  }
+
+  private LockNotificationContext captureLockNotificationContext(boolean forceFull)
+  {
+    Set<CDOLockOwner> owners = new HashSet<>();
+    List<ViewLockNotificationContext> viewContexts = new ArrayList<>();
 
     for (InternalView view : getViews())
     {
-      CDOBranch affectedBranch = lockChangeInfo.getBranch();
-      if (affectedBranch == null || affectedBranch == view.getBranch())
+      CDOLockOwner owner = view.getLockOwner();
+      owners.add(owner);
+      viewContexts.add(new ViewLockNotificationContext(view.getBranch(), view.options().isLockNotificationEnabled()));
+    }
+
+    return new LockNotificationContext(options().getLockNotificationMode(), viewContexts, owners, forceFull);
+  }
+
+  /**
+   * Returns the last sequence number assigned to a lock-state change visible to
+   * this server session. The value is zero until its first relevant change.
+   *
+   * @return this session's current lock-state sequence number
+   */
+  @Override
+  public long getLockModCount()
+  {
+    return lockChangeDispatcher.getLockModCount();
+  }
+
+  void setLockModCountBaseline(long lockModCount)
+  {
+    lockChangeDispatcher.setInitialLockModCount(lockModCount);
+  }
+
+  boolean isLockChangesQuiescent()
+  {
+    return lockChangeDispatcher.isQuiescent();
+  }
+
+  boolean isLockStateRelevantForSnapshot(CDOLockState state)
+  {
+    CDOBranch branch = state.getBranch();
+    LockNotificationMode mode = options().getLockNotificationMode();
+    if (mode == LockNotificationMode.ALWAYS)
+    {
+      return true;
+    }
+
+    Set<CDOLockOwner> owners = new HashSet<>();
+    for (InternalView view : getViews())
+    {
+      if (mode == LockNotificationMode.IF_REQUIRED_BY_VIEWS && view.options().isLockNotificationEnabled()
+          && (branch == null || view.getBranch() == branch))
       {
-        Map<CDOID, LockGrade> locks = lockingManager.getLocks(view);
+        return true;
+      }
 
-        for (CDOLockDelta delta : lockChangeInfo.getLockDeltas())
-        {
-          Object lockedObject = delta.getTarget();
-          CDOID id = CDOLockUtil.getLockedObjectID(lockedObject);
+      owners.add(view.getLockOwner());
+    }
 
-          LockGrade lockGrade = locks.get(id);
-          if (lockGrade != null && lockGrade != LockGrade.NONE)
-          {
-            lockedIDs.add(id);
-          }
-        }
+    for (CDOLockOwner owner : state.getReadLockOwners())
+    {
+      if (owners.contains(owner))
+      {
+        return true;
       }
     }
 
-    if (!lockedIDs.isEmpty())
+    return owners.contains(state.getWriteLockOwner()) || owners.contains(state.getWriteOptionOwner());
+  }
+
+  void awaitLockChangesQuiescent()
+  {
+    lockChangeDispatcher.awaitQuiescence();
+  }
+
+  void completeLockChange(LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> ticket, CDOLockChangeInfo info)
+  {
+    ticket.ready(info, LockNotificationContext::project);
+  }
+
+  void cancelLockChange(LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> ticket)
+  {
+    ticket.cancel();
+  }
+
+  private static final class ViewLockNotificationContext
+  {
+    private final CDOBranch branch;
+
+    private final boolean enabled;
+
+    private ViewLockNotificationContext(CDOBranch branch, boolean enabled)
     {
-      return lockedIDs;
+      this.branch = branch;
+      this.enabled = enabled;
+    }
+  }
+
+  static final class LockNotificationContext
+  {
+    private final LockNotificationMode mode;
+
+    private final List<ViewLockNotificationContext> views;
+
+    private final Set<CDOLockOwner> owners;
+
+    private final boolean forceFull;
+
+    private LockNotificationContext(LockNotificationMode mode, List<ViewLockNotificationContext> views, Set<CDOLockOwner> owners, boolean forceFull)
+    {
+      this.mode = mode;
+      this.views = Collections.unmodifiableList(views);
+      this.owners = Collections.unmodifiableSet(owners);
+      this.forceFull = forceFull;
     }
 
-    return null;
+    private LockChangeDispatcher.Projection<CDOLockChangeInfo> project(CDOLockChangeInfo info)
+    {
+      if (forceFull || mode == LockNotificationMode.ALWAYS)
+      {
+        return new LockChangeDispatcher.Projection<>(true, info);
+      }
+
+      CDOBranch affectedBranch = info.getBranch();
+      if (mode == LockNotificationMode.IF_REQUIRED_BY_VIEWS)
+      {
+        for (ViewLockNotificationContext view : views)
+        {
+          if (view.enabled && (affectedBranch == null || affectedBranch == view.branch))
+          {
+            return new LockChangeDispatcher.Projection<>(true, info);
+          }
+        }
+      }
+
+      Set<CDOID> lockedIDs = new HashSet<>();
+      for (CDOLockDelta delta : info.getLockDeltas())
+      {
+        if (affectedBranch != null && delta.getBranch() != null && delta.getBranch() != affectedBranch)
+        {
+          continue;
+        }
+
+        CDOID id = delta.getID();
+        boolean owned = owners.contains(delta.getOldOwner()) && delta.getOldOwner() != null;
+        for (CDOLockState state : info.getLockStates())
+        {
+          if (state.getID().equals(id) && state.getBranch() == delta.getBranch() && isOwnedBySession(state))
+          {
+            owned = true;
+            break;
+          }
+        }
+
+        if (owned)
+        {
+          lockedIDs.add(id);
+        }
+      }
+
+      return lockedIDs.isEmpty() ? new LockChangeDispatcher.Projection<>(false, null)
+          : new LockChangeDispatcher.Projection<>(true, info, lockedIDs);
+    }
+
+    private boolean isOwnedBySession(CDOLockState state)
+    {
+      if (state == null)
+      {
+        return false;
+      }
+
+      for (CDOLockOwner owner : state.getReadLockOwners())
+      {
+        if (owners.contains(owner))
+        {
+          return true;
+        }
+      }
+
+      return owners.contains(state.getWriteLockOwner()) || owners.contains(state.getWriteOptionOwner());
+    }
+  }
+
+  private Object isLockNotificationRequired(CDOLockChangeInfo lockChangeInfo)
+  {
+    LockChangeDispatcher.Projection<CDOLockChangeInfo> projection = captureLockNotificationContext().project(lockChangeInfo);
+    if (!projection.isVisible())
+    {
+      return null;
+    }
+
+    Set<?> filteredIDs = projection.getFilteredIDs();
+    return filteredIDs == null ? Boolean.TRUE : filteredIDs;
   }
 
   private boolean isDeltaNeeded(CDOID id, InternalView[] views)
@@ -990,6 +1194,8 @@ public class Session extends Container<IView> implements InternalSession
   @Override
   protected void doDeactivate() throws Exception
   {
+    lockChangeDispatcher.close();
+
     EventUtil.removeListener(protocol, protocolListener);
     protocolListener = null;
 

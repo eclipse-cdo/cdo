@@ -474,6 +474,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   @Override
   public String changeLockArea(CDOView view, boolean create)
   {
+    return changeLockArea2(view, create).getDurableLockingID();
+  }
+
+  @Override
+  public ChangeLockAreaResult changeLockArea2(CDOView view, boolean create)
+  {
     return send(new LockAreaRequest(this, view, create));
   }
 
@@ -605,6 +611,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth)
   {
     return send(new LockStateRequest(this, branchID, ids, depth));
+  }
+
+  @Override
+  public LockStateSnapshotResult getLockStateSnapshot()
+  {
+    return send(new LockStateSnapshotRequest(this));
   }
 
   @Override

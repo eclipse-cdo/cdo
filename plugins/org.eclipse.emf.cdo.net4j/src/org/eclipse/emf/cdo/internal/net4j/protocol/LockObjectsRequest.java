@@ -92,8 +92,9 @@ public class LockObjectsRequest extends CDOClientRequest<LockObjectsResult>
 
     List<CDOLockDelta> lockDeltas = in.readCDOLockDeltas();
     List<CDOLockState> lockStates = in.readCDOLockStates();
+    long lockModCount = in.readXLong();
 
-    return new LockObjectsResult(succesful, timeout, waitForUpdate, requiredTimestamp, staleRevisions, lockDeltas, lockStates, timestamp);
+    return new LockObjectsResult(succesful, timeout, waitForUpdate, requiredTimestamp, staleRevisions, lockDeltas, lockStates, timestamp, lockModCount);
   }
 
   @Override

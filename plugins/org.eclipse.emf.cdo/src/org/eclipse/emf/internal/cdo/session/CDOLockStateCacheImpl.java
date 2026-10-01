@@ -298,7 +298,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   }
 
   @Override
-  public void addLockStates(CDOBranch branch, Collection<? extends CDOLockState> lockStates, Consumer<CDOLockState> consumer)
+  public synchronized void addLockStates(CDOBranch branch, Collection<? extends CDOLockState> lockStates, Consumer<CDOLockState> consumer)
   {
     ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
 
@@ -315,8 +315,48 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
   }
 
+  synchronized void replaceSnapshot(Collection<? extends CDOLockState> lockStates)
+  {
+    ownerInfosOfMainBranch.clear();
+
+    synchronized (ownerInfosPerBranch)
+    {
+      ownerInfosPerBranch.values().forEach(Map::clear);
+    }
+
+    for (ConcurrentMap<CDOLockOwner, SingleOwnerInfo> infos : singleOwnerInfos)
+    {
+      infos.clear();
+    }
+
+    for (CDOView view : session.getViews())
+    {
+      addSingleOwnerInfos(view.getLockOwner(), -1);
+    }
+
+    for (CDOLockState lockState : lockStates)
+    {
+      ConcurrentMap<CDOID, OwnerInfo> infos;
+
+      CDOBranch branch = lockState.getBranch() == null ? mainBranch : lockState.getBranch();
+      if (branch.isMainBranch())
+      {
+        infos = ownerInfosOfMainBranch;
+      }
+      else
+      {
+        synchronized (ownerInfosPerBranch)
+        {
+          infos = ownerInfosPerBranch.computeIfAbsent(branch, key -> new ConcurrentHashMap<>());
+        }
+      }
+
+      addLockState(infos, lockState, null);
+    }
+  }
+
   @Override
-  public List<CDOLockDelta> removeOwner(CDOBranch branch, CDOLockOwner owner, Consumer<CDOLockState> consumer)
+  public synchronized List<CDOLockDelta> removeOwner(CDOBranch branch, CDOLockOwner owner, Consumer<CDOLockState> consumer)
   {
     List<CDOLockDelta> deltas = new ArrayList<>();
     List<Pair<CDOID, OwnerInfo>> newInfos = new ArrayList<>();
@@ -344,7 +384,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   }
 
   @Override
-  public void remapOwner(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner)
+  public synchronized void remapOwner(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner)
   {
     for (int type = 0; type < singleOwnerInfos.length; type++)
     {
@@ -362,7 +402,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   }
 
   @Override
-  public void removeLockStates(CDOBranch branch, Collection<CDOID> ids, Consumer<CDOLockState> consumer)
+  public synchronized void removeLockStates(CDOBranch branch, Collection<CDOID> ids, Consumer<CDOLockState> consumer)
   {
     if (ObjectUtil.isEmpty(ids))
     {
@@ -382,7 +422,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   }
 
   @Override
-  public void removeLockStates(CDOBranch branch)
+  public synchronized void removeLockStates(CDOBranch branch)
   {
     ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
     infos.clear();

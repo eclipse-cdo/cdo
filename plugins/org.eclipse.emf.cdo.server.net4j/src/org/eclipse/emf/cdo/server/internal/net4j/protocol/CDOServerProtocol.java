@@ -161,15 +161,29 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter) throws Exception
   {
     send(new LockNotificationRequest(this, lockChangeInfo, filter));
   }
 
   @Override
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter, long lockModCount) throws Exception
+  {
+    send(new LockNotificationRequest(this, lockChangeInfo, filter, lockModCount));
+  }
+
+  @Override
+  @SuppressWarnings("deprecation")
   public void sendLockOwnerRemappedNotification(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner) throws Exception
   {
     send(new LockOwnerRemappedNotificationRequest(this, branch, oldOwner, newOwner));
+  }
+
+  @Override
+  public void sendLockOwnerRemappedNotification(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner, long lockModCount) throws Exception
+  {
+    send(new LockOwnerRemappedNotificationRequest(this, branch, oldOwner, newOwner, lockModCount));
   }
 
   @Override
@@ -328,6 +342,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
     case SIGNAL_LOCK_STATE:
       return new LockStateIndication(this);
+
+    case SIGNAL_LOCK_STATE_SNAPSHOT:
+      return new LockStateSnapshotIndication(this);
 
     case SIGNAL_ENABLE_LOCK_NOTIFICATION:
       return new EnableLockNotificationIndication(this);

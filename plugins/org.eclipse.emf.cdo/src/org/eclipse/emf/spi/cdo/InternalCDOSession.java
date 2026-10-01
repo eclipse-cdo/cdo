@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -95,26 +96,12 @@ public interface InternalCDOSession
   }
 
   /**
-   * @since 4.0
-   * @deprecated As of 4.2 use {@link #getCredentialsProvider()}
-   */
-  @Deprecated
-  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator();
-
-  /**
-   * @since 4.0
-   * @deprecated As of 4.2 use {@link #setCredentialsProvider(IPasswordCredentialsProvider)}
-   */
-  @Deprecated
-  public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator);
-
-  /**
    * @since 4.2
    */
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
   /**
-   * @since 4.27
+   * @since 4.31
    */
   public void setOneTimeLoginToken(byte[] oneTimeLoginToken);
 
@@ -244,42 +231,24 @@ public interface InternalCDOSession
   public void handleRepositoryStateChanged(CDOCommonRepository.State oldState, CDOCommonRepository.State newState);
 
   /**
-   * @since 3.0
-   * @deprecated As of 4.3 no longer supported.
-   */
-  @Deprecated
-  public void handleBranchNotification(InternalCDOBranch branch);
-
-  /**
-   * @since 3.0
-   * @deprecated As of 4.2 use {@link #handleCommitNotification(CDOCommitInfo, boolean)}.
-   */
-  @Deprecated
-  public void handleCommitNotification(CDOCommitInfo commitInfo);
-
-  /**
-   * @since 4.2
-   * @deprecated As of 4.3 use {@link #handleCommitNotification(CommitNotificationInfo)}.
-   */
-  @Deprecated
-  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache);
-
-  /**
    * @since 4.3
    */
   public void handleCommitNotification(CommitNotificationInfo info);
 
   /**
-   * @since 4.1
-   * @deprecated As of 4.12 use {@link #handleLockNotification(CDOLockChangeInfo, InternalCDOView, boolean)}.
+   * Handles a lock notification while retaining its event-specific sequence
+   * number for subsequent client-side processing.
+   *
+   * @since 4.31
    */
-  @Deprecated
-  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender);
+  public void handleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async);
 
   /**
-   * @since 4.12
+   * Handles an owner remap while retaining its event-specific sequence number.
+   *
+   * @since 4.31
    */
-  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async);
+  public void handleLockOwnerRemappedNotification(long lockModCount, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner);
 
   /**
    * @since 4.15
@@ -302,31 +271,20 @@ public interface InternalCDOSession
   public void endLocalCommit(Object token);
 
   /**
-   * @since 3.0
-   * @deprecated As of 4.2 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)}.
-   */
-  @Deprecated
-  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender);
-
-  /**
-   * @since 4.2
-   * @deprecated As of 4.3 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, byte, Map)}.
-   */
-  @Deprecated
-  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache);
-
-  /**
-   * @since 4.3
-   * @deprecated As of 4.6 use {@link #invalidate(InvalidationData)}.
-   */
-  @Deprecated
-  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
-      Map<CDOID, CDOPermission> newPermissions);
-
-  /**
    * @since 4.6
    */
   public void invalidate(InvalidationData invalidationData);
+
+  /**
+   * Schedules the given invalidation data for processing and associates an optional lock cache update with that same
+   * invalidation.
+   *
+   * @param invalidationData the data that describes the invalidation
+   * @param lockCacheUpdate the lock cache update to run as part of processing the invalidation, or {@code null} if no
+   *          lock cache update is needed
+   * @since 4.31
+   */
+  public void invalidate(InvalidationData invalidationData, Runnable lockCacheUpdate);
 
   /**
    * @since 3.0
@@ -363,20 +321,6 @@ public interface InternalCDOSession
    * @since 4.0
    */
   public void setMainBranchLocal(boolean mainBranchLocal);
-
-  /**
-   * @since 4.0
-   * @deprecated As of 4.2 not used anymore.
-   */
-  @Deprecated
-  public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint);
-
-  /**
-   * @since 4.0
-   * @deprecated As of 4.2 not used anymore.
-   */
-  @Deprecated
-  public void cacheRevisions(CDORevisionAvailabilityInfo info);
 
   /**
    * @since 4.2
@@ -455,6 +399,8 @@ public interface InternalCDOSession
 
     private CDOLockChangeInfo lockChangeInfo;
 
+    private long lockModCount;
+
     public InvalidationData()
     {
     }
@@ -517,6 +463,27 @@ public interface InternalCDOSession
     public void setLockChangeInfo(CDOLockChangeInfo lockChangeInfo)
     {
       this.lockChangeInfo = lockChangeInfo;
+    }
+
+    /**
+     * Returns the sequence number of the lock change in this invalidation,
+     * or zero if there is no lock change.
+     *
+     * @since 4.31
+     */
+    public long getLockModCount()
+    {
+      return lockModCount;
+    }
+
+    /**
+     * Sets the sequence number of the lock change in this invalidation.
+     *
+     * @since 4.31
+     */
+    public void setLockModCount(long lockModCount)
+    {
+      this.lockModCount = lockModCount;
     }
 
     @Override
@@ -730,4 +697,89 @@ public interface InternalCDOSession
       return getTargetBaseInfo();
     }
   }
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.2 use {@link #getCredentialsProvider()}
+   */
+  @Deprecated
+  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator();
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.2 use {@link #setCredentialsProvider(IPasswordCredentialsProvider)}
+   */
+  @Deprecated
+  public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator);
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.3 no longer supported.
+   */
+  @Deprecated
+  public void handleBranchNotification(InternalCDOBranch branch);
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.2 use {@link #handleCommitNotification(CDOCommitInfo, boolean)}.
+   */
+  @Deprecated
+  public void handleCommitNotification(CDOCommitInfo commitInfo);
+
+  /**
+   * @since 4.2
+   * @deprecated As of 4.3 use {@link #handleCommitNotification(CommitNotificationInfo)}.
+   */
+  @Deprecated
+  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache);
+
+  /**
+   * @since 4.1
+   * @deprecated As of 4.12 use {@link #handleLockNotification(CDOLockChangeInfo, InternalCDOView, boolean)}.
+   */
+  @Deprecated
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender);
+
+  /**
+   * @since 4.12
+   * @deprecated As of 4.31 use {@link #handleLockNotification(long, CDOLockChangeInfo, InternalCDOView, boolean)}.
+   */
+  @Deprecated
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async);
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.2 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)}.
+   */
+  @Deprecated
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender);
+
+  /**
+   * @since 4.2
+   * @deprecated As of 4.3 use {@link #invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, byte, Map)}.
+   */
+  @Deprecated
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache);
+
+  /**
+   * @since 4.3
+   * @deprecated As of 4.6 use {@link #invalidate(InvalidationData)}.
+   */
+  @Deprecated
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
+      Map<CDOID, CDOPermission> newPermissions);
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.2 not used anymore.
+   */
+  @Deprecated
+  public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.2 not used anymore.
+   */
+  @Deprecated
+  public void cacheRevisions(CDORevisionAvailabilityInfo info);
 }

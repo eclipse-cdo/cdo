@@ -1,0 +1,232 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Security, Queries, and Specialized Extensions (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Security, Queries, and Specialized Extensions (CDO Model Repository Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Security, Queries, and Specialized Extensions</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Backward to Repository Handlers and Commit Processing"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc09_AdvancedServerIntegration.html" title="Forward to Advanced Server Integration"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ Security and query handling are specialized extension domains: use their deliberately supported contracts instead
+ of general read/write handlers when the problem is authentication, authorization, or a query language. Deployment
+ credentials, password files, TLS, and directory-server configuration remain
+ <a href="https://wiki.eclipse.org/CDO/Security_Manager" title="Article in CDO Model Repository Documentation">Operator's Guide topics</a>.
+ <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#SecurityModel" title="Chapter in CDO Model Repository Documentation">Repository Protection</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#PermissionCacheSPI" title="Chapter in CDO Model Repository Documentation">Permission Cache SPI</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#AuthenticationExample" title="Chapter in CDO Model Repository Documentation">Authentication Example</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#QueryHandlers" title="Chapter in CDO Model Repository Documentation">Query Handlers</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#FactoryExtensions" title="Chapter in CDO Model Repository Documentation">Extension Boundaries</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="SecurityModel"></a>1&nbsp;&nbsp;Repository Protection</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepositoryProtector</code></a> protects a repository by combining a <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.UserAuthenticator.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>UserAuthenticator</code></a>, authorization
+ strategy, revision authorizers, and commit handlers. The authenticator establishes repository user identity;
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.AuthorizationStrategy.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>IRepositoryProtector.AuthorizationStrategy</code></a> combines permissions; a
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.RevisionAuthorizer.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>IRepositoryProtector.RevisionAuthorizer</code></a> decides revision permissions; and a
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.CommitHandler.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>IRepositoryProtector.CommitHandler</code></a> runs before security checking and after a successful protected commit.
+ The protector's product groups make those elements container-configurable.
+ <p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IPermissionManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>IPermissionManager</code></a> is the legacy permission-management API used by the security model. The optional
+ org.eclipse.emf.cdo.server.security module supplies its own ISecurityManager; use its public API
+ when that module is intentionally part of an application, without coupling to its internal realm implementation.
+
+<h2><a name="PermissionCacheSPI"></a>2&nbsp;&nbsp;Permission Cache SPI</h2>
+<p>
+ The optional org.eclipse.emf.cdo.server.security module provides the PermissionCache and
+ PermissionCacheFactory SPIs for applications that need an alternative resource-permission cache. The
+ module's InternalSecurityManager exposes the creator configuration point.
+ The security manager conservatively separates resource-stable permissions, which can contribute to a cached
+ resource baseline, from dynamic or context-sensitive permissions, which are evaluated for each authorization. Custom
+ Permission and PermissionFilter implementations are dynamic by default. A security-manager
+ subclass can opt a custom permission or filter into resource caching through its protected
+ isResourceCacheable(...) hooks only when its result does not depend on request-local state, transaction
+ state, arbitrary object contents, or AuthorizationContext.
+ <p>
+ Cached authorization applies only to reads at the current branch head. Historical reads and commit authorization
+ remain uncached. Cache generations are isolated by repository, user, and branch, and relevant realm or
+ resource-tree changes replace affected generations. This also applies independently to secondary repositories.
+ A dynamic permission that depends on AuthorizationContext is evaluated outside the cached resource
+ baseline on each authorization.
+ <p>
+ A custom PermissionCache.Creator must return a fresh logical generation for each repository/user/branch
+ scope and keep late writes to an obsolete generation from becoming visible through its replacement. The cache
+ implementation must support concurrent authorization access.
+
+<h2><a name="AuthenticationExample"></a>3&nbsp;&nbsp;Authentication Example</h2>
+<p>
+ An authenticator must delegate credential validation to application-owned policy and return null when the
+ policy rejects the credentials. This example shows the integration seam without embedding credentials or choosing
+ a password-storage scheme.
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_AuthenticationExample_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateAuthenticator.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('AuthenticationExample_1')" id="max_AuthenticationExample_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_AuthenticationExample_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_AuthenticationExample_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;new&nbsp;</b></font>UserAuthenticator()<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font>IRepositoryProtector.UserInfo&nbsp;authenticateUser(String&nbsp;userID,&nbsp;<font color="#7f0055"><b>char</b></font>[]&nbsp;password)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(credentials.test(userID,&nbsp;password))<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;new&nbsp;</b></font>IRepositoryProtector.UserInfo(userID);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;null</b></font>;<br/>
+            &nbsp;&nbsp;}<br/>
+            };            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="QueryHandlers"></a>4&nbsp;&nbsp;Query Handlers</h2>
+<p>
+ An <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>IQueryHandler</code></a> executes the <a href="../../../javadoc/org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="Interface in org.eclipse.emf.cdo.common.util"><code>query info</code></a> selected by a repository's query-handler
+ provider. It submits results through <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryContext.html#addResult(java.lang.Object)" title="Method in org.eclipse.emf.cdo.server.IQueryContext"><code>IQueryContext.addResult(Object)</code></a> and stops when that method returns
+ false or the context is cancelled. Register handler factories in
+ <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/QueryHandlerFactory.html#PRODUCT_GROUP" title="Field in org.eclipse.emf.cdo.spi.server.QueryHandlerFactory"><code>QueryHandlerFactory.PRODUCT_GROUP</code></a>; the factory type is the query language, so container configuration can
+ select the handler. Implement <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.PotentiallySlow.html" title="Interface in org.eclipse.emf.cdo.server.IQueryHandler"><code>IQueryHandler.PotentiallySlow</code></a> when a handler can identify slow query forms.
+ OCL is a supplied optional handler integration; this guide does not teach the OCL language itself.
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_QueryHandlers_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateViewIdentifierHandler.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('QueryHandlers_1')" id="max_QueryHandlers_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_QueryHandlers_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_QueryHandlers_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>(info,&nbsp;context)&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!context.isCancelled())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;context.addResult(context.getView().getViewID());<br/>
+            &nbsp;&nbsp;}<br/>
+            };            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="FactoryExtensions"></a>5&nbsp;&nbsp;Extension Boundaries</h2>
+<p>
+ Repository factories, query handler factories, repository-protector elements, DB adapters, and mapping
+ strategies are container/factory extension mechanisms. They serve different responsibilities and should not be
+ confused with application extensions. Use a supported factory SPI only when the application must supply that
+ product; otherwise configure an existing product.
+
+<p align="right">
+<a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Backward to Repository Handlers and Commit Processing"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc09_AdvancedServerIntegration.html" title="Forward to Advanced Server Integration"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

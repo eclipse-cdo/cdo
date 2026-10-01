@@ -80,14 +80,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IRWLockManager.LockType.</span><code><a href="../IRWLockManager.LockType.html#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color"><code><a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.LockChange.</span><code><a href="../IRWOLockManager.LockChange.html#getLockType()" class="member-name-link">getLockType</a>()</code></div>
 <div class="col-last even-row-color">
+<div class="block">Returns the lock type, or <code>null</code> to unlock all types.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRWLockManager.LockType.</span><code><a href="../IRWLockManager.LockType.html#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>[]</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IRWLockManager.LockType.</span><code><a href="../IRWLockManager.LockType.html#values()" class="member-name-link">values</a>()</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRWLockManager.LockType.</span><code><a href="../IRWLockManager.LockType.html#values()" class="member-name-link">values</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 </div>
@@ -107,92 +112,110 @@ the order they are declared.</div>
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.LockDeltaHandler.</span><code><a href="../IRWOLockManager.LockDeltaHandler.html#handleLockDelta(CONTEXT,OBJECT,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,int)" class="member-name-link">handleLockDelta</a><wbr>(<a href="../IRWOLockManager.LockDeltaHandler.html" title="type parameter in IRWOLockManager.LockDeltaHandler">CONTEXT</a>&nbsp;context,
+<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.LockChange.DeltaHandler.</span><code><a href="../IRWOLockManager.LockChange.DeltaHandler.html#handleLockDelta(org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.Operation,CONTEXT,OBJECT,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,int)" class="member-name-link">handleLockDelta</a><wbr>(<a href="../IRWOLockManager.LockChange.Operation.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWOLockManager.LockChange.Operation</a>&nbsp;operation,
+ <a href="../IRWOLockManager.LockChange.DeltaHandler.html" title="type parameter in IRWOLockManager.LockChange.DeltaHandler">CONTEXT</a>&nbsp;context,
+ <a href="../IRWOLockManager.LockChange.DeltaHandler.html" title="type parameter in IRWOLockManager.LockChange.DeltaHandler">OBJECT</a>&nbsp;object,
+ <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+ int&nbsp;oldCount,
+ int&nbsp;newCount)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Handles one effective lock-count change in a lock mutation batch.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRWOLockManager.LockDeltaHandler.</span><code><a href="../IRWOLockManager.LockDeltaHandler.html#handleLockDelta(CONTEXT,OBJECT,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,int)" class="member-name-link">handleLockDelta</a><wbr>(<a href="../IRWOLockManager.LockDeltaHandler.html" title="type parameter in IRWOLockManager.LockDeltaHandler">CONTEXT</a>&nbsp;context,
  <a href="../IRWOLockManager.LockDeltaHandler.html" title="type parameter in IRWOLockManager.LockDeltaHandler">OBJECT</a>&nbsp;object,
  <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
  int&nbsp;oldCount,
  int&nbsp;newCount)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IRWLockManager.</span><code><a href="../IRWLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
- <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RWLockManager.</span><code><a href="../RWLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="../RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="../RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
-<div class="col-last even-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
-&nbsp;</div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
- <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RWOLockManager.LockState.</span><code><a href="../RWOLockManager.LockState.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RWOLockManager.LockState.</span><code><a href="../RWOLockManager.LockState.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,boolean)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="../RWOLockManager.LockState.html" title="type parameter in RWOLockManager.LockState">CONTEXT</a>&nbsp;context,
- boolean&nbsp;byOthers)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IRWLockManager.</span><code><a href="../IRWLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLockByOthers</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+<div class="col-second even-row-color"><span class="type-name-label">IRWLockManager.</span><code><a href="../IRWLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
  <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
  <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RWLockManager.</span><code><a href="../RWLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLockByOthers</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+<div class="col-second odd-row-color"><span class="type-name-label">RWLockManager.</span><code><a href="../RWLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
  <a href="../RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
  <a href="../RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
 <div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLockByOthers</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+<div class="col-second even-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
  <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
  <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IRWLockManager.</span><code><a href="../IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RWOLockManager.LockState.</span><code><a href="../RWOLockManager.LockState.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RWOLockManager.LockState.</span><code><a href="../RWOLockManager.LockState.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,boolean)" class="member-name-link">hasLock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="../RWOLockManager.LockState.html" title="type parameter in RWOLockManager.LockState">CONTEXT</a>&nbsp;context,
+ boolean&nbsp;byOthers)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRWLockManager.</span><code><a href="../IRWLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLockByOthers</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RWLockManager.</span><code><a href="../RWLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLockByOthers</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="../RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="../RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLockByOthers</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
+ <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRWLockManager.</span><code><a href="../IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
  <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
  long&nbsp;timeout)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IRWLockManager.</span><code><a href="../IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRWLockManager.</span><code><a href="../IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
  <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">CONTEXT</a>&nbsp;context,
  <a href="../IRWLockManager.html" title="type parameter in IRWLockManager">OBJECT</a>&nbsp;objectToLock,
  long&nbsp;timeout)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>long</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#lock(CONTEXT,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,long,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">lock</a><wbr>(<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#lock(CONTEXT,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,long,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">lock</a><wbr>(<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>&gt;&nbsp;objects,
  <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
  int&nbsp;count,
  long&nbsp;timeout,
  <a href="../IRWOLockManager.LockDeltaHandler.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager.LockDeltaHandler</a>&lt;<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>,<wbr><a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&gt;&nbsp;deltaHandler,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>,<wbr><a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&gt;&gt;&nbsp;stateHandler)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Adds locks of the given lockType, owned by the given context to the given objects.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
  <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
+ long&nbsp;timeout)</code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+ <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
+ <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>&nbsp;objectToLock,
  long&nbsp;timeout)</code></div>
 <div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
- <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
- <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>&nbsp;objectToLock,
+<div class="col-first odd-row-color"><code>static &lt;OBJECT&gt;&nbsp;<a href="../IRWOLockManager.LockChange.html" title="class in org.eclipse.net4j.util.concurrent">IRWOLockManager.LockChange</a><wbr>&lt;OBJECT&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRWOLockManager.LockChange.</span><code><a href="../IRWOLockManager.LockChange.html#lock(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,long)" class="member-name-link">lock</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends OBJECT&gt;&nbsp;objects,
+ <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+ int&nbsp;count,
  long&nbsp;timeout)</code></div>
 <div class="col-last odd-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block">Creates a request to acquire a lock on each object in the given collection.</div>
 </div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">RWLockManager.</span><code><a href="../RWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
@@ -258,59 +281,81 @@ the order they are declared.</div>
 <div class="col-last odd-row-color">
 <div class="block">Attempts to release for a given lock type, context and objects.</div>
 </div>
-<div class="col-first even-row-color"><code>long</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#unlock(CONTEXT,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">unlock</a><wbr>(<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
+<div class="col-first even-row-color"><code>static &lt;OBJECT&gt;&nbsp;<a href="../IRWOLockManager.LockChange.html" title="class in org.eclipse.net4j.util.concurrent">IRWOLockManager.LockChange</a><wbr>&lt;OBJECT&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.LockChange.</span><code><a href="../IRWOLockManager.LockChange.html#unlock(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int)" class="member-name-link">unlock</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends OBJECT&gt;&nbsp;objects,
+ <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+ int&nbsp;count)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a request to release locks from the given objects.</div>
+</div>
+<div class="col-first odd-row-color"><code>long</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#unlock(CONTEXT,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">unlock</a><wbr>(<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>&gt;&nbsp;objects,
  <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
  int&nbsp;count,
  <a href="../IRWOLockManager.LockDeltaHandler.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager.LockDeltaHandler</a>&lt;<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>,<wbr><a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&gt;&nbsp;deltaHandler,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>,<wbr><a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&gt;&gt;&nbsp;stateHandler)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Removes locks of the given lockType, owned by the given context from the given objects.</div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
  <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RWLockManager.</span><code><a href="../RWLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RWLockManager.</span><code><a href="../RWLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
  <a href="../RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 <div class="block">Attempts to release for a given locktype, context and objects.</div>
 </div>
-<div class="col-first odd-row-color"><code>long</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#unlock(CONTEXT,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">unlock</a><wbr>(<a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#unlock(CONTEXT,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">unlock</a><wbr>(<a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&gt;&nbsp;objects,
  <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
  int&nbsp;count,
  <a href="../IRWOLockManager.LockDeltaHandler.html" title="interface in org.eclipse.net4j.util.concurrent">IRWOLockManager.LockDeltaHandler</a>&lt;<a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<wbr><a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&nbsp;deltaHandler,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<wbr><a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;&nbsp;stateHandler)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
  <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
-<div class="col-last even-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
-</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>,<wbr><a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&gt;&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock2</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
- <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
 <div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<wbr><a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock2</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
- <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>,<wbr><a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRWOLockManager.</span><code><a href="../IRWOLockManager.html#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock2</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+ <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">CONTEXT</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../IRWOLockManager.html" title="type parameter in IRWOLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
 <div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../RWOLockManager.LockState.html" title="class in org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a>&lt;<a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>,<wbr><a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&gt;&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RWOLockManager.</span><code><a href="../RWOLockManager.html#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock2</a><wbr>(<a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+ <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">CONTEXT</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../RWOLockManager.html" title="type parameter in RWOLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+</div>
+<div class="caption"><span>Constructors in <a href="../package-summary.html">org.eclipse.net4j.util.concurrent</a> with parameters of type <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../IRWOLockManager.LockChange.html#%3Cinit%3E(org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.Operation,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,long)" class="member-name-link">LockChange</a><wbr>(<a href="../IRWOLockManager.LockChange.Operation.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWOLockManager.LockChange.Operation</a>&nbsp;operation,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="../IRWOLockManager.LockChange.html" title="type parameter in IRWOLockManager.LockChange">OBJECT</a>&gt;&nbsp;objects,
+ <a href="../IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;lockType,
+ int&nbsp;count,
+ long&nbsp;timeout)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates one immutable lock mutation request.</div>
 </div>
 </div>
 </section>

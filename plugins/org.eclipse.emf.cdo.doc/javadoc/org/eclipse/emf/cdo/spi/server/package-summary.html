@@ -151,9 +151,13 @@ loadScripts(document, 'script');</script>
 <div class="block">An optional extension of the <a href="IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for <a href="IAppExtension5.html#getName()"><code>named</code></a> app extensions.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Defines the server protocol operations used to authenticate a session.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="ICommitConflictResolver.html" title="interface in org.eclipse.emf.cdo.spi.server">ICommitConflictResolver</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Resolves conflicts detected while committing a transaction.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ICommitConflictResolver.Merging.html" title="class in org.eclipse.emf.cdo.spi.server">ICommitConflictResolver.Merging</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></div>
@@ -172,6 +176,22 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">The type of the to-be-locked objects is either <a href="../../common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDOIDAndBranch</code></a> or <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>, depending on whether
  branching is supported by the repository or not.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalLockManager.LockChangeOperationResult.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeOperationResult</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">The generic lock-manager modification count and optional reservation produced by one operation.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalLockManager.LockChangeReservationSet.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeReservationSet</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">An aggregate of per-session reservations for one lock change.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalLockManager.LockStateQuery.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockStateQuery</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">A selective lock-state query paired with a session sequence baseline.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalLockManager.LockStateSnapshot.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockStateSnapshot</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">A consistent lock-state snapshot for one session.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalQueryManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalQueryManager</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
@@ -200,6 +220,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalSession.LockChangeReservation.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeReservation</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Represents a position reserved in this session's lock-change sequence.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalSession.LockChangeResult.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeResult</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">The session-specific result of a completed lock-change reservation.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalSessionManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSessionManager</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
@@ -250,9 +278,13 @@ loadScripts(document, 'script');</script>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalTopic.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTopic</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Provides the server-internal operations of a topic.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalTopicManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTopicManager</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Provides the server-internal operations of a topic manager.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalTransaction.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
@@ -260,9 +292,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="InternalTransaction.CommitAttempt.html" title="class in org.eclipse.emf.cdo.spi.server">InternalTransaction.CommitAttempt</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalUnitManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Provides the server-internal operations of a unit manager.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalUnitManager.InternalObjectAttacher.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager.InternalObjectAttacher</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Receives completion notification for object attachment during a commit.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
@@ -279,88 +315,92 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ObjectWriteAccessHandler.html" title="class in org.eclipse.emf.cdo.spi.server">ObjectWriteAccessHandler</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="MatchCache.html" title="interface in org.eclipse.emf.cdo.spi.server">MatchCache</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Caches boolean results of matcher evaluations.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ObjectWriteAccessHandler.html" title="class in org.eclipse.emf.cdo.spi.server">ObjectWriteAccessHandler</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PluginRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server">PluginRepositoryProvider</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PluginRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server">PluginRepositoryProvider</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">Deprecated.
 <div class="deprecation-comment">As of 4.20 use <a href="ContainerRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server"><code>ContainerRepositoryProvider</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="QueryHandlerFactory.html" title="class in org.eclipse.emf.cdo.spi.server">QueryHandlerFactory</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryActivityLog.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryActivityLog.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Factory</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryActivityLog.Rolling.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Rolling</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryActivityLog.Rolling.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Rolling.Factory</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="QueryHandlerFactory.html" title="class in org.eclipse.emf.cdo.spi.server">QueryHandlerFactory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="RepositoryConfigurator.Extension.html" title="interface in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Extension</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryActivityLog.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryActivityLog.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Factory</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryActivityLog.Rolling.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Rolling</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryActivityLog.Rolling.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryActivityLog.Rolling.Factory</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryConfigurator.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="RepositoryConfigurator.Extension.html" title="interface in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Extension</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">Can use <code>cdo-server.xml</code> markup elements to configure extended aspects of a <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryConfigurator.Factory.Default.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory.Default</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryConfigurator.Factory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryConfigurator.TreeExtension.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.TreeExtension</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryConfigurator.Factory.Default.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.Factory.Default</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryConfigurator.TreeExtension.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryConfigurator.TreeExtension</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A repository configurator <a href="RepositoryConfigurator.Extension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>extension</code></a> that</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryFactory</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryUserManager.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryFactory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryUserManager.RepositoryAuthenticatorFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryAuthenticatorFactory</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryUserManager.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryUserManager.RepositoryInjector.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryInjector</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryUserManager.RepositoryAuthenticatorFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryAuthenticatorFactory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryUserManager.RepositoryUserManagerFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryUserManagerFactory</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RepositoryUserManager.RepositoryInjector.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryInjector</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Store.html" title="class in org.eclipse.emf.cdo.spi.server">Store</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RepositoryUserManager.RepositoryUserManagerFactory.html" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryUserManagerFactory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Store.html" title="class in org.eclipse.emf.cdo.spi.server">Store</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StoreAccessorBase.CommitDataRevisionHandler.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase.CommitDataRevisionHandler</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StoreAccessorBase.CommitDataRevisionHandler.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase.CommitDataRevisionHandler</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StoreChunkReader.html" title="class in org.eclipse.emf.cdo.spi.server">StoreChunkReader</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StoreAccessorPool.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SyncingUtil.html" title="class in org.eclipse.emf.cdo.spi.server">SyncingUtil</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StoreChunkReader.html" title="class in org.eclipse.emf.cdo.spi.server">StoreChunkReader</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SyncingUtil.html" title="class in org.eclipse.emf.cdo.spi.server">SyncingUtil</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Static methods that may help with classes related to repository synchronization.</div>
 </div>
 </div>

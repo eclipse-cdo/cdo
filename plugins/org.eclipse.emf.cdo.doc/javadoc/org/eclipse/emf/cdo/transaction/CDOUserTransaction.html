@@ -193,6 +193,9 @@ extends <a href="CDORollbackable.html" title="interface in org.eclipse.emf.cdo.t
  Various kinds of problems <b>can</b> cause the commit to fail and not all of them can be avoided by acquiring pessimistic <a href="../CDOObject.html#cdoWriteLock()"><code>locks</code></a>
  on the modified objects. In particular you <b>must</b> expect and handle <a href="../util/ContainmentCycleException.html" title="class in org.eclipse.emf.cdo.util"><code>containment cycle exceptions</code></a>. The following example shows how
  write robust transactions:
+ <p>
+ The legacy locking methods used below are disabled by default. This example requires
+ <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code>.
  <pre>
     CDOTransaction transaction = null;
 

@@ -15,6 +15,56 @@ function windowTitle()
     }
 }
 </script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
 </head>
 
 <body bgcolor="white" onload="windowTitle();">
@@ -23,44 +73,283 @@ function windowTitle()
 <table border="0">
 	<tr>
 		<td width="100%"><h1>Advanced Topics</h1></td>
-		<td align="right" valign="middle" nowrap><a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Backward to Integrating with EMF and Other Frameworks"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc12_BestPracticesAndPatterns.html" title="Forward to Best Practices and Patterns"><img src="../../../images/forward.png" border="0"></a></td>
+		<td align="right" valign="middle" nowrap><a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Backward to Integrating with EMF and Other Frameworks"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc12_BestPracticesAndPatterns.html" title="Forward to Best Practices and Common Pitfalls"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- This chapter covers advanced topics for CDO client application programmers. Explore advanced customization,
- performance tuning, efficient handling of large models, and troubleshooting techniques to build robust and scalable
- CDO applications.
+ This chapter collects advanced client techniques that sit between the core session, view, transaction, locking,
+ notification, large-object, and integration topics. It focuses on controlling loading work, bounding memory and
+ network cost, and making long-lived clients recoverable and diagnosable.
  <p>
- These topics are essential for developers who need to extend CDO, optimize resource usage, and resolve complex
- issues in production environments.
+ The chapter deliberately does not repeat view-provider integration, basic fetch-rule configuration, notification
+ semantics, or ordinary session and transaction lifecycle. Those subjects are owned by <a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Article in CDO Model Repository Documentation">Integrating with EMF and Other Frameworks</a>,
+ <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a>, <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>, <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a>, and
+ <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a>.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc11_AdvancedTopics.html#PartialCollectionLoading" title="Chapter in CDO Model Repository Documentation">Modern Partial Collection Loading</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc11_AdvancedTopics.html#RevisionRequests" title="Chapter in CDO Model Repository Documentation">Cache-Aware Revision Requests</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc11_AdvancedTopics.html#Units" title="Chapter in CDO Model Repository Documentation">Units and Bounded Graph Loading</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc11_AdvancedTopics.html#LargeScaleAccess" title="Chapter in CDO Model Repository Documentation">Queries and Large-Scale Model Access</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc11_AdvancedTopics.html#Recovery" title="Chapter in CDO Model Repository Documentation">Reconnect and Session Recovery</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc11_AdvancedTopics.html#CustomizationAndDiagnostics" title="Chapter in CDO Model Repository Documentation">Conflict Customization and Diagnostics</a></td></tr>
+<tr><td>7&nbsp;</td><td class="te" colspan="3"><a href="Doc11_AdvancedTopics.html#PerformanceAtScale" title="Chapter in CDO Model Repository Documentation">Advanced Performance Guidance</a></td></tr>
+</table>
+</p>
 
-<h2><a name="CustomViewProviders"></a>1&nbsp;&nbsp;Custom View Providers</h2>
-<p>
- Extend CDO by implementing custom view providers to support specialized access patterns, security requirements, or
- integration scenarios. Learn how to register and use custom view providers to tailor repository access to your
- application's needs.
 
-<h2><a name="OptimizingPerformance"></a>2&nbsp;&nbsp;Optimizing Performance</h2>
+<h2><a name="PartialCollectionLoading"></a>1&nbsp;&nbsp;Modern Partial Collection Loading</h2>
 <p>
- Performance optimization is critical for large-scale and high-traffic CDO applications. This section covers
- strategies for reducing memory usage, minimizing network overhead, tuning fetch rules, and leveraging caching
- mechanisms to achieve optimal performance.
+ Modern CDO clients can configure partial loading of many-valued features with
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.html" title="Class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a>. A non-null configuration enables the mode; its <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.ChunkConfig.html" title="Class in org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig"><code>chunk configuration</code></a> controls how many elements are materialized initially and how many are resolved around a later
+ indexed access. <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.ChunkConfig.html#NONE" title="Field in org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig"><code>CDOCollectionLoadingConfig.ChunkConfig.NONE</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.ChunkConfig.html#ALL" title="Field in org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig"><code>CDOCollectionLoadingConfig.ChunkConfig.ALL</code></a>,
+ and <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.ChunkConfig.html#INHERIT" title="Field in org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig.ChunkConfig"><code>CDOCollectionLoadingConfig.ChunkConfig.INHERIT</code></a> express explicit, complete, and inherited behavior.
+ <p>
+ Overrides can be associated with a package, class, or structural feature. Keep the initial and resolve sizes large
+ enough for the application's access pattern: very small chunks reduce initial work but can turn sequential traversal
+ into many requests. A null configuration disables modern partial collection loading. This configuration is distinct
+ from revision prefetching: collection loading fills list elements, while revision prefetching loads target revisions.
+ <p>
+ The older CDOCollectionLoadingPolicy and the corresponding CDOSession.Options methods are deprecated
+ compatibility APIs. New code should use the immutable configuration snapshot shown in
+ 
 
-<h2><a name="HandlingLargeModelsEfficiently"></a>3&nbsp;&nbsp;Handling Large Models Efficiently</h2>
-<p>
- Large models present unique challenges in terms of memory management, data loading, and responsiveness. Learn best
- practices for partitioning models, using lazy loading, and managing resource sets to handle large models
- efficiently in CDO.
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_PartialCollectionLoading_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ConfigureCollectionLoading.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('PartialCollectionLoading_1')" id="max_PartialCollectionLoading_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_PartialCollectionLoading_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_PartialCollectionLoading_1" style="padding:8px;">
+            <code>
+            CDOCollectionLoadingConfig.ChunkConfig&nbsp;chunks&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>CDOCollectionLoadingConfig.ChunkConfig(<font color="#990000">100</font>,&nbsp;<font color="#990000">20</font>);<br/>
+            CDOCollectionLoadingConfig&nbsp;config&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>CDOCollectionLoadingConfig(chunks,&nbsp;Collections.emptyMap());<br/>
+            session.options().setCollectionLoadingConfig(config);            </code>
 
-<h2><a name="TroubleshootingAndDebugging"></a>4&nbsp;&nbsp;Troubleshooting and Debugging</h2>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 <p>
- Effective troubleshooting and debugging are essential for maintaining application stability. This section provides
- guidance on diagnosing common issues, using CDO and Net4j logging, analyzing stack traces, and employing debugging
- tools to resolve problems quickly.
+.
+
+<h2><a name="RevisionRequests"></a>2&nbsp;&nbsp;Cache-Aware Revision Requests</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionManager</code></a> exposes a current request API for advanced applications that need explicit control over
+ cache and loader behavior. <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.html#lookupCacheOnly()" title="Method in org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request"><code>CDORevisionManager.Request.lookupCacheOnly()</code></a> is useful for observing cache state
+ without causing network traffic; <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.html#lookupLoaderOnly()" title="Method in org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request"><code>CDORevisionManager.Request.lookupLoaderOnly()</code></a> deliberately bypasses the
+ cache as a lookup source; and the default cache-then-loader mode is appropriate for normal application reads.
+ <p>
+ A request can also ask for containment prefetch depth and lock-state prefetch. Prefetched revisions are placed in
+ the revision cache, but that does not materialize every EMF object or guarantee that later collection access is free
+ of network traffic. Use <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#containsRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" title="Method in org.eclipse.emf.cdo.common.revision.CDORevisionManager"><code>CDORevisionManager.containsRevision(CDOID, CDOBranchPoint)</code></a> when a cache check is
+ enough, and avoid the deprecated overloads that expose the old boolean loading controls.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_RevisionRequests_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CheckRevisionCache.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('RevisionRequests_1')" id="max_RevisionRequests_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_RevisionRequests_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_RevisionRequests_1" style="padding:8px;">
+            <code>
+            CDORevisionManager&nbsp;revisionManager&nbsp;=&nbsp;session.getRevisionManager();<br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>revisionManager.request().lookupCacheOnly().getRevision(id,&nbsp;branchPoint)&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>;            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+ demonstrates a read-only
+ cache probe.
+
+<h2><a name="Units"></a>3&nbsp;&nbsp;Units and Bounded Graph Loading</h2>
+<p>
+ A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOUnit.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOUnit</code></a> is a disjoint repository subtree with explicit loading semantics. Opening a unit loads its
+ elements in one request and keeps them loaded until the unit is closed. While open, its elements receive server
+ change notifications without requiring a matching change-subscription policy. Units therefore suit bounded working
+ sets such as a document, project, or other independently edited subtree.
+ <p>
+ Units belong to a view and cannot overlap. They are not a general replacement for lazy loading: opening a large unit
+ intentionally trades round trips for memory. Always close the unit when the working set is no longer needed, and
+ use an <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" target="_blank" title="Interface in org.eclipse.core.runtime"><code>IProgressMonitor</code></a> for an operation that can take noticeable time. See
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Units_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">OpenUnit.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Units_1')" id="max_Units_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Units_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Units_1" style="padding:8px;">
+            <code>
+            CDOUnit&nbsp;unit&nbsp;=&nbsp;view.getUnitManager().openUnit(root,&nbsp;false,&nbsp;monitor);<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Loaded&nbsp;unit&nbsp;elements:&nbsp;&#34;&nbsp;</font>+&nbsp;unit.getElements());<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;unit.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+.
+
+<h2><a name="LargeScaleAccess"></a>4&nbsp;&nbsp;Queries and Large-Scale Model Access</h2>
+<p>
+ For very large models, prefer a server-side <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String,java.lang.String)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>query</code></a> when the task is to
+ find candidates rather than to materialize a broad containment graph. Limit results with <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html#setMaxResults(int)" title="Method in org.eclipse.emf.cdo.view.CDOQuery"><code>CDOQuery.setMaxResults(int)</code></a>,
+ bind values with <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html#setParameter(java.lang.String,java.lang.Object)" title="Method in org.eclipse.emf.cdo.view.CDOQuery"><code>CDOQuery.setParameter(String, Object)</code></a>, and use the asynchronous
+ result iterator when the result stream should not be accumulated in a list. The query language and expression
+ syntax are repository capabilities, so applications must select a language supported by the target repository.
+ Custom query languages are implemented and registered on the server as described in
+ <a href="../server/Doc08_SecurityQueriesAndSpecializedExtensions.html#QueryHandlers" title="Chapter in CDO Model Repository Documentation">Query Handlers</a>.
+ <p>
+ For graph traversal, combine a deliberate revision prefetch depth with a collection-loading configuration and
+ measure round trips for the actual access pattern. Avoid infinite containment prefetch and eager traversal merely
+ to make later reads convenient. Large binary and text payloads should use the CDO large-object APIs described in
+ <a href="Doc07_LargeObjects.html" title="Article in CDO Model Repository Documentation">Large Objects</a>, not oversized ordinary attributes.
+
+<h2><a name="Recovery"></a>5&nbsp;&nbsp;Reconnect and Session Recovery</h2>
+<p>
+ Net4j provides public recovering and reconnecting session configurations. A recovering configuration uses heartbeat
+ detection; a reconnecting configuration retries the connection to the same repository. Configure retry interval and
+ attempt limits according to the application's availability requirements, and observe <a href="../../../javadoc/org/eclipse/emf/cdo/net4j/CDOSessionRecoveryEvent.html" title="Interface in org.eclipse.emf.cdo.net4j"><code>CDOSessionRecoveryEvent</code></a>
+ on the session when the application needs to report recovery progress.
+ <p>
+ Recovery is not a substitute for application-level transaction policy. A reconnecting session does not make an
+ interrupted commit magically idempotent, and the application must decide how to handle dirty transactions, retries,
+ stale UI state, and user-visible failures. Durable locks and their recovery implications remain the subject of
+ <a href="Doc06_Locking.html" title="Article in CDO Model Repository Documentation">Locking</a>. 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Recovery_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateReconnectingSession.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Recovery_1')" id="max_Recovery_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Recovery_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Recovery_1" style="padding:8px;">
+            <code>
+            ReconnectingCDOSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;CDONet4jUtil.createReconnectingSessionConfiguration(<font color="#2a00ff">&#34;localhost:2036&#34;</font>,&nbsp;repositoryName,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;container);<br/>
+            configuration.setReconnectInterval(<font color="#990000">5000L</font>);<br/>
+            configuration.setMaxReconnectAttempts(<font color="#990000">3</font>);<br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>configuration.openNet4jSession();            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ shows the supported configuration entry point.
+
+<h2><a name="CustomizationAndDiagnostics"></a>6&nbsp;&nbsp;Conflict Customization and Diagnostics</h2>
+<p>
+ Advanced transaction applications can install a conflict resolver through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.Options.html" title="Interface in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.Options</code></a>. The
+ public <a href="../../../javadoc/org/eclipse/emf/spi/cdo/CDOMergingConflictResolver.html" title="Class in org.eclipse.emf.spi.cdo"><code>CDOMergingConflictResolver</code></a> is an SPI-level customization and should be selected only when its merge
+ policy matches the application's conflict model; it does not eliminate the need to inspect conflicts or to test
+ domain-specific merge behavior. Basic conflict handling remains in <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a>.
+ <p>
+ For diagnostics, start with public state: repository capabilities from <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html#getRepositoryInfo()" title="Method in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.getRepositoryInfo()</code></a>, the
+ view branch/time and URI from <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a>, revision-cache checks, and the exception cause chain. Use
+ <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a> when a multi-step observation must be protected from invalidation between reads. Session and
+ recovery events are appropriate for operational status; they are not a replacement for application logging and
+ metrics. Do not depend on internal protocol, cache, or state-machine classes.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_CustomizationAndDiagnostics_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">InstallConflictResolver.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CustomizationAndDiagnostics_1')" id="max_CustomizationAndDiagnostics_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_CustomizationAndDiagnostics_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_CustomizationAndDiagnostics_1" style="padding:8px;">
+            <code>
+            transaction.options().addConflictResolver(<font color="#7f0055"><b>new&nbsp;</b></font>CDOMergingConflictResolver());            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+ is intentionally minimal.
+
+<h2><a name="PerformanceAtScale"></a>7&nbsp;&nbsp;Advanced Performance Guidance</h2>
+<p>
+ Reduce round trips by choosing the smallest useful combination of collection chunks, revision prefetch depth, and
+ server-side query results. Reuse sessions and views when their branch/time and consistency requirements match, but
+ close units and views when their working sets are no longer needed. Avoid enabling detailed subscriptions or
+ unbounded prefetch for objects that the application will not inspect. Measure with the application's real access
+ pattern: a setting that helps a bounded document load can hurt a broad search or a historical audit view.
+ <p>
+ Fetch-rule and feature-analyzer configuration is covered in <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a>; notification traffic
+ and adapter subscriptions are covered in <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a>; and LOB streaming is covered
+ in <a href="Doc07_LargeObjects.html" title="Article in CDO Model Repository Documentation">Large Objects</a>. This section is the compact decision guide, not a second configuration reference.
 
 <p align="right">
-<a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Backward to Integrating with EMF and Other Frameworks"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc12_BestPracticesAndPatterns.html" title="Forward to Best Practices and Patterns"><img src="../../../images/forward.png" border="0"></a></p>
+<a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Backward to Integrating with EMF and Other Frameworks"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc12_BestPracticesAndPatterns.html" title="Forward to Best Practices and Common Pitfalls"><img src="../../../images/forward.png" border="0"></a></p>
 <!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
 
 <div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>

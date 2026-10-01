@@ -567,10 +567,17 @@ loadScripts(document, 'script');</script>
  <a href="../CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
  <a href="../../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AbstractChangeSetsConflictResolver.</span><code><a href="../../../../../spi/cdo/AbstractChangeSetsConflictResolver.html#transactionModifyingObject(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">transactionModifyingObject</a><wbr>(<a href="../../../../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#registerFeatureDeltaUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaUnsynced</a><wbr>(<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Registers a feature delta without acquiring the transaction/view lock.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AbstractChangeSetsConflictResolver.</span><code><a href="../../../../../spi/cdo/AbstractChangeSetsConflictResolver.html#transactionModifyingObject(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">transactionModifyingObject</a><wbr>(<a href="../../../../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
  <a href="../CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

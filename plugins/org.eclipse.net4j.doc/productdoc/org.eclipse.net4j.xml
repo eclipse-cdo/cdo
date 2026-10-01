@@ -32,7 +32,7 @@
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.serverProtocols" name="Net4j Server Protocols" description="" deprecated="false">
 		<factory type="cdo" class="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory" contributor="org.eclipse.emf.cdo.server.net4j"/>
-		<factory type="cdo-admin" class="org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol$Factory$Plugin" contributor="org.eclipse.emf.cdo.server.admin"/>
+		<factory type="cdo-admin" class="org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol$Factory" contributor="org.eclipse.emf.cdo.server.admin"/>
 		<factory type="failover" class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$AgentProtocol$Factory" contributor="org.eclipse.emf.cdo.server.net4j"/>
 		<factory type="failover-client" class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$ClientProtocol$Factory" contributor="org.eclipse.emf.cdo.server.net4j"/>
 		<factory type="heartbeat" class="org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol$Server$Factory" contributor="org.eclipse.net4j"/>

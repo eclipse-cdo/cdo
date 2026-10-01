@@ -130,35 +130,42 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;recursive,
  long&nbsp;timeout)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../InternalRepository.html#unlock(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">unlock</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../InternalRepository.html#unlock(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlock</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
- org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
- boolean&nbsp;recursive)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../InternalRepository.html#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../InternalRepository.html#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
- org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
- boolean&nbsp;recursive)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../InternalSession.html#viewClosed(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">viewClosed</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../InternalLockManager.html#setDurableLockingID(org.eclipse.emf.cdo.spi.server.InternalView,java.lang.String)" class="member-name-link">setDurableLockingID</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Changes the durable locking ID of a view and returns the exact lock-change count assigned to
+ the resulting owner remap for that view's session.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../InternalRepository.html#unlock(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">unlock</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../InternalRepository.html#unlock(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlock</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
+ org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ boolean&nbsp;recursive)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../InternalRepository.html#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../InternalRepository.html#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
+ org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ boolean&nbsp;recursive)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../InternalSession.html#viewClosed(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">viewClosed</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.15 use <a href="../InternalSession.html#viewClosed(org.eclipse.emf.cdo.spi.server.InternalView,boolean)"><code>InternalSession.viewClosed(InternalView, boolean)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../InternalSession.html#viewClosed(org.eclipse.emf.cdo.spi.server.InternalView,boolean)" class="member-name-link">viewClosed</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../InternalSession.html#viewClosed(org.eclipse.emf.cdo.spi.server.InternalView,boolean)" class="member-name-link">viewClosed</a><wbr>(<a href="../InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
  boolean&nbsp;inverse)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

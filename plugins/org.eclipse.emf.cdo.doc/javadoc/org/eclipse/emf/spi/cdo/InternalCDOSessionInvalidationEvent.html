@@ -131,9 +131,15 @@ extends <a href="../../cdo/session/CDOSessionInvalidationEvent.html" title="inte
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>byte</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSecurityImpact()" class="member-name-link">getSecurityImpact</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockModCount()" class="member-name-link">getLockModCount</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the per-session sequence number of the lock change carried by this
+ invalidation event, or zero when the commit contains no lock change.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>byte</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSecurityImpact()" class="member-name-link">getSecurityImpact</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -185,6 +191,18 @@ extends <a href="../../cdo/session/CDOSessionInvalidationEvent.html" title="inte
 <li><a href="../../cdo/common/protocol/CDOProtocol.CommitNotificationInfo.html#IMPACT_REALM"><code>CDOProtocol.CommitNotificationInfo.IMPACT_REALM</code></a></li>
 </ul>
 </dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getLockModCount()">
+<h3>getLockModCount</h3>
+<div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">getLockModCount</span>()</div>
+<div class="block">Returns the per-session sequence number of the lock change carried by this
+ invalidation event, or zero when the commit contains no lock change.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
 </dl>
 </section>
 </li>

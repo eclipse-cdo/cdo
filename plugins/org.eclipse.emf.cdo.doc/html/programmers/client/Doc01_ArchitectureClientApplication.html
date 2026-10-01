@@ -74,7 +74,12 @@ function windowTitle()
  <p>
  All <b>communication aspects</b> (the sending/receiving of signals to/from a network system) are fully abstracted
  through the service provider interface (SPI) <a href="../../../javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" title="Interface in org.eclipse.emf.spi.cdo"><code>CDOSessionProtocol</code></a>. Concrete implementations are fully separated
- and can be plugged into the core as described in <a href="Doc01_ArchitectureClientApplication.html#Protocol" title="Chapter in CDO Model Repository Documentation">Protocol</a>.<p><b>See Also:</b></p>
+ and can be plugged into the core as described in <a href="Doc01_ArchitectureClientApplication.html#Protocol" title="Chapter in CDO Model Repository Documentation">Protocol</a>.
+ <p>
+ A small first-application path is: open a <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">session</a>, create a
+ <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">view</a> or transaction, load a resource, modify the model, commit through
+ <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a>, and close the owned objects. Framework-specific resource and provider
+ integration is covered in <a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Article in CDO Model Repository Documentation">Integrating with EMF and Other Frameworks</a>.<p><b>See Also:</b></p>
 <ul>
 	<li><a href="Doc01_ArchitectureClientApplication.html#EMF" title="Chapter in CDO Model Repository Documentation">EMF</a></li>
 	<li><a href="Doc01_ArchitectureClientApplication.html#Models" title="Chapter in CDO Model Repository Documentation">Models</a></li>
@@ -123,7 +128,7 @@ function windowTitle()
  (optionally with SSL support) and <a href="../../../../org.eclipse.net4j.doc/javadoc/org/eclipse/net4j/ws/IWSConnector.html" title="Interface in org.eclipse.net4j.ws"><code>IWSConnector</code></a>.
  <p>
  The <a href="../server/Architecture.html" title="Article in CDO Model Repository Documentation">server</a> must be deployed and configured with
- the matching <a href="../server/Architecture.html#Transport" title="Chapter in CDO Model Repository Documentation">transport</a>.
+ the matching org.eclipse.emf.cdo.doc.programmers.server.Architecture.Transport transport.
 
 <p align="right">
 <a href="index.html" title="Backward to Developing Client Applications"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_AnatomyModelObject.html" title="Forward to Anatomy of a Model Object"><img src="../../../images/forward.png" border="0"></a></p>

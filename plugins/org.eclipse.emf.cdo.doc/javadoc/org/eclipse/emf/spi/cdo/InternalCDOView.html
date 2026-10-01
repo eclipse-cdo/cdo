@@ -175,12 +175,22 @@ extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.em
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.util.concurrent.Access</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#access()" class="member-name-link">access</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Acquires this view's internal reentrant lock and returns a reusable lexical access handle.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#attachResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)" class="member-name-link">attachResource</a><wbr>(<a href="../../cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#attachResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)" class="member-name-link">attachResource</a><wbr>(<a href="../../cdo/eresource/impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a>&nbsp;resource)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)" class="member-name-link">clearResourcePathCacheIfNecessary</a><wbr>(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)" class="member-name-link">clearResourcePathCacheIfNecessary</a><wbr>(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#clearResourcePathCacheIfNecessaryUnsynced(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)" class="member-name-link">clearResourcePathCacheIfNecessaryUnsynced</a><wbr>(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Clears the resource-path cache using the same logic as <a href="#clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)"><code>clearResourcePathCacheIfNecessary(CDORevisionDelta)</code></a>.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#collectViewedRevisions(java.util.Map)" class="member-name-link">collectViewedRevisions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&nbsp;revisions)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -188,12 +198,25 @@ extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.em
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertIDToObject(java.lang.Object)" class="member-name-link">convertIDToObject</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertObjectToID(java.lang.Object)" class="member-name-link">convertObjectToID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialObject)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertIDToObjectUnsynced(java.lang.Object)" class="member-name-link">convertIDToObjectUnsynced</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialID)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Performs the same ID-to-object conversion as <a href="#convertIDToObject(java.lang.Object)"><code>convertIDToObject(Object)</code></a> without acquiring this view's
+ internal lock.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertObjectToID(java.lang.Object)" class="member-name-link">convertObjectToID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialObject)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertObjectToID(java.lang.Object,boolean)" class="member-name-link">convertObjectToID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialObject,
+ boolean&nbsp;onlyPersistedID)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertObjectToID(java.lang.Object,boolean)" class="member-name-link">convertObjectToID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialObject,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertObjectToIDUnsynced(java.lang.Object,boolean)" class="member-name-link">convertObjectToIDUnsynced</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialObject,
  boolean&nbsp;onlyPersistedID)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Performs the same conversion as <a href="#convertObjectToID(java.lang.Object,boolean)"><code>convertObjectToID(Object, boolean)</code></a> without acquiring this view's
+ internal lock.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#deregisterObject(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">deregisterObject</a><wbr>(<a href="InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -455,6 +478,18 @@ extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.em
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="access()">
+<h3>access</h3>
+<div class="member-signature"><span class="return-type">org.eclipse.net4j.util.concurrent.Access</span>&nbsp;<span class="element-name">access</span>()</div>
+<div class="block">Acquires this view's internal reentrant lock and returns a reusable lexical access handle. Close the returned handle
+ exactly once for each successful acquisition.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setViewID(int)">
 <h3>setViewID</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setViewID</span><wbr><span class="parameters">(int&nbsp;viewId)</span></div>
@@ -660,6 +695,27 @@ extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.em
 </section>
 </li>
 <li>
+<section class="detail" id="clearResourcePathCacheIfNecessaryUnsynced(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)">
+<h3>clearResourcePathCacheIfNecessaryUnsynced</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">clearResourcePathCacheIfNecessaryUnsynced</span><wbr><span class="parameters">(<a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;delta)</span></div>
+<div class="block">Clears the resource-path cache using the same logic as <a href="#clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)"><code>clearResourcePathCacheIfNecessary(CDORevisionDelta)</code></a>.
+ This method does not acquire the view lock; the caller must already hold this view's internal lock. It is intended
+ for internal call paths that are already inside the owning view/transaction synchronization boundary. A
+ <code>null</code> delta clears the cache unconditionally; a non-null delta clears it only if it can affect the
+ resource tree structure.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#clearResourcePathCacheIfNecessary(org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta)"><code>clearResourcePathCacheIfNecessary(CDORevisionDelta)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getResourceNodeID(java.lang.String)">
 <h3>getResourceNodeID</h3>
 <div class="member-signature"><span class="return-type"><a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">getResourceNodeID</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;path)</span></div>
@@ -709,9 +765,48 @@ extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.em
 </section>
 </li>
 <li>
+<section class="detail" id="convertObjectToIDUnsynced(java.lang.Object,boolean)">
+<h3>convertObjectToIDUnsynced</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">convertObjectToIDUnsynced</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialObject,
+ boolean&nbsp;onlyPersistedID)</span></div>
+<div class="block">Performs the same conversion as <a href="#convertObjectToID(java.lang.Object,boolean)"><code>convertObjectToID(Object, boolean)</code></a> without acquiring this view's
+ internal lock. The caller must already hold this view's internal lock. This method is intended for internal paths
+ that are already inside the owning view synchronization boundary.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#convertObjectToID(java.lang.Object,boolean)"><code>convertObjectToID(Object, boolean)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="convertIDToObject(java.lang.Object)">
 <h3>convertIDToObject</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">convertIDToObject</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialID)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="convertIDToObjectUnsynced(java.lang.Object)">
+<h3>convertIDToObjectUnsynced</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">convertIDToObjectUnsynced</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;potentialID)</span></div>
+<div class="block">Performs the same ID-to-object conversion as <a href="#convertIDToObject(java.lang.Object)"><code>convertIDToObject(Object)</code></a> without acquiring this view's
+ internal lock. The caller must already hold this view's internal lock. This method is intended for internal paths
+ that are already inside the owning view synchronization boundary.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="#convertIDToObject(java.lang.Object)"><code>convertIDToObject(Object)</code></a></li>
+</ul>
+</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -728,12 +823,20 @@ extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.em
 <section class="detail" id="isObjectDirty(org.eclipse.emf.cdo.common.id.CDOID)">
 <h3>isObjectDirty</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isObjectDirty</span><wbr><span class="parameters">(<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="isObjectDetached(org.eclipse.emf.cdo.common.id.CDOID)">
 <h3>isObjectDetached</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isObjectDetached</span><wbr><span class="parameters">(<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -823,6 +926,9 @@ extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.em
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.29 use <a href="../../cdo/view/CDOView.html#sync()"><code>CDOView.sync()</code></a></div>
 </div>
+<div class="block">Returns a per-view compatibility monitor. The monitor does not coordinate with CDO's internal view lock; use
+ <a href="../../cdo/view/CDOView.html#sync()"><code>CDOView.sync()</code></a> instead. This method is disabled by default and requires
+ <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.5</dd>
@@ -837,6 +943,8 @@ extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.em
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.29 use <a href="../../cdo/view/CDOView.html#sync()"><code>CDOView.sync()</code></a></div>
 </div>
+<div class="block">Acquires the underlying view lock for deprecated compatibility code. This method is disabled by default and
+ requires <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code>. Use <a href="../../cdo/view/CDOView.html#sync()"><code>CDOView.sync()</code></a> instead.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.5</dd>

@@ -497,14 +497,28 @@ loadScripts(document, 'script');</script>
  long&nbsp;timestamp)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.LockObjectsResult.html#%3Cinit%3E(boolean,boolean,boolean,long,org.eclipse.emf.cdo.common.revision.CDORevisionKey%5B%5D,org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D,long)" class="member-name-link">LockObjectsResult</a><wbr>(boolean&nbsp;successful,
+<div class="col-second even-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.LockObjectsResult.html#%3Cinit%3E(boolean,boolean,boolean,long,org.eclipse.emf.cdo.common.revision.CDORevisionKey%5B%5D,java.util.List,java.util.List,long,long)" class="member-name-link">LockObjectsResult</a><wbr>(boolean&nbsp;successful,
+ boolean&nbsp;timedOut,
+ boolean&nbsp;waitForUpdate,
+ long&nbsp;requiredTimestamp,
+ <a href="../CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>[]&nbsp;staleRevisions,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../lock/CDOLockDelta.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a>&gt;&nbsp;lockDeltas,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;lockStates,
+ long&nbsp;timestamp,
+ long&nbsp;lockModCount)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a lock result with the sequence number of its authoritative lock
+ change.</div>
+</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.LockObjectsResult.html#%3Cinit%3E(boolean,boolean,boolean,long,org.eclipse.emf.cdo.common.revision.CDORevisionKey%5B%5D,org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D,long)" class="member-name-link">LockObjectsResult</a><wbr>(boolean&nbsp;successful,
  boolean&nbsp;timedOut,
  boolean&nbsp;waitForUpdate,
  long&nbsp;requiredTimestamp,
  <a href="../CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>[]&nbsp;staleRevisions,
  <a href="../../lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]&nbsp;newLockStates,
  long&nbsp;timestamp)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
 </div>

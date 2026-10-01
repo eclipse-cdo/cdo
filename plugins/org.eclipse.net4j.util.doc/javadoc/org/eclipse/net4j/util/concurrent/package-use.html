@@ -129,66 +129,80 @@ loadScripts(document, 'script');</script>
 <div class="block">A <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent"><code>read/write lock manager</code></a> that supports <a href="IRWLockManager.LockType.html#OPTION"><code>write option</code></a>
  locks.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IRWOLockManager.LockDeltaHandler.html#org.eclipse.net4j.util.concurrent">IRWOLockManager.LockDeltaHandler</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/ISynchronizer.html#org.eclipse.net4j.util.concurrent">ISynchronizer</a></div>
+<div class="col-first even-row-color"><a href="class-use/IRWOLockManager.LockChange.html#org.eclipse.net4j.util.concurrent">IRWOLockManager.LockChange</a></div>
+<div class="col-last even-row-color">
+<div class="block">An immutable request to lock or unlock objects for one context.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IRWOLockManager.LockChange.DeltaHandler.html#org.eclipse.net4j.util.concurrent">IRWOLockManager.LockChange.DeltaHandler</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Receives one effective delta from a <a href="IRWOLockManager.html#changeLocks(CONTEXT,java.util.List,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler,java.util.function.Consumer)"><code>IRWOLockManager.changeLocks(CONTEXT, java.util.List&lt;? extends org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange&lt;OBJECT&gt;&gt;, org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler&lt;OBJECT, CONTEXT&gt;, java.util.function.Consumer&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;OBJECT, CONTEXT&gt;&gt;)</code></a> call.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/IRWOLockManager.LockChange.Operation.html#org.eclipse.net4j.util.concurrent">IRWOLockManager.LockChange.Operation</a></div>
+<div class="col-last even-row-color">
+<div class="block">The kind of mutation represented by a <a href="IRWOLockManager.LockChange.html" title="class in org.eclipse.net4j.util.concurrent"><code>IRWOLockManager.LockChange</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IRWOLockManager.LockDeltaHandler.html#org.eclipse.net4j.util.concurrent">IRWOLockManager.LockDeltaHandler</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Receives notifications about changes to locks.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/ISynchronizer.html#org.eclipse.net4j.util.concurrent">ISynchronizer</a></div>
+<div class="col-last even-row-color">
 <div class="block">Synchronizes a producer and a consumer thread letting the producer pass a value to the consumer.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IWorkSerializer.html#org.eclipse.net4j.util.concurrent">IWorkSerializer</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IWorkSerializer.html#org.eclipse.net4j.util.concurrent">IWorkSerializer</a></div>
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 3.9 use an executor such as <a href="SerializingExecutor.html" title="class in org.eclipse.net4j.util.concurrent"><code>SerializingExecutor</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/MonitoredThread.html#org.eclipse.net4j.util.concurrent">MonitoredThread</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/MonitoredThread.ThreadMonitor.html#org.eclipse.net4j.util.concurrent">MonitoredThread.ThreadMonitor</a></div>
+<div class="col-first even-row-color"><a href="class-use/MonitoredThread.html#org.eclipse.net4j.util.concurrent">MonitoredThread</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/NonFairReentrantLock.html#org.eclipse.net4j.util.concurrent">NonFairReentrantLock</a></div>
+<div class="col-first odd-row-color"><a href="class-use/MonitoredThread.ThreadMonitor.html#org.eclipse.net4j.util.concurrent">MonitoredThread.ThreadMonitor</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/PriorityQueueRunnable.html#org.eclipse.net4j.util.concurrent">PriorityQueueRunnable</a></div>
+<div class="col-first even-row-color"><a href="class-use/NonFairReentrantLock.html#org.eclipse.net4j.util.concurrent">NonFairReentrantLock</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/QueueRunner.html#org.eclipse.net4j.util.concurrent">QueueRunner</a></div>
+<div class="col-first odd-row-color"><a href="class-use/PriorityQueueRunnable.html#org.eclipse.net4j.util.concurrent">PriorityQueueRunnable</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/QueueRunner2.html#org.eclipse.net4j.util.concurrent">QueueRunner2</a></div>
+<div class="col-first even-row-color"><a href="class-use/QueueRunner.html#org.eclipse.net4j.util.concurrent">QueueRunner</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/QueueWorker.html#org.eclipse.net4j.util.concurrent">QueueWorker</a></div>
+<div class="col-first odd-row-color"><a href="class-use/QueueRunner2.html#org.eclipse.net4j.util.concurrent">QueueRunner2</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/ReentrantReadWriteAccess.html#org.eclipse.net4j.util.concurrent">ReentrantReadWriteAccess</a></div>
+<div class="col-first even-row-color"><a href="class-use/QueueWorker.html#org.eclipse.net4j.util.concurrent">QueueWorker</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/RWLockManager.LockEntry.html#org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a></div>
-<div class="col-last odd-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
-</div>
-</div>
-<div class="col-first even-row-color"><a href="class-use/RWLockManager.LockEntryHandler.html#org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a></div>
+<div class="col-first odd-row-color"><a href="class-use/ReentrantReadWriteAccess.html#org.eclipse.net4j.util.concurrent">ReentrantReadWriteAccess</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/RWLockManager.LockEntry.html#org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a></div>
 <div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
 </div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/RWLockManager.LockStrategy.html#org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a></div>
+<div class="col-first odd-row-color"><a href="class-use/RWLockManager.LockEntryHandler.html#org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a></div>
 <div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
 </div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/RWOLockManager.LockState.html#org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a></div>
+<div class="col-first even-row-color"><a href="class-use/RWLockManager.LockStrategy.html#org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a></div>
 <div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
+</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/RWOLockManager.LockState.html#org.eclipse.net4j.util.concurrent">RWOLockManager.LockState</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Represents a combination of locks for one OBJECT.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ThreadPool.html#org.eclipse.net4j.util.concurrent">ThreadPool</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/TimeoutRuntimeException.html#org.eclipse.net4j.util.concurrent">TimeoutRuntimeException</a></div>
+<div class="col-first even-row-color"><a href="class-use/ThreadPool.html#org.eclipse.net4j.util.concurrent">ThreadPool</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/TimerLifecycle.html#org.eclipse.net4j.util.concurrent">TimerLifecycle</a></div>
+<div class="col-first odd-row-color"><a href="class-use/TimeoutRuntimeException.html#org.eclipse.net4j.util.concurrent">TimeoutRuntimeException</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/Worker.html#org.eclipse.net4j.util.concurrent">Worker</a></div>
+<div class="col-first even-row-color"><a href="class-use/TimerLifecycle.html#org.eclipse.net4j.util.concurrent">TimerLifecycle</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/Worker.WorkContext.html#org.eclipse.net4j.util.concurrent">Worker.WorkContext</a></div>
+<div class="col-first odd-row-color"><a href="class-use/Worker.html#org.eclipse.net4j.util.concurrent">Worker</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/Worker.WorkContext.html#org.eclipse.net4j.util.concurrent">Worker.WorkContext</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

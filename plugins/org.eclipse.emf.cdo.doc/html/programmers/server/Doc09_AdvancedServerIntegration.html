@@ -1,0 +1,161 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Advanced Server Integration (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Advanced Server Integration (CDO Model Repository Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Advanced Server Integration</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html" title="Backward to Security, Queries, and Specialized Extensions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../DocXX_InstallingSources.html" title="Forward to Installing the Sources"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ Advanced integrations compose repositories with other repositories, diagnostics, or data-transfer facilities. They
+ remain application integrations, not a substitute for <a href="../../operators/Doc00_OperatingServer.html" title="Article in CDO Model Repository Documentation">Operator's Guide procedures</a>
+ for production topology, backups, or failover operation.
+ <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc09_AdvancedServerIntegration.html#SynchronizationAndFailover" title="Chapter in CDO Model Repository Documentation">Synchronization and Failover</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc09_AdvancedServerIntegration.html#MonitoringAndDiagnostics" title="Chapter in CDO Model Repository Documentation">Monitoring and Activity Logs</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc09_AdvancedServerIntegration.html#ImportAndExport" title="Chapter in CDO Model Repository Documentation">Import and Export</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc09_AdvancedServerIntegration.html#IntegrationBoundary" title="Chapter in CDO Model Repository Documentation">Net4j and Other Intentional Extensions</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="SynchronizationAndFailover"></a>1&nbsp;&nbsp;Synchronization and Failover</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>ISynchronizableRepository</code></a> is a repository that synchronizes against a master through an
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepositorySynchronizer</code></a>. It exposes the synchronizer, replicator session, replication progress, and
+ explicit online/offline transition. <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)</code></a>
+ creates the supplied synchronizer from a remote session configuration factory. The same utility offers offline
+ clone and failover-participant creation. Treat source/target selection, retry policy, and lifecycle as part of the
+ application design; production failover topology and recovery procedures belong to the Operator's Guide.
+
+<h2><a name="MonitoringAndDiagnostics"></a>2&nbsp;&nbsp;Monitoring and Activity Logs</h2>
+<p>
+ Repository state, manager containers, lifecycle events, and commit information provide lightweight programmatic
+ diagnostics. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>RepositoryActivityLog</code></a> is a lifecycle hook that records repository activation, sessions,
+ views, transactions, and commit start/finish events. Its supplied rolling implementation can be attached to an
+ application-owned repository. Keep custom diagnostics bounded and do not treat an activity log as an operational
+ retention policy.
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_MonitoringAndDiagnostics_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateActivityLog.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('MonitoringAndDiagnostics_1')" id="max_MonitoringAndDiagnostics_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_MonitoringAndDiagnostics_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_MonitoringAndDiagnostics_1" style="padding:8px;">
+            <code>
+            RepositoryActivityLog&nbsp;log&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>RepositoryActivityLog.Rolling(<font color="#2a00ff">&#34;activities&#34;</font>,&nbsp;<font color="#990000">1000000L</font>,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            log.setRepository(repository);<br/>
+            LifecycleUtil.activate(log);<br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>log;            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="ImportAndExport"></a>3&nbsp;&nbsp;Import and Export</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerExporter.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerExporter</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerImporter.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerImporter</code></a> are the programmatic transfer boundaries for repository
+ contents and history. Subclass or configure them only through their documented API for controlled application
+ migration and interchange. Backup schedules, storage retention, and restore runbooks are operational concerns.
+
+<h2><a name="IntegrationBoundary"></a>4&nbsp;&nbsp;Net4j and Other Intentional Extensions</h2>
+<p>
+ Use the managed container to integrate supported acceptors, connectors, factories, and monitors with a CDO
+ repository. Do not customize internal signal indications or protocol dispatch. When an extension cannot be
+ expressed through the public API or documented SPI presented in this guide, keep it isolated and verify that it is
+ intentionally supported before relying on it across CDO releases.
+
+<p align="right">
+<a href="Doc08_SecurityQueriesAndSpecializedExtensions.html" title="Backward to Security, Queries, and Specialized Extensions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../DocXX_InstallingSources.html" title="Forward to Installing the Sources"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

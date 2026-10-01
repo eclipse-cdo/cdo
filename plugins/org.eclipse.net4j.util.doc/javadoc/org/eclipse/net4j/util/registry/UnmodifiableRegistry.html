@@ -91,6 +91,11 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>K</code> - the key type</dd>
+<dd><code>V</code> - the value type</dd>
+</dl>
+<dl class="notes">
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;K,<wbr>V&gt;</code>, <code><a href="../container/IContainer.html" title="interface in org.eclipse.net4j.util.container">IContainer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.Entry.html" title="class or interface in java.util" class="external-link">Map.Entry</a>&lt;K,<wbr>V&gt;&gt;</code>, <code><a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;K,<wbr>V&gt;</code></dd>
 </dl>
@@ -98,6 +103,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">UnmodifiableRegistry&lt;K,<wbr>V&gt;</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;K,<wbr>V&gt;</span></div>
+<div class="block">A registry view that delegates lookups while preventing modifications.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">

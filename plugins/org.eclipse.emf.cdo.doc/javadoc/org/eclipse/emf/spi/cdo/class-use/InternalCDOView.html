@@ -187,39 +187,52 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.ViewAndState.</span><code><a href="../InternalCDOView.ViewAndState.html#create(org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">create</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../../../cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
- <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../InternalCDOSession.html#handleLockNotification(long,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)" class="member-name-link">handleLockNotification</a><wbr>(long&nbsp;lockModCount,
+ <a href="../../../cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+ <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
+ boolean&nbsp;async)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Handles a lock notification while retaining its event-specific sequence
+ number for subsequent client-side processing.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../../../cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+ <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender)</code></div>
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.12 use <a href="../InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)"><code>InternalCDOSession.handleLockNotification(CDOLockChangeInfo, InternalCDOView, boolean)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../../../cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../../../cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
  <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
  boolean&nbsp;async)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../InternalCDOSession.html#handleLockNotification(long,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)"><code>InternalCDOSession.handleLockNotification(long, CDOLockChangeInfo, InternalCDOView, boolean)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
  <a href="../../../cdo/common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FSMUtil.</span><code><a href="../FSMUtil.html#iterator(java.util.Collection,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">iterator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;?&gt;&nbsp;instances,
- <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FSMUtil.</span><code><a href="../FSMUtil.html#iterator(java.util.Iterator,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">iterator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;?&gt;&nbsp;delegate,
+<div class="col-second even-row-color"><span class="type-name-label">FSMUtil.</span><code><a href="../FSMUtil.html#iterator(java.util.Collection,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">iterator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;?&gt;&nbsp;instances,
  <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOViewSet.</span><code><a href="../InternalCDOViewSet.html#remapView(org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">remapView</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
+<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FSMUtil.</span><code><a href="../FSMUtil.html#iterator(java.util.Iterator,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">iterator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;?&gt;&nbsp;delegate,
+ <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOViewSet.</span><code><a href="../InternalCDOViewSet.html#remove(org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">remove</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOViewSet.</span><code><a href="../InternalCDOViewSet.html#remapView(org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">remapView</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../InternalCDOSession.html#viewDetached(org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">viewDetached</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOViewSet.</span><code><a href="../InternalCDOViewSet.html#remove(org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">remove</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../InternalCDOSession.html#viewDetached(org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">viewDetached</a><wbr>(<a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../package-summary.html">org.eclipse.emf.spi.cdo</a> with type arguments of type <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></span></div>
 <div class="summary-table three-column-summary">

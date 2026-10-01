@@ -2,7 +2,7 @@
 <html>
 
 <head>
-<title>Best Practices and Patterns (CDO Model Repository Documentation)</title>
+<title>Best Practices and Common Pitfalls (CDO Model Repository Documentation)</title>
 
 <link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
 
@@ -11,8 +11,58 @@
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Best Practices and Patterns (CDO Model Repository Documentation)";
+        parent.document.title="Best Practices and Common Pitfalls (CDO Model Repository Documentation)";
     }
+}
+</script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
 }
 </script>
 </head>
@@ -22,30 +72,226 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Best Practices and Patterns</h1></td>
+		<td width="100%"><h1>Best Practices and Common Pitfalls</h1></td>
 		<td align="right" valign="middle" nowrap><a href="Doc11_AdvancedTopics.html" title="Backward to Advanced Topics"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../server/index.html" title="Forward to Developing Server Applications"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- This chapter covers best practices, recommended usage patterns, and common pitfalls for CDO client application
- programmers. Following these guidelines will help you build robust, maintainable, and efficient CDO applications.
+ CDO applications combine EMF object access with session, view, transaction, repository, and network lifecycles.
+ The most serious failures usually happen at those boundaries: an object is used after its view has closed, a dirty
+ transaction is kept open across unrelated work, a callback performs blocking UI work, or a retry repeats a
+ non-repeatable operation. This chapter is a concise set of CDO-specific decisions and failure modes.
+ <p>
+ The detailed API references remain in <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a>, <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>,
+ <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a>, <a href="Doc06_Locking.html" title="Article in CDO Model Repository Documentation">Locking</a>, <a href="Doc07_LargeObjects.html" title="Article in CDO Model Repository Documentation">Large Objects</a>,
+ <a href="Doc08_BranchingAndVersioning.html" title="Article in CDO Model Repository Documentation">Branching and Versioning</a>, <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a>,
+ <a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Article in CDO Model Repository Documentation">Integrating with EMF and Other Frameworks</a>, and <a href="Doc11_AdvancedTopics.html" title="Article in CDO Model Repository Documentation">Advanced Topics</a>.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#OwnershipAndLifecycle" title="Chapter in CDO Model Repository Documentation">Own Sessions, Views, Transactions, and Resources Explicitly</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#SessionViewAndTransactionBoundaries" title="Chapter in CDO Model Repository Documentation">Reuse Sessions, Keep Views Purposeful, and Bound Transactions</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#ConcurrencyAndCallbacks" title="Chapter in CDO Model Repository Documentation">Use Supported Concurrency Boundaries</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#LockingChoices" title="Chapter in CDO Model Repository Documentation">Choose Optimistic or Pessimistic Coordination Deliberately</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#ConflictsAndRetries" title="Chapter in CDO Model Repository Documentation">Handle Conflicts and Retries as Business Decisions</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#LoadingAndPerformance" title="Chapter in CDO Model Repository Documentation">Load Only What the Operation Needs</a></td></tr>
+<tr><td>7&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#RemoteChangesAndRecovery" title="Chapter in CDO Model Repository Documentation">Treat Remote Changes and Recovery as Asynchronous Failure Modes</a></td></tr>
+<tr><td>8&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#ContextAndIntegration" title="Chapter in CDO Model Repository Documentation">Preserve Branch, History, and Integration Context</a></td></tr>
+<tr><td>9&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#FailureHandlingAndAPIStability" title="Chapter in CDO Model Repository Documentation">Distinguish Failure Classes and Keep APIs Current</a></td></tr>
+<tr><td>10&nbsp;</td><td class="te" colspan="3"><a href="Doc12_BestPracticesAndPatterns.html#CommonPitfalls" title="Chapter in CDO Model Repository Documentation">Common CDO Pitfalls</a></td></tr>
+</table>
+</p>
 
-<h2><a name="ErrorHandlingStrategies"></a>1&nbsp;&nbsp;Error Handling Strategies</h2>
-<p>
- Effective error handling is crucial for building resilient applications. This section discusses strategies for
- managing exceptions, validating input, and ensuring graceful recovery from failures in CDO client code.
 
-<h2><a name="RecommendedUsagePatterns"></a>2&nbsp;&nbsp;Recommended Usage Patterns</h2>
+<h2><a name="OwnershipAndLifecycle"></a>1&nbsp;&nbsp;Own Sessions, Views, Transactions, and Resources Explicitly</h2>
 <p>
- Learn recommended patterns for session management, transaction handling, resource loading, and event processing.
- These patterns are based on real-world experience and help avoid common mistakes in CDO client development.
+ Decide which application component owns each <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a>, view, transaction, and CDO-managed
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>resource set</code></a>. The owner closes
+ it after the last dependent component has stopped using it. A transaction is also a view, but closing the transaction
+ is the transaction owner's responsibility; do not let a helper close a view or session that it did not open.
+ <p>
+ A resource set associated with a view is not an independent connection. CDO resources and objects obtained from it
+ must not be treated as usable after the owning view has closed. Likewise, a listener registration and an adapter
+ registration are application resources: retain the exact listener or adapter instance so it can be removed from the
+ same notifier. Readers and streams returned for CDO large objects should be closed with try-with-resources; views,
+ sessions, and transactions expose explicit close() lifecycle methods rather than being Java
+ AutoCloseable resources.
+ <p>
+ Close a transaction before its session, remove listeners before disposing the observed component, and release a LOB
+ stream before closing the view or session that supplies it. See 
 
-<h2><a name="CommonPitfalls"></a>3&nbsp;&nbsp;Common Pitfalls</h2>
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_OwnershipAndLifecycle_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">commitOrRollback</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('OwnershipAndLifecycle_1')" id="max_OwnershipAndLifecycle_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_OwnershipAndLifecycle_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_OwnershipAndLifecycle_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(transaction.isDirty())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;transaction.commit();<br/>
+            &nbsp;&nbsp;}<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(CommitException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!transaction.isClosed()&nbsp;&amp;&amp;&nbsp;transaction.isDirty())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;transaction.rollback();<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!transaction.isClosed())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;transaction.close();<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 <p>
- Avoid frequent mistakes and issues encountered by CDO application programmers. This section highlights common
- pitfalls, such as improper resource management, incorrect transaction usage, and misunderstanding of CDO's
- concurrency model.
+
+ for a small failure-safe transaction boundary.
+
+<h2><a name="SessionViewAndTransactionBoundaries"></a>2&nbsp;&nbsp;Reuse Sessions, Keep Views Purposeful, and Bound Transactions</h2>
+<p>
+ Reuse a session when its connector, repository, authentication, and passive-update policy are appropriate for the
+ component. Repeatedly opening and closing sessions adds connection and package/revision setup cost. Reuse a view
+ when its branch, time point, notification policy, and consistency requirements match; otherwise open a separate
+ view rather than silently changing the context of unrelated work.
+ <p>
+ Keep transactions focused on one coherent business operation. A long-lived dirty transaction holds local state,
+ increases the conflict window, and makes recovery after disconnects or user cancellation harder. Commit or roll back
+ deliberately, and check <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#isDirty()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.isDirty()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#hasConflict()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.hasConflict()</code></a> at boundaries.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>scopes</code></a> are useful for composable operations: a scope can commit into its parent or roll
+ back to its opening state, but <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.commit()</code></a> is not a repository commit. Only the root
+ transaction commit persists changes.
+ <p>
+ Separate read-only views from editing transactions when a reader must not observe or mutate work-in-progress.
+ Detailed session and view lifecycle belongs to <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a> and <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>.
+
+<h2><a name="ConcurrencyAndCallbacks"></a>3&nbsp;&nbsp;Use Supported Concurrency Boundaries</h2>
+<p>
+ CDO views and their model objects support concurrent single accesses. That does not make a sequence of reads atomic
+ with respect to invalidation. When several reads must describe one consistent observation, execute them through the
+ view's <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>critical section</code></a>. Keep the critical section short and do not hold it while waiting for
+ UI work, another thread, network I/O, or a long-running computation.
+ <p>
+ Sessions and views are not a reason to add application-wide synchronization around every call. Use repository locks
+ when the business rule requires coordination between clients, and use application locks only for application-owned
+ state. Listener callbacks can run on the thread that delivers the event; they should capture the relevant state and
+ hand expensive or UI work to an application executor. See <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>, <a href="Doc06_Locking.html" title="Article in CDO Model Repository Documentation">Locking</a>,
+ and <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a> for the respective contracts.
+
+<h2><a name="LockingChoices"></a>4&nbsp;&nbsp;Choose Optimistic or Pessimistic Coordination Deliberately</h2>
+<p>
+ Prefer normal optimistic transaction conflict detection when concurrent edits are uncommon or can be merged at the
+ domain level. Use explicit object locks when a short operation must exclude competing writers, and use durable locks
+ when ownership must survive a view or session lifetime and the repository's durable-locking support is appropriate.
+ A lock is coordination state, not a replacement for a transaction boundary or conflict policy.
+ <p>
+ Do not acquire broad or long-lived locks merely to avoid learning how conflicts work. Handle lock acquisition
+ timeouts as a decision for the caller, and release locks according to the transaction's configured lock policy.
+ Locking ownership, timeouts, and durable areas are covered in <a href="Doc06_Locking.html" title="Article in CDO Model Repository Documentation">Locking</a>.
+
+<h2><a name="ConflictsAndRetries"></a>5&nbsp;&nbsp;Handle Conflicts and Retries as Business Decisions</h2>
+<p>
+ Distinguish <a href="../../../javadoc/org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="Class in org.eclipse.emf.cdo.util"><code>ConcurrentAccessException</code></a> from a general <a href="../../../javadoc/org/eclipse/emf/cdo/util/CommitException.html" title="Class in org.eclipse.emf.cdo.util"><code>CommitException</code></a>. A concurrent-access failure
+ means that the operation must decide whether to refresh, merge, ask the user, or retry. A retry is safe only when the
+ operation is repeatable and its inputs are still valid. Bound the number of attempts and avoid an infinite loop that
+ turns contention into unbounded load.
+ <p>
+ Conflict resolvers can automate a known policy, but they do not make every domain merge correct. Reapply only the
+ repeatable part of a failed operation, inspect transaction conflict state, and preserve user input that cannot be
+ reconstructed. The transaction chapter's bounded retry example and conflict guidance in
+ <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a> are the normative details.
+ <p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/util/LockTimeoutException.html" title="Class in org.eclipse.emf.cdo.util"><code>LockTimeoutException</code></a> and commit conflicts are different failures: one concerns lock acquisition, the other
+ concerns concurrent repository state. Do not handle both by blindly retrying the same mutation.
+
+<h2><a name="LoadingAndPerformance"></a>6&nbsp;&nbsp;Load Only What the Operation Needs</h2>
+<p>
+ Treat loading as a cost decision. Prefer server-side queries when the task is to identify a bounded set of objects,
+ and prefer deliberate units when a known disjoint subtree is the working set. For graph traversal, choose collection
+ chunks and revision prefetch depth based on measured access patterns. Avoid accidental full traversal of a large
+ containment tree, infinite prefetch, and forcing full collection materialization for a list that is only sampled.
+ <p>
+ A cache hit is not the same as current repository truth: cache-aware revision requests describe where a revision may
+ be loaded from, while view invalidation and branch/time semantics determine what the view should observe. Use CDO
+ large-object types and streams for large payloads instead of materializing them into memory. See
+ <a href="Doc07_LargeObjects.html" title="Article in CDO Model Repository Documentation">Large Objects</a> and <a href="Doc11_AdvancedTopics.html" title="Article in CDO Model Repository Documentation">Advanced Topics</a> for the detailed loading and query APIs.
+
+<h2><a name="RemoteChangesAndRecovery"></a>7&nbsp;&nbsp;Treat Remote Changes and Recovery as Asynchronous Failure Modes</h2>
+<p>
+ A passive update and view invalidation signal that the visible state may have changed; it is not automatically a
+ feature-level delta for every adapter. Use subscriptions only for objects that need detailed remote adapter
+ delivery, remove subscriptions and listeners when the observing component ends, and move expensive callback work
+ off the delivery thread. The notification chapter explains the distinction between invalidation, adapters, and
+ CDO events in detail.
+ <p>
+ Reconnecting sessions can restore a connection, but they do not make an interrupted business operation idempotent.
+ An application must inspect session, view, and transaction state after a disconnect and decide whether to retry,
+ rebuild a transaction, or report failure. Never assume that a commit was not applied merely because the client lost
+ its response. Recovery configuration and recovery events are described in <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a> and
+ <a href="Doc11_AdvancedTopics.html" title="Article in CDO Model Repository Documentation">Advanced Topics</a>.
+
+<h2><a name="ContextAndIntegration"></a>8&nbsp;&nbsp;Preserve Branch, History, and Integration Context</h2>
+<p>
+ A revision version is meaningful together with its branch; it is not a globally unique object version. Keep the
+ branch and time point with identifiers used for history operations. A historical view is a read context, not a
+ revert operation, and a merge produces transaction changes that still require an explicit repository commit.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchVersion.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchVersion</code></a> therefore belongs in a branch-aware API rather than in a bare integer field.
+ <p>
+ CDO URIs, provider-created views, and CDO-managed resource sets carry ownership and context. Do not treat a CDO URI
+ as an ordinary platform file URI, do not assume a provider caches or closes views for you, and do not dispose a view's
+ resource set while EMF clients still use its resources. See <a href="Doc08_BranchingAndVersioning.html" title="Article in CDO Model Repository Documentation">Branching and Versioning</a> and
+ <a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Article in CDO Model Repository Documentation">Integrating with EMF and Other Frameworks</a>.
+
+<h2><a name="FailureHandlingAndAPIStability"></a>9&nbsp;&nbsp;Distinguish Failure Classes and Keep APIs Current</h2>
+<p>
+ Handle commit failures, concurrent access, lock timeouts, transport disconnects, query failures, LOB I/O failures,
+ and closed-lifecycle errors according to their recovery meaning. Preserve causes and repository context in logs,
+ but do not expose credentials or sensitive URI user information. After a failure, query documented state such as
+ <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html#isClosed()" title="Method in org.eclipse.net4j.util.collection.Closeable"><code>CDOView.isClosed()</code></a>, transaction dirty/conflict state, and session lifecycle state before deciding what to do.
+ <p>
+ Prefer current public APIs. Avoid internal implementation packages and compatibility APIs marked deprecated, even when
+ an older example still compiles. A public SPI can be used for its documented extension purpose, but it should be
+ treated as an extension contract, not as ordinary application state. The integration and advanced-topics chapters
+ identify the current replacements for provider and loading patterns.
+
+<h2><a name="CommonPitfalls"></a>10&nbsp;&nbsp;Common CDO Pitfalls</h2>
+<p>
+ Before shipping a client, check the boundaries that are easiest to get wrong:
+ <ul>
+ <li>Do not use objects, resources, or resource sets after their owning view or session has closed.</li>
+ <li>Do not confuse a nested scope commit with a repository commit.</li>
+ <li>Do not retry non-repeatable mutations or assume a lost commit response means that no commit happened.</li>
+ <li>Do not use broad locks where optimistic conflict handling is sufficient.</li>
+ <li>Do not interpret invalidations as universal feature-level notifications.</li>
+ <li>Do not traverse or prefetch an entire large graph without an explicit working-set reason.</li>
+ <li>Do not treat historical version numbers as globally meaningful.</li>
+ <li>Do not leak listeners, provider-created views, or LOB streams.</li>
+ </ul>
+ Each item is a CDO lifecycle or consistency rule, not a generic Java style preference. Use the linked subsystem
+ chapters when the application needs the precise option or recovery API.
 
 <p align="right">
 <a href="Doc11_AdvancedTopics.html" title="Backward to Advanced Topics"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="../server/index.html" title="Forward to Developing Server Applications"><img src="../../../images/forward.png" border="0"></a></p>

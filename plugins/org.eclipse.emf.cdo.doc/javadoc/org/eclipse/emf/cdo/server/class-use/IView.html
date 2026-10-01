@@ -288,6 +288,28 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../spi/server/InternalLockManager.html#changeLocks(org.eclipse.emf.cdo.server.IView,java.util.List,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler,java.util.function.Consumer)" class="member-name-link">changeLocks</a><wbr>(<a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&gt;&nbsp;changes,
+ boolean&nbsp;recursive,
+ boolean&nbsp;explicit,
+ org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Applies one ordered set of lock changes under one in-memory write-access scope, then persists explicit durable
+ lock changes after releasing that access.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../spi/server/InternalLockManager.LockChangeOperationResult.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeOperationResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../spi/server/InternalLockManager.html#changeLocksWithReservation(org.eclipse.emf.cdo.server.IView,java.util.List,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler,java.util.function.Consumer)" class="member-name-link">changeLocksWithReservation</a><wbr>(<a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&gt;&nbsp;changes,
+ boolean&nbsp;recursive,
+ boolean&nbsp;explicit,
+ org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Applies a lock change and returns its exact sequencing reservation together with the generic
+ lock-manager modification count.</div>
+</div>
 <div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">RepositoryActivityLog.</span><code><a href="../../spi/server/RepositoryActivityLog.html#formatView(org.eclipse.emf.cdo.server.IView)" class="member-name-link">formatView</a><wbr>(<a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -460,6 +482,50 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>long</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../spi/server/InternalLockManager.html#changeLocks(org.eclipse.emf.cdo.server.IView,java.util.List,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler,java.util.function.Consumer)" class="member-name-link">changeLocks</a><wbr>(<a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&gt;&nbsp;changes,
+ boolean&nbsp;recursive,
+ boolean&nbsp;explicit,
+ org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Applies one ordered set of lock changes under one in-memory write-access scope, then persists explicit durable
+ lock changes after releasing that access.</div>
+</div>
+<div class="col-first odd-row-color"><code>long</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../spi/server/InternalLockManager.html#changeLocks(org.eclipse.emf.cdo.server.IView,java.util.List,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler,java.util.function.Consumer)" class="member-name-link">changeLocks</a><wbr>(<a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&gt;&nbsp;changes,
+ boolean&nbsp;recursive,
+ boolean&nbsp;explicit,
+ org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Applies one ordered set of lock changes under one in-memory write-access scope, then persists explicit durable
+ lock changes after releasing that access.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../../spi/server/InternalLockManager.LockChangeOperationResult.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeOperationResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../spi/server/InternalLockManager.html#changeLocksWithReservation(org.eclipse.emf.cdo.server.IView,java.util.List,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler,java.util.function.Consumer)" class="member-name-link">changeLocksWithReservation</a><wbr>(<a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&gt;&nbsp;changes,
+ boolean&nbsp;recursive,
+ boolean&nbsp;explicit,
+ org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Applies a lock change and returns its exact sequencing reservation together with the generic
+ lock-manager modification count.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../spi/server/InternalLockManager.LockChangeOperationResult.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeOperationResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../spi/server/InternalLockManager.html#changeLocksWithReservation(org.eclipse.emf.cdo.server.IView,java.util.List,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler,java.util.function.Consumer)" class="member-name-link">changeLocksWithReservation</a><wbr>(<a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;? extends org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&gt;&nbsp;changes,
+ boolean&nbsp;recursive,
+ boolean&nbsp;explicit,
+ org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Applies a lock change and returns its exact sequencing reservation together with the generic
+ lock-manager modification count.</div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../spi/server/InternalLockManager.html#getLockStates(java.util.Collection,java.util.function.BiConsumer)" class="member-name-link">getLockStates</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;keys,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr>org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="../IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;consumer)</code></div>

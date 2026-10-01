@@ -110,17 +110,36 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HashMapDelegatingRegistry.html" title="class in org.eclipse.net4j.util.registry">HashMapDelegatingRegistry</a>&lt;K,<wbr>V&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="HashMapRegistry.html" title="class in org.eclipse.net4j.util.registry">HashMapRegistry</a>&lt;K,<wbr>V&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A registry backed by a hash map.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HashMapRegistry.AutoCommit.html" title="class in org.eclipse.net4j.util.registry">HashMapRegistry.AutoCommit</a>&lt;K,<wbr>V&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">A hash-map registry that commits changes immediately.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="IRegistry.html" title="interface in org.eclipse.net4j.util.registry">IRegistry</a>&lt;K,<wbr>V&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Registry.html" title="class in org.eclipse.net4j.util.registry">Registry</a>&lt;K,<wbr>V&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="RegistryUtil.html" title="class in org.eclipse.net4j.util.registry">RegistryUtil</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UnmodifiableRegistry.html" title="class in org.eclipse.net4j.util.registry">UnmodifiableRegistry</a>&lt;K,<wbr>V&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ScopedRegistry.html" title="class in org.eclipse.net4j.util.registry">ScopedRegistry</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">A logical registry whose entries share one physical backing map with other registries created by the same
+ <a href="ScopedRegistry.Store.html" title="class in org.eclipse.net4j.util.registry"><code>ScopedRegistry.Store</code></a>.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ScopedRegistry.Store.html" title="class in org.eclipse.net4j.util.registry">ScopedRegistry.Store</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Owns the single physical map shared by all registries it creates.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="ScopedRegistry.Store.Provider.html" title="interface in org.eclipse.net4j.util.registry">ScopedRegistry.Store.Provider</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Provides a <a href="ScopedRegistry.Store.html" title="class in org.eclipse.net4j.util.registry"><code>ScopedRegistry.Store</code></a> that creates logical <a href="ScopedRegistry.html" title="class in org.eclipse.net4j.util.registry"><code>ScopedRegistry</code></a> instances.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UnmodifiableRegistry.html" title="class in org.eclipse.net4j.util.registry">UnmodifiableRegistry</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A registry view that delegates lookups while preventing modifications.</div>
+</div>
 </div>
 </div>
 </div>

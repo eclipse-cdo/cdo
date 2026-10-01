@@ -123,7 +123,7 @@ function maximize(id)
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CrititicalSectionWithCallable.java</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CriticalSectionWithCallable.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UsingCriticalSections_1')" id="max_UsingCriticalSections_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -168,8 +168,17 @@ function maximize(id)
  <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#newCondition()" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>newCondition()</code></a> - Creates a new Condition associated with the critical section.
  </ul>
  <p>
- By default the critical section of a view uses the monitor lock of that view to synchronize. If you need a different locking
- strategy you can override this by calling <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#setNextViewLock(java.util.concurrent.locks.Lock)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>CDOUtil.setNextViewLock(Lock)</code></a> before opening the view.
+ A view's critical section uses a real reentrant lock. The default is a non-fair lock; a lock supplied with
+ <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#setNextViewLock(java.util.concurrent.locks.Lock)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>CDOUtil.setNextViewLock(Lock)</code></a> or the session's delegable-lock option is used when configured. Synchronizing
+ directly on the view object is unsupported. By default, CDO detects this when a view lock is next entered and throws
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html" target="_blank" title="Class in java.lang"><code>UnsupportedOperationException</code></a>, directing the caller to <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a>. Set
+ <code>-Dorg.eclipse.emf.cdo.view.DISABLE_INTRINSIC_MONITOR_CHECK=true</code> to disable that safety check.
+ <p>
+ Deprecated monitor and lock methods fail fast by default. Set
+ <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code> to re-enable their best-effort behavior.
+ The compatibility monitor returned by <code>getViewMonitor()</code> coordinates only callers that synchronize on
+ that returned object; it does not coordinate by itself with CDO's internal view lock. The deprecated lock methods
+ use the real view lock when enabled.
  <p>
  Here's an example of setting a custom lock for the next view to be opened:
  
@@ -495,9 +504,7 @@ function maximize(id)
             CDOID&nbsp;rootResourceID&nbsp;=&nbsp;session.getRepositoryInfo().getRootResourceID();<br/>
             CDOBranch&nbsp;mainBranch&nbsp;=&nbsp;session.getBranchManager().getMainBranch();<br/>
             <br/>
-            CDORevision&nbsp;rootResourceRevision&nbsp;=&nbsp;session.getRevisionManager().&nbsp;<font color="#3f7f5f">//</font><br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;getRevision(rootResourceID,&nbsp;mainBranch.getHead(),&nbsp;<font color="#3f7f5f">//</font><br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDORevision.UNCHUNKED,&nbsp;CDORevision.DEPTH_NONE,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            CDORevision&nbsp;rootResourceRevision&nbsp;=&nbsp;session.getRevisionManager().request().getRevision(rootResourceID,&nbsp;mainBranch.getHead());<br/>
             System.out.println(<font color="#2a00ff">&#34;Root&nbsp;Resource&nbsp;Revision:&nbsp;&#34;&nbsp;</font>+&nbsp;rootResourceRevision);            </code>
 
           </div>
@@ -906,23 +913,25 @@ function maximize(id)
 
 <h2><a name="QueryingResources"></a>8&nbsp;&nbsp;Querying Resources</h2>
 <p>
- CDO supports querying resources using various criteria. This section explains how to construct and execute queries
- to locate resources and model objects efficiently.
+ Queries are created from the view and executed by the repository. Use a query when selecting candidate resources
+ is cheaper than loading and traversing a broad resource tree; result limits and asynchronous consumption are
+ covered in <a href="Doc11_AdvancedTopics.html#LargeScaleAccess" title="Chapter in CDO Model Repository Documentation">Queries and Large-Scale Model Access</a>.
 
 <h2><a name="QueryingModelObjects"></a>9&nbsp;&nbsp;Querying Model Objects</h2>
 <p>
- Learn how to query model objects using CDO's query APIs, including support for OCL, custom queries, and
- cross-references.
+ A client selects a repository-supported query language and supplies its expression and parameters. OCL is one
+ optional language integration; query-language syntax is not part of the client API contract.
 
 <h2><a name="QueryingCrossReferences"></a>10&nbsp;&nbsp;Querying Cross References</h2>
 <p>
- Cross references allow navigation between related model objects. This section covers techniques for querying and
- resolving cross references in CDO models.
+ Use normal EMF reference navigation when the relevant objects are already loaded. Use a repository query when
+ cross-reference discovery would otherwise require loading an unbounded graph.
 
 <h2><a name="CustomQueries"></a>11&nbsp;&nbsp;Custom Queries</h2>
 <p>
- Extend CDO's querying capabilities with custom query implementations. Learn how to define, register, and execute
- custom queries for advanced use cases.
+ Clients execute custom query languages exactly like other CDO queries. Defining and registering the corresponding
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>server query handler</code></a> is server programming and is covered in
+ <a href="../server/Doc08_SecurityQueriesAndSpecializedExtensions.html#QueryHandlers" title="Chapter in CDO Model Repository Documentation">Query Handlers</a>.
 
 <h2><a name="Units"></a>12&nbsp;&nbsp;Units</h2>
 <p>

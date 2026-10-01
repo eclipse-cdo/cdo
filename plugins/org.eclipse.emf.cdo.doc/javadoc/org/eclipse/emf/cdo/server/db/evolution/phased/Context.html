@@ -373,6 +373,10 @@ implements <a href="../../../../common/util/CDOTimeProvider.html" title="interfa
 <h3 id="getNewElement(org.eclipse.emf.ecore.EObject)">getNewElement</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getNewElement</span><wbr><span class="parameters">(T&nbsp;oldElement)</span></div>
 <div class="block">Returns the new element corresponding to the given old element, or <code>null</code> if there is no such mapping.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - the element type</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -390,6 +394,10 @@ implements <a href="../../../../common/util/CDOTimeProvider.html" title="interfa
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;&nbsp;handler)</span></div>
 <div class="block">Handles feature ID changes for the given old class by applying the given feature provider and invoking the given handler
  for each detected feature ID change.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>F</code> - the structural feature type</dd>
+</dl>
 </section>
 </li>
 <li>

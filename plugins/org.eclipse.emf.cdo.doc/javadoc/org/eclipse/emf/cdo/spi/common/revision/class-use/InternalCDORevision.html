@@ -871,9 +871,15 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>,<wbr><a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#getCleanRevisions()" class="member-name-link">getCleanRevisions</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.ViewInvalidationData.</span><code><a href="../../../../../spi/cdo/InternalCDOView.ViewInvalidationData.html#getOldRevisions()" class="member-name-link">getOldRevisions</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>,<wbr><a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#getCleanRevisionsUnsynced()" class="member-name-link">getCleanRevisionsUnsynced</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the same live clean-revisions map as <a href="../../../../../spi/cdo/InternalCDOTransaction.html#getCleanRevisions()"><code>InternalCDOTransaction.getCleanRevisions()</code></a> without acquiring the transaction/view
+ lock.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.ViewInvalidationData.</span><code><a href="../../../../../spi/cdo/InternalCDOView.ViewInvalidationData.html#getOldRevisions()" class="member-name-link">getOldRevisions</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with parameters of type <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span></div>
 <div class="summary-table three-column-summary">
@@ -926,12 +932,19 @@ loadScripts(document, 'script');</script>
  <a href="../../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
  <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOStore.</span><code><a href="../../../../../spi/cdo/CDOStore.html#resolveProxy(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">resolveProxy</a><wbr>(<a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#registerFeatureDeltaUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaUnsynced</a><wbr>(<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Registers a feature delta without acquiring the transaction/view lock.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOStore.</span><code><a href="../../../../../spi/cdo/CDOStore.html#resolveProxy(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">resolveProxy</a><wbr>(<a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  int&nbsp;index,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with type arguments of type <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></span></div>
 <div class="summary-table three-column-summary">

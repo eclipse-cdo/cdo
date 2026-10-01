@@ -166,7 +166,9 @@ implements <a href="../../cdo/transaction/CDOConflictResolver.NonConflictAware.h
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleNonConflict(long)" class="member-name-link">handleNonConflict</a><wbr>(long&nbsp;updateTime)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Handles an invalidation that did not produce a conflict.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">hookTransaction</a><wbr>(<a href="../../cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -279,9 +281,13 @@ implements <a href="../../cdo/transaction/CDOConflictResolver.NonConflictAware.h
 <section class="detail" id="handleNonConflict(long)">
 <h3>handleNonConflict</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleNonConflict</span><wbr><span class="parameters">(long&nbsp;updateTime)</span></div>
+<div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/transaction/CDOConflictResolver.NonConflictAware.html#handleNonConflict(long)">CDOConflictResolver.NonConflictAware</a></code></span></div>
+<div class="block">Handles an invalidation that did not produce a conflict.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../cdo/transaction/CDOConflictResolver.NonConflictAware.html#handleNonConflict(long)">handleNonConflict</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/transaction/CDOConflictResolver.NonConflictAware.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver.NonConflictAware</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>updateTime</code> - the time of the update.</dd>
 <dt>Since:</dt>
 <dd>4.3</dd>
 </dl>

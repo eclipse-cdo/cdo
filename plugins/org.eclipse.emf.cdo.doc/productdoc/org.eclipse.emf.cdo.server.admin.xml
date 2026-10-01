@@ -4,7 +4,7 @@
 		<factory type="default" class="org.eclipse.emf.cdo.server.internal.admin.DefaultCDOAdminHandler$Factory" contributor="org.eclipse.emf.cdo.server.admin"/>
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.admin.adminServers" name="CDO Administration Servers" description="" deprecated="false">
-		<factory type="default" class="org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer$Factory$Plugin" contributor="org.eclipse.emf.cdo.server.admin"/>
+		<factory type="default" class="org.eclipse.emf.cdo.server.internal.admin.CDOAdminServer$Factory" contributor="org.eclipse.emf.cdo.server.admin"/>
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers" name="CDO Repository Configuration Managers" description="" deprecated="false">
 		<factory type="default" class="org.eclipse.emf.cdo.server.internal.admin.DefaultCDORepositoryConfigurationManager$Factory" contributor="org.eclipse.emf.cdo.server.admin"/>

@@ -388,109 +388,113 @@ extends <a href="../../server/IRepository.html" title="interface in org.eclipse.
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="../../common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a>&nbsp;info)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo,org.eclipse.emf.cdo.spi.server.InternalLockManager.LockChangeReservationSet)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="../../common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a>&nbsp;info,
+ <a href="InternalLockManager.LockChangeReservationSet.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeReservationSet</a>&nbsp;reservation)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
  <a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 use <a href="#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)"><code>sendCommitNotification(InternalSession, CDOCommitInfo, boolean)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendCommitNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)" class="member-name-link">sendCommitNotification</a><wbr>(<a href="InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
  <a href="../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo,
  boolean&nbsp;clearResourcePathCache)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.3 use <a href="#sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)"><code>sendCommitNotification(ISessionProtocol.CommitNotificationInfo)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBranchManager(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager)" class="member-name-link">setBranchManager</a><wbr>(<a href="../common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager</a>&nbsp;branchManager)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)" class="member-name-link">setCollectionLoadingConfig</a><wbr>(<a href="../../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a>&nbsp;config)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBranchManager(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager)" class="member-name-link">setBranchManager</a><wbr>(<a href="../common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager</a>&nbsp;branchManager)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)" class="member-name-link">setCollectionLoadingConfig</a><wbr>(<a href="../../common/revision/CDOCollectionLoadingConfig.html" title="class in org.eclipse.emf.cdo.common.revision">CDOCollectionLoadingConfig</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Replaces the repository-wide runtime collection-loading configuration snapshot.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCommitConflictResolver(org.eclipse.emf.cdo.spi.server.ICommitConflictResolver)" class="member-name-link">setCommitConflictResolver</a><wbr>(<a href="ICommitConflictResolver.html" title="interface in org.eclipse.emf.cdo.spi.server">ICommitConflictResolver</a>&nbsp;commitConflictResolver)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">setContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCommitConflictResolver(org.eclipse.emf.cdo.spi.server.ICommitConflictResolver)" class="member-name-link">setCommitConflictResolver</a><wbr>(<a href="ICommitConflictResolver.html" title="interface in org.eclipse.emf.cdo.spi.server">ICommitConflictResolver</a>&nbsp;commitConflictResolver)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setEntityStore(org.eclipse.net4j.util.collection.Entity.Store)" class="member-name-link">setEntityStore</a><wbr>(org.eclipse.net4j.util.collection.Entity.Store&nbsp;entityStore)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">setContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setIDGenerator(java.util.function.Function)" class="member-name-link">setIDGenerator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<wbr><a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;idGenerator)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setEntityStore(org.eclipse.net4j.util.collection.Entity.Store)" class="member-name-link">setEntityStore</a><wbr>(org.eclipse.net4j.util.collection.Entity.Store&nbsp;entityStore)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLastCommitTimeStamp(long)" class="member-name-link">setLastCommitTimeStamp</a><wbr>(long&nbsp;commitTimeStamp)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setIDGenerator(java.util.function.Function)" class="member-name-link">setIDGenerator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<wbr><a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;idGenerator)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setName(java.lang.String)" class="member-name-link">setName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLastCommitTimeStamp(long)" class="member-name-link">setLastCommitTimeStamp</a><wbr>(long&nbsp;commitTimeStamp)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setOptimisticLockingTimeout(long)" class="member-name-link">setOptimisticLockingTimeout</a><wbr>(long&nbsp;optimisticLockingTimeout)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setName(java.lang.String)" class="member-name-link">setName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPackageRegistry(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry)" class="member-name-link">setPackageRegistry</a><wbr>(<a href="../common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a>&nbsp;packageRegistry)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setOptimisticLockingTimeout(long)" class="member-name-link">setOptimisticLockingTimeout</a><wbr>(long&nbsp;optimisticLockingTimeout)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setProperties(java.util.Map)" class="member-name-link">setProperties</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPackageRegistry(org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry)" class="member-name-link">setPackageRegistry</a><wbr>(<a href="../common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a>&nbsp;packageRegistry)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setProtector(org.eclipse.emf.cdo.server.IRepositoryProtector)" class="member-name-link">setProtector</a><wbr>(<a href="../../server/IRepositoryProtector.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProtector</a>&nbsp;protector)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setProperties(java.util.Map)" class="member-name-link">setProperties</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setQueryHandlerProvider(org.eclipse.emf.cdo.server.IQueryHandlerProvider)" class="member-name-link">setQueryHandlerProvider</a><wbr>(<a href="../../server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a>&nbsp;queryHandlerProvider)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setProtector(org.eclipse.emf.cdo.server.IRepositoryProtector)" class="member-name-link">setProtector</a><wbr>(<a href="../../server/IRepositoryProtector.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProtector</a>&nbsp;protector)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setRevisionManager(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager)" class="member-name-link">setRevisionManager</a><wbr>(<a href="../common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a>&nbsp;revisionManager)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setQueryHandlerProvider(org.eclipse.emf.cdo.server.IQueryHandlerProvider)" class="member-name-link">setQueryHandlerProvider</a><wbr>(<a href="../../server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a>&nbsp;queryHandlerProvider)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setRootResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setRootResourceID</a><wbr>(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setRevisionManager(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager)" class="member-name-link">setRevisionManager</a><wbr>(<a href="../common/revision/InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a>&nbsp;revisionManager)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setSessionManager(org.eclipse.emf.cdo.spi.server.InternalSessionManager)" class="member-name-link">setSessionManager</a><wbr>(<a href="InternalSessionManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSessionManager</a>&nbsp;sessionManager)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setRootResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setRootResourceID</a><wbr>(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setSkipInitialization(boolean)" class="member-name-link">setSkipInitialization</a><wbr>(boolean&nbsp;skipInitialization)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setSessionManager(org.eclipse.emf.cdo.spi.server.InternalSessionManager)" class="member-name-link">setSessionManager</a><wbr>(<a href="InternalSessionManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSessionManager</a>&nbsp;sessionManager)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setState(org.eclipse.emf.cdo.common.CDOCommonRepository.State)" class="member-name-link">setState</a><wbr>(<a href="../../common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;state)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setSkipInitialization(boolean)" class="member-name-link">setSkipInitialization</a><wbr>(boolean&nbsp;skipInitialization)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStore(org.eclipse.emf.cdo.spi.server.InternalStore)" class="member-name-link">setStore</a><wbr>(<a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a>&nbsp;store)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setState(org.eclipse.emf.cdo.common.CDOCommonRepository.State)" class="member-name-link">setState</a><wbr>(<a href="../../common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;state)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTimeProvider(org.eclipse.emf.cdo.common.util.CDOTimeProvider)" class="member-name-link">setTimeProvider</a><wbr>(<a href="../../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>&nbsp;timeProvider)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStore(org.eclipse.emf.cdo.spi.server.InternalStore)" class="member-name-link">setStore</a><wbr>(<a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a>&nbsp;store)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setType(org.eclipse.emf.cdo.common.CDOCommonRepository.Type)" class="member-name-link">setType</a><wbr>(<a href="../../common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;type)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setTimeProvider(org.eclipse.emf.cdo.common.util.CDOTimeProvider)" class="member-name-link">setTimeProvider</a><wbr>(<a href="../../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>&nbsp;timeProvider)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setUnitManager(org.eclipse.emf.cdo.spi.server.InternalUnitManager)" class="member-name-link">setUnitManager</a><wbr>(<a href="InternalUnitManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager</a>&nbsp;unitManager)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setType(org.eclipse.emf.cdo.common.CDOCommonRepository.Type)" class="member-name-link">setType</a><wbr>(<a href="../../common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlock(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">unlock</a><wbr>(<a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setUnitManager(org.eclipse.emf.cdo.spi.server.InternalUnitManager)" class="member-name-link">setUnitManager</a><wbr>(<a href="InternalUnitManager.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalUnitManager</a>&nbsp;unitManager)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlock(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlock</a><wbr>(<a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlock(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">unlock</a><wbr>(<a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlock(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlock</a><wbr>(<a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  boolean&nbsp;recursive)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  boolean&nbsp;recursive)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -751,7 +755,7 @@ extends <a href="../../server/IRepository.html" title="interface in org.eclipse.
 <dt>Returns:</dt>
 <dd>the configuration snapshot, or <code>null</code></dd>
 <dt>Since:</dt>
-<dd>4.38</dd>
+<dd>4.27</dd>
 </dl>
 </section>
 </li>
@@ -764,7 +768,7 @@ extends <a href="../../server/IRepository.html" title="interface in org.eclipse.
 <dt>Parameters:</dt>
 <dd><code>config</code> - the configuration snapshot, or <code>null</code></dd>
 <dt>Since:</dt>
-<dd>4.38</dd>
+<dd>4.27</dd>
 </dl>
 </section>
 </li>
@@ -785,7 +789,7 @@ extends <a href="../../server/IRepository.html" title="interface in org.eclipse.
 <dt>Returns:</dt>
 <dd>the effective configuration, or <code>null</code> if modern partial collection loading is disabled</dd>
 <dt>Since:</dt>
-<dd>4.38</dd>
+<dd>4.27</dd>
 </dl>
 </section>
 </li>
@@ -1011,6 +1015,17 @@ extends <a href="../../server/IRepository.html" title="interface in org.eclipse.
 </section>
 </li>
 <li>
+<section class="detail" id="sendCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo,org.eclipse.emf.cdo.spi.server.InternalLockManager.LockChangeReservationSet)">
+<h3>sendCommitNotification</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">sendCommitNotification</span><wbr><span class="parameters">(<a href="../../common/protocol/CDOProtocol.CommitNotificationInfo.html" title="class in org.eclipse.emf.cdo.common.protocol">CDOProtocol.CommitNotificationInfo</a>&nbsp;info,
+ <a href="InternalLockManager.LockChangeReservationSet.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeReservationSet</a>&nbsp;reservation)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="setRootResourceID(org.eclipse.emf.cdo.common.id.CDOID)">
 <h3>setRootResourceID</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setRootResourceID</span><wbr><span class="parameters">(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</span></div>
@@ -1059,6 +1074,8 @@ extends <a href="../../server/IRepository.html" title="interface in org.eclipse.
 <dd><code>ranges</code> - ordered half-open source ranges</dd>
 <dt>Returns:</dt>
 <dd>the accessor used for the read, or <code>null</code> if no read is needed</dd>
+<dt>Since:</dt>
+<dd>4.27</dd>
 </dl>
 </section>
 </li>

@@ -705,7 +705,9 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">CDOMerger2.</span><code><a href="../../transaction/CDOMerger2.html#merge(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.view.CDOView,java.util.Set)" class="member-name-link">merge</a><wbr>(<a href="../../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;localTransaction,
  <a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;remoteView,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Merges the affected objects from a remote view into a local transaction.</div>
+</div>
 </div>
 </section>
 </li>
@@ -1195,7 +1197,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">URI</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOViewProvider.CDOViewProvider2.</span><code><a href="../CDOViewProvider.CDOViewProvider2.html#getViewURI(org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">getViewURI</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the view URI for the given view.</div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORegistrationHandler.Default.</span><code><a href="../CDORegistrationHandler.Default.html#objectCollected(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">objectCollected</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
@@ -1379,34 +1383,45 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#changeLockArea(org.eclipse.emf.cdo.view.CDOView,boolean)" class="member-name-link">changeLockArea</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  boolean&nbsp;create)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected abstract <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ViewResourceSetConfigurer.</span><code><a href="../../../spi/cdo/ViewResourceSetConfigurer.html#configureViewResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">configureViewResourceSet</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet,
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../../../spi/cdo/CDOSessionProtocol.html#changeLockArea2(org.eclipse.emf.cdo.view.CDOView,boolean)"><code>CDOSessionProtocol.changeLockArea2(CDOView, boolean)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../../spi/cdo/CDOSessionProtocol.ChangeLockAreaResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.ChangeLockAreaResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#changeLockArea2(org.eclipse.emf.cdo.view.CDOView,boolean)" class="member-name-link">changeLockArea2</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+ boolean&nbsp;create)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Changes durable locking and returns the sequence number of the resulting
+ owner remap for this session.</div>
+</div>
+<div class="col-first even-row-color"><code>protected abstract <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ViewResourceSetConfigurer.</span><code><a href="../../../spi/cdo/ViewResourceSetConfigurer.html#configureViewResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">configureViewResourceSet</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet,
  <a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#isObjectLocked(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.CDOObject,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">isObjectLocked</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#isObjectLocked(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.CDOObject,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">isObjectLocked</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  <a href="../../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;object,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  boolean&nbsp;byOthers)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#query(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.spi.cdo.AbstractQueryIterator)" class="member-name-link">query</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
- <a href="../../../spi/cdo/AbstractQueryIterator.html" title="class in org.eclipse.emf.spi.cdo">AbstractQueryIterator</a>&lt;?&gt;&nbsp;queryResult)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#unlockObjects(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">unlockObjects</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<div class="col-second even-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#query(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.spi.cdo.AbstractQueryIterator)" class="member-name-link">query</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+ <a href="../../../spi/cdo/AbstractQueryIterator.html" title="class in org.eclipse.emf.spi.cdo">AbstractQueryIterator</a>&lt;?&gt;&nbsp;queryResult)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#unlockObjects(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">unlockObjects</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;objectIDs,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#unlockObjects2(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">unlockObjects2</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<div class="col-first even-row-color"><code><a href="../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOSessionProtocol.</span><code><a href="../../../spi/cdo/CDOSessionProtocol.html#unlockObjects2(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">unlockObjects2</a><wbr>(<a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;objectIDs,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  boolean&nbsp;recursive)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> with parameters of type <a href="../CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span></div>
 <div class="summary-table three-column-summary">

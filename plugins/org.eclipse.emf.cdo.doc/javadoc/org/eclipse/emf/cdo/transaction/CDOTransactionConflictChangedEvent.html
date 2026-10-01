@@ -126,10 +126,14 @@ extends <a href="../view/CDOViewEvent.html" title="interface in org.eclipse.emf.
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConflictingObject()" class="member-name-link">getConflictingObject</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the object whose conflict state changed.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConflicts()" class="member-name-link">getConflicts</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the number of conflicts currently associated with the object.</div>
+</div>
 </div>
 </div>
 </div>
@@ -151,12 +155,22 @@ extends <a href="../view/CDOViewEvent.html" title="interface in org.eclipse.emf.
 <section class="detail" id="getConflictingObject()">
 <h3>getConflictingObject</h3>
 <div class="member-signature"><span class="return-type"><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></span>&nbsp;<span class="element-name">getConflictingObject</span>()</div>
+<div class="block">Returns the object whose conflict state changed.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the conflicting object.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getConflicts()">
 <h3>getConflicts</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getConflicts</span>()</div>
+<div class="block">Returns the number of conflicts currently associated with the object.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the conflict count.</dd>
+</dl>
 </section>
 </li>
 </ul>

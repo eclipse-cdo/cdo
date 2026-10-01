@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>org.eclipse.net4j.util.container.IManagedContainerProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></dd>
+<dd><code>org.eclipse.net4j.util.container.IManagedContainerProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code>, <code>org.eclipse.net4j.util.properties.IPropertiesContainer</code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
@@ -109,7 +109,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static class </span><span class="element-name type-name-label">IRepositoryProtector.Element</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle
-implements org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
+implements org.eclipse.net4j.util.container.IManagedContainerProvider, org.eclipse.net4j.util.properties.IPropertiesContainer</span></div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -164,9 +164,14 @@ implements org.eclipse.net4j.util.container.IManagedContainerProvider</span></di
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="IRepositoryProtector.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProtector</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepositoryProtector()" class="member-name-link">getRepositoryProtector</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRepositoryProtector(org.eclipse.emf.cdo.server.IRepositoryProtector)" class="member-name-link">setRepositoryProtector</a><wbr>(<a href="IRepositoryProtector.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProtector</a>&nbsp;repositoryProtector)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final org.eclipse.net4j.util.registry.IRegistry<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#properties()" class="member-name-link">properties</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns this element's properties registry.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRepositoryProtector(org.eclipse.emf.cdo.server.IRepositoryProtector)" class="member-name-link">setRepositoryProtector</a><wbr>(<a href="IRepositoryProtector.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProtector</a>&nbsp;repositoryProtector)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -193,6 +198,28 @@ implements org.eclipse.net4j.util.container.IManagedContainerProvider</span></di
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="properties()">
+<h3>properties</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.registry.IRegistry&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">properties</span>()</div>
+<div class="block">Returns this element's properties registry.
+ <p>
+ The registry is created lazily on first access. If this element's
+ <a href="#getRepositoryProtector()"><code>repository protector</code></a> provides a
+ <code>ScopedRegistry.Store</code>,
+ the registry shares that store with other
+ elements of the protector. Otherwise, an independent registry is used.
+ The returned registry is stable for the lifetime of this element.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>properties</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.properties.IPropertiesContainer</code></dd>
+<dt>Returns:</dt>
+<dd>this element's properties registry</dd>
+<dt>Since:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="getContainer()">
 <h3>getContainer</h3>

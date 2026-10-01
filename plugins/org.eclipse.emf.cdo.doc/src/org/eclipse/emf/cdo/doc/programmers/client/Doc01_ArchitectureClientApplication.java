@@ -109,11 +109,11 @@ public class Doc01_ArchitectureClientApplication
    * All <b>communication aspects</b> (the sending/receiving of signals to/from a network system) are fully abstracted
    * through the service provider interface (SPI) {@link CDOSessionProtocol}. Concrete implementations are fully separated
    * and can be plugged into the core as described in {@link Protocol}.
- * <p>
- * A small first-application path is: open a {@link Doc03_WorkingWithSessions session}, create a
- * {@link Doc04_WorkingWithViews view} or transaction, load a resource, modify the model, commit through
- * {@link Doc05_WorkingWithTransactions}, and close the owned objects. Framework-specific resource and provider
- * integration is covered in {@link Doc10_IntegratingWithEMFAndOtherFrameworks}.
+  * <p>
+  * A small first-application path is: open a {@link Doc03_WorkingWithSessions session}, create a
+  * {@link Doc04_WorkingWithViews view} or transaction, load a resource, modify the model, commit through
+  * {@link Doc05_WorkingWithTransactions}, and close the owned objects. Framework-specific resource and provider
+  * integration is covered in {@link Doc10_IntegratingWithEMFAndOtherFrameworks}.
    *
    * @see EMF
    * @see Models
@@ -176,7 +176,7 @@ public class Doc01_ArchitectureClientApplication
    * (optionally with SSL support) and {@link IWSConnector}.
    * <p>
    * The {@link org.eclipse.emf.cdo.doc.programmers.server.Architecture server} must be deployed and configured with
-   * the matching {@link org.eclipse.emf.cdo.doc.programmers.server.Architecture.Transport transport}.
+   * the matching transport.
    */
   public class Transport
   {

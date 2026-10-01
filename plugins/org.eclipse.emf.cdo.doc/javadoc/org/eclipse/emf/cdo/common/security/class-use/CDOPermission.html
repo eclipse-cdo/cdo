@@ -76,28 +76,32 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Server concepts for dealing with repositories and stores.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.server.spi.security">org.eclipse.emf.cdo.server.spi.security</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Server provider interfaces (SPI) for the server integration of the <a href="../../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></div>
+<div class="col-last even-row-color">
 <div class="block">Client concepts for dealing with sessions to CDO repositories.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.spi.common.revision">org.eclipse.emf.cdo.spi.common.revision</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.spi.common.revision">org.eclipse.emf.cdo.spi.common.revision</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.ui">org.eclipse.emf.cdo.ui</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.ui">org.eclipse.emf.cdo.ui</a></div>
+<div class="col-last even-row-color">
 <div class="block">Reusable UI components specific to the CDO Model Repository.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.internal.cdo">org.eclipse.emf.internal.cdo</a></div>
+<div class="col-last even-row-color">
 <div class="block">Exposes <a href="../../../../internal/cdo/CDOObjectImpl.html" title="class in org.eclipse.emf.internal.cdo"><code>CDOObjectImpl</code></a> for extension in generated EMF models.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </div>
 </div>
@@ -293,6 +297,37 @@ the order they are declared.</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.Constant.html#%3Cinit%3E(org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">Constant</a><wbr>(<a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;permission)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.server.spi.security">
+<h2>Uses of <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a> in <a href="../../../server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a></h2>
+<div class="caption"><span>Methods in <a href="../../../server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a> that return <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PermissionCache.</span><code><a href="../../../server/spi/security/PermissionCache.html#get(org.eclipse.emf.cdo.common.id.CDOID,boolean)" class="member-name-link">get</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceNodeID,
+ boolean&nbsp;resourceNode)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the permission in the selected semantic slot, or <code>null</code> when that slot is unknown.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../../server/spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a> with parameters of type <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PermissionCache.</span><code><a href="../../../server/spi/security/PermissionCache.html#put(org.eclipse.emf.cdo.common.id.CDOID,boolean,org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">put</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceNodeID,
+ boolean&nbsp;resourceNode,
+ <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;permission)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Stores a non-null permission in the selected semantic slot without changing the other slot for the same resource
+ node ID.</div>
+</div>
 </div>
 </section>
 </li>

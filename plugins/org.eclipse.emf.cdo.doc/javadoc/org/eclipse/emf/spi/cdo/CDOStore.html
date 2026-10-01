@@ -135,48 +135,79 @@ extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertToCDO(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" class="member-name-link">convertToCDO</a><wbr>(<a href="InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addUnsynced(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">addUnsynced</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;index,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Adds a value to a many-valued feature using the same backing-store operation as
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#add-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-int-java.lang.Object-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.add(InternalEObject, EStructuralFeature, int, Object)</code></a>, without acquiring the owning view's access lock.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertToCDO(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" class="member-name-link">convertToCDO</a><wbr>(<a href="InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertToEMF(org.eclipse.emf.ecore.EObject,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">convertToEMF</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;eObject,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#convertToEMF(org.eclipse.emf.ecore.EObject,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">convertToEMF</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;eObject,
  <a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  int&nbsp;index,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContainerFeatureID(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getContainerFeatureID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContainerFeatureID(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getContainerFeatureID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the container feature ID.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code>default int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code><a href="#getContainingFeatureID(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getContainingFeatureID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code>default int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code><a href="#getContainingFeatureID(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getContainingFeatureID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.29, replaced by <a href="#getContainerFeatureID(org.eclipse.emf.ecore.InternalEObject)"><code>getContainerFeatureID(InternalEObject)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getResource(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getResource</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getView()" class="member-name-link">getView</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getResource(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getResource</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getView()" class="member-name-link">getView</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#moveUnsynced(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.ecore.EStructuralFeature,int,int)" class="member-name-link">moveUnsynced</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;target,
+ int&nbsp;source)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Moves a value in a many-valued feature without acquiring the view lock.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#resolveProxy(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">resolveProxy</a><wbr>(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeUnsynced(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.ecore.EStructuralFeature,int)" class="member-name-link">removeUnsynced</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;index)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Removes a value from a many-valued feature using the same backing-store operation as
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#remove-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-int-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.remove(InternalEObject, EStructuralFeature, int)</code></a>, without acquiring the owning view's access lock.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#resolveProxy(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">resolveProxy</a><wbr>(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  int&nbsp;index,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setContainer(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.cdo.eresource.CDOResource,org.eclipse.emf.ecore.InternalEObject,int)" class="member-name-link">setContainer</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setContainer(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.cdo.eresource.CDOResource,org.eclipse.emf.ecore.InternalEObject,int)" class="member-name-link">setContainer</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
  <a href="../../cdo/eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;newResource,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;newEContainer,
  int&nbsp;newContainerFeatureID)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sizeUnsynced(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">sizeUnsynced</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the number of values in a many-valued feature without acquiring the view lock.</div>
+</div>
 </div>
 </div>
 </div>
@@ -194,6 +225,122 @@ extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="sizeUnsynced(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>sizeUnsynced</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">sizeUnsynced</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="block">Returns the number of values in a many-valued feature without acquiring the view lock.
+ <p>
+ The calling thread must already hold the owning view's access lock for the complete operation that uses this
+ result. This method exists for composite list operations that keep that lock while performing their own index
+ validation and subsequent store operation. Call <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#size-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.size(InternalEObject, EStructuralFeature)</code></a> when no such
+ outer lock is held.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>eObject</code> - the object that owns the feature.</dd>
+<dd><code>feature</code> - the many-valued feature whose size is requested.</dd>
+<dt>Returns:</dt>
+<dd>the current number of values in the feature.</dd>
+<dt>Since:</dt>
+<dd>4.31</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#size-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.size(InternalEObject, EStructuralFeature)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="moveUnsynced(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.ecore.EStructuralFeature,int,int)">
+<h3>moveUnsynced</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">moveUnsynced</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;target,
+ int&nbsp;source)</span></div>
+<div class="block">Moves a value in a many-valued feature without acquiring the view lock.
+ <p>
+ The calling thread must already hold the owning view's access lock for the complete operation. This method
+ performs the same backing-store update and returns the same former value as <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#move-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-int-int-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.move(InternalEObject, EStructuralFeature, int, int)</code></a>. Call the synchronized method when no such outer lock is held.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>eObject</code> - the object that owns the feature.</dd>
+<dd><code>feature</code> - the many-valued feature to update.</dd>
+<dd><code>target</code> - the index to which the value is moved.</dd>
+<dd><code>source</code> - the index from which the value is moved.</dd>
+<dt>Returns:</dt>
+<dd>the value formerly at <code>source</code>.</dd>
+<dt>Since:</dt>
+<dd>4.31</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#move-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-int-int-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.move(InternalEObject, EStructuralFeature, int, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="removeUnsynced(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.ecore.EStructuralFeature,int)">
+<h3>removeUnsynced</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">removeUnsynced</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;index)</span></div>
+<div class="block">Removes a value from a many-valued feature using the same backing-store operation as
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#remove-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-int-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.remove(InternalEObject, EStructuralFeature, int)</code></a>, without acquiring the owning view's access lock.
+ <p>
+ The calling thread must already hold that lock for the complete operation. Call the synchronized method when no
+ such outer lock is held.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>eObject</code> - the object that owns the feature.</dd>
+<dd><code>feature</code> - the many-valued feature to update.</dd>
+<dd><code>index</code> - the index of the value to remove.</dd>
+<dt>Returns:</dt>
+<dd>the removed value.</dd>
+<dt>Since:</dt>
+<dd>4.31</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#remove-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-int-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.remove(InternalEObject, EStructuralFeature, int)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addUnsynced(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)">
+<h3>addUnsynced</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addUnsynced</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;index,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+<div class="block">Adds a value to a many-valued feature using the same backing-store operation as
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#add-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-int-java.lang.Object-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.add(InternalEObject, EStructuralFeature, int, Object)</code></a>, without acquiring the owning view's access lock.
+ <p>
+ The calling thread must already hold that lock for the complete operation. The synchronized <code>add(...)</code>
+ method remains the independently safe EStore entry point and must be used when no such outer lock is held.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>eObject</code> - the object that owns the feature.</dd>
+<dd><code>feature</code> - the many-valued feature to update.</dd>
+<dd><code>index</code> - the index at which the value is added.</dd>
+<dd><code>value</code> - the value to add.</dd>
+<dt>Since:</dt>
+<dd>4.31</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.EStore.html#add-org.eclipse.emf.ecore.InternalEObject-org.eclipse.emf.ecore.EStructuralFeature-int-java.lang.Object-" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EStore.add(InternalEObject, EStructuralFeature, int, Object)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="getView()">
 <h3>getView</h3>

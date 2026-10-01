@@ -249,9 +249,13 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOCLQueryParameter(java.lang.String)" class="member-name-link">isOCLQueryParameter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Initialized containers are prepared automatically.</div>
+</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readParameter(java.util.Map,java.lang.String,boolean)" class="member-name-link">readParameter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr>?&gt;&nbsp;queryParameters,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -550,7 +554,15 @@ implements <a href="../IQueryHandler.html" title="interface in org.eclipse.emf.c
 <li>
 <section class="detail" id="prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">
 <h3>prepareContainer</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prepareContainer</span><wbr><span class="parameters">(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prepareContainer</span><wbr><span class="parameters">(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Initialized containers are prepared automatically.</div>
+</div>
+<div class="block">Manually prepares a raw container with the OCL query handler factory.
+ Initialized containers receive this factory automatically through declarative
+ container initialization. Manual preparation remains appropriate for containers
+ created with <code>ContainerUtil.createContainer()</code>.</div>
 </section>
 </li>
 </ul>

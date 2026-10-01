@@ -85,10 +85,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../AcknowledgeCompressedStringsIndication.html" class="type-name-link" title="class in org.eclipse.net4j.signal">AcknowledgeCompressedStringsIndication</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Receives the acknowledgement for compressed string support.</div>
+</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../EntityIndication.html" class="type-name-link" title="class in org.eclipse.net4j.signal">EntityIndication</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Receives an entity from a signal protocol.</div>
+</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../Indication.html" class="type-name-link" title="class in org.eclipse.net4j.signal">Indication</a></code></div>
 <div class="col-last even-row-color">
@@ -106,10 +110,14 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../MonitorCanceledIndication.html" class="type-name-link" title="class in org.eclipse.net4j.signal">MonitorCanceledIndication</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Reports cancellation of a monitored signal operation.</div>
+</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../MonitorProgressIndication.html" class="type-name-link" title="class in org.eclipse.net4j.signal">MonitorProgressIndication</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Reports progress of a monitored signal operation.</div>
+</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.signal</a> that return <a href="../SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></span></div>
 <div class="summary-table three-column-summary">
@@ -126,6 +134,34 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">SignalProtocol.</span><code><a href="../SignalProtocol.html#provideSignalReactor(short)" class="member-name-link">provideSignalReactor</a><wbr>(short&nbsp;signalID)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.signal</a> with parameters of type <a href="../SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SignalProtocol.</span><code><a href="../SignalProtocol.html#createSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor,java.lang.Object)" class="member-name-link">createSignalReactorExecutor</a><wbr>(<a href="../SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;orderKey)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates the serial executor for a newly encountered order key.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SignalProtocol.</span><code><a href="../SignalProtocol.html#getSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor)" class="member-name-link">getSignalReactorExecutor</a><wbr>(<a href="../SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the executor for an incoming signal reactor.</div>
+</div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SignalProtocol.</span><code><a href="../SignalProtocol.html#getSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor,java.lang.Object)" class="member-name-link">getSignalReactorExecutor</a><wbr>(<a href="../SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;orderKey)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the serial executor associated with an order key, creating it on first use.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SignalProtocol.</span><code><a href="../SignalProtocol.html#getSignalReactorOrderKey(org.eclipse.net4j.signal.SignalReactor)" class="member-name-link">getSignalReactorOrderKey</a><wbr>(<a href="../SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns the execution-order key for an incoming signal reactor.</div>
+</div>
+</div>
 </section>
 </li>
 <li>
@@ -138,7 +174,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../confirmation/ConfirmationIndication.html" class="type-name-link" title="class in org.eclipse.net4j.signal.confirmation">ConfirmationIndication</a>&lt;PROTOCOL extends <a href="../SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a>&lt;?&gt; &amp; org.eclipse.net4j.util.confirmation.IConfirmationProvider.Provider&gt;</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Receives a confirmation response for a signal request.</div>
+</div>
 </div>
 </section>
 </li>
@@ -169,7 +207,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../security/AuthenticationIndication.html" class="type-name-link" title="class in org.eclipse.net4j.signal.security">AuthenticationIndication</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Receives the result of a signal authentication attempt.</div>
+</div>
 </div>
 </section>
 </li>

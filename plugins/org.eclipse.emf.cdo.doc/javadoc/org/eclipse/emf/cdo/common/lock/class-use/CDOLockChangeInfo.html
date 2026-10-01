@@ -246,11 +246,34 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.eclipse.emf.cdo.spi.server">
 <h2>Uses of <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a> in <a href="../../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a></h2>
+<div class="caption"><span>Methods in <a href="../../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that return <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalSession.LockChangeResult.</span><code><a href="../../../spi/server/InternalSession.LockChangeResult.html#getLockChangeInfo()" class="member-name-link">getLockChangeInfo</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the projected lock change, or <code>null</code> when the change is not visible.</div>
+</div>
+</div>
 <div class="caption"><span>Methods in <a href="../../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalLockManager.LockChangeReservationSet.</span><code><a href="../../../spi/server/InternalLockManager.LockChangeReservationSet.html#complete(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.cdo.spi.server.InternalSession)" class="member-name-link">complete</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;info,
+ <a href="../../../spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;excludedSession)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Completes this reservation with the resulting change, canceling the entry for the excluded
+ session when the notification is not delivered to that session.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalSession.LockChangeReservation.</span><code><a href="../../../spi/server/InternalSession.LockChangeReservation.html#complete(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">complete</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;info)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Makes the reserved position ready with the lock change that linearized at that position.</div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../../../spi/server/InternalSession.html#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -259,16 +282,33 @@ loadScripts(document, 'script');</script>
  <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><span class="type-name-label">InternalSessionManager.</span><code><a href="../../../spi/server/InternalSessionManager.html#sendLockNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.cdo.spi.server.InternalLockManager.LockChangeReservationSet)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../../../spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+ <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+ <a href="../../../spi/server/InternalLockManager.LockChangeReservationSet.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeReservationSet</a>&nbsp;reservation)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.11 use <a href="../../../spi/server/ISessionProtocol.html#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,java.util.Set)"><code>ISessionProtocol.sendLockNotification(CDOLockChangeInfo, Set)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,java.util.Set)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,java.util.Set)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;filter)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.27 use <a href="../../../spi/server/ISessionProtocol.html#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,java.util.Set,long)"><code>ISessionProtocol.sendLockNotification(CDOLockChangeInfo, Set, long)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,java.util.Set,long)" class="member-name-link">sendLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;filter,
+ long&nbsp;lockModCount)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sends a lock notification with the sequence number assigned to this exact
+ change for the receiving session.</div>
+</div>
 </div>
 </section>
 </li>
@@ -310,28 +350,41 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../../../../spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
- <a href="../../../../spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../../../../spi/cdo/InternalCDOSession.html#handleLockNotification(long,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)" class="member-name-link">handleLockNotification</a><wbr>(long&nbsp;lockModCount,
+ <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+ <a href="../../../../spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
+ boolean&nbsp;async)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Handles a lock notification while retaining its event-specific sequence
+ number for subsequent client-side processing.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../../../../spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+ <a href="../../../../spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender)</code></div>
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.12 use <a href="../../../../spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)"><code>InternalCDOSession.handleLockNotification(CDOLockChangeInfo, InternalCDOView, boolean)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../../../../spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../../../../spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo,
  <a href="../../../../spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
  boolean&nbsp;async)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.31 use <a href="../../../../spi/cdo/InternalCDOSession.html#handleLockNotification(long,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)"><code>InternalCDOSession.handleLockNotification(long, CDOLockChangeInfo, InternalCDOView, boolean)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../spi/cdo/InternalCDOView.html#handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../../../../spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
+ <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../../../../spi/cdo/InternalCDOView.html#handleLockNotification(org.eclipse.emf.spi.cdo.InternalCDOView,org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">handleLockNotification</a><wbr>(<a href="../../../../spi/cdo/InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;sender,
- <a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOSession.InvalidationData.</span><code><a href="../../../../spi/cdo/InternalCDOSession.InvalidationData.html#setLockChangeInfo(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">setLockChangeInfo</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOSession.InvalidationData.</span><code><a href="../../../../spi/cdo/InternalCDOSession.InvalidationData.html#setLockChangeInfo(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">setLockChangeInfo</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.ViewInvalidationData.</span><code><a href="../../../../spi/cdo/InternalCDOView.ViewInvalidationData.html#setLockChangeInfo(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">setLockChangeInfo</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.ViewInvalidationData.</span><code><a href="../../../../spi/cdo/InternalCDOView.ViewInvalidationData.html#setLockChangeInfo(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">setLockChangeInfo</a><wbr>(<a href="../CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

@@ -138,11 +138,15 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause,
  <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
  <a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a conflict exception with a cause and partial merge result.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,org.eclipse.emf.cdo.transaction.CDOMerger,org.eclipse.emf.cdo.common.commit.CDOChangeSetData)" class="member-name-link">ConflictException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
  <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
  <a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a conflict exception with the partial merge result.</div>
+</div>
 </div>
 </section>
 </li>
@@ -159,10 +163,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMerger()" class="member-name-link">getMerger</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the merger that detected the conflict.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getResult()" class="member-name-link">getResult</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the partial merge result.</div>
+</div>
 </div>
 </div>
 </div>
@@ -189,6 +197,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ConflictException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
  <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
  <a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</span></div>
+<div class="block">Creates a conflict exception with the partial merge result.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>message</code> - the detail message.</dd>
+<dd><code>merger</code> - the merger that detected the conflict.</dd>
+<dd><code>result</code> - the partial merge result.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -198,6 +213,14 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause,
  <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
  <a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;result)</span></div>
+<div class="block">Creates a conflict exception with a cause and partial merge result.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>message</code> - the detail message.</dd>
+<dd><code>cause</code> - the underlying cause.</dd>
+<dd><code>merger</code> - the merger that detected the conflict.</dd>
+<dd><code>result</code> - the partial merge result.</dd>
+</dl>
 </section>
 </li>
 </ul>
@@ -212,12 +235,22 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getMerger()">
 <h3>getMerger</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a></span>&nbsp;<span class="element-name">getMerger</span>()</div>
+<div class="block">Returns the merger that detected the conflict.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the merger.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getResult()">
 <h3>getResult</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">getResult</span>()</div>
+<div class="block">Returns the partial merge result.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the partial result.</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -161,20 +161,24 @@ function windowTitle()
 <h3><a name="Repository"></a>2.2&nbsp;&nbsp;Repository Architecture</h3>
 <p>
  <p>
- The main building block of a CDO repository is split into two layers, the generic repository layer that client
- applications interact with and the database integration layer that providers can hook into to integrate their data
- storage solutions with CDO. A number of such integrations already ship with CDO, making it possible to connect a
- repository to all sorts of JDBC databases, Hibernate, Objectivity/DB, MongoDB or DB4O.
+ A CDO server hosts one or more <a href="../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>repositories</code></a>. Each repository combines a generic CDO core with
+ a store and a protocol boundary; applications normally configure, observe, and customize the repository rather than
+ either boundary. The managed container supplies the factories and named elements that assemble those parts.
  <p>
- While technically a CDO repository depends on EMF this dependency is not of equal importance as it is in a CDO
- application. In particular the generated application models are not required to be deployed to the server because a
- CDO repository accesses models reflectively and the model objects are not implemented as <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a> on
- the server.
+ The diagram shows the architectural separation. It is deliberately not a deployment topology:
+ <p align="center"><img src="programmers/server/repository-architecture.png">
+
  <p>
- The following diagram illustrates the major building blocks of a CDO repository: <p align="center"><img src="programmers/server/repository-architecture.png">
+ This guide uses normal API and intentional extension SPI. In particular, internal repository, session,
+ commit-manager, protocol-indication, and store classes are implementation details and are not server application
+ extension points.
+ <p>
+<table border="0">
+</table>
+</p>
 <p><b>See Also:</b></p>
 <ul>
-	<li><a href="programmers/server/Architecture.html" title="Article in CDO Model Repository Documentation">Understanding the Architecture of a Repository</a></li>
+	<li><a href="programmers/server/Architecture.html" title="Article in CDO Model Repository Documentation">Server Architecture</a></li>
 </ul>
 
 

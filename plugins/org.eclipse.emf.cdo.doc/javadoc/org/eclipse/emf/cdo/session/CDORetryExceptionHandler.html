@@ -120,7 +120,9 @@ implements <a href="CDOSession.ExceptionHandler.html" title="interface in org.ec
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final int</code></div>
 <div class="col-second even-row-color"><code><a href="#RETRY_FOREVER" class="member-name-link">RETRY_FOREVER</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">The value used to retry a failed operation without a retry limit.</div>
+</div>
 </div>
 </section>
 </li>
@@ -133,9 +135,13 @@ implements <a href="CDOSession.ExceptionHandler.html" title="interface in org.ec
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CDORetryExceptionHandler</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a retry handler that retries forever.</div>
+</div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">CDORetryExceptionHandler</a><wbr>(int&nbsp;retries)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a retry handler with the given retry limit.</div>
+</div>
 </div>
 </section>
 </li>
@@ -152,7 +158,9 @@ implements <a href="CDOSession.ExceptionHandler.html" title="interface in org.ec
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRetries()" class="member-name-link">getRetries</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the configured retry limit.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleException(org.eclipse.emf.cdo.session.CDOSession,int,java.lang.Exception)" class="member-name-link">handleException</a><wbr>(<a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
  int&nbsp;attempt,
@@ -160,10 +168,14 @@ implements <a href="CDOSession.ExceptionHandler.html" title="interface in org.ec
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isRetryingForever()" class="member-name-link">isRetryingForever</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether this handler retries without a limit.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a concise representation of this retry handler.</div>
+</div>
 </div>
 </div>
 </div>
@@ -185,6 +197,7 @@ implements <a href="CDOSession.ExceptionHandler.html" title="interface in org.ec
 <section class="detail" id="RETRY_FOREVER">
 <h3>RETRY_FOREVER</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">RETRY_FOREVER</span></div>
+<div class="block">The value used to retry a failed operation without a retry limit.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -207,12 +220,18 @@ implements <a href="CDOSession.ExceptionHandler.html" title="interface in org.ec
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>CDORetryExceptionHandler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDORetryExceptionHandler</span><wbr><span class="parameters">(int&nbsp;retries)</span></div>
+<div class="block">Creates a retry handler with the given retry limit.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>retries</code> - the maximum number of retries, or a negative value to retry forever.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CDORetryExceptionHandler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDORetryExceptionHandler</span>()</div>
+<div class="block">Creates a retry handler that retries forever.</div>
 </section>
 </li>
 </ul>
@@ -227,12 +246,22 @@ implements <a href="CDOSession.ExceptionHandler.html" title="interface in org.ec
 <section class="detail" id="getRetries()">
 <h3>getRetries</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRetries</span>()</div>
+<div class="block">Returns the configured retry limit.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the retry limit.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="isRetryingForever()">
 <h3>isRetryingForever</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRetryingForever</span>()</div>
+<div class="block">Returns whether this handler retries without a limit.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if retries are unlimited.</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -256,9 +285,12 @@ implements <a href="CDOSession.ExceptionHandler.html" title="interface in org.ec
 <section class="detail" id="toString()">
 <h3>toString</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span>()</div>
+<div class="block">Returns a concise representation of this retry handler.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a></code>&nbsp;in class&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></dd>
+<dt>Returns:</dt>
+<dd>the handler description.</dd>
 </dl>
 </section>
 </li>

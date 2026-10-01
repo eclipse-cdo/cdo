@@ -142,9 +142,16 @@ extends <a href="CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.s
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSender()" class="member-name-link">getSender</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockModCount()" class="member-name-link">getLockModCount</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the per-session sequence number of the lock change carried by this
+ event, or zero when the event was not produced by an authoritative remote
+ change carrier.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSender()" class="member-name-link">getSender</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the view that caused the lock changes if this view is local, or <code>null</code> if the view was remote.</div>
 </div>
 </div>
@@ -172,6 +179,19 @@ extends <a href="CDOSessionEvent.html" title="interface in org.eclipse.emf.cdo.s
 <h3>getSender</h3>
 <div class="member-signature"><span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">getSender</span>()</div>
 <div class="block">Returns the view that caused the lock changes if this view is local, or <code>null</code> if the view was remote.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getLockModCount()">
+<h3>getLockModCount</h3>
+<div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">getLockModCount</span>()</div>
+<div class="block">Returns the per-session sequence number of the lock change carried by this
+ event, or zero when the event was not produced by an authoritative remote
+ change carrier.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.31</dd>
+</dl>
 </section>
 </li>
 </ul>

@@ -300,7 +300,7 @@
           <topic label="Passive Update Mode" href="html/programmers/client/Doc03_WorkingWithSessions.html#Doc_PassiveUpdateMode" icon="chapter" />
           <topic label="Lock Notification Enabled" href="html/programmers/client/Doc03_WorkingWithSessions.html#LockNotificationEnabled" icon="chapter" />
           <topic label="Lock Notification Mode" href="html/programmers/client/Doc03_WorkingWithSessions.html#Doc_LockNotificationMode" icon="chapter" />
-          <topic label="Collection Loading Policy" href="html/programmers/client/Doc03_WorkingWithSessions.html#CollectionLoadingPolicy" icon="chapter" />
+          <topic label="Collection Loading Configuration" href="html/programmers/client/Doc03_WorkingWithSessions.html#CollectionLoadingConfiguration" icon="chapter" />
           <topic label="Large Object Cache" href="html/programmers/client/Doc03_WorkingWithSessions.html#LargeObjectCache" icon="chapter" />
           <topic label="Permission Updater" href="html/programmers/client/Doc03_WorkingWithSessions.html#PermissionUpdater" icon="chapter" />
           <topic label="Delegable View Lock Enabled" href="html/programmers/client/Doc03_WorkingWithSessions.html#DelegableViewLockEnabled" icon="chapter" />
@@ -337,18 +337,18 @@
       </topic>
       <topic label="Working with Transactions" href="html/programmers/client/Doc05_WorkingWithTransactions.html" icon="article">
         <topic label="Creating and Managing Transactions" href="html/programmers/client/Doc05_WorkingWithTransactions.html#CreatingAndManagingTransactions" icon="chapter" />
-        <topic label="Committing and Rolling Back Changes" href="html/programmers/client/Doc05_WorkingWithTransactions.html#CommittingAndRollingBackChanges" icon="chapter">
-          <topic label="Commit Comments" href="html/programmers/client/Doc05_WorkingWithTransactions.html#CommitComments" icon="chapter" />
-          <topic label="Partial Commits" href="html/programmers/client/Doc05_WorkingWithTransactions.html#PartialCommits" icon="chapter" />
-        </topic>
-        <topic label="Dirtiness Detection" href="html/programmers/client/Doc05_WorkingWithTransactions.html#DirtinessDetection" icon="chapter" />
-        <topic label="Conflict Detection and Resolution" href="html/programmers/client/Doc05_WorkingWithTransactions.html#ConflictDetectionAndResolution" icon="chapter" />
-        <topic label="Merging" href="html/programmers/client/Doc05_WorkingWithTransactions.html#Merging" icon="chapter" />
-        <topic label="Using Save Points" href="html/programmers/client/Doc05_WorkingWithTransactions.html#UsingSavePoints" icon="chapter" />
-        <topic label="Reverting Changes" href="html/programmers/client/Doc05_WorkingWithTransactions.html#RevertingChanges" icon="chapter" />
-        <topic label="Exporting and Importing Changes" href="html/programmers/client/Doc05_WorkingWithTransactions.html#ExportingAndImportingChanges" icon="chapter" />
-        <topic label="Push Transactions" href="html/programmers/client/Doc05_WorkingWithTransactions.html#PushTransactions" icon="chapter" />
-        <topic label="Considering Dirty Objects In Queries" href="html/programmers/client/Doc05_WorkingWithTransactions.html#ConsideringDirtyObjectsInQueries" icon="chapter" />
+        <topic label="Local Changes and Dirty State" href="html/programmers/client/Doc05_WorkingWithTransactions.html#LocalChangesAndDirtyState" icon="chapter" />
+        <topic label="Committing Changes" href="html/programmers/client/Doc05_WorkingWithTransactions.html#CommittingChanges" icon="chapter" />
+        <topic label="Commit Retry and Conflicts" href="html/programmers/client/Doc05_WorkingWithTransactions.html#CommitRetryAndConflicts" icon="chapter" />
+        <topic label="Rolling Back Changes" href="html/programmers/client/Doc05_WorkingWithTransactions.html#RollingBackChanges" icon="chapter" />
+        <topic label="Partial Commits" href="html/programmers/client/Doc05_WorkingWithTransactions.html#PartialCommits" icon="chapter" />
+        <topic label="Savepoints" href="html/programmers/client/Doc05_WorkingWithTransactions.html#Savepoints" icon="chapter" />
+        <topic label="Nested Transaction Scopes" href="html/programmers/client/Doc05_WorkingWithTransactions.html#NestedTransactionScopes" icon="chapter" />
+        <topic label="Merge" href="html/programmers/client/Doc05_WorkingWithTransactions.html#Merging" icon="chapter" />
+        <topic label="Revert" href="html/programmers/client/Doc05_WorkingWithTransactions.html#RevertingChanges" icon="chapter" />
+        <topic label="Change Export and Import" href="html/programmers/client/Doc05_WorkingWithTransactions.html#ChangeExportAndImport" icon="chapter" />
+        <topic label="File-Backed Transactions" href="html/programmers/client/Doc05_WorkingWithTransactions.html#FileBackedTransactions" icon="chapter" />
+        <topic label="Queries in Transactions" href="html/programmers/client/Doc05_WorkingWithTransactions.html#TransactionQueries" icon="chapter" />
         <topic label="Transaction Options" href="html/programmers/client/Doc05_WorkingWithTransactions.html#TransactionOptions" icon="chapter" />
       </topic>
       <topic label="Locking" href="html/programmers/client/Doc06_Locking.html" icon="article">
@@ -357,47 +357,136 @@
           <topic label="Write Locks" href="html/programmers/client/Doc06_Locking.html#WriteLocks" icon="chapter" />
           <topic label="Write Option Locks" href="html/programmers/client/Doc06_Locking.html#WriteOptionLocks" icon="chapter" />
         </topic>
+        <topic label="Acquiring, Releasing, and Inspecting Locks" href="html/programmers/client/Doc06_Locking.html#AcquiringAndInspectingLocks" icon="chapter" />
         <topic label="Optimistic Locking" href="html/programmers/client/Doc06_Locking.html#OptimisticLocking" icon="chapter" />
         <topic label="Pessimistic Locking" href="html/programmers/client/Doc06_Locking.html#PessimisticLocking" icon="chapter" />
+        <topic label="Lock State" href="html/programmers/client/Doc06_Locking.html#LockState" icon="chapter" />
         <topic label="Durable Locking" href="html/programmers/client/Doc06_Locking.html#DurableLocking" icon="chapter" />
+        <topic label="Lock Notifications and Events" href="html/programmers/client/Doc06_Locking.html#LockNotifications" icon="chapter" />
+        <topic label="Locking and Transactions" href="html/programmers/client/Doc06_Locking.html#LockingAndTransactions" icon="chapter" />
+        <topic label="Locking and Reconnection" href="html/programmers/client/Doc06_Locking.html#LockingAndRecovery" icon="chapter" />
+        <topic label="Performance and Usage Guidance" href="html/programmers/client/Doc06_Locking.html#UsageGuidance" icon="chapter" />
       </topic>
-      <topic label="Large Objects" href="html/programmers/client/Doc07_LargeObjects.html" icon="article" />
+      <topic label="Large Objects" href="html/programmers/client/Doc07_LargeObjects.html" icon="article">
+        <topic label="The Large-Object Model" href="html/programmers/client/Doc07_LargeObjects.html#LargeObjectModel" icon="chapter" />
+        <topic label="Creating Binary Large Objects" href="html/programmers/client/Doc07_LargeObjects.html#BinaryLargeObjects" icon="chapter" />
+        <topic label="Creating Character Large Objects" href="html/programmers/client/Doc07_LargeObjects.html#CharacterLargeObjects" icon="chapter" />
+        <topic label="Assigning and Persisting Large Objects" href="html/programmers/client/Doc07_LargeObjects.html#PersistingLargeObjects" icon="chapter" />
+        <topic label="Reading and Streaming Contents" href="html/programmers/client/Doc07_LargeObjects.html#ReadingLargeObjects" icon="chapter" />
+        <topic label="Loading and Caching" href="html/programmers/client/Doc07_LargeObjects.html#LoadingAndCaching" icon="chapter" />
+        <topic label="Repository and Store Support" href="html/programmers/client/Doc07_LargeObjects.html#RepositoryAndStoreSupport" icon="chapter" />
+        <topic label="Large Objects in Model Features" href="html/programmers/client/Doc07_LargeObjects.html#ModelFeatures" icon="chapter" />
+        <topic label="Identity, Equality, and Change Detection" href="html/programmers/client/Doc07_LargeObjects.html#IdentityAndEquality" icon="chapter" />
+        <topic label="Resource Ownership and Failure Behavior" href="html/programmers/client/Doc07_LargeObjects.html#ResourceOwnership" icon="chapter" />
+        <topic label="Performance and Usage Guidance" href="html/programmers/client/Doc07_LargeObjects.html#UsageGuidance" icon="chapter" />
+      </topic>
       <topic label="Branching and Versioning" href="html/programmers/client/Doc08_BranchingAndVersioning.html" icon="article">
-        <topic label="Working with Branches" href="html/programmers/client/Doc08_BranchingAndVersioning.html#WorkingWithBranches" icon="chapter" />
-        <topic label="Accessing Historical Versions" href="html/programmers/client/Doc08_BranchingAndVersioning.html#AccessingHistoricalVersions" icon="chapter" />
-        <topic label="Comparing Versions" href="html/programmers/client/Doc08_BranchingAndVersioning.html#ComparingVersions" icon="chapter" />
-        <topic label="Merging Changes" href="html/programmers/client/Doc08_BranchingAndVersioning.html#MergingChanges" icon="chapter" />
+        <topic label="Mental Model" href="html/programmers/client/Doc08_BranchingAndVersioning.html#MentalModel" icon="chapter" />
+        <topic label="Branches and Branch Points" href="html/programmers/client/Doc08_BranchingAndVersioning.html#BranchesAndBranchPoints" icon="chapter" />
+        <topic label="Versions and Revisions" href="html/programmers/client/Doc08_BranchingAndVersioning.html#VersionsAndRevisions" icon="chapter" />
+        <topic label="Historical Views and Navigating History" href="html/programmers/client/Doc08_BranchingAndVersioning.html#HistoricalViews" icon="chapter">
+          <topic label="An object's commit history is available through" href="html/programmers/client/Doc08_BranchingAndVersioning.html#HistoryNavigation" icon="chapter" />
+        </topic>
+        <topic label="Comparing Historical State" href="html/programmers/client/Doc08_BranchingAndVersioning.html#ComparingVersions" icon="chapter" />
+        <topic label="Branching, Transactions, and Merge Concepts" href="html/programmers/client/Doc08_BranchingAndVersioning.html#BranchTransactionsAndMerges" icon="chapter" />
+        <topic label="Revert, Tags, and Repository Capability" href="html/programmers/client/Doc08_BranchingAndVersioning.html#RevertTagsAndCapability" icon="chapter" />
+        <topic label="Practical Guidance" href="html/programmers/client/Doc08_BranchingAndVersioning.html#PracticalGuidance" icon="chapter" />
       </topic>
       <topic label="Notifications and Event Handling" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html" icon="article">
-        <topic label="Listening for Model Changes" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#ListeningForModelChanges" icon="chapter" />
-        <topic label="Handling Remote Updates" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#HandlingRemoteUpdates" icon="chapter" />
-        <topic label="Custom Event Processing" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#CustomEventProcessing" icon="chapter" />
+        <topic label="The Notification and Event Model" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#NotificationAndEventModel" icon="chapter" />
+        <topic label="EMF Model Notifications" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#EMFNotifications" icon="chapter" />
+        <topic label="CDO Events and Listeners" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#CDOEventsAndListeners" icon="chapter" />
+        <topic label="Session Events" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#SessionEvents" icon="chapter" />
+        <topic label="View Events" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#ViewEvents" icon="chapter" />
+        <topic label="Transaction Events" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#TransactionEvents" icon="chapter" />
+        <topic label="Remote Changes, Invalidations, and Subscriptions" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#RemoteChangesAndSubscriptions" icon="chapter" />
+        <topic label="Lock Notifications" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#LockEvents" icon="chapter" />
+        <topic label="Event Threading and Delivery" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#EventThreading" icon="chapter" />
+        <topic label="Listener Lifetime, Errors, and Ordering" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#LifetimeErrorsAndOrdering" icon="chapter" />
+        <topic label="Choosing the Right Mechanism" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html#ChoosingTheRightMechanism" icon="chapter" />
       </topic>
       <topic label="Integrating with EMF and Other Frameworks" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html" icon="article">
-        <topic label="Using CDO with EMF-Based Tools" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#UsingCDOWithEMFBasedTools" icon="chapter" />
-        <topic label="Extending and Customizing CDO Behavior" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ExtendingAndCustomizingCDOBehavior" icon="chapter" />
+        <topic label="CDO in the EMF Programming Model" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#CDOAndEMF" icon="chapter" />
+        <topic label="ResourceSet Integration" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ResourceSets" icon="chapter" />
+        <topic label="CDO URIs" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#CDOURIs" icon="chapter" />
+        <topic label="View Providers" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ViewProviders" icon="chapter" />
+        <topic label="View-Provider Extension Point" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ExtensionPoints" icon="chapter" />
+        <topic label="Standard EMF Tools and Editing" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#EMFToolsAndEditing" icon="chapter" />
+        <topic label="Adapters and Remote Changes" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#AdapterIntegration" icon="chapter" />
+        <topic label="UI and Other Frameworks" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#UIAndOtherFrameworks" icon="chapter" />
+        <topic label="Lifecycle and Choosing an Integration" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html#ChoosingAnIntegration" icon="chapter" />
       </topic>
       <topic label="Advanced Topics" href="html/programmers/client/Doc11_AdvancedTopics.html" icon="article">
-        <topic label="Custom View Providers" href="html/programmers/client/Doc11_AdvancedTopics.html#CustomViewProviders" icon="chapter" />
-        <topic label="Optimizing Performance" href="html/programmers/client/Doc11_AdvancedTopics.html#OptimizingPerformance" icon="chapter" />
-        <topic label="Handling Large Models Efficiently" href="html/programmers/client/Doc11_AdvancedTopics.html#HandlingLargeModelsEfficiently" icon="chapter" />
-        <topic label="Troubleshooting and Debugging" href="html/programmers/client/Doc11_AdvancedTopics.html#TroubleshootingAndDebugging" icon="chapter" />
+        <topic label="Modern Partial Collection Loading" href="html/programmers/client/Doc11_AdvancedTopics.html#PartialCollectionLoading" icon="chapter" />
+        <topic label="Cache-Aware Revision Requests" href="html/programmers/client/Doc11_AdvancedTopics.html#RevisionRequests" icon="chapter" />
+        <topic label="Units and Bounded Graph Loading" href="html/programmers/client/Doc11_AdvancedTopics.html#Units" icon="chapter" />
+        <topic label="Queries and Large-Scale Model Access" href="html/programmers/client/Doc11_AdvancedTopics.html#LargeScaleAccess" icon="chapter" />
+        <topic label="Reconnect and Session Recovery" href="html/programmers/client/Doc11_AdvancedTopics.html#Recovery" icon="chapter" />
+        <topic label="Conflict Customization and Diagnostics" href="html/programmers/client/Doc11_AdvancedTopics.html#CustomizationAndDiagnostics" icon="chapter" />
+        <topic label="Advanced Performance Guidance" href="html/programmers/client/Doc11_AdvancedTopics.html#PerformanceAtScale" icon="chapter" />
       </topic>
-      <topic label="Best Practices and Patterns" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html" icon="article">
-        <topic label="Error Handling Strategies" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#ErrorHandlingStrategies" icon="chapter" />
-        <topic label="Recommended Usage Patterns" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#RecommendedUsagePatterns" icon="chapter" />
-        <topic label="Common Pitfalls" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#CommonPitfalls" icon="chapter" />
+      <topic label="Best Practices and Common Pitfalls" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html" icon="article">
+        <topic label="Own Sessions, Views, Transactions, and Resources Explicitly" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#OwnershipAndLifecycle" icon="chapter" />
+        <topic label="Reuse Sessions, Keep Views Purposeful, and Bound Transactions" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#SessionViewAndTransactionBoundaries" icon="chapter" />
+        <topic label="Use Supported Concurrency Boundaries" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#ConcurrencyAndCallbacks" icon="chapter" />
+        <topic label="Choose Optimistic or Pessimistic Coordination Deliberately" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#LockingChoices" icon="chapter" />
+        <topic label="Handle Conflicts and Retries as Business Decisions" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#ConflictsAndRetries" icon="chapter" />
+        <topic label="Load Only What the Operation Needs" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#LoadingAndPerformance" icon="chapter" />
+        <topic label="Treat Remote Changes and Recovery as Asynchronous Failure Modes" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#RemoteChangesAndRecovery" icon="chapter" />
+        <topic label="Preserve Branch, History, and Integration Context" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#ContextAndIntegration" icon="chapter" />
+        <topic label="Distinguish Failure Classes and Keep APIs Current" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#FailureHandlingAndAPIStability" icon="chapter" />
+        <topic label="Common CDO Pitfalls" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#CommonPitfalls" icon="chapter" />
       </topic>
     </topic>
     <topic label="Developing Server Applications" href="html/programmers/server/index.html">
-      <topic label="Understanding the Architecture of a Repository" href="html/programmers/server/Architecture.html" icon="article">
-        <topic label="OSGi" href="html/programmers/server/Architecture.html#OSGi" icon="chapter" />
-        <topic label="CDO Server Core" href="html/programmers/server/Architecture.html#Core" icon="chapter" />
-        <topic label="CDO Store" href="html/programmers/server/Architecture.html#Store" icon="chapter" />
-        <topic label="Protocol" href="html/programmers/server/Architecture.html#Protocol" icon="chapter" />
-        <topic label="OCL" href="html/programmers/server/Architecture.html#OCL" icon="chapter" />
-        <topic label="Net4j Core" href="html/programmers/server/Architecture.html#Net4j" icon="chapter" />
-        <topic label="Transport" href="html/programmers/server/Architecture.html#Transport" icon="chapter" />
+      <topic label="Server Architecture" href="html/programmers/server/Architecture.html" icon="article">
+        <topic label="Repository Core" href="html/programmers/server/Architecture.html#RepositoryCore" icon="chapter" />
+        <topic label="Store Boundary" href="html/programmers/server/Architecture.html#StoreBoundary" icon="chapter" />
+        <topic label="Protocol and Transport Boundary" href="html/programmers/server/Architecture.html#ProtocolBoundary" icon="chapter" />
+        <topic label="Container and Lifecycle" href="html/programmers/server/Architecture.html#ContainerAndLifecycle" icon="chapter" />
+      </topic>
+      <topic label="CDO Server Application and Startup" href="html/programmers/server/Doc02_ServerApplicationAndStartup.html" icon="article">
+        <topic label="Startup and Shutdown" href="html/programmers/server/Doc02_ServerApplicationAndStartup.html#Lifecycle" icon="chapter" />
+        <topic label="Early Extensions" href="html/programmers/server/Doc02_ServerApplicationAndStartup.html#ExtensionTiming" icon="chapter" />
+        <topic label="Standalone, Embedded, and OSGi Use" href="html/programmers/server/Doc02_ServerApplicationAndStartup.html#ExecutionModes" icon="chapter" />
+      </topic>
+      <topic label="The Managed Container" href="html/programmers/server/Doc03_ManagedContainer.html" icon="article">
+        <topic label="Factories, Product Groups, and Lookup" href="html/programmers/server/Doc03_ManagedContainer.html#FactoriesAndElements" icon="chapter" />
+        <topic label="Lifecycle and Configuration" href="html/programmers/server/Doc03_ManagedContainer.html#LifecycleAndConfiguration" icon="chapter" />
+        <topic label="Repository Lookup Example" href="html/programmers/server/Doc03_ManagedContainer.html#Examples" icon="chapter" />
+      </topic>
+      <topic label="Application Extensions" href="html/programmers/server/Doc04_ApplicationExtensions.html" icon="article">
+        <topic label="Choosing an Extension Variant" href="html/programmers/server/Doc04_ApplicationExtensions.html#VariantsAndContext" icon="chapter" />
+        <topic label="Lifecycle Discipline" href="html/programmers/server/Doc04_ApplicationExtensions.html#LifecycleDiscipline" icon="chapter" />
+        <topic label="Repository-aware Extension Example" href="html/programmers/server/Doc04_ApplicationExtensions.html#Examples" icon="chapter" />
+      </topic>
+      <topic label="Creating and Configuring Repositories" href="html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html" icon="article">
+        <topic label="Programmatic Repository Setup" href="html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html#ProgrammaticSetup" icon="chapter" />
+        <topic label="MEMStore and Embedded Repositories" href="html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html#EmbeddedRepositories" icon="chapter" />
+        <topic label="Existing Persistent Stores" href="html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html#PersistentStoreConfiguration" icon="chapter" />
+      </topic>
+      <topic label="Repository Services and Events" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html" icon="article">
+        <topic label="Services" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#Services" icon="chapter" />
+        <topic label="Sessions, Views, and Transactions" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#ServerSideContexts" icon="chapter" />
+        <topic label="Event Families" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#Events" icon="chapter" />
+      </topic>
+      <topic label="Repository Handlers and Commit Processing" href="html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html" icon="article">
+        <topic label="Read and Write Access" href="html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html#AccessHandlers" icon="chapter" />
+        <topic label="Commit Information and Conflicts" href="html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html#CommitObservationAndConflicts" icon="chapter" />
+        <topic label="Application-facing Commit Flow" href="html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html#CommitFlow" icon="chapter" />
+      </topic>
+      <topic label="Security, Queries, and Specialized Extensions" href="html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html" icon="article">
+        <topic label="Repository Protection" href="html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#SecurityModel" icon="chapter" />
+        <topic label="Permission Cache SPI" href="html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#PermissionCacheSPI" icon="chapter" />
+        <topic label="Authentication Example" href="html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#AuthenticationExample" icon="chapter" />
+        <topic label="Query Handlers" href="html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#QueryHandlers" icon="chapter" />
+        <topic label="Extension Boundaries" href="html/programmers/server/Doc08_SecurityQueriesAndSpecializedExtensions.html#FactoryExtensions" icon="chapter" />
+      </topic>
+      <topic label="Advanced Server Integration" href="html/programmers/server/Doc09_AdvancedServerIntegration.html" icon="article">
+        <topic label="Synchronization and Failover" href="html/programmers/server/Doc09_AdvancedServerIntegration.html#SynchronizationAndFailover" icon="chapter" />
+        <topic label="Monitoring and Activity Logs" href="html/programmers/server/Doc09_AdvancedServerIntegration.html#MonitoringAndDiagnostics" icon="chapter" />
+        <topic label="Import and Export" href="html/programmers/server/Doc09_AdvancedServerIntegration.html#ImportAndExport" icon="chapter" />
+        <topic label="Net4j and Other Intentional Extensions" href="html/programmers/server/Doc09_AdvancedServerIntegration.html#IntegrationBoundary" icon="chapter" />
       </topic>
     </topic>
     <topic label="Installing the Sources" href="html/programmers/DocXX_InstallingSources.html" icon="article" />
@@ -482,6 +571,7 @@
           <topic label="CDOSession" href="javadoc/org/eclipse/emf/cdo/session/CDOSession.html" icon="interface" />
           <topic label="CDOSession.ExceptionHandler" href="javadoc/org/eclipse/emf/cdo/session/CDOSession.ExceptionHandler.html" icon="interface" />
           <topic label="CDOSession.Options" href="javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html" icon="interface" />
+          <topic label="CDOSession.Options.CollectionLoadingConfigEvent" href="javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingConfigEvent.html" icon="interface" />
           <topic label="CDOSession.Options.CollectionLoadingPolicyEvent" href="javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.CollectionLoadingPolicyEvent.html" icon="interface" />
           <topic label="CDOSession.Options.DelegableViewLockEvent" href="javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.DelegableViewLockEvent.html" icon="interface" />
           <topic label="CDOSession.Options.GeneratedPackageEmulationEvent" href="javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.GeneratedPackageEmulationEvent.html" icon="interface" />
@@ -689,6 +779,7 @@
         </topic>
         <topic label="org.eclipse.emf.internal.cdo" href="javadoc/org/eclipse/emf/internal/cdo/package-summary.html" icon="package">
           <topic label="CDOObjectImpl" href="javadoc/org/eclipse/emf/internal/cdo/CDOObjectImpl.html" icon="class" />
+          <topic label="CDORevisionTransitionUtil" href="javadoc/org/eclipse/emf/internal/cdo/CDORevisionTransitionUtil.html" icon="class" />
         </topic>
         <topic label="org.eclipse.emf.spi.cdo" href="javadoc/org/eclipse/emf/spi/cdo/package-summary.html" icon="package">
           <topic label="AbstractChangeSetsConflictResolver" href="javadoc/org/eclipse/emf/spi/cdo/AbstractChangeSetsConflictResolver.html" icon="class" />
@@ -710,9 +801,13 @@
           <topic label="CDOSessionInvalidationAggregator" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionInvalidationAggregator.html" icon="class" />
           <topic label="CDOSessionInvalidationEventQueue" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html" icon="class" />
           <topic label="CDOSessionProtocol" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.html" icon="interface" />
+          <topic label="CDOSessionProtocol.ChangeLockAreaResult" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.ChangeLockAreaResult.html" icon="class" />
+          <topic label="CDOSessionProtocol.ChunkRange" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.ChunkRange.html" icon="class" />
           <topic label="CDOSessionProtocol.CommitTransactionResult" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" icon="class" />
           <topic label="CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" icon="class" />
           <topic label="CDOSessionProtocol.LockObjectsResult" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockObjectsResult.html" icon="class" />
+          <topic label="CDOSessionProtocol.LockStateQueryResult" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockStateQueryResult.html" icon="class" />
+          <topic label="CDOSessionProtocol.LockStateSnapshotResult" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockStateSnapshotResult.html" icon="class" />
           <topic label="CDOSessionProtocol.MergeDataResult" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.MergeDataResult.html" icon="class" />
           <topic label="CDOSessionProtocol.OpenSessionResult" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html" icon="class" />
           <topic label="CDOSessionProtocol.RefreshSessionResult" href="javadoc/org/eclipse/emf/spi/cdo/CDOSessionProtocol.RefreshSessionResult.html" icon="class" />
@@ -741,6 +836,7 @@
           <topic label="DelegatingCDOTransaction" href="javadoc/org/eclipse/emf/spi/cdo/DelegatingCDOTransaction.html" icon="interface" />
           <topic label="FSMUtil" href="javadoc/org/eclipse/emf/spi/cdo/FSMUtil.html" icon="class" />
           <topic label="InternalCDOLoadable" href="javadoc/org/eclipse/emf/spi/cdo/InternalCDOLoadable.html" icon="interface" />
+          <topic label="InternalCDOLockStateCache" href="javadoc/org/eclipse/emf/spi/cdo/InternalCDOLockStateCache.html" icon="interface" />
           <topic label="InternalCDOObject" href="javadoc/org/eclipse/emf/spi/cdo/InternalCDOObject.html" icon="interface" />
           <topic label="InternalCDORemoteSession" href="javadoc/org/eclipse/emf/spi/cdo/InternalCDORemoteSession.html" icon="interface" />
           <topic label="InternalCDORemoteSessionManager" href="javadoc/org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html" icon="interface" />
@@ -1076,10 +1172,13 @@
           <topic label="CDOClassifierRef" href="javadoc/org/eclipse/emf/cdo/common/model/CDOClassifierRef.html" icon="class" />
           <topic label="CDOClassifierRef.Provider" href="javadoc/org/eclipse/emf/cdo/common/model/CDOClassifierRef.Provider.html" icon="interface" />
           <topic label="CDOClassInfo" href="javadoc/org/eclipse/emf/cdo/common/model/CDOClassInfo.html" icon="interface" />
+          <topic label="CDOFeatureRef" href="javadoc/org/eclipse/emf/cdo/common/model/CDOFeatureRef.html" icon="class" />
           <topic label="CDOFeatureType" href="javadoc/org/eclipse/emf/cdo/common/model/CDOFeatureType.html" icon="enum" />
           <topic label="CDOModelConstants" href="javadoc/org/eclipse/emf/cdo/common/model/CDOModelConstants.html" icon="interface" />
+          <topic label="CDOModelElementRef&lt;T&gt;" href="javadoc/org/eclipse/emf/cdo/common/model/CDOModelElementRef.html" icon="interface" />
           <topic label="CDOModelUtil" href="javadoc/org/eclipse/emf/cdo/common/model/CDOModelUtil.html" icon="class" />
           <topic label="CDOPackageInfo" href="javadoc/org/eclipse/emf/cdo/common/model/CDOPackageInfo.html" icon="interface" />
+          <topic label="CDOPackageRef" href="javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRef.html" icon="class" />
           <topic label="CDOPackageRegistry" href="javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" icon="interface" />
           <topic label="CDOPackageRegistryPopulator" href="javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistryPopulator.html" icon="class" />
           <topic label="CDOPackageRegistryPopulator.Descriptor" href="javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistryPopulator.Descriptor.html" icon="class" />
@@ -1109,6 +1208,9 @@
         </topic>
         <topic label="org.eclipse.emf.cdo.common.revision" href="javadoc/org/eclipse/emf/cdo/common/revision/package-summary.html" icon="package">
           <topic label="CDOAllRevisionsProvider" href="javadoc/org/eclipse/emf/cdo/common/revision/CDOAllRevisionsProvider.html" icon="interface" />
+          <topic label="CDOCollectionLoadingConfig" href="javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.html" icon="class" />
+          <topic label="CDOCollectionLoadingConfig.ChunkConfig" href="javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.ChunkConfig.html" icon="class" />
+          <topic label="CDOCollectionLoadingConfigResolver" href="javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfigResolver.html" icon="class" />
           <topic label="CDOElementProxy" href="javadoc/org/eclipse/emf/cdo/common/revision/CDOElementProxy.html" icon="interface" />
           <topic label="CDOIDAndBranch" href="javadoc/org/eclipse/emf/cdo/common/revision/CDOIDAndBranch.html" icon="interface" />
           <topic label="CDOIDAndVersion" href="javadoc/org/eclipse/emf/cdo/common/revision/CDOIDAndVersion.html" icon="interface" />
@@ -1138,6 +1240,9 @@
           <topic label="CDORevisionInterner" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionInterner.html" icon="interface" />
           <topic label="CDORevisionKey" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionKey.html" icon="interface" />
           <topic label="CDORevisionManager" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" icon="interface" />
+          <topic label="CDORevisionManager.Request" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.html" icon="interface" />
+          <topic label="CDORevisionManager.Request.Config" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.Config.html" icon="class" />
+          <topic label="CDORevisionManager.Request.Config.LookupMode" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.Config.LookupMode.html" icon="enum" />
           <topic label="CDORevisionProvider" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionProvider.html" icon="interface" />
           <topic label="CDORevisionsLoadedEvent" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionsLoadedEvent.html" icon="interface" />
           <topic label="CDORevisionUtil" href="javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html" icon="class" />
@@ -1288,6 +1393,7 @@
           <topic label="InternalCDOFeatureDelta.WithIndex" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDOFeatureDelta.WithIndex.html" icon="interface" />
           <topic label="InternalCDOList" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.html" icon="interface" />
           <topic label="InternalCDOList.ConfigurableEquality" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.ConfigurableEquality.html" icon="interface" />
+          <topic label="InternalCDOList.Owner" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDOList.Owner.html" icon="interface" />
           <topic label="InternalCDORevision" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevision.html" icon="interface" />
           <topic label="InternalCDORevisionCache" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionCache.html" icon="interface" />
           <topic label="InternalCDORevisionDelta" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionDelta.html" icon="interface" />
@@ -1295,6 +1401,7 @@
           <topic label="InternalCDORevisionManager.RevisionLoader" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader.html" icon="interface" />
           <topic label="InternalCDORevisionManager.RevisionLoader2" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader2.html" icon="interface" />
           <topic label="InternalCDORevisionManager.RevisionLoader3" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader3.html" icon="interface" />
+          <topic label="InternalCDORevisionManager.RevisionLoader4" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader4.html" icon="interface" />
           <topic label="InternalCDORevisionManager.RevisionLocker" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" icon="interface" />
           <topic label="ManagedRevisionProvider" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/ManagedRevisionProvider.html" icon="class" />
           <topic label="ManagedRevisionProvider.WithSynthetics" href="javadoc/org/eclipse/emf/cdo/spi/common/revision/ManagedRevisionProvider.WithSynthetics.html" icon="class" />
@@ -1996,6 +2103,10 @@
           <topic label="InternalCommitManager" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalCommitManager.html" icon="interface" />
           <topic label="InternalFailoverParticipant" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalFailoverParticipant.html" icon="interface" />
           <topic label="InternalLockManager" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalLockManager.html" icon="interface" />
+          <topic label="InternalLockManager.LockChangeOperationResult" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalLockManager.LockChangeOperationResult.html" icon="interface" />
+          <topic label="InternalLockManager.LockChangeReservationSet" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalLockManager.LockChangeReservationSet.html" icon="interface" />
+          <topic label="InternalLockManager.LockStateQuery" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalLockManager.LockStateQuery.html" icon="interface" />
+          <topic label="InternalLockManager.LockStateSnapshot" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalLockManager.LockStateSnapshot.html" icon="interface" />
           <topic label="InternalQueryManager" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalQueryManager.html" icon="interface" />
           <topic label="InternalQueryResult" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalQueryResult.html" icon="interface" />
           <topic label="InternalRepository" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalRepository.html" icon="interface" />
@@ -2003,6 +2114,8 @@
           <topic label="InternalRepository.PostActivateable" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalRepository.PostActivateable.html" icon="interface" />
           <topic label="InternalRepositorySynchronizer" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalRepositorySynchronizer.html" icon="interface" />
           <topic label="InternalSession" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalSession.html" icon="interface" />
+          <topic label="InternalSession.LockChangeReservation" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalSession.LockChangeReservation.html" icon="interface" />
+          <topic label="InternalSession.LockChangeResult" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalSession.LockChangeResult.html" icon="interface" />
           <topic label="InternalSessionManager" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalSessionManager.html" icon="interface" />
           <topic label="InternalStore" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalStore.html" icon="interface" />
           <topic label="InternalStore.NoChangeSets" href="javadoc/org/eclipse/emf/cdo/spi/server/InternalStore.NoChangeSets.html" icon="interface" />
@@ -2025,6 +2138,7 @@
           <topic label="ISessionProtocol" href="javadoc/org/eclipse/emf/cdo/spi/server/ISessionProtocol.html" icon="interface" />
           <topic label="LongIDStore" href="javadoc/org/eclipse/emf/cdo/spi/server/LongIDStore.html" icon="class" />
           <topic label="LongIDStoreAccessor" href="javadoc/org/eclipse/emf/cdo/spi/server/LongIDStoreAccessor.html" icon="class" />
+          <topic label="MatchCache" href="javadoc/org/eclipse/emf/cdo/spi/server/MatchCache.html" icon="interface" />
           <topic label="ObjectWriteAccessHandler" href="javadoc/org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html" icon="class" />
           <topic label="PluginRepositoryProvider" href="javadoc/org/eclipse/emf/cdo/spi/server/PluginRepositoryProvider.html" icon="class" />
           <topic label="QueryHandlerFactory" href="javadoc/org/eclipse/emf/cdo/spi/server/QueryHandlerFactory.html" icon="class" />
@@ -2197,6 +2311,10 @@
           <topic label="InternalSecurityManager.CommitHandler.Factory" href="javadoc/org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler.Factory.html" icon="class" />
           <topic label="InternalSecurityManager.CommitHandler2" href="javadoc/org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler2.html" icon="interface" />
           <topic label="InternalSecurityManager.CommitHandler2.WithUser" href="javadoc/org/eclipse/emf/cdo/server/spi/security/InternalSecurityManager.CommitHandler2.WithUser.html" icon="class" />
+          <topic label="PermissionCache" href="javadoc/org/eclipse/emf/cdo/server/spi/security/PermissionCache.html" icon="interface" />
+          <topic label="PermissionCache.Creator" href="javadoc/org/eclipse/emf/cdo/server/spi/security/PermissionCache.Creator.html" icon="interface" />
+          <topic label="PermissionCacheFactory" href="javadoc/org/eclipse/emf/cdo/server/spi/security/PermissionCacheFactory.html" icon="class" />
+          <topic label="PermissionCacheFactory.Default" href="javadoc/org/eclipse/emf/cdo/server/spi/security/PermissionCacheFactory.Default.html" icon="class" />
           <topic label="SecurityManagerFactory" href="javadoc/org/eclipse/emf/cdo/server/spi/security/SecurityManagerFactory.html" icon="class" />
           <topic label="SecurityManagerFactory.Annotation" href="javadoc/org/eclipse/emf/cdo/server/spi/security/SecurityManagerFactory.Annotation.html" icon="class" />
           <topic label="SecurityManagerFactory.Default" href="javadoc/org/eclipse/emf/cdo/server/spi/security/SecurityManagerFactory.Default.html" icon="class" />
@@ -2323,6 +2441,7 @@
         <topic label="CDO Browser Pages" href="productdoc/org.eclipse.emf.cdo.server.browserPages.html" icon="productgroup" />
         <topic label="CDO Browsers" href="productdoc/org.eclipse.emf.cdo.server.browsers.html" icon="productgroup" />
         <topic label="CDO Commands" href="productdoc/org.eclipse.emf.cdo.server.commands.html" icon="productgroup" />
+        <topic label="CDO Match Caches" href="productdoc/org.eclipse.emf.cdo.server.matchCaches.html" icon="productgroup" />
         <topic label="CDO Query Handler Factories" href="productdoc/org.eclipse.emf.cdo.server.queryHandlerFactories.html" icon="productgroup" />
         <topic label="CDO Repository Activity Logs" href="productdoc/org.eclipse.emf.cdo.server.repositoryActivityLogs.html" icon="productgroup" />
         <topic label="CDO Repository Configurator Extensions" href="productdoc/org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions.html" icon="productgroup" />
@@ -2351,6 +2470,7 @@
       <topic label="CDO Model Repository Server Security Support" href="productdoc/org.eclipse.emf.cdo.server.security.commitHandlers.html" icon="plugin">
         <topic label="CDO Commit Handlers" href="productdoc/org.eclipse.emf.cdo.server.security.commitHandlers.html" icon="productgroup" />
         <topic label="CDO Operation Authorizers" href="productdoc/org.eclipse.net4j.util.security.operationAuthorizers.html" icon="productgroup" />
+        <topic label="CDO Permission Cache Creators" href="productdoc/org.eclipse.emf.cdo.server.security.permissionCacheCreators.html" icon="productgroup" />
         <topic label="CDO Security Managers" href="productdoc/org.eclipse.emf.cdo.server.security.managers.html" icon="productgroup" />
       </topic>
       <topic label="CDO Transfer Framework UI" href="productdoc/org.eclipse.emf.cdo.transfer.ui.providers.html" icon="plugin">

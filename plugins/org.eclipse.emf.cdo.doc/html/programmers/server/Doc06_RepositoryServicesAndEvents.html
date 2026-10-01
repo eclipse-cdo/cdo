@@ -1,0 +1,157 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Repository Services and Events (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Repository Services and Events (CDO Model Repository Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Repository Services and Events</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc05_CreatingAndConfiguringRepositories.html" title="Backward to Creating and Configuring Repositories"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Forward to Repository Handlers and Commit Processing"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ A repository is a running service object. Its managers expose server-side state; its containers and lifecycle
+ notifiers expose meaningful changes. Observe those services from an application extension and unregister every
+ listener at shutdown.
+ <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#Services" title="Chapter in CDO Model Repository Documentation">Services</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#ServerSideContexts" title="Chapter in CDO Model Repository Documentation">Sessions, Views, and Transactions</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#Events" title="Chapter in CDO Model Repository Documentation">Event Families</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Services"></a>1&nbsp;&nbsp;Services</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html#getSessionManager()" title="Method in org.eclipse.emf.cdo.server.IRepository"><code>IRepository.getSessionManager()</code></a> exposes active <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISession.html" title="Interface in org.eclipse.emf.cdo.server"><code>sessions</code></a>. The branch, revision, and
+ commit-info managers (<a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionManager</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoManager</code></a>)
+ provide repository history services. The package registry (<a href="../../../javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="Interface in org.eclipse.emf.cdo.common.model"><code>CDOPackageRegistry</code></a>),
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/ILockingManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>locking manager</code></a>, and optional <a href="../../../javadoc/org/eclipse/emf/cdo/server/IUnitManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>unit manager</code></a> complete the commonly
+ useful services. Inspect their capability and lifecycle contracts instead of assuming that every store supports
+ every historical or branching operation.
+
+<h2><a name="ServerSideContexts"></a>2&nbsp;&nbsp;Sessions, Views, and Transactions</h2>
+<p>
+ An <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISession.html" title="Interface in org.eclipse.emf.cdo.server"><code>ISession</code></a> is the server-side representation of a client session. Its <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISessionManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>manager</code></a>
+ owns the session, and the session owns server <a href="../../../javadoc/org/eclipse/emf/cdo/server/IView.html" title="Interface in org.eclipse.emf.cdo.server"><code>views</code></a>; <a href="../../../javadoc/org/eclipse/emf/cdo/server/ITransaction.html" title="Interface in org.eclipse.emf.cdo.server"><code>ITransaction</code></a> is the transaction form of
+ a view. They carry server-visible user, session, view, branch-point, and repository context. Applications may
+ inspect that context and use it in supported handlers, but should not retain closed sessions or invoke internal
+ commit machinery.
+
+<h2><a name="Events"></a>3&nbsp;&nbsp;Event Families</h2>
+<p>
+ Repository and container lifecycle events identify activation and removal. The session manager emits container
+ events for session open and close; each session emits container events for views and transactions. Commit-info
+ handlers observe completed commit information. Branch and locking managers have their own notifier contracts.
+ Listener callbacks run in the notifier's execution path; keep them quick and hand off slow work instead of making
+ unsupported assumptions about a global callback thread.
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Events_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ObserveSessions.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Events_1')" id="max_Events_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Events_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Events_1" style="padding:8px;">
+            <code>
+            IListener&nbsp;listener&nbsp;=&nbsp;event&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;repository.getSessionManager().getSessions();<br/>
+            };<br/>
+            <br/>
+            repository.getSessionManager().addListener(listener);<br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>listener;            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<p align="right">
+<a href="Doc05_CreatingAndConfiguringRepositories.html" title="Backward to Creating and Configuring Repositories"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Forward to Repository Handlers and Commit Processing"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

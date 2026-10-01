@@ -16,6 +16,9 @@
 		<factory type="userdel" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserDelete" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="userpw" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserPassword" contributor="org.eclipse.emf.cdo.server"/>
 	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.matchCaches" name="CDO Match Caches" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.internal.server.DefaultMatchCache" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.queryHandlerFactories" name="CDO Query Handler Factories" description="" deprecated="false">
 		<factory type="ocl" class="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler$Factory" contributor="org.eclipse.emf.cdo.server.ocl"/>
 	</productGroup>

@@ -191,7 +191,9 @@ extends <a href="../io/ExtendedIOUtil.ClassResolver.html" title="interface in or
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(<a href="../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Registers this bundle's declarative managed-container contributions in the supplied container.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#setBundleContext(java.lang.Object)" class="member-name-link">setBundleContext</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;bundleContext)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
@@ -357,9 +359,26 @@ extends <a href="../io/ExtendedIOUtil.ClassResolver.html" title="interface in or
 <section class="detail" id="prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">
 <h3>prepareContainer</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">prepareContainer</span><wbr><span class="parameters">(<a href="../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</span></div>
+<div class="block">Registers this bundle's declarative managed-container contributions in the supplied container. This is the
+ low-level preparation primitive used primarily by <a href="../container/IManagedContainerInitializer.html" title="interface in org.eclipse.net4j.util.container"><code>IManagedContainerInitializer</code></a> implementations. It may
+ also be used when intentionally configuring a raw container, for example one created by
+ <a href="../container/ContainerUtil.html#createContainer()"><code>ContainerUtil.createContainer()</code></a>. Applications using <a href="../container/ContainerUtil.html#createInitializedContainer()"><code>ContainerUtil.createInitializedContainer()</code></a> or
+ <a href="OMPlatform.html#createManagedContainer()"><code>OMPlatform.createManagedContainer()</code></a> generally do not need to prepare individual bundles themselves.
+ Preparation is idempotent for a given bundle/container pair. This method does not activate the container.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>container</code> - the container to receive this bundle's declarative contributions.</dd>
 <dt>Since:</dt>
 <dd>3.23</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="../container/IManagedContainerInitializer.html" title="interface in org.eclipse.net4j.util.container"><code>IManagedContainerInitializer</code></a></li>
+<li><a href="../container/ContainerUtil.html#createContainer()"><code>ContainerUtil.createContainer()</code></a></li>
+<li><a href="../container/ContainerUtil.html#createInitializedContainer()"><code>ContainerUtil.createInitializedContainer()</code></a></li>
+<li><a href="OMPlatform.html#createManagedContainer()"><code>OMPlatform.createManagedContainer()</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 </li>

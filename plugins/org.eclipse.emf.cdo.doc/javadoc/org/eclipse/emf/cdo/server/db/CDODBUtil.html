@@ -194,9 +194,14 @@ loadScripts(document, 'script');</script>
  <a href="evolution/IModelEvolutionSupport.html" title="interface in org.eclipse.emf.cdo.server.db.evolution">IModelEvolutionSupport</a>&nbsp;modelEvolutionSupport,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
+             <code>OMPlatform.createManagedContainer()</code> are initialized automatically.</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -305,7 +310,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">
 <h3>prepareContainer</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prepareContainer</span><wbr><span class="parameters">(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prepareContainer</span><wbr><span class="parameters">(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
+             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
+             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
+</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

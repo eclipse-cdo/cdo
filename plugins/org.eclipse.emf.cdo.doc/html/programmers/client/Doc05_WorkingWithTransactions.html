@@ -15,6 +15,56 @@ function windowTitle()
     }
 }
 </script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
 </head>
 
 <body bgcolor="white" onload="windowTitle();">
@@ -28,62 +78,590 @@ function windowTitle()
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- Transactions enable modifications to repository data. This section covers creating, managing, and committing
- transactions, as well as handling conflicts and merging changes.
+ A <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> is a read-write <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the current state of a repository
+ branch. It shares the view concepts explained in <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>, but additionally records local
+ model changes until they are committed or rolled back.
+ <p>
+ A root transaction commit is the operation that persists the effective changes in the repository. Savepoints and
+ nested scopes are client-side composition mechanisms; completing either one does not create a repository commit.
+ Server applications that validate or observe these commits use the supported handlers described in
+ <a href="../server/Doc07_RepositoryHandlersAndCommitProcessing.html" title="Article in CDO Model Repository Documentation">Repository Handlers and Commit Processing</a>.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#CreatingAndManagingTransactions" title="Chapter in CDO Model Repository Documentation">Creating and Managing Transactions</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#LocalChangesAndDirtyState" title="Chapter in CDO Model Repository Documentation">Local Changes and Dirty State</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#CommittingChanges" title="Chapter in CDO Model Repository Documentation">Committing Changes</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#CommitRetryAndConflicts" title="Chapter in CDO Model Repository Documentation">Commit Retry and Conflicts</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#RollingBackChanges" title="Chapter in CDO Model Repository Documentation">Rolling Back Changes</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#PartialCommits" title="Chapter in CDO Model Repository Documentation">Partial Commits</a></td></tr>
+<tr><td>7&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#Savepoints" title="Chapter in CDO Model Repository Documentation">Savepoints</a></td></tr>
+<tr><td>8&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#NestedTransactionScopes" title="Chapter in CDO Model Repository Documentation">Nested Transaction Scopes</a></td></tr>
+<tr><td>9&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#Merging" title="Chapter in CDO Model Repository Documentation">Merge</a></td></tr>
+<tr><td>10&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#RevertingChanges" title="Chapter in CDO Model Repository Documentation">Revert</a></td></tr>
+<tr><td>11&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#ChangeExportAndImport" title="Chapter in CDO Model Repository Documentation">Change Export and Import</a></td></tr>
+<tr><td>12&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#FileBackedTransactions" title="Chapter in CDO Model Repository Documentation">File-Backed Transactions</a></td></tr>
+<tr><td>13&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#TransactionQueries" title="Chapter in CDO Model Repository Documentation">Queries in Transactions</a></td></tr>
+<tr><td>14&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#TransactionOptions" title="Chapter in CDO Model Repository Documentation">Transaction Options</a></td></tr>
+</table>
+</p>
+
 
 <h2><a name="CreatingAndManagingTransactions"></a>1&nbsp;&nbsp;Creating and Managing Transactions</h2>
 <p>
- Learn how to create transactions, track changes, and manage transaction lifecycles for reliable data
- modification.
+ Transactions are opened from a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a>. The session supplies the repository connection and
+ the transaction owns its view and resource set until it is closed. The common overload of
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionContainer"><code>openTransaction()</code></a> and the more specific overloads inherited from
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionContainer</code></a> allow an application to select a branch point,
+ resource set, or durable-locking identity.
+ <p>
+ A transaction remains usable after a successful commit, so an application can perform another unit of work or
+ close it. Closing the transaction releases its client-side resources; it does not replace commit or rollback.
 
-<h2><a name="CommittingAndRollingBackChanges"></a>2&nbsp;&nbsp;Committing and Rolling Back Changes</h2>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_CreatingAndManagingTransactions_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">OpenTransaction.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CreatingAndManagingTransactions_1')" id="max_CreatingAndManagingTransactions_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_CreatingAndManagingTransactions_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_CreatingAndManagingTransactions_1" style="padding:8px;">
+            <code>
+            CDOTransaction&nbsp;transaction&nbsp;=&nbsp;session.openTransaction();<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;Resource&nbsp;resource&nbsp;=&nbsp;transaction.getOrCreateResource(<font color="#2a00ff">&#34;/example&#34;</font>);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Modify&nbsp;the&nbsp;resource&nbsp;or&nbsp;its&nbsp;model&nbsp;contents&nbsp;here.</font><br/>
+            <br/>
+            &nbsp;&nbsp;transaction.setCommitComment(<font color="#2a00ff">&#34;Update&nbsp;example&nbsp;model&#34;</font>);<br/>
+            &nbsp;&nbsp;transaction.commit();<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;transaction.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 <p>
- This section explains how to commit changes to the repository, handle commit comments, perform partial commits,
- and roll back changes when necessary.
-
-<h3><a name="CommitComments"></a>2.1&nbsp;&nbsp;Commit Comments</h3>
 
 
-<h3><a name="PartialCommits"></a>2.2&nbsp;&nbsp;Partial Commits</h3>
-
-
-<h2><a name="DirtinessDetection"></a>3&nbsp;&nbsp;Dirtiness Detection</h2>
+<h2><a name="LocalChangesAndDirtyState"></a>2&nbsp;&nbsp;Local Changes and Dirty State</h2>
 <p>
- Detect and manage dirty objects in transactions to ensure data consistency and optimize commit operations.
+ A transaction is dirty when it contains uncommitted changes. The public transaction API exposes separate maps
+ for new, detached, and modified objects through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getNewObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getNewObjects()</code></a>,
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getDetachedObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getDetachedObjects()</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getDirtyObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getDirtyObjects()</code></a>.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getRevisionDeltas()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getRevisionDeltas()</code></a> exposes the revision-level changes.
+ <p>
+ These collections describe the transaction's current local state. They are not a second repository history and
+ are cleared or reduced as changes are committed or rolled back.
 
-<h2><a name="ConflictDetectionAndResolution"></a>4&nbsp;&nbsp;Conflict Detection and Resolution</h2>
-<p>
- Handle conflicts that arise during concurrent modifications. Learn strategies for detecting and resolving conflicts in transactions.
+ 
 
-<h2><a name="Merging"></a>5&nbsp;&nbsp;Merging</h2>
-<p>
- Merge changes from different branches or transactions, ensuring data integrity and consistency.
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_LocalChangesAndDirtyState_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">InspectDirtyState.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('LocalChangesAndDirtyState_1')" id="max_LocalChangesAndDirtyState_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_LocalChangesAndDirtyState_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_LocalChangesAndDirtyState_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(transaction.isDirty())<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>newObjects&nbsp;=&nbsp;transaction.getNewObjects().size();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>dirtyObjects&nbsp;=&nbsp;transaction.getDirtyObjects().size();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>detachedObjects&nbsp;=&nbsp;transaction.getDetachedObjects().size();<br/>
+            <br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;New:&nbsp;&#34;&nbsp;</font>+&nbsp;newObjects);<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Dirty:&nbsp;&#34;&nbsp;</font>+&nbsp;dirtyObjects);<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Detached:&nbsp;&#34;&nbsp;</font>+&nbsp;detachedObjects);<br/>
+            }            </code>
 
-<h2><a name="UsingSavePoints"></a>6&nbsp;&nbsp;Using Save Points</h2>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 <p>
- Save points allow partial rollback within a transaction. Learn how to use save points to manage complex
- modification scenarios.
 
-<h2><a name="RevertingChanges"></a>7&nbsp;&nbsp;Reverting Changes</h2>
-<p>
- Revert changes in a transaction to restore previous states and maintain model integrity.
 
-<h2><a name="ExportingAndImportingChanges"></a>8&nbsp;&nbsp;Exporting and Importing Changes</h2>
+<h2><a name="CommittingChanges"></a>3&nbsp;&nbsp;Committing Changes</h2>
 <p>
- Export transaction changes for backup or migration, and import changes from external sources.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.commit()</code></a> sends the transaction's effective changes to the repository and returns a
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info</code></a> object. The transaction stays open after a successful commit. Commit comments
+ and arbitrary commit properties can be set with <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommitComment(java.lang.String)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommitComment(String)</code></a> and
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommitProperty(java.lang.String,java.lang.String)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommitProperty(String, String)</code></a>; committed metadata can be observed through the
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info manager</code></a>.
+ <p>
+ A commit can fail with <a href="../../../javadoc/org/eclipse/emf/cdo/util/CommitException.html" title="Class in org.eclipse.emf.cdo.util"><code>CommitException</code></a>, including a <a href="../../../javadoc/org/eclipse/emf/cdo/util/CommitConflictException.html" title="Class in org.eclipse.emf.cdo.util"><code>CommitConflictException</code></a> or an
+ <a href="../../../javadoc/org/eclipse/emf/cdo/util/OptimisticLockingException.html" title="Class in org.eclipse.emf.cdo.util"><code>OptimisticLockingException</code></a>. Applications must not assume that acquiring explicit locks eliminates every
+ possible commit failure.
 
-<h2><a name="PushTransactions"></a>9&nbsp;&nbsp;Push Transactions</h2>
-<p>
- Push transactions allow distributed commit operations. Learn how to use push transactions for advanced
- repository scenarios.
+ 
 
-<h2><a name="ConsideringDirtyObjectsInQueries"></a>10&nbsp;&nbsp;Considering Dirty Objects In Queries</h2>
-<p>
- Ensure queries account for uncommitted changes in transactions to provide accurate results.
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_CommittingChanges_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CommitChanges.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CommittingChanges_1')" id="max_CommittingChanges_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_CommittingChanges_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_CommittingChanges_1" style="padding:8px;">
+            <code>
+            transaction.setCommitComment(<font color="#2a00ff">&#34;Update&nbsp;customer&nbsp;model&#34;</font>);<br/>
+            transaction.setCommitProperty(<font color="#2a00ff">&#34;source&#34;</font>,&nbsp;<font color="#2a00ff">&#34;customer-editor&#34;</font>);<br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>transaction.commit();            </code>
 
-<h2><a name="TransactionOptions"></a>11&nbsp;&nbsp;Transaction Options</h2>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 <p>
- Configure transaction options to customize commit behavior, conflict handling, and more.
+
+
+<h2><a name="CommitRetryAndConflicts"></a>4&nbsp;&nbsp;Commit Retry and Conflicts</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#hasConflict()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.hasConflict()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getConflicts()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getConflicts()</code></a> expose objects whose local
+ modifications conflict with remote changes. A configured <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>conflict resolver</code></a> can resolve conflicts during invalidation; otherwise an application commonly rolls back,
+ reapplies its business operation against the current view, and commits again.
+ <p>
+ The retry overloads of <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.lang.Runnable,int,org.eclipse.core.runtime.IProgressMonitor)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.commit(Runnable, int, IProgressMonitor)</code></a> and its
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html" target="_blank" title="Interface in java.util.concurrent"><code>Callable</code></a> counterpart run the operation before each attempt. The integer is the total attempt
+ count, so 3 permits one initial attempt and two retries. When a <a href="../../../javadoc/org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="Class in org.eclipse.emf.cdo.util"><code>ConcurrentAccessException</code></a>
+ occurs, CDO rolls back the failed attempt before trying again; other commit failures are not retried by this
+ overload. The operation supplied for retry must therefore be repeatable and must reapply the intended changes.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_CommitRetryAndConflicts_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CommitWithRetry.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CommitRetryAndConflicts_1')" id="max_CommitRetryAndConflicts_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_CommitRetryAndConflicts_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_CommitRetryAndConflicts_1" style="padding:8px;">
+            <code>
+            transaction.commit(operation,&nbsp;<font color="#990000">3</font>,&nbsp;<font color="#7f0055"><b>null</b></font>);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="RollingBackChanges"></a>5&nbsp;&nbsp;Rolling Back Changes</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.rollback()</code></a> removes all uncommitted changes from the root transaction and leaves the
+ transaction open for further work. It is different from rolling back a <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>savepoint</code></a>, which
+ retains the earlier part of the transaction, and from rolling back a <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>scope</code></a>, which
+ affects only that scope and its descendants.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_RollingBackChanges_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">RollbackChanges.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('RollingBackChanges_1')" id="max_RollingBackChanges_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_RollingBackChanges_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_RollingBackChanges_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(transaction.isDirty())<br/>
+            {<br/>
+            &nbsp;&nbsp;transaction.rollback();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="PartialCommits"></a>6&nbsp;&nbsp;Partial Commits</h2>
+<p>
+ A transaction can restrict one commit to a set of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>committable objects</code></a> with
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set<? extends org.eclipse.emf.ecore.EObject>)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommittables(Set)</code></a>. Objects not selected remain local and the transaction remains dirty;
+ dependencies required by the selected objects must also be included. This is useful for staged work, but it is a
+ deliberate consistency boundary and should not be used as a substitute for designing independent transactions.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_PartialCommits_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CommitSelectedObjects.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('PartialCommits_1')" id="max_PartialCommits_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_PartialCommits_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_PartialCommits_1" style="padding:8px;">
+            <code>
+            transaction.setCommittables(Collections.singleton(object));<br/>
+            transaction.commit();            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Savepoints"></a>7&nbsp;&nbsp;Savepoints</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setSavepoint()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setSavepoint()</code></a> creates an in-memory client-side boundary in the transaction's change
+ history. <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserSavepoint"><code>CDOUserSavepoint.rollback()</code></a> restores the transaction to that boundary by undoing changes made
+ after it, while keeping the root transaction active. Savepoints do not flush changes to disk or to the repository.
+ <p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOSavepoint</code></a> is the richer transaction-specific view of the same boundary. It exposes the objects and
+ revision deltas belonging to a savepoint, including <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getDirtyObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOSavepoint"><code>CDOSavepoint.getDirtyObjects()</code></a> and
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getAllChangeSetData()" title="Method in org.eclipse.emf.cdo.transaction.CDOSavepoint"><code>CDOSavepoint.getAllChangeSetData()</code></a>. Use those inspection APIs only when the application needs to reason
+ about the change segment itself.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Savepoints_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">UseSavepoint.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Savepoints_1')" id="max_Savepoints_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Savepoints_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Savepoints_1" style="padding:8px;">
+            <code>
+            CDOUserSavepoint&nbsp;savepoint&nbsp;=&nbsp;transaction.setSavepoint();<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;operation.run();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!accept)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;savepoint.rollback();<br/>
+            &nbsp;&nbsp;}<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(RuntimeException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;savepoint.rollback();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="NestedTransactionScopes"></a>8&nbsp;&nbsp;Nested Transaction Scopes</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#openScope()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.openScope()</code></a> creates a stack-disciplined scope inside the root transaction. A scope shares
+ the transaction's view, resource set, object identities, cache, dirty state, locks, and session. Its changes are
+ immediately visible in the containing transaction.
+ <p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.commit()</code></a> accepts the scope into its parent but never persists anything to the
+ repository. <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.rollback()</code></a> restores the state at the scope boundary, and
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#close()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.close()</code></a> rolls back an active scope. Only a later commit on the root
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> creates the repository commit. Scopes may be nested and must be completed from the
+ innermost scope outward.
+ <p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#asTransaction()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.asTransaction()</code></a> supplies a stable nested transaction facade for APIs that accept a
+ transaction. Commit operations on that facade are unsupported; the scope itself is completed with
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.commit()</code></a>.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_NestedTransactionScopes_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">RunBusinessOperationInScope.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('NestedTransactionScopes_1')" id="max_NestedTransactionScopes_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_NestedTransactionScopes_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_NestedTransactionScopes_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(CDOTransactionScope&nbsp;scope&nbsp;=&nbsp;transaction.openScope())<br/>
+            {<br/>
+            &nbsp;&nbsp;operation.accept(scope.asTransaction());<br/>
+            &nbsp;&nbsp;scope.commit();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Merging"></a>9&nbsp;&nbsp;Merge</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.merge(CDOBranch, CDOMerger)</code></a> and the related branch-point overloads apply changes from a
+ source branch or branch point to the local transaction. They create local changes; the caller still decides when
+ to commit them. The returned <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOChangeSetData</code></a> describes the applied change set. Merge conflicts are part
+ of the transaction conflict model and must be resolved before a successful commit.
+ <p>
+ Branch selection and historical branch points belong in the Branching and Versioning chapter. This section is
+ limited to the transaction side of applying and committing a merge.
+
+<h2><a name="RevertingChanges"></a>10&nbsp;&nbsp;Revert</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#revertTo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.revertTo(CDOBranchPoint)</code></a> creates local changes that restore the transaction's model to a
+ specified historical branch point. Revert is not the same as <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>rollback</code></a>: rollback
+ discards uncommitted local work, whereas revert prepares a new change set that can itself be reviewed and committed.
+ It is also distinct from a savepoint rollback and from opening a historical read-only view.
+
+<h2><a name="ChangeExportAndImport"></a>11&nbsp;&nbsp;Change Export and Import</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#exportChanges(java.io.OutputStream)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.exportChanges(OutputStream)</code></a> serializes the transaction's local changes to an output
+ stream and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#importChanges(java.io.InputStream,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.importChanges(InputStream, boolean)</code></a> applies serialized transaction
+ changes from an input stream. The boolean controls whether savepoints are reconstructed while importing. These
+ operations work with transaction changes; they are not repository commits, raw revision history exports, or
+ generic model serialization.
+ <p>
+ The file-backed transaction described below uses these APIs internally, but they can also be used directly when an
+ application controls the transfer stream.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ChangeExportAndImport_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">TransferChanges.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ChangeExportAndImport_1')" id="max_ChangeExportAndImport_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ChangeExportAndImport_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ChangeExportAndImport_1" style="padding:8px;">
+            <code>
+            source.exportChanges(output);<br/>
+            target.importChanges(input,&nbsp;<font color="#7f0055"><b>true</b></font>);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="FileBackedTransactions"></a>12&nbsp;&nbsp;File-Backed Transactions</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a> is the current public API for persisting uncommitted changes in its stable backing file
+ (available through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html#getFile()" title="Method in org.eclipse.emf.cdo.transaction.CDOFileTransaction"><code>CDOFileTransaction.getFile()</code></a>) and later pushing them to the repository. Its normal
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOFileTransaction.commit()</code></a> persists the current uncommitted changes to that file and does not commit to
+ the repository; <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html#push()" title="Method in org.eclipse.emf.cdo.transaction.CDOFileTransaction"><code>CDOFileTransaction.push()</code></a> performs the repository commit and removes the persisted file
+ after success. The inherited rollback operation is unsupported, as are the inherited callable and runnable commit
+ overloads. File-backed transactions are therefore appropriate for explicit export-and-push workflows rather than
+ ordinary rollback-based editing.
+ <p>
+ The older CDOPushTransaction API is deprecated as of 4.30 in favor of <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a> and is
+ not used in this example.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_FileBackedTransactions_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">UseFileBackedTransaction.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('FileBackedTransactions_1')" id="max_FileBackedTransactions_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_FileBackedTransactions_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_FileBackedTransactions_1" style="padding:8px;">
+            <code>
+            CDOFileTransaction&nbsp;fileTransaction&nbsp;=&nbsp;CDOUtil.createFileTransaction(transaction);<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Modify&nbsp;the&nbsp;delegate&nbsp;transaction&nbsp;here.</font><br/>
+            &nbsp;&nbsp;fileTransaction.commit();<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;The&nbsp;file&nbsp;can&nbsp;be&nbsp;retained&nbsp;across&nbsp;application&nbsp;restarts&nbsp;before&nbsp;this&nbsp;step.</font><br/>
+            &nbsp;&nbsp;fileTransaction.push();<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;fileTransaction.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="TransactionQueries"></a>13&nbsp;&nbsp;Queries in Transactions</h2>
+<p>
+ General querying is covered in the Views chapter. A transaction additionally offers
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#createQuery(java.lang.String,java.lang.String,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.createQuery(String, String, boolean)</code></a> and its context overload, whose
+ considerDirtyState argument controls whether the query considers the transaction's local uncommitted
+ changes. Use true only when the query is intended to describe the transaction's working state rather than
+ the repository state alone.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_TransactionQueries_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">QueryDirtyState.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('TransactionQueries_1')" id="max_TransactionQueries_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_TransactionQueries_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_TransactionQueries_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>transaction.createQuery(<font color="#2a00ff">&#34;ocl&#34;</font>,&nbsp;<font color="#2a00ff">&#34;EObject.allInstances()&#34;</font>,&nbsp;<font color="#7f0055"><b>true</b></font>);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="TransactionOptions"></a>14&nbsp;&nbsp;Transaction Options</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#options()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.options()</code></a> exposes the transaction-specific options in addition to the view options
+ described in the Views chapter. Application developers should normally consider three groups: conflict resolvers
+ for automatic handling of remote conflicts; optimistic-locking and commit-info timeouts for bounded commit
+ behavior; and automatic lock release, including its exemptions, for predictable lock ownership after commit or
+ rollback.
+ <p>
+ The options API is intentionally linked rather than duplicated here. Its Javadoc documents defaults and the
+ complete option set, including undo detection, stale-reference cleaning, and attached-revision handling.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_TransactionOptions_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ConfigureTransactionOptions.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('TransactionOptions_1')" id="max_TransactionOptions_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_TransactionOptions_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_TransactionOptions_1" style="padding:8px;">
+            <code>
+            transaction.options().setOptimisticLockingTimeout(<font color="#990000">10000L</font>);<br/>
+            transaction.options().setCommitInfoTimeout(<font color="#990000">10000L</font>);<br/>
+            transaction.options().setAutoReleaseLocksEnabled(<font color="#7f0055"><b>true</b></font>);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <p align="right">
 <a href="Doc04_WorkingWithViews.html" title="Backward to Working with Views"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc06_Locking.html" title="Forward to Locking"><img src="../../../images/forward.png" border="0"></a></p>

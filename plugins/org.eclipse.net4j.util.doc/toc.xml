@@ -138,6 +138,8 @@
         <topic label="Holder&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/Holder.html" icon="class" />
         <topic label="IExecutorServiceProvider" href="javadoc/org/eclipse/net4j/util/concurrent/IExecutorServiceProvider.html" icon="interface" />
         <topic label="IRWLockManager.LockType" href="javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" icon="enum" />
+        <topic label="IRWOLockManager.LockChange&lt;OBJECT&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/IRWOLockManager.LockChange.html" icon="class" />
+        <topic label="IRWOLockManager.LockChange.Operation" href="javadoc/org/eclipse/net4j/util/concurrent/IRWOLockManager.LockChange.Operation.html" icon="enum" />
         <topic label="ISynchronizer&lt;RESULT&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/ISynchronizer.html" icon="interface" />
         <topic label="IWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/IWorkSerializer.html" icon="interface" />
         <topic label="MonitoredThread" href="javadoc/org/eclipse/net4j/util/concurrent/MonitoredThread.html" icon="class" />
@@ -147,6 +149,7 @@
         <topic label="NonBlockingLongCounter" href="javadoc/org/eclipse/net4j/util/concurrent/NonBlockingLongCounter.html" icon="class" />
         <topic label="NonFairReentrantLock" href="javadoc/org/eclipse/net4j/util/concurrent/NonFairReentrantLock.html" icon="class" />
         <topic label="OnePendingExecutor" href="javadoc/org/eclipse/net4j/util/concurrent/OnePendingExecutor.html" icon="class" />
+        <topic label="OrderedExecution" href="javadoc/org/eclipse/net4j/util/concurrent/OrderedExecution.html" icon="interface" />
         <topic label="ParallelRunner" href="javadoc/org/eclipse/net4j/util/concurrent/ParallelRunner.html" icon="class" />
         <topic label="PriorityQueueRunnable" href="javadoc/org/eclipse/net4j/util/concurrent/PriorityQueueRunnable.html" icon="class" />
         <topic label="PriorityQueueRunner" href="javadoc/org/eclipse/net4j/util/concurrent/PriorityQueueRunner.html" icon="class" />

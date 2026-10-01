@@ -27,10 +27,10 @@ import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * Integrating with EMF and Other Frameworks
@@ -151,8 +151,7 @@ public class Doc10_IntegratingWithEMFAndOtherFrameworks
     public String inspectURI(URI uri)
     {
       CDOURIData data = new CDOURIData(uri);
-      return data.getScheme() + ":" + data.getRepositoryName() + CDOURIUtil.SEGMENT_SEPARATOR
-          + data.getResourcePath().toPortableString();
+      return data.getScheme() + ":" + data.getRepositoryName() + CDOURIUtil.SEGMENT_SEPARATOR + data.getResourcePath().toPortableString();
     }
   }
 
@@ -280,7 +279,7 @@ public class Doc10_IntegratingWithEMFAndOtherFrameworks
   /**
    * Adapters and Remote Changes
    * <p>
-   * Ordinary EMF {@link Adapter adapters} can be attached to CDO objects. CDO-specific {@link CDOAdapter adapters}
+   * Ordinary EMF {@link org.eclipse.emf.common.notify.Adapter adapters} can be attached to CDO objects. CDO-specific {@link CDOAdapter adapters}
    * and {@link CDOAdapterPolicy} change-subscription policies are available when an application needs selected remote
    * changes delivered to adapters. A policy controls subscription and delivery; it does not replace passive updates or
    * view invalidation.

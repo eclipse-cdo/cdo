@@ -219,6 +219,10 @@ extends <a href="../common/util/CDOQueryInfo.html" title="interface in org.eclip
  As opposed to the <a href="#getResult(java.lang.Class)"><code>getResult(Class)</code></a> method, this method <b>asynchronously</b> communicates with the server.
  In other words, the returned iterator can be used immediately, even if the server is still about to send pending
  result elements.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - the result element type</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -228,6 +232,8 @@ extends <a href="../common/util/CDOQueryInfo.html" title="interface in org.eclip
 <span class="return-type">org.eclipse.net4j.util.collection.CloseableIterator&lt;T&gt;</span>&nbsp;<span class="element-name">getResultAsync</span>()</div>
 <div class="block">Same as <a href="#getResultAsync(java.lang.Class)"><code>getResultAsync(Class)</code></a> but tries to infer the return type from the static context.</div>
 <dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - the result element type</dd>
 <dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
@@ -242,6 +248,10 @@ extends <a href="../common/util/CDOQueryInfo.html" title="interface in org.eclip
  As opposed to the <a href="#getResultAsync(java.lang.Class)"><code>getResultAsync(Class)</code></a> method, this method <b>synchronously</b> communicates with the
  server. In other words, the result list is only returned after all result elements have been received by the
  client.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - the result element type</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -250,6 +260,8 @@ extends <a href="../common/util/CDOQueryInfo.html" title="interface in org.eclip
 <div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;T&gt;</span>&nbsp;<span class="element-name">getResult</span>()</div>
 <div class="block">Same as <a href="#getResult(java.lang.Class)"><code>getResult(Class)</code></a> but tries to infer the return type from the static context.</div>
 <dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - the result element type</dd>
 <dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
@@ -260,6 +272,8 @@ extends <a href="../common/util/CDOQueryInfo.html" title="interface in org.eclip
 <h3>getResultValue</h3>
 <div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getResultValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
 <dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - the result value type</dd>
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
@@ -270,6 +284,8 @@ extends <a href="../common/util/CDOQueryInfo.html" title="interface in org.eclip
 <h3>getResultValue</h3>
 <div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getResultValue</span>()</div>
 <dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>T</code> - the result value type</dd>
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>

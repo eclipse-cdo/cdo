@@ -249,12 +249,12 @@ public class Doc08_BranchingAndVersioning
    * Viewing an old branch point is read-only inspection. Reverting is a transaction operation that creates local changes
    * intended to restore the transaction toward a historical branch point; it is not a deletion of repository history.
    * Merging is different again: it applies changes from a source state into a target transaction. The resulting changes
-   * become repository history only after commit. See {@link Doc05_WorkingWithTransactions#RevertingChanges} for the
+   * become repository history only after commit. See {@link Doc05_WorkingWithTransactions.RevertingChanges} for the
    * operation-level distinction.
    * <p>
    * A {@link org.eclipse.emf.cdo.common.branch.CDOBranchTag tag} is a named, movable reference to a branch point. Tags
    * are useful for naming releases or other meaningful historical coordinates, but they do not freeze a point when moved.
-   * Branch and tag creation, lookup, and management belong to {@link Doc03_WorkingWithSessions#BranchManager}.
+   * Branch and tag creation, lookup, and management belong to {@link Doc03_WorkingWithSessions.SessionFacilities.BranchManager}.
    * <p>
    * Branching is repository-dependent. Check {@link CDOCommonRepository#isSupportingBranches()} before relying on child
    * branches. The main branch exists in every repository mode, while sub-branches require branching support. Historical

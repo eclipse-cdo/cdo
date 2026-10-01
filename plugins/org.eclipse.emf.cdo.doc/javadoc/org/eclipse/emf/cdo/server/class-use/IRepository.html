@@ -82,8 +82,12 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Server provider interfaces (SPI) for the protocol to administer CDO repositories remotely.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.server.spi.security">org.eclipse.emf.cdo.server.spi.security</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Server provider interfaces (SPI) for the server integration of the <a href="../../security/Realm.html" title="interface in org.eclipse.emf.cdo.security"><code>Security</code></a> model.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></div>
+<div class="col-last even-row-color">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </div>
 </div>
@@ -370,6 +374,32 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOAdminHandler.</span><code><a href="../spi/admin/CDOAdminHandler.html#deleteRepository(org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">deleteRepository</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;delegate)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.server.spi.security">
+<h2>Uses of <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a> in <a href="../spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a></h2>
+<div class="caption"><span>Methods in <a href="../spi/security/package-summary.html">org.eclipse.emf.cdo.server.spi.security</a> with parameters of type <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../spi/security/PermissionCache.html" title="interface in org.eclipse.emf.cdo.server.spi.security">PermissionCache</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PermissionCache.Creator.</span><code><a href="../spi/security/PermissionCache.Creator.html#create(org.eclipse.emf.cdo.server.IRepository,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">create</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
+ <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a non-null, logically empty cache generation for exactly the supplied repository, user, and branch.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../spi/security/PermissionCache.Creator.html" title="interface in org.eclipse.emf.cdo.server.spi.security">PermissionCache.Creator</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">PermissionCacheFactory.</span><code><a href="../spi/security/PermissionCacheFactory.html#get(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,org.eclipse.emf.cdo.server.IRepository,java.lang.String)" class="member-name-link">get</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
+ <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Resolves a creator using the repository name and an optional implementation-specific description.</div>
+</div>
 </div>
 </section>
 </li>

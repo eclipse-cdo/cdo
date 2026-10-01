@@ -15,6 +15,56 @@ function windowTitle()
     }
 }
 </script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
 </head>
 
 <body bgcolor="white" onload="windowTitle();">
@@ -28,21 +78,293 @@ function windowTitle()
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- This chapter describes how to work with large objects in CDO client applications. Large objects, such as images,
- documents, or binary files, require special handling to ensure efficient storage, retrieval, and transfer within the
- CDO repository.
+ CDO large objects are immutable, identifiable values for content that should not be serialized as an ordinary
+ in-line model attribute. A <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOBlob</code></a> represents binary content and a <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOClob</code></a> represents character
+ content. A model revision stores the large object's identity and size; the content is handled by the CDO large-object
+ store and is read through a stream or reader when needed.
  <p>
- CDO provides mechanisms for streaming large objects, managing memory usage, and integrating binary and textual data
- with EMF models. Learn best practices for loading, saving, and querying large objects, as well as strategies for
- optimizing performance and avoiding common pitfalls.
+ This chapter explains the client-facing model, creation and consumption APIs, transaction behavior, cache-backed
+ loading, model representation, and resource ownership. It is about CDO large objects rather than JDBC BLOB/CLOB
+ objects. General session, view, and transaction lifecycle remains in <a href="Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">Working with Sessions</a>,
+ <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>, and <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a>.
  <p>
- Topics include:
- <ul>
-   <li>Storing and retrieving binary and text resources</li>
-   <li>Streaming APIs for large data</li>
-   <li>Performance considerations</li>
-   <li>Integration with EMF ResourceSet</li>
- </ul>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#LargeObjectModel" title="Chapter in CDO Model Repository Documentation">The Large-Object Model</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#BinaryLargeObjects" title="Chapter in CDO Model Repository Documentation">Creating Binary Large Objects</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#CharacterLargeObjects" title="Chapter in CDO Model Repository Documentation">Creating Character Large Objects</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#PersistingLargeObjects" title="Chapter in CDO Model Repository Documentation">Assigning and Persisting Large Objects</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#ReadingLargeObjects" title="Chapter in CDO Model Repository Documentation">Reading and Streaming Contents</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#LoadingAndCaching" title="Chapter in CDO Model Repository Documentation">Loading and Caching</a></td></tr>
+<tr><td>7&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#RepositoryAndStoreSupport" title="Chapter in CDO Model Repository Documentation">Repository and Store Support</a></td></tr>
+<tr><td>8&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#ModelFeatures" title="Chapter in CDO Model Repository Documentation">Large Objects in Model Features</a></td></tr>
+<tr><td>9&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#IdentityAndEquality" title="Chapter in CDO Model Repository Documentation">Identity, Equality, and Change Detection</a></td></tr>
+<tr><td>10&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#ResourceOwnership" title="Chapter in CDO Model Repository Documentation">Resource Ownership and Failure Behavior</a></td></tr>
+<tr><td>11&nbsp;</td><td class="te" colspan="3"><a href="Doc07_LargeObjects.html#UsageGuidance" title="Chapter in CDO Model Repository Documentation">Performance and Usage Guidance</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="LargeObjectModel"></a>1&nbsp;&nbsp;The Large-Object Model</h2>
+<p>
+ CDO's public large-object types are <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOBlob</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOClob</code></a>. They are the Java values for the
+ <a href="../../../javadoc/org/eclipse/emf/cdo/etypes/EtypesPackage.html#BLOB" title="Field in org.eclipse.emf.cdo.etypes.EtypesPackage"><code>Blob</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/etypes/EtypesPackage.html#CLOB" title="Field in org.eclipse.emf.cdo.etypes.EtypesPackage"><code>Clob</code></a> EDataTypes in the CDO types package. A
+ generated model feature using one of those data types has a Java type of CDOBlob or CDOClob; the
+ value is not a byte[], a String, or a mutable file handle.
+ <p>
+ A byte array or string attribute is part of the ordinary revision value and is normally materialized with that
+ revision. A large-object attribute is represented by a content identifier and size, while the content is stored and
+ transferred separately. This separation avoids putting the complete payload into every revision serialization.
+ <p>
+ Both large-object classes are immutable. <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID()" title="Method in org.eclipse.emf.cdo.common.lob.CDOLobInfo"><code>CDOLobInfo.getID()</code></a> identifies the content with a digest and
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getSize()" title="Method in org.eclipse.emf.cdo.common.lob.CDOLobInfo"><code>CDOLobInfo.getSize()</code></a> reports its size. The size is bytes for a blob and characters for a clob. Treat the
+ returned ID array as read-only. The public equality and hash-code contract is inherited from <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobInfo.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOLobInfo</code></a>:
+ it compares the ID bytes and size, rather than reading and comparing the content.
+
+<h2><a name="BinaryLargeObjects"></a>2&nbsp;&nbsp;Creating Binary Large Objects</h2>
+<p>
+ Create a blob from an <a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html" target="_blank" title="Class in java.io"><code>InputStream</code></a> when the source is naturally streamed, or from a byte[] when the
+ content is already in memory. A hexadecimal string is also accepted by the low-level <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOBlob</code></a> constructor,
+ but it represents encoded binary data, not ordinary text. Prefer the session factories
+ <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html#newBlob(java.io.InputStream)" title="Method in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.newBlob(InputStream)</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html#newBlob(byte[])" title="Method in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.newBlob(byte[])</code></a> because they use the session's
+ configured large-object cache.
+ <p>
+ Construction consumes the supplied stream immediately to compute the identity and populate the client
+ large-object store. The constructor does not retain the stream for a later commit. The caller owns the supplied
+ stream and should close it, normally with try-with-resources.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_BinaryLargeObjects_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">StoreBinaryResource.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('BinaryLargeObjects_1')" id="max_BinaryLargeObjects_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_BinaryLargeObjects_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_BinaryLargeObjects_1" style="padding:8px;">
+            <code>
+            CDOBinaryResource&nbsp;resource&nbsp;=&nbsp;transaction.createBinaryResource(resourcePath);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(InputStream&nbsp;input&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>FileInputStream(file))<br/>
+            {<br/>
+            &nbsp;&nbsp;CDOBlob&nbsp;blob&nbsp;=&nbsp;transaction.getSession().newBlob(input);<br/>
+            &nbsp;&nbsp;resource.setContents(blob);<br/>
+            &nbsp;&nbsp;transaction.commit();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="CharacterLargeObjects"></a>3&nbsp;&nbsp;Creating Character Large Objects</h2>
+<p>
+ Create a clob from a <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" target="_blank" title="Class in java.io"><code>Reader</code></a> for streamed character input or from a <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/String.html" target="_blank" title="Class in java.lang"><code>String</code></a> for already-materialized
+ text. Use <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html#newClob(java.io.Reader)" title="Method in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.newClob(Reader)</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html#newClob(java.lang.String)" title="Method in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.newClob(String)</code></a> so that the session's configured
+ large-object store is used. Character decoding belongs at the boundary: if the source is bytes, choose its charset
+ when creating the reader. A clob's size is counted in characters, not source bytes.
+ <p>
+ As with blobs, construction consumes the supplied reader immediately and does not retain it. The caller owns and
+ closes the supplied reader.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_CharacterLargeObjects_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">StoreTextResource.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CharacterLargeObjects_1')" id="max_CharacterLargeObjects_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_CharacterLargeObjects_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_CharacterLargeObjects_1" style="padding:8px;">
+            <code>
+            CDOTextResource&nbsp;resource&nbsp;=&nbsp;transaction.createTextResource(resourcePath);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(Reader&nbsp;reader&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>InputStreamReader(<font color="#7f0055"><b>new&nbsp;</b></font>FileInputStream(file),&nbsp;StandardCharsets.UTF_8))<br/>
+            {<br/>
+            &nbsp;&nbsp;CDOClob&nbsp;clob&nbsp;=&nbsp;transaction.getSession().newClob(reader);<br/>
+            &nbsp;&nbsp;resource.setContents(clob);<br/>
+            &nbsp;&nbsp;transaction.commit();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="PersistingLargeObjects"></a>4&nbsp;&nbsp;Assigning and Persisting Large Objects</h2>
+<p>
+ A large object is assigned to a model feature in the same way as any other EDataType value. The assignment changes
+ the transaction's local model and makes the transaction dirty; the value becomes visible to other views only after
+ a successful <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>commit</code></a>. Replacing a blob or clob is an ordinary feature replacement
+ from the transaction's perspective.
+ <p>
+ The payload has already been consumed into the client large-object store when the value is constructed. During
+ commit, CDO sends the content needed by the repository for large-object identities that are not already known
+ there, together with the revision change. Consequently, an I/O failure can occur during creation as well as during
+ commit. Rolling back removes the feature change from the transaction; it does not imply that every temporary local
+ cache file is immediately deleted.
+ <p>
+ Content identity allows a repository to recognize an already-known large object and avoid storing or transferring a
+ duplicate payload. This is an identity optimization, not a reason to mutate a large object: large-object values are
+ immutable, so replacing content means assigning a new value.
+ <p>
+ See <a href="Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a> for dirty state, commit, rollback, and conflict handling.
+
+<h2><a name="ReadingLargeObjects"></a>5&nbsp;&nbsp;Reading and Streaming Contents</h2>
+<p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html#getContents()" title="Method in org.eclipse.emf.cdo.common.lob.CDOBlob"><code>CDOBlob.getContents()</code></a> returns an <a href="https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html" target="_blank" title="Class in java.io"><code>InputStream</code></a>; <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html#getContents()" title="Method in org.eclipse.emf.cdo.common.lob.CDOClob"><code>CDOClob.getContents()</code></a> returns a
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html" target="_blank" title="Class in java.io"><code>Reader</code></a>. Both can be requested repeatedly. The returned resource belongs to the caller and must be closed.
+ The convenience methods <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html#copyTo(java.io.OutputStream)" title="Method in org.eclipse.emf.cdo.common.lob.CDOBlob"><code>CDOBlob.copyTo(OutputStream)</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html#copyTo(java.io.Writer)" title="Method in org.eclipse.emf.cdo.common.lob.CDOClob"><code>CDOClob.copyTo(Writer)</code></a>,
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html#getBytes()" title="Method in org.eclipse.emf.cdo.common.lob.CDOBlob"><code>CDOBlob.getBytes()</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html#getString()" title="Method in org.eclipse.emf.cdo.common.lob.CDOClob"><code>CDOClob.getString()</code></a> are useful when their materialization cost is
+ acceptable. For large payloads, prefer copying from the stream or reader to the final destination.
+ <p>
+ A model object or revision can be loaded without reading the full large-object content. On the first content access,
+ a session-backed store can load missing content from the repository into its configured cache and then return a
+ stream or reader. Subsequent reads can use that cache. The exact cache behavior is determined by the configured
+ <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getLobCache()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>session LOB cache</code></a>; do not assume that a custom store is disk-backed or
+ reusable after its owner has been closed. Keep the session available while a missing remote payload is being read.
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ReadingLargeObjects_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CopyBinaryResource.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ReadingLargeObjects_1')" id="max_ReadingLargeObjects_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ReadingLargeObjects_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ReadingLargeObjects_1" style="padding:8px;">
+            <code>
+            CDOBinaryResource&nbsp;resource&nbsp;=&nbsp;view.getBinaryResource(resourcePath);<br/>
+            CDOBlob&nbsp;blob&nbsp;=&nbsp;resource.getContents();<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(InputStream&nbsp;input&nbsp;=&nbsp;blob.getContents();&nbsp;OutputStream&nbsp;output&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>FileOutputStream(file))<br/>
+            {<br/>
+            &nbsp;&nbsp;IOUtil.copyBinary(input,&nbsp;output);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="LoadingAndCaching"></a>6&nbsp;&nbsp;Loading and Caching</h2>
+<p>
+ The revision value contains large-object identity and size, while the bytes or characters are obtained through the
+ large-object store. The default client store is file-backed, and a session exposes its configurable
+ <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getLobCache()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>LOB cache</code></a> through session options. If a requested value is absent from the
+ cache, the session's store can fetch it from the repository before returning the content stream or reader.
+ <p>
+ The cache is keyed by the large-object identity and is separate from the ordinary object/revision cache. It can
+ therefore reduce repeated network transfers without making a blob or clob mutable. Cache location, retention, and
+ eviction are properties of the selected <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobStore.html" title="Interface in org.eclipse.emf.cdo.common.lob"><code>CDOLobStore</code></a>; applications should
+ choose a suitable store when local disk or memory usage matters.
+ <p>
+ Loading a revision is not the same as loading every large-object payload referenced by that revision. Avoid calling
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html#getBytes()" title="Method in org.eclipse.emf.cdo.common.lob.CDOBlob"><code>CDOBlob.getBytes()</code></a> or <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html#getString()" title="Method in org.eclipse.emf.cdo.common.lob.CDOClob"><code>CDOClob.getString()</code></a> merely to inspect metadata; use <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID()" title="Method in org.eclipse.emf.cdo.common.lob.CDOLobInfo"><code>CDOLobInfo.getID()</code></a>
+ and <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getSize()" title="Method in org.eclipse.emf.cdo.common.lob.CDOLobInfo"><code>CDOLobInfo.getSize()</code></a> instead.
+
+<h2><a name="RepositoryAndStoreSupport"></a>7&nbsp;&nbsp;Repository and Store Support</h2>
+<p>
+ Large-object support is a store capability. CDO's public client API does not expose a universal boolean capability
+ query on <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html" title="Interface in org.eclipse.emf.cdo.common"><code>CDOCommonRepository</code></a>; applications should therefore treat large-object
+ support as a repository/store deployment requirement and verify it for the repositories they target. A store that
+ does not support large objects cannot provide the normal commit and load behavior.
+ <p>
+ The repository also exposes its configured <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getLobDigestAlgorithm()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>LOB digest algorithm</code></a>. Applications normally do not need to depend on that value, but it explains why the ID is a
+ content-derived identity rather than an arbitrary object ID. Server/store cleanup of unreferenced large objects is a
+ store concern and is not part of ordinary client transaction lifecycle.
+
+<h2><a name="ModelFeatures"></a>8&nbsp;&nbsp;Large Objects in Model Features</h2>
+<p>
+ Declare a persistent EAttribute with the CDO <a href="../../../javadoc/org/eclipse/emf/cdo/etypes/EtypesPackage.html#BLOB" title="Field in org.eclipse.emf.cdo.etypes.EtypesPackage"><code>Blob</code></a> or
+ <a href="../../../javadoc/org/eclipse/emf/cdo/etypes/EtypesPackage.html#CLOB" title="Field in org.eclipse.emf.cdo.etypes.EtypesPackage"><code>Clob</code></a> EDataType when a generated model feature should hold a CDO large object. The
+ generated accessor then uses <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOBlob</code></a> or <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOClob</code></a>. The built-in <a href="../../../javadoc/org/eclipse/emf/cdo/eresource/CDOBinaryResource.html" title="Interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a> and
+ <a href="../../../javadoc/org/eclipse/emf/cdo/eresource/CDOTextResource.html" title="Interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a> are examples of model objects whose persistent contents feature has exactly this shape.
+ <p>
+ These values are attributes, not EObjects: do not put them in containment, and do not model their payload as an
+ ordinary byte-array or string feature if the application needs CDO large-object storage and streaming. Lists of
+ blob or clob values are supported by the same value semantics; each entry is still immutable and identified by its
+ own content ID. General model preparation is covered by the Preparing Models material rather than repeated here.
+
+<h2><a name="IdentityAndEquality"></a>9&nbsp;&nbsp;Identity, Equality, and Change Detection</h2>
+<p>
+ A large object's <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#getID()" title="Method in org.eclipse.emf.cdo.common.lob.CDOLobInfo"><code>ID</code></a> is a digest of its content, with the repository's configured digest
+ algorithm used consistently by the client and store. The ID also distinguishes binary and character content in the
+ standard store. <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOLobInfo.html#equals(java.lang.Object)" title="Method in org.eclipse.emf.cdo.common.lob.CDOLobInfo"><code>CDOLobInfo.equals(Object)</code></a> compares the ID bytes and size; it does not stream the payload.
+ This makes equality inexpensive and lets CDO recognize an already-known content value during commit.
+ <p>
+ Equality is not Java object identity: two separately constructed values with the same content can compare equal.
+ Conversely, do not compare a blob and clob merely because their visible text happens to match; they are different
+ large-object kinds and have different content semantics. Treat the ID array returned by the API as immutable even
+ though the array itself is exposed.
+
+<h2><a name="ResourceOwnership"></a>10&nbsp;&nbsp;Resource Ownership and Failure Behavior</h2>
+<p>
+ Close input streams and readers supplied to blob/clob constructors or session factories after construction has
+ completed. Those factories consume the source synchronously but do not make the source application's lifecycle their
+ responsibility. Always close streams and readers returned by <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html#getContents()" title="Method in org.eclipse.emf.cdo.common.lob.CDOBlob"><code>CDOBlob.getContents()</code></a> and
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html#getContents()" title="Method in org.eclipse.emf.cdo.common.lob.CDOClob"><code>CDOClob.getContents()</code></a>, even when copying fails.
+ <p>
+ Creation can fail with <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" target="_blank" title="Class in java.io"><code>IOException</code></a> while reading the source or writing the client store. Reading can fail
+ with <a href="https://docs.oracle.com/javase/8/docs/api/java/io/IOException.html" target="_blank" title="Class in java.io"><code>IOException</code></a> because cached content is missing, a repository transfer fails, or the returned stream or
+ reader cannot be consumed. A closed or disconnected session is especially relevant when the needed content is not
+ already in the local cache. Handle these failures as I/O and repository failures; do not assume that model-object
+ loading has already validated the payload.
+ <p>
+ Keep only metadata when possible. Holding a byte[] or String obtained from <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html#getBytes()" title="Method in org.eclipse.emf.cdo.common.lob.CDOBlob"><code>CDOBlob.getBytes()</code></a>
+ or <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html#getString()" title="Method in org.eclipse.emf.cdo.common.lob.CDOClob"><code>CDOClob.getString()</code></a> defeats the memory benefit of the streaming API.
+
+<h2><a name="UsageGuidance"></a>11&nbsp;&nbsp;Performance and Usage Guidance</h2>
+<p>
+ Use a CDO large-object feature when content is large enough that embedding it in ordinary revision values would
+ create undesirable materialization, serialization, or memory costs. Construct from streams/readers for file or
+ network sources, and consume through streams/readers for file or network destinations. Use byte arrays, strings,
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html#getBytes()" title="Method in org.eclipse.emf.cdo.common.lob.CDOBlob"><code>CDOBlob.getBytes()</code></a>, or <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html#getString()" title="Method in org.eclipse.emf.cdo.common.lob.CDOClob"><code>CDOClob.getString()</code></a> only when the complete content is intentionally needed.
+ <p>
+ Remember that construction performs a complete local read to calculate identity and cache the content; streaming
+ creation avoids an extra application buffer but does not make digesting free. Commit may transfer content that the
+ repository does not already know, and the first read of a missing value may transfer it back. Reuse the immutable
+ large-object value or its cache when appropriate, close resources promptly, and configure a suitable session LOB
+ cache for the application's disk and memory constraints.
+ <p>
+ Choose a blob for binary data and a clob for character data. Decode bytes with an explicit charset before creating a
+ clob, and do not use a hexadecimal blob constructor as a text encoding shortcut.
 
 <p align="right">
 <a href="Doc06_Locking.html" title="Backward to Locking"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc08_BranchingAndVersioning.html" title="Forward to Branching and Versioning"><img src="../../../images/forward.png" border="0"></a></p>

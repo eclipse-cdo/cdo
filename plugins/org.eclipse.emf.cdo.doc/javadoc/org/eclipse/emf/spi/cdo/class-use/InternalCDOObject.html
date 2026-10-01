@@ -727,22 +727,28 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>,<wbr><a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#getCleanRevisions()" class="member-name-link">getCleanRevisions</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#getObjects()" class="member-name-link">getObjects</a>()</code></div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>,<wbr><a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#getCleanRevisionsUnsynced()" class="member-name-link">getCleanRevisionsUnsynced</a>()</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Returns the same live clean-revisions map as <a href="../InternalCDOTransaction.html#getCleanRevisions()"><code>InternalCDOTransaction.getCleanRevisions()</code></a> without acquiring the transaction/view
+ lock.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#getObjects()" class="member-name-link">getObjects</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns an unmodifiable map of the objects managed by this view.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#getObjectsList()" class="member-name-link">getObjectsList</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">FSMUtil.</span><code><a href="../FSMUtil.html#iterator(java.util.Collection,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">iterator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;?&gt;&nbsp;instances,
- <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#getObjectsList()" class="member-name-link">getObjectsList</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FSMUtil.</span><code><a href="../FSMUtil.html#iterator(java.util.Iterator,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">iterator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;?&gt;&nbsp;delegate,
+<div class="col-second even-row-color"><span class="type-name-label">FSMUtil.</span><code><a href="../FSMUtil.html#iterator(java.util.Collection,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">iterator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;?&gt;&nbsp;instances,
  <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a><wbr>&lt;<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FSMUtil.</span><code><a href="../FSMUtil.html#iterator(java.util.Iterator,org.eclipse.emf.spi.cdo.InternalCDOView)" class="member-name-link">iterator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="class or interface in java.util" class="external-link">Iterator</a>&lt;?&gt;&nbsp;delegate,
+ <a href="../InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a>&nbsp;view)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.spi.cdo</a> with parameters of type <a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></span></div>
 <div class="summary-table three-column-summary">
@@ -808,14 +814,21 @@ loadScripts(document, 'script');</script>
  <a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#registerObject(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">registerObject</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerFeatureDeltaUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaUnsynced</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Registers a feature delta without acquiring the transaction/view lock.</div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#removeConflict(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">removeConflict</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#registerObject(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">registerObject</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#setConflict(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">setConflict</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#removeConflict(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">removeConflict</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#setConflict(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">setConflict</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../package-summary.html">org.eclipse.emf.spi.cdo</a> with type arguments of type <a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></span></div>
 <div class="summary-table three-column-summary">

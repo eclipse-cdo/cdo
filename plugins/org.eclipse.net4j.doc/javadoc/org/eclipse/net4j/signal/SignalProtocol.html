@@ -97,6 +97,10 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>INFRA_STRUCTURE</code> - the infrastructure structure associated with the protocol</dd>
+</dl>
+<dl class="notes">
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code>, <code><a href="../ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code>, <code><a href="../protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../protocol/IProtocol3.html" title="interface in org.eclipse.net4j.protocol">IProtocol3</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="ISignalProtocol.WithSignalCounters.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol.WithSignalCounters</a>&lt;INFRA_STRUCTURE&gt;</code>, <code>org.eclipse.net4j.util.collection.Entity.Store.Provider</code>, <code>org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</code>, <code>org.eclipse.net4j.util.container.IManagedContainerProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code>, <code>org.eclipse.net4j.util.security.IUserAware</code></dd>
 </dl>
@@ -131,7 +135,9 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="SignalProtocol.InvalidSignalIDException.html" class="type-name-link" title="class in org.eclipse.net4j.signal">SignalProtocol.InvalidSignalIDException</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Writes signal data to the underlying channel.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="SignalProtocol.TimeoutChangedEvent.html" class="type-name-link" title="class in org.eclipse.net4j.signal">SignalProtocol.TimeoutChangedEvent</a></code></div>
 <div class="col-last odd-row-color">
@@ -237,24 +243,46 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 <div class="block">Returns a new signal instance to serve the given signal ID or <code>null</code> if the signal ID is invalid/unknown
  for this protocol.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doBeforeDeactivate()" class="member-name-link">doBeforeDeactivate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor,java.lang.Object)" class="member-name-link">createSignalReactorExecutor</a><wbr>(<a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;orderKey)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates the serial executor for a newly encountered order key.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doBeforeDeactivate()" class="member-name-link">doBeforeDeactivate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDeactivationTimeout()" class="member-name-link">getDeactivationTimeout</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.collection.Entity.Store</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEntityStore()" class="member-name-link">getEntityStore</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDeactivationTimeout()" class="member-name-link">getDeactivationTimeout</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReceivedSignals()" class="member-name-link">getReceivedSignals</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.collection.Entity.Store</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEntityStore()" class="member-name-link">getEntityStore</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSentSignals()" class="member-name-link">getSentSignals</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReceivedSignals()" class="member-name-link">getReceivedSignals</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSentSignals()" class="member-name-link">getSentSignals</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor)" class="member-name-link">getSignalReactorExecutor</a><wbr>(<a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the executor for an incoming signal reactor.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor,java.lang.Object)" class="member-name-link">getSignalReactorExecutor</a><wbr>(<a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;orderKey)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the serial executor associated with an order key, creating it on first use.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSignalReactorOrderKey(org.eclipse.net4j.signal.SignalReactor)" class="member-name-link">getSignalReactorOrderKey</a><wbr>(<a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the execution-order key for an incoming signal reactor.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.io.IStreamWrapper</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStreamWrapper()" class="member-name-link">getStreamWrapper</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -642,8 +670,9 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 <section class="detail" id="handleBuffer(org.eclipse.net4j.buffer.IBuffer)">
 <h3>handleBuffer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleBuffer</span><wbr><span class="parameters">(<a href="../buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</span></div>
-<div class="block">Handles a given (incoming) buffer. Creates a signal to act upon the given buffer or uses a previously created
- signal.</div>
+<div class="block">Handles a given (incoming) buffer.
+ <p>
+ Creates a signal to act upon the given buffer or uses a previously created signal.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../buffer/IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)">handleBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code></dd>
@@ -740,6 +769,92 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.22</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSignalReactorOrderKey(org.eclipse.net4j.signal.SignalReactor)">
+<h3>getSignalReactorOrderKey</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getSignalReactorOrderKey</span><wbr><span class="parameters">(<a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal)</span></div>
+<div class="block">Returns the execution-order key for an incoming signal reactor.
+ <p>
+ Equal non-null keys, according to <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link"><code>Object.equals(Object)</code></a> and <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link"><code>Object.hashCode()</code></a>, select one execution
+ lane. Signals in that lane execute sequentially in the order this protocol receives their begin-of-signal buffers.
+ Different keys may execute concurrently, and signals with a <code>null</code> key use the normal executor and may run
+ concurrently with both ordered lanes and each other. This preserves receiver-side reception order only; it does not
+ establish semantic ordering between signals produced independently by senders.
+ <p>
+ Keys should normally be stable and low-cardinality. A signal class is often a natural key, and different signal
+ classes may deliberately return the same key when they must share a lane. Keys and their executors are retained for
+ this protocol's active lifetime.
+ <p>
+ For example:
+ <pre>
+ if (signal instanceof MySensibleIndication)
+ {
+   return MySensibleIndication.class;
+ }
+ </pre></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>signal</code> - the incoming signal reactor</dd>
+<dt>Returns:</dt>
+<dd>the order key, or <code>null</code> for normal unordered execution</dd>
+<dt>Since:</dt>
+<dd>4.23</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor)">
+<h3>getSignalReactorExecutor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></span>&nbsp;<span class="element-name">getSignalReactorExecutor</span><wbr><span class="parameters">(<a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal)</span></div>
+<div class="block">Returns the executor for an incoming signal reactor. The default preserves the direct executor fast path for
+ unordered signals and uses a protocol-owned serial executor for a non-null order key.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>signal</code> - the incoming signal reactor</dd>
+<dt>Returns:</dt>
+<dd>the executor that will run the signal</dd>
+<dt>Since:</dt>
+<dd>4.23</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor,java.lang.Object)">
+<h3>getSignalReactorExecutor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></span>&nbsp;<span class="element-name">getSignalReactorExecutor</span><wbr><span class="parameters">(<a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;orderKey)</span></div>
+<div class="block">Returns the serial executor associated with an order key, creating it on first use. Keys are compared using normal
+ <code>equals()</code> and <code>hashCode()</code> semantics. The executor is retained for the active lifetime of this protocol
+ and deactivated with it.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>signal</code> - the first signal reactor that caused this lane to be created, or a later signal assigned to the lane</dd>
+<dd><code>orderKey</code> - the non-null key identifying the lane</dd>
+<dt>Returns:</dt>
+<dd>the executor for the lane</dd>
+<dt>Since:</dt>
+<dd>4.23</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createSignalReactorExecutor(org.eclipse.net4j.signal.SignalReactor,java.lang.Object)">
+<h3>createSignalReactorExecutor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Executor.html" title="class or interface in java.util.concurrent" class="external-link">Executor</a></span>&nbsp;<span class="element-name">createSignalReactorExecutor</span><wbr><span class="parameters">(<a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a>&nbsp;signal,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;orderKey)</span></div>
+<div class="block">Creates the serial executor for a newly encountered order key. The <code>signal</code> argument is the first reactor
+ that caused this lane to be created; it does not imply that the lane is dedicated to that reactor's class.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>signal</code> - the first signal reactor assigned to the lane</dd>
+<dd><code>orderKey</code> - the non-null key identifying the lane</dd>
+<dt>Returns:</dt>
+<dd>a serial executor for the lane</dd>
+<dt>Since:</dt>
+<dd>4.23</dd>
 </dl>
 </section>
 </li>

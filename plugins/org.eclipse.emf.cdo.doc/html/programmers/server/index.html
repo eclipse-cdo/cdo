@@ -15,6 +15,56 @@ function windowTitle()
     }
 }
 </script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
 </head>
 
 <body bgcolor="white" onload="windowTitle();">
@@ -23,25 +73,57 @@ function windowTitle()
 <table border="0">
 	<tr>
 		<td width="100%"><h1>Developing Server Applications</h1></td>
-		<td align="right" valign="middle" nowrap><a href="../client/Doc12_BestPracticesAndPatterns.html" title="Backward to Best Practices and Patterns"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Architecture.html" title="Forward to Understanding the Architecture of a Repository"><img src="../../../images/forward.png" border="0"></a></td>
+		<td align="right" valign="middle" nowrap><a href="../client/Doc12_BestPracticesAndPatterns.html" title="Backward to Best Practices and Common Pitfalls"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Architecture.html" title="Forward to Server Architecture"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
 <p>
 <table border="0">
-<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Architecture.html" title="Article in CDO Model Repository Documentation">Understanding the Architecture of a Repository</a></td></tr>
-<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#OSGi" title="Chapter in CDO Model Repository Documentation">OSGi</a></td></tr>
-<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#Core" title="Chapter in CDO Model Repository Documentation">CDO Server Core</a></td></tr>
-<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#Store" title="Chapter in CDO Model Repository Documentation">CDO Store</a></td></tr>
-<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#Protocol" title="Chapter in CDO Model Repository Documentation">Protocol</a></td></tr>
-<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#OCL" title="Chapter in CDO Model Repository Documentation">OCL</a></td></tr>
-<tr><td></td><td>6&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#Net4j" title="Chapter in CDO Model Repository Documentation">Net4j Core</a></td></tr>
-<tr><td></td><td>7&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#Transport" title="Chapter in CDO Model Repository Documentation">Transport</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Architecture.html" title="Article in CDO Model Repository Documentation">Server Architecture</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#RepositoryCore" title="Chapter in CDO Model Repository Documentation">Repository Core</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#StoreBoundary" title="Chapter in CDO Model Repository Documentation">Store Boundary</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#ProtocolBoundary" title="Chapter in CDO Model Repository Documentation">Protocol and Transport Boundary</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Architecture.html#ContainerAndLifecycle" title="Chapter in CDO Model Repository Documentation">Container and Lifecycle</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc02_ServerApplicationAndStartup.html" title="Article in CDO Model Repository Documentation">CDO Server Application and Startup</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ServerApplicationAndStartup.html#Lifecycle" title="Chapter in CDO Model Repository Documentation">Startup and Shutdown</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ServerApplicationAndStartup.html#ExtensionTiming" title="Chapter in CDO Model Repository Documentation">Early Extensions</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ServerApplicationAndStartup.html#ExecutionModes" title="Chapter in CDO Model Repository Documentation">Standalone, Embedded, and OSGi Use</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc03_ManagedContainer.html" title="Article in CDO Model Repository Documentation">The Managed Container</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#FactoriesAndElements" title="Chapter in CDO Model Repository Documentation">Factories, Product Groups, and Lookup</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#LifecycleAndConfiguration" title="Chapter in CDO Model Repository Documentation">Lifecycle and Configuration</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#Examples" title="Chapter in CDO Model Repository Documentation">Repository Lookup Example</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc04_ApplicationExtensions.html" title="Article in CDO Model Repository Documentation">Application Extensions</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_ApplicationExtensions.html#VariantsAndContext" title="Chapter in CDO Model Repository Documentation">Choosing an Extension Variant</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc04_ApplicationExtensions.html#LifecycleDiscipline" title="Chapter in CDO Model Repository Documentation">Lifecycle Discipline</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc04_ApplicationExtensions.html#Examples" title="Chapter in CDO Model Repository Documentation">Repository-aware Extension Example</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc05_CreatingAndConfiguringRepositories.html" title="Article in CDO Model Repository Documentation">Creating and Configuring Repositories</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc05_CreatingAndConfiguringRepositories.html#ProgrammaticSetup" title="Chapter in CDO Model Repository Documentation">Programmatic Repository Setup</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc05_CreatingAndConfiguringRepositories.html#EmbeddedRepositories" title="Chapter in CDO Model Repository Documentation">MEMStore and Embedded Repositories</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc05_CreatingAndConfiguringRepositories.html#PersistentStoreConfiguration" title="Chapter in CDO Model Repository Documentation">Existing Persistent Stores</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc06_RepositoryServicesAndEvents.html" title="Article in CDO Model Repository Documentation">Repository Services and Events</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#Services" title="Chapter in CDO Model Repository Documentation">Services</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#ServerSideContexts" title="Chapter in CDO Model Repository Documentation">Sessions, Views, and Transactions</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#Events" title="Chapter in CDO Model Repository Documentation">Event Families</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Article in CDO Model Repository Documentation">Repository Handlers and Commit Processing</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc07_RepositoryHandlersAndCommitProcessing.html#AccessHandlers" title="Chapter in CDO Model Repository Documentation">Read and Write Access</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc07_RepositoryHandlersAndCommitProcessing.html#CommitObservationAndConflicts" title="Chapter in CDO Model Repository Documentation">Commit Information and Conflicts</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc07_RepositoryHandlersAndCommitProcessing.html#CommitFlow" title="Chapter in CDO Model Repository Documentation">Application-facing Commit Flow</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html" title="Article in CDO Model Repository Documentation">Security, Queries, and Specialized Extensions</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#SecurityModel" title="Chapter in CDO Model Repository Documentation">Repository Protection</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#PermissionCacheSPI" title="Chapter in CDO Model Repository Documentation">Permission Cache SPI</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#AuthenticationExample" title="Chapter in CDO Model Repository Documentation">Authentication Example</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#QueryHandlers" title="Chapter in CDO Model Repository Documentation">Query Handlers</a></td></tr>
+<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc08_SecurityQueriesAndSpecializedExtensions.html#FactoryExtensions" title="Chapter in CDO Model Repository Documentation">Extension Boundaries</a></td></tr>
+<tr><td><img src="../../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc09_AdvancedServerIntegration.html" title="Article in CDO Model Repository Documentation">Advanced Server Integration</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc09_AdvancedServerIntegration.html#SynchronizationAndFailover" title="Chapter in CDO Model Repository Documentation">Synchronization and Failover</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc09_AdvancedServerIntegration.html#MonitoringAndDiagnostics" title="Chapter in CDO Model Repository Documentation">Monitoring and Activity Logs</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc09_AdvancedServerIntegration.html#ImportAndExport" title="Chapter in CDO Model Repository Documentation">Import and Export</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc09_AdvancedServerIntegration.html#IntegrationBoundary" title="Chapter in CDO Model Repository Documentation">Net4j and Other Intentional Extensions</a></td></tr>
 </table>
 </p>
 
 
 <p align="right">
-<a href="../client/Doc12_BestPracticesAndPatterns.html" title="Backward to Best Practices and Patterns"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Architecture.html" title="Forward to Understanding the Architecture of a Repository"><img src="../../../images/forward.png" border="0"></a></p>
+<a href="../client/Doc12_BestPracticesAndPatterns.html" title="Backward to Best Practices and Common Pitfalls"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Architecture.html" title="Forward to Server Architecture"><img src="../../../images/forward.png" border="0"></a></p>
 <!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a></div> -->
 
 <div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>

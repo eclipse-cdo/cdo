@@ -178,6 +178,7 @@
     <productGroups id="org.eclipse.emf.cdo.server.browserPages" name="CDO Browser Pages" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.browsers" name="CDO Browsers" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.commands" name="CDO Commands" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.matchCaches" name="CDO Match Caches" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.queryHandlerFactories" name="CDO Query Handler Factories" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.repositoryActivityLogs" name="CDO Repository Activity Logs" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" name="CDO Repository Configurator Extensions" description=""/>
@@ -228,6 +229,7 @@
     <packages name="org.eclipse.emf.cdo.server.spi.security"/>
     <productGroups id="org.eclipse.emf.cdo.server.security.commitHandlers" name="CDO Commit Handlers" description=""/>
     <productGroups id="org.eclipse.net4j.util.security.operationAuthorizers" name="CDO Operation Authorizers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.security.permissionCacheCreators" name="CDO Permission Cache Creators" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.security.managers" name="CDO Security Managers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.transfer" label="CDO Transfer Framework">

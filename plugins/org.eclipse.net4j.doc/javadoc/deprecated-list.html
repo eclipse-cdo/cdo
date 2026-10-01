@@ -87,6 +87,18 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/jvm/JVMUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.jvm.JVMUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last even-row-color">
+<div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
+             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
+             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/Net4jUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.Net4jUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
+             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
+             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
+</div>
 <div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/signal/IndicationWithMonitoring.html#getMonitoringExecutorService()">org.eclipse.net4j.signal.IndicationWithMonitoring.getMonitoringExecutorService()</a></div>
 <div class="col-last even-row-color">
 <div class="block">As of 4.13 not used anymore.</div>
@@ -103,22 +115,44 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#getDefaultHandShakeWaitTime()"><code>SSLUtil.getDefaultHandShakeWaitTime()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultSSLConfiguration(java.lang.String,java.lang.String,java.lang.String)">org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration<wbr>(String, String, String)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.tcp.ssl.SSLUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
 <div class="col-last even-row-color">
+<div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
+             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
+             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultSSLConfiguration(java.lang.String,java.lang.String,java.lang.String)">org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration<wbr>(String, String, String)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultKeyPath(java.lang.String)"><code>SSLUtil.setDefaultKeyPath(String)</code></a>, <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultTrustPath(java.lang.String)"><code>SSLUtil.setDefaultTrustPath(String)</code></a>, and <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultPassPhrase(java.lang.String)"><code>SSLUtil.setDefaultPassPhrase(String)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultSSLConfiguration(java.lang.String,java.lang.String,java.lang.String,int,int)">org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration<wbr>(String, String, String, int, int)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultSSLConfiguration(java.lang.String,java.lang.String,java.lang.String,int,int)">org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration<wbr>(String, String, String, int, int)</a></div>
+<div class="col-last even-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultKeyPath(java.lang.String)"><code>SSLUtil.setDefaultKeyPath(String)</code></a>, <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultTrustPath(java.lang.String)"><code>SSLUtil.setDefaultTrustPath(String)</code></a>, <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultPassPhrase(java.lang.String)"><code>SSLUtil.setDefaultPassPhrase(String)</code></a>,
  <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultHandShakeTimeOut(int)"><code>SSLUtil.setDefaultHandShakeTimeOut(int)</code></a>, and <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setDefaultHandShakeWaitTime(int)"><code>SSLUtil.setDefaultHandShakeWaitTime(int)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setSSLConfigurationFile(java.lang.String)">org.eclipse.net4j.tcp.ssl.SSLUtil.setSSLConfigurationFile<wbr>(String)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setSSLConfigurationFile(java.lang.String)">org.eclipse.net4j.tcp.ssl.SSLUtil.setSSLConfigurationFile<wbr>(String)</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.4 use <a href="org/eclipse/net4j/tcp/ssl/SSLUtil.html#setConfigFile(java.lang.String)"><code>SSLUtil.setConfigFile(String)</code></a>.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/tcp/TCPUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.tcp.TCPUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last even-row-color">
+<div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
+             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
+             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
 </div>
 <div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/TransportConfigurator.html#getStoreConfig(org.w3c.dom.Element)">org.eclipse.net4j.TransportConfigurator.getStoreConfig<wbr>(Element)</a></div>
 <div class="col-last odd-row-color">
 <div class="block">As of 4.19 no longer supported.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/ws/WSUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.ws.WSUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last even-row-color">
+<div class="block">Containers created via <code>ContainerUtil.createInitializedContainer()</code> or
+             <code>OMPlatform.createManagedContainer()</code> are initialized automatically. Advanced callers
+             configuring a raw container can use <code>OMBundle.prepareContainer(IManagedContainer)</code>.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/wss/WSSUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">org.eclipse.net4j.wss.WSSUtil.prepareContainer<wbr>(IManagedContainer)</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Initialized containers are prepared automatically.</div>
 </div>
 <div class="col-summary-item-name even-row-color"><a href="org/eclipse/spi/net4j/Channel.html#createReceiverWork(org.eclipse.net4j.buffer.IBuffer)">org.eclipse.spi.net4j.Channel.createReceiverWork<wbr>(IBuffer)</a></div>
 <div class="col-last even-row-color">

@@ -105,7 +105,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOLock.CDOAcquiredLock.</span><code><a href="../../../CDOLock.CDOAcquiredLock.html#getOwners()" class="member-name-link">getOwners</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Returns the owners of the lock.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOLock.</span><code><a href="../../../CDOLock.html#getOwners()" class="member-name-link">getOwners</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -408,18 +410,51 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../../../spi/server/InternalSession.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.27 use <a href="../../../spi/server/InternalSession.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner,long)"><code>InternalSession.sendLockOwnerRemappedNotification(CDOBranch, CDOLockOwner, CDOLockOwner, long)</code></a>.</div>
+</div>
+</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalSessionManager.</span><code><a href="../../../spi/server/InternalSessionManager.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../../spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
+<div class="col-second odd-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../../../spi/server/InternalSession.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner,long)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
+ <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner,
+ long&nbsp;lockModCount)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sends an owner remap with the sequence number assigned to this exact
+ change for this session.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalSessionManager.</span><code><a href="../../../spi/server/InternalSessionManager.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../../spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;sender,
  <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalSessionManager.</span><code><a href="../../../spi/server/InternalSessionManager.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.spi.server.InternalSession,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.spi.server.InternalLockManager.LockChangeReservationSet)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../../spi/server/InternalSession.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession</a>&nbsp;session,
+ <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
+ <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner,
+ <a href="../../../spi/server/InternalLockManager.LockChangeReservationSet.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeReservationSet</a>&nbsp;reservation)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.27 use <a href="../../../spi/server/ISessionProtocol.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner,long)"><code>ISessionProtocol.sendLockOwnerRemappedNotification(CDOBranch, CDOLockOwner, CDOLockOwner, long)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendLockOwnerRemappedNotification(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner,long)" class="member-name-link">sendLockOwnerRemappedNotification</a><wbr>(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
+ <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner,
+ long&nbsp;lockModCount)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sends an owner remap with the sequence number assigned to this exact
+ change for the receiving session.</div>
+</div>
 </div>
 </section>
 </li>
@@ -462,15 +497,23 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOLockStateCache.</span><code><a href="../../../../spi/cdo/CDOLockStateCache.html#remapOwner(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">remapOwner</a><wbr>(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOSession.</span><code><a href="../../../../spi/cdo/InternalCDOSession.html#handleLockOwnerRemappedNotification(long,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">handleLockOwnerRemappedNotification</a><wbr>(long&nbsp;lockModCount,
+ <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../CDOLockDelta.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOLockStateCache.</span><code><a href="../../../../spi/cdo/CDOLockStateCache.html#removeOwner(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,java.util.function.Consumer)" class="member-name-link">removeOwner</a><wbr>(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<div class="col-last odd-row-color">
+<div class="block">Handles an owner remap while retaining its event-specific sequence number.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOLockStateCache.</span><code><a href="../../../../spi/cdo/CDOLockStateCache.html#remapOwner(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">remapOwner</a><wbr>(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
+ <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../CDOLockDelta.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOLockStateCache.</span><code><a href="../../../../spi/cdo/CDOLockStateCache.html#removeOwner(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.common.lock.CDOLockOwner,java.util.function.Consumer)" class="member-name-link">removeOwner</a><wbr>(<a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  <a href="../CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;owner,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;consumer)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

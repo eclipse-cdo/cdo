@@ -122,28 +122,44 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Releases the acquired lock.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOLock.html" title="interface in org.eclipse.emf.cdo">CDOLock</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLock()" class="member-name-link">getLock</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the lock represented by this acquired lock.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getObject()" class="member-name-link">getObject</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the object protected by this lock.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getOwners()" class="member-name-link">getOwners</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the owners of the lock.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.util.concurrent.IRWLockManager.LockType</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the lock type.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isLocked()" class="member-name-link">isLocked</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns whether the lock is held by the requesting view.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isLockedByOthers()" class="member-name-link">isLockedByOthers</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns whether the lock is held by another view.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isRecursive()" class="member-name-link">isRecursive</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns whether the lock was acquired recursively.</div>
+</div>
 </div>
 </div>
 </div>
@@ -162,48 +178,84 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 <section class="detail" id="getLock()">
 <h3>getLock</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOLock.html" title="interface in org.eclipse.emf.cdo">CDOLock</a></span>&nbsp;<span class="element-name">getLock</span>()</div>
+<div class="block">Returns the lock represented by this acquired lock.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the lock.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getObject()">
 <h3>getObject</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></span>&nbsp;<span class="element-name">getObject</span>()</div>
+<div class="block">Returns the object protected by this lock.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the locked object.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getType()">
 <h3>getType</h3>
 <div class="member-signature"><span class="return-type">org.eclipse.net4j.util.concurrent.IRWLockManager.LockType</span>&nbsp;<span class="element-name">getType</span>()</div>
+<div class="block">Returns the lock type.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the lock type.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getOwners()">
 <h3>getOwners</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&gt;</span>&nbsp;<span class="element-name">getOwners</span>()</div>
+<div class="block">Returns the owners of the lock.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the lock owners.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="isLocked()">
 <h3>isLocked</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isLocked</span>()</div>
+<div class="block">Returns whether the lock is held by the requesting view.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the lock is held by the requesting view.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="isLockedByOthers()">
 <h3>isLockedByOthers</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isLockedByOthers</span>()</div>
+<div class="block">Returns whether the lock is held by another view.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if another view holds the lock.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="isRecursive()">
 <h3>isRecursive</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isRecursive</span>()</div>
+<div class="block">Returns whether the lock was acquired recursively.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd><code>true</code> if the lock is recursive.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="close()">
 <h3>close</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()</div>
+<div class="block">Releases the acquired lock.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/AutoCloseable.html#close()" title="class or interface in java.lang" class="external-link">close</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code></dd>

@@ -119,7 +119,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="class-use/ICommitConflictResolver.html#org.eclipse.emf.cdo.server">ICommitConflictResolver</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Resolves conflicts detected while committing a transaction.</div>
+</div>
 <div class="col-first odd-row-color"><a href="class-use/InternalCommitContext.html#org.eclipse.emf.cdo.server">InternalCommitContext</a></div>
 <div class="col-last odd-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
@@ -196,9 +198,13 @@ loadScripts(document, 'script');</script>
 <div class="block">An optional extension of the <a href="IAppExtension.html" title="interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> interface for <a href="IAppExtension5.html#getName()"><code>named</code></a> app extensions.</div>
 </div>
 <div class="col-first even-row-color"><a href="class-use/IAuthenticationProtocol.html#org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Defines the server protocol operations used to authenticate a session.</div>
+</div>
 <div class="col-first odd-row-color"><a href="class-use/ICommitConflictResolver.html#org.eclipse.emf.cdo.spi.server">ICommitConflictResolver</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Resolves conflicts detected while committing a transaction.</div>
+</div>
 <div class="col-first even-row-color"><a href="class-use/InternalCommitContext.html#org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></div>
 <div class="col-last even-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
@@ -211,6 +217,22 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The type of the to-be-locked objects is either <a href="../../common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDOIDAndBranch</code></a> or <a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>, depending on whether
  branching is supported by the repository or not.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/InternalLockManager.LockChangeOperationResult.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeOperationResult</a></div>
+<div class="col-last odd-row-color">
+<div class="block">The generic lock-manager modification count and optional reservation produced by one operation.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/InternalLockManager.LockChangeReservationSet.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockChangeReservationSet</a></div>
+<div class="col-last even-row-color">
+<div class="block">An aggregate of per-session reservations for one lock change.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/InternalLockManager.LockStateQuery.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockStateQuery</a></div>
+<div class="col-last odd-row-color">
+<div class="block">A selective lock-state query paired with a session sequence baseline.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/InternalLockManager.LockStateSnapshot.html#org.eclipse.emf.cdo.spi.server">InternalLockManager.LockStateSnapshot</a></div>
+<div class="col-last even-row-color">
+<div class="block">A consistent lock-state snapshot for one session.</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/InternalQueryManager.html#org.eclipse.emf.cdo.spi.server">InternalQueryManager</a></div>
 <div class="col-last odd-row-color">
@@ -232,6 +254,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
+<div class="col-first even-row-color"><a href="class-use/InternalSession.LockChangeReservation.html#org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeReservation</a></div>
+<div class="col-last even-row-color">
+<div class="block">Represents a position reserved in this session's lock-change sequence.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/InternalSession.LockChangeResult.html#org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeResult</a></div>
+<div class="col-last odd-row-color">
+<div class="block">The session-specific result of a completed lock-change reservation.</div>
+</div>
 <div class="col-first even-row-color"><a href="class-use/InternalSessionManager.html#org.eclipse.emf.cdo.spi.server">InternalSessionManager</a></div>
 <div class="col-last even-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
@@ -245,9 +275,13 @@ loadScripts(document, 'script');</script>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/InternalTopic.html#org.eclipse.emf.cdo.spi.server">InternalTopic</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Provides the server-internal operations of a topic.</div>
+</div>
 <div class="col-first even-row-color"><a href="class-use/InternalTopicManager.html#org.eclipse.emf.cdo.spi.server">InternalTopicManager</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Provides the server-internal operations of a topic manager.</div>
+</div>
 <div class="col-first odd-row-color"><a href="class-use/InternalTransaction.html#org.eclipse.emf.cdo.spi.server">InternalTransaction</a></div>
 <div class="col-last odd-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
@@ -255,9 +289,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><a href="class-use/InternalTransaction.CommitAttempt.html#org.eclipse.emf.cdo.spi.server">InternalTransaction.CommitAttempt</a></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="class-use/InternalUnitManager.html#org.eclipse.emf.cdo.spi.server">InternalUnitManager</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Provides the server-internal operations of a unit manager.</div>
+</div>
 <div class="col-first even-row-color"><a href="class-use/InternalUnitManager.InternalObjectAttacher.html#org.eclipse.emf.cdo.spi.server">InternalUnitManager.InternalObjectAttacher</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Receives completion notification for object attachment during a commit.</div>
+</div>
 <div class="col-first odd-row-color"><a href="class-use/InternalView.html#org.eclipse.emf.cdo.spi.server">InternalView</a></div>
 <div class="col-last odd-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>

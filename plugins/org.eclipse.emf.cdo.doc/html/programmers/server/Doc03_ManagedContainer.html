@@ -1,0 +1,148 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>The Managed Container (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="The Managed Container (CDO Model Repository Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>The Managed Container</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc02_ServerApplicationAndStartup.html" title="Backward to CDO Server Application and Startup"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_ApplicationExtensions.html" title="Forward to Application Extensions"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ An <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IManagedContainer</code></a> is the CDO and Net4j registry for factories and named runtime elements. A factory is
+ addressed by its product group and type; an element also has a description. The container can create an element on
+ demand, retain one supplied by <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#putElement(java.lang.String,java.lang.String,java.lang.String,java.lang.Object)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.putElement(String, String, String, Object)</code></a>, and notify
+ container listeners when elements are added or removed.
+ <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#FactoriesAndElements" title="Chapter in CDO Model Repository Documentation">Factories, Product Groups, and Lookup</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#LifecycleAndConfiguration" title="Chapter in CDO Model Repository Documentation">Lifecycle and Configuration</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#Examples" title="Chapter in CDO Model Repository Documentation">Repository Lookup Example</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="FactoriesAndElements"></a>1&nbsp;&nbsp;Factories, Product Groups, and Lookup</h2>
+<p>
+ Register an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactory.html" title="Interface in org.eclipse.net4j.util.factory"><code>factory</code></a> before asking the container to create its product. Use
+ <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#getProductGroups()" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.getProductGroups()</code></a> and <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryTypes(java.lang.String)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.getFactoryTypes(String)</code></a> for discovery,
+ and use a component's factory constants rather than literal keys. Creation resolves the selected factory and its
+ dependencies; lookup can activate the resulting lifecycle object. Repositories use
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryFactory.html#PRODUCT_GROUP" title="Field in org.eclipse.emf.cdo.server.IRepositoryFactory"><code>RepositoryFactory.PRODUCT_GROUP</code></a> and are normally obtained with <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.getRepository(IManagedContainer, String)</code></a>.
+
+<h2><a name="LifecycleAndConfiguration"></a>2&nbsp;&nbsp;Lifecycle and Configuration</h2>
+<p>
+ A container is also a lifecycle object. Populate it before activation when possible, then let component activation
+ acquire dependencies. <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#loadElements(java.io.InputStream)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.loadElements(java.io.InputStream)</code></a> supports container
+ configuration; server XML configuration is normally handled by the repository configurator instead. Avoid sharing
+ mutable application objects under ambiguous descriptions, and remove or deactivate owned elements during teardown.
+
+<h2><a name="Examples"></a>3&nbsp;&nbsp;Repository Lookup Example</h2>
+<p>
+ This lookup reuses a repository already registered under its repository-factory identity. The returned repository
+ remains container-owned; an extension should remove listeners and handlers that it added before shutdown.
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Examples_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">FindRepository.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Examples_1')" id="max_Examples_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Examples_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Examples_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>CDOServerUtil.getRepository(container,&nbsp;repositoryName);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<p align="right">
+<a href="Doc02_ServerApplicationAndStartup.html" title="Backward to CDO Server Application and Startup"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_ApplicationExtensions.html" title="Forward to Application Extensions"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

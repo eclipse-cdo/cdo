@@ -167,7 +167,7 @@ function maximize(id)
 <tr><td></td><td>7.3&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#Doc_PassiveUpdateMode" title="Chapter in CDO Model Repository Documentation">Passive Update Mode</a></td></tr>
 <tr><td></td><td>7.4&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#LockNotificationEnabled" title="Chapter in CDO Model Repository Documentation">Lock Notification Enabled</a></td></tr>
 <tr><td></td><td>7.5&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#Doc_LockNotificationMode" title="Chapter in CDO Model Repository Documentation">Lock Notification Mode</a></td></tr>
-<tr><td></td><td>7.6&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#CollectionLoadingPolicy" title="Chapter in CDO Model Repository Documentation">Collection Loading Policy</a></td></tr>
+<tr><td></td><td>7.6&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#CollectionLoadingConfiguration" title="Chapter in CDO Model Repository Documentation">Collection Loading Configuration</a></td></tr>
 <tr><td></td><td>7.7&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#LargeObjectCache" title="Chapter in CDO Model Repository Documentation">Large Object Cache</a></td></tr>
 <tr><td></td><td>7.8&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#PermissionUpdater" title="Chapter in CDO Model Repository Documentation">Permission Updater</a></td></tr>
 <tr><td></td><td>7.9&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#DelegableViewLockEnabled" title="Chapter in CDO Model Repository Documentation">Delegable View Lock Enabled</a></td></tr>
@@ -213,12 +213,16 @@ function maximize(id)
             configuration.setRepositoryName(repositoryName);<br/>
             <br/>
             CDOSession&nbsp;session&nbsp;=&nbsp;configuration.openNet4jSession();<br/>
-            System.out.println(<font color="#2a00ff">&#34;Session&nbsp;opened&nbsp;for&nbsp;repository:&nbsp;&#34;&nbsp;</font>+&nbsp;session.getRepositoryInfo().getName());<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Session&nbsp;opened&nbsp;for&nbsp;repository:&nbsp;&#34;&nbsp;</font>+&nbsp;session.getRepositoryInfo().getName());<br/>
             <br/>
-            <font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;session...</font><br/>
-            <br/>
-            <font color="#3f7f5f">//&nbsp;Finally,&nbsp;close&nbsp;the&nbsp;session&nbsp;when&nbsp;done.</font><br/>
-            session.close();            </code>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;session...</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;session.close();<br/>
+            }            </code>
 
           </div>
         </div>
@@ -233,7 +237,7 @@ function maximize(id)
  connectors, refer to the <a href="Doc03_WorkingWithSessions.html#Net4jConnectors" title="Chapter in CDO Model Repository Documentation">Net4j Connectors</a> section or the <a href="../../../../org.eclipse.net4j.doc/html/Overview.html" title="Article in Net4j Signaling Platform Documentation">Net4j documentation</a>.
  <p>
  Also note that the repository must already exist on the server. For more information about
- repositories, refer to the <a href="../server/Architecture.html" title="Article in CDO Model Repository Documentation">Server Programming</a> section.
+ repositories, refer to <a href="../server/Doc05_CreatingAndConfiguringRepositories.html" title="Article in CDO Model Repository Documentation">Creating and Configuring Repositories</a>.
  <p>
  Once a session is opened, you can still change various options on it, such as enabling or
  disabling passive updates. For more information about session options, refer to the
@@ -246,7 +250,7 @@ function maximize(id)
  <p>
  Typically a Net4j connector is created and configured using a Net4j container. Within an Eclipse environment,
  the container is usually managed by the Eclipse extension registry. Such a container can be accessed using
- IPluginContainer.INSTANCE. In a non-Eclipse environment, you can create and manage the container
+ IManagedContainer.INSTANCE. In a non-Eclipse environment, you can create and manage the container
  programmatically. Refer to <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IManagedContainer</code></a> for more details.
  <p>
  The following example demonstrates how to set up a JVM connector within an Eclipse environment:
@@ -270,12 +274,14 @@ function maximize(id)
             <code>
             <font color="#3f7f5f">//&nbsp;Obtain&nbsp;the&nbsp;connector&nbsp;from&nbsp;the&nbsp;plugin&nbsp;container&nbsp;by&nbsp;its&nbsp;product&nbsp;group,&nbsp;factory&nbsp;type,&nbsp;and&nbsp;factory-specific</font><br/>
             <font color="#3f7f5f">//&nbsp;description.</font><br/>
-            IConnector&nbsp;connector&nbsp;=&nbsp;IPluginContainer.INSTANCE.getElementOrNull(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;jvm&#34;</font>,&nbsp;<font color="#2a00ff">&#34;acceptor1&#34;</font>);<br/>
+            IConnector&nbsp;connector&nbsp;=&nbsp;IManagedContainer.INSTANCE.getElementOrNull(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;jvm&#34;</font>,&nbsp;<font color="#2a00ff">&#34;acceptor1&#34;</font>);<br/>
             <br/>
-            <font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;connector&nbsp;to&nbsp;create&nbsp;and&nbsp;open&nbsp;a&nbsp;session...</font><br/>
+            CDONet4jSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;CDONet4jUtil.createNet4jSessionConfiguration();<br/>
+            configuration.setConnector(connector);<br/>
             <br/>
-            <font color="#3f7f5f">//&nbsp;Finally,&nbsp;close&nbsp;the&nbsp;connector&nbsp;when&nbsp;done.</font><br/>
-            connector.close();            </code>
+            <font color="#3f7f5f">//&nbsp;Set&nbsp;the&nbsp;repository&nbsp;name&nbsp;and&nbsp;open&nbsp;a&nbsp;session.&nbsp;The&nbsp;shared&nbsp;plugin&nbsp;container&nbsp;owns&nbsp;this&nbsp;connector.</font><br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;The&nbsp;shared&nbsp;plugin&nbsp;container&nbsp;owns&nbsp;this&nbsp;connector.&nbsp;Do&nbsp;not&nbsp;close&nbsp;it&nbsp;from&nbsp;this&nbsp;client&nbsp;code.</font>            </code>
 
           </div>
         </div>
@@ -305,21 +311,23 @@ function maximize(id)
         <div id="editor_content_1_Net4jConnectors_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_Net4jConnectors_2" style="padding:8px;">
             <code>
-            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createContainer();<br/>
-            ContainerUtil.prepareContainer(container);&nbsp;<font color="#3f7f5f">//&nbsp;Register&nbsp;basic&nbsp;Net4j&nbsp;factories.</font><br/>
-            TCPUtil.prepareContainer(container);&nbsp;<font color="#3f7f5f">//&nbsp;Register&nbsp;TCP&nbsp;connector&nbsp;factory.</font><br/>
-            container.activate();<br/>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Obtain&nbsp;the&nbsp;connector&nbsp;from&nbsp;the&nbsp;container&nbsp;by&nbsp;its&nbsp;product&nbsp;group,&nbsp;factory&nbsp;type,&nbsp;and&nbsp;factory-specific</font><br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;description.</font><br/>
+            &nbsp;&nbsp;IConnector&nbsp;connector&nbsp;=&nbsp;container.getElementOrNull(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;tcp&#34;</font>,&nbsp;<font color="#2a00ff">&#34;localhost:2036&#34;</font>);<br/>
             <br/>
-            <font color="#3f7f5f">//&nbsp;Obtain&nbsp;the&nbsp;connector&nbsp;from&nbsp;the&nbsp;container&nbsp;by&nbsp;its&nbsp;product&nbsp;group,&nbsp;factory&nbsp;type,&nbsp;and&nbsp;factory-specific&nbsp;description.</font><br/>
-            IConnector&nbsp;connector&nbsp;=&nbsp;container.getElementOrNull(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;tcp&#34;</font>,&nbsp;<font color="#2a00ff">&#34;localhost:2036&#34;</font>);<br/>
+            &nbsp;&nbsp;CDONet4jSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;CDONet4jUtil.createNet4jSessionConfiguration();<br/>
+            &nbsp;&nbsp;configuration.setConnector(connector);<br/>
             <br/>
-            <font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;connector&nbsp;to&nbsp;create&nbsp;and&nbsp;open&nbsp;a&nbsp;session...</font><br/>
-            <br/>
-            <font color="#3f7f5f">//&nbsp;Finally,&nbsp;close&nbsp;the&nbsp;connector&nbsp;when&nbsp;done.</font><br/>
-            connector.close();<br/>
-            <br/>
-            <font color="#3f7f5f">//&nbsp;Deactivate&nbsp;the&nbsp;container&nbsp;when&nbsp;done.</font><br/>
-            container.deactivate();            </code>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Set&nbsp;the&nbsp;repository&nbsp;name&nbsp;and&nbsp;open&nbsp;a&nbsp;session.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Deactivate&nbsp;the&nbsp;application-owned&nbsp;container;&nbsp;it&nbsp;deactivates&nbsp;the&nbsp;connector.</font><br/>
+            &nbsp;&nbsp;container.deactivate();<br/>
+            }            </code>
 
           </div>
         </div>
@@ -342,7 +350,7 @@ function maximize(id)
  appropriate credentials. If the credentials are valid, the server allows the session to be opened; otherwise,
  the session opening fails.
  <p>
- Here is an example of how to configure a session with fixed credentials:
+ Here is an example of how to configure a session with application-supplied credentials:
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -361,7 +369,7 @@ function maximize(id)
         <div id="editor_content_1_AuthenticationAndSecurity_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_AuthenticationAndSecurity_1" style="padding:8px;">
             <code>
-            IPasswordCredentialsProvider&nbsp;credentialsProvider&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>PasswordCredentialsProvider(<font color="#2a00ff">&#34;userID&#34;</font>,&nbsp;<font color="#2a00ff">&#34;password&#34;</font>);<br/>
+            IPasswordCredentialsProvider&nbsp;credentialsProvider&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>PasswordCredentialsProvider(userID,&nbsp;password);<br/>
             <br/>
             CDONet4jSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;CDONet4jUtil.createNet4jSessionConfiguration();<br/>
             configuration.setCredentialsProvider(credentialsProvider);            </code>
@@ -411,6 +419,8 @@ function maximize(id)
  <p>
  The actual password is transmitted securely using a cryptographically strong protocol called <i>Diffie-Hellman Key Exchange</i>.
  It is not sent over the network in clear text, but is restored to clear text on the server side for verification.
+ Server-side authentication and authorization customization is covered in
+ <a href="../server/Doc08_SecurityQueriesAndSpecializedExtensions.html" title="Article in CDO Model Repository Documentation">Security, Queries, and Specialized Extensions</a>.
 
 <h3><a name="RecoveringFromDisconnects"></a>1.4&nbsp;&nbsp;Recovering from Disconnects</h3>
 <p>
@@ -440,7 +450,7 @@ function maximize(id)
         <div id="editor_content_1_RecoveringFromDisconnects_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_RecoveringFromDisconnects_1" style="padding:8px;">
             <code>
-            IManagedContainer&nbsp;container&nbsp;=&nbsp;IPluginContainer.INSTANCE;<br/>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;IManagedContainer.INSTANCE;<br/>
             <br/>
             ReconnectingCDOSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;<font color="#3f7f5f">//</font><br/>
             &nbsp;&nbsp;&nbsp;&nbsp;CDONet4jUtil.createReconnectingSessionConfiguration(hostAndPort,&nbsp;repositoryName,&nbsp;container);<br/>
@@ -490,7 +500,7 @@ function maximize(id)
         <div id="editor_content_1_RecoveringFromDisconnects_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_RecoveringFromDisconnects_2" style="padding:8px;">
             <code>
-            IManagedContainer&nbsp;container&nbsp;=&nbsp;IPluginContainer.INSTANCE;<br/>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;IManagedContainer.INSTANCE;<br/>
             <br/>
             FailoverCDOSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;<font color="#3f7f5f">//</font><br/>
             &nbsp;&nbsp;&nbsp;&nbsp;CDONet4jUtil.createFailoverSessionConfiguration(monitorConnectorDescription,&nbsp;repositoryGroup,&nbsp;container);<br/>
@@ -1391,7 +1401,7 @@ function maximize(id)
  implementing version control tools, custom synchronization, or replication logic.
  <p>
  The combination of ID, branch, and version uniquely identifies a revision within the repository. Hence the
- <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,int,boolean)" title="Method in org.eclipse.emf.cdo.common.revision.CDORevisionManager"><code>getRevisionByVersion()</code></a> method
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.html#getRevisionByVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)" title="Method in org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request"><code>getRevisionByVersion()</code></a> method
  can be used to retrieve a specific revision:
  
 
@@ -1414,10 +1424,9 @@ function maximize(id)
             CDOID&nbsp;rootResourceID&nbsp;=&nbsp;session.getRepositoryInfo().getRootResourceID();<br/>
             CDOBranch&nbsp;mainBranch&nbsp;=&nbsp;session.getBranchManager().getMainBranch();<br/>
             CDOBranchVersion&nbsp;firstVersion&nbsp;=&nbsp;mainBranch.getVersion(CDOBranchVersion.FIRST_VERSION);<br/>
-            <font color="#7f0055"><b>boolean&nbsp;</b></font>loadOnDemand&nbsp;=&nbsp;<font color="#7f0055"><b>true</b></font>;&nbsp;<font color="#3f7f5f">//&nbsp;Set&nbsp;to&nbsp;false&nbsp;to&nbsp;only&nbsp;consider&nbsp;locally&nbsp;cached&nbsp;revisions.</font><br/>
-            <br/>
             CDORevisionManager&nbsp;revisionManager&nbsp;=&nbsp;session.getRevisionManager();<br/>
-            CDORevision&nbsp;firstRevision&nbsp;=&nbsp;revisionManager.getRevisionByVersion(rootResourceID,&nbsp;firstVersion,&nbsp;CDORevision.UNCHUNKED,&nbsp;loadOnDemand);<br/>
+            CDORevisionManager.Request&nbsp;request&nbsp;=&nbsp;revisionManager.request().lookupCacheThenLoader();<br/>
+            CDORevision&nbsp;firstRevision&nbsp;=&nbsp;request.getRevisionByVersion(rootResourceID,&nbsp;firstVersion);<br/>
             System.out.println(<font color="#2a00ff">&#34;First&nbsp;revision&nbsp;found:&nbsp;&#34;&nbsp;</font>+&nbsp;firstRevision);            </code>
 
           </div>
@@ -1454,10 +1463,9 @@ function maximize(id)
             CDOID&nbsp;rootResourceID&nbsp;=&nbsp;session.getRepositoryInfo().getRootResourceID();<br/>
             CDOBranch&nbsp;mainBranch&nbsp;=&nbsp;session.getBranchManager().getMainBranch();<br/>
             CDOBranchPoint&nbsp;tenSecondsAgo&nbsp;=&nbsp;mainBranch.getPoint(System.currentTimeMillis()&nbsp;-&nbsp;<font color="#990000">10000</font>);&nbsp;<font color="#3f7f5f">//&nbsp;10&nbsp;seconds&nbsp;ago</font><br/>
-            <font color="#7f0055"><b>boolean&nbsp;</b></font>loadOnDemand&nbsp;=&nbsp;<font color="#7f0055"><b>true</b></font>;&nbsp;<font color="#3f7f5f">//&nbsp;Set&nbsp;to&nbsp;false&nbsp;to&nbsp;only&nbsp;consider&nbsp;locally&nbsp;cached&nbsp;revisions.</font><br/>
-            <br/>
             CDORevisionManager&nbsp;revisionManager&nbsp;=&nbsp;session.getRevisionManager();<br/>
-            CDORevision&nbsp;oldRevision&nbsp;=&nbsp;revisionManager.getRevision(rootResourceID,&nbsp;tenSecondsAgo,&nbsp;CDORevision.UNCHUNKED,&nbsp;CDORevision.DEPTH_NONE,&nbsp;loadOnDemand);<br/>
+            CDORevisionManager.Request&nbsp;request&nbsp;=&nbsp;revisionManager.request().lookupCacheThenLoader();<br/>
+            CDORevision&nbsp;oldRevision&nbsp;=&nbsp;request.getRevision(rootResourceID,&nbsp;tenSecondsAgo);<br/>
             System.out.println(<font color="#2a00ff">&#34;Old&nbsp;revision&nbsp;found:&nbsp;&#34;&nbsp;</font>+&nbsp;oldRevision);            </code>
 
           </div>
@@ -1470,7 +1478,7 @@ function maximize(id)
 
  <p>
  The revision manager also supports bulk loading of revisions using the
- <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html#getRevisions(java.util.List<org.eclipse.emf.cdo.common.id.CDOID>,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,int,boolean)" title="Method in org.eclipse.emf.cdo.common.revision.CDORevisionManager"><code>getRevisions()</code></a> method. Here is an example:
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.Request.html#getRevisions(java.util.List<org.eclipse.emf.cdo.common.id.CDOID>,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" title="Method in org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request"><code>getRevisions()</code></a> method. Here is an example:
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -1501,7 +1509,7 @@ function maximize(id)
             &nbsp;&nbsp;CDOBranchPoint&nbsp;head&nbsp;=&nbsp;session.getBranchManager().getMainBranch().getHead();<br/>
             <br/>
             &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Collect&nbsp;available&nbsp;revisions&nbsp;from&nbsp;the&nbsp;local&nbsp;cache&nbsp;and&nbsp;load&nbsp;missing&nbsp;ones&nbsp;from&nbsp;the&nbsp;repository&nbsp;in&nbsp;one&nbsp;batch.</font><br/>
-            &nbsp;&nbsp;List&lt;CDORevision&gt;&nbsp;revisions&nbsp;=&nbsp;revisionManager.getRevisions(ids,&nbsp;head,&nbsp;CDORevision.UNCHUNKED,&nbsp;CDORevision.DEPTH_NONE,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            &nbsp;&nbsp;List&lt;CDORevision&gt;&nbsp;revisions&nbsp;=&nbsp;revisionManager.request().getRevisions(ids,&nbsp;head);<br/>
             &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Revisions&nbsp;found:&nbsp;&#34;&nbsp;</font>+&nbsp;revisions);<br/>
             }            </code>
 
@@ -3063,20 +3071,19 @@ function maximize(id)
  <p>
  API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.getLockNotificationMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setLockNotificationMode(LockNotificationMode)</code></a>
 
-<h3><a name="CollectionLoadingPolicy"></a>7.6&nbsp;&nbsp;Collection Loading Policy</h3>
+<h3><a name="CollectionLoadingConfiguration"></a>7.6&nbsp;&nbsp;Collection Loading Configuration</h3>
 <p>
  Defines how large collections are loaded (e.g., all at once or in chunks).
  Collection loading can impact performance and memory usage. A collection loading policy helps balance
  performance and memory consumption when dealing with large collections.
  <p>
- You can create custom policies by calling <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#createCollectionLoadingPolicy(int,int)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>createCollectionLoadingPolicy(int, int)</code></a>
- with your desired initial chunk size and resolve chunk size. The initial chunk size defines how many elements are loaded
- when the collection is first accessed. The resolve chunk size defines how many additional elements are loaded
- when more elements in the collection are accessed. A smaller chunk size reduces memory consumption but may require
- more network round-trips. A larger chunk size improves performance but increases memory usage. The optimal chunk sizes
- depend on your application's access patterns and resource constraints.
+ Use the current <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDOCollectionLoadingConfig.html" title="Class in org.eclipse.emf.cdo.common.revision"><code>CDOCollectionLoadingConfig</code></a> API to configure partial loading with an initial chunk size and
+ resolve chunk size. The initial chunk size defines how many elements are loaded when the collection is first accessed;
+ the resolve chunk size defines how many additional elements are loaded when more elements are accessed. A smaller
+ chunk size reduces memory consumption but may require more network round-trips. A larger chunk size improves performance
+ but increases memory usage. The optimal chunk sizes depend on the application's access patterns and resource constraints.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getCollectionLoadingPolicy()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getCollectionLoadingPolicy()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setCollectionLoadingPolicy(CDOCollectionLoadingPolicy)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getCollectionLoadingConfig()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getCollectionLoadingConfig()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingConfig(org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setCollectionLoadingConfig(CDOCollectionLoadingConfig)</code></a>
 
 <h3><a name="LargeObjectCache"></a>7.7&nbsp;&nbsp;Large Object Cache</h3>
 <p>
@@ -3101,8 +3108,10 @@ function maximize(id)
 <h3><a name="DelegableViewLockEnabled"></a>7.9&nbsp;&nbsp;Delegable View Lock Enabled</h3>
 <p>
  Specifies whether the session supports delegable view locks. All view methods
- are protected from concurrent access by the view's <i>view lock</i>. By default, the view lock is the constant object
- returned by <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getViewLock()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getViewLock()</code></a>. This lock is reentrant, but it is not delegable. This means that if a thread
+ are protected from concurrent access by the view's internal reentrant <i>view lock</i>. The deprecated
+ <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getViewLock()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getViewLock()</code></a> accessor exposes that lock only when
+ <code>-Dorg.eclipse.emf.cdo.view.ENABLE_LEGACY_LOCKING_API=true</code> is set; use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a> for
+ supported synchronization. By default, the view lock is non-fair and not delegable. This means that if a thread
  holds the view lock and <b>calls</b> a method that tries to acquire the same view lock again, it will succeed. However,
  if the thread that holds the view lock schedules a task to be executed asynchronously (e.g., using
  <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html#syncExec(java.lang.Runnable)" target="_blank" title="Method in org.eclipse.swt.widgets.Display"><code>Display.syncExec(Runnable)</code></a>) and waits for its completion, the task will not be able
@@ -3113,7 +3122,7 @@ function maximize(id)
  Hence, it can <b>delegate</b> the lock to another thread.
  <p>
  When delegable view locks are enabled, the view locks become instances of <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="Class in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a>,
- which uses <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.html" title="Interface in org.eclipse.net4j.util.concurrent.DelegableReentrantLock"><code>DelegateDetector</code></a>s that are contributed to <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IPluginContainer.html#INSTANCE" title="Field in org.eclipse.net4j.util.container.IPluginContainer"><code>IPluginContainer.INSTANCE</code></a> in order
+ which uses <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.html" title="Interface in org.eclipse.net4j.util.concurrent.DelegableReentrantLock"><code>DelegateDetector</code></a>s that are contributed to <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IPluginContainer.html#INSTANCE" title="Field in org.eclipse.net4j.util.container.IPluginContainer"><code>IManagedContainer.INSTANCE</code></a> in order
  to decide whether a thread is allowed to delegate its lock to another thread.
  The <code>org.eclipse.net4j.util.ui</code> plug-in contributes a
  <code>org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector</code> that allows

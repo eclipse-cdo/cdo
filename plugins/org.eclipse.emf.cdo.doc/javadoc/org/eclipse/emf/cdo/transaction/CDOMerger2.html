@@ -136,7 +136,9 @@ extends <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transac
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.view.CDOView,java.util.Set)" class="member-name-link">merge</a><wbr>(<a href="CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;localTransaction,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;remoteView,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Merges the affected objects from a remote view into a local transaction.</div>
+</div>
 </div>
 </div>
 </div>
@@ -179,9 +181,14 @@ extends <a href="CDOMerger.html" title="interface in org.eclipse.emf.cdo.transac
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;remoteView,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;affectedIDs)</span>
     throws <span class="exceptions"><a href="CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction">CDOMerger.ConflictException</a></span></div>
+<div class="block">Merges the affected objects from a remote view into a local transaction.</div>
 <dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>localTransaction</code> - the transaction to update.</dd>
+<dd><code>remoteView</code> - the view supplying the remote changes.</dd>
+<dd><code>affectedIDs</code> - the IDs whose changes are to be merged.</dd>
 <dt>Throws:</dt>
-<dd><code><a href="CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction">CDOMerger.ConflictException</a></code></dd>
+<dd><code><a href="CDOMerger.ConflictException.html" title="class in org.eclipse.emf.cdo.transaction">CDOMerger.ConflictException</a></code> - if the changes cannot be merged without conflicts.</dd>
 </dl>
 </section>
 </li>

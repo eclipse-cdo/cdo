@@ -56,8 +56,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
-
 import org.eclipse.net4j.signal.EntityRequest;
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.Request;
@@ -816,8 +814,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
       if (!lockStates.isEmpty())
       {
         List<CDOLockState> capturedLockStates = List.copyOf(lockStates);
-        CDOSessionImpl sessionImpl = (CDOSessionImpl)session;
-        sessionImpl.enqueueLockStateQuery(lockModCount, () -> sessionImpl.applyLockStateQuery(lockModCount, branch, capturedLockStates));
+        session.enqueueLockStateQuery(lockModCount, () -> session.applyLockStateQuery(lockModCount, branch, capturedLockStates));
       }
     }
   }

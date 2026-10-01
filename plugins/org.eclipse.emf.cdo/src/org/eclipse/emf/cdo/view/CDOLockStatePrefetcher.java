@@ -21,7 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -272,8 +272,8 @@ public class CDOLockStatePrefetcher
             List<CDOLockState> capturedStates = new ArrayList<>(queryCacheStates);
             long lockModCount = queryResult.getLockModCount();
 
-            CDOSessionImpl sessionImpl = (CDOSessionImpl)view.getSession();
-            if (sessionImpl.enqueueLockStateQuery(lockModCount, () -> sessionImpl.applyLockStateQuery(lockModCount, view.getBranch(), capturedStates)))
+            InternalCDOSession session = view.getSession();
+            if (session.enqueueLockStateQuery(lockModCount, () -> session.applyLockStateQuery(lockModCount, view.getBranch(), capturedStates)))
             {
               updateLockStates(additionalLockStates, false);
               break;

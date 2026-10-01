@@ -511,13 +511,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return lockChangeSequencer.getCurrentLockModCount();
   }
 
-  /**
-   * Applies a server-authoritative lock change at its session sequence position.
-   *
-   * @param lockModCount the positive server lock modification count
-   * @param action the cache and event update for this count
-   * @param wait whether to wait for this count to be applied
-   */
+  @Override
   public void sequenceLockChange(long lockModCount, Runnable action, boolean wait)
   {
     if (wait)
@@ -549,12 +543,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
   }
 
-  /**
-   * Enqueues a lock change without starting the drainer. This is used while a caller still holds view Access.
-   *
-   * @param lockModCount the positive server lock modification count
-   * @param action the cache and event update for this count
-   */
+  @Override
   public void enqueueLockChange(long lockModCount, Runnable action)
   {
     lockChangeSequencer.enqueue(lockModCount, action);
@@ -562,6 +551,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   /**
    * Enqueues a lock change and schedules the drainer on the session executor.
+   * <p>
+   * Called directly from tests!
    *
    * @param lockModCount the positive server lock modification count
    * @param action the cache and event update for this count
@@ -577,9 +568,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     getExecutorService().submit(lockChangeSequencer::drain);
   }
 
-  /**
-   * Registers a query cache update at its captured session sequence boundary.
-   */
+  @Override
   public boolean enqueueLockStateQuery(long lockModCount, Runnable action)
   {
     if (lockModCount == CDOSessionProtocol.UNSPECIFIED_LOCK_MOD_COUNT)
@@ -602,17 +591,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return true;
   }
 
-  /**
-   * Applies states captured by a lock-state query.
-   * <p>
-   * Cache updates tied to an explicit sequence baseline must fail fast so that the lock change sequencer can request
-   * an authoritative snapshot. Results with an unspecified compatibility baseline retain the historical
-   * best-effort cache behavior.
-   *
-   * @param lockModCount the baseline reported by the query
-   * @param branch the branch whose cache entries are updated
-   * @param lockStates the lock states captured by the query
-   */
+  @Override
   public void applyLockStateQuery(long lockModCount, CDOBranch branch, Collection<? extends CDOLockState> lockStates)
   {
     if (lockModCount == CDOSessionProtocol.UNSPECIFIED_LOCK_MOD_COUNT)
@@ -629,6 +608,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    *
    * @param lockModCount the positive server lock modification count
    */
+  @Override
   public void awaitLockChange(long lockModCount)
   {
     try

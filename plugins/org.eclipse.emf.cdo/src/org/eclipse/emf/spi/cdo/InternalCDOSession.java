@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
@@ -49,6 +50,7 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -82,18 +84,6 @@ public interface InternalCDOSession
    * @since 4.15
    */
   public CDOLockStateCache getLockStateCache();
-
-  /**
-   * @since 4.31
-   *
-   * Returns the effective legacy initial collection-loading chunk size.
-   *
-   * @return the effective legacy initial chunk size.
-   */
-  public default int getEffectiveLegacyCollectionLoadingInitialChunkSize()
-  {
-    return CDORevision.UNCHUNKED;
-  }
 
   /**
    * @since 4.2
@@ -209,6 +199,61 @@ public interface InternalCDOSession
   public void resetCredentials(String userID);
 
   public void viewDetached(InternalCDOView view);
+
+  /**
+   * Processes a lock change at its server-assigned sequence position.
+   *
+   * @param lockModCount the positive server lock modification count
+   * @param action the cache and event update for this count
+   * @param wait whether to wait for this count to be applied
+   * @since 4.31
+   */
+  public void sequenceLockChange(long lockModCount, Runnable action, boolean wait);
+
+  /**
+   * Enqueues a lock change without starting the drainer. This is used while a caller still holds view access.
+   *
+   * @param lockModCount the positive server lock modification count
+   * @param action the cache and event update for this count
+   * @since 4.31
+   */
+  public void enqueueLockChange(long lockModCount, Runnable action);
+
+  /**
+   * Drains and waits until the given lock change has completed.
+   *
+   * @param lockModCount the positive server lock modification count
+   * @since 4.31
+   */
+  public void awaitLockChange(long lockModCount);
+
+  /**
+   * Registers a lock-state query update at its captured session sequence boundary.
+   *
+   * @param lockModCount the lock modification count captured by the query
+   * @param action the cache update to apply at that sequence boundary
+   * @return {@code true} if the query result was accepted, or {@code false} if a newer sequence was already applied
+   * @since 4.31
+   */
+  public boolean enqueueLockStateQuery(long lockModCount, Runnable action);
+
+  /**
+   * Applies lock states captured by a lock-state query.
+   *
+   * @param lockModCount the baseline reported by the query
+   * @param branch the branch whose cache entries are updated
+   * @param lockStates the lock states captured by the query
+   * @since 4.31
+   */
+  public void applyLockStateQuery(long lockModCount, CDOBranch branch, Collection<? extends CDOLockState> lockStates);
+
+  /**
+   * Returns the effective legacy initial collection-loading chunk size.
+   *
+   * @return the effective legacy initial chunk size.
+   * @since 4.31
+   */
+  public int getEffectiveLegacyCollectionLoadingInitialChunkSize();
 
   /**
    * @since 3.0

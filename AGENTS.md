@@ -1,35 +1,16 @@
-## Maven / Tycho Validation
+## Avoid unjustified implementation downcasts
 
-Maven/Tycho is **not** the default validation path for normal CDO development tasks.
+Production code should use API/SPI abstractions where they represent a real architectural boundary. Do not downcast such abstractions merely to reach implementation-specific functionality that properly belongs on that abstraction.
 
-When the Eclipse MCP server is available, use Eclipse/JDT/PDE MCP for routine compilation/build-state verification and Eclipse MCP JUnit for focused test execution.
+However, do not introduce new `Internal*` interfaces, SPI methods, adapters, or other abstraction layers solely to eliminate a downcast. Within implementation code, a downcast to a concrete implementation class is acceptable when the concrete type is an intentional implementation invariant or when the collaborating classes are inherently implementation-specific.
 
-Do **not** invoke Maven/Tycho merely to:
-- compile or validate Java changes;
-- check affected projects;
-- inspect PDE/OSGi resolution;
-- run ordinary CDO unit/integration tests.
+When deciding, prefer the simplest architecture that reflects the actual ownership and coupling:
 
-Use Maven/Tycho only when:
-- the user explicitly requests Maven/Tycho or CI-equivalent validation;
-- the task specifically concerns the Tycho build, target definition, features, sites, packaging, publishing, or other Maven/Tycho-specific behavior;
-- a final broad CI-equivalent build has been explicitly requested.
+- Fix or extend an existing abstraction when the required capability conceptually belongs to that abstraction and is useful beyond one implementation-specific caller.
+- Keep implementation-specific collaboration concrete when introducing an abstraction would only mirror implementation details or serve a single tightly coupled implementation path.
+- Tests may freely use and downcast to concrete implementation classes. Do not add production API/SPI solely for tests.
 
-The rules below apply only after Maven/Tycho has intentionally been selected by one of these criteria. They do not themselves authorize starting Maven/Tycho.
-
-- CDO is a Tycho/PDE reactor build using Java 21. Never invoke Maven directly from an individual bundle.
-- Start focused builds from `releng/org.eclipse.emf.cdo.releng.parent/pom.xml`.
-- Every focused reactor must include `org.eclipse.emf.cdo:org.eclipse.emf.cdo.releng.tp`.
-- Maven `-am` does not resolve OSGi dependencies (`Require-Bundle`, `Import-Package`, `Fragment-Host`). Do not assume that it provides the required bundle closure.
-- Always use full `groupId:artifactId` selectors; artifact-only selectors can be ambiguous between plugins and features.
-- When the required in-repository OSGi closure is small and obvious, build that closure with `-pl ... -am -DskipTests package`.
-- Otherwise prefer the reliable plugin-only reactor using the target definition plus `org.eclipse.emf.cdo:org.eclipse.emf.cdo.plugins -amd -DskipTests package` rather than spending excessive effort deriving the closure.
-- Use `-amd` with the plugins aggregator only; do not treat `-amd` on an individual bundle as OSGi downstream-impact analysis.
-- Tycho tests require `verify` and an explicit `CDO_TESTS` value. `IntegrationTests` is the normal CI suite.
-- Only `org.eclipse.emf.cdo.tests`, `org.eclipse.emf.cdo.tests.db`, and `org.eclipse.emf.cdo.tests.lm` execute tests through Maven; other test bundles are compile-only under Maven.
-- `CDO_TESTS` supports class/prefix selection but not individual test methods.
-- Maven is configured to ignore test failures. Always inspect current `target/surefire-reports/TEST-*.xml`; a successful Maven exit code alone does not prove that tests passed.
-- Use a root `clean verify` only for broad/build/target/feature/site changes or final CI-equivalent verification.
+Do not hide questionable casts behind helpers, reflection, or artificial interfaces. The goal is correct abstraction boundaries, not elimination of casts as such.
 
 ## CDO Native/Legacy Model Compatibility in Tests
 

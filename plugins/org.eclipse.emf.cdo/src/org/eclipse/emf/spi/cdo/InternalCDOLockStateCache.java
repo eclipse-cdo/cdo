@@ -35,5 +35,13 @@ public interface InternalCDOLockStateCache extends CDOLockStateCache
    */
   public void addLockStatesStrict(CDOBranch branch, Collection<? extends CDOLockState> lockStates);
 
+  /**
+   * Replaces the cached lock states with the given authoritative snapshot.
+   * <p>
+   * Existing cached lock states are cleared before the supplied states are added. This operation is used to restore
+   * the cache after a sequence gap, when incremental updates can no longer be applied reliably.
+   *
+   * @param lockStates the complete lock-state snapshot to install
+   */
   public void replaceSnapshot(Collection<? extends CDOLockState> lockStates);
 }

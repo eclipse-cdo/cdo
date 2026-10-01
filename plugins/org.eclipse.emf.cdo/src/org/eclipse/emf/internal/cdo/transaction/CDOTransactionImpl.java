@@ -153,7 +153,6 @@ import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapper;
 import org.eclipse.emf.internal.cdo.query.CDOQueryImpl;
 import org.eclipse.emf.internal.cdo.session.CDOCollectionLoadingResolver;
-import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.util.CommitIntegrityCheck;
 import org.eclipse.emf.internal.cdo.util.CompletePackageClosure;
 import org.eclipse.emf.internal.cdo.util.IPackageClosure;
@@ -2394,7 +2393,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     long lockModCount = pendingLockChangeCount;
     if (lockModCount > 0L)
     {
-      ((CDOSessionImpl)getSession()).awaitLockChange(lockModCount);
+      getSession().awaitLockChange(lockModCount);
       pendingLockChangeCount = 0L;
     }
   }
@@ -2406,7 +2405,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       return false;
     }
 
-    ((CDOSessionImpl)getSession()).enqueueLockChange(lockModCount, action);
+    getSession().enqueueLockChange(lockModCount, action);
     recordPendingLockChangeCount(lockModCount);
     return true;
   }
@@ -6549,7 +6548,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           {
             if (lockModCount > 0L)
             {
-              ((CDOSessionImpl)session).enqueueLockChange(lockModCount, () -> {
+              session.enqueueLockChange(lockModCount, () -> {
                 lockCacheUpdate.run();
                 notifyLockChanges(unlockChangeInfo);
               });
@@ -6596,7 +6595,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
           if (lockModCount > 0L)
           {
-            ((CDOSessionImpl)session).enqueueLockChange(lockModCount, lockCacheUpdate);
+            session.enqueueLockChange(lockModCount, lockCacheUpdate);
           }
           else
           {

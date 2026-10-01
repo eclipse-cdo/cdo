@@ -81,7 +81,6 @@ import org.eclipse.emf.internal.cdo.object.CDODeltaNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDOInvalidationNotificationImpl;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 import org.eclipse.emf.internal.cdo.object.CDOObjectWrapperBase;
-import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.util.AbstractLocksChangedEvent;
@@ -547,7 +546,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
 
       if (!(this instanceof CDOTransactionImpl) || !((CDOTransactionImpl)this).deferLockChangeWait(lockModCount, action))
       {
-        ((CDOSessionImpl)session).sequenceLockChange(lockModCount, action, true);
+        session.sequenceLockChange(lockModCount, action, true);
       }
     }
     else if (!ObjectUtil.isEmpty(resultLockDeltas))
@@ -765,7 +764,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
 
       if (!(this instanceof CDOTransactionImpl) || !((CDOTransactionImpl)this).deferLockChangeWait(lockModCount, action))
       {
-        ((CDOSessionImpl)session).sequenceLockChange(lockModCount, action, true);
+        session.sequenceLockChange(lockModCount, action, true);
       }
     }
     else if (!ObjectUtil.isEmpty(resultLockDeltas))
@@ -934,7 +933,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   {
     if (lockModCount > 0L)
     {
-      ((CDOSessionImpl)session).sequenceLockChange(lockModCount, action == null ? NOOP_ACTION : action, true);
+      session.sequenceLockChange(lockModCount, action == null ? NOOP_ACTION : action, true);
     }
     else if (action != null)
     {
@@ -1016,8 +1015,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
           List<CDOLockState> loadedLockStates = result.getLockStates();
           long lockModCount = result.getLockModCount();
 
-          CDOSessionImpl sessionImpl = (CDOSessionImpl)session;
-          if (sessionImpl.enqueueLockStateQuery(lockModCount, () -> sessionImpl.applyLockStateQuery(lockModCount, branch, loadedLockStates)))
+          if (session.enqueueLockStateQuery(lockModCount, () -> session.applyLockStateQuery(lockModCount, branch, loadedLockStates)))
           {
             break;
           }

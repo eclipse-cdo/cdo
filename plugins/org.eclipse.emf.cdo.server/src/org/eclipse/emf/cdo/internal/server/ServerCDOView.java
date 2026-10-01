@@ -1614,6 +1614,42 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    public void sequenceLockChange(long lockModCount, Runnable action, boolean wait)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void enqueueLockChange(long lockModCount, Runnable action)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void awaitLockChange(long lockModCount)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean enqueueLockStateQuery(long lockModCount, Runnable action)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void applyLockStateQuery(long lockModCount, CDOBranch branch, Collection<? extends CDOLockState> lockStates)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getEffectiveLegacyCollectionLoadingInitialChunkSize()
+    {
+      return 0;
+    }
+
+    @Override
     public CDOSession getContainer()
     {
       throw new UnsupportedOperationException();

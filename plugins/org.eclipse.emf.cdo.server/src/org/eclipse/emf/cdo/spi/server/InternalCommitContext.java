@@ -170,10 +170,7 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
    *
    * @since 4.27
    */
-  public default long getLockModCount()
-  {
-    return 0L;
-  }
+  public long getLockModCount();
 
   /**
    * @since 4.5

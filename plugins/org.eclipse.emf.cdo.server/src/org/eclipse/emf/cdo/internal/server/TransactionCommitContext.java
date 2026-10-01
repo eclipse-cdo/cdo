@@ -1887,7 +1887,7 @@ public class TransactionCommitContext implements InternalCommitContext
           if (lockChangeReservation != null && transaction.getSession() instanceof Session)
           {
             LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = lockChangeReservation.getResult((Session)transaction.getSession());
-            lockModCount = result == null ? 0L : result.getLockModCount();
+            lockModCount = result.getLockModCount();
           }
         }
         catch (RuntimeException | Error ex)

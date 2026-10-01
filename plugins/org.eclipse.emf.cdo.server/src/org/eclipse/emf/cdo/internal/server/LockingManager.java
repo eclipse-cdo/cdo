@@ -540,8 +540,10 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 
       if (failedChangeInfo != null)
       {
-        ((SessionManager)repository.getSessionManager()).sendLockNotification((InternalSession)view.getSession(), failedChangeInfo,
-            failedChangeReservation);
+        InternalSession session = (InternalSession)view.getSession();
+
+        SessionManager sessionManager = (SessionManager)repository.getSessionManager();
+        sessionManager.sendLockNotification(session, failedChangeInfo, failedChangeReservation);
       }
     }
   }
@@ -584,7 +586,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
           Session serverSession = (Session)session;
           if (!serverSession.isClosed())
           {
-            LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo> ticket = serverSession.reserveLockChange(forceFull || serverSession == resultSession);
+            LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo> ticket = //
+                serverSession.reserveLockChange(forceFull || serverSession == resultSession);
             if (ticket != null)
             {
               tickets.put(serverSession, ticket);
@@ -939,7 +942,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
         {
           ((SessionManager)repository.getSessionManager()).sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner, reservation);
           LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)session);
-          return result == null ? 0L : result.getLockModCount();
+          return result.getLockModCount();
         }
       }
       finally

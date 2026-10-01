@@ -165,6 +165,10 @@ import java.util.function.Predicate;
  */
 public class CDOViewImpl extends AbstractCDOView implements IManagedContainerProvider
 {
+  private static final Runnable NOOP_ACTION = () -> {
+    // Do nothing.
+  };
+
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
   private static final Config UNCHUNKED_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
@@ -930,7 +934,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   {
     if (lockModCount > 0L)
     {
-      ((CDOSessionImpl)session).sequenceLockChange(lockModCount, ConcurrencyUtil.safe(action), true);
+      ((CDOSessionImpl)session).sequenceLockChange(lockModCount, action == null ? NOOP_ACTION : action, true);
     }
     else if (action != null)
     {

@@ -472,6 +472,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   }
 
   @Override
+  @Deprecated
   public String changeLockArea(CDOView view, boolean create)
   {
     return changeLockArea2(view, create).getDurableLockingID();

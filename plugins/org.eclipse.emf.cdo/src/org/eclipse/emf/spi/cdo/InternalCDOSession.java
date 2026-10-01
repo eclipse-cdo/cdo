@@ -101,7 +101,7 @@ public interface InternalCDOSession
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
   /**
-   * @since 4.31
+   * @since 4.27
    */
   public void setOneTimeLoginToken(byte[] oneTimeLoginToken);
 

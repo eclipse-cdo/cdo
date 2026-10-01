@@ -531,6 +531,7 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
+  @Deprecated
   public String changeLockArea(CDOView view, boolean create)
   {
     int attempt = 0;

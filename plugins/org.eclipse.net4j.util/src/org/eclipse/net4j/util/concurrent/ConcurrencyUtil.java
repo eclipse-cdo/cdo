@@ -25,10 +25,6 @@ import java.util.concurrent.ExecutorService;
  */
 public final class ConcurrencyUtil
 {
-  private static final Runnable NOOP = () -> {
-    // Do nothing.
-  };
-
   private ConcurrencyUtil()
   {
   }
@@ -196,13 +192,5 @@ public final class ConcurrencyUtil
     {
       Thread.currentThread().interrupt();
     }
-  }
-
-  /**
-   * @since 3.31
-   */
-  public static Runnable safe(Runnable runnable)
-  {
-    return runnable == null ? NOOP : runnable;
   }
 }

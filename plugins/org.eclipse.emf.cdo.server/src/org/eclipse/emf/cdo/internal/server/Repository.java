@@ -2466,7 +2466,7 @@ public class Repository extends Container<Object> implements InternalRepository
     if (reservation != null && sender instanceof Session)
     {
       LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)sender);
-      return result == null ? 0L : result.getLockModCount();
+      return result.getLockModCount();
     }
 
     return 0L;
@@ -2600,9 +2600,13 @@ public class Repository extends Container<Object> implements InternalRepository
     lockingManager.unlock(view, unlockables, lockType, count, recursive, true, lockDeltas, lockStates);
 
     CDOLockChangeInfo lockChangeInfo;
+
     try
     {
-      lockChangeInfo = CDOLockUtil.createLockChangeInfo(view.getBranch().getPoint(getTimeStamp()), view.getLockOwner(), lockDeltas, lockStates, notifyAllSessions);
+      CDOBranchPoint branchPoint = view.getBranch().getPoint(getTimeStamp());
+      CDOLockOwner lockOwner = view.getLockOwner();
+
+      lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates, notifyAllSessions);
     }
     catch (RuntimeException | Error ex)
     {
@@ -2613,21 +2617,25 @@ public class Repository extends Container<Object> implements InternalRepository
 
       throw ex;
     }
+
     Session excludedSession = viewClose ? (Session)view.getSession() : null;
     LockingManager.LockChangeReservation reservation = null;
+
     if (!lockDeltas.isEmpty())
     {
       reservation = ((LockingManager)lockingManager).completeLastLockChange(lockChangeInfo, excludedSession);
     }
+
     InternalSession sender = notifyAllSessions ? null : (InternalSession)view.getSession();
     ((SessionManager)sessionManager).sendLockNotification(sender, lockChangeInfo, reservation);
 
     long timestamp = getTimeStamp();
     long lockModCount = 0L;
+
     if (reservation != null && !viewClose && view.getSession() instanceof Session)
     {
       LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)view.getSession());
-      lockModCount = result == null ? 0L : result.getLockModCount();
+      lockModCount = result.getLockModCount();
     }
 
     return new UnlockObjectsResult(timestamp, lockDeltas, lockStates, lockModCount);

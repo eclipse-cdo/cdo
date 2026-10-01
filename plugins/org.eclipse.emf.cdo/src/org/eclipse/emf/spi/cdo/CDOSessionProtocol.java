@@ -217,20 +217,12 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public boolean isObjectLocked(CDOView view, CDOObject object, LockType lockType, boolean byOthers);
 
   /**
-   * @since 4.0
-   */
-  public String changeLockArea(CDOView view, boolean create);
-
-  /**
    * Changes durable locking and returns the sequence number of the resulting
    * owner remap for this session.
    *
    * @since 4.31
    */
-  public default ChangeLockAreaResult changeLockArea2(CDOView view, boolean create)
-  {
-    return new ChangeLockAreaResult(changeLockArea(view, create), 0L);
-  }
+  public ChangeLockAreaResult changeLockArea2(CDOView view, boolean create);
 
   /**
    * @since 4.0
@@ -1950,6 +1942,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType);
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.31 use {@link #changeLockArea2(CDOView, boolean)}.
+   */
+  @Deprecated
+  public String changeLockArea(CDOView view, boolean create);
 
   @Deprecated
   public CommitTransactionResult commitTransaction(int transactionID, String comment, boolean releaseLocks, CDOIDProvider idProvider, CDOCommitData commitData,

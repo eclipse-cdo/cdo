@@ -16,6 +16,7 @@ package org.eclipse.emf.cdo.tests.general;
 import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOLock.CDOAcquiredLock;
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -34,6 +35,7 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
@@ -1521,6 +1523,42 @@ public class LockingManagerTest extends AbstractLockingTest
 
     session.close();
     controlSession.close();
+  }
+
+  public void testLockOnNewObjectAfterRollbackAndReattach() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.options().setAutoReleaseLocksEnabled(false);
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    transaction.commit();
+
+    Category category = getModel1Factory().createCategory();
+    CDOUserSavepoint savepoint = transaction.setSavepoint();
+    resource.getContents().add(category);
+
+    CDOObject cdoCategory = CDOUtil.getCDOObject(category);
+    CDOID firstID = cdoCategory.cdoID();
+    lockWrite(category);
+    assertEquals(firstID, cdoCategory.cdoLockState().getID());
+
+    savepoint.rollback();
+    assertEquals(CDOState.TRANSIENT, cdoCategory.cdoState());
+
+    // Consume the next temporary ID so that the reattached object gets a different ID.
+    Category interveningCategory = getModel1Factory().createCategory();
+    resource.getContents().add(interveningCategory);
+
+    resource.getContents().add(category);
+    CDOID secondID = cdoCategory.cdoID();
+    assertFalse("Reattached object must get a different temporary ID", firstID.equals(secondID));
+    assertEquals("Lock state must follow the reattached object's new temporary ID", secondID, cdoCategory.cdoLockState().getID());
+
+    transaction.commit();
+    assertEquals(cdoCategory.cdoID(), cdoCategory.cdoLockState().getID());
+    assertWriteLock(true, category);
+
+    session.close();
   }
 
   public void testDeleteLockedObject() throws Exception

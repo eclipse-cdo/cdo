@@ -2727,6 +2727,27 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void registerObject(InternalCDOObject object)
+  {
+    super.registerObject(object);
+
+    // https://github.com/eclipse-cdo/cdo/issues/72
+    remapLockStateOfNewObject(object);
+  }
+
+  private void remapLockStateOfNewObject(InternalCDOObject object)
+  {
+    InternalCDOLockState lockState = lockStatesOfNewObjects.get(object);
+    if (lockState != null)
+    {
+      lockState.remapID(object.cdoID());
+    }
+  }
+
+  /**
    * @since 2.0
    */
   @Override

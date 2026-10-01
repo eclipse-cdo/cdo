@@ -83,11 +83,9 @@ import org.eclipse.core.runtime.PlatformObject;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Deque;
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -132,8 +130,6 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   };
 
   private final Map<String, ReentrantLock> durablePersistenceLocks = new ConcurrentHashMap<>();
-
-  private final ThreadLocal<Deque<LockChangeReservation>> lockChangeReservations = ThreadLocal.withInitial(ArrayDeque::new);
 
   @ExcludeFromDump
   private transient IListener sessionManagerListener = new ContainerEventAdapter<ISession>()
@@ -182,7 +178,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
   }
 
-  public LockStateSnapshot snapshotLockStates(Session session)
+  @Override
+  public InternalLockManager.LockStateSnapshot snapshotLockStates(InternalSession session)
   {
     for (;;)
     {
@@ -205,34 +202,11 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
             }
           }
 
-          return new LockStateSnapshot(session.getLockModCount(), relevantLockStates);
+          return new LockStateSnapshotImpl(session.getLockModCount(), relevantLockStates);
         }
       }
 
       session.awaitLockChangesQuiescent();
-    }
-  }
-
-  public static final class LockStateSnapshot
-  {
-    private final long lockModCount;
-
-    private final List<CDOLockState> lockStates;
-
-    LockStateSnapshot(long lockModCount, List<CDOLockState> lockStates)
-    {
-      this.lockModCount = lockModCount;
-      this.lockStates = lockStates;
-    }
-
-    public long getLockModCount()
-    {
-      return lockModCount;
-    }
-
-    public List<CDOLockState> getLockStates()
-    {
-      return lockStates;
     }
   }
 
@@ -387,6 +361,20 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   public long changeLocks(IView view, List<? extends LockChange<Object>> changes, boolean recursive, boolean explicit, //
       DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) throws InterruptedException, TimeoutRuntimeException
   {
+    InternalLockManager.LockChangeOperationResult result = changeLocksWithReservation(view, changes, recursive, explicit, deltaHandler, stateHandler);
+    if (result.getReservation() != null)
+    {
+      result.getReservation().cancel();
+    }
+
+    return result.getModCount();
+  }
+
+  @Override
+  public InternalLockManager.LockChangeOperationResult changeLocksWithReservation(IView view, List<? extends LockChange<Object>> changes, boolean recursive,
+      boolean explicit, DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler)
+      throws InterruptedException, TimeoutRuntimeException
+  {
     List<LockChange<Object>> normalizedChanges = new ArrayList<>(changes.size());
 
     for (LockChange<Object> change : changes)
@@ -412,17 +400,20 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
 
     CDOLockChangeInfo failedChangeInfo = null;
-    LockChangeReservation failedChangeReservation = null;
+    LockChangeReservationSetImpl failedChangeReservation = null;
 
     try
     {
       AtomicReference<Map<CDOID, LockGrade>> durableSnapshot = new AtomicReference<>();
       AtomicInteger persistedChangeCount = new AtomicInteger();
-      AtomicReference<LockChangeReservation> reservation = new AtomicReference<>();
+      AtomicReference<LockChangeReservationSetImpl> reservation = new AtomicReference<>();
+
       LockDeltaCollector capturedDeltas = new LockDeltaCollector();
       LockStateCollector capturedStates = new LockStateCollector();
+
       Map<Object, EnumMap<LockType, Integer>> capturedLockCounts = new LinkedHashMap<>();
       boolean clientVisible = explicit && (deltaHandler != null || stateHandler != null);
+
       DeltaHandler<Object, IView> persistenceHandler = durableLockingID == null //
           ? deltaHandler //
           : (operation, context, object, lockType, oldCount, newCount) -> {
@@ -440,7 +431,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       DeltaHandler<Object, IView> capturingHandler = (operation, context, object, lockType, oldCount, newCount) -> {
         if (clientVisible && hasVisibleOwnerChange(operation, oldCount, newCount) && reservation.get() == null)
         {
-          reservation.compareAndSet(null, reserveLockChange(view.getSession() instanceof Session ? (Session)view.getSession() : null));
+          reservation.compareAndSet(null, reserveLockChange((InternalSession)view.getSession()));
         }
 
         if (clientVisible && hasVisibleOwnerChange(operation, oldCount, newCount))
@@ -481,13 +472,22 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
           persistDurableChanges(view, durableLockingID, normalizedChanges, durableSnapshot.get(), persistedChangeCount);
         }
 
-        LockChangeReservation ticket = reservation.get();
-        if (ticket != null)
-        {
-          lockChangeReservations.get().push(ticket);
-        }
+        LockChangeReservationSetImpl ticket = reservation.get();
 
-        return modCount;
+        return new InternalLockManager.LockChangeOperationResult()
+        {
+          @Override
+          public long getModCount()
+          {
+            return modCount;
+          }
+
+          @Override
+          public InternalLockManager.LockChangeReservationSet getReservation()
+          {
+            return ticket;
+          }
+        };
       }
       catch (InterruptedException | RuntimeException | Error ex)
       {
@@ -497,7 +497,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
           rollbackSucceeded = rollbackNewLocks(view, normalizedChanges.subList(persistedChangeCount.get(), normalizedChanges.size()), ex);
         }
 
-        LockChangeReservation ticket = reservation.get();
+        LockChangeReservationSetImpl ticket = reservation.get();
         if (ticket != null)
         {
           boolean completed = false;
@@ -508,7 +508,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
                     normalizedChanges.subList(persistedChangeCount.get(), normalizedChanges.size()), rollbackSucceeded);
             if (info != null)
             {
-              ticket.complete(info, view.getSession() instanceof Session ? (Session)view.getSession() : null);
+              ticket.complete(info, (InternalSession)view.getSession());
               completed = true;
               failedChangeInfo = info;
               failedChangeReservation = ticket;
@@ -542,7 +542,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       {
         InternalSession session = (InternalSession)view.getSession();
 
-        SessionManager sessionManager = (SessionManager)repository.getSessionManager();
+        InternalSessionManager sessionManager = repository.getSessionManager();
         sessionManager.sendLockNotification(session, failedChangeInfo, failedChangeReservation);
       }
     }
@@ -553,56 +553,52 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     return operation == LockChange.Operation.LOCK ? oldCount == 0 && newCount > 0 : oldCount > 0 && newCount == 0;
   }
 
-  private LockChangeReservation reserveLockChange(Session resultSession)
+  private LockChangeReservationSetImpl reserveLockChange(InternalSession resultSession)
   {
     return reserveLockChange(repository.getSessionManager().getSessions(), resultSession);
   }
 
-  private LockChangeReservation reserveLockChange(boolean forceFull)
+  private LockChangeReservationSetImpl reserveLockChange(boolean forceFull)
   {
-    return reserveLockChange(repository.getSessionManager().getSessions(), forceFull);
+    return reserveLockChange(repository.getSessionManager().getSessions(), null, forceFull);
   }
 
-  static LockChangeReservation reserveLockChange(ISession[] sessions, boolean forceFull)
+  @Override
+  public InternalLockManager.LockChangeReservationSet reserveLockChange(InternalSession[] sessions, boolean forceFull)
   {
     return reserveLockChange(sessions, null, forceFull);
   }
 
-  private static LockChangeReservation reserveLockChange(ISession[] sessions, Session resultSession)
+  private LockChangeReservationSetImpl reserveLockChange(InternalSession[] sessions, InternalSession resultSession)
   {
     return reserveLockChange(sessions, resultSession, false);
   }
 
-  private static LockChangeReservation reserveLockChange(ISession[] sessions, Session resultSession, boolean forceFull)
+  private LockChangeReservationSetImpl reserveLockChange(InternalSession[] sessions, InternalSession resultSession, boolean forceFull)
   {
-    Map<Session, LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo>> tickets = new HashMap<>();
+    Map<InternalSession, InternalSession.LockChangeReservation> tickets = new HashMap<>();
 
     try
     {
-      for (ISession session : sessions)
+      for (InternalSession serverSession : sessions)
       {
-        if (session instanceof Session)
+        if (!serverSession.isClosed())
         {
-          Session serverSession = (Session)session;
-          if (!serverSession.isClosed())
+          InternalSession.LockChangeReservation ticket = serverSession.reserveLockChange(forceFull || serverSession == resultSession);
+          if (ticket != null)
           {
-            LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo> ticket = //
-                serverSession.reserveLockChange(forceFull || serverSession == resultSession);
-            if (ticket != null)
-            {
-              tickets.put(serverSession, ticket);
-            }
+            tickets.put(serverSession, ticket);
           }
         }
       }
     }
     catch (RuntimeException | Error failure)
     {
-      for (Map.Entry<Session, LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo>> entry : tickets.entrySet())
+      for (Map.Entry<InternalSession, InternalSession.LockChangeReservation> entry : tickets.entrySet())
       {
         try
         {
-          entry.getKey().cancelLockChange(entry.getValue());
+          entry.getValue().cancel();
         }
         catch (RuntimeException | Error cancelFailure)
         {
@@ -613,85 +609,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       throw failure;
     }
 
-    return new LockChangeReservation(tickets);
-  }
-
-  LockChangeReservation completeLastLockChange(CDOLockChangeInfo info)
-  {
-    return completeLastLockChange(info, null);
-  }
-
-  LockChangeReservation completeLastLockChange(CDOLockChangeInfo info, Session excludedSession)
-  {
-    Deque<LockChangeReservation> reservations = lockChangeReservations.get();
-    LockChangeReservation reservation = reservations.poll();
-    if (reservation != null)
-    {
-      reservation.complete(info, excludedSession);
-    }
-
-    if (reservations.isEmpty())
-    {
-      lockChangeReservations.remove();
-    }
-
-    return reservation;
-  }
-
-  void cancelLastLockChange()
-  {
-    Deque<LockChangeReservation> reservations = lockChangeReservations.get();
-    LockChangeReservation reservation = reservations.poll();
-    if (reservation != null)
-    {
-      reservation.cancel();
-    }
-
-    if (reservations.isEmpty())
-    {
-      lockChangeReservations.remove();
-    }
-  }
-
-  static final class LockChangeReservation
-  {
-    private final Map<Session, LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo>> tickets;
-
-    private LockChangeReservation(Map<Session, LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo>> tickets)
-    {
-      this.tickets = tickets;
-    }
-
-    private void complete(CDOLockChangeInfo info, Session excludedSession)
-    {
-      for (Map.Entry<Session, LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo>> entry : tickets.entrySet())
-      {
-        Session session = entry.getKey();
-        LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo> ticket = entry.getValue();
-        if (session == excludedSession)
-        {
-          session.cancelLockChange(ticket);
-        }
-        else
-        {
-          session.completeLockChange(ticket, info);
-        }
-      }
-    }
-
-    LockChangeDispatcher.TicketResult<CDOLockChangeInfo> getResult(Session session)
-    {
-      LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo> ticket = tickets.get(session);
-      return ticket == null ? null : ticket.awaitResult();
-    }
-
-    private void cancel()
-    {
-      for (Map.Entry<Session, LockChangeDispatcher.Ticket<Session.LockNotificationContext, CDOLockChangeInfo>> entry : tickets.entrySet())
-      {
-        entry.getKey().cancelLockChange(entry.getValue());
-      }
-    }
+    return new LockChangeReservationSetImpl(tickets);
   }
 
   private CDOLockChangeInfo createDurableFailureInfo(IView view, LockDeltaCollector deltas, LockStateCollector states,
@@ -878,12 +796,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
         -> handler.handleLockDelta(context, object, lockType, oldCount, newCount);
   }
 
-  void setDurableLockingID(InternalView view, String durableLockingID)
-  {
-    setDurableLockingID2(view, durableLockingID);
-  }
-
-  public long setDurableLockingID2(InternalView view, String durableLockingID)
+  @Override
+  public long setDurableLockingID(InternalView view, String durableLockingID)
   {
     View concreteView = (View)view;
     CDOLockOwner oldOwner;
@@ -892,7 +806,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     CDOBranchPoint branchPoint = branch.getPoint(repository.getTimeStamp());
     List<CDOLockDelta> lockDeltas = new ArrayList<>();
     List<CDOLockState> lockStates = new ArrayList<>();
-    LockChangeReservation reservation = null;
+    LockChangeReservationSetImpl reservation = null;
 
     try (Access access = write.access())
     {
@@ -938,12 +852,9 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
         reservation.complete(info, null);
         completed = true;
         InternalSession session = view.getSession();
-        if (session instanceof Session)
-        {
-          ((SessionManager)repository.getSessionManager()).sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner, reservation);
-          LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)session);
-          return result.getLockModCount();
-        }
+        repository.getSessionManager().sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner, reservation);
+        InternalSession.LockChangeResult result = reservation.getResult(session);
+        return result.getLockModCount();
       }
       finally
       {
@@ -1122,7 +1033,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     CDOLockOwner oldOwner;
     CDOLockOwner newOwner;
 
-    LockChangeReservation reservation = null;
+    LockChangeReservationSetImpl reservation = null;
     List<CDOLockDelta> lockDeltas = new ArrayList<>();
     List<CDOLockState> lockStates = new ArrayList<>();
     CDOBranchPoint branchPoint = branch.getPoint(repository.getTimeStamp());
@@ -1167,7 +1078,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       try
       {
         CDOLockChangeInfo info = CDOLockUtil.createLockChangeInfo(branchPoint, newOwner, lockDeltas, lockStates);
-        reservation.complete(info, session instanceof Session ? (Session)session : null);
+        reservation.complete(info, session);
         completed = true;
       }
       finally
@@ -1179,7 +1090,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       }
     }
 
-    ((SessionManager)repository.getSessionManager()).sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner, reservation);
+    repository.getSessionManager().sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner, reservation);
   }
 
   @Override
@@ -1905,11 +1816,90 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
     private static final long serialVersionUID = 1L;
 
+    public LockStateCollector()
+    {
+    }
+
     @Override
     public void accept(LockState<Object, IView> serverLockState)
     {
       CDOLockState commonLockState = CDOLockUtil.convertLockState(serverLockState);
       add(commonLockState);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LockStateSnapshotImpl implements InternalLockManager.LockStateSnapshot
+  {
+    private final long lockModCount;
+
+    private final List<CDOLockState> lockStates;
+
+    public LockStateSnapshotImpl(long lockModCount, List<CDOLockState> lockStates)
+    {
+      this.lockModCount = lockModCount;
+      this.lockStates = lockStates;
+    }
+
+    @Override
+    public long getLockModCount()
+    {
+      return lockModCount;
+    }
+
+    @Override
+    public List<CDOLockState> getLockStates()
+    {
+      return lockStates;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LockChangeReservationSetImpl implements InternalLockManager.LockChangeReservationSet
+  {
+    private final Map<InternalSession, InternalSession.LockChangeReservation> tickets;
+
+    public LockChangeReservationSetImpl(Map<InternalSession, InternalSession.LockChangeReservation> tickets)
+    {
+      this.tickets = tickets;
+    }
+
+    @Override
+    public void complete(CDOLockChangeInfo info, InternalSession excludedSession)
+    {
+      for (Map.Entry<InternalSession, InternalSession.LockChangeReservation> entry : tickets.entrySet())
+      {
+        InternalSession session = entry.getKey();
+        InternalSession.LockChangeReservation ticket = entry.getValue();
+        if (session == excludedSession)
+        {
+          ticket.cancel();
+        }
+        else
+        {
+          ticket.complete(info);
+        }
+      }
+    }
+
+    @Override
+    public InternalSession.LockChangeResult getResult(InternalSession session)
+    {
+      InternalSession.LockChangeReservation ticket = tickets.get(session);
+      return ticket == null ? null : ticket.awaitResult();
+    }
+
+    @Override
+    public void cancel()
+    {
+      for (Map.Entry<InternalSession, InternalSession.LockChangeReservation> entry : tickets.entrySet())
+      {
+        entry.getValue().cancel();
+      }
     }
   }
 

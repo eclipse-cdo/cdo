@@ -296,6 +296,11 @@ public interface InternalRepository extends IRepository, //
    */
   public void sendCommitNotification(CommitNotificationInfo info);
 
+  /**
+   * @since 4.27
+   */
+  public void sendCommitNotification(CommitNotificationInfo info, InternalLockManager.LockChangeReservationSet reservation);
+
   public void setRootResourceID(CDOID rootResourceID);
 
   /**

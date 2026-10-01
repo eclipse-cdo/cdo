@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
-import org.eclipse.emf.cdo.internal.server.LockingManager;
 
 import java.io.IOException;
 
@@ -49,13 +48,13 @@ public class LockAreaIndication extends CDOServerWriteIndication
       LockArea area = lockManager.createLockArea(view);
 
       result = area.getDurableLockingID();
-      lockModCount = ((LockingManager)lockManager).setDurableLockingID2(view, result);
+      lockModCount = lockManager.setDurableLockingID(view, result);
     }
     else
     {
       String durableLockingID = view.getDurableLockingID();
       result = null;
-      lockModCount = ((LockingManager)lockManager).setDurableLockingID2(view, null);
+      lockModCount = lockManager.setDurableLockingID(view, null);
       lockManager.deleteLockArea(durableLockingID);
     }
   }

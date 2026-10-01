@@ -1677,14 +1677,15 @@ public class Repository extends Container<Object> implements InternalRepository
     sendCommitNotification(info, null);
   }
 
-  void sendCommitNotification(CommitNotificationInfo info, LockingManager.LockChangeReservation reservation)
+  @Override
+  public void sendCommitNotification(CommitNotificationInfo info, InternalLockManager.LockChangeReservationSet reservation)
   {
     CDOCommitInfo commitInfo = info.getCommitInfo();
     boolean isFailureCommitInfo = commitInfo.getBranch() == null;
 
     if (isFailureCommitInfo || !commitInfo.isEmpty() || info.getLockChangeInfo() != null)
     {
-      ((SessionManager)sessionManager).sendCommitNotification(info, reservation);
+      sessionManager.sendCommitNotification(info, reservation);
       commitInfoManager.notifyCommitInfoHandlers(commitInfo);
     }
   }
@@ -2436,7 +2437,8 @@ public class Repository extends Container<Object> implements InternalRepository
     return staleRevisionsArray;
   }
 
-  private long sendLockNotifications(IView view, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, boolean administrative)
+  private long sendLockNotifications(IView view, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, boolean administrative,
+      InternalLockManager.LockChangeReservationSet reservation)
   {
     CDOBranchPoint branchPoint = view.getBranch().getPoint(getTimeStamp());
     CDOLockOwner lockOwner = view.getLockOwner();
@@ -2444,28 +2446,27 @@ public class Repository extends Container<Object> implements InternalRepository
     try
     {
       lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates, administrative);
+      if (!lockDeltas.isEmpty())
+      {
+        reservation.complete(lockChangeInfo, null);
+      }
     }
     catch (RuntimeException | Error ex)
     {
-      if (!lockDeltas.isEmpty())
+      if (reservation != null)
       {
-        ((LockingManager)lockingManager).cancelLastLockChange();
+        reservation.cancel();
       }
 
       throw ex;
     }
 
-    LockingManager.LockChangeReservation reservation = null;
-    if (!lockDeltas.isEmpty())
-    {
-      reservation = ((LockingManager)lockingManager).completeLastLockChange(lockChangeInfo);
-    }
-
     InternalSession sender = administrative ? null : (InternalSession)view.getSession();
-    ((SessionManager)sessionManager).sendLockNotification(sender, lockChangeInfo, reservation);
-    if (reservation != null && sender instanceof Session)
+    sessionManager.sendLockNotification(sender, lockChangeInfo, reservation);
+
+    if (reservation != null)
     {
-      LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)sender);
+      InternalSession.LockChangeResult result = reservation.getResult(sender);
       return result.getLockModCount();
     }
 
@@ -2484,10 +2485,15 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     LockDeltaCollector lockDeltas = new LockDeltaCollector(LockChange.Operation.LOCK);
     LockStateCollector lockStates = new LockStateCollector();
+    InternalLockManager.LockChangeReservationSet lockChangeReservation = null;
 
     try
     {
-      lockingManager.lock(view, lockables, lockType, 1, timeout, recursive, true, lockDeltas, lockStates);
+      InternalLockManager.LockChangeOperationResult lockChange = lockingManager.changeLocksWithReservation(view,
+          Collections.singletonList(LockChange.lock(lockables, lockType, 1, timeout)), recursive, true, lockDeltas, lockStates);
+
+      // Retain this operation's reservation through validation and notification.
+      lockChangeReservation = lockChange.getReservation();
     }
     catch (TimeoutRuntimeException ex)
     {
@@ -2508,9 +2514,9 @@ public class Repository extends Container<Object> implements InternalRepository
     }
     catch (IllegalArgumentException ex)
     {
-      if (!lockDeltas.isEmpty())
+      if (lockChangeReservation != null)
       {
-        ((LockingManager)lockingManager).cancelLastLockChange();
+        lockChangeReservation.cancel();
       }
 
       lockingManager.unlock(view, lockables, lockType, 1, recursive, true, null, null);
@@ -2520,7 +2526,7 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       if (!lockDeltas.isEmpty())
       {
-        sendLockNotifications(view, lockDeltas, lockStates, false);
+        sendLockNotifications(view, lockDeltas, lockStates, false, lockChangeReservation);
       }
 
       throw ex;
@@ -2533,16 +2539,16 @@ public class Repository extends Container<Object> implements InternalRepository
     boolean staleNoUpdate = staleRevisionsArray.length > 0 && !session.isPassiveUpdateEnabled();
     if (staleNoUpdate)
     {
-      if (!lockDeltas.isEmpty())
+      if (lockChangeReservation != null)
       {
-        ((LockingManager)lockingManager).cancelLastLockChange();
+        lockChangeReservation.cancel();
       }
 
       lockingManager.unlock(view, lockables, lockType, 1, recursive, true, null, null);
       return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, NO_LOCK_DELTAS, NO_LOCK_STATES, getTimeStamp());
     }
 
-    long lockModCount = sendLockNotifications(view, lockDeltas, lockStates, false);
+    long lockModCount = sendLockNotifications(view, lockDeltas, lockStates, false, lockChangeReservation);
 
     boolean waitForUpdate = staleRevisionsArray.length > 0;
     return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, lockDeltas, lockStates, getTimeStamp(), lockModCount);
@@ -2597,8 +2603,21 @@ public class Repository extends Container<Object> implements InternalRepository
     LockDeltaCollector lockDeltas = new LockDeltaCollector(LockChange.Operation.UNLOCK);
     LockStateCollector lockStates = new LockStateCollector();
 
-    lockingManager.unlock(view, unlockables, lockType, count, recursive, true, lockDeltas, lockStates);
+    InternalLockManager.LockChangeOperationResult lockChange;
+    try
+    {
+      lockChange = lockingManager.changeLocksWithReservation(view, Collections.singletonList(LockChange.unlock(unlockables, lockType, count)), recursive, true,
+          lockDeltas, lockStates);
+    }
+    catch (InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
+    }
 
+    InternalLockManager.LockChangeReservationSet reservation = lockChange.getReservation();
+
+    InternalSession excludedSession = viewClose ? (InternalSession)view.getSession() : null;
     CDOLockChangeInfo lockChangeInfo;
 
     try
@@ -2607,34 +2626,30 @@ public class Repository extends Container<Object> implements InternalRepository
       CDOLockOwner lockOwner = view.getLockOwner();
 
       lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates, notifyAllSessions);
+      if (!lockDeltas.isEmpty())
+      {
+        reservation.complete(lockChangeInfo, excludedSession);
+      }
     }
     catch (RuntimeException | Error ex)
     {
-      if (!lockDeltas.isEmpty())
+      if (reservation != null)
       {
-        ((LockingManager)lockingManager).cancelLastLockChange();
+        reservation.cancel();
       }
 
       throw ex;
     }
 
-    Session excludedSession = viewClose ? (Session)view.getSession() : null;
-    LockingManager.LockChangeReservation reservation = null;
-
-    if (!lockDeltas.isEmpty())
-    {
-      reservation = ((LockingManager)lockingManager).completeLastLockChange(lockChangeInfo, excludedSession);
-    }
-
     InternalSession sender = notifyAllSessions ? null : (InternalSession)view.getSession();
-    ((SessionManager)sessionManager).sendLockNotification(sender, lockChangeInfo, reservation);
+    sessionManager.sendLockNotification(sender, lockChangeInfo, reservation);
 
     long timestamp = getTimeStamp();
     long lockModCount = 0L;
 
-    if (reservation != null && !viewClose && view.getSession() instanceof Session)
+    if (reservation != null && !viewClose)
     {
-      LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)view.getSession());
+      InternalSession.LockChangeResult result = reservation.getResult(view.getSession());
       lockModCount = result.getLockModCount();
     }
 

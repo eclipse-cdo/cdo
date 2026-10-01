@@ -69,8 +69,8 @@ import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
@@ -816,28 +816,15 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
-  void sendLockNotification(CDOLockChangeInfo lockChangeInfo, LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result) throws Exception
+  @Override
+  public void sendLockNotification(InternalSession.LockChangeResult result) throws Exception
   {
-    if (protocol == null || result == null || result.getLockModCount() == 0)
+    if (protocol == null || result == null || result.getLockModCount() == 0 || result.getLockChangeInfo() == null)
     {
       return;
     }
 
-    LockChangeDispatcher.Projection<CDOLockChangeInfo> projection = result.getProjection();
-    if (projection == null || !projection.isVisible())
-    {
-      return;
-    }
-
-    Set<CDOID> filteredIDs = null;
-    if (projection.getFilteredIDs() != null)
-    {
-      @SuppressWarnings("unchecked")
-      Set<CDOID> ids = (Set<CDOID>)projection.getFilteredIDs();
-      filteredIDs = ids;
-    }
-
-    protocol.sendLockNotification(projection.getValue(), filteredIDs, result.getLockModCount());
+    protocol.sendLockNotification(result.getLockChangeInfo(), result.getFilteredIDs(), result.getLockModCount());
   }
 
   @Override
@@ -859,7 +846,8 @@ public class Session extends Container<IView> implements InternalSession
     }
   }
 
-  LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> reserveLockChange(boolean forceFull)
+  @Override
+  public InternalSession.LockChangeReservation reserveLockChange(boolean forceFull)
   {
     if (isClosed())
     {
@@ -881,7 +869,8 @@ public class Session extends Container<IView> implements InternalSession
       return null;
     }
 
-    return lockChangeDispatcher.reserve(context);
+    LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> ticket = lockChangeDispatcher.reserve(context);
+    return ticket == null ? null : new SessionLockChangeReservation(ticket);
   }
 
   private LockNotificationContext captureLockNotificationContext()
@@ -916,19 +905,23 @@ public class Session extends Container<IView> implements InternalSession
     return lockChangeDispatcher.getLockModCount();
   }
 
-  void setLockModCountBaseline(long lockModCount)
+  @Override
+  public void setLockModCountBaseline(long lockModCount)
   {
     lockChangeDispatcher.setInitialLockModCount(lockModCount);
   }
 
-  boolean isLockChangesQuiescent()
+  @Override
+  public boolean isLockChangesQuiescent()
   {
     return lockChangeDispatcher.isQuiescent();
   }
 
-  boolean isLockStateRelevantForSnapshot(CDOLockState state)
+  @Override
+  public boolean isLockStateRelevantForSnapshot(CDOLockState state)
   {
     CDOBranch branch = state.getBranch();
+
     LockNotificationMode mode = options().getLockNotificationMode();
     if (mode == LockNotificationMode.ALWAYS)
     {
@@ -936,10 +929,10 @@ public class Session extends Container<IView> implements InternalSession
     }
 
     Set<CDOLockOwner> owners = new HashSet<>();
+
     for (InternalView view : getViews())
     {
-      if (mode == LockNotificationMode.IF_REQUIRED_BY_VIEWS && view.options().isLockNotificationEnabled()
-          && (branch == null || view.getBranch() == branch))
+      if (mode == LockNotificationMode.IF_REQUIRED_BY_VIEWS && view.options().isLockNotificationEnabled() && (branch == null || view.getBranch() == branch))
       {
         return true;
       }
@@ -958,34 +951,85 @@ public class Session extends Container<IView> implements InternalSession
     return owners.contains(state.getWriteLockOwner()) || owners.contains(state.getWriteOptionOwner());
   }
 
-  void awaitLockChangesQuiescent()
+  @Override
+  public void awaitLockChangesQuiescent()
   {
     lockChangeDispatcher.awaitQuiescence();
   }
 
-  void completeLockChange(LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> ticket, CDOLockChangeInfo info)
+  /**
+   * @author Eike Stepper
+   */
+  private final class SessionLockChangeReservation implements InternalSession.LockChangeReservation
   {
-    ticket.ready(info, LockNotificationContext::project);
+    private final LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> ticket;
+
+    public SessionLockChangeReservation(LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> ticket)
+    {
+      this.ticket = ticket;
+    }
+
+    @Override
+    public void complete(CDOLockChangeInfo info)
+    {
+      ticket.ready(info, LockNotificationContext::project);
+    }
+
+    @Override
+    public void cancel()
+    {
+      ticket.cancel();
+    }
+
+    @Override
+    public InternalSession.LockChangeResult awaitResult()
+    {
+      LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = ticket.awaitResult();
+      LockChangeDispatcher.Projection<CDOLockChangeInfo> projection = result.getProjection();
+
+      return new InternalSession.LockChangeResult()
+      {
+        @Override
+        public long getLockModCount()
+        {
+          return result.getLockModCount();
+        }
+
+        @Override
+        public CDOLockChangeInfo getLockChangeInfo()
+        {
+          return projection == null ? null : projection.getValue();
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public Set<CDOID> getFilteredIDs()
+        {
+          return projection == null || projection.getFilteredIDs() == null ? null : (Set<CDOID>)projection.getFilteredIDs();
+        }
+      };
+    }
   }
 
-  void cancelLockChange(LockChangeDispatcher.Ticket<LockNotificationContext, CDOLockChangeInfo> ticket)
-  {
-    ticket.cancel();
-  }
-
+  /**
+   * @author Eike Stepper
+   */
   private static final class ViewLockNotificationContext
   {
-    private final CDOBranch branch;
+    public final CDOBranch branch;
 
-    private final boolean enabled;
+    public final boolean enabled;
 
-    private ViewLockNotificationContext(CDOBranch branch, boolean enabled)
+    public ViewLockNotificationContext(CDOBranch branch, boolean enabled)
     {
       this.branch = branch;
       this.enabled = enabled;
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   static final class LockNotificationContext
   {
     private final LockNotificationMode mode;
@@ -996,7 +1040,7 @@ public class Session extends Container<IView> implements InternalSession
 
     private final boolean forceFull;
 
-    private LockNotificationContext(LockNotificationMode mode, List<ViewLockNotificationContext> views, Set<CDOLockOwner> owners, boolean forceFull)
+    public LockNotificationContext(LockNotificationMode mode, List<ViewLockNotificationContext> views, Set<CDOLockOwner> owners, boolean forceFull)
     {
       this.mode = mode;
       this.views = Collections.unmodifiableList(views);
@@ -1048,7 +1092,8 @@ public class Session extends Container<IView> implements InternalSession
         }
       }
 
-      return lockedIDs.isEmpty() ? new LockChangeDispatcher.Projection<>(false, null)
+      return lockedIDs.isEmpty() //
+          ? new LockChangeDispatcher.Projection<>(false, null) //
           : new LockChangeDispatcher.Projection<>(true, info, lockedIDs);
     }
 

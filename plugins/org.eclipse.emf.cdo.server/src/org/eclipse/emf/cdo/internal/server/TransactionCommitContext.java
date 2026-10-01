@@ -85,6 +85,7 @@ import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction.CommitAttempt;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
@@ -255,7 +256,7 @@ public class TransactionCommitContext implements InternalCommitContext
    */
   private CDOLockChangeInfo lockChangeInfo;
 
-  private LockingManager.LockChangeReservation lockChangeReservation;
+  private InternalLockManager.LockChangeReservationSet lockChangeReservation;
 
   private long lockModCount;
 
@@ -1095,7 +1096,7 @@ public class TransactionCommitContext implements InternalCommitContext
       commitNotificationInfo.setCommitInfo(createFailureCommitInfo());
     }
 
-    ((Repository)repository).sendCommitNotification(commitNotificationInfo, lockChangeReservation);
+    repository.sendCommitNotification(commitNotificationInfo, lockChangeReservation);
   }
 
   @Override
@@ -1875,7 +1876,9 @@ public class TransactionCommitContext implements InternalCommitContext
       collectAutoReleaseExplicitLocks(lockOwner, lockChanges);
       monitor.worked();
 
-      lockManager.changeLocks(transaction, lockChanges, false, true, lockDeltas, lockStates);
+      InternalLockManager.LockChangeOperationResult lockChange = lockManager.changeLocksWithReservation(transaction, lockChanges, false, true, lockDeltas,
+          lockStates);
+      lockChangeReservation = lockChange.getReservation();
 
       if (!lockDeltas.isEmpty())
       {
@@ -1883,19 +1886,21 @@ public class TransactionCommitContext implements InternalCommitContext
         {
           CDOBranchPoint branchPoint = getBranchPoint();
           lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
-          lockChangeReservation = ((LockingManager)lockManager).completeLastLockChange(lockChangeInfo);
-          if (lockChangeReservation != null && transaction.getSession() instanceof Session)
+
+          if (lockChangeReservation != null)
           {
-            LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = lockChangeReservation.getResult((Session)transaction.getSession());
+            lockChangeReservation.complete(lockChangeInfo, null);
+            InternalSession.LockChangeResult result = lockChangeReservation.getResult(transaction.getSession());
             lockModCount = result.getLockModCount();
           }
         }
         catch (RuntimeException | Error ex)
         {
-          if (lockChangeReservation == null)
+          if (lockChangeReservation != null)
           {
-            ((LockingManager)lockManager).cancelLastLockChange();
+            lockChangeReservation.cancel();
           }
+
           throw ex;
         }
       }

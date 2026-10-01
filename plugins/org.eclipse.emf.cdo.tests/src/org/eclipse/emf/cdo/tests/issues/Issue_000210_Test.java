@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
@@ -449,8 +450,9 @@ public class Issue_000210_Test extends AbstractCDOTest
     }
 
     @Override
-    public long changeLocks(IView view, List<? extends LockChange<Object>> changes, boolean recursive, boolean explicit,
-        DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) throws InterruptedException, TimeoutRuntimeException
+    public InternalLockManager.LockChangeOperationResult changeLocksWithReservation(IView view, List<? extends LockChange<Object>> changes, boolean recursive,
+        boolean explicit, DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler)
+        throws InterruptedException, TimeoutRuntimeException
     {
       boolean observed = observedChangeKey != null
           && changes.stream().anyMatch(change -> change.getObjects() != null && change.getObjects().contains(observedChangeKey));
@@ -463,7 +465,7 @@ public class Issue_000210_Test extends AbstractCDOTest
       boolean unlocks = changes.stream().anyMatch(LockChange::isUnlock);
       if (!locks || !unlocks || !pauseAtLockMutationBoundary)
       {
-        return super.changeLocks(view, changes, recursive, explicit, deltaHandler, stateHandler);
+        return super.changeLocksWithReservation(view, changes, recursive, explicit, deltaHandler, stateHandler);
       }
 
       Consumer<LockState<Object, IView>> pausingHandler = state -> {
@@ -488,7 +490,7 @@ public class Issue_000210_Test extends AbstractCDOTest
         stateHandler.accept(state);
       };
 
-      return super.changeLocks(view, changes, recursive, explicit, deltaHandler, pausingHandler);
+      return super.changeLocksWithReservation(view, changes, recursive, explicit, deltaHandler, pausingHandler);
     }
   }
 }

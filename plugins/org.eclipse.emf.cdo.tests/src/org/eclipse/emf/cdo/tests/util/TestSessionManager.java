@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.util;
 
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager.LockChangeReservationSet;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
@@ -93,7 +94,7 @@ public class TestSessionManager extends SessionManager
   }
 
   @Override
-  public void sendCommitNotification(CommitNotificationInfo info)
+  public void sendCommitNotification(CommitNotificationInfo info, LockChangeReservationSet reservation)
   {
     CountDownLatch entered;
     CountDownLatch release;
@@ -133,6 +134,6 @@ public class TestSessionManager extends SessionManager
       }
     }
 
-    super.sendCommitNotification(info);
+    super.sendCommitNotification(info, reservation);
   }
 }

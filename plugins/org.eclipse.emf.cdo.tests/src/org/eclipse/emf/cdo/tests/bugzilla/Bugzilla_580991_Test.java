@@ -12,7 +12,7 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.Session;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -42,7 +42,7 @@ public class Bugzilla_580991_Test extends AbstractCDOTest
     view.options().setLockNotificationEnabled(true);
     CDOResource resFromView = view.getResource(path);
 
-    Session observerServerSession = (Session)serverSession(observerSession);
+    InternalSession observerServerSession = serverSession(observerSession);
     long lockModCountBeforeEnable = observerServerSession.getLockModCount();
     String durableLockID = tx.enableDurableLocking();
     assertEquals(lockModCountBeforeEnable + 1, observerServerSession.getLockModCount());

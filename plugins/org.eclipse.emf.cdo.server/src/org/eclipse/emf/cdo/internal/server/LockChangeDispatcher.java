@@ -19,6 +19,9 @@ import java.util.function.BiFunction;
  * Orders lock changes for one server session and assigns gapless counts to
  * changes that are visible to that session.
  *
+ * @param <C> the immutable context captured for a reserved change and used to determine how
+ *          that change is projected for this session
+ * @param <P> the payload type produced by projecting a change for this session
  * @author Eike Stepper
  */
 public final class LockChangeDispatcher<C, P>
@@ -118,6 +121,7 @@ public final class LockChangeDispatcher<C, P>
 
           queue.remove();
           active = ticket;
+
           if (ticket.state == TicketState.CANCELLED || closed)
           {
             ticket.done = true;
@@ -238,6 +242,7 @@ public final class LockChangeDispatcher<C, P>
     synchronized (this)
     {
       closed = true;
+
       for (Ticket<C, P> ticket : queue)
       {
         if (ticket.state == TicketState.PENDING)
@@ -252,6 +257,8 @@ public final class LockChangeDispatcher<C, P>
 
   /**
    * The reservation lifecycle before and after queue processing.
+   *
+   * @author Eike Stepper
    */
   public enum TicketState
   {
@@ -260,6 +267,8 @@ public final class LockChangeDispatcher<C, P>
 
   /**
    * The result of projecting a completed change onto one session.
+   *
+   * @author Eike Stepper
    */
   public static final class Projection<P>
   {
@@ -327,6 +336,8 @@ public final class LockChangeDispatcher<C, P>
 
   /**
    * A reserved position that can be made ready or cancelled exactly once.
+   *
+   * @author Eike Stepper
    */
   public static final class Ticket<C, P>
   {
@@ -348,7 +359,7 @@ public final class LockChangeDispatcher<C, P>
 
     private BiFunction<C, P, Projection<P>> projector;
 
-    private Ticket(LockChangeDispatcher<C, P> dispatcher, C context)
+    public Ticket(LockChangeDispatcher<C, P> dispatcher, C context)
     {
       this.dispatcher = dispatcher;
       this.context = context;
@@ -471,6 +482,8 @@ public final class LockChangeDispatcher<C, P>
 
   /**
    * Immutable result of one ticket after projection and sequencing.
+   *
+   * @author Eike Stepper
    */
   public static final class TicketResult<P>
   {
@@ -478,7 +491,7 @@ public final class LockChangeDispatcher<C, P>
 
     private final Projection<P> projection;
 
-    private TicketResult(long lockModCount, Projection<P> projection)
+    public TicketResult(long lockModCount, Projection<P> projection)
     {
       this.lockModCount = lockModCount;
       this.projection = projection;

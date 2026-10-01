@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager.LockChangeReservationSet;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
@@ -205,7 +206,7 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
    */
   private static class SuspendableSessionManager extends SessionManager
   {
-    private List<CommitNotificationInfo> queue;
+    private List<QueuedCommitNotification> queue;
 
     public synchronized void suspend()
     {
@@ -219,9 +220,9 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
 
       try
       {
-        for (CommitNotificationInfo info : queue)
+        for (QueuedCommitNotification notification : queue)
         {
-          super.sendCommitNotification(info);
+          super.sendCommitNotification(notification.info, notification.reservation);
         }
       }
       finally
@@ -231,17 +232,33 @@ public class Bugzilla_547640_Test extends AbstractCDOTest
     }
 
     @Override
-    public synchronized void sendCommitNotification(CommitNotificationInfo info)
+    public synchronized void sendCommitNotification(CommitNotificationInfo info, LockChangeReservationSet reservation)
     {
       if (queue != null)
       {
         IOUtil.OUT().println("[2] Queuing commit notification: " + info);
-        queue.add(info);
+        queue.add(new QueuedCommitNotification(info, reservation));
       }
       else
       {
         IOUtil.OUT().println("[2] Sending commit notification: " + info);
-        super.sendCommitNotification(info);
+        super.sendCommitNotification(info, reservation);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class QueuedCommitNotification
+    {
+      private final CommitNotificationInfo info;
+
+      private final LockChangeReservationSet reservation;
+
+      public QueuedCommitNotification(CommitNotificationInfo info, LockChangeReservationSet reservation)
+      {
+        this.info = info;
+        this.reservation = reservation;
       }
     }
   }

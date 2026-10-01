@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.ISessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager.LockChangeReservationSet;
 
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.security.DiffieHellman;
@@ -56,19 +57,6 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
    */
   @Override
   public InternalTopicManager getTopicManager();
-
-  /**
-   * @since 4.1
-   * @deprecated As of 4.2 use {@link #getAuthenticator()}
-   */
-  @Deprecated
-  public IUserManager getUserManager();
-
-  /**
-   * @deprecated As of 4.2 use {@link #setAuthenticator(IAuthenticator)}
-   */
-  @Deprecated
-  public void setUserManager(IUserManager userManager);
 
   /**
    * @since 4.2
@@ -163,17 +151,85 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType);
 
   /**
+   * @since 4.1
+   */
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID);
+
+  /**
+   * @since 4.15
+   */
+  public void sendBranchNotification(InternalSession sender, ChangeKind changeKind, CDOBranch... branches);
+
+  /**
+   * @since 4.10
+   */
+  public void sendTagNotification(InternalSession sender, int modCount, String oldName, String newName, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.3
+   */
+  public void sendCommitNotification(CommitNotificationInfo info);
+
+  /**
+   * @since 4.27
+   */
+  public void sendCommitNotification(CommitNotificationInfo info, InternalLockManager.LockChangeReservationSet reservation);
+
+  /**
+   * @since 4.1
+   */
+  public void sendLockNotification(InternalSession sender, CDOLockChangeInfo lockChangeInfo);
+
+  /**
+   * @since 4.27
+   */
+  public void sendLockNotification(InternalSession sender, CDOLockChangeInfo lockChangeInfo, InternalLockManager.LockChangeReservationSet reservation);
+
+  /**
+   * @since 4.19
+   */
+  public void sendLockOwnerRemappedNotification(InternalSession sender, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner);
+
+  /**
+   * @since 4.27
+   */
+  public void sendLockOwnerRemappedNotification(InternalSession session, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner,
+      LockChangeReservationSet reservation);
+
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
+
+  /**
+   * @since 4.17
+   */
+  public void sendRemoteSessionNotification(InternalSession sender, Collection<InternalSession> recipients, InternalTopic topic, byte opcode);
+
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
+
+  /**
+   * @since 4.17
+   */
+  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, InternalTopic topic);
+
+  /**
+   * @since 4.1
+   * @deprecated As of 4.2 use {@link #getAuthenticator()}
+   */
+  @Deprecated
+  public IUserManager getUserManager();
+
+  /**
+   * @deprecated As of 4.2 use {@link #setAuthenticator(IAuthenticator)}
+   */
+  @Deprecated
+  public void setUserManager(IUserManager userManager);
+
+  /**
    * @deprecated use
    *             {@link #sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State, org.eclipse.emf.cdo.common.CDOCommonRepository.State, CDOID)}
    *             instead
    */
   @Deprecated
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState);
-
-  /**
-   * @since 4.1
-   */
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID);
 
   /**
    * @deprecated As of 4.3 use {@link #sendBranchNotification(InternalSession, InternalCDOBranch, ChangeKind)}.
@@ -189,16 +245,6 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
   public void sendBranchNotification(InternalSession sender, InternalCDOBranch branch, ChangeKind changeKind);
 
   /**
-   * @since 4.15
-   */
-  public void sendBranchNotification(InternalSession sender, ChangeKind changeKind, CDOBranch... branches);
-
-  /**
-   * @since 4.10
-   */
-  public void sendTagNotification(InternalSession sender, int modCount, String oldName, String newName, CDOBranchPoint branchPoint);
-
-  /**
    * @deprecated As of 4.2 use {@link #sendCommitNotification(InternalSession, CDOCommitInfo, boolean)}.
    */
   @Deprecated
@@ -210,33 +256,4 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
    */
   @Deprecated
   public void sendCommitNotification(InternalSession sender, CDOCommitInfo commitInfo, boolean clearResourcePathCache);
-
-  /**
-   * @since 4.3
-   */
-  public void sendCommitNotification(CommitNotificationInfo info);
-
-  /**
-   * @since 4.1
-   */
-  public void sendLockNotification(InternalSession sender, CDOLockChangeInfo lockChangeInfo);
-
-  /**
-   * @since 4.19
-   */
-  public void sendLockOwnerRemappedNotification(InternalSession sender, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner);
-
-  public void sendRemoteSessionNotification(InternalSession sender, byte opcode);
-
-  /**
-   * @since 4.17
-   */
-  public void sendRemoteSessionNotification(InternalSession sender, Collection<InternalSession> recipients, InternalTopic topic, byte opcode);
-
-  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, int[] recipients);
-
-  /**
-   * @since 4.17
-   */
-  public List<Integer> sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message, InternalTopic topic);
 }

@@ -27,15 +27,14 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
-import org.eclipse.emf.cdo.internal.server.LockChangeDispatcher;
-import org.eclipse.emf.cdo.internal.server.LockingManager;
 import org.eclipse.emf.cdo.internal.server.Session;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.tests.AbstractLockingTest;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -407,32 +406,23 @@ public class LockingNotificationsTest extends AbstractLockingTest
       closingSession.close();
       assertTrue(closingSession.isClosed());
 
-      Method reserveRecipients = LockingManager.class.getDeclaredMethod("reserveLockChange", ISession[].class, boolean.class);
-      reserveRecipients.setAccessible(true);
-      Object reservation = reserveRecipients.invoke(null, new ISession[] { activeSession, closingSession }, true);
+      InternalLockManager lockManager = getRepository().getLockingManager();
+      InternalLockManager.LockChangeReservationSet reservation = lockManager.reserveLockChange(new InternalSession[] { activeSession, closingSession }, true);
       assertNotNull(reservation);
 
-      Method reserveSession = Session.class.getDeclaredMethod("reserveLockChange", boolean.class);
-      reserveSession.setAccessible(true);
-      Object laterTicket = reserveSession.invoke(activeSession, true);
+      InternalSession.LockChangeReservation laterTicket = activeSession.reserveLockChange(true);
 
       CDOBranch branch = getRepository().getBranchManager().getMainBranch();
       CDOLockOwner owner = CDOLockUtil.createLockOwner(activeSession.getSessionID(), 1, "durable");
       CDOLockChangeInfo info = CDOLockUtil.createLockChangeInfo(branch.getHead(), owner, Collections.emptyList(), Collections.emptyList());
 
-      Method completeSessionTicket = Session.class.getDeclaredMethod("completeLockChange", LockChangeDispatcher.Ticket.class, CDOLockChangeInfo.class);
-      completeSessionTicket.setAccessible(true);
-      completeSessionTicket.invoke(activeSession, laterTicket, info);
+      laterTicket.complete(info);
       assertEquals(0L, activeSession.getLockModCount());
 
-      Method completeReservation = reservation.getClass().getDeclaredMethod("complete", CDOLockChangeInfo.class, Session.class);
-      completeReservation.setAccessible(true);
-      completeReservation.invoke(reservation, info, null);
+      reservation.complete(info, null);
 
       assertEquals(2L, activeSession.getLockModCount());
-      Method isQuiescent = Session.class.getDeclaredMethod("isLockChangesQuiescent");
-      isQuiescent.setAccessible(true);
-      assertEquals(Boolean.TRUE, isQuiescent.invoke(activeSession));
+      assertTrue(activeSession.isLockChangesQuiescent());
     }
     finally
     {
@@ -1185,7 +1175,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
 
     controlViewListener.clearEvents();
-    Session transactionServerSession = (Session)serverSession(transaction.getSession());
+    InternalSession transactionServerSession = serverSession(transaction.getSession());
     long lockModCount = transactionServerSession.getLockModCount();
     transaction.commit();
     assertEquals(lockModCount + 1, transactionServerSession.getLockModCount());

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOCollectionLoadingConfig;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -189,6 +190,110 @@ public interface InternalSession
    * @since 4.27
    */
   public long getLockModCount();
+
+  /**
+   * Sets the initial lock-change sequence number when a server session is reconnected.
+   *
+   * @since 4.27
+   */
+  public void setLockModCountBaseline(long lockModCount);
+
+  /**
+   * Reserves this session's place in the lock-change notification sequence.
+   *
+   * @param forceFull whether the resulting notification must contain the full change
+   * @return the reservation, or {@code null} if this session is closed
+   * @since 4.27
+   */
+  public LockChangeReservation reserveLockChange(boolean forceFull);
+
+  /**
+   * Returns whether all reserved lock changes for this session have completed.
+   *
+   * @since 4.27
+   */
+  public boolean isLockChangesQuiescent();
+
+  /**
+   * Waits until all reserved lock changes for this session have completed.
+   *
+   * @since 4.27
+   */
+  public void awaitLockChangesQuiescent();
+
+  /**
+   * Returns whether a lock state belongs in a snapshot for this session.
+   *
+   * @since 4.27
+   */
+  public boolean isLockStateRelevantForSnapshot(CDOLockState state);
+
+  /**
+   * Sends the visible result of a reserved lock change with its assigned sequence number.
+   *
+   * @since 4.27
+   */
+  public void sendLockNotification(LockChangeResult result) throws Exception;
+
+  /**
+   * Represents a position reserved in this session's lock-change sequence. The reservation
+   * captures the notification context when it is created, so completing it later preserves
+   * recipient-specific projection and ordering even if the session's views change meanwhile.
+   *
+   * @author Eike Stepper
+   * @since 4.27
+   */
+  public interface LockChangeReservation
+  {
+    /**
+     * Makes the reserved position ready with the lock change that linearized at that position.
+     * A later ready reservation cannot overtake an earlier pending reservation.
+     *
+     * @param info the lock change to project for this session
+     */
+    public void complete(CDOLockChangeInfo info);
+
+    /**
+     * Cancels this position because its lock change did not complete. Cancellation preserves
+     * the sequence of subsequent relevant changes without assigning a count to this position.
+     */
+    public void cancel();
+
+    /**
+     * Waits until this position has been resolved and returns its session-specific result.
+     *
+     * @return the assigned count and visible projection, or a result with no visible change
+     */
+    public LockChangeResult awaitResult();
+  }
+
+  /**
+   * The session-specific result of a completed lock-change reservation. A zero count or a
+   * {@code null} change info means that the change was not visible to this session. A
+   * {@code null} filtered ID set means the complete change info should be sent; otherwise the
+   * set identifies the subset of lock IDs included in the projection.
+   *
+   * @author Eike Stepper
+   * @since 4.27
+   */
+  public interface LockChangeResult
+  {
+    /**
+     * Returns the exact sequence count assigned to this reservation, or zero when it was
+     * cancelled or irrelevant to this session.
+     */
+    public long getLockModCount();
+
+    /**
+     * Returns the projected lock change, or {@code null} when the change is not visible.
+     */
+    public CDOLockChangeInfo getLockChangeInfo();
+
+    /**
+     * Returns the projected lock IDs, or {@code null} when the complete change is visible.
+     */
+    public Set<CDOID> getFilteredIDs();
+  }
 
   /**
    * @deprecated As of 4.15 use {@link #viewClosed(InternalView, boolean)}.

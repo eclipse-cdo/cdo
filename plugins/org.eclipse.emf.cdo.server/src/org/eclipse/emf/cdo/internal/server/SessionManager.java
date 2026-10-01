@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol;
 import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -109,8 +110,6 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   private final Map<OneTimeLoginToken, Long> oneTimeLoginTokens = Collections.synchronizedMap(new HashMap<>());
 
   private final Map<InternalSession, List<CommitNotificationInfo>> commitNotificationInfoQueues = new HashMap<>();
-
-  private final ThreadLocal<LockingManager.LockChangeReservation> commitNotificationReservation = new ThreadLocal<>();
 
   private final IListener sessionListener = new LifecycleEventAdapter()
   {
@@ -363,13 +362,10 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       previousSession.close();
     }
 
-    long lockModCountBaseline = previousSession instanceof Session ? ((Session)previousSession).getLockModCount() : 0L;
+    long lockModCountBaseline = previousSession == null ? 0L : previousSession.getLockModCount();
 
     InternalSession session = createSession(id, userID, sessionProtocol);
-    if (session instanceof Session)
-    {
-      ((Session)session).setLockModCountBaseline(lockModCountBaseline);
-    }
+    session.setLockModCountBaseline(lockModCountBaseline);
 
     if (sessionInitializer != null)
     {
@@ -574,31 +570,11 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Override
   public void sendCommitNotification(CommitNotificationInfo info)
   {
-    dispatchCommitNotification(info, commitNotificationReservation.get());
+    sendCommitNotification(info, null);
   }
 
-  void sendCommitNotification(CommitNotificationInfo info, LockingManager.LockChangeReservation reservation)
-  {
-    LockingManager.LockChangeReservation previous = commitNotificationReservation.get();
-    commitNotificationReservation.set(reservation);
-    try
-    {
-      sendCommitNotification(info);
-    }
-    finally
-    {
-      if (previous == null)
-      {
-        commitNotificationReservation.remove();
-      }
-      else
-      {
-        commitNotificationReservation.set(previous);
-      }
-    }
-  }
-
-  private void dispatchCommitNotification(CommitNotificationInfo info, LockingManager.LockChangeReservation reservation)
+  @Override
+  public void sendCommitNotification(CommitNotificationInfo info, InternalLockManager.LockChangeReservationSet reservation)
   {
     CDOCommonSession sender = info.getSender();
     InternalSession[] sessions = getSessions();
@@ -621,7 +597,7 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   }
 
   private CommitNotificationInfo createSessionCommitNotification(InternalSession session, CommitNotificationInfo info,
-      LockingManager.LockChangeReservation reservation)
+      InternalLockManager.LockChangeReservationSet reservation)
   {
     CommitNotificationInfo result = new CommitNotificationInfo();
     result.setSender(info.getSender());
@@ -633,14 +609,12 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     result.setNewPermissions(info.getNewPermissions());
     result.setImpactedRules(info.getImpactedRules());
 
-    if (info.getLockChangeInfo() != null && reservation != null && session instanceof Session
-        && (session != info.getSender() || !info.isModifiedByServer()))
+    if (info.getLockChangeInfo() != null && reservation != null && (session != info.getSender() || !info.isModifiedByServer()))
     {
-      LockChangeDispatcher.TicketResult<CDOLockChangeInfo> ticketResult = reservation.getResult((Session)session);
-      if (ticketResult != null && ticketResult.getLockModCount() > 0 && ticketResult.getProjection() != null
-          && ticketResult.getProjection().isVisible())
+      InternalSession.LockChangeResult ticketResult = reservation.getResult(session);
+      if (ticketResult != null && ticketResult.getLockModCount() > 0 && ticketResult.getLockChangeInfo() != null)
       {
-        result.setLockChangeInfo(ticketResult.getProjection().getValue());
+        result.setLockChangeInfo(ticketResult.getLockChangeInfo());
         result.setLockModCount(ticketResult.getLockModCount());
       }
     }
@@ -702,7 +676,8 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     sendLockNotification(sender, lockChangeInfo, null);
   }
 
-  void sendLockNotification(InternalSession sender, CDOLockChangeInfo lockChangeInfo, LockingManager.LockChangeReservation reservation)
+  @Override
+  public void sendLockNotification(InternalSession sender, CDOLockChangeInfo lockChangeInfo, InternalLockManager.LockChangeReservationSet reservation)
   {
     for (InternalSession session : getSessions())
     {
@@ -710,12 +685,15 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         try
         {
-          if (reservation != null && session instanceof Session)
+          if (reservation != null)
           {
-            LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)session);
-            ((Session)session).sendLockNotification(lockChangeInfo, result);
+            InternalSession.LockChangeResult result = reservation.getResult(session);
+            if (result != null)
+            {
+              session.sendLockNotification(result);
+            }
           }
-          else if (reservation == null && session.options().getLockNotificationMode() != LockNotificationMode.OFF)
+          else if (session.options().getLockNotificationMode() != LockNotificationMode.OFF)
           {
             session.sendLockNotification(lockChangeInfo);
           }
@@ -734,9 +712,10 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     sendLockOwnerRemappedNotification(sender, branch, oldOwner, newOwner, null);
   }
 
+  @Override
   @SuppressWarnings("deprecation")
-  void sendLockOwnerRemappedNotification(InternalSession sender, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner,
-      LockingManager.LockChangeReservation reservation)
+  public void sendLockOwnerRemappedNotification(InternalSession sender, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner,
+      InternalLockManager.LockChangeReservationSet reservation)
   {
     for (InternalSession session : getSessions())
     {
@@ -744,15 +723,15 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       {
         try
         {
-          if (reservation != null && session instanceof Session)
+          if (reservation != null)
           {
-            LockChangeDispatcher.TicketResult<CDOLockChangeInfo> result = reservation.getResult((Session)session);
+            InternalSession.LockChangeResult result = reservation.getResult(session);
             if (result != null && result.getLockModCount() > 0)
             {
               session.sendLockOwnerRemappedNotification(branch, oldOwner, newOwner, result.getLockModCount());
             }
           }
-          else if (reservation == null)
+          else
           {
             session.sendLockOwnerRemappedNotification(branch, oldOwner, newOwner);
           }

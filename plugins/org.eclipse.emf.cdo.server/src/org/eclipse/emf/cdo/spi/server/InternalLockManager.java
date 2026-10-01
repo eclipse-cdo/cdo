@@ -13,10 +13,13 @@ package org.eclipse.emf.cdo.spi.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.server.ILockingManager;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.spi.server.InternalSession.LockChangeResult;
 
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager.LockChange.DeltaHandler;
@@ -122,6 +125,55 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
       DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) throws InterruptedException, TimeoutRuntimeException;
 
   /**
+   * Applies a lock change and returns its exact sequencing reservation together with the generic
+   * lock-manager modification count.
+   *
+   * @param view the lock owner
+   * @param changes the ordered lock and unlock requests
+   * @param recursive whether object collections are expanded to their contained objects
+   * @param explicit whether changes must also be persisted for a durable view
+   * @param deltaHandler receives the effective lock-count changes
+   * @param stateHandler receives the final state of affected objects
+   * @return the result for this exact operation
+   * @throws InterruptedException if a requested lock wait is interrupted
+   * @throws TimeoutRuntimeException if a requested lock cannot be acquired before its timeout
+   * @since 4.27
+   */
+  public LockChangeOperationResult changeLocksWithReservation(IView view, List<? extends LockChange<Object>> changes, boolean recursive, boolean explicit, //
+      DeltaHandler<Object, IView> deltaHandler, Consumer<LockState<Object, IView>> stateHandler) throws InterruptedException, TimeoutRuntimeException;
+
+  /**
+   * Reserves a lock-change sequencing position for each open session in the given set.
+   *
+   * @param sessions the sessions that may receive the change
+   * @param forceFull whether each resulting notification must contain the full change
+   * @return an aggregate reservation whose per-session results become available after completion
+   * @since 4.27
+   */
+  public LockChangeReservationSet reserveLockChange(InternalSession[] sessions, boolean forceFull);
+
+  /**
+   * Changes the durable locking ID of a view and returns the exact lock-change count assigned to
+   * the resulting owner remap for that view's session.
+   *
+   * @param view the view whose durable locking ID is changed
+   * @param durableLockingID the new durable locking ID, or {@code null} to disable durable locking
+   * @return the exact session lock-change count for the owner remap, or zero if no owner remap occurred
+   * @since 4.27
+   */
+  public long setDurableLockingID(InternalView view, String durableLockingID);
+
+  /**
+   * Returns a consistent snapshot of the lock states relevant to a session, paired with that
+   * session's exact lock-change sequence baseline.
+   *
+   * @param session the session for which relevant lock states are selected
+   * @return the relevant lock states and their sequence baseline
+   * @since 4.27
+   */
+  public LockStateSnapshot snapshotLockStates(InternalSession session);
+
+  /**
    * @since 4.0
    */
   public LockArea createLockArea(InternalView view);
@@ -188,6 +240,88 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
    * @since 4.1
    */
   public void reloadLocks();
+
+  /**
+   * An aggregate of per-session reservations for one lock change.
+   *
+   * @author Eike Stepper
+   * @since 4.27
+   */
+  public interface LockChangeReservationSet
+  {
+    /**
+     * Completes this reservation with the resulting change, canceling the entry for the excluded
+     * session when the notification is not delivered to that session.
+     *
+     * @param info the completed lock change
+     * @param excludedSession the session whose entry must be cancelled, or {@code null}
+     * @since 4.27
+     */
+    public void complete(CDOLockChangeInfo info, InternalSession excludedSession);
+
+    /**
+     * Cancels all entries in this reservation.
+     *
+     * @since 4.27
+     */
+    public void cancel();
+
+    /**
+     * Waits for and returns this lock change's result for the given session.
+     *
+     * @param session the recipient session
+     * @return the exact sequence count and projected change, or {@code null} if no reservation was made
+     * @since 4.27
+     */
+    public LockChangeResult getResult(InternalSession session);
+  }
+
+  /**
+   * The generic lock-manager modification count and optional reservation produced by one operation.
+   *
+   * @author Eike Stepper
+   * @since 4.27
+   */
+  public interface LockChangeOperationResult
+  {
+    /**
+     * Returns the generic lock-manager modification count.
+     *
+     * @since 4.27
+     */
+    public long getModCount();
+
+    /**
+     * Returns the reservation produced by this operation, or {@code null} when it had no
+     * client-visible lock change.
+     *
+     * @since 4.27
+     */
+    public LockChangeReservationSet getReservation();
+  }
+
+  /**
+   * A consistent lock-state snapshot for one session.
+   *
+   * @author Eike Stepper
+   * @since 4.27
+   */
+  public interface LockStateSnapshot
+  {
+    /**
+     * Returns the session's exact lock-change sequence baseline represented by this snapshot.
+     *
+     * @since 4.27
+     */
+    public long getLockModCount();
+
+    /**
+     * Returns the lock states relevant to the session when this snapshot was taken.
+     *
+     * @since 4.27
+     */
+    public List<CDOLockState> getLockStates();
+  }
 
   @Deprecated
   public List<LockState<Object, IView>> getLockStates();

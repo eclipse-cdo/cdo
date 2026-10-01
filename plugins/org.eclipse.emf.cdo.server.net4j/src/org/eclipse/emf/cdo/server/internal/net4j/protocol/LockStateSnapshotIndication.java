@@ -11,8 +11,7 @@ package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.internal.server.LockingManager;
-import org.eclipse.emf.cdo.internal.server.Session;
+import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 
 import java.io.IOException;
 
@@ -23,7 +22,7 @@ import java.io.IOException;
  */
 public class LockStateSnapshotIndication extends CDOServerReadIndication
 {
-  private LockingManager.LockStateSnapshot snapshot;
+  private InternalLockManager.LockStateSnapshot snapshot;
 
   public LockStateSnapshotIndication(CDOServerProtocol protocol)
   {
@@ -33,7 +32,7 @@ public class LockStateSnapshotIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    snapshot = ((LockingManager)getRepository().getLockingManager()).snapshotLockStates((Session)getSession());
+    snapshot = getRepository().getLockingManager().snapshotLockStates(getSession());
   }
 
   @Override

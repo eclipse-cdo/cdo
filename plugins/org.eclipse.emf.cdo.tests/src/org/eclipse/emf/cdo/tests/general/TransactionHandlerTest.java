@@ -29,6 +29,11 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Simon McDuff
@@ -322,66 +327,123 @@ public class TransactionHandlerTest extends AbstractCDOTest
 
   public void testAsyncTransactionHandler() throws Exception
   {
-    final CDOAccumulateTransactionHandler handler = new CDOAccumulateTransactionHandler();
-    CDOAsyncTransactionHandler asyncHandler = new CDOAsyncTransactionHandler(handler);
+    AtomicInteger attachingCount = new AtomicInteger();
+    AtomicInteger detachingCount = new AtomicInteger();
+    AtomicInteger modifyingCount = new AtomicInteger();
+    CountDownLatch callbacksDone = new CountDownLatch(4);
+    AtomicReference<Throwable> asyncFailure = new AtomicReference<>();
+    ConcurrentLinkedQueue<Thread> callbackThreads = new ConcurrentLinkedQueue<>();
+    Thread testThread = Thread.currentThread();
     CDOSession session = openSession();
-    CDOTransaction transaction = session.openTransaction();
-
-    Order order = getModel1Factory().createPurchaseOrder();
-    final Company company = getModel1Factory().createCompany();
-
-    final CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
-    resource.getContents().add(company);
-
-    transaction.addTransactionHandler(new CDOAsyncTransactionHandler(new CDOTransactionHandler()
+    try
     {
-      @Override
-      public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+      CDOTransaction transaction = session.openTransaction();
+
+      Order order = getModel1Factory().createPurchaseOrder();
+      Company company = getModel1Factory().createCompany();
+
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+      resource.getContents().add(company);
+
+      CDOTransactionHandler delegate = new CDOTransactionHandler()
       {
-        // Create READ access to see if we have deadlock
-        company.getCity();
+        private void accessView()
+        {
+          if (Thread.currentThread() == testThread)
+          {
+            throw new IllegalStateException("Async transaction callback ran on the test thread");
+          }
+
+          company.getCity();
+        }
+
+        @Override
+        public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+        {
+          accessView();
+          modifyingCount.incrementAndGet();
+        }
+
+        @Override
+        public void detachingObject(CDOTransaction transaction, CDOObject object)
+        {
+          accessView();
+          detachingCount.incrementAndGet();
+        }
+
+        @Override
+        public void attachingObject(CDOTransaction transaction, CDOObject object)
+        {
+          accessView();
+          attachingCount.incrementAndGet();
+        }
+
+        @Override
+        public void rolledBackTransaction(CDOTransaction transaction)
+        {
+        }
+
+        @Override
+        public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+        {
+        }
+
+        @Override
+        public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
+        {
+        }
+      };
+
+      CDOAsyncTransactionHandler asyncHandler = new CDOAsyncTransactionHandler(delegate)
+      {
+        @Override
+        protected void runAsync(Runnable runnable)
+        {
+          super.runAsync(() -> {
+            callbackThreads.add(Thread.currentThread());
+
+            try
+            {
+              runnable.run();
+            }
+            catch (Throwable ex)
+            {
+              asyncFailure.compareAndSet(null, ex);
+            }
+            finally
+            {
+              callbacksDone.countDown();
+            }
+          });
+        }
+      };
+
+      transaction.addTransactionHandler(asyncHandler);
+      resource.getContents().add(order); // 1 modif + 1 attach
+      resource.getContents().remove(order); // 1 modif + 1 detach
+
+      assertTrue("One or more expected asynchronous callbacks did not complete", callbacksDone.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS));
+
+      for (Thread callbackThread : callbackThreads)
+      {
+        callbackThread.join(DEFAULT_TIMEOUT);
+        assertFalse("Asynchronous callback thread did not terminate", callbackThread.isAlive());
       }
 
-      @Override
-      public void detachingObject(CDOTransaction transaction, CDOObject object)
+      Throwable failure = asyncFailure.get();
+      if (failure != null)
       {
-        // Create READ access to see if we have deadlock
-        company.getCity();
+        throw new AssertionError("An asynchronous transaction callback failed", failure);
       }
 
-      @Override
-      public void attachingObject(CDOTransaction transaction, CDOObject object)
-      {
-        // Create READ access to see if we have deadlock
-        company.getCity();
-      }
-
-      @Override
-      public void rolledBackTransaction(CDOTransaction transaction)
-      {
-      }
-
-      @Override
-      public void committingTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
-      {
-      }
-
-      @Override
-      public void committedTransaction(CDOTransaction transaction, CDOCommitContext commitContext)
-      {
-      }
-    }));
-
-    transaction.addTransactionHandler(asyncHandler);
-    resource.getContents().add(order); // 1 modif + 1 attach
-    resource.getContents().remove(order); // 1 modif + 1 detach
-
-    assertNoTimeout(() -> handler.listOfAddingObject.size() == 1 && handler.listOfDetachingObject.size() == 1 && handler.listOfModifyinObject.size() == 2);
-
-    // Wait a little bit to let the async finish. It is only there to not have Transaction not active exception and
-    // mislead the test.
-    sleep(300);
-    session.close();
+      assertEquals(1, attachingCount.get());
+      assertEquals(1, detachingCount.get());
+      assertEquals(2, modifyingCount.get());
+    }
+    finally
+    {
+      session.close();
+    }
   }
 
   protected void veto()

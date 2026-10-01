@@ -462,14 +462,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth)
+  public LockStateQueryResult getLockStates3(int branchID, Collection<CDOID> ids, int depth)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.getLockStates2(branchID, ids, depth);
+        return delegate.getLockStates3(branchID, ids, depth);
       }
       catch (Exception ex)
       {
@@ -522,24 +522,6 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.isObjectLocked(view, object, lockType, byOthers);
-      }
-      catch (Exception ex)
-      {
-        handleException(++attempt, ex);
-      }
-    }
-  }
-
-  @Override
-  @Deprecated
-  public String changeLockArea(CDOView view, boolean create)
-  {
-    int attempt = 0;
-    for (;;)
-    {
-      try
-      {
-        return changeLockArea2(view, create).getDurableLockingID();
       }
       catch (Exception ex)
       {
@@ -1383,6 +1365,13 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
 
   @Override
   @Deprecated
+  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
   public void deleteBranch(int branchID)
   {
     throw new UnsupportedOperationException();
@@ -1413,6 +1402,13 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   @Override
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public String changeLockArea(CDOView view, boolean create)
   {
     throw new UnsupportedOperationException();
   }

@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -28,20 +27,18 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
-import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
-import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-
-import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
 
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author Caspar De Groot
@@ -50,15 +47,15 @@ public class LockStateIndication extends CDOServerReadIndication
 {
   private static final Config REVISION_LOADING_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, 0);
 
-  private final LockStateCollector existingLockStates = new LockStateCollector();
-
-  private InternalLockManager lockManager;
+  private InternalLockManager.LockStateQuery query;
 
   private CDOBranch branch;
 
   private int prefetchDepth = CDOLockState.DEPTH_NONE;
 
   private CDORevisionProvider revisionProvider;
+
+  private Map<CDOID, Integer> targetIDs;
 
   public LockStateIndication(CDOServerProtocol protocol)
   {
@@ -70,7 +67,7 @@ public class LockStateIndication extends CDOServerReadIndication
   {
     InternalRepository repository = getRepository();
     CDOBranchManager branchManager = repository.getBranchManager();
-    lockManager = repository.getLockingManager();
+    InternalLockManager lockManager = repository.getLockingManager();
 
     int branchID = in.readXInt();
     branch = branchManager.getBranch(branchID);
@@ -87,10 +84,11 @@ public class LockStateIndication extends CDOServerReadIndication
 
     if (idsLength == 0)
     {
-      lockManager.getLockStates(existingLockStates);
+      query = lockManager.snapshotLockStates(getSession(), branch, null);
     }
     else
     {
+      targetIDs = new LinkedHashMap<>();
       int depth = prefetchDepth >= CDOLockState.DEPTH_NONE ? prefetchDepth : Integer.MAX_VALUE;
 
       for (int i = 0; i < idsLength; i++)
@@ -98,12 +96,20 @@ public class LockStateIndication extends CDOServerReadIndication
         CDOID id = in.readCDOID();
         prefetchLockStates(depth, id);
       }
+
+      query = lockManager.snapshotLockStates(getSession(), branch, targetIDs.keySet());
     }
   }
 
   private void prefetchLockStates(int depth, CDOID id)
   {
-    addLockState(id);
+    Integer previousDepth = targetIDs.get(id);
+    if (previousDepth != null && previousDepth >= depth)
+    {
+      return;
+    }
+
+    targetIDs.put(id, depth);
 
     if (depth > CDOLockState.DEPTH_NONE)
     {
@@ -148,21 +154,11 @@ public class LockStateIndication extends CDOServerReadIndication
     }
   }
 
-  private void addLockState(CDOID id)
-  {
-    Object key = lockManager.getLockKey(id, branch);
-
-    LockState<Object, IView> lockState = lockManager.getLockState(key);
-    if (lockState != null)
-    {
-      existingLockStates.add(CDOLockUtil.convertLockState(lockState));
-    }
-  }
-
   @Override
   protected void responding(CDODataOutput out) throws IOException
   {
-    out.writeCDOLockStates(existingLockStates, null);
+    out.writeXLong(query.getLockModCount());
+    out.writeCDOLockStates(query.getLockStates(), null);
   }
 
   /**

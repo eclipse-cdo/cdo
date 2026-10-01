@@ -100,7 +100,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     config = new Request.Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, referenceChunk);
 
     boolean prefetchLockStates = in.readBoolean();
-    lockStatePrefetcher = CDOServerLockStatePrefetcher.create(repository, branchPoint, prefetchLockStates);
+    lockStatePrefetcher = CDOServerLockStatePrefetcher.create(repository, getSession(), branchPoint, prefetchLockStates);
 
     int size = in.readXInt();
     if (size < 0)

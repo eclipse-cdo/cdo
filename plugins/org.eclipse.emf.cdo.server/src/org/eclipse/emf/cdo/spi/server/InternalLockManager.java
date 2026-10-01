@@ -174,6 +174,19 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   public LockStateSnapshot snapshotLockStates(InternalSession session);
 
   /**
+   * Returns lock states for the specified query targets with the session's exact lock-change
+   * sequence baseline. A {@code null} ID collection requests all lock states using normal query
+   * semantics.
+   *
+   * @param session the session whose sequence baseline is returned
+   * @param branch the branch used to create lock keys
+   * @param ids the target IDs, or {@code null} to query all lock states
+   * @return the lock states and matching session sequence baseline
+   * @since 4.27
+   */
+  public LockStateQuery snapshotLockStates(InternalSession session, CDOBranch branch, Collection<CDOID> ids);
+
+  /**
    * @since 4.0
    */
   public LockArea createLockArea(InternalView view);
@@ -319,6 +332,29 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
      * Returns the lock states relevant to the session when this snapshot was taken.
      *
      * @since 4.27
+     */
+    public List<CDOLockState> getLockStates();
+  }
+
+  /**
+   * A selective lock-state query paired with a session sequence baseline.
+   *
+   * @author Eike Stepper
+   * @since 4.27
+   */
+  public interface LockStateQuery
+  {
+    /**
+     * Returns the session-specific lock-change sequence baseline represented by the query.
+     *
+     * @return the session lock-change sequence baseline
+     */
+    public long getLockModCount();
+
+    /**
+     * Returns the existing lock states found for the query targets.
+     *
+     * @return the queried lock states
      */
     public List<CDOLockState> getLockStates();
   }

@@ -1004,16 +1004,23 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       List<CDOID> ids = new ArrayList<>();
 
       CDOBranch branch = getBranch();
-      CDOLockStateCache lockStateCache = forEachLockState(branch, (object, lockState) -> ids.add(lockState.getID()));
+      forEachLockState(branch, (object, lockState) -> ids.add(lockState.getID()));
 
       if (!ids.isEmpty())
       {
         CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        List<CDOLockState> loadedLockStates = sessionProtocol.getLockStates2(viewID, ids, CDOLockState.DEPTH_NONE);
 
-        if (!ObjectUtil.isEmpty(loadedLockStates))
+        for (;;)
         {
-          lockStateCache.addLockStates(branch, loadedLockStates, null);
+          CDOSessionProtocol.LockStateQueryResult result = sessionProtocol.getLockStates3(viewID, ids, CDOLockState.DEPTH_NONE);
+          List<CDOLockState> loadedLockStates = result.getLockStates();
+          long lockModCount = result.getLockModCount();
+
+          CDOSessionImpl sessionImpl = (CDOSessionImpl)session;
+          if (sessionImpl.enqueueLockStateQuery(lockModCount, () -> sessionImpl.applyLockStateQuery(lockModCount, branch, loadedLockStates)))
+          {
+            break;
+          }
         }
       }
     }

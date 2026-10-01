@@ -10,6 +10,8 @@ package org.eclipse.emf.cdo.tests.plain;
 
 import org.eclipse.emf.cdo.tests.config.impl.PlainTest;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -27,6 +29,163 @@ import java.util.function.Consumer;
  */
 public class LockChangeSequencerTest extends PlainTest
 {
+  public void testRealZeroAndUnspecifiedQueryBaselinesAreDistinct()
+  {
+    assertEquals(-1L, CDOSessionProtocol.UNSPECIFIED_LOCK_MOD_COUNT);
+    assertEquals(0L, new CDOSessionProtocol.LockStateQueryResult(0L, Collections.emptyList()).getLockModCount());
+    assertEquals(-1L, new CDOSessionProtocol.LockStateQueryResult(CDOSessionProtocol.UNSPECIFIED_LOCK_MOD_COUNT, Collections.emptyList()).getLockModCount());
+  }
+
+  public void testBaselineZeroActionRunsBeforeMutationOne() throws Exception
+  {
+    Object sequencer = newSequencer();
+    List<String> applied = new ArrayList<>();
+
+    assertTrue(registerBaselineAction(sequencer, 0L, () -> applied.add("query-0"))); //$NON-NLS-1$
+    enqueue(sequencer, 1L, () -> applied.add("mutation-1")); //$NON-NLS-1$
+
+    assertEquals(List.of("query-0", "mutation-1"), applied); //$NON-NLS-1$
+  }
+
+  public void testFutureBaselineActionRunsBetweenItsMutationAndTheNext() throws Exception
+  {
+    Object sequencer = newSequencer();
+    List<String> applied = new ArrayList<>();
+
+    assertTrue(registerBaselineAction(sequencer, 2L, () -> applied.add("query-2"))); //$NON-NLS-1$
+    enqueue(sequencer, 1L, () -> applied.add("mutation-1")); //$NON-NLS-1$
+    assertEquals(List.of("mutation-1"), applied); //$NON-NLS-1$
+    enqueue(sequencer, 2L, () -> applied.add("mutation-2")); //$NON-NLS-1$
+
+    assertEquals(List.of("mutation-1", "mutation-2", "query-2"), applied); //$NON-NLS-1$
+  }
+
+  public void testSameBaselineActionsAreFifoBeforeNextMutation() throws Exception
+  {
+    Object sequencer = newSequencer();
+    List<String> applied = new ArrayList<>();
+
+    registerBaselineAction(sequencer, 0L, () -> applied.add("first")); //$NON-NLS-1$
+    registerBaselineAction(sequencer, 0L, () -> applied.add("second")); //$NON-NLS-1$
+    enqueue(sequencer, 1L, () -> applied.add("mutation")); //$NON-NLS-1$
+
+    assertEquals(List.of("first", "second", "mutation"), applied); //$NON-NLS-1$
+  }
+
+  public void testSnapshotSupersedesCoveredBaselineActionsAndRetainsLaterOnes() throws Exception
+  {
+    Object sequencer = newSequencer();
+    List<String> applied = new ArrayList<>();
+    registerBaselineAction(sequencer, 5L, () -> applied.add("covered-query")); //$NON-NLS-1$
+    registerBaselineAction(sequencer, 8L, () -> applied.add("later-query")); //$NON-NLS-1$
+
+    installSnapshot(sequencer, 7L, () -> applied.add("snapshot")); //$NON-NLS-1$
+    resume(sequencer);
+    drain(sequencer);
+
+    assertEquals(List.of("snapshot"), applied); //$NON-NLS-1$
+    enqueue(sequencer, 8L, () -> applied.add("mutation-8")); //$NON-NLS-1$
+    assertEquals(List.of("snapshot", "mutation-8", "later-query"), applied); //$NON-NLS-1$
+  }
+
+  public void testSuspensionPreventsBaselineActionsFromDraining() throws Exception
+  {
+    Object sequencer = newSequencer();
+    List<String> applied = new ArrayList<>();
+    suspend(sequencer, 0L);
+    assertTrue(registerBaselineAction(sequencer, 0L, () -> applied.add("query"))); //$NON-NLS-1$
+    drain(sequencer);
+    assertTrue(applied.isEmpty());
+
+    resume(sequencer);
+    drain(sequencer);
+    assertEquals(List.of("query"), applied); //$NON-NLS-1$
+  }
+
+  public void testBaselineActionFailureRequestsRecovery() throws Exception
+  {
+    Object sequencer = newSequencer();
+    boolean[] recoveryRequested = { false };
+    Method setFailureHandler = sequencer.getClass().getDeclaredMethod("setFailureHandler", Consumer.class); //$NON-NLS-1$
+    setFailureHandler.setAccessible(true);
+    setFailureHandler.invoke(sequencer, (Consumer<Throwable>)cause -> recoveryRequested[0] = true);
+
+    registerBaselineAction(sequencer, 0L, () -> {
+      throw new IllegalStateException("query cache failed"); //$NON-NLS-1$
+    });
+
+    try
+    {
+      drain(sequencer);
+      fail("An escaping baseline action failure must propagate"); //$NON-NLS-1$
+    }
+    catch (InvocationTargetException ex)
+    {
+      assertEquals("query cache failed", ex.getCause().getMessage()); //$NON-NLS-1$
+    }
+
+    assertTrue(recoveryRequested[0]);
+    assertTrue(isSuspended(sequencer));
+  }
+
+  public void testBaselineBelowCurrentCountIsStale() throws Exception
+  {
+    Object sequencer = newSequencer();
+    enqueue(sequencer, 1L, () -> {
+    });
+    assertFalse(registerBaselineAction(sequencer, 0L, () -> fail("A past boundary is stale"))); //$NON-NLS-1$
+  }
+
+  public void testCloseDiscardsPendingBaselineActions() throws Exception
+  {
+    Object sequencer = newSequencer();
+    List<String> applied = new ArrayList<>();
+    registerBaselineAction(sequencer, 0L, () -> applied.add("must-not-run")); //$NON-NLS-1$
+
+    Method close = sequencer.getClass().getDeclaredMethod("close", Throwable.class); //$NON-NLS-1$
+    close.setAccessible(true);
+    close.invoke(sequencer, (Object)null);
+    drain(sequencer);
+
+    assertTrue(applied.isEmpty());
+  }
+
+  public void testBoundaryAlreadyCrossedByExecutingMutationIsStale() throws Exception
+  {
+    Object sequencer = newSequencer();
+    CountDownLatch started = new CountDownLatch(1);
+    CountDownLatch release = new CountDownLatch(1);
+
+    Thread mutation = new Thread(() -> {
+      try
+      {
+        enqueue(sequencer, 1L, () -> {
+          started.countDown();
+          try
+          {
+            release.await();
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.currentThread().interrupt();
+            throw new RuntimeException(ex);
+          }
+        });
+      }
+      catch (Exception ex)
+      {
+        throw new RuntimeException(ex);
+      }
+    });
+
+    mutation.start();
+    started.await();
+
+    assertFalse(registerBaselineAction(sequencer, 0L, () -> fail("A crossed boundary must not accept an action"))); //$NON-NLS-1$
+    release.countDown();
+    mutation.join();
+  }
+
   public void testFutureCountIsBufferedUntilItsPredecessorArrives() throws Exception
   {
     Object sequencer = newSequencer();
@@ -440,6 +599,13 @@ public class LockChangeSequencerTest extends PlainTest
     Method method = sequencer.getClass().getDeclaredMethod("enqueue", long.class, Runnable.class); //$NON-NLS-1$
     method.setAccessible(true);
     return method.invoke(sequencer, count, action);
+  }
+
+  private boolean registerBaselineAction(Object sequencer, long baseline, Runnable action) throws Exception
+  {
+    Method method = sequencer.getClass().getDeclaredMethod("registerBaselineAction", long.class, Runnable.class); //$NON-NLS-1$
+    method.setAccessible(true);
+    return (boolean)method.invoke(sequencer, baseline, action);
   }
 
   private long currentCount(Object sequencer) throws Exception

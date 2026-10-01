@@ -56,6 +56,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
+
 import org.eclipse.net4j.signal.EntityRequest;
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.Request;
@@ -80,7 +82,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
-import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
@@ -472,13 +473,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   }
 
   @Override
-  @Deprecated
-  public String changeLockArea(CDOView view, boolean create)
-  {
-    return changeLockArea2(view, create).getDurableLockingID();
-  }
-
-  @Override
   public ChangeLockAreaResult changeLockArea2(CDOView view, boolean create)
   {
     return send(new LockAreaRequest(this, view, create));
@@ -609,7 +603,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   }
 
   @Override
-  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth)
+  public LockStateQueryResult getLockStates3(int branchID, Collection<CDOID> ids, int depth)
   {
     return send(new LockStateRequest(this, branchID, ids, depth));
   }
@@ -792,6 +786,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   {
     if (in.readBoolean())
     {
+      long lockModCount = in.readXLong();
       List<CDOLockState> lockStates = in.readCDOLockStates();
 
       int noLockStateKeys = in.readXInt();
@@ -820,8 +815,9 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
 
       if (!lockStates.isEmpty())
       {
-        CDOLockStateCache lockStateCache = session.getLockStateCache();
-        lockStateCache.addLockStates(branch, lockStates, null);
+        List<CDOLockState> capturedLockStates = List.copyOf(lockStates);
+        CDOSessionImpl sessionImpl = (CDOSessionImpl)session;
+        sessionImpl.enqueueLockStateQuery(lockModCount, () -> sessionImpl.applyLockStateQuery(lockModCount, branch, capturedLockStates));
       }
     }
   }
@@ -902,6 +898,13 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
 
   @Override
   @Deprecated
+  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
   public void requestChangeCredentials()
   {
     throw new UnsupportedOperationException();
@@ -910,6 +913,13 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   @Override
   @Deprecated
   public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public String changeLockArea(CDOView view, boolean create)
   {
     throw new UnsupportedOperationException();
   }

@@ -17,6 +17,8 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateQueryResult;
+
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -25,7 +27,7 @@ import java.util.List;
 /**
  * @author Caspar De Groot
  */
-public class LockStateRequest extends CDOClientRequest<List<CDOLockState>>
+public class LockStateRequest extends CDOClientRequest<LockStateQueryResult>
 {
   private int branchID;
 
@@ -63,9 +65,11 @@ public class LockStateRequest extends CDOClientRequest<List<CDOLockState>>
   }
 
   @Override
-  protected List<CDOLockState> confirming(CDODataInput in) throws IOException
+  protected LockStateQueryResult confirming(CDODataInput in) throws IOException
   {
-    return in.readCDOLockStates();
+    long lockModCount = in.readXLong();
+    List<CDOLockState> lockStates = in.readCDOLockStates();
+    return new LockStateQueryResult(lockModCount, lockStates);
   }
 
   @Override

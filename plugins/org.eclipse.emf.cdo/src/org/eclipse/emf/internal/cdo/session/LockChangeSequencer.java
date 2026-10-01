@@ -21,6 +21,8 @@ final class LockChangeSequencer
 {
   private final TreeMap<Long, Entry> pending = new TreeMap<>();
 
+  private final TreeMap<Long, List<Runnable>> pendingBaselineActions = new TreeMap<>();
+
   private final List<Runnable> pendingSnapshotCoveredActions = new ArrayList<>();
 
   private long currentLockModCount;
@@ -53,6 +55,18 @@ final class LockChangeSequencer
   public synchronized boolean isSuspended()
   {
     return suspended;
+  }
+
+  public synchronized boolean registerBaselineAction(long baseline, Runnable action)
+  {
+    if (closed || failure != null || baseline < 0 || baseline < currentLockModCount || executing != null && executing.lockModCount > baseline)
+    {
+      return false;
+    }
+
+    pendingBaselineActions.computeIfAbsent(baseline, key -> new ArrayList<>()).add(action);
+    notifyAll();
+    return true;
   }
 
   public synchronized void setFailureHandler(Consumer<Throwable> failureHandler)
@@ -94,7 +108,10 @@ final class LockChangeSequencer
     cacheReplacement.run();
 
     List<Runnable> snapshotCoveredActions = new ArrayList<>(pendingSnapshotCoveredActions);
+
     pendingSnapshotCoveredActions.clear();
+    pendingBaselineActions.headMap(baseline, true).clear();
+
     List<Long> stale = new ArrayList<>(pending.headMap(baseline, true).keySet());
     for (Long count : stale)
     {
@@ -215,18 +232,83 @@ final class LockChangeSequencer
     for (;;)
     {
       Entry entry;
+      Runnable baselineAction;
+
       synchronized (this)
       {
-        entry = pending.remove(currentLockModCount + 1L);
-        if (entry == null)
+        if (suspended || closed || failure != null)
         {
           draining = false;
           notifyAll();
           return;
         }
 
-        executing = entry;
-        executingThread = Thread.currentThread();
+        List<Runnable> actions = pendingBaselineActions.get(currentLockModCount);
+        if (actions != null && !actions.isEmpty())
+        {
+          baselineAction = actions.remove(0);
+          if (actions.isEmpty())
+          {
+            pendingBaselineActions.remove(currentLockModCount);
+          }
+
+          entry = null;
+        }
+        else
+        {
+          baselineAction = null;
+          entry = pending.remove(currentLockModCount + 1L);
+        }
+
+        if (baselineAction != null)
+        {
+          // The monitor owns the boundary before the next mutation is selected.
+          executingThread = Thread.currentThread();
+        }
+        else if (entry == null)
+        {
+          draining = false;
+          notifyAll();
+          return;
+        }
+
+        if (entry != null)
+        {
+          executing = entry;
+          executingThread = Thread.currentThread();
+        }
+      }
+
+      if (baselineAction != null)
+      {
+        try
+        {
+          baselineAction.run();
+        }
+        catch (Throwable ex)
+        {
+          failAndRequestResync(ex);
+
+          if (ex instanceof Error)
+          {
+            throw (Error)ex;
+          }
+
+          if (ex instanceof RuntimeException)
+          {
+            throw (RuntimeException)ex;
+          }
+
+          throw new RuntimeException(ex);
+        }
+
+        synchronized (this)
+        {
+          executingThread = null;
+          notifyAll();
+        }
+
+        continue;
       }
 
       try
@@ -328,6 +410,7 @@ final class LockChangeSequencer
     }
 
     pending.clear();
+    pendingBaselineActions.clear();
     pendingSnapshotCoveredActions.clear();
     notifyAll();
     if (executing != null)
@@ -339,6 +422,7 @@ final class LockChangeSequencer
   private void failAndRequestResync(Throwable cause)
   {
     Consumer<Throwable> handler;
+
     synchronized (this)
     {
       executing = null;
@@ -346,11 +430,15 @@ final class LockChangeSequencer
       draining = false;
       failure = cause;
       suspended = true;
+
       for (Entry entry : pending.values())
       {
         entry.completion.complete(cause);
       }
+
+      pendingBaselineActions.clear();
       handler = failureHandler;
+
       notifyAll();
     }
 

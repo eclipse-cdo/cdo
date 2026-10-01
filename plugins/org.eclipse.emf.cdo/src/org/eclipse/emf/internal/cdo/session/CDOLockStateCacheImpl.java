@@ -45,8 +45,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
 
-import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.InternalCDOLockStateCache;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.util.ArrayList;
@@ -67,7 +67,7 @@ import java.util.function.Consumer;
 /**
  * @author Eike Stepper
  */
-public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockStateCache
+public final class CDOLockStateCacheImpl extends Lifecycle implements InternalCDOLockStateCache
 {
   private static final Class<CDOLockOwner[]> ARRAY_CLASS = CDOLockOwner[].class;
 
@@ -225,75 +225,49 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   public synchronized void updateLockStates(CDOBranch branch, Collection<CDOLockDelta> lockDeltas, Collection<CDOLockState> lockStates,
       Consumer<CDOLockState> consumer)
   {
-    try
+    ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
+
+    delta_loop: for (CDOLockDelta delta : lockDeltas)
     {
-      ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
+      CDOID id = delta.getID();
 
-      delta_loop: for (CDOLockDelta delta : lockDeltas)
+      OwnerInfo info = infos.get(id);
+      if (info == null || delta.getType() == null)
       {
-        CDOID id = delta.getID();
-
-        OwnerInfo info = null;
-        OwnerInfo newInfo = null;
-
-        for (int i = 50; i >= 0; --i)
+        for (CDOLockState lockState : lockStates)
         {
-          info = infos.get(id);
-          if (info == null || delta.getType() == null)
+          if (lockState.getID() == id)
           {
-            for (CDOLockState lockState : lockStates)
-            {
-              if (lockState.getID() == id)
-              {
-                addLockState(infos, lockState, consumer);
-                continue delta_loop;
-              }
-            }
-
+            addLockState(infos, lockState, consumer);
             continue delta_loop;
           }
-
-          try
-          {
-            newInfo = info.applyDelta(this, delta);
-            break;
-          }
-          catch (ObjectAlreadyLockedException ex)
-          {
-            if (i == 0)
-            {
-              throw new ObjectAlreadyLockedException(id, branch, ex);
-            }
-
-            try
-            {
-              wait(100);
-            }
-            catch (InterruptedException ex1)
-            {
-              Thread.currentThread().interrupt();
-              throw new Error(ex1);
-            }
-          }
         }
 
-        if (newInfo != info)
-        {
-          trace(id, info, newInfo);
-          infos.put(id, newInfo);
-        }
-
-        if (consumer != null)
-        {
-          Object target = delta.getTarget();
-          CDOLockState lockState = new LockState(target, this);
-          consumer.accept(lockState);
-        }
+        continue delta_loop;
       }
-    }
-    finally
-    {
-      notifyAll();
+
+      OwnerInfo newInfo;
+      try
+      {
+        newInfo = info.applyDelta(this, delta);
+      }
+      catch (ObjectAlreadyLockedException ex)
+      {
+        throw new ObjectAlreadyLockedException(id, branch, ex);
+      }
+
+      if (newInfo != info)
+      {
+        trace(id, info, newInfo);
+        infos.put(id, newInfo);
+      }
+
+      if (consumer != null)
+      {
+        Object target = delta.getTarget();
+        CDOLockState lockState = new LockState(target, this);
+        consumer.accept(lockState);
+      }
     }
   }
 
@@ -315,7 +289,19 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
     }
   }
 
-  synchronized void replaceSnapshot(Collection<? extends CDOLockState> lockStates)
+  @Override
+  public synchronized void addLockStatesStrict(CDOBranch branch, Collection<? extends CDOLockState> lockStates)
+  {
+    ConcurrentMap<CDOID, OwnerInfo> infos = getOwnerInfoMap(branch);
+
+    for (CDOLockState lockState : lockStates)
+    {
+      addLockState(infos, lockState, null);
+    }
+  }
+
+  @Override
+  public synchronized void replaceSnapshot(Collection<? extends CDOLockState> lockStates)
   {
     ownerInfosOfMainBranch.clear();
 
@@ -692,9 +678,48 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
   private void loadLockStates(CDOBranch branch, Set<CDOID> ids, Consumer<CDOLockState> consumer)
   {
     CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-    List<CDOLockState> lockStates = sessionProtocol.getLockStates2(branch.getID(), ids, CDOLockState.DEPTH_NONE);
 
-    addLockStates(branch, lockStates, consumer);
+    for (;;)
+    {
+      CDOSessionProtocol.LockStateQueryResult result = sessionProtocol.getLockStates3(branch.getID(), ids, CDOLockState.DEPTH_NONE);
+
+      List<CDOLockState> lockStates = result.getLockStates();
+      Set<CDOID> missingIDs = ids == null ? Collections.emptySet() : new HashSet<>(ids);
+
+      for (CDOLockState lockState : lockStates)
+      {
+        missingIDs.remove(lockState.getID());
+      }
+
+      List<CDOLockState> cacheStates = new ArrayList<>(lockStates);
+      for (CDOID id : missingIDs)
+      {
+        cacheStates.add(CDOLockUtil.createLockState(createKey(branch, id)));
+      }
+
+      List<CDOLockState> capturedStates = Collections.unmodifiableList(cacheStates);
+      long lockModCount = result.getLockModCount();
+      CDOSessionImpl sessionImpl = (CDOSessionImpl)session;
+
+      boolean accepted = sessionImpl.enqueueLockStateQuery(lockModCount, () -> sessionImpl.applyLockStateQuery(lockModCount, branch, capturedStates));
+      if (accepted)
+      {
+        if (consumer != null)
+        {
+          for (CDOLockState lockState : lockStates)
+          {
+            consumer.accept(lockState);
+          }
+
+          for (CDOID id : missingIDs)
+          {
+            consumer.accept(CDOLockUtil.createLockState(createKey(branch, id)));
+          }
+        }
+
+        return;
+      }
+    }
   }
 
   private void addLockState(ConcurrentMap<CDOID, OwnerInfo> infos, CDOLockState lockState, Consumer<CDOLockState> consumer)

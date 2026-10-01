@@ -89,6 +89,13 @@ import java.util.function.BiConsumer;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
+ * <p>
+ * Deprecated methods in this interface are retained for API compatibility only. Implementations should
+ * implement the corresponding non-deprecated methods directly and must not use deprecated methods as
+ * implementation fallbacks for newer methods, unless explicitly specified otherwise.
+ * <p>
+ * In particular, the presence of a deprecated method does not imply that implementations are required
+ * to support it; implementations may throw {@link UnsupportedOperationException} where appropriate.
  *
  * @author Eike Stepper
  * @since 2.0
@@ -97,6 +104,13 @@ import java.util.function.BiConsumer;
  */
 public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLoader5, RevisionLoader3, RevisionLoader4, CommitInfoLoader
 {
+  /**
+   * Indicates that a lock-state query has no atomically captured sequence baseline.
+   *
+   * @since 4.31
+   */
+  public static final long UNSPECIFIED_LOCK_MOD_COUNT = -1L;
+
   public RepositoryTimeResult getRepositoryTime();
 
   /**
@@ -308,9 +322,16 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       CDORevisionAvailabilityInfo targetBaseInfo, CDORevisionAvailabilityInfo sourceBaseInfo);
 
   /**
-   * @since 4.15
+   * Returns a selective lock-state query paired with the exact session lock-change sequence baseline
+   * represented by the query result.
+   *
+   * @param branchID the ID of the branch to query
+   * @param ids the object IDs to query
+   * @param depth the containment prefetch depth
+   * @return the queried lock states and the session sequence baseline
+   * @since 4.31
    */
-  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth);
+  public LockStateQueryResult getLockStates3(int branchID, Collection<CDOID> ids, int depth);
 
   /**
    * Returns an authoritative lock-state snapshot and the exact session lock
@@ -1936,6 +1957,55 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
   }
 
+  /**
+   * A partial lock-state query paired with the session lock-change sequence baseline represented by
+   * the queried states. Unlike a lock-state snapshot, this result does not describe the complete
+   * session cache.
+   *
+   * @author Eike Stepper
+   * @since 4.31
+   */
+  public static final class LockStateQueryResult
+  {
+    private final long lockModCount;
+
+    private final List<CDOLockState> lockStates;
+
+    /**
+     * Creates a result for a selective lock-state query.
+     *
+     * @param lockModCount the session-specific sequence baseline represented by {@code lockStates}
+     * @param lockStates the existing lock states found for the query targets
+     */
+    public LockStateQueryResult(long lockModCount, List<CDOLockState> lockStates)
+    {
+      this.lockModCount = lockModCount;
+      this.lockStates = Collections.unmodifiableList(new ArrayList<>(lockStates));
+    }
+
+    /**
+     * Returns the session-specific lock-change sequence baseline represented by the queried lock
+     * states. This value is not a global lock-manager version.
+     *
+     * @return the session lock-change sequence baseline
+     */
+    public long getLockModCount()
+    {
+      return lockModCount;
+    }
+
+    /**
+     * Returns the existing lock states among the query targets. Targets with no lock state are
+     * omitted, and the returned list is immutable.
+     *
+     * @return the lock states returned by the selective query
+     */
+    public List<CDOLockState> getLockStates()
+    {
+      return lockStates;
+    }
+  }
+
   @Deprecated
   public LockObjectsResult lockObjects(List<InternalCDORevision> viewedRevisions, int viewID, CDOBranch viewedBranch, LockType lockType, long timeout)
       throws InterruptedException;
@@ -1967,6 +2037,13 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   @Deprecated
   public CDOLockState[] getLockStates(int branchID, Collection<CDOID> ids, int depth);
+
+  /**
+   * @since 4.15
+   * @deprecated As of 4.31 use {@link #getLockStates3(int, Collection, int)}.
+   */
+  @Deprecated
+  public List<CDOLockState> getLockStates2(int branchID, Collection<CDOID> ids, int depth);
 
   @Deprecated
   public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID);

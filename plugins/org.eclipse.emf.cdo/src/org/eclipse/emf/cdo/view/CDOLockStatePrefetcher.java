@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -209,41 +210,35 @@ public class CDOLockStatePrefetcher
         {
           // Direct call the session protocol.
           CDOSessionProtocol sessionProtocol = view.getSession().getSessionProtocol();
-          List<CDOLockState> loadedLockStates = sessionProtocol.getLockStates2(view.getBranch().getID(), ids, event.getPrefetchDepth());
+          CDOSessionProtocol.LockStateQueryResult queryResult;
 
-          updateLockStates(loadedLockStates, true);
-
-          // Add missing lock states.
-          List<CDOLockState> missingLockStates = new ArrayList<>();
-          for (CDOID id : ids)
+          for (;;)
           {
-            try
+            queryResult = sessionProtocol.getLockStates3(view.getBranch().getID(), ids, event.getPrefetchDepth());
+
+            List<CDOLockState> loadedLockStates = queryResult.getLockStates();
+            List<CDOLockState> queryCacheStates = new ArrayList<>(loadedLockStates);
+            List<CDOLockState> additionalLockStates = new ArrayList<>();
+            Set<CDOID> returnedIDs = new HashSet<>();
+
+            for (CDOLockState lockState : loadedLockStates)
             {
-              CDOObject object = view.getObject(id, false);
-              if (object != null)
+              returnedIDs.add(lockState.getID());
+            }
+
+            for (CDOID id : ids)
+            {
+              if (returnedIDs.contains(id))
               {
-                addMissingLockState(object, missingLockStates);
+                continue;
               }
-            }
-            catch (ObjectNotFoundException ex)
-            {
-              //$FALL-THROUGH$
-            }
-          }
-
-          for (CDORevision revision : event.getAdditionalLoadedRevisions())
-          {
-            CDOID id = revision.getID();
-            if (id != null && filter.test(id))
-            {
-              boolean normalObject = !revision.isResourceNode();
 
               try
               {
-                CDOObject object = view.getObject(id, normalObject);
+                CDOObject object = view.getObject(id, false);
                 if (object != null)
                 {
-                  addMissingLockState(object, missingLockStates);
+                  addMissingLockState(object, queryCacheStates);
                 }
               }
               catch (ObjectNotFoundException ex)
@@ -251,9 +246,39 @@ public class CDOLockStatePrefetcher
                 //$FALL-THROUGH$
               }
             }
-          }
 
-          updateLockStates(missingLockStates, false);
+            for (CDORevision revision : event.getAdditionalLoadedRevisions())
+            {
+              CDOID id = revision.getID();
+              if (id != null && filter.test(id))
+              {
+                boolean normalObject = !revision.isResourceNode();
+
+                try
+                {
+                  CDOObject object = view.getObject(id, normalObject);
+                  if (object != null)
+                  {
+                    addMissingLockState(object, additionalLockStates);
+                  }
+                }
+                catch (ObjectNotFoundException ex)
+                {
+                  //$FALL-THROUGH$
+                }
+              }
+            }
+
+            List<CDOLockState> capturedStates = new ArrayList<>(queryCacheStates);
+            long lockModCount = queryResult.getLockModCount();
+
+            CDOSessionImpl sessionImpl = (CDOSessionImpl)view.getSession();
+            if (sessionImpl.enqueueLockStateQuery(lockModCount, () -> sessionImpl.applyLockStateQuery(lockModCount, view.getBranch(), capturedStates)))
+            {
+              updateLockStates(additionalLockStates, false);
+              break;
+            }
+          }
         }
       }
       catch (Exception ex)

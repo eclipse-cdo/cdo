@@ -5,7 +5,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -15,13 +15,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
-import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
-
-import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -43,7 +40,8 @@ public abstract class CDOServerLockStatePrefetcher
 
   public abstract void writeLockStates(CDODataOutput out) throws IOException;
 
-  public static CDOServerLockStatePrefetcher create(InternalRepository repository, CDOBranchPoint branchPoint, boolean prefetchLockStates)
+  public static CDOServerLockStatePrefetcher create(InternalRepository repository, InternalSession session, CDOBranchPoint branchPoint,
+      boolean prefetchLockStates)
   {
     if (!prefetchLockStates)
     {
@@ -56,12 +54,7 @@ public abstract class CDOServerLockStatePrefetcher
     }
 
     CDOBranch branch = branchPoint.getBranch();
-    if (repository.isSupportingBranches())
-    {
-      return new Branching(repository, branch);
-    }
-
-    return new Normal(repository, branch);
+    return new Normal(repository, session, branch);
   }
 
   /**
@@ -97,23 +90,25 @@ public abstract class CDOServerLockStatePrefetcher
    */
   private static class Normal extends CDOServerLockStatePrefetcher
   {
-    private final Set<Object> lockStateKeys = new HashSet<>();
+    private final Set<CDOID> lockStateIDs = new HashSet<>();
 
     private final InternalLockManager lockingManager;
 
     private final CDOBranch branch;
 
-    private Normal(InternalRepository repository, CDOBranch branch)
+    private final InternalSession session;
+
+    private Normal(InternalRepository repository, InternalSession session, CDOBranch branch)
     {
       lockingManager = repository.getLockingManager();
+      this.session = session;
       this.branch = branch;
     }
 
     @Override
     public void addLockStateKey(CDOID id)
     {
-      Object key = lockingManager.getLockKey(id, branch);
-      lockStateKeys.add(key);
+      lockStateIDs.add(id);
     }
 
     @Override
@@ -133,72 +128,23 @@ public abstract class CDOServerLockStatePrefetcher
     public void writeLockStates(CDODataOutput out) throws IOException
     {
       out.writeBoolean(true);
+      InternalLockManager.LockStateQuery snapshot = lockingManager.snapshotLockStates(session, branch, lockStateIDs);
+      out.writeXLong(snapshot.getLockModCount());
+      out.writeCDOLockStates(snapshot.getLockStates(), null);
 
-      Set<Object> noLockStateKeys = new HashSet<>();
-
-      try
+      Set<CDOID> existingIDs = new HashSet<>();
+      for (CDOLockState state : snapshot.getLockStates())
       {
-        lockingManager.getLockStates(lockStateKeys, (key, lockState) -> {
-          if (lockState != null)
-          {
-            CDOLockState cdoLockState = CDOLockUtil.convertLockState(lockState);
-
-            try
-            {
-              out.writeCDOLockState(cdoLockState);
-            }
-            catch (IOException ex)
-            {
-              throw WrappedException.wrap(ex);
-            }
-          }
-          else
-          {
-            noLockStateKeys.add(key);
-          }
-        });
-      }
-      catch (WrappedException ex)
-      {
-        Exception exception = ex.exception();
-        if (exception instanceof IOException)
-        {
-          throw (IOException)exception;
-        }
-
-        throw ex;
+        existingIDs.add(state.getID());
       }
 
-      out.writeCDOLockState(null);
-      out.writeXInt(noLockStateKeys.size());
-      writeNoLockStateKeys(out, noLockStateKeys);
-    }
+      Set<CDOID> noLockStateIDs = new HashSet<>(lockStateIDs);
+      noLockStateIDs.removeAll(existingIDs);
+      out.writeXInt(noLockStateIDs.size());
 
-    protected void writeNoLockStateKeys(CDODataOutput out, Set<Object> noLockStateKeys) throws IOException
-    {
-      for (Object key : noLockStateKeys)
+      for (CDOID id : noLockStateIDs)
       {
-        out.writeCDOID((CDOID)key);
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static class Branching extends CDOServerLockStatePrefetcher.Normal
-  {
-    private Branching(InternalRepository repository, CDOBranch branch)
-    {
-      super(repository, branch);
-    }
-
-    @Override
-    protected void writeNoLockStateKeys(CDODataOutput out, Set<Object> noLockStateKeys) throws IOException
-    {
-      for (Object key : noLockStateKeys)
-      {
-        out.writeCDOID(((CDOIDAndBranch)key).getID());
+        out.writeCDOID(id);
       }
     }
   }

@@ -14,7 +14,9 @@ package org.eclipse.emf.cdo.tests.general;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -22,12 +24,16 @@ import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.session.CDOLockStateCacheImpl;
+import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -110,6 +116,79 @@ public class LockStateCacheTest extends AbstractCDOTest
     assertTrue(lockState1.getReadLockOwners().contains(owner2));
     assertTrue(lockState1.getReadLockOwners().contains(owner3));
     assertEquals(owner1, lockState1.getWriteOptionOwner());
+  }
+
+  public void testSequenceAwareQueryCacheFailurePropagates() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOLockStateCache cache = ((CDOSessionImpl)session).getLockStateCache();
+    CDOBranch branch = getTestBranch(session);
+    CDOView readerView = session.openView(branch.getHead());
+    CDOView writerView = session.openView(branch.getHead());
+    CDOID id = CDOIDUtil.createLong(100L);
+    CDOLockOwner reader = readerView.getLockOwner();
+    CDOLockOwner writer = writerView.getLockOwner();
+
+    CDOLockState inconsistentState = new CDOLockState()
+    {
+      @Override
+      public CDOID getID()
+      {
+        return id;
+      }
+
+      @Override
+      public CDOBranch getBranch()
+      {
+        return branch;
+      }
+
+      @Override
+      public Object getLockedObject()
+      {
+        return id;
+      }
+
+      @Override
+      public boolean isLocked(LockType type, CDOLockOwner by, boolean others)
+      {
+        return true;
+      }
+
+      @Override
+      public Set<CDOLockOwner> getReadLockOwners()
+      {
+        return Collections.singleton(reader);
+      }
+
+      @Override
+      public CDOLockOwner getWriteLockOwner()
+      {
+        return writer;
+      }
+
+      @Override
+      public CDOLockOwner getWriteOptionOwner()
+      {
+        return null;
+      }
+    };
+
+    try
+    {
+      assertException(CDOLockStateCache.ObjectAlreadyLockedException.class,
+          () -> ((CDOSessionImpl)session).applyLockStateQuery(0L, branch, Collections.singleton(inconsistentState)));
+
+      List<CDOLockState> cachedStates = new ArrayList<>();
+      cache.getLockStates(branch, Collections.singleton(id), false, cachedStates::add);
+      assertTrue("A rejected state must not be installed in the cache", cachedStates.isEmpty()); //$NON-NLS-1$
+    }
+    finally
+    {
+      writerView.close();
+      readerView.close();
+      session.close();
+    }
   }
 
   public void testSetWriteLockOwner() throws Exception

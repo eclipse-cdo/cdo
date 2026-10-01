@@ -144,7 +144,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOOperationAuthorizer;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater2;
@@ -153,6 +152,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateSnapshotResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
+import org.eclipse.emf.spi.cdo.InternalCDOLockStateCache;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
@@ -171,6 +171,7 @@ import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -214,7 +215,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private CDOUserInfoManager userInfoManager;
 
-  private CDOLockStateCache lockStateCache;
+  private InternalCDOLockStateCache lockStateCache;
 
   private final LockChangeSequencer lockChangeSequencer = new LockChangeSequencer();
 
@@ -497,9 +498,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
-  public CDOLockStateCache getLockStateCache()
+  public InternalCDOLockStateCache getLockStateCache()
   {
     return lockStateCache;
+  }
+
+  /**
+   * This method is required for reflective access from org.eclipse.emf.cdo.tests.general.LockingNotificationsTest!
+   */
+  long getCurrentLockModCount()
+  {
+    return lockChangeSequencer.getCurrentLockModCount();
   }
 
   /**
@@ -569,6 +578,53 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   /**
+   * Registers a query cache update at its captured session sequence boundary.
+   */
+  public boolean enqueueLockStateQuery(long lockModCount, Runnable action)
+  {
+    if (lockModCount == CDOSessionProtocol.UNSPECIFIED_LOCK_MOD_COUNT)
+    {
+      action.run();
+      return true;
+    }
+
+    if (lockModCount < 0)
+    {
+      throw new IllegalArgumentException("Invalid lock modification count: " + lockModCount); //$NON-NLS-1$
+    }
+
+    if (!lockChangeSequencer.registerBaselineAction(lockModCount, action))
+    {
+      return false;
+    }
+
+    getExecutorService().submit(lockChangeSequencer::drain);
+    return true;
+  }
+
+  /**
+   * Applies states captured by a lock-state query.
+   * <p>
+   * Cache updates tied to an explicit sequence baseline must fail fast so that the lock change sequencer can request
+   * an authoritative snapshot. Results with an unspecified compatibility baseline retain the historical
+   * best-effort cache behavior.
+   *
+   * @param lockModCount the baseline reported by the query
+   * @param branch the branch whose cache entries are updated
+   * @param lockStates the lock states captured by the query
+   */
+  public void applyLockStateQuery(long lockModCount, CDOBranch branch, Collection<? extends CDOLockState> lockStates)
+  {
+    if (lockModCount == CDOSessionProtocol.UNSPECIFIED_LOCK_MOD_COUNT)
+    {
+      lockStateCache.addLockStates(branch, lockStates, null);
+      return;
+    }
+
+    lockStateCache.addLockStatesStrict(branch, lockStates);
+  }
+
+  /**
    * Drains and waits until the given lock change has completed.
    *
    * @param lockModCount the positive server lock modification count
@@ -602,13 +658,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         return;
       }
 
-      if (!(lockStateCache instanceof CDOLockStateCacheImpl))
-      {
-        throw new IllegalStateException("Unsupported lock-state cache implementation"); //$NON-NLS-1$
-      }
-
       List<Runnable> snapshotCoveredActions = lockChangeSequencer.installSnapshotAndCollect(snapshot.getLockModCount(),
-          () -> ((CDOLockStateCacheImpl)lockStateCache).replaceSnapshot(snapshot.getLockStates()));
+          () -> lockStateCache.replaceSnapshot(snapshot.getLockStates()));
 
       for (Runnable action : snapshotCoveredActions)
       {
@@ -658,11 +709,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         throw new IllegalStateException("Cannot wait for a lock change while holding view Access: " + view); //$NON-NLS-1$
       }
     }
-  }
-
-  long getCurrentLockModCount()
-  {
-    return lockChangeSequencer.getCurrentLockModCount();
   }
 
   @Override
@@ -1651,6 +1697,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     doHandleLockNotification(0L, lockChangeInfo, sender, notifyViews);
   }
 
+  /**
+   * This method is also required for reflective access from org.eclipse.emf.cdo.tests.general.LockingNotificationsTest!
+   */
   protected void doHandleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean notifyViews)
   {
     processLockNotification(lockModCount, lockChangeInfo, sender, notifyViews);

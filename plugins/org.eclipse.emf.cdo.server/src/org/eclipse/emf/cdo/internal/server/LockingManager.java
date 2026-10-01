@@ -181,31 +181,64 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   @Override
   public InternalLockManager.LockStateSnapshot snapshotLockStates(InternalSession session)
   {
+    return captureLockStates(session, lockStates -> {
+      LockStateCollector allLockStates = new LockStateCollector();
+      getLockStates(allLockStates);
+
+      for (CDOLockState state : allLockStates)
+      {
+        if (session.isLockStateRelevantForSnapshot(state))
+        {
+          lockStates.add(state);
+        }
+      }
+    });
+  }
+
+  @Override
+  public InternalLockManager.LockStateQuery snapshotLockStates(InternalSession session, CDOBranch branch, Collection<CDOID> ids)
+  {
+    InternalLockManager.LockStateSnapshot snapshot = captureLockStates(session, lockStates -> {
+      if (ids == null)
+      {
+        getLockStates(lockStates);
+      }
+      else
+      {
+        List<Object> keys = new ArrayList<>(ids.size());
+
+        for (CDOID id : ids)
+        {
+          keys.add(getLockKey(id, branch));
+        }
+
+        getLockStates(keys, (key, lockState) -> {
+          if (lockState != null)
+          {
+            lockStates.accept(lockState);
+          }
+        });
+      }
+    });
+
+    return new LockStateQueryImpl(snapshot.getLockModCount(), snapshot.getLockStates());
+  }
+
+  private InternalLockManager.LockStateSnapshot captureLockStates(InternalSession session, Consumer<LockStateCollector> collector)
+  {
     for (;;)
     {
       try (Access access = write.access())
       {
-        if (!session.isLockChangesQuiescent())
+        if (session.isLockChangesQuiescent())
         {
-          // Reservation completion can require compensation, so never wait while the write lock is held.
-        }
-        else
-        {
-          LockStateCollector allLockStates = new LockStateCollector();
-          getLockStates(allLockStates);
-          List<CDOLockState> relevantLockStates = new ArrayList<>();
-          for (CDOLockState state : allLockStates)
-          {
-            if (session.isLockStateRelevantForSnapshot(state))
-            {
-              relevantLockStates.add(state);
-            }
-          }
-
-          return new LockStateSnapshotImpl(session.getLockModCount(), relevantLockStates);
+          LockStateCollector lockStates = new LockStateCollector();
+          collector.accept(lockStates);
+          return new LockStateSnapshotImpl(session.getLockModCount(), Collections.unmodifiableList(new ArrayList<>(lockStates)));
         }
       }
 
+      // Reservation completion can require compensation, so never wait while the write lock is held.
       session.awaitLockChangesQuiescent();
     }
   }
@@ -1841,6 +1874,34 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     {
       this.lockModCount = lockModCount;
       this.lockStates = lockStates;
+    }
+
+    @Override
+    public long getLockModCount()
+    {
+      return lockModCount;
+    }
+
+    @Override
+    public List<CDOLockState> getLockStates()
+    {
+      return lockStates;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LockStateQueryImpl implements InternalLockManager.LockStateQuery
+  {
+    private final long lockModCount;
+
+    private final List<CDOLockState> lockStates;
+
+    public LockStateQueryImpl(long lockModCount, List<CDOLockState> lockStates)
+    {
+      this.lockModCount = lockModCount;
+      this.lockStates = Collections.unmodifiableList(new ArrayList<>(lockStates));
     }
 
     @Override

@@ -55,6 +55,13 @@ public class AbstractLockingTest extends AbstractCDOTest
   {
   }
 
+  /**
+   * Called before a received lock notification is submitted for client processing.
+   */
+  protected void beforeLockNotificationSubmitted(long lockModCount)
+  {
+  }
+
   @Deprecated
   protected long getInvalidationDelay()
   {
@@ -170,6 +177,8 @@ public class AbstractLockingTest extends AbstractCDOTest
         @Override
         public void handleLockNotification(long lockModCount, CDOLockChangeInfo lockChangeInfo, InternalCDOView sender, boolean async)
         {
+          beforeLockNotificationSubmitted(lockModCount);
+
           synchronized (activeLockNotifications)
           {
             activeLockNotifications.incrementAndGet();

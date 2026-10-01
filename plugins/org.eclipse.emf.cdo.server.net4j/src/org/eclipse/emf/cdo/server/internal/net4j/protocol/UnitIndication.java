@@ -90,7 +90,7 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
       return;
     }
 
-    CDOServerLockStatePrefetcher lockStatePrefetcher = CDOServerLockStatePrefetcher.create(repository, view, prefetchLockStates);
+    CDOServerLockStatePrefetcher lockStatePrefetcher = CDOServerLockStatePrefetcher.create(repository, view.getSession(), view, prefetchLockStates);
     InternalCDORevisionCache revisionCache = repository.getRevisionManager().getCache();
     IOException[] ioException = { null };
     RuntimeException[] runtimeException = { null };

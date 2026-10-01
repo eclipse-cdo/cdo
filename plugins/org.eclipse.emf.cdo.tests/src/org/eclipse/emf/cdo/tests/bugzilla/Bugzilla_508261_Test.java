@@ -70,6 +70,7 @@ public class Bugzilla_508261_Test extends AbstractCDOTest
     CDOResourceFolder folder2 = transaction2.getObject(folder);
     assertTrue(transaction2.getUnitManager().isUnit(folder2));
 
+    transaction2.getUnitManager().setPrefetchLockStates(true);
     CDOUnit unit2 = transaction2.getUnitManager().openUnit(folder2, false, null);
     assertNotNull(unit2);
 

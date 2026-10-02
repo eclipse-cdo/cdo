@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import java.util.function.Consumer;
+
 /**
  * Best Practices and Common Pitfalls
  * <p>
@@ -57,28 +59,40 @@ public class Doc12_BestPracticesAndPatterns
    * {@code AutoCloseable} resources.
    * <p>
    * Close a transaction before its session, remove listeners before disposing the observed component, and release a LOB
-   * stream before closing the view or session that supplies it. See {@link #commitOrRollback(CDOTransaction) commitOrRollback}
-   * for a small failure-safe transaction boundary.
+   * stream before closing the view or session that supplies it. The example below shows the owning component opening
+   * its own transaction, committing one bounded operation, rolling back failures, and closing the transaction:
+   * {@link #inTransaction(CDOSession, Consumer) InTransaction.java}
    */
   public class OwnershipAndLifecycle
   {
     /**
-     * Commits a focused transaction or rolls it back after a commit failure, then closes it.
+     * Opens a transaction for one business operation, commits it once, rolls back failures, and always closes it.
+     * A commit failure is reported to the caller; it is not blindly retried because the business operation may not be
+     * repeatable or the caller may need to resolve a conflict.
      *
-     * @param transaction the transaction owned by the calling component
-     * @throws CommitException if the commit fails
+     * @param session the open session that owns the new transaction
+     * @param operation one bounded unit of model work
+     * @throws CommitException if the repository commit fails
      * @snip
      */
-    public void commitOrRollback(CDOTransaction transaction) throws CommitException
+    public void inTransaction(CDOSession session, Consumer<CDOTransaction> operation) throws CommitException
     {
+      CDOTransaction transaction = session.openTransaction();
       try
       {
-        if (transaction.isDirty())
-        {
-          transaction.commit();
-        }
+        operation.accept(transaction);
+        transaction.commit();
       }
       catch (CommitException ex)
+      {
+        if (!transaction.isClosed() && transaction.isDirty())
+        {
+          transaction.rollback();
+        }
+
+        throw ex;
+      }
+      catch (RuntimeException | Error ex)
       {
         if (!transaction.isClosed() && transaction.isDirty())
         {
@@ -95,6 +109,7 @@ public class Doc12_BestPracticesAndPatterns
         }
       }
     }
+
   }
 
   /**

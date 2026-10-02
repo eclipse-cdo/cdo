@@ -20,9 +20,12 @@ import org.eclipse.emf.cdo.doc.programmers.server.Doc02_ServerApplicationAndStar
 /**
  * Introduction
  * <p>
- * CDO is a model repository and distributed shared model framework for EMF models. It enables
- * collaborative editing of EMF models in a distributed environment, providing features such as
- * transactions, versioning, and branching.
+ * CDO is a repository and distributed shared-model framework for EMF. It stores model objects and
+ * their relationships centrally so multiple clients can work with the same model while keeping
+ * local object graphs in ordinary EMF {@code ResourceSet}s. A client session connects to a
+ * repository; views read a repository state and transactions edit a branch head and publish a
+ * change set as a commit. Repositories can also retain history and expose branches when their
+ * storage configuration supports those capabilities.
  * <p>
  * This documentation is intended for developers who want to use CDO in their applications.
  * It assumes that you have a basic understanding of EMF, Net4j and Java development with Eclipse.
@@ -35,7 +38,12 @@ import org.eclipse.emf.cdo.doc.programmers.server.Doc02_ServerApplicationAndStar
  * <li>The {@link org.eclipse.net4j.util.doc.Overview Net4j Utilities Documentation} explains various utility classes used by CDO.
  * </ul>
  * <p>
- * This documentation about CDO programming is split into two main parts:
+ * This guide separates three kinds of work. Client programming covers connecting, loading,
+ * observing, and changing models. Server programming covers embedding or extending a repository
+ * server. Workspace preparation and source installation cover development setup; operating a
+ * deployed server, including its configuration and maintenance, belongs to the Operator's Guide.
+ * <p>
+ * The guide has two main programming parts:
  * <ul>
  * <li>{@link org.eclipse.emf.cdo.doc.programmers.client}: A guide for developing client applications that use CDO to store and manage EMF models in a distributed environment.
  * <li>{@link org.eclipse.emf.cdo.doc.programmers.server}: A guide for developing server applications that provide CDO repositories for client applications.
@@ -51,13 +59,15 @@ import org.eclipse.emf.cdo.doc.programmers.server.Doc02_ServerApplicationAndStar
  * This includes creating Ecore models and generating CDO-enabled code.
  * <p>
  * For a first client application, continue with the client {@link Doc03_WorkingWithSessions session} chapter,
- * open a {@link Doc04_WorkingWithViews view} or transaction, and follow the transaction chapter's commit and cleanup
- * guidance in {@link Doc05_WorkingWithTransactions}. The client guide then provides the detailed topics for the
- * particular application architecture and integration needs.
+ * then open a {@link Doc04_WorkingWithViews view} for reading or a transaction for changes. Follow
+ * {@link Doc05_WorkingWithTransactions} for commit, rollback, and cleanup. The remaining client
+ * chapters explain specific topics such as synchronization, locking, history, notifications, and
+ * integration with other EMF-based frameworks.
  * <p>
- * For a first server application, start with {@link Architecture}, continue with
- * {@link Doc02_ServerApplicationAndStartup}, and then follow the managed-container, application-extension, and
- * repository setup articles in their displayed order.
+ * For server development, start with {@link Architecture} to understand the components and their
+ * ownership, then read {@link Doc02_ServerApplicationAndStartup} for the packaged server lifecycle.
+ * Continue with managed containers, application extensions, and repository creation when building
+ * an embedded or extended server. Use the Operator's Guide for deployment configuration.
  * <p>
  * At the end of this Programmer's Guide, you find the chapter {@link DocXX_InstallingSources} with
  * instructions for installing the CDO sources into your workspace. This is only necessary if you want to

@@ -19,13 +19,17 @@ package org.eclipse.emf.cdo.doc.programmers;
  * which is described in section {@link Doc03_PreparingWorkspace}.
  * <p>
  * However, if you want to work on CDO itself or want to analyze the commit history of CDO, you need to have the CDO sources available in your workspace.
- * This chapter guides you through the trivial process of installing a development environment for the CDO sources.
+ * This chapter installs the CDO development workspace, not just the SDK used by an application.
+ * The setup provisions an Eclipse installation and target platform, checks out/imports the CDO
+ * projects, and configures the workspace for developing those projects. It is not necessary when
+ * an application only needs CDO bundles; see {@link Doc03_PreparingWorkspace} for that case.
  * <p>
  * The installation is fully automated and will be performed by the
  * <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/Eclipse_Installer.md">Eclipse Installer</a>.
  * Here are the steps you need to follow:
  * <ol>
- *  <li>Download and install a Java Development Kit (JDK) if you don't have one already. Version 21 or greater is required.
+ *  <li>Download and install a Java Development Kit (JDK) if you don't have one already. The current
+ *      CDO development setup requires Java 21 or later.
  *      You can get it from <a href="https://adoptium.net/">Adoptium</a> or any other JDK provider of your choice.</li>
  *  <li>Download and run the <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/Eclipse_Installer.md">Eclipse Installer</a>.
  *      You can use an existing Eclipse Installer installation if you have one.</li>
@@ -40,10 +44,12 @@ package org.eclipse.emf.cdo.doc.programmers;
  * <p>
  * {@image EclipseInstaller2.png}
  * <p>
- * The installer will download and install the required Eclipse IDE packages, CDO, and all its dependencies.
+ * The installer will provision the Eclipse IDE, the CDO source projects, the target platform, and
+ * the dependencies declared by the development setup. It does not merely install the CDO SDK into
+ * an existing application's target platform.
  * This may take a while depending on your internet connection speed.
  * Once the installation is complete, the installer will launch the new IDE.
- * Each time the IDE is started, it will check for updates and perform them automatically. Please refer to the
+ * The setup configures automatic update behavior for the provisioned installation. Please refer to the
  * <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/index.md">Eclipse Installer documentation</a> for details.
  *
  * @author Eike Stepper

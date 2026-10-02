@@ -40,18 +40,19 @@ import org.eclipse.net4j.util.om.pref.OMPreference;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.ws.IWSConnector;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
  * Architecture of a Client Application
  * <p>
- * The architecture of a CDO application is characterized by its mandatory dependency on EMF, the Eclipse Modeling
- * Framework. Most of the time an application interacts with the object graph of the model through standard EMF APIs
- * because CDO model graph objects are {@link EObject EObjects}. While CDO's basic functionality integrates nicely and
- * transparently with EMF's extension mechanisms some of the more advanced functions may require to add direct
- * dependencies on CDO to your application code.
+ * A CDO client combines an EMF model object graph with repository-aware loading and persistence. Application code
+ * normally uses generated model interfaces and EMF APIs for domain behavior, then uses CDO APIs to connect, choose a
+ * branch or time, manage a view, commit changes, and observe repository events. The session, view, and transaction
+ * connect these levels: a session owns connection-wide services; a view loads revision data into its resource set; a
+ * transaction tracks local edits and sends them for commit. Revision managers and caches support loading and reuse,
+ * while the session protocol carries requests to the server. These managers and the transport are infrastructure;
+ * applications generally configure them through session and connector APIs instead of implementing them.
  * <p>
  * The following diagram illustrates the major building blocks of a CDO application: <p align="center">{@image application-architecture.png}
  *
@@ -62,11 +63,12 @@ public class Doc01_ArchitectureClientApplication
   /**
    * OSGi
    * <p>
-   * All components of CDO are implemented as <a href="http://www.osgi.org">OSGi</a> bundles. The core components of
-   * both clients and servers do not require OSGi to actually run to be functional, they can perfectly be operated
-   * stand-alone. If OSGi is running the setup and configuration of some CDO facilities is a little simpler than in
-   * stand-alone mode because the needed {@link IFactory factories} get automatically registered with the central
-   * {@link IPluginContainer wiring container}.
+   * CDO is distributed as <a href="https://www.osgi.org">OSGi</a> bundles, but its core client and server facilities
+   * can also run in a plain Java process. OSGi supplies bundle lifecycle, extension and service discovery, and the
+   * shared {@link IPluginContainer wiring container}; registrations declared by bundles are then available without
+   * application code registering each {@link IFactory factory}. A standalone application must assemble the required
+   * container and factories itself. Application code should usually use the public session and connector APIs rather
+   * than depend on OSGi internals.
    * <p>
    * CDO utilizes an {@link OMPlatform operations and maintenance} framework to abstract common platform services such
    * as {@link OMLogger logging}, {@link OMTracer tracing}, {@link OMMonitor monitoring} and {@link OMPreference
@@ -106,14 +108,17 @@ public class Doc01_ArchitectureClientApplication
    * <li>a {@link CDOCommitInfo commit info} {@link CDOCommitInfoManager manager},
    * </ul>
    * <p>
-   * All <b>communication aspects</b> (the sending/receiving of signals to/from a network system) are fully abstracted
-   * through the service provider interface (SPI) {@link CDOSessionProtocol}. Concrete implementations are fully separated
-   * and can be plugged into the core as described in {@link Protocol}.
-  * <p>
-  * A small first-application path is: open a {@link Doc03_WorkingWithSessions session}, create a
-  * {@link Doc04_WorkingWithViews view} or transaction, load a resource, modify the model, commit through
-  * {@link Doc05_WorkingWithTransactions}, and close the owned objects. Framework-specific resource and provider
-  * integration is covered in {@link Doc10_IntegratingWithEMFAndOtherFrameworks}.
+   * The client core separates repository behavior from transport. It sends repository operations through the
+   * {@link CDOSessionProtocol session protocol} SPI; the shipped protocol uses Net4j signals. Net4j multiplexes that
+   * protocol over a connector and transport such as in-process JVM, TCP, SSL, or WebSocket. The server receives the
+   * connection, associates it with a server session and repository, executes repository services, and returns results
+   * or notifications. Applications normally select/configure a supported connector and do not implement signal
+   * indications or protocol dispatch.
+   * <p>
+   * A small first-application path is: open a {@link Doc03_WorkingWithSessions session}, create a
+   * {@link Doc04_WorkingWithViews view} or transaction, load a resource, modify the model, commit through
+   * {@link Doc05_WorkingWithTransactions}, and close the owned objects. Framework-specific resource and provider
+   * integration is covered in {@link Doc10_IntegratingWithEMFAndOtherFrameworks}.
    *
    * @see EMF
    * @see Models
@@ -130,7 +135,9 @@ public class Doc01_ArchitectureClientApplication
    * physical {@link IConnector transport} medium. Transport protocols are pluggable and Net4j ships with support for
    * {@link ITCPConnector TCP}, {@link SSLUtil SSL}, {@link IWSConnector WS} and {@link IJVMConnector JVM}
    * (in-process) transport. The core of Net4j is a fast, asynchronous and non-blocking {@link IBuffer buffer}
-   * multiplexing kernel, based on {@link OSGi} but also executable stand-alone.
+   * multiplexing kernel that can be initialized from OSGi or run standalone. In an in-process application the JVM
+   * connector avoids a socket; TCP/SSL and WebSocket connectors cross a process boundary. The transport choice changes
+   * how bytes move, while the CDO session protocol and repository operations remain the same.
    *
    * @see Transport
    * @see Protocol
@@ -146,9 +153,12 @@ public class Doc01_ArchitectureClientApplication
    * in an application. They define the structure (and, mostly irrelevant for CDO, the behavior) of the business entities
    * and they're used by the generic {@link Client CDO client} to manage, e.g., load, commit, query, the business data.
    * <p>
-   * CDO can transparently support <i>scalable</i> models such that arbitrary, single {@link CDOObject objects} are loaded
-   * on demand and automatically unloaded (garbage collected) when they're no longer needed. For these sophisticated
-   * features to work properly and efficiently the models have to be re-generated with slightly modified GenModel properties.
+   * <img src="company.png"/>
+   * <p>
+   * CDO loads individual {@link CDOObject objects} on demand and can unload objects that are no longer strongly reachable
+   * under the view's cache policy. For native generated models, the model must be generated with CDO-compatible GenModel
+   * properties; ordinary EMF models can instead be used through legacy compatibility. The model interfaces remain the
+   * application's domain-facing types, while CDO tracks object identity and revision state.
    * The CDO SDK comes with a convenient migrator tool for existing GenModels and an importer tool for new GenModels.
    *
    * @see EMF

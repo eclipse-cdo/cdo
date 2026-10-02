@@ -11,8 +11,9 @@
  */
 package org.eclipse.emf.cdo.doc.programmers.client;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOLock;
+import org.eclipse.emf.cdo.CDOLock.CDOAcquiredLock;
+import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -158,15 +159,10 @@ public class Doc06_Locking
     public void acquireWithTimeout(CDOObject object) throws Exception
     {
       CDOLock lock = object.cdoWriteLock();
-      lock.lock(1, TimeUnit.SECONDS);
 
-      try
+      try (CDOAcquiredLock acquired = lock.acquire(1, TimeUnit.SECONDS, false))
       {
         System.out.println("Exclusive work on " + object);
-      }
-      finally
-      {
-        lock.unlock();
       }
     }
 
@@ -312,15 +308,17 @@ public class Doc06_Locking
   public class LockNotifications
   {
     /**
-     * Enables view lock notifications and observes lock changes.
+     * Enables view lock notifications and registers an observer. The caller must remove the returned listener when
+     * observation is no longer needed.
      *
      * @param view the view to configure
      * @snip
      */
-    public void listenForLockChanges(CDOView view)
+    public IListener listenForLockChanges(CDOView view)
     {
       view.options().setLockNotificationEnabled(true);
-      view.addListener(new IListener()
+
+      IListener listener = new IListener()
       {
         @Override
         public void notifyEvent(IEvent event)
@@ -331,7 +329,10 @@ public class Doc06_Locking
             System.out.println("Changed lock types: " + lockEvent.getLockTypes());
           }
         }
-      });
+      };
+
+      view.addListener(listener);
+      return listener;
     }
   }
 
@@ -357,7 +358,7 @@ public class Doc06_Locking
    * Locking and Reconnection
    * <p>
    * Ordinary locks are tied to the connected view and are released when that view is closed or its session is lost.
-   * Applications that need to reconnect and reclaim locks must enable durable locking first, retain the returned
+   * Applications that need to reconnect and reclaim locks must enable {@link DurableLocking durable locking} first, retain the returned
    * durable-locking ID, and reopen the view or transaction with that ID. On recovery, inspect the resulting
    * {@link CDOLockState lock states} and handle an unavailable or already-active durable view according to the
    * application policy. Durable state is repository-managed, so a repository that does not provide durable locking

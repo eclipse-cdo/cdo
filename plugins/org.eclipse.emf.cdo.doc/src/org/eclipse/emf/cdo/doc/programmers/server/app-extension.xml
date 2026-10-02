@@ -1,0 +1,5 @@
+<plugin>
+  <extension point="org.eclipse.emf.cdo.server.appExtensions">
+    <appExtension class="com.example.server.SessionObserverExtension"/>
+  </extension>
+</plugin>

@@ -43,7 +43,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.function.Consumer;
@@ -242,11 +241,14 @@ public class Doc05_WorkingWithTransactions
    * Partial Commits
    * <p>
    * A transaction can restrict one commit to a set of {@link EObject committable objects} with
-   * {@link CDOTransaction#setCommittables(Set)}. Objects not selected remain local and the transaction remains dirty;
-   * dependencies required by the selected objects must also be included. This is useful for staged work, but it is a
-   * deliberate consistency boundary and should not be used as a substitute for designing independent transactions.
+   * {@link CDOTransaction#setCommittables(Set)}. CDO filters the transaction's new, dirty, and detached objects against
+   * this set; it does not automatically compute a dependency closure. If a selected object refers to a new object that
+   * is not selected, the intended commit may be incomplete or violate model constraints. Include the full set needed
+   * for a valid repository change. Non-selected changes remain local and the transaction stays dirty. Use partial
+   * commits only when those staged boundaries make sense to the domain; independent business units are usually easier
+   * to reason about as separate transactions.
    *
-   * {@link #commitSelectedObjects(CDOTransaction, EObject) CommitSelectedObjects.java}
+   * {@link #commitSelectedObjects(CDOTransaction, Set) CommitSelectedObjects.java}
    */
   public class PartialCommits
   {
@@ -254,13 +256,13 @@ public class Doc05_WorkingWithTransactions
      * Commits one selected object while leaving other local changes for a later commit.
      *
      * @param transaction the transaction containing the changes
-     * @param object the object and its required dependencies to commit
+     * @param committables the selected objects, including any new objects required by their references
      * @throws CommitException if the selected commit fails
      * @snip
      */
-    public void commitSelectedObjects(CDOTransaction transaction, EObject object) throws CommitException
+    public void commitSelectedObjects(CDOTransaction transaction, Set<? extends EObject> committables) throws CommitException
     {
-      transaction.setCommittables(Collections.singleton(object));
+      transaction.setCommittables(committables);
       transaction.commit();
     }
   }
@@ -456,9 +458,12 @@ public class Doc05_WorkingWithTransactions
    * <p>
    * General querying is covered in the Views chapter. A transaction additionally offers
    * {@link CDOTransaction#createQuery(String, String, boolean)} and its context overload, whose
-   * {@code considerDirtyState} argument controls whether the query considers the transaction's local uncommitted
-   * changes. Use {@code true} only when the query is intended to describe the transaction's working state rather than
-   * the repository state alone.
+   * {@code considerDirtyState} argument controls whether CDO adds the transaction's local change-set data to the
+   * query request. This lets query implementations that support change-set data account for new, modified, and
+   * detached objects alongside repository results. It does not execute an arbitrary query over a complete in-memory
+   * copy, and a custom query handler must honor the supplied change-set data for the option to affect its results.
+   * Use {@code true} when asking about the transaction's working state; the default repository-only query answers a
+   * different question.
    *
    * {@link #queryDirtyState(CDOTransaction) QueryDirtyState.java}
    */

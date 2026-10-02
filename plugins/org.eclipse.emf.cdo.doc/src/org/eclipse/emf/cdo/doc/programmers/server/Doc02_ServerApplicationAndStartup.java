@@ -14,9 +14,13 @@ import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 /**
  * CDO Server Application and Startup
  * <p>
- * The packaged OSGi server application is {@code CDOServerApplication}. It is an application implementation, not a
- * general-purpose public API to subclass. Its useful programming contract is the lifecycle it gives application
- * extensions and the managed container that it uses to configure repositories and acceptors.
+ * The packaged OSGi server application is {@code CDOServerApplication}. It is an internal application implementation,
+ * not an application API to subclass. It owns orchestration: it starts the OSGi application lifecycle, uses the shared
+ * plugin container, discovers application-extension contributions, configures the repositories, and coordinates
+ * auxiliary server components. Application code enters through the {@link IAppExtension} extension point and through
+ * repository/store configuration. Standalone programs assemble those components themselves; embedded applications
+ * can use the higher-level embedded-repository API. These are different ownership models, not three ways to subclass
+ * the packaged application.
  * {@toc}
  *
  * @author Eike Stepper
@@ -26,15 +30,45 @@ public class Doc02_ServerApplicationAndStartup
   /**
    * Startup and Shutdown
    * <p>
-   * On startup the application obtains its managed container, reads the configured application extensions, and starts
-   * extensions that request an early start. It then configures repositories from the server configuration, optionally
-   * creates the configured browser, and starts the remaining extensions. An {@link IAppExtension3} receives the
-   * configured repository array; a plain {@link IAppExtension} receives the configuration file.
+   * The OSGi application lifecycle starts first; {@code CDOServerApplication} obtains the shared plugin container
+   * through its container accessor. If the configured server
+   * XML file exists, the application discovers {@code appExtension} contributions from the OSGi registry, removes
+   * contributions superseded by a {@code predecessor}, instantiates them, and injects the container into extensions
+   * that implement {@code ContainerAware}. It sorts early and normal extensions separately by priority; lower numeric
+   * priorities start first, with the default priority used by extensions that do not implement
+   * {@link IAppExtension4}. An {@link IAppExtension5} selects the early phase with
+   * {@link IAppExtension5#startBeforeRepositories()}.
    * <p>
-   * On shutdown, ordinary extensions stop in reverse order, repositories deactivate, early extensions stop in reverse
-   * order, and the application container deactivates. Exceptions from an individual extension are logged so that the
-   * application can continue processing its other lifecycle participants. A missing configuration file is reported and
-   * no repositories are configured.
+   * Early extensions run before repository configuration, so they can install container-level factories or services
+   * but cannot assume repositories exist. The configured {@code RepositoryConfigurator} then reads the XML: it creates
+   * each store and repository, applies properties and initial packages, registers the repository in the container, and
+   * activates it. A configuration with no repository entries is allowed but logged. An invalid XML document, missing
+   * store factory, or repository activation error propagates from startup. The OSGi application framework does not
+   * then call this application's normal stop sequence as rollback, so components created before the error can require
+   * operator cleanup or restart; validate configuration before deployment.
+   * <p>
+   * After repository setup, the application creates the optional browser component if configured, then starts normal
+   * extensions. An {@link IAppExtension3} receives the configured repository array instead of the base file-only
+   * callback. Base and early extensions receive the configuration file; an early extension must not assume that
+   * repositories are ready. The optional browser is a container-owned component started before normal extensions.
+   * Acceptor configuration is normally represented in server XML and creates its acceptors as container elements;
+   * the application coordinates the configured repository setup rather than exposing acceptor startup as an extension
+   * callback.
+   * <p>
+   * Shutdown stops normal extensions in reverse priority/start order, deactivates the repositories returned by initial
+   * configuration, stops early extensions in reverse order, deactivates the shared application container, and then
+   * stops the OSGi application. Each extension stop is attempted even when another throws; exceptions are logged and
+   * shutdown continues. An extension whose start partially installed listeners before throwing is still responsible
+   * for undoing that partial work: a failed start is logged and the application does not call stop as rollback.
+   * <p>
+   * If the configured XML file is absent, the application logs a warning, skips extension discovery, repositories,
+   * browser, and normal extension start, then enters the running application wait. It does not silently create a
+   * default repository.
+   * <p>
+   * Dynamically created repositories are managed by the repository-configuration manager and their dynamic extension
+   * lifecycle, not appended to the initial repository array. Use {@link IAppExtension2} for per-dynamic-repository XML
+   * callbacks; use repository-specific extension behavior only when its callback provides the needed repository
+   * context. See {@link Doc04_ApplicationExtensions}.
    */
   public class Lifecycle
   {
@@ -55,9 +89,12 @@ public class Doc02_ServerApplicationAndStartup
   /**
    * Standalone, Embedded, and OSGi Use
    * <p>
-   * OSGi supplies bundle and extension registration for the packaged application. A standalone or embedded Java
-   * program can instead create repositories and Net4j elements directly in an
-   * {@link org.eclipse.net4j.util.container.IManagedContainer}. Deployment details, configuration-file names, ports,
+   * The packaged OSGi application uses the shared plugin container; its bundle registry supplies factories and
+   * {@code appExtension} contributions, and the application owns shutdown of that shared container. A standalone
+   * program owns an independent initialized container, creates/configures named Net4j elements and repositories, and
+   * deactivates the container when done. An embedded repository API packages a local repository and client connection
+   * lifecycle for an application that does not need to assemble the full server. See {@link Doc03_ManagedContainer}
+   * and {@link Doc05_CreatingAndConfiguringRepositories} for those workflows. Deployment details, configuration-file names, ports,
    * TLS, and production topology belong to {@link Doc00_OperatingServer} and {@link Doc02_ConfiguringAcceptors}.
    *
    * @see Doc03_ManagedContainer

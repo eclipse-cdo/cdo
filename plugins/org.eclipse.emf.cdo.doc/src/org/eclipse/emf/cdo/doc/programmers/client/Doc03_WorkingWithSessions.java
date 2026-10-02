@@ -210,11 +210,10 @@ import java.util.stream.Collectors;
  * <p>
  * <b>Thread Safety</b>
  * <p>
- * Sessions in CDO are inherently thread-safe. This means that if multiple threads
- * access the same session instance concurrently, the session ensures that its internal
- * state remains consistent and that operations are executed in a thread-safe manner.
- * This is particularly important in multi-threaded applications where different threads
- * may need to perform operations on the same session simultaneously.
+ * Session-level operations are synchronized, so applications can share one session to open views from multiple
+ * threads. This does not make a sequence of operations on a view atomic: view consistency and cross-thread object
+ * access follow the view's own synchronization contract. Use {@link Doc04_WorkingWithViews} for atomic multi-call
+ * access, and keep UI or blocking application work outside CDO event callbacks.
  * <p>
  * <b>Table of Contents</b> {@toc}
  *
@@ -225,9 +224,12 @@ public class Doc03_WorkingWithSessions
   /**
    * Creating and Configuring Sessions
    * <p>
-   * Learn how to instantiate and configure CDOSession objects, including specifying repository details, authentication,
-   * and connection parameters. Proper session configuration ensures secure and efficient communication with the CDO
-   * server.
+   * A session configuration is the recipe for connecting to one named repository: it supplies a Net4j connector,
+   * repository name, credential provider, and session options. Opening it performs the connection and authentication
+   * and yields a {@link CDOSession} that applications can reuse to open multiple views and transactions. Keep the
+   * session for the lifetime of the logical client connection, then close it to release its views and remote session
+   * state. The session configuration does not make application-owned credentials or shared connector lifecycle
+   * disappear; keep those under their own owners.
    */
   public class CreatingAndConfiguringSessions
   {
@@ -238,7 +240,7 @@ public class Doc03_WorkingWithSessions
      * specifies the connector to use and the repository name to connect to, as well as various other options.
      * <p>
      * Here is an example of how to create and open a session using a given connector and repository name:
-     * {@link SessionConfigurations#createSession(IConnector, String) CreateSession.java}
+     * {@link SessionConfigurations#createSession(IConnector, String, IPasswordCredentialsProvider) CreateSession.java}
      * <p>
      * Note that the connector must be created and configured separately. For more information about
      * connectors, refer to the {@link Net4jConnectors} section or the {@link Overview Net4j documentation}.
@@ -253,17 +255,19 @@ public class Doc03_WorkingWithSessions
     public class SessionConfigurations
     {
       /**
-       * Configures a Net4j session configuration to obtain credentials from application-owned input.
+       * Opens a session for the named repository using the supplied connector and credentials, then closes it.
        *
-       * @param userID the user identity supplied to the repository
-       * @param password the corresponding application-supplied password
+       * @param connector the connector owned by the surrounding application or container
+       * @param repositoryName the repository to open
+       * @param credentialsProvider the application-owned provider for repository credentials
        * @snip
        */
-      public void createSession(IConnector connector, String repositoryName)
+      public void createSession(IConnector connector, String repositoryName, IPasswordCredentialsProvider credentialsProvider)
       {
         CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
         configuration.setConnector(connector);
         configuration.setRepositoryName(repositoryName);
+        configuration.setCredentialsProvider(credentialsProvider);
 
         CDOSession session = configuration.openNet4jSession();
         try
@@ -282,19 +286,22 @@ public class Doc03_WorkingWithSessions
     /**
      * Net4j Connectors
      * <p>
-     * Net4j connectors are the transport layer for CDO communication. Learn how to configure TCP, JVM, SSL, WS or WSS
-     * connectors to establish reliable and secure connections between client and server.
+     * A Net4j connector carries CDO protocol traffic between the client session and server acceptor. Choose a connector
+     * factory type that matches the deployment boundary: JVM transport for processes in the same runtime, TCP for a
+     * network endpoint, or SSL/WS/WSS variants where the deployment configures those transports. A connector is
+     * transport infrastructure, not a CDO session; multiple sessions may use shared connector infrastructure.
      * <p>
      * Typically a Net4j connector is created and configured using a Net4j container. Within an Eclipse environment,
      * the container is usually managed by the Eclipse extension registry. Such a container can be accessed using
      * IManagedContainer.INSTANCE. In a non-Eclipse environment, you can create and manage the container
      * programmatically. Refer to {@link IManagedContainer} for more details.
      * <p>
-     * The following example demonstrates how to set up a JVM connector within an Eclipse environment:
-     * {@link Net4jConnectors#createConnectorInEclipse() CreateConnectorInEclipse.java}
+     * The following example obtains a JVM connector from the shared Eclipse container and uses it to open a session.
+     * {@link Net4jConnectors#createConnectorInEclipse(String) CreateConnectorInEclipse.java}
      * <p>
-     * The following example demonstrates how to set up a TCP connector within a non-Eclipse environment:
-     * {@link Net4jConnectors#createConnectorInStandalone() CreateConnectorInStandalone.java}
+     * The following example creates an initialized standalone container, obtains a TCP connector, and closes both the
+     * session and its owning container.
+     * {@link Net4jConnectors#createConnectorInStandalone(String) CreateConnectorInStandalone.java}
      * <p>
      * More details on the architecture and usage of Net4j connectors can be found in the
      * {@link Overview Net4j documentation}.
@@ -304,24 +311,35 @@ public class Doc03_WorkingWithSessions
       /**
        * @snip
        */
-      public void createConnectorInEclipse()
+      public void createConnectorInEclipse(String repositoryName)
       {
         // Obtain the connector from the plugin container by its product group, factory type, and factory-specific
         // description.
         IConnector connector = IManagedContainer.INSTANCE.getElementOrNull("org.eclipse.net4j.connectors", "jvm", "acceptor1");
+        if (connector == null)
+        {
+          throw new IllegalStateException("JVM connector acceptor1 is not available");
+        }
 
         CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
         configuration.setConnector(connector);
+        configuration.setRepositoryName(repositoryName);
 
-        // Set the repository name and open a session. The shared plugin container owns this connector.
-
-        // The shared plugin container owns this connector. Do not close it from this client code.
+        CDOSession session = configuration.openNet4jSession();
+        try
+        {
+          // Use the session. The shared plugin container owns the connector.
+        }
+        finally
+        {
+          session.close();
+        }
       }
 
       /**
        * @snip
        */
-      public void createConnectorInStandalone()
+      public void createConnectorInStandalone(String repositoryName)
       {
         IManagedContainer container = ContainerUtil.createInitializedContainer();
         try
@@ -329,11 +347,24 @@ public class Doc03_WorkingWithSessions
           // Obtain the connector from the container by its product group, factory type, and factory-specific
           // description.
           IConnector connector = container.getElementOrNull("org.eclipse.net4j.connectors", "tcp", "localhost:2036");
+          if (connector == null)
+          {
+            throw new IllegalStateException("TCP connector localhost:2036 is not available");
+          }
 
           CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
           configuration.setConnector(connector);
+          configuration.setRepositoryName(repositoryName);
 
-          // Set the repository name and open a session.
+          CDOSession session = configuration.openNet4jSession();
+          try
+          {
+            // Use the session.
+          }
+          finally
+          {
+            session.close();
+          }
         }
         finally
         {
@@ -393,8 +424,11 @@ public class Doc03_WorkingWithSessions
     /**
      * Recovering from Disconnects
      * <p>
-     * Discover strategies for handling session disconnects and automatic reconnection. Learn how to maintain session
-     * continuity and recover gracefully from network interruptions.
+     * A normal session closes when its connection is lost. A reconnecting configuration can restore the connection
+     * and session, while a failover configuration can obtain another server endpoint through the configured failover
+     * monitor. These mechanisms address transport recovery; application operations still need to observe recovery
+     * events and decide whether work interrupted by the disconnect can be repeated safely. In particular, do not
+     * blindly replay a business operation when the client cannot determine whether its commit reached the server.
      * <p>
      * Normally, when a session is disconnected, it is automatically closed and cannot be used anymore. However, you can
      * create a reconnecting session that automatically tries to reconnect when it gets disconnected. This is done by using
@@ -603,9 +637,11 @@ public class Doc03_WorkingWithSessions
    * determines the exact state of the repository that the view exposes. Views can be read-only or read-write (transactions),
    * and they can also be configured to access historical states of the repository through audit views.
    * <p>
-   * This section covers the key aspects of view management, including the purpose of views and transactions,
-   * branch points and view targets, types of views, finding views by ID, listening for view-related events, and closing views.
-   * For more detailed information on working with views, refer to the {@link Doc04_WorkingWithViews} section.
+   * A session is the connection and shared client infrastructure; each view selects the branch point through which
+   * model objects are read. A read-only view follows repository state without accepting local edits, while a
+   * transaction adds isolated local changes and an explicit commit boundary. Views are owned by the session and must
+   * be closed when their work ends. For branch/time targets, resource handling, query behavior, and synchronization,
+   * continue with {@link Doc04_WorkingWithViews}.
    * <p>
    * Note that a {@link CDOSession} inherits most of the view management functionality through the following super interfaces:
    * <ul>
@@ -2284,8 +2320,10 @@ public class Doc03_WorkingWithSessions
   /**
    * Session Events
    * <p>
-   * Sessions emit events for lifecycle changes, errors, and repository updates. Learn how to listen for and handle these
-   * events to build responsive applications.
+   * Session events report changes to the connection and repository context; they are not model-object notifications.
+   * Listen to invalidation and recovery events when application state depends on remote commits or a restored
+   * connection, and remove listeners when the owning component or session closes. Keep event handlers short: event
+   * delivery can occur on a CDO-managed thread, so queue UI work or long-running processing to an application executor.
    * <p>
    * The following events are fired from {@link CDOSession}:
    * <ul>

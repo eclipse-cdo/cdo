@@ -24,12 +24,26 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 /**
  * Server Architecture
  * <p>
- * A CDO server hosts one or more {@link IRepository repositories}. Each repository combines a generic CDO core with
- * a store and a protocol boundary; applications normally configure, observe, and customize the repository rather than
- * either boundary. The managed container supplies the factories and named elements that assemble those parts.
+ * A CDO server hosts one or more {@link IRepository repositories}. Each repository combines model and history
+ * services with a store and a protocol boundary; applications normally configure, observe, and customize the
+ * repository rather than either boundary. The managed container supplies the factories and named elements that
+ * assemble those parts.
  * <p>
  * The diagram shows the architectural separation. It is deliberately not a deployment topology:
  * <p align="center">{@image repository-architecture.png}
+ * <p>
+ * A typical request starts when a client connector reaches a server acceptor and creates a server session. The session
+ * opens a server view or transaction on a repository. A read then uses the revision manager and store; a query is
+ * dispatched to a registered query handler; a commit passes through supported validation/interception and conflict
+ * handling before the store persists its change set. The resulting commit information and notifications update
+ * interested clients. The protocol carries these requests and responses, but its individual indications are not a
+ * stable application extension seam.
+ * <p>
+ * Repository managers divide responsibilities: the package registry supplies model metadata; the branch manager
+ * resolves branches and points; the revision manager loads current or historical object data; the commit-info manager
+ * exposes commit metadata; the session manager tracks connected clients; the locking manager coordinates explicit
+ * repository locks; and, when enabled, the unit manager handles bounded model subtrees. Repository handlers and
+ * protectors intercept supported operations; they do not replace the store or repository factory.
  * <p>
  * This guide uses normal API and intentional extension SPI. In particular, {@code internal} repository, session,
  * commit-manager, protocol-indication, and store classes are implementation details and are not server application
@@ -43,11 +57,20 @@ public class Architecture
   /**
    * Repository Core
    * <p>
-   * A running repository owns the package registry, {@link CDOBranchManager branch manager},
+ * A running repository owns the package registry, {@link CDOBranchManager branch manager},
    * {@link CDORevisionManager revision manager}, {@link CDOCommitInfoManager commit-info manager},
-   * {@link ISessionManager session manager}, and {@link ILockingManager locking manager}. These services expose the
-   * state that applications can observe; repository handlers and protectors are the supported ways to influence work.
-   * The following articles introduce startup, configuration, services, events, and handlers in that order.
+ * {@link ISessionManager session manager}, and {@link ILockingManager locking manager}; it can also expose a unit
+ * manager and commit handlers according to its configuration. These services expose state that applications can
+ * observe; repository handlers and protectors are the supported ways to influence work. A server application should
+ * retain manager objects only while the repository is active and should not retain closed session or view instances as
+ * live contexts.
+   * Continue with {@link Doc02_ServerApplicationAndStartup startup and shutdown}, the
+   * {@link Doc03_ManagedContainer managed-container lifecycle}, and
+   * {@link Doc05_CreatingAndConfiguringRepositories repository creation}. For live server contexts and observation, see
+   * {@link Doc06_RepositoryServicesAndEvents}; for supported interception, see
+   * {@link Doc07_RepositoryHandlersAndCommitProcessing}. Security/query extensions and synchronization/transfer are
+   * covered in {@link Doc08_SecurityQueriesAndSpecializedExtensions} and
+   * {@link Doc09_AdvancedServerIntegration}.
    */
   public class RepositoryCore
   {
@@ -56,8 +79,8 @@ public class Architecture
   /**
    * Store Boundary
    * <p>
-   * {@link IStore} is the physical persistence boundary. Its capabilities determine whether a repository can offer
-   * facilities such as auditing and branching. Choose and configure an existing store at the repository boundary; a
+ * {@link IStore} is the persistence boundary for revisions, commit data, and large objects. Its capabilities determine
+ * whether a repository can offer facilities such as auditing and branching. Choose and configure an existing store at the repository boundary; a
    * custom store and {@code IStoreAccessor} implementation are expert persistence SPI work, not normal server
    * application programming.
    */

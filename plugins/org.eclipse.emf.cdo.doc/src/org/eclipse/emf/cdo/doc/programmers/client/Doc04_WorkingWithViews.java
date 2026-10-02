@@ -28,7 +28,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
-import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.CriticalSection;
@@ -40,6 +39,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.swt.widgets.Display;
@@ -57,6 +57,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * This chapter covers view management, resource handling, querying, transactions, and related options in CDO client
  * applications. Views are central to accessing and interacting with model data in a CDO repository. Understanding how
  * to use views effectively is key to building responsive and scalable applications.
+ * <p>
+ * <b>Table of Contents</b> {@toc}
  *
  * @author Eike Stepper
  */
@@ -65,9 +67,15 @@ public class Doc04_WorkingWithViews
   /**
    * Understanding Views and Their Types
    * <p>
-   * CDO provides several types of views, including read-only views and transactional views. Read-only views allow safe
-   * navigation of repository data without risk of modification, while transactional views enable changes and commits.
-   * This section explains the differences, use cases, and lifecycle of each view type.
+   * A view binds one client-side {@link CDOView} and its objects to a session, a resource set,
+   * and a branch point. Use a read-only view for navigation, queries, or a stable historical target; use a
+   * {@link CDOTransaction} when the operation must stage local edits and commit them. A normal head view can receive
+   * remote invalidations as repository commits arrive, so it is not a frozen snapshot. Audit or historical views read
+   * an explicit branch/time point and are read-only. Objects are view-scoped: reopen by persistent ID in another view
+   * instead of carrying model objects across view lifetimes.
+   * <p>
+   * {@link #openReadOnlyView(CDOSession) OpenReadOnlyView.java} shows a short-lived read; the transaction example
+   * {@link #modifyAndCommit(CDOSession, CDOID, EStructuralFeature, Object) ModifyAndCommit.java} shows an editable view and its commit boundary.
    */
   public class UnderstandingViewsAndTheirTypes
   {
@@ -76,8 +84,16 @@ public class Doc04_WorkingWithViews
   /**
    * Opening and Closing Views
    * <p>
-   * Learn how to open views to access repository data and close them to release resources. Proper management of view
-   * lifecycles helps prevent memory leaks and ensures efficient resource usage.
+   * Open views from a session with {@link CDOSession#openView()} for the current branch head, or choose an explicit
+   * branch point through the session's view-opener overloads. Open a transaction when the operation must modify data;
+   * a historical view is read-only. The session tracks its open views, their resource sets, caches, listeners, and
+   * remote view state, so close each view in a {@code finally} block or try-with-resources pattern when the work ends.
+   * Closing a view releases those resources and ends the validity of its model-object context. It does not close the
+   * session, which may create later views. Avoid sharing a single long-lived view across unrelated operations just to
+   * avoid reopening it; view lifetime should match the consistency and object-identity scope the application needs.
+   * <p>
+   * {@link #openReadOnlyView(CDOSession) OpenReadOnlyView.java} and
+   * {@link #modifyAndCommit(CDOSession, CDOID, EStructuralFeature, Object) ModifyAndCommit.java} shows the transaction cleanup pattern.
    */
   public class OpeningAndClosingViews
   {
@@ -90,15 +106,10 @@ public class Doc04_WorkingWithViews
    * <b>multiple</b> operations that need to be atomic or consistent, developers must use a {@link CriticalSection} to
    * synchronize access to the view. A CDO view provides its critical section via the {@link CDOView#sync()}.
    * <p>
-   * Thread safety of CDO views is absolutely essential, even in single-threaded applications. The reason is that CDO
-   * views are accessed by background threads for tasks such as asynchronous updates, notifications, and
-   * event handling. If a view were not thread-safe, these background operations could lead to data corruption,
-   * inconsistent states, and unpredictable behavior in the application. By ensuring that views are thread-safe,
-   * CDO allows developers to build robust applications that can safely handle concurrent operations without risking
-   * data integrity.
-   * <p>
-   * This section discusses best practices for managing concurrent access,
-   * synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
+   * Each individual access to a view or one of its objects is synchronized with the view's internal work. This does
+   * not make a sequence of separate calls atomic: an invalidation may occur between calls. Use {@link CDOView#sync()}
+   * around the smallest multi-call operation that must observe one coherent state. Keep that critical section short;
+   * do not wait for network work, block on another thread, or call arbitrary application callbacks while holding it.
    */
   public class ThreadSafety
   {
@@ -125,7 +136,7 @@ public class Doc04_WorkingWithViews
      * <li>{@link CriticalSection#newCondition() newCondition()} - Creates a new Condition associated with the critical section.
      * </ul>
      * <p>
-     * A view's critical section uses a real reentrant lock. The default is a non-fair lock; a lock supplied with
+     * A view's critical section uses a real reentrant lock; the current default is a non-fair reentrant lock. A lock supplied with
      * {@link CDOUtil#setNextViewLock(Lock)} or the session's delegable-lock option is used when configured. Synchronizing
      * directly on the view object is unsupported. By default, CDO detects this when a view lock is next entered and throws
      * {@link UnsupportedOperationException}, directing the caller to {@link CDOView#sync()}. Set
@@ -140,8 +151,10 @@ public class Doc04_WorkingWithViews
      * Here's an example of setting a custom lock for the next view to be opened:
      * {@link #customLockForNextView(CDOSession) CustomLockForNextView.java}
      * <p>
-     * The following chapter describes how to use a special kind of lock, a {@link DelegableReentrantLock}, that
-     * allows to delegate the lock ownership to a different thread.
+     * A {@link DelegableReentrantLock} is useful when a framework synchronously hands work to another thread that must
+     * access the same view, such as an SWT UI callback. It solves that specific lock-ownership handoff; it is not a
+     * reason to hold the critical section across arbitrary blocking work. Register the relevant delegate detector and
+     * enable the session option or install the lock before opening the view.
      */
     public class UsingCriticalSections
     {
@@ -175,18 +188,25 @@ public class Doc04_WorkingWithViews
       {
         Lock customLock = new ReentrantLock();
         CDOUtil.setNextViewLock(customLock);
-
-        CDOView view = session.openView();
-        CriticalSection sync = view.sync();
-
-        if (sync instanceof LockedCriticalSection)
+        CDOView view = null;
+        try
         {
-          Lock lock = ((LockedCriticalSection)sync).getLock();
-          assert lock == customLock;
+          view = session.openView();
+          CriticalSection sync = view.sync();
+
+          if (!(sync instanceof LockedCriticalSection) || ((LockedCriticalSection)sync).getLock() != customLock)
+          {
+            throw new IllegalStateException("The configured lock was not installed");
+          }
         }
-        else
+        finally
         {
-          throw new IllegalStateException();
+          if (view != null)
+          {
+            view.close();
+          }
+
+          CDOUtil.setNextViewLock(null);
         }
       }
     }
@@ -404,8 +424,11 @@ public class Doc04_WorkingWithViews
     /**
      * Resource Folders
      * <p>
-     * Resource folders organize model resources into logical groups. Learn how to create, navigate, and manage folders
-     * to structure your repository effectively.
+     * The CDO resource hierarchy is a repository-side virtual file system. A {@link CDOResourceFolder} is a persistent
+     * model object that contains resource nodes; those nodes may be folders, model resources, binary resources, or text
+     * resources. Use folders when resource paths need meaningful grouping and use the node APIs to enumerate children
+     * without loading every model's contents. Folder creation is a transaction change and becomes visible to other
+     * views only after commit.
      * <p>
      * For creating resource folders you need a CDOTransaction. Here is an example that illustrates how to create
      * folders and subfolders:
@@ -468,8 +491,11 @@ public class Doc04_WorkingWithViews
     /**
      * Model Resources
      * <p>
-     * Model resources store EMF model data in the repository. This section explains how to load, save, and query model
-     * resources, and how they relate to EMF ResourceSet.
+     * A {@link CDOResource} is an EMF resource backed by a CDO view. Its root objects and resource metadata participate
+     * in the view's model and notification behavior; creating a resource or changing its contents requires a
+     * {@link CDOTransaction}. Loading it in a read-only view gives access to repository state through that view's
+     * {@code ResourceSet}. Adding a resource to an ordinary EMF {@code ResourceSet} does not persist it in CDO; use the
+     * CDO transaction's resource-creation APIs and commit the transaction to publish the change.
      * <p>
      * For creating model resources you need a CDOTransaction. Here is an example that illustrates how to create
      * model resources:
@@ -651,8 +677,12 @@ public class Doc04_WorkingWithViews
   /**
    * Resource Sets and Their Usage
    * <p>
-   * Resource sets are collections of resources managed together. Learn how to use EMF ResourceSet with CDO, manage
-   * resource lifecycles, and optimize performance for large models.
+   * A view is associated with a {@code ResourceSet}; resources loaded through it contain objects owned by that view.
+   * Keep the resource set with the view that created it and close the view when the application is done. Do not move
+   * CDO resources or their objects to another resource set and assume their view context changes with them. A
+   * {@code ResourceSet} can also contain ordinary EMF resources, but their persistence and lifecycle remain the
+   * responsibility of their own resource implementation. See {@link Doc10_IntegratingWithEMFAndOtherFrameworks} for
+   * URI-based loading and resource factories.
    */
   public class ResourceSetsAndTheirUsage
   {
@@ -661,8 +691,10 @@ public class Doc04_WorkingWithViews
   /**
    * Navigating Models
    * <p>
-   * This section provides techniques for traversing and querying model objects within views, including use of EMF APIs
-   * and CDO-specific features for efficient navigation.
+   * Use ordinary EMF navigation for a known, bounded part of the graph. References may be proxies, so reading one can
+   * trigger additional loading. A broad walk can therefore cause many round trips and retain many objects. When the
+   * desired result is defined by a type or predicate over repository contents, prefer a repository query and load
+   * only the returned objects. Choose deliberately between traversal and query; neither is always cheaper.
    */
   public class NavigatingModels
   {
@@ -671,8 +703,10 @@ public class Doc04_WorkingWithViews
   /**
    * Waiting For Updates
    * <p>
-   * Learn how to synchronize your client with repository changes, block for updates, and react to notifications to keep
-   * your application state current.
+   * Passive updates advance or invalidate a live head view according to its session update mode. An application that
+   * needs to wait for such updates can use the view/session update-waiting API; a fixed-time historical view does not
+   * move forward. Waiting should happen outside a view critical section, because update processing may need that same
+   * synchronization boundary. Use view or session events for notification rather than polling model values.
    */
   public class WaitingForUpdates
   {
@@ -692,8 +726,11 @@ public class Doc04_WorkingWithViews
   /**
    * Querying Model Objects
    * <p>
-   * A client selects a repository-supported query language and supplies its expression and parameters. OCL is one
-   * optional language integration; query-language syntax is not part of the client API contract.
+   * A query runs against the view's repository coordinate and returns objects associated with that view. Select a
+   * language supported by both the client and server, bind parameters instead of building expressions from untrusted
+   * strings, and close asynchronous result iterators. For a transaction, query options determine whether local dirty
+   * state participates; this does not turn a repository query into arbitrary in-memory graph evaluation. OCL is an
+   * optional integration, not a universally available language.
    */
   public class QueryingModelObjects
   {
@@ -702,8 +739,10 @@ public class Doc04_WorkingWithViews
   /**
    * Querying Cross References
    * <p>
-   * Use normal EMF reference navigation when the relevant objects are already loaded. Use a repository query when
-   * cross-reference discovery would otherwise require loading an unbounded graph.
+   * {@code queryXRefs} asks the repository for objects whose selected source references point at one or more target
+   * objects. This is useful when reverse navigation is not already loaded locally. Restrict the source reference set
+   * where possible, and use the asynchronous iterator for large results so the whole result list need not be retained
+   * at once. The iterator is a resource and must be closed.
    */
   public class QueryingCrossReferences
   {
@@ -712,8 +751,9 @@ public class Doc04_WorkingWithViews
   /**
    * Custom Queries
    * <p>
-   * Clients execute custom query languages exactly like other CDO queries. Defining and registering the corresponding
-   * {@link IQueryHandler server query handler} is server programming and is covered in
+   * A custom query language is only usable when the server has a matching {@link IQueryHandler server query handler}
+   * registered and the client supplies the language identifier and parameters that handler expects. It is not enough
+   * to install a parser on the client. Handler registration and result delivery are covered in
    * {@link Doc08_SecurityQueriesAndSpecializedExtensions.QueryHandlers}.
    */
   public class CustomQueries
@@ -723,8 +763,10 @@ public class Doc04_WorkingWithViews
   /**
    * Units
    * <p>
-   * Units are disjunct subtrees of model objects that can be managed independently. This section explains how to
-   * create, open, and close units, and how they can improve performance and consistency in your application.
+   * A unit is a repository-defined subtree that the view can treat as a bounded working set. Units can help an
+   * application load and manage a coherent part of a large model, but they do not make unrelated object access free
+   * or replace transaction boundaries. Unit membership and lifecycle must follow the repository's unit-manager
+   * support; close units and views according to the APIs that opened them.
    */
   public class Units
   {
@@ -733,8 +775,10 @@ public class Doc04_WorkingWithViews
   /**
    * View Events
    * <p>
-   * Views emit events for changes, updates, and errors. This section explains how to listen for and handle view events
-   * to build responsive applications.
+   * View events report lifecycle and target/update changes for that view. Register listeners only for the period in
+   * which the application needs them and remove them when the owning component is disposed. Event callbacks may run
+   * on a CDO-managed thread; capture the data needed by the UI and dispatch UI work to its thread instead of blocking
+   * the callback. See {@link Doc09_NotificationsAndEventHandling} for event categories and threading guidance.
    */
   public class ViewEvents
   {
@@ -743,7 +787,10 @@ public class Doc04_WorkingWithViews
   /**
    * View Options
    * <p>
-   * Configure view options to customize behavior, such as passive updates, notification handling, and more.
+   * View options control view-local behavior such as invalidation, object-cache references, adapters, and locking or
+   * notification details. Configure options before relying on the resulting policy, and distinguish them from
+   * session options that apply to all views opened by that session. A view option cannot enable a repository feature
+   * that the server/store does not provide.
    */
   public class ViewOptions
   {
@@ -752,7 +799,10 @@ public class Doc04_WorkingWithViews
   /**
    * View Properties
    * <p>
-   * Access and modify view properties to store custom metadata and configuration values.
+   * View properties are an application-owned key/value area associated with a view. They are useful for associating
+   * client-side metadata with that view; they are not persisted model features, are not shared with the repository,
+   * and should not be used to smuggle objects between views. Remove values that retain large application objects
+   * when they are no longer needed.
    */
   public class ViewProperties
   {
@@ -766,36 +816,44 @@ public class Doc04_WorkingWithViews
    */
   public void openReadOnlyView(CDOSession session)
   {
-    org.eclipse.emf.cdo.view.CDOView view = session.openView();
-    System.out.println("Opened view with ID: " + view.getViewID());
-    view.close();
+    CDOView view = session.openView();
+    try
+    {
+      System.out.println("Opened view with ID: " + view.getViewID());
+    }
+    finally
+    {
+      view.close();
+    }
   }
 
   /**
-   * Example: Open a transactional view and commit changes
+   * Example: Open a transaction, change a feature on a persistent object, and commit it.
    * @snip
-   * Opens a CDOTransaction, modifies a model object, and commits the transaction.
    * @param session the CDOSession
-   * @param object the CDOObject to modify
+   * @param objectID the persistent ID of the object to modify
+   * @param feature a feature belonging to the object's EClass
+   * @param value a value valid for the feature's type and multiplicity
    */
-  public void modifyAndCommit(CDOSession session, CDOObject object)
+  public void modifyAndCommit(CDOSession session, CDOID objectID, EStructuralFeature feature, Object value) throws CommitException
   {
     CDOTransaction transaction = session.openTransaction();
 
     try
     {
-      object.eSet(object.eClass().getEStructuralFeature(0), "exampleValue");
+      CDOObject object = transaction.getObject(objectID);
+      if (!object.eClass().getEAllStructuralFeatures().contains(feature))
+      {
+        throw new IllegalArgumentException("Feature does not belong to the object's EClass");
+      }
+
+      object.eSet(feature, value);
       transaction.commit();
     }
-    catch (ConcurrentAccessException e)
+    catch (CommitException | RuntimeException ex)
     {
-      System.err.println("Commit failed: " + e.getMessage());
       transaction.rollback();
-    }
-    catch (CommitException e)
-    {
-      System.err.println("Commit failed: " + e.getMessage());
-      transaction.rollback();
+      throw ex;
     }
     finally
     {

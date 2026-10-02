@@ -57,8 +57,11 @@ public class Doc04_PreparingModels
   /**
    * Using the CDO Model Importer
    * <p>
-   * The easiest way to create a CDO enabled GenModel is to use the CDO Migrator utility that is shipped with the CDO SDK.
-   * It includes a special Ecore Model Importer that adjusts all the GenModel properties needed to generate CDO native models.
+   * The CDO SDK contributes an Ecore model importer to the EMF Generator Model wizard. It creates a
+   * GenModel configured for CDO-native generated objects and adjusts CDO-specific generator
+   * properties. Choose this importer when generated instances should participate directly in CDO's
+   * object and revision APIs. An ordinary EMF model can also be used in legacy mode, but generated
+   * objects then need CDO's adaptation layer and do not necessarily implement {@code CDOObject}.
    * Right-click the Ecore model file and select New and Other... and choose the EMF Generator Model New Wizard:
    * <p align="center">{@image Migrator0.png}
    * <p align="center">{@image Migrator1.png}
@@ -83,8 +86,10 @@ public class Doc04_PreparingModels
   /**
    * Using the CDO Model Migrator
    * <p>
-   * If you don't want to use the CDO Model Importer to automatically let a proper GenModel be created for you it
-   * is still rather easy to migrate an existing GenModel with the CDO Migrator:
+   * To convert an existing GenModel, select the CDO Model Migrator action contributed by the SDK.
+   * It adjusts the GenModel in place; review and save those changes before regenerating model code.
+   * Keep generated code synchronized with the updated GenModel rather than editing generated
+   * implementation classes by hand.
    * <p align="center">{@image Migrator6.png}
    * <p>
    * In case the generator model was successfully migrated to CDO the following dialog box will appear:
@@ -99,17 +104,20 @@ public class Doc04_PreparingModels
   /**
    * Migrating a GenModel Manually
    * <p>
-   * If you don't want to use the CDO Model Importer to automatically let a proper GenModel be created for you
-   * it is still rather easy to migrate an existing GenModel by hand.
-   * <p>
-   * The EMF generator model for your Ecore model is much like a usual GenModel except for the following four differences:
+   * If you migrate a GenModel manually, use the current CDO migrator defaults as the reference. It
+   * adjusts feature delegation, generated base types, and generator flags so generated objects use
+   * CDO's reflective feature storage path. The relevant properties are:
    * <ul>
-   * <li> The <i>Feature Delegation</i> property <b>must be</b> set to <code>Reflective</code>
-   * <li> The <i>Model Plug-in Variables</i> property <b>should be</b> set to <code>CDO=org.eclipse.emf.cdo</code>
-   * <li> The <i>Root Extends Class</i> property <b>must be</b> set to {@link CDOObjectImpl org.eclipse.emf.internal.cdo.CDOObjectImpl}.
-   *       This generated-model base class is the required exception to the usual rule against depending on CDO internal types;
-   *       application code should continue to use the public {@link CDOObject} API.
-   * <li> The <i>Root Extends Interface</i> property <b>can be</b> set to {@link CDOObject org.eclipse.emf.cdo.CDOObject}
+   * <li> The <i>Feature Delegation</i> property is set to <code>Reflective</code>.
+   * <li> The <i>Root Extends Class</i> property is set to {@link CDOObjectImpl org.eclipse.emf.internal.cdo.CDOObjectImpl}.
+   *       The migrator currently selects this implementation base for generated native models. It
+   *       is a generator/runtime dependency, not an application API; application code should use
+   *       the public {@link CDOObject} contract.
+   * <li> The <i>Root Extends Interface</i> property is set to {@link CDOObject org.eclipse.emf.cdo.CDOObject}.
+   * <li> Model plug-in variables include <code>CDO=org.eclipse.emf.cdo</code>. If generating an edit
+   *       plug-in, edit plug-in variables include <code>CDO_EDIT=org.eclipse.emf.cdo.edit</code> and
+   *       the provider root class is <code>org.eclipse.emf.cdo.edit.CDOItemProviderAdapter</code>.
+   * <li> Boolean flags are disabled and packed enums are disabled, as configured by the migrator.
    * </ul>
    * <p align="center">{@image GenModel.png}
    * <p>
@@ -146,11 +154,11 @@ public class Doc04_PreparingModels
   /**
    * Modifying Generated Getters and Setters
    * <p>
-   * If you want to modify the behavior of generated getters and setters (or have already done so in existing models)
-   * you might want to try <i>dynamic feature delegation</i> (introduced in EMF 2.5). With this pattern, the reflective methods like eGet still
-   * call your generated method like getX() and then that calls the dynamic reflective method like eDynamicGet. It effectively produces
-   * the same behavior as "Reflective" delegating but does so by delegating through your generated accessors allowing you to specialize
-   * those as you could when you used "None"...
+   * Reflective feature delegation lets CDO intercept generated model feature access and store values
+   * in revision data. Custom getters and setters must preserve that path; switching delegation to
+   * <code>None</code> can make generated Java fields diverge from repository-backed state. Keep
+   * custom behavior in generated accessor overrides that delegate to the compatible reflective
+   * implementation, and verify the generated code against the EMF/CDO versions in use.
    */
   public class Doc_ModifyingGeneratedCode
   {

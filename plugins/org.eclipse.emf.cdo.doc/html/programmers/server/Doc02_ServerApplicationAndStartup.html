@@ -52,7 +52,7 @@ function windowTitle()
  contributions superseded by a predecessor, instantiates them, and injects the container into extensions
  that implement ContainerAware. It sorts early and normal extensions separately by priority; lower numeric
  priorities start first, with the default priority used by extensions that do not implement
- IAppExtension4. An <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension5</code></a> selects the early phase with
+ <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension4.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension4</code></a>. An <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension5</code></a> selects the early phase with
  <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html#startBeforeRepositories()" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension5"><code>IAppExtension5.startBeforeRepositories()</code></a>.
  <p>
  Early extensions run before repository configuration, so they can install container-level factories or services
@@ -82,7 +82,7 @@ function windowTitle()
  default repository.
  <p>
  Dynamically created repositories are managed by the repository-configuration manager and their dynamic extension
- lifecycle, not appended to the initial repository array. Use IAppExtension2 for per-dynamic-repository XML
+ lifecycle, not appended to the initial repository array. Use <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension2.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension2</code></a> for per-dynamic-repository XML
  callbacks; use repository-specific extension behavior only when its callback provides the needed repository
  context. See <a href="Doc04_ApplicationExtensions.html" title="Article in CDO Model Repository Documentation">Application Extensions</a>.
 

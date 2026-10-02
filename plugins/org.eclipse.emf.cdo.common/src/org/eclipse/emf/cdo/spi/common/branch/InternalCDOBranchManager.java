@@ -33,7 +33,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal owner of a repository's branch tree and branch tags. It combines the in-memory branch objects with a
+ * {@link BranchLoader} that persists, creates, and lazily loads branch metadata, and propagates branch and tag changes
+ * to registered handlers.
  *
  * @author Eike Stepper
  * @since 3.0
@@ -180,7 +182,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Persistence boundary used by the branch manager to allocate branches and load branch metadata and descendants.
+   * Implementations translate between repository storage and the manager's in-memory branch tree.
    *
    * @author Eike Stepper
    * @since 3.0
@@ -219,7 +222,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
     public int loadBranches(int startID, int endID, CDOBranchHandler branchHandler);
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Serialized metadata for a branch: its name and the branch point from which its history was forked. The branch
+     * manager uses this record when loading or creating a branch.
      *
      * @author Eike Stepper
      * @since 3.0
@@ -284,7 +288,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
     }
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Serialized metadata for one child branch in a branch listing. It supplies the child's identity, name, and base
+     * timestamp so the manager can materialize that branch beneath its parent.
      * @author Eike Stepper
      * @since 3.0
      */
@@ -335,7 +340,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Compatibility extension of the branch persistence contract for branch deletion and renaming. Later loader versions
+   * add richer change notifications while retaining these operations for older stores.
    *
    * @author Mathieu Velten
    * @since 4.3
@@ -356,7 +362,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Branch-loader extension that persists a rename with both the old and new names, allowing the store to detect
+   * duplicate names and report them as a branch-specific error.
    *
    * @author Eike Stepper
    * @since 4.4
@@ -367,7 +374,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Branch-loader extension that persists branch-tag changes and streams stored tags back to the manager during load.
+   * The modification counter lets callers distinguish an update based on stale tag state.
    *
    * @author Eike Stepper
    * @since 4.11
@@ -380,7 +388,8 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Branch-loader extension for deleting a branch together with its descendants. It returns the removed branch tree so
+   * the manager can update its in-memory structure and notify clients of the affected branches.
    *
    * @author Eike Stepper
    * @since 4.15

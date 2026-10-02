@@ -12,7 +12,8 @@
 package org.eclipse.spi.net4j;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Provides the inverse-close operation used when a resource must be closed from the opposite side of a bidirectional lifecycle relationship.
+ * Implementations use {@link #inverseClose()} to perform that direction-specific close action.
  *
  * @author Eike Stepper
  * @since 4.10

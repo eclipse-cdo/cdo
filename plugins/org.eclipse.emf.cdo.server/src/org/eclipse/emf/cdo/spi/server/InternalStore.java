@@ -18,7 +18,8 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal lifecycle and repository-binding contract for a storage backend. The repository uses it to configure the
+ * store's revision behavior and to maintain branch and commit timestamp state across activation.
  *
  * @author Eike Stepper
  * @since 3.0
@@ -68,7 +69,8 @@ public interface InternalStore extends IStore, ILifecycle
   public void setCreationTime(long creationTime);
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Legacy capability marker for stores whose data model permits no references that point outside the repository. New
+   * repositories should express this capability through {@code IRepositoryConfig.CAPABILITY_EXTERNAL_REFS}.
    *
    * @author Eike Stepper
    * @since 4.0
@@ -80,7 +82,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Capability marker for stores that cannot answer cross-reference queries. Repository query support can use this to
+   * avoid exposing queries that require those references.
    *
    * @author Eike Stepper
    * @since 4.0
@@ -90,7 +93,7 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Capability marker for stores that do not persist or retrieve CDO large objects such as blobs and character objects.
    *
    * @author Eike Stepper
    * @since 4.0
@@ -100,7 +103,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Capability marker for stores that do not support persisted EMF feature maps. The feature-map model representation is
+   * no longer supported by current CDO revisions.
    *
    * @author Eike Stepper
    * @since 4.0
@@ -112,7 +116,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Capability marker for stores that cannot enumerate revisions through the revision-handler API. Repository
+   * services use it when determining which history operations the backend can support.
    *
    * @author Eike Stepper
    * @since 4.0
@@ -122,7 +127,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Capability marker for stores that cannot expose raw storage data for replication. Such stores must use the
+   * callback-based replication path instead.
    *
    * @author Eike Stepper
    * @since 4.0
@@ -132,7 +138,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Capability marker for stores that cannot produce change-set data for a time interval. Change-set based history
+   * operations require this capability from the backend.
    *
    * @author Eike Stepper
    * @since 4.2
@@ -142,7 +149,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Capability marker for stores that do not retain commit-info history. The repository can use it to identify that
+   * commit-history lookup is unavailable from this backend.
    *
    * @author Eike Stepper
    * @since 4.2
@@ -152,7 +160,8 @@ public interface InternalStore extends IStore, ILifecycle
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Capability marker for stores that do not support durable lock areas, so a client cannot resume locks through this
+   * backend after its session is closed.
    *
    * @author Eike Stepper
    * @since 4.2

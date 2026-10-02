@@ -31,7 +31,8 @@ import org.eclipse.net4j.util.security.DiffieHellman.Server.Challenge;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Server-side protocol contract for a connected CDO session. Repository, branch, commit, remote-session, and lock
+ * changes are sent through it so the client can update the state visible in its session.
  *
  * @author Eike Stepper
  * @since 3.0

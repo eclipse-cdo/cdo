@@ -23,7 +23,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal contract for a CDO workspace that coordinates its local repository, session, and views with the remote session configuration and
+ * workspace change data.
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

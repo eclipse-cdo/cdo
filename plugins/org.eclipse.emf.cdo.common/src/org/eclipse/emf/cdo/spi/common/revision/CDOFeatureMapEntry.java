@@ -14,7 +14,8 @@ package org.eclipse.emf.cdo.spi.common.revision;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Deprecated CDO-specific mutable feature-map entry retained for compatibility with older serialized model data.
+ * Current CDO revisions no longer support EMF feature maps.
  *
  * @since 3.0
  * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.

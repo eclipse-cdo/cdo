@@ -23,7 +23,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal manager for a repository's commit history. It creates commit-info objects, serves commit-data loading
+ * requests through a {@link CommitInfoLoader}, and notifies handlers as commits become available.
  *
  * @author Eike Stepper
  * @since 3.0
@@ -73,7 +74,8 @@ public interface InternalCDOCommitInfoManager extends CDOCommitInfoManager, ILif
   public void setLastCommitOfBranch(CDOBranch branch, long lastCommit);
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Storage boundary for reading a branch's commit history and the detailed change data for an individual commit. The
+   * manager uses it to fulfill history queries without requiring every commit to be held in memory.
    *
    * @author Eike Stepper
    */

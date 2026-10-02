@@ -14,7 +14,8 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Repository service that starts query handlers for a view and tracks their running results. It gives protocol and
+ * client code a way to check or cancel a query by its assigned ID.
  *
  * @author Eike Stepper
  * @since 3.0

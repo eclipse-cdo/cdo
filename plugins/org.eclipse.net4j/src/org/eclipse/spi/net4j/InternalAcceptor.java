@@ -16,7 +16,8 @@ import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.util.security.INegotiatorAware;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal acceptor contract that combines the public acceptor API with transport configuration and negotiator support required by Net4j
+ * acceptor implementations.
  *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.

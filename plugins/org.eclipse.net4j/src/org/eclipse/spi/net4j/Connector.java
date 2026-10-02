@@ -35,7 +35,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Multiplexes Net4j channels over a physical connection and manages connection establishment, negotiation, authentication, and shutdown.
+ * Concrete connectors provide the transport-specific connection mechanism.
  *
  * @author Eike Stepper
  * @since 2.0

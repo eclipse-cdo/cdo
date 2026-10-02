@@ -875,7 +875,8 @@ public class DefaultCDOMerger implements CDOMergerBaseAware
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Describes an unresolved change-set conflict for one object ID. The concrete conflict types capture the incompatible
+   * target and source histories so a {@link CDOMerger} client can inspect why the merge could not produce a result.
    *
    * @author Eike Stepper
    */
@@ -889,7 +890,8 @@ public class DefaultCDOMerger implements CDOMergerBaseAware
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Conflict raised when both the target and source change the same object's revision. It retains both revision deltas,
+   * which are the competing histories a merger or conflict handler must reconcile.
    *
    * @author Eike Stepper
    */
@@ -929,7 +931,8 @@ public class DefaultCDOMerger implements CDOMergerBaseAware
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Conflict raised when the source changes an object that the target has detached. The source delta identifies the
+   * update that cannot be applied while the target considers the object absent.
    *
    * @author Eike Stepper
    */
@@ -961,7 +964,8 @@ public class DefaultCDOMerger implements CDOMergerBaseAware
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Conflict raised when the target changes an object that the source detached. The target delta preserves the local
+   * work that would otherwise be lost by accepting the source detachment.
    *
    * @author Eike Stepper
    */
@@ -993,7 +997,9 @@ public class DefaultCDOMerger implements CDOMergerBaseAware
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Merger strategy that resolves each object's revision delta by comparing feature-level changes. Its nested variants
+   * choose how conflicting feature values and list edits are reconciled while respecting the configured resolution
+   * preference and list ordering.
    *
    * @author Eike Stepper
    */

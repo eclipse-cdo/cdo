@@ -23,7 +23,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Mutable internal form of a revision delta used while building, applying, and rebasing changes to one object. It
+ * retains the feature changes and the branch/version context required to apply them to a target revision.
  *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.

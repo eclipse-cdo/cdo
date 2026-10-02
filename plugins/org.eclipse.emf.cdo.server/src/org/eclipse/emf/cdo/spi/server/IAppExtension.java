@@ -14,7 +14,8 @@ package org.eclipse.emf.cdo.spi.server;
 import java.io.File;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Lifecycle hook for server application extensions loaded from an application configuration file. The server starts
+ * the extension with that file and later calls it to release any resources it acquired.
  *
  * @author Eike Stepper
  * @since 3.0

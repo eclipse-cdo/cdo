@@ -22,7 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Indexes a {@link CDOChangeSetData} by object ID so callers can determine whether each object is new, changed, or
+ * detached without scanning the three change-set lists repeatedly.
  *
  * @author Eike Stepper
  * @since 4.0

@@ -31,7 +31,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal bridge between the public {@link CDOObject} model and the CDO state machine. It adapts
+ * legacy EMF objects to their CDO wrappers and exposes state checks used by view and transaction implementation code.
  *
  * @author Eike Stepper
  * @since 4.0

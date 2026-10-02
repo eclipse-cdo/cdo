@@ -14,7 +14,8 @@ package org.eclipse.emf.cdo.spi.common.id;
 import org.eclipse.emf.cdo.common.id.CDOIDObject;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal extension of an object ID that distinguishes the concrete storage subtype used for that identifier.
+ * Revision and ID factories use this subtype when selecting the appropriate object-ID representation.
  *
  * @author Eike Stepper
  * @since 3.0

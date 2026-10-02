@@ -25,7 +25,8 @@ import java.text.MessageFormat;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Records revisions known to be available at a branch point and exposes them as a revision provider. If a requested ID
+ * is not in the recorded set, an optional revision manager can load it at that same point.
  *
  * @author Eike Stepper
  * @since 3.0

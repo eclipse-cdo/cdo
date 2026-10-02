@@ -23,7 +23,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Shared event implementation for lock notifications backed by a set of lock deltas. It derives the affected IDs,
+ * lock types, and lock/unlock operations from those deltas so listeners can summarize a batch of lock changes.
  *
  * @author Eike Stepper
  * @since 4.15

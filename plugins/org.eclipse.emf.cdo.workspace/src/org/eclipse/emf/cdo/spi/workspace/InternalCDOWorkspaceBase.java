@@ -19,7 +19,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase2;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal contract for a workspace base that tracks object additions, changes, and detachments while a workspace transaction is committed
+ * or cleared. The workspace implementation uses these operations to keep its local base store consistent.
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

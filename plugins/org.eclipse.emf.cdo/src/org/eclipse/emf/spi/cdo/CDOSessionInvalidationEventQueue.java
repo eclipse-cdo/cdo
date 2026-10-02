@@ -25,7 +25,9 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Collects {@link CDOSessionInvalidationEvent}s emitted by a {@link CDOSession} so a consumer can retrieve them later.
+ * The queue registers a session listener for its lifetime, and {@link #dispose()} removes that listener after clearing
+ * pending events.
  *
  * @author Eike Stepper
  * @since 4.2

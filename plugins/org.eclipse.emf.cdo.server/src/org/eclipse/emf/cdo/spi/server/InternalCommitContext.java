@@ -32,7 +32,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Prepared server-side description of one transaction commit. It carries the object and package changes, ID remappings,
+ * locks, LOBs, and commit metadata through the pre-write, store-write, commit, rollback, and post-commit phases.
  *
  * @author Eike Stepper
  * @since 3.0

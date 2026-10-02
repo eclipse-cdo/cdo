@@ -13,7 +13,8 @@
 package org.eclipse.emf.spi.cdo;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Marks internal model objects that participate in CDO's load lifecycle. The state machine calls the pre-load and
+ * post-load hooks around loading so implementations can prepare and finalize their EMF object state.
  *
  * @author Simon McDuff
  * @since 2.0

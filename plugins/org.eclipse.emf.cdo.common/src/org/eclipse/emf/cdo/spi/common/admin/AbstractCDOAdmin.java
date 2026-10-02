@@ -24,7 +24,9 @@ import java.util.Comparator;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Shared implementation for administrative connections that discover, create, and delete repository instances. It
+ * tracks the repositories announced by the remote admin service and waits for the corresponding lifecycle event after
+ * a create or delete request completes.
  *
  * @author Eike Stepper
  * @since 4.1

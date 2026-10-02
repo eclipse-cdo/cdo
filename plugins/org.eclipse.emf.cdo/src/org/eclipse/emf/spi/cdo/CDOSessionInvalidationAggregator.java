@@ -14,7 +14,8 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Compatibility name for {@link CDOSessionInvalidationEventQueue}. It retains the earlier API for clients that collect
+ * session invalidation events; new code should use the queue class directly.
  *
  * @author Eike Stepper
  * @since 4.0

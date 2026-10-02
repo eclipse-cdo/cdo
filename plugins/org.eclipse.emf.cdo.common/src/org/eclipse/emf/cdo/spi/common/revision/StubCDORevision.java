@@ -30,7 +30,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.io.IOException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Minimal revision shell for code that needs revision identity or class metadata without a mutable feature store.
+ * Unsupported mutations make accidental use as a loaded object revision fail immediately; specialized internal uses
+ * can supply only the revision behavior they require.
  *
  * @author Eike Stepper
  * @since 3.0

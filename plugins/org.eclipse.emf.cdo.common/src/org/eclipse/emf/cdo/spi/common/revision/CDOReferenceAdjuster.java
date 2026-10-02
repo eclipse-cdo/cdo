@@ -20,7 +20,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Policy consulted while a revision rewrites a stored reference. The revision supplies the feature and list position so
+ * the policy can map an ID in the context where it occurs, such as replacing temporary IDs after commit.
  *
  * @author Simon McDuff
  * @since 4.0

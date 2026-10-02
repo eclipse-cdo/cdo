@@ -14,7 +14,8 @@ package org.eclipse.spi.net4j;
 import org.eclipse.net4j.util.factory.Factory;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Creates client-side protocol instances for the Net4j client protocol extension point. Each factory is registered under a protocol type in
+ * the client protocol product group.
  *
  * @author Eike Stepper
  * @since 2.0

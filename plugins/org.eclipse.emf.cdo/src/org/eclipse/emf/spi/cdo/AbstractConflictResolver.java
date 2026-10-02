@@ -15,7 +15,9 @@ import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Base for conflict resolvers that retain a transaction association while that transaction is open. Subclasses can
+ * install and remove transaction-specific listeners or handlers in {@link #hookTransaction(CDOTransaction)} and
+ * {@link #unhookTransaction(CDOTransaction)} when the association changes.
  *
  * @author Eike Stepper
  * @since 4.0

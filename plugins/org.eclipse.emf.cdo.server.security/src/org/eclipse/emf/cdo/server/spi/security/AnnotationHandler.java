@@ -41,7 +41,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.util.StringTokenizer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Commit handler that reads CDO security annotations from newly registered EPackages and translates them into realm
+ * roles with package- or class-level read and write permissions.
  *
  * @author Eike Stepper
  */

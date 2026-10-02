@@ -29,7 +29,9 @@ import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Utilities for interpreting branch ancestry and transporting branch points and ranges. The helpers normalize time
+ * stamps against branch bases and rebind branch references to a particular branch manager when data crosses manager
+ * boundaries.
  *
  * @author Eike Stepper
  * @since 3.0

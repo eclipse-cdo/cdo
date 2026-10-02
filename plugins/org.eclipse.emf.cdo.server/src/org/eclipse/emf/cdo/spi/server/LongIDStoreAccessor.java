@@ -19,7 +19,8 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Store-accessor base paired with {@link LongIDStore}. It delegates permanent ID allocation to that store so reader
+ * and writer implementations share the store's repository versus local-branch ID policy.
  *
  * @since 2.0
  * @author Eike Stepper

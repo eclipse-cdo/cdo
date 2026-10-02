@@ -17,7 +17,8 @@ import org.eclipse.emf.cdo.common.util.CDOQueryQueue;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Server-side result stream for a query executing against a view. The query manager exposes it as a blocking iterator
+ * backed by a queue, while retaining the handler and query metadata needed for cancellation and lifecycle management.
  *
  * @author Eike Stepper
  * @since 3.0

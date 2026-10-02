@@ -13,7 +13,8 @@
 package org.eclipse.emf.cdo.spi.common;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Checkpoint reported by a replication target, identifying the last branch and commit time it has incorporated and
+ * the durable lock areas that must also be synchronized.
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

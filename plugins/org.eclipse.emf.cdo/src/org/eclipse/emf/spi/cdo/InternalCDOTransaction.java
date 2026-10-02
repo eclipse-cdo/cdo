@@ -38,7 +38,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal transaction contract that connects the public transaction API to a CDO view and the transaction strategy.
+ * It tracks clean revisions and local deltas, builds commit contexts, applies change sets, and maintains savepoint and
+ * conflict state needed to reconcile the local model with repository commits.
  *
  * @author Simon McDuff
  * @since 2.0
@@ -243,7 +245,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Summarizes the effects of applying a goal change set to a transaction, including the normalized change set, any ID
+   * remappings, and the objects whose references had to be adjusted.
    *
    * @author Eike Stepper
    * @since 4.1
@@ -277,7 +280,8 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Signals that a change set can no longer be applied against the target revision state used to define it. Callers
+   * receive this when the expected versions or base state have moved and must obtain current change data before retrying.
    *
    * @author Eike Stepper
    * @since 4.1

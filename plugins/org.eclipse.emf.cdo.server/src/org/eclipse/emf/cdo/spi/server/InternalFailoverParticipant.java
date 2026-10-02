@@ -12,7 +12,8 @@
 package org.eclipse.emf.cdo.spi.server;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Synchronizable repository participating in failover. Its backup-commit setting determines whether it may accept
+ * commits while serving as the backup side of the failover arrangement.
  *
  * @author Eike Stepper
  * @since 4.0

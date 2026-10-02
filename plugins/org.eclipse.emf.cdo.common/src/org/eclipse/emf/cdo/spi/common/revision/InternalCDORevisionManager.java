@@ -32,7 +32,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal owner of revision loading, interning, and caching for a session or repository. It resolves revisions at
+ * branch points and versions, delegates storage access to a loader, and coordinates atomic load requests with a locker.
  *
  * @author Eike Stepper
  * @since 3.0
@@ -205,7 +206,8 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
   public void addRevision(CDORevision revision);
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Storage boundary used by the revision manager to retrieve revision state and enumerate historical revisions. The
+   * manager selects cache or loader access, while this SPI reads the requested data from its backing source.
    *
    * @author Eike Stepper
    * @since 3.0
@@ -229,7 +231,8 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Revision-loader extension for retrieving an object's lifetime at a branch point, enabling the manager to answer
+   * whether the object existed there without loading its full feature state.
    *
    * @author Eike Stepper
    * @since 4.4
@@ -242,7 +245,8 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Revision-loader extension for batch loading revision metadata and values using the older explicit chunk and
+   * prefetch options. The manager passes batches through this path when the store supports it.
    *
    * @author Eike Stepper
    * @since 4.15
@@ -290,7 +294,8 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Lock used to keep a multi-step revision request atomic with respect to other loads for the same key. The manager
+   * acquires it before the request and releases it after the related revisions have been resolved.
    *
    * @author Eike Stepper
    * @since 3.0

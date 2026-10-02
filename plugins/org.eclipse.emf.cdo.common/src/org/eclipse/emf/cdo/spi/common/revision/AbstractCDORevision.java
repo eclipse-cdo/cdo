@@ -36,7 +36,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.text.MessageFormat;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Common implementation for revision objects that supplies class metadata, branch-time validity, permission checks, and
+ * traversal of currently loaded feature values. Concrete revisions build on this behavior to store and exchange the
+ * versioned state of one CDO object.
  *
  * @author Eike Stepper
  * @since 2.0

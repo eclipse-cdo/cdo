@@ -17,7 +17,8 @@ import org.eclipse.emf.cdo.transaction.CDOXASavepoint;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Savepoint representation for a CDO XA transaction. Besides its position in the user-transaction savepoint chain, it
+ * retains the set of participating transaction savepoints that must be restored together.
  *
  * @author Eike Stepper
  * @since 3.0

@@ -22,7 +22,8 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 import java.util.LinkedList;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Reuses passivated store accessors managed by an {@link IStore}. A pool may be shared or scoped to a session or view;
+ * checkout restores the accessor's active context, while excess or unusable accessors are deactivated.
  *
  * @author Eike Stepper
  * @since 2.0

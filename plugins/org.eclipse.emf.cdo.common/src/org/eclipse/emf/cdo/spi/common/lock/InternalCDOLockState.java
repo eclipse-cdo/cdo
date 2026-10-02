@@ -19,7 +19,8 @@ import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Mutable internal lock-state contract used by lock caches to update ownership and report the corresponding
+ * {@link CDOLockDelta}s. It also supports remapping an object's ID or lock owner when session state changes.
  *
  * @author Caspar De Groot
  * @since 4.1

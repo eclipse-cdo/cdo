@@ -13,7 +13,8 @@
 package org.eclipse.emf.cdo.spi.common.revision;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Implemented by revision data structures whose stored object references can be rewritten through a
+ * {@link CDOReferenceAdjuster}, for example when temporary IDs are replaced after commit.
  *
  * @author Simon McDuff
  * @since 4.0

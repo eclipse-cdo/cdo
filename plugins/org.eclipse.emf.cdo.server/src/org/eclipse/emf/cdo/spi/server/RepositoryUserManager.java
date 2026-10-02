@@ -27,7 +27,8 @@ import org.eclipse.net4j.util.security.UserManagerFactory;
 import java.util.Arrays;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Repository-scoped source of user credentials that also authenticates clients against those credentials. The managed
+ * container injects the repository context so subclasses can retrieve a user's password from the repository they serve.
  *
  * @author Eike Stepper
  * @since 4.0
@@ -130,7 +131,8 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Factory for installing a repository-backed {@link RepositoryUserManager} as a user manager. Its description
+   * identifies the repository, and subclasses create the storage-specific manager.
    *
    * @author Eike Stepper
    */
@@ -159,7 +161,8 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Factory for installing a repository-backed {@link RepositoryUserManager} as an authenticator. It binds the created
+   * manager to the repository named by its description before the server uses it to authenticate sessions.
    *
    * @author Eike Stepper
    * @since 4.2
@@ -189,7 +192,8 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Container post-processor that injects the managed container into each repository user manager. The manager then
+   * resolves its configured repository when it authenticates a user or retrieves credentials.
    *
    * @author Eike Stepper
    */

@@ -17,7 +17,8 @@ import org.eclipse.emf.cdo.spi.common.CDORawReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Repository-side contract for a repository that participates in replication. It owns the synchronizer and replication
+ * session, accepts replicated history in either callback or raw form, and records the replication checkpoint.
  *
  * @author Eike Stepper
  * @since 3.0

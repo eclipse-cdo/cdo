@@ -21,7 +21,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Deprecated wrapper base that forwards EMF package-registry operations to an underlying CDO package registry. It was
+ * used to customize package lookup while retaining the registry's package-unit metadata and loader configuration.
  *
  * @author Eike Stepper
  * @since 4.0

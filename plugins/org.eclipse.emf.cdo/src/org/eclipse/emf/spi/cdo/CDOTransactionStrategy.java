@@ -21,7 +21,9 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal policy used by a transaction to perform commit, rollback, and savepoint operations. The default strategy
+ * delegates these operations to the single-transaction implementation; alternate strategies can control how a
+ * transaction is attached to and detached from the transaction machinery.
  *
  * @author Simon McDuff
  * @since 2.0

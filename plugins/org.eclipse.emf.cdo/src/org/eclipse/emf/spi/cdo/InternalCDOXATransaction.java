@@ -28,7 +28,8 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal coordinator for an XA transaction spanning multiple CDO transactions. It collects participating
+ * transactions and their savepoints, then drives their commit or rollback as one coordinated operation.
  *
  * @author Eike Stepper
  * @since 2.0
@@ -72,7 +73,8 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
   public InternalCDOXACommitContext getCommitContext(CDOTransaction transaction);
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Per-operation state passed through an XA commit. It gathers the participating transactions' requested object IDs,
+   * carries the protocol result, and invokes the state-specific work that advances or rolls back the coordinated commit.
    *
    * @author Eike Stepper
    * @since 2.0
@@ -106,7 +108,8 @@ public interface InternalCDOXATransaction extends CDOXATransaction, InternalCDOU
     public void setProgressMonitor(IProgressMonitor progressMonitor);
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * A phase in the XA commit state machine. Each state validates the repository result and performs the work needed
+     * to advance the shared commit context or report a rollback to the participating transactions.
      *
      * @author Simon McDuff
      * @since 3.0

@@ -32,7 +32,8 @@ import java.text.MessageFormat;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Factory and diagnostic utilities for commit data and commit-info managers. It also formats a change set as a readable
+ * list of new, changed, and detached objects, including feature-level deltas when available.
  *
  * @author Eike Stepper
  * @since 3.0

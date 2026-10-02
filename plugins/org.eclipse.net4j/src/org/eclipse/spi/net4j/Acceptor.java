@@ -32,7 +32,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Manages a listening Net4j transport endpoint and the connectors accepted through it. The acceptor applies transport configuration and
+ * negotiation settings to incoming connections.
  *
  * @author Eike Stepper
  * @since 2.0

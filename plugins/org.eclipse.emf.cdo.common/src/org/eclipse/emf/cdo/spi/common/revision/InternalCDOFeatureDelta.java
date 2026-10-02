@@ -15,7 +15,8 @@ package org.eclipse.emf.cdo.spi.common.revision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal extension contract for feature changes that need to participate in list-index adjustment during delta
+ * application. Its nested roles let list operations update the positions affected by insertions, removals, and moves.
  *
  * @author Simon McDuff
  * @since 3.0
@@ -25,7 +26,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 public interface InternalCDOFeatureDelta extends CDOFeatureDelta
 {
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Marks a list feature delta whose operation has a meaningful position in the current list. List edits use this
+   * contract to keep their indices aligned as earlier operations are applied.
    *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
@@ -49,7 +51,8 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Contract for a list operation that changes the indices of other pending operations. It projects an index through
+   * that edit and can update the affected target additions.
    *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
@@ -69,7 +72,7 @@ public interface InternalCDOFeatureDelta extends CDOFeatureDelta
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Identifies a value being added to a list delta so other edits can adjust or cancel that pending target insertion.
    *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.

@@ -14,7 +14,8 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.transaction.CDOUserTransaction;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal transaction contract for user-managed transactions, where savepoints are retained as a linked sequence and
+ * the transaction exposes its current endpoint for rollback and commit handling.
  *
  * @author Eike Stepper
  * @since 3.0

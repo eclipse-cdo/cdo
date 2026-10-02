@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Reference-adjustment policy backed by the ID mapping returned from a commit. It replaces temporary object IDs with
+ * their repository-assigned IDs and can optionally retain temporary IDs that have no mapping.
  *
  * @author Simon McDuff
  * @since 2.0

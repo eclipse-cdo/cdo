@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Revision-owned list implementation contract for many-valued features. It tracks loaded versus unloaded positions,
+ * adjusts references when IDs change, and notifies its owner when partial-loading state changes.
  *
  * @author Simon McDuff
  * @since 2.0

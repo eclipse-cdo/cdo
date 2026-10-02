@@ -14,7 +14,9 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.server.ITransaction;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Server-side transaction extension of a view that creates the commit context used to validate and persist a client
+ * commit. It also retains the latest commit attempt so transaction processing can associate retries with their
+ * repository timestamps.
  *
  * @author Eike Stepper
  * @since 3.0

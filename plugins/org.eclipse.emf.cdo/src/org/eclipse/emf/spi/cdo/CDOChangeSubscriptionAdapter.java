@@ -24,7 +24,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * An adapter for registering selected {@link CDOObject}s for change notifications in a {@link CDOView}. When attached
+ * to an object, it makes the view's change-subscription policy accept that object; the adapter tracks those notifiers
+ * so they can be detached together when the subscription is reset or disposed.
  *
  * @author Eike Stepper
  * @since 4.0

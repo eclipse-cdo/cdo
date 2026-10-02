@@ -56,7 +56,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Base for resolvers that make a resolution decision separately for each conflicting {@link CDOObject}. The resolver
+ * receives the local and remote revision changes for each conflict, while subclasses decide how to reconcile them in
+ * the transaction.
  *
  * @author Eike Stepper
  * @since 2.0
@@ -201,7 +203,9 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Older three-way resolution framework that observes local feature edits and remote revision deltas for each object.
+   * Subclasses use those two streams to decide how a conflicting object should be updated; newer implementations
+   * generally use {@link CDOMergingConflictResolver}.
    *
    * @author Eike Stepper
    * @since 2.0
@@ -288,7 +292,9 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
     protected abstract void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas);
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Collects remote {@link CDORevisionDelta}s by notifier while remote invalidation events are being processed. The
+     * enclosing resolver uses the collected deltas to associate changes in a remote update with the object being
+     * resolved.
      *
      * @author Eike Stepper
      * @since 4.0
@@ -349,7 +355,8 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Legacy per-feature conflict strategy that applies the transaction's local feature changes after adopting remote
+   * object state. Use {@link CDOMergingConflictResolver} for the current merger-based approach.
    *
    * @author Eike Stepper
    * @since 2.0

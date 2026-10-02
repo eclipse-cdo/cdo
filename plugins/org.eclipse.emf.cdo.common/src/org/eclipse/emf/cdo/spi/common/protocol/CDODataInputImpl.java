@@ -98,7 +98,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Shared decoder for CDO protocol values layered over an extended data input. It reconstructs revisions, change sets,
+ * model metadata, locks, and branch references using the receiving session's registries and managers.
  *
  * @author Eike Stepper
  * @since 4.2

@@ -34,7 +34,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.io.IOException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Wrapper base for revision decorators that must preserve the complete {@link InternalCDORevision} contract. Subclasses
+ * can override selected revision behavior while all other reads and updates continue to reach the wrapped revision.
  *
  * @author Eike Stepper
  * @since 3.0

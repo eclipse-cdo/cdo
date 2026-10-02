@@ -22,7 +22,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import java.io.IOException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal lifecycle and transport contract for a group of related EPackages registered together in CDO. It loads or
+ * resolves the packages through a package loader, records their original type and timestamp, and reads or writes the
+ * unit as repository package metadata.
  *
  * @author Eike Stepper
  * @since 2.0

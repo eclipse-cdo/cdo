@@ -29,7 +29,8 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Managed-container factory for repository security managers. Its description identifies the repository and the
+ * security realm and may select commit handlers that participate in repository writes.
  *
  * @author Eike Stepper
  */
@@ -91,7 +92,8 @@ public abstract class SecurityManagerFactory extends Factory
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Default factory that creates a realm-backed security manager for a repository. It resolves the configured commit
+   * handlers from the container and associates the manager with the repository it protects.
    *
    * @author Eike Stepper
    */
@@ -196,7 +198,8 @@ public abstract class SecurityManagerFactory extends Factory
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Legacy factory that installs {@link AnnotationHandler} for a realm. Use the default factory with the annotation
+   * handler selection in its description for new configurations.
    *
    * @author Eike Stepper
    * @deprecated As of 4.3 use {@link Default} with a description like "realmPath<b>:annotation</b>".

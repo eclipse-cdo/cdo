@@ -38,7 +38,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Repository service that owns connected sessions and coordinates their authentication and notification flow. It opens
+ * and closes session state, routes repository changes to relevant clients, and delegates user and permission decisions
+ * to the configured security services.
  *
  * @author Eike Stepper
  * @since 3.0

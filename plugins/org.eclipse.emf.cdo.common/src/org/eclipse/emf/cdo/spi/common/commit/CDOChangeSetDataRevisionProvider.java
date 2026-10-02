@@ -25,7 +25,9 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDeltaProvider;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Presents a change set as a {@link CDORevisionProvider} layered over an existing revision source. New revisions and
+ * changed revisions can be supplied eagerly in the change set or fetched lazily through callbacks, while detached IDs
+ * resolve to no revision.
  *
  * @author Eike Stepper
  * @since 4.0

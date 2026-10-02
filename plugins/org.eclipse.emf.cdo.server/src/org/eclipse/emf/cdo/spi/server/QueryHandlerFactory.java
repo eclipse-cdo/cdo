@@ -17,7 +17,8 @@ import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Extension factory for repository query handlers. The factory type is the query language identifier used by the
+ * repository to select a handler for a query's language and description.
  *
  * @author Eike Stepper
  * @since 2.0

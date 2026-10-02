@@ -19,7 +19,9 @@ import java.text.MessageFormat;
 import java.util.LinkedList;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * A time interval on one branch used to divide a history traversal into branch-local segments. The static traversal
+ * helpers follow branch bases from an end point and report each interval to a handler, which supports change-set
+ * calculations across forks.
  *
  * @noextend This class is not intended to be subclassed by clients.
  * @author Eike Stepper

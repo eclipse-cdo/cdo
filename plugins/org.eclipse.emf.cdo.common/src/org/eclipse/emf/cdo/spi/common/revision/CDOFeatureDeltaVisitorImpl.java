@@ -24,7 +24,8 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Convenience visitor for revision deltas whose default behavior is to ignore each feature-change kind and recursively
+ * visit the child operations of list deltas. Subclasses override only the changes relevant to their operation.
  *
  * @author Simon McDuff
  * @since 3.0
@@ -95,7 +96,8 @@ public class CDOFeatureDeltaVisitorImpl implements CDOFeatureDeltaVisitor
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Internal signal used by {@link CDOFeatureDeltaVisitorImpl} to stop recursive traversal when a visitor finds the
+   * result it needs.
    *
    * @author Eike Stepper
    * @since 4.0

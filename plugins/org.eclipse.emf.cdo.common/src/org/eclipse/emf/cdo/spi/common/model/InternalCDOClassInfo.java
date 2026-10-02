@@ -22,7 +22,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject.EStore;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Cached model metadata used by revisions and CDO objects to map EMF features to their stored slots. It defines which
+ * features are persisted, how transient object settings are laid out, and how model-specific persistence filters
+ * transform values before storage.
  *
  * @since 4.2
  * @author Eike Stepper

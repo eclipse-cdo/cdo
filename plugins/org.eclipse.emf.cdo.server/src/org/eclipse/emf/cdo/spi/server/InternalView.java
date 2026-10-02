@@ -25,7 +25,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Server-side state for one client view or transaction. It binds the view to a session and branch point, tracks change
+ * subscriptions and open resource units, and receives repository changes that must invalidate the client's view.
  *
  * @author Eike Stepper
  * @since 3.0

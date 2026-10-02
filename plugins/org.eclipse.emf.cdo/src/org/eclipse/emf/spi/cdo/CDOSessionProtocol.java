@@ -88,7 +88,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Defines the client-side operations for communicating with a CDO repository over a session protocol. Each operation
+ * corresponds to a request handled by the server protocol, while the nested result types carry the repository's reply
+ * and any state needed by the session to apply it.
  * <p>
  * Deprecated methods in this interface are retained for API compatibility only. Implementations should
  * implement the corresponding non-deprecated methods directly and must not use deprecated methods as
@@ -391,7 +393,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public Map<String, Entity> requestEntities(String namespace, String... names);
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Carries the repository metadata and initial session state returned when a client opens a session. The session uses
+   * this response to initialize its repository view and to determine which repository capabilities are available.
    *
    * @author Eike Stepper
    * @since 3.0
@@ -911,7 +914,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Contains the repository update position and package-unit information returned when a session refreshes. The client
+   * uses this snapshot to synchronize its views with repository changes that have occurred since its previous update.
    *
    * @author Eike Stepper
    * @since 3.0
@@ -1071,7 +1075,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Reports the repository time values exchanged during time synchronization, including the requested, indicated,
+   * responded, and confirmed timestamps used to estimate the repository's current time.
    *
    * @author Eike Stepper
    */
@@ -1152,7 +1157,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Describes the object IDs and branch point produced by a repository merge request. The session uses this result to
+   * apply the merged data to the target branch at the repository-selected result base.
    *
    * @author Eike Stepper
    * @since 4.6
@@ -1199,7 +1205,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Returns the commit outcome to the client, including the commit point and the information needed to reconcile the
+   * transaction's objects and commit metadata with the repository's accepted commit.
    *
    * @author Eike Stepper
    * @since 3.0
@@ -1567,7 +1574,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     }
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Adjusts references in post-commit notifications when the repository assigns or remaps object IDs during commit.
+     * It applies the ID provider and mapper supplied by the commit response so adapters see references consistent with
+     * the committed objects.
      *
      * @author Simon McDuff
      */
@@ -1605,7 +1614,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Describes the outcome of a repository object-lock request, including whether the requested locks were obtained and
+   * the lock-state information the client needs to update its view.
    *
    * @since 4.0
    */
@@ -1746,7 +1756,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Carries the repository's response to an object-unlock request, including the lock changes and their update timestamp
+   * so the client can bring its lock state in line with the repository.
    *
    * @since 4.1
    */

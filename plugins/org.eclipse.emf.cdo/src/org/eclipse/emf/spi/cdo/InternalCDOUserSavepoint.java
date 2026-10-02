@@ -14,7 +14,8 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.transaction.CDOUserSavepoint;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal node in a user transaction's savepoint chain. The transaction uses the links to restore or traverse retained
+ * savepoints while preserving the public {@link CDOUserSavepoint} view of the same state.
  *
  * @author Eike Stepper
  * @since 3.0

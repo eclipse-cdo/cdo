@@ -16,7 +16,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Wrapper base for query-resource contexts that forwards query scope and result collection to a delegate. Subclasses
+ * can adapt selected query behavior while retaining the delegate's branch point, folder, and result handling.
  *
  * @author Eike Stepper
  * @since 4.2

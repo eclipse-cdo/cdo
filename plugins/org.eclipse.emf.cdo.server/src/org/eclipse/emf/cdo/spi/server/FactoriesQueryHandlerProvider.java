@@ -20,7 +20,8 @@ import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Resolves query handlers from an explicit registry of factories keyed by query language. This is useful when a
+ * repository needs a controlled handler set without looking up extensions from the managed container.
  *
  * @author Eike Stepper
  * @since 2.0

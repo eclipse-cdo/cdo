@@ -50,7 +50,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Shared lifecycle and commit pipeline for store readers and writers. It binds an accessor to its session or
+ * transaction, gathers commit contexts, assigns permanent IDs, and delegates the backend-specific persistence work to
+ * the concrete accessor.
  *
  * @author Eike Stepper
  * @since 4.0
@@ -280,7 +282,8 @@ public abstract class StoreAccessorBase extends Lifecycle implements NewIDSuppor
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Builds the {@link CDOCommitData} for one commit timestamp by enumerating the revisions and package units stored at
+   * that point. The resulting lists distinguish new, changed, and detached objects for commit-history consumers.
    *
    * @author Eike Stepper
    * @since 3.0

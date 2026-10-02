@@ -49,7 +49,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Base for repository storage backends. It binds a store to its repository, advertises the revision and change formats
+ * the backend can support, and creates or reuses reader and writer accessors for session and transaction operations.
  *
  * @author Eike Stepper
  * @since 2.0

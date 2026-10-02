@@ -16,7 +16,8 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Target-side callback contract for replaying repository history into another repository. It receives branch and
+ * commit information together with durable lock-area data as the replication process walks the source history.
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

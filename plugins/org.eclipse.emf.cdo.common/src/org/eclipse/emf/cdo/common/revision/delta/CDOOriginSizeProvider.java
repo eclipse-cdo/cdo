@@ -12,7 +12,8 @@
 package org.eclipse.emf.cdo.common.revision.delta;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Supplies the size of a list-valued feature at the origin of a revision delta. This lets list deltas interpret their
+ * indices against the list before the recorded edits were applied.
  *
  * @author Eike Stepper
  * @since 4.2

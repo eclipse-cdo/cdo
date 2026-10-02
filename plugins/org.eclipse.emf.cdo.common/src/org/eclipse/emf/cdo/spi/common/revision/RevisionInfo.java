@@ -31,7 +31,9 @@ import java.text.MessageFormat;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Request and response record used by the revision-loading protocol for one object at a branch point. Concrete variants
+ * distinguish a directly available revision, an inherited or detached synthetic result, and an object missing from
+ * that history; the record also carries the loaded result back to the revision manager.
  *
  * @author Eike Stepper
  * @since 3.0
@@ -397,7 +399,8 @@ public abstract class RevisionInfo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Wire-level category for a revision lookup result. The values select which {@link RevisionInfo} form is read from
+   * the protocol stream.
    *
    * @author Eike Stepper
    * @since 3.0
@@ -408,7 +411,9 @@ public abstract class RevisionInfo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Common request form for an object revision found in branch history. It records the branch version where the state
+   * is available and determines whether that state can be used directly or must be loaded for the requested branch
+   * point.
    *
    * @author Eike Stepper
    * @since 3.0
@@ -484,7 +489,8 @@ public abstract class RevisionInfo
     }
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Revision lookup result for an object whose state is available directly at the requested branch point. It reuses
+     * that branch version as the loaded result when possible.
      *
      * @author Eike Stepper
      * @since 3.0
@@ -536,7 +542,8 @@ public abstract class RevisionInfo
     }
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Revision lookup result for an object whose available state points to another branch version. It carries that
+     * target relationship so the revision manager can materialize or reuse the corresponding synthetic pointer state.
      *
      * @author Eike Stepper
      * @since 3.0
@@ -627,7 +634,8 @@ public abstract class RevisionInfo
     }
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Revision lookup result indicating that the object's latest relevant state is a detachment. It preserves that
+     * lifetime boundary as a synthetic result for callers performing historical lookups.
      *
      * @author Eike Stepper
      * @since 3.0
@@ -665,7 +673,8 @@ public abstract class RevisionInfo
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Revision lookup result for an object with no state available at the requested history point. The revision manager
+   * treats it as a load request so the backing source can confirm that the object is absent.
    *
    * @author Eike Stepper
    * @since 3.0

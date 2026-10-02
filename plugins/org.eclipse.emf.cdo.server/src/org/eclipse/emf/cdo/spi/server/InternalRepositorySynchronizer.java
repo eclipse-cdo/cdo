@@ -19,7 +19,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Lifecycle-managed link between a synchronizable local repository and its remote repository session. It supplies the
+ * connection configuration used to read remote history and apply it to the local repository.
  *
  * @author Eike Stepper
  * @since 3.0

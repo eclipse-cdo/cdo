@@ -62,7 +62,9 @@ import java.text.MessageFormat;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Standard mutable revision representation used by CDO's revision factory. It stores object identity and branch
+ * metadata alongside persistent feature values, and reads or writes that state through the CDO revision protocol with
+ * support for permissions and partially loaded lists.
  *
  * @author Eike Stepper
  * @since 3.0

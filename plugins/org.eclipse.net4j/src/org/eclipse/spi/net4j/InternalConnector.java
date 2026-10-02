@@ -15,7 +15,8 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.security.INegotiatorAware;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal connector contract that combines the public connector API with channel multiplexing and negotiator configuration. Net4j
+ * connector implementations use it to expose the transport-level operations needed by the framework.
  *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.

@@ -14,7 +14,8 @@ package org.eclipse.spi.net4j;
 import org.eclipse.net4j.util.factory.Factory;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Creates acceptor implementations for the Net4j acceptor extension point. Each factory is registered under an acceptor type in the
+ * acceptor product group.
  *
  * @author Eike Stepper
  */

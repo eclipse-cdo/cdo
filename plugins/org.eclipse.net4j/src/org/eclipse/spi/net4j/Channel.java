@@ -43,7 +43,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Implements a logical Net4j channel that sends and receives buffers through a channel multiplexer and dispatches received data to its
+ * configured receiver.
  *
  * @author Eike Stepper
  * @since 2.0
@@ -506,7 +507,8 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Legacy receive work item that delivers a buffer to its channel. This class is retained for compatibility with the deprecated receive
+   * executor mechanism.
    *
    * @author Eike Stepper
    * @deprecated As of 4.10 scheduled for future removal.

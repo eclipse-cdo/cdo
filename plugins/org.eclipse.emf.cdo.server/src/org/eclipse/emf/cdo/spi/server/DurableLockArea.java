@@ -22,7 +22,8 @@ import java.text.MessageFormat;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Deprecated value object for a persisted durable-locking session: it records the user, branch point, read-only status,
+ * and locks restored when that session resumes. New code should use the lock-area factory on {@link CDOLockUtil}.
  *
  * @author Eike Stepper
  * @since 4.0

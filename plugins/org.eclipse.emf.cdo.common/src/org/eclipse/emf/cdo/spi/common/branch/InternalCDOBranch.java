@@ -16,7 +16,8 @@ import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal branch node maintained by {@link InternalCDOBranchManager}. Besides the public branch history, it retains
+ * loader metadata and mutable child links needed while branches are lazily loaded, created, or removed.
  *
  * @author Eike Stepper
  * @since 3.0

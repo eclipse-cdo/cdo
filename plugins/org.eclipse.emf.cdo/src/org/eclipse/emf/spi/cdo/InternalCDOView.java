@@ -46,7 +46,9 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal contract for a repository view's object cache and invalidation lifecycle. A view uses it to resolve and
+ * load revisions for its branch point, while session invalidations update the objects and permissions visible through
+ * that view.
  *
  * @author Eike Stepper
  * @since 2.0

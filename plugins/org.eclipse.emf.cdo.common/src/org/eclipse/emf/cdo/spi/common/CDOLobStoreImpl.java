@@ -38,7 +38,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * File-backed {@link CDOLobStore} that stores binary and character large objects under digest-derived IDs. Identical
+ * contents share a permanent file, while {@link CDOLobInfo} supplies the expected size used when reading it back.
  *
  * @author Eike Stepper
  * @since 4.0

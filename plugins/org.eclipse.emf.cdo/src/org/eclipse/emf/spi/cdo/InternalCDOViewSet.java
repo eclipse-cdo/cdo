@@ -21,7 +21,8 @@ import org.eclipse.emf.common.util.URI;
 import java.util.concurrent.Callable;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal registry for the views belonging to one EMF resource set. It lets resource lookup resolve a view URI to the
+ * owning CDO view and provides the executor used to serialize view work and notification handling.
  *
  * @author Eike Stepper
  * @since 2.0

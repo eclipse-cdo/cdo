@@ -17,7 +17,8 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.ecore.EClass;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Synthetic revision marker for an object that has been detached from a branch. It preserves the object's class,
+ * identity, and lifetime metadata for history and merge calculations even though no feature state is available.
  *
  * @author Eike Stepper
  * @since 3.0

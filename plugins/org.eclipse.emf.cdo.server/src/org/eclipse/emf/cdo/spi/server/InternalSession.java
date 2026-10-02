@@ -38,7 +38,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Server representation of one connected client session. It owns that client's views and protocol, supplies ID and
+ * permission context for requests, and projects repository notifications—including ordered lock changes—into the
+ * state visible to that client.
  *
  * @author Eike Stepper
  * @since 4.3

@@ -22,7 +22,8 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal security service bound to a repository. It evaluates operations against a realm, coordinates secondary
+ * repositories and permission caches, and invokes commit handlers around repository writes.
  *
  * @author Eike Stepper
  * @noimplement This interface is not intended to be implemented by clients.
@@ -92,7 +93,8 @@ public interface InternalSecurityManager extends ISecurityManager, IManagedConta
   public void removeCommitHandler(CommitHandler handler);
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Repository extension invoked before a commit is security-checked and written. Implementations can inspect or
+   * prepare security-related state for the committing user.
    *
    * @author Eike Stepper
    */
@@ -131,7 +133,8 @@ public interface InternalSecurityManager extends ISecurityManager, IManagedConta
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Commit-handler extension that receives a callback after a commit succeeds, allowing security state to be updated
+   * only once the repository has accepted the change.
    *
    * @author Eike Stepper
    * @since 4.3
@@ -144,7 +147,8 @@ public interface InternalSecurityManager extends ISecurityManager, IManagedConta
     public void handleCommitted(InternalSecurityManager securityManager, CommitContext commitContext);
 
     /**
-     * If the meaning of this type isn't clear, there really should be more of a description here...
+     * Convenience base for post-commit handlers that need the user associated with the commit. It stores that user in
+     * the commit context before the commit and passes it to the post-commit callback.
      *
      * @author Eike Stepper
      */

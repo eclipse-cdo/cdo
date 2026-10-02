@@ -18,7 +18,8 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import java.util.concurrent.ExecutionException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Repository service that schedules transaction commit contexts and lets callers await, remove, or roll back the
+ * pending work. Its pre-commit phase can run asynchronously before the store write and commit phases proceed.
  *
  * @author Eike Stepper
  * @since 3.0

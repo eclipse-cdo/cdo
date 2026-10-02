@@ -29,7 +29,9 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Resolves detected transaction conflicts by delegating the merge result to a selected {@link ConflictHandler}. The
+ * available handlers are discovered from the managed container, allowing applications to choose or contribute a
+ * policy for presenting or applying a conflict resolution before the commit proceeds.
  *
  * @author Eike Stepper
  * @since 4.4

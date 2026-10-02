@@ -15,7 +15,8 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal topic within a {@link InternalCDORemoteSessionManager}. It groups the remote sessions subscribed to a topic
+ * and routes topic messages from the manager to those sessions.
  *
  * @author Eike Stepper
  * @since 4.17

@@ -25,7 +25,8 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal cache and interner for revisions shared by a revision manager. It indexes revisions by object and branch
+ * version, supports branch-scoped eviction, and participates in the manager's lifecycle.
  *
  * @author Eike Stepper
  * @since 3.0

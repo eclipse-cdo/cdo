@@ -36,7 +36,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Base for store accessors that implement repository reads and writes for one session or transaction. It provides the
+ * common context and lifecycle behavior; storage backends implement the actual revision and commit operations.
  *
  * @author Eike Stepper
  * @since 2.0

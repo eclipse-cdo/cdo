@@ -23,7 +23,9 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Applies a {@link CDORevisionDelta} to an internal revision by visiting its feature changes and updating the
+ * corresponding feature values and containment metadata. It is the low-level operation used when materializing a
+ * revision from a base revision and a delta.
  *
  * @author Simon McDuff
  * @since 2.0

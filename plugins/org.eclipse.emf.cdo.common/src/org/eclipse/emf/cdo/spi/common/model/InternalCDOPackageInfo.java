@@ -21,7 +21,9 @@ import org.eclipse.emf.ecore.EPackage;
 import java.io.IOException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Registry metadata attached to an {@link EPackage} that associates it with its containing CDO package unit. The
+ * registry serializes this record with the package URI and parent relationship so package units can be loaded and
+ * reconstructed across sessions.
  *
  * @author Eike Stepper
  * @since 2.0

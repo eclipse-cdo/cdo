@@ -14,7 +14,8 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal extension of the public session configuration used while constructing a {@link InternalCDOSession}. It
+ * exposes the created session and carries implementation settings needed to initialize login and branch behavior.
  *
  * @author Eike Stepper
  * @since 3.0

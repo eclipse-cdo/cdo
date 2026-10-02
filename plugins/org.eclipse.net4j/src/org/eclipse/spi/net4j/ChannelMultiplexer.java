@@ -51,7 +51,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.ExecutorService;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Implements the shared channel-multiplexing machinery for a connector or acceptor, routing buffers between logical channels and the
+ * underlying transport while managing channel registration and lifecycle.
  *
  * @author Eike Stepper
  * @since 2.0

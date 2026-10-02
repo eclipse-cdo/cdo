@@ -18,7 +18,9 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import java.io.IOException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Replication target that accepts the repository's raw replication stream. A raw context is used when replication data
+ * can be transferred in the source store's native representation instead of replaying individual branch, commit, and
+ * lock callbacks.
  *
  * @author Eike Stepper
  * @since 3.0

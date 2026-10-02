@@ -57,7 +57,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal contract for the client-side connection to a CDO repository. It owns the session's views and managers,
+ * translates protocol notifications into cache, invalidation, lock, and permission updates, and supplies the services
+ * those views and transactions share.
  *
  * @author Eike Stepper
  * @since 2.0

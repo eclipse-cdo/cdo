@@ -19,7 +19,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Resolves repository query handlers through the managed container, which holds the registered language-specific
+ * {@link QueryHandlerFactory} extensions.
  *
  * @author Eike Stepper
  * @since 2.0
@@ -40,7 +41,7 @@ public class ContainerQueryHandlerProvider implements IQueryHandlerProvider, IMa
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Selects the handler factory whose type matches the query language and asks the container for its handler instance.
    *
    * @since 3.0
    */

@@ -27,7 +27,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal contract implemented by objects managed by a CDO view. It joins the EMF object with its CDO identity,
+ * revision, view, and state, and supplies the lifecycle hooks that the CDO state machine invokes during attachment,
+ * loading, invalidation, commit, rollback, and detachment.
  *
  * @author Eike Stepper
  * @since 2.0

@@ -31,7 +31,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Wrapper base for revision-manager decorators. It forwards cache, loading, interning, and lifecycle operations to a
+ * delegate so an implementation can customize selected manager behavior without replacing the underlying revision
+ * storage and loader.
  *
  * @author Eike Stepper
  * @since 3.0

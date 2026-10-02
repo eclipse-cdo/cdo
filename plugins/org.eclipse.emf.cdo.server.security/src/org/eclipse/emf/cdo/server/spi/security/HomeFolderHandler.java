@@ -40,7 +40,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Security commit handler that provisions a home resource folder and grants its owner access when users are added to
+ * the realm. It performs this work after the user commit has reached the realm's update point.
  *
  * @author Eike Stepper
  * @since 4.3

@@ -27,7 +27,9 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Convenience base for repository write-access hooks that need EMF objects while a transaction is committing. It opens
+ * a temporary view over the commit context, resolves the new and dirty revisions to objects, and releases that view
+ * after each pre-commit or post-commit callback.
  *
  * @author Eike Stepper
  * @since 4.0

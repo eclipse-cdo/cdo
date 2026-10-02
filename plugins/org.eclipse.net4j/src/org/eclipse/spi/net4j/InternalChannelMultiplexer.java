@@ -18,7 +18,8 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal contract for a transport that multiplexes logical channels over a connection and supplies their buffers. It also provides the
+ * hooks used by channels to submit buffers and by the transport to close channels.
  *
  * @author Eike Stepper
  * @since 2.0

@@ -52,7 +52,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Reconciles local transaction edits with change sets received from the repository by passing both sides to a
+ * {@link CDOMerger}. It applies the resulting revision changes to the transaction and records whether unresolved
+ * conflicts remain, which lets the pre-commit path decide whether the transaction can be committed.
  *
  * @author Eike Stepper
  * @since 4.0

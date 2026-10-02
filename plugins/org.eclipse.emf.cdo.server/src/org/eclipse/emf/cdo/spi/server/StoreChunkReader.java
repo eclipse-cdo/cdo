@@ -21,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Base request object for loading selected positions of a many-valued feature from a store. It carries the accessor,
+ * revision, and feature context and accumulates the simple or ranged chunks that the backend must return.
  *
  * @author Eike Stepper
  * @since 2.0

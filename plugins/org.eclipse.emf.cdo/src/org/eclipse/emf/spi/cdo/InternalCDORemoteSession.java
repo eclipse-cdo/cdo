@@ -14,7 +14,8 @@ package org.eclipse.emf.spi.cdo;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal representation of a client session connected to the local session through remote-session notifications.
+ * Its subscription state is maintained by the remote-session manager as topics are subscribed to or left.
  *
  * @author Eike Stepper
  * @since 3.0

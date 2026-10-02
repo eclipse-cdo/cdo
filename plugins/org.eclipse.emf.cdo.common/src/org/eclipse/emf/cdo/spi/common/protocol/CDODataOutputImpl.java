@@ -76,7 +76,8 @@ import java.util.Set;
 import java.util.function.UnaryOperator;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Shared encoder for CDO protocol values layered over an extended data output. It serializes revisions, change sets,
+ * model metadata, locks, and branch references using the session's ID and permission providers.
  *
  * @author Eike Stepper
  * @since 4.2

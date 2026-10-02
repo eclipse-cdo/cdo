@@ -15,7 +15,7 @@ import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal buffer contract that allows the transport to associate a buffer with its provider and dispose it when processing is complete.
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.

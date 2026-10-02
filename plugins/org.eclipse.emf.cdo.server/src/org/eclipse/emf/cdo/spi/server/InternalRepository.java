@@ -74,7 +74,8 @@ import java.util.concurrent.Semaphore;
 import java.util.function.Function;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal composition point for a running CDO repository. It owns the store, branch and revision services, sessions,
+ * lock and query managers, and coordinates commits, reads, replication, and notifications across those components.
  *
  * @author Eike Stepper
  * @since 3.0

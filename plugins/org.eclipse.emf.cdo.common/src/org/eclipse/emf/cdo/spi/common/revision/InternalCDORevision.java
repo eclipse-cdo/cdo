@@ -36,7 +36,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal mutable form of a {@link CDORevision}, used by revision managers and transaction code to load, edit,
+ * serialize, and rebase versioned object state. It also exposes the feature-value storage that revision deltas update.
  *
  * @author Eike Stepper
  * @since 2.0

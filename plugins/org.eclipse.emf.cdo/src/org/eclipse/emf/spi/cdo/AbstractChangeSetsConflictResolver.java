@@ -35,7 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Base for resolvers that compare a transaction's local change set with change sets received through session
+ * invalidations. It tracks transaction edits and queues relevant remote invalidations so subclasses can merge changes
+ * against the transaction's clean revisions and reset that tracking after commit or rollback.
  *
  * @author Eike Stepper
  * @since 4.0

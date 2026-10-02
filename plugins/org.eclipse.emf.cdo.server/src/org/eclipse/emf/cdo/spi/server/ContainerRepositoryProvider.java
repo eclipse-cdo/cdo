@@ -18,7 +18,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Resolves named repository instances from a managed container through {@link RepositoryFactory}. It lets server
+ * clients locate repositories that were configured as container elements.
  *
  * @author Eike Stepper
  * @since 2.0

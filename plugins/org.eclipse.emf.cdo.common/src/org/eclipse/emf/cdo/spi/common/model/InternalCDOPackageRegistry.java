@@ -22,7 +22,9 @@ import org.eclipse.emf.ecore.EPackage;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal package registry shared by CDO model objects, sessions, and repositories. It associates EPackages with
+ * timestamped package units and delegates package processing or loading when descriptors must be installed or
+ * resolved.
  *
  * @author Eike Stepper
  * @since 2.0
@@ -102,7 +104,8 @@ public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecyc
   public Object getWithDelegation(String nsURI, boolean resolve);
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Registry callback that transforms a package value as it is installed. Implementations use it to adapt or validate
+   * package descriptors before they become visible through the registry.
    *
    * @author Eike Stepper
    */
@@ -113,7 +116,7 @@ public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecyc
   }
 
   /**
-   * If the meaning of this type isn't clear, there really should be more of a description here...
+   * Registry callback that materializes the EPackages belonging to a package unit when the unit is loaded on demand.
    *
    * @author Eike Stepper
    */

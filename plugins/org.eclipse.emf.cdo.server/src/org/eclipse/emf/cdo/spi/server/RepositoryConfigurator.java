@@ -72,7 +72,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Builds configured repository instances from CDO server configuration. It resolves repository and store factories,
+ * applies properties and security components, and installs the resulting repositories in the managed container.
  *
  * @author Eike Stepper
  * @since 4.0

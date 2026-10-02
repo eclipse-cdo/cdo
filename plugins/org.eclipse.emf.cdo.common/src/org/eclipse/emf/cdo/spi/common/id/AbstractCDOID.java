@@ -22,7 +22,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import java.io.IOException;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Common behavior for concrete CDO object identifiers. It defines ordering and identity semantics shared by ID
+ * implementations, while each concrete kind supplies its own comparison, hash, and protocol encoding.
  *
  * @author Eike Stepper
  * @since 2.0

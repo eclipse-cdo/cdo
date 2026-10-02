@@ -23,7 +23,8 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Store base for backends that identify objects with 64-bit IDs. It allocates positive IDs for repository branches and
+ * descending IDs for local branches, keeping the two spaces separate while preserving the common accessor lifecycle.
  *
  * @author Eike Stepper
  * @since 2.0

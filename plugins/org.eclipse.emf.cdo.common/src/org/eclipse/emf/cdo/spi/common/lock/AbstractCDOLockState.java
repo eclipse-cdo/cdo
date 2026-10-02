@@ -28,7 +28,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Shared implementation for lock states keyed by an object ID, optionally scoped to a branch. It tracks the owners of
+ * read, write, and write-option locks and produces lock deltas as ownership changes are applied.
  *
  * @author Eike Stepper
  * @since 4.15

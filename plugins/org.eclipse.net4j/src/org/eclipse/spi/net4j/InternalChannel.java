@@ -22,7 +22,8 @@ import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal channel contract for managing channel identity, its multiplexer, buffer flow, lifecycle, and queued outgoing buffers. It extends
+ * the public channel API with operations used by the Net4j transport implementation.
  *
  * @author Eike Stepper
  */

@@ -18,7 +18,8 @@ import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
+ * Internal owner of a session's remote-session and remote-topic state. It translates protocol notifications into
+ * lifecycle, subscription, and message updates on the corresponding remote-session objects.
  *
  * @author Eike Stepper
  * @since 2.0

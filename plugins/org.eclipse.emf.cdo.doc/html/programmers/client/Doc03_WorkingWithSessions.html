@@ -119,11 +119,10 @@ function maximize(id)
  <p>
  <b>Thread Safety</b>
  <p>
- Sessions in CDO are inherently thread-safe. This means that if multiple threads
- access the same session instance concurrently, the session ensures that its internal
- state remains consistent and that operations are executed in a thread-safe manner.
- This is particularly important in multi-threaded applications where different threads
- may need to perform operations on the same session simultaneously.
+ Session-level operations are synchronized, so applications can share one session to open views from multiple
+ threads. This does not make a sequence of operations on a view atomic: view consistency and cross-thread object
+ access follow the view's own synchronization contract. Use <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a> for atomic multi-call
+ access, and keep UI or blocking application work outside CDO event callbacks.
  <p>
  <b>Table of Contents</b> <p>
 <table border="0">
@@ -180,9 +179,12 @@ function maximize(id)
 
 <h2><a name="CreatingAndConfiguringSessions"></a>1&nbsp;&nbsp;Creating and Configuring Sessions</h2>
 <p>
- Learn how to instantiate and configure CDOSession objects, including specifying repository details, authentication,
- and connection parameters. Proper session configuration ensures secure and efficient communication with the CDO
- server.
+ A session configuration is the recipe for connecting to one named repository: it supplies a Net4j connector,
+ repository name, credential provider, and session options. Opening it performs the connection and authentication
+ and yields a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a> that applications can reuse to open multiple views and transactions. Keep the
+ session for the lifetime of the logical client connection, then close it to release its views and remote session
+ state. The session configuration does not make application-owned credentials or shared connector lifecycle
+ disappear; keep those under their own owners.
 
 <h3><a name="SessionConfigurations"></a>1.1&nbsp;&nbsp;Session Configurations</h3>
 <p>
@@ -211,6 +213,7 @@ function maximize(id)
             CDONet4jSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;CDONet4jUtil.createNet4jSessionConfiguration();<br/>
             configuration.setConnector(connector);<br/>
             configuration.setRepositoryName(repositoryName);<br/>
+            configuration.setCredentialsProvider(credentialsProvider);<br/>
             <br/>
             CDOSession&nbsp;session&nbsp;=&nbsp;configuration.openNet4jSession();<br/>
             <font color="#7f0055"><b>try</b></font><br/>
@@ -245,15 +248,17 @@ function maximize(id)
 
 <h3><a name="Net4jConnectors"></a>1.2&nbsp;&nbsp;Net4j Connectors</h3>
 <p>
- Net4j connectors are the transport layer for CDO communication. Learn how to configure TCP, JVM, SSL, WS or WSS
- connectors to establish reliable and secure connections between client and server.
+ A Net4j connector carries CDO protocol traffic between the client session and server acceptor. Choose a connector
+ factory type that matches the deployment boundary: JVM transport for processes in the same runtime, TCP for a
+ network endpoint, or SSL/WS/WSS variants where the deployment configures those transports. A connector is
+ transport infrastructure, not a CDO session; multiple sessions may use shared connector infrastructure.
  <p>
  Typically a Net4j connector is created and configured using a Net4j container. Within an Eclipse environment,
  the container is usually managed by the Eclipse extension registry. Such a container can be accessed using
  IManagedContainer.INSTANCE. In a non-Eclipse environment, you can create and manage the container
  programmatically. Refer to <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IManagedContainer</code></a> for more details.
  <p>
- The following example demonstrates how to set up a JVM connector within an Eclipse environment:
+ The following example obtains a JVM connector from the shared Eclipse container and uses it to open a session.
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -275,13 +280,24 @@ function maximize(id)
             <font color="#3f7f5f">//&nbsp;Obtain&nbsp;the&nbsp;connector&nbsp;from&nbsp;the&nbsp;plugin&nbsp;container&nbsp;by&nbsp;its&nbsp;product&nbsp;group,&nbsp;factory&nbsp;type,&nbsp;and&nbsp;factory-specific</font><br/>
             <font color="#3f7f5f">//&nbsp;description.</font><br/>
             IConnector&nbsp;connector&nbsp;=&nbsp;IManagedContainer.INSTANCE.getElementOrNull(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;jvm&#34;</font>,&nbsp;<font color="#2a00ff">&#34;acceptor1&#34;</font>);<br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(connector&nbsp;==&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;JVM&nbsp;connector&nbsp;acceptor1&nbsp;is&nbsp;not&nbsp;available&#34;</font>);<br/>
+            }<br/>
             <br/>
             CDONet4jSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;CDONet4jUtil.createNet4jSessionConfiguration();<br/>
             configuration.setConnector(connector);<br/>
+            configuration.setRepositoryName(repositoryName);<br/>
             <br/>
-            <font color="#3f7f5f">//&nbsp;Set&nbsp;the&nbsp;repository&nbsp;name&nbsp;and&nbsp;open&nbsp;a&nbsp;session.&nbsp;The&nbsp;shared&nbsp;plugin&nbsp;container&nbsp;owns&nbsp;this&nbsp;connector.</font><br/>
-            <br/>
-            <font color="#3f7f5f">//&nbsp;The&nbsp;shared&nbsp;plugin&nbsp;container&nbsp;owns&nbsp;this&nbsp;connector.&nbsp;Do&nbsp;not&nbsp;close&nbsp;it&nbsp;from&nbsp;this&nbsp;client&nbsp;code.</font>            </code>
+            CDOSession&nbsp;session&nbsp;=&nbsp;configuration.openNet4jSession();<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;session.&nbsp;The&nbsp;shared&nbsp;plugin&nbsp;container&nbsp;owns&nbsp;the&nbsp;connector.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;session.close();<br/>
+            }            </code>
 
           </div>
         </div>
@@ -292,7 +308,8 @@ function maximize(id)
 <p>
 
  <p>
- The following example demonstrates how to set up a TCP connector within a non-Eclipse environment:
+ The following example creates an initialized standalone container, obtains a TCP connector, and closes both the
+ session and its owning container.
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -317,11 +334,24 @@ function maximize(id)
             &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Obtain&nbsp;the&nbsp;connector&nbsp;from&nbsp;the&nbsp;container&nbsp;by&nbsp;its&nbsp;product&nbsp;group,&nbsp;factory&nbsp;type,&nbsp;and&nbsp;factory-specific</font><br/>
             &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;description.</font><br/>
             &nbsp;&nbsp;IConnector&nbsp;connector&nbsp;=&nbsp;container.getElementOrNull(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;tcp&#34;</font>,&nbsp;<font color="#2a00ff">&#34;localhost:2036&#34;</font>);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(connector&nbsp;==&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;TCP&nbsp;connector&nbsp;localhost:2036&nbsp;is&nbsp;not&nbsp;available&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
             <br/>
             &nbsp;&nbsp;CDONet4jSessionConfiguration&nbsp;configuration&nbsp;=&nbsp;CDONet4jUtil.createNet4jSessionConfiguration();<br/>
             &nbsp;&nbsp;configuration.setConnector(connector);<br/>
+            &nbsp;&nbsp;configuration.setRepositoryName(repositoryName);<br/>
             <br/>
-            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Set&nbsp;the&nbsp;repository&nbsp;name&nbsp;and&nbsp;open&nbsp;a&nbsp;session.</font><br/>
+            &nbsp;&nbsp;CDOSession&nbsp;session&nbsp;=&nbsp;configuration.openNet4jSession();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;session.</font><br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;session.close();<br/>
+            &nbsp;&nbsp;}<br/>
             }<br/>
             <font color="#7f0055"><b>finally</b></font><br/>
             {<br/>
@@ -424,8 +454,11 @@ function maximize(id)
 
 <h3><a name="RecoveringFromDisconnects"></a>1.4&nbsp;&nbsp;Recovering from Disconnects</h3>
 <p>
- Discover strategies for handling session disconnects and automatic reconnection. Learn how to maintain session
- continuity and recover gracefully from network interruptions.
+ A normal session closes when its connection is lost. A reconnecting configuration can restore the connection
+ and session, while a failover configuration can obtain another server endpoint through the configured failover
+ monitor. These mechanisms address transport recovery; application operations still need to observe recovery
+ events and decide whether work interrupted by the disconnect can be repeated safely. In particular, do not
+ blindly replay a business operation when the client cannot determine whether its commit reached the server.
  <p>
  Normally, when a session is disconnected, it is automatically closed and cannot be used anymore. However, you can
  create a reconnecting session that automatically tries to reconnect when it gets disconnected. This is done by using
@@ -716,9 +749,11 @@ function maximize(id)
  determines the exact state of the repository that the view exposes. Views can be read-only or read-write (transactions),
  and they can also be configured to access historical states of the repository through audit views.
  <p>
- This section covers the key aspects of view management, including the purpose of views and transactions,
- branch points and view targets, types of views, finding views by ID, listening for view-related events, and closing views.
- For more detailed information on working with views, refer to the <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a> section.
+ A session is the connection and shared client infrastructure; each view selects the branch point through which
+ model objects are read. A read-only view follows repository state without accepting local edits, while a
+ transaction adds isolated local changes and an explicit commit boundary. Views are owned by the session and must
+ be closed when their work ends. For branch/time targets, resource handling, query behavior, and synchronization,
+ continue with <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>.
  <p>
  Note that a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a> inherits most of the view management functionality through the following super interfaces:
  <ul>
@@ -2949,8 +2984,10 @@ function maximize(id)
 
 <h2><a name="SessionEvents"></a>6&nbsp;&nbsp;Session Events</h2>
 <p>
- Sessions emit events for lifecycle changes, errors, and repository updates. Learn how to listen for and handle these
- events to build responsive applications.
+ Session events report changes to the connection and repository context; they are not model-object notifications.
+ Listen to invalidation and recovery events when application state depends on remote commits or a restored
+ connection, and remove listeners when the owning component or session closes. Keep event handlers short: event
+ delivery can occur on a CDO-managed thread, so queue UI work or long-running processing to an application executor.
  <p>
  The following events are fired from <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a>:
  <ul>

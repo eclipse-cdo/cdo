@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOSessionProtocol</span><span class="extends-implements">
 extends <a href="../../cdo/common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a>, <a href="../../cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>, <a href="../../cdo/spi/common/branch/InternalCDOBranchManager.BranchLoader5.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader5</a>, <a href="../../cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader3</a>, <a href="../../cdo/spi/common/revision/InternalCDORevisionManager.RevisionLoader4.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader4</a>, <a href="../../cdo/spi/common/commit/InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...
+<div class="block">Defines the client-side operations for communicating with a CDO repository over a session protocol. Each operation
+ corresponds to a request handled by the server protocol, while the nested result types carry the repository's reply
+ and any state needed by the session to apply it.
  <p>
  Deprecated methods in this interface are retained for API compatibility only. Implementations should
  implement the corresponding non-deprecated methods directly and must not use deprecated methods as
@@ -137,12 +139,14 @@ extends <a href="../../cdo/common/protocol/CDOProtocol.html" title="interface in
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOSessionProtocol.CommitTransactionResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Returns the commit outcome to the client, including the commit point and the information needed to reconcile the
+ transaction's objects and commit metadata with the repository's accepted commit.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDOSessionProtocol.LockObjectsResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.LockObjectsResult</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Describes the outcome of a repository object-lock request, including whether the requested locks were obtained and
+ the lock-state information the client needs to update its view.</div>
 </div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOSessionProtocol.LockStateQueryResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.LockStateQueryResult</a></code></div>
@@ -158,27 +162,29 @@ extends <a href="../../cdo/common/protocol/CDOProtocol.html" title="interface in
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOSessionProtocol.MergeDataResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.MergeDataResult</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Describes the object IDs and branch point produced by a repository merge request.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDOSessionProtocol.OpenSessionResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.OpenSessionResult</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Carries the repository metadata and initial session state returned when a client opens a session.</div>
 </div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOSessionProtocol.RefreshSessionResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Contains the repository update position and package-unit information returned when a session refreshes.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDOSessionProtocol.RepositoryTimeResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Reports the repository time values exchanged during time synchronization, including the requested, indicated,
+ responded, and confirmed timestamps used to estimate the repository's current time.</div>
 </div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOSessionProtocol.UnlockObjectsResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Carries the repository's response to an object-unlock request, including the lock changes and their update timestamp
+ so the client can bring its lock state in line with the repository.</div>
 </div>
 </div>
 <div class="inherited-list">

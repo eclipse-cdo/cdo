@@ -56,7 +56,7 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="org/eclipse/spi/net4j/Acceptor.html" class="type-name-link" title="class in org.eclipse.spi.net4j">Acceptor</a> - Class in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Manages a listening Net4j transport endpoint and the connectors accepted through it.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/Acceptor.html#%3Cinit%3E()" class="member-name-link">Acceptor()</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Acceptor.html" title="class in org.eclipse.spi.net4j">Acceptor</a></dt>
 <dd>&nbsp;</dd>
@@ -80,7 +80,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/AcceptorFactory.html" class="type-name-link" title="class in org.eclipse.spi.net4j">AcceptorFactory</a> - Class in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates acceptor implementations for the Net4j acceptor extension point.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/AcceptorFactory.html#%3Cinit%3E(java.lang.String)" class="member-name-link">AcceptorFactory(String)</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/AcceptorFactory.html" title="class in org.eclipse.spi.net4j">AcceptorFactory</a></dt>
 <dd>&nbsp;</dd>
@@ -159,7 +159,8 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="org/eclipse/spi/net4j/Channel.html" class="type-name-link" title="class in org.eclipse.spi.net4j">Channel</a> - Class in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements a logical Net4j channel that sends and receives buffers through a channel multiplexer and dispatches received data to its
+ configured receiver.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/Channel.html#%3Cinit%3E()" class="member-name-link">Channel()</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Channel.html" title="class in org.eclipse.spi.net4j">Channel</a></dt>
 <dd>&nbsp;</dd>
@@ -211,7 +212,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/ChannelMultiplexer.html" class="type-name-link" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a> - Class in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements the shared channel-multiplexing machinery for a connector or acceptor, routing buffers between logical channels and the
+ underlying transport while managing channel registration and lifecycle.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/ChannelMultiplexer.html#%3Cinit%3E()" class="member-name-link">ChannelMultiplexer()</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></dt>
 <dd>&nbsp;</dd>
@@ -237,7 +239,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/ClientProtocolFactory.html" class="type-name-link" title="class in org.eclipse.spi.net4j">ClientProtocolFactory</a> - Class in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates client-side protocol instances for the Net4j client protocol extension point.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/ClientProtocolFactory.html#%3Cinit%3E(java.lang.String)" class="member-name-link">ClientProtocolFactory(String)</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/ClientProtocolFactory.html" title="class in org.eclipse.spi.net4j">ClientProtocolFactory</a></dt>
 <dd>&nbsp;</dd>
@@ -365,7 +367,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/Connector.html" class="type-name-link" title="class in org.eclipse.spi.net4j">Connector</a> - Class in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Multiplexes Net4j channels over a physical connection and manages connection establishment, negotiation, authentication, and shutdown.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/Connector.html#%3Cinit%3E()" class="member-name-link">Connector()</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Connector.html" title="class in org.eclipse.spi.net4j">Connector</a></dt>
 <dd>&nbsp;</dd>
@@ -405,7 +407,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/ConnectorFactory.html" class="type-name-link" title="class in org.eclipse.spi.net4j">ConnectorFactory</a> - Class in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates connector implementations for the Net4j connector extension point.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/ConnectorFactory.html#%3Cinit%3E(java.lang.String)" class="member-name-link">ConnectorFactory(String)</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/ConnectorFactory.html" title="class in org.eclipse.spi.net4j">ConnectorFactory</a></dt>
 <dd>&nbsp;</dd>
@@ -1586,15 +1588,16 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/InternalAcceptor.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalAcceptor</a> - Interface in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal acceptor contract that combines the public acceptor API with transport configuration and negotiator support required by Net4j
+ acceptor implementations.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/InternalBuffer.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalBuffer</a> - Interface in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal buffer contract that allows the transport to associate a buffer with its provider and dispose it when processing is complete.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/InternalChannel.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalChannel</a> - Interface in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal channel contract for managing channel identity, its multiplexer, buffer flow, lifecycle, and queued outgoing buffers.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/InternalChannel.CountersChangedEvent.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalChannel.CountersChangedEvent</a> - Interface in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
@@ -1611,13 +1614,13 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/InternalChannelMultiplexer.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a> - Interface in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a transport that multiplexes logical channels over a connection and supplies their buffers.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/InternalChannelMultiplexer.BufferMultiplexer.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer.BufferMultiplexer</a> - Interface in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/InternalConnector.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalConnector</a> - Interface in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal connector contract that combines the public connector API with channel multiplexing and negotiator configuration.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/signal/SignalProtocol.InvalidSignalIDException.html#%3Cinit%3E(short)" class="member-name-link">InvalidSignalIDException(short)</a> - Constructor for exception class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocol.InvalidSignalIDException.html" title="class in org.eclipse.net4j.signal">SignalProtocol.InvalidSignalIDException</a></dt>
 <dd>&nbsp;</dd>
@@ -1627,7 +1630,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/InverseCloseable.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InverseCloseable</a> - Interface in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Provides the inverse-close operation used when a resource must be closed from the opposite side of a bidirectional lifecycle relationship.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/ChannelMultiplexer.html#inverseCloseChannel(short)" class="member-name-link">inverseCloseChannel(short)</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></dt>
 <dd>&nbsp;</dd>
@@ -1860,7 +1863,7 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/eclipse/net4j/ui/Net4jItemProvider.html" class="type-name-link" title="class in org.eclipse.net4j.ui">Net4jItemProvider</a> - Class in <a href="org/eclipse/net4j/ui/package-summary.html">org.eclipse.net4j.ui</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Supplies tree labels, icons, and context actions for Net4j containers and their acceptors, connectors, channels, and signals.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/ui/Net4jItemProvider.html#%3Cinit%3E()" class="member-name-link">Net4jItemProvider()</a> - Constructor for class org.eclipse.net4j.ui.<a href="org/eclipse/net4j/ui/Net4jItemProvider.html" title="class in org.eclipse.net4j.ui">Net4jItemProvider</a></dt>
 <dd>&nbsp;</dd>
@@ -1868,7 +1871,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ui/Net4jItemProvider.RemoveAction.html" class="type-name-link" title="class in org.eclipse.net4j.ui">Net4jItemProvider.RemoveAction</a> - Class in <a href="org/eclipse/net4j/ui/package-summary.html">org.eclipse.net4j.ui</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Long-running action that deactivates a selected Net4j lifecycle object from the container view.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/Net4jUtil.html" class="type-name-link" title="class in org.eclipse.net4j">Net4jUtil</a> - Class in <a href="org/eclipse/net4j/package-summary.html">org.eclipse.net4j</a></dt>
 <dd>
@@ -2359,7 +2362,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/ServerProtocolFactory.html" class="type-name-link" title="class in org.eclipse.spi.net4j">ServerProtocolFactory</a> - Class in <a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a></dt>
 <dd>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates server-side protocol instances for the Net4j server protocol extension point.</div>
 </dd>
 <dt><a href="org/eclipse/spi/net4j/ServerProtocolFactory.html#%3Cinit%3E(java.lang.String)" class="member-name-link">ServerProtocolFactory(String)</a> - Constructor for class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/ServerProtocolFactory.html" title="class in org.eclipse.spi.net4j">ServerProtocolFactory</a></dt>
 <dd>&nbsp;</dd>

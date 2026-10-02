@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ContainerQueryHandlerProvider</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../../server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a>, org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Resolves repository query handlers through the managed container, which holds the registered language-specific
+ <a href="QueryHandlerFactory.html" title="class in org.eclipse.emf.cdo.spi.server"><code>QueryHandlerFactory</code></a> extensions.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
@@ -138,7 +139,7 @@ implements <a href="../../server/IQueryHandlerProvider.html" title="interface in
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandler</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getQueryHandler(org.eclipse.emf.cdo.common.util.CDOQueryInfo)" class="member-name-link">getQueryHandler</a><wbr>(<a href="../../common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Selects the handler factory whose type matches the query language and asks the container for its handler instance.</div>
 </div>
 </div>
 </div>
@@ -185,7 +186,7 @@ implements <a href="../../server/IQueryHandlerProvider.html" title="interface in
 <section class="detail" id="getQueryHandler(org.eclipse.emf.cdo.common.util.CDOQueryInfo)">
 <h3>getQueryHandler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../server/IQueryHandler.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandler</a></span>&nbsp;<span class="element-name">getQueryHandler</span><wbr><span class="parameters">(<a href="../../common/util/CDOQueryInfo.html" title="interface in org.eclipse.emf.cdo.common.util">CDOQueryInfo</a>&nbsp;info)</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Selects the handler factory whose type matches the query language and asks the container for its handler instance.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../server/IQueryHandlerProvider.html#getQueryHandler(org.eclipse.emf.cdo.common.util.CDOQueryInfo)">getQueryHandler</a></code>&nbsp;in interface&nbsp;<code><a href="../../server/IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></code></dd>

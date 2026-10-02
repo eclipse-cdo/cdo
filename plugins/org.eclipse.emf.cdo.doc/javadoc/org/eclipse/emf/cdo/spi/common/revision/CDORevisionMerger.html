@@ -99,7 +99,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDORevisionMerger</span>
 <span class="extends-implements">extends <a href="CDOFeatureDeltaVisitorImpl.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureDeltaVisitorImpl</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Applies a <a href="../../../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>CDORevisionDelta</code></a> to an internal revision by visiting its feature changes and updating the
+ corresponding feature values and containment metadata. It is the low-level operation used when materializing a
+ revision from a base revision and a delta.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

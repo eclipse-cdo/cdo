@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalSynchronizableRepository</span><span class="extends-implements">
 extends <a href="../../server/ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>, <a href="InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>, <a href="../common/CDOReplicationContext.html" title="interface in org.eclipse.emf.cdo.spi.common">CDOReplicationContext</a>, <a href="../common/CDORawReplicationContext.html" title="interface in org.eclipse.emf.cdo.spi.common">CDORawReplicationContext</a>, <a href="../../common/lock/CDOLockChangeInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfoHandler</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Repository-side contract for a repository that participates in replication. It owns the synchronizer and replication
+ session, accepts replicated history in either callback or raw form, and records the replication checkpoint.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

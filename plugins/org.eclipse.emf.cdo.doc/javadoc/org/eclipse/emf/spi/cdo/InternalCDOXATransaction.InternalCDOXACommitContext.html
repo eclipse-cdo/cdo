@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">InternalCDOXATransaction.InternalCDOXACommitContext</span><span class="extends-implements">
 extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Callable.html" title="class or interface in java.util.concurrent" class="external-link">Callable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;, <a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>, <a href="InternalCDOTransaction.InternalCDOCommitContext.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction.InternalCDOCommitContext</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Per-operation state passed through an XA commit. It gathers the participating transactions' requested object IDs,
+ carries the protocol result, and invokes the state-specific work that advances or rolls back the coordinated commit.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
@@ -120,7 +121,7 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOXATransaction.InternalCDOXACommitContext.CDOXAState.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">InternalCDOXATransaction.InternalCDOXACommitContext.CDOXAState</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">A phase in the XA commit state machine.</div>
 </div>
 </div>
 </section>

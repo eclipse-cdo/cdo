@@ -97,7 +97,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOLoadable</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Marks internal model objects that participate in CDO's load lifecycle. The state machine calls the pre-load and
+ post-load hooks around loading so implementations can prepare and finalize their EMF object state.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

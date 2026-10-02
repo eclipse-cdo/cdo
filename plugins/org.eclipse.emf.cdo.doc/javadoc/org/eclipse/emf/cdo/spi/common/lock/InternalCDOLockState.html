@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOLockState</span><span class="extends-implements">
 extends <a href="../../../common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Mutable internal lock-state contract used by lock caches to update ownership and report the corresponding
+ <a href="../../../common/lock/CDOLockDelta.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>CDOLockDelta</code></a>s. It also supports remapping an object's ID or lock owner when session state changes.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.1</dd>

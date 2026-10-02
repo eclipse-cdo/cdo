@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOXASavepoint</span><span class="extends-implements">
 extends <a href="../../cdo/transaction/CDOXASavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXASavepoint</a>, <a href="InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Savepoint representation for a CDO XA transaction. Besides its position in the user-transaction savepoint chain, it
+ retains the set of participating transaction savepoints that must be restored together.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

@@ -185,7 +185,7 @@ function windowTitle()
 <h2><a name="LockingAndRecovery"></a>9&nbsp;&nbsp;Locking and Reconnection</h2>
 <p>
  Ordinary locks are tied to the connected view and are released when that view is closed or its session is lost.
- Applications that need to reconnect and reclaim locks must enable durable locking first, retain the returned
+ Applications that need to reconnect and reclaim locks must enable <a href="Doc06_Locking.html#DurableLocking" title="Chapter in CDO Model Repository Documentation">durable locking</a> first, retain the returned
  durable-locking ID, and reopen the view or transaction with that ID. On recovery, inspect the resulting
  <a href="../../../javadoc/org/eclipse/emf/cdo/common/lock/CDOLockState.html" title="Interface in org.eclipse.emf.cdo.common.lock"><code>lock states</code></a> and handle an unavailable or already-active durable view according to the
  application policy. Durable state is repository-managed, so a repository that does not provide durable locking

@@ -28,9 +28,12 @@ function windowTitle()
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- CDO is a model repository and distributed shared model framework for EMF models. It enables
- collaborative editing of EMF models in a distributed environment, providing features such as
- transactions, versioning, and branching.
+ CDO is a repository and distributed shared-model framework for EMF. It stores model objects and
+ their relationships centrally so multiple clients can work with the same model while keeping
+ local object graphs in ordinary EMF ResourceSets. A client session connects to a
+ repository; views read a repository state and transactions edit a branch head and publish a
+ change set as a commit. Repositories can also retain history and expose branches when their
+ storage configuration supports those capabilities.
  <p>
  This documentation is intended for developers who want to use CDO in their applications.
  It assumes that you have a basic understanding of EMF, Net4j and Java development with Eclipse.
@@ -43,7 +46,12 @@ function windowTitle()
  <li>The <a href="../../../org.eclipse.net4j.util.doc/html/Overview.html" title="Article in Net4j Utilities Documentation">Net4j Utilities Documentation</a> explains various utility classes used by CDO.
  </ul>
  <p>
- This documentation about CDO programming is split into two main parts:
+ This guide separates three kinds of work. Client programming covers connecting, loading,
+ observing, and changing models. Server programming covers embedding or extending a repository
+ server. Workspace preparation and source installation cover development setup; operating a
+ deployed server, including its configuration and maintenance, belongs to the Operator's Guide.
+ <p>
+ The guide has two main programming parts:
  <ul>
  <li><a href="client/index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a>: A guide for developing client applications that use CDO to store and manage EMF models in a distributed environment.
  <li><a href="server/index.html" title="Category in CDO Model Repository Documentation">Developing Server Applications</a>: A guide for developing server applications that provide CDO repositories for client applications.
@@ -59,13 +67,15 @@ function windowTitle()
  This includes creating Ecore models and generating CDO-enabled code.
  <p>
  For a first client application, continue with the client <a href="client/Doc03_WorkingWithSessions.html" title="Article in CDO Model Repository Documentation">session</a> chapter,
- open a <a href="client/Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">view</a> or transaction, and follow the transaction chapter's commit and cleanup
- guidance in <a href="client/Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a>. The client guide then provides the detailed topics for the
- particular application architecture and integration needs.
+ then open a <a href="client/Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">view</a> for reading or a transaction for changes. Follow
+ <a href="client/Doc05_WorkingWithTransactions.html" title="Article in CDO Model Repository Documentation">Working with Transactions</a> for commit, rollback, and cleanup. The remaining client
+ chapters explain specific topics such as synchronization, locking, history, notifications, and
+ integration with other EMF-based frameworks.
  <p>
- For a first server application, start with <a href="server/Architecture.html" title="Article in CDO Model Repository Documentation">Server Architecture</a>, continue with
- <a href="server/Doc02_ServerApplicationAndStartup.html" title="Article in CDO Model Repository Documentation">CDO Server Application and Startup</a>, and then follow the managed-container, application-extension, and
- repository setup articles in their displayed order.
+ For server development, start with <a href="server/Architecture.html" title="Article in CDO Model Repository Documentation">Server Architecture</a> to understand the components and their
+ ownership, then read <a href="server/Doc02_ServerApplicationAndStartup.html" title="Article in CDO Model Repository Documentation">CDO Server Application and Startup</a> for the packaged server lifecycle.
+ Continue with managed containers, application extensions, and repository creation when building
+ an embedded or extended server. Use the Operator's Guide for deployment configuration.
  <p>
  At the end of this Programmer's Guide, you find the chapter <a href="DocXX_InstallingSources.html" title="Article in CDO Model Repository Documentation">Installing the Sources</a> with
  instructions for installing the CDO sources into your workspace. This is only necessary if you want to

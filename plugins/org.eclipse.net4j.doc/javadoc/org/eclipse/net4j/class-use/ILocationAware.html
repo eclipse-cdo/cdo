@@ -302,17 +302,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/net4j/InternalChannel.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalChannel</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal channel contract for managing channel identity, its multiplexer, buffer flow, lifecycle, and queued outgoing buffers.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../spi/net4j/InternalChannelMultiplexer.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a transport that multiplexes logical channels over a connection and supplies their buffers.</div>
 </div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/net4j/InternalConnector.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalConnector</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal connector contract that combines the public connector API with channel multiplexing and negotiator configuration.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> that implement <a href="../ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></span></div>
@@ -323,17 +323,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/net4j/Channel.html" class="type-name-link" title="class in org.eclipse.spi.net4j">Channel</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements a logical Net4j channel that sends and receives buffers through a channel multiplexer and dispatches received data to its
+ configured receiver.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../spi/net4j/ChannelMultiplexer.html" class="type-name-link" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements the shared channel-multiplexing machinery for a connector or acceptor, routing buffers between logical channels and the
+ underlying transport while managing channel registration and lifecycle.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/net4j/Connector.html" class="type-name-link" title="class in org.eclipse.spi.net4j">Connector</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Multiplexes Net4j channels over a physical connection and manages connection establishment, negotiation, authentication, and shutdown.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../spi/net4j/Protocol.html" class="type-name-link" title="class in org.eclipse.spi.net4j">Protocol</a>&lt;INFRA_STRUCTURE&gt;</code></div>

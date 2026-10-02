@@ -99,7 +99,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static class </span><span class="element-name type-name-label">DefaultCDOMerger.ChangedInSourceAndTargetConflict</span>
 <span class="extends-implements">extends <a href="DefaultCDOMerger.Conflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.Conflict</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Conflict raised when both the target and source change the same object's revision. It retains both revision deltas,
+ which are the competing histories a merger or conflict handler must reconcile.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

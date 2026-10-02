@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOFeatureDelta</span><span class="extends-implements">
 extends <a href="../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal extension contract for feature changes that need to participate in list-index adjustment during delta
+ application. Its nested roles let list operations update the positions affected by insertions, removals, and moves.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
@@ -120,17 +121,17 @@ extends <a href="../../../common/revision/delta/CDOFeatureDelta.html" title="int
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOFeatureDelta.ListIndexAffecting.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.ListIndexAffecting</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Contract for a list operation that changes the indices of other pending operations.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalCDOFeatureDelta.ListTargetAdding.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.ListTargetAdding</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Identifies a value being added to a list delta so other edits can adjust or cancel that pending target insertion.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOFeatureDelta.WithIndex.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.WithIndex</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Marks a list feature delta whose operation has a meaningful position in the current list.</div>
 </div>
 </div>
 <div class="inherited-list">

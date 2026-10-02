@@ -407,7 +407,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/branch/InternalCDOBranch.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranch</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal branch node maintained by <a href="../../../spi/common/branch/InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch"><code>InternalCDOBranchManager</code></a>.</div>
 </div>
 </div>
 </section>
@@ -423,7 +423,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/commit/CDOChangeSetSegment.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">A time interval on one branch used to divide a history traversal into branch-local segments.</div>
 </div>
 </div>
 </section>
@@ -439,7 +439,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/lock/InternalCDOLockState.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.lock">InternalCDOLockState</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Mutable internal lock-state contract used by lock caches to update ownership and report the corresponding
+ <a href="../../lock/CDOLockDelta.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>CDOLockDelta</code></a>s.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../../spi/common/lock/package-summary.html">org.eclipse.emf.cdo.spi.common.lock</a> that implement <a href="../CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></span></div>
@@ -450,12 +451,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/lock/AbstractCDOLockChangeInfo.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.lock">AbstractCDOLockChangeInfo</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Shared event implementation for lock notifications backed by a set of lock deltas.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/common/lock/AbstractCDOLockState.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.lock">AbstractCDOLockState</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Shared implementation for lock states keyed by an object ID, optionally scoped to a branch.</div>
 </div>
 </div>
 </section>
@@ -471,12 +472,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal mutable form of a <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a>, used by revision managers and transaction code to load, edit,
+ serialize, and rebase versioned object state.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/common/revision/InternalCDORevisionDelta.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Mutable internal form of a revision delta used while building, applying, and rebasing changes to one object.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../../spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a> that implement <a href="../CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></span></div>
@@ -487,22 +489,23 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/AbstractCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Common implementation for revision objects that supplies class metadata, branch-time validity, permission checks, and
+ traversal of currently loaded feature values.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/common/revision/BaseCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Standard mutable revision representation used by CDO's revision factory.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/DelegatingCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Wrapper base for revision decorators that must preserve the complete <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><code>InternalCDORevision</code></a> contract.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/common/revision/DetachedCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Synthetic revision marker for an object that has been detached from a branch.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/PointerCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a></code></div>
@@ -513,7 +516,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/common/revision/StubCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Minimal revision shell for code that needs revision identity or class metadata without a mutable feature store.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/SyntheticCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></code></div>
@@ -535,12 +538,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/server/InternalTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalTransaction</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Server-side transaction extension of a view that creates the commit context used to validate and persist a client
+ commit.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/server/InternalView.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Server-side state for one client view or transaction.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that implement <a href="../CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></span></div>
@@ -551,7 +555,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/server/DelegatingQueryResourcesContext.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">DelegatingQueryResourcesContext</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Wrapper base for query-resource contexts that forwards query scope and result collection to a delegate.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/server/DurableLockArea.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">DurableLockArea</a></code></div>
@@ -651,7 +655,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../../spi/cdo/InternalCDOTransaction.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal transaction contract that connects the public transaction API to a CDO view and the transaction strategy.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../../spi/cdo/InternalCDOTransaction.InternalCDOCommitContext.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction.InternalCDOCommitContext</a></code></div>
@@ -661,12 +665,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../../spi/cdo/InternalCDOView.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a repository view's object cache and invalidation lifecycle.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../../spi/cdo/InternalCDOXATransaction.InternalCDOXACommitContext.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction.InternalCDOXACommitContext</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Per-operation state passed through an XA commit.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../../../spi/cdo/package-summary.html">org.eclipse.emf.spi.cdo</a> that implement <a href="../CDOBranchProvider.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchProvider</a></span></div>
@@ -677,7 +681,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.CommitTransactionResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Returns the commit outcome to the client, including the commit point and the information needed to reconcile the
+ transaction's objects and commit metadata with the repository's accepted commit.</div>
 </div>
 </div>
 </section>

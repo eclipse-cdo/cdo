@@ -89,7 +89,9 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOTransactionStrategy</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal policy used by a transaction to perform commit, rollback, and savepoint operations. The default strategy
+ delegates these operations to the single-transaction implementation; alternate strategies can control how a
+ transaction is attached to and detached from the transaction machinery.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

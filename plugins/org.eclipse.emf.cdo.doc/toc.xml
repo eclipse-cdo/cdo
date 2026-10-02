@@ -453,7 +453,7 @@
       <topic label="The Managed Container" href="html/programmers/server/Doc03_ManagedContainer.html" icon="article">
         <topic label="Factories, Product Groups, and Lookup" href="html/programmers/server/Doc03_ManagedContainer.html#FactoriesAndElements" icon="chapter" />
         <topic label="Lifecycle and Configuration" href="html/programmers/server/Doc03_ManagedContainer.html#LifecycleAndConfiguration" icon="chapter" />
-        <topic label="Repository Lookup Example" href="html/programmers/server/Doc03_ManagedContainer.html#Examples" icon="chapter" />
+        <topic label="Standalone Container Example" href="html/programmers/server/Doc03_ManagedContainer.html#Examples" icon="chapter" />
       </topic>
       <topic label="Application Extensions" href="html/programmers/server/Doc04_ApplicationExtensions.html" icon="article">
         <topic label="Choosing an Extension Variant" href="html/programmers/server/Doc04_ApplicationExtensions.html#VariantsAndContext" icon="chapter" />
@@ -466,9 +466,9 @@
         <topic label="Existing Persistent Stores" href="html/programmers/server/Doc05_CreatingAndConfiguringRepositories.html#PersistentStoreConfiguration" icon="chapter" />
       </topic>
       <topic label="Repository Services and Events" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html" icon="article">
-        <topic label="Services" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#Services" icon="chapter" />
-        <topic label="Sessions, Views, and Transactions" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#ServerSideContexts" icon="chapter" />
-        <topic label="Event Families" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#Events" icon="chapter" />
+        <topic label="Repository Services" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#Services" icon="chapter" />
+        <topic label="Server Session, View, and Transaction Context" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#ServerSideContexts" icon="chapter" />
+        <topic label="Events and Listener Lifetimes" href="html/programmers/server/Doc06_RepositoryServicesAndEvents.html#Events" icon="chapter" />
       </topic>
       <topic label="Repository Handlers and Commit Processing" href="html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html" icon="article">
         <topic label="Read and Write Access" href="html/programmers/server/Doc07_RepositoryHandlersAndCommitProcessing.html#AccessHandlers" icon="chapter" />

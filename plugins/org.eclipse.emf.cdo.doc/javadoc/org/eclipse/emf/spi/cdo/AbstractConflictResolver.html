@@ -102,7 +102,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractConflictResolver</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../../cdo/transaction/CDOConflictResolver.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for conflict resolvers that retain a transaction association while that transaction is open. Subclasses can
+ install and remove transaction-specific listeners or handlers in <a href="#hookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)"><code>hookTransaction(CDOTransaction)</code></a> and
+ <a href="#unhookTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)"><code>unhookTransaction(CDOTransaction)</code></a> when the association changes.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

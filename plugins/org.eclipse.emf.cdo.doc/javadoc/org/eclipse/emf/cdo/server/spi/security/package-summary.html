@@ -84,7 +84,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AnnotationHandler.html" title="class in org.eclipse.emf.cdo.server.spi.security">AnnotationHandler</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Commit handler that reads CDO security annotations from newly registered EPackages and translates them into realm
+ roles with package- or class-level read and write permissions.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AnnotationHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.security">AnnotationHandler.Factory</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
@@ -92,7 +93,8 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="HomeFolderHandler.html" title="class in org.eclipse.emf.cdo.server.spi.security">HomeFolderHandler</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Security commit handler that provisions a home resource folder and grants its owner access when users are added to
+ the realm.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HomeFolderHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.security">HomeFolderHandler.Factory</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
@@ -100,11 +102,11 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalSecurityManager.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal security service bound to a repository.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Repository extension invoked before a commit is security-checked and written.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="InternalSecurityManager.CommitHandler.Factory.html" title="class in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler.Factory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -112,11 +114,12 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalSecurityManager.CommitHandler2.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler2</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Commit-handler extension that receives a callback after a commit succeeds, allowing security state to be updated
+ only once the repository has accepted the change.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="InternalSecurityManager.CommitHandler2.WithUser.html" title="class in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler2.WithUser</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Convenience base for post-commit handlers that need the user associated with the commit.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="PermissionCache.html" title="interface in org.eclipse.emf.cdo.server.spi.security">PermissionCache</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
@@ -136,7 +139,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SecurityManagerFactory.html" title="class in org.eclipse.emf.cdo.server.spi.security">SecurityManagerFactory</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Managed-container factory for repository security managers.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="SecurityManagerFactory.Annotation.html" title="class in org.eclipse.emf.cdo.server.spi.security">SecurityManagerFactory.Annotation</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.
@@ -144,7 +147,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SecurityManagerFactory.Default.html" title="class in org.eclipse.emf.cdo.server.spi.security">SecurityManagerFactory.Default</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Default factory that creates a realm-backed security manager for a repository.</div>
 </div>
 </div>
 </div>

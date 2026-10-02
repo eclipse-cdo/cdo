@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOWorkspaceBase</span><span class="extends-implements">
 extends <a href="../../workspace/CDOWorkspaceBase2.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspaceBase2</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a workspace base that tracks object additions, changes, and detachments while a workspace transaction is committed
+ or cleared. The workspace implementation uses these operations to keep its local base store consistent.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

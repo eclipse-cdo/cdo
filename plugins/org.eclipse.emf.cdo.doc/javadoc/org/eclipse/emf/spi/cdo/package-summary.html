@@ -84,15 +84,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractChangeSetsConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractChangeSetsConflictResolver</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for resolvers that compare a transaction's local change set with change sets received through session
+ invalidations.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractConflictResolver</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for conflict resolvers that retain a transaction association while that transaction is open.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractObjectConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for resolvers that make a resolution decision separately for each conflicting <a href="../../cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a>.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractObjectConflictResolver.MergeLocalChangesPerFeature.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver.MergeLocalChangesPerFeature</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">Deprecated.
@@ -102,11 +103,11 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractObjectConflictResolver.ThreeWayMerge.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver.ThreeWayMerge</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Older three-way resolution framework that observes local feature edits and remote revision deltas for each object.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractObjectConflictResolver.ThreeWayMerge.RevisionDeltaCollector.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver.ThreeWayMerge.RevisionDeltaCollector</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Collects remote <a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>CDORevisionDelta</code></a>s by notifier while remote invalidation events are being processed.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractQueryIterator.html" title="class in org.eclipse.emf.spi.cdo">AbstractQueryIterator</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
@@ -114,7 +115,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOChangeSubscriptionAdapter.html" title="class in org.eclipse.emf.spi.cdo">CDOChangeSubscriptionAdapter</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">An adapter for registering selected <a href="../../cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a>s for change notifications in a <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a>.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOLockStateCache.html" title="interface in org.eclipse.emf.spi.cdo">CDOLockStateCache</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
@@ -126,7 +127,8 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOMergingConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">CDOMergingConflictResolver</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Reconciles local transaction edits with change sets received from the repository by passing both sides to a
+ <a href="../../cdo/transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOMerger</code></a>.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOOperationAuthorizer.html" title="interface in org.eclipse.emf.spi.cdo">CDOOperationAuthorizer</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
@@ -151,11 +153,11 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOSessionInvalidationEventQueue.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionInvalidationEventQueue</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Collects <a href="../../cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a>s emitted by a <a href="../../cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a> so a consumer can retrieve them later.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Defines the client-side operations for communicating with a CDO repository over a session protocol.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.ChangeLockAreaResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.ChangeLockAreaResult</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
@@ -167,15 +169,17 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.CommitTransactionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Returns the commit outcome to the client, including the commit point and the information needed to reconcile the
+ transaction's objects and commit metadata with the repository's accepted commit.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.CommitTransactionResult.PostCommitReferenceAdjuster</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Adjusts references in post-commit notifications when the repository assigns or remaps object IDs during commit.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.LockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.LockObjectsResult</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Describes the outcome of a repository object-lock request, including whether the requested locks were obtained and
+ the lock-state information the client needs to update its view.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.LockStateQueryResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.LockStateQueryResult</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -188,15 +192,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.MergeDataResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.MergeDataResult</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Describes the object IDs and branch point produced by a repository merge request.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.OpenSessionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.OpenSessionResult</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Carries the repository metadata and initial session state returned when a client opens a session.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.RefreshSessionResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Contains the repository update position and package-unit information returned when a session refreshes.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOSessionProtocol.RefreshSessionResult.Provider.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RefreshSessionResult.Provider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
@@ -204,11 +208,13 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Reports the repository time values exchanged during time synchronization, including the requested, indicated,
+ responded, and confirmed timestamps used to estimate the repository's current time.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Carries the repository's response to an object-unlock request, including the lock changes and their update timestamp
+ so the client can bring its lock state in line with the repository.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOStore.html" title="interface in org.eclipse.emf.spi.cdo">CDOStore</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
@@ -216,7 +222,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOTransactionStrategy.html" title="interface in org.eclipse.emf.spi.cdo">CDOTransactionStrategy</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal policy used by a transaction to perform commit, rollback, and savepoint operations.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -224,23 +230,23 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.ChangedInSourceAndDetachedInTargetConflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ChangedInSourceAndDetachedInTargetConflict</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Conflict raised when the source changes an object that the target has detached.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.ChangedInSourceAndTargetConflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ChangedInSourceAndTargetConflict</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Conflict raised when both the target and source change the same object's revision.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.ChangedInTargetAndDetachedInSourceConflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.ChangedInTargetAndDetachedInSourceConflict</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Conflict raised when the target changes an object that the source detached.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.Conflict.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.Conflict</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Describes an unresolved change-set conflict for one object ID.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Merger strategy that resolves each object's revision delta by comparing feature-level changes.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultCDOMerger.PerFeature.ManyValued.html" title="class in org.eclipse.emf.spi.cdo">DefaultCDOMerger.PerFeature.ManyValued</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -288,29 +294,29 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="FSMUtil.html" title="class in org.eclipse.emf.spi.cdo">FSMUtil</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal bridge between the public <a href="../../cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> model and the CDO state machine.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOLoadable.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOLoadable</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Marks internal model objects that participate in CDO's load lifecycle.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOLockStateCache.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOLockStateCache</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract implemented by objects managed by a CDO view.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORemoteSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSession</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal representation of a client session connected to the local session through remote-session notifications.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORemoteSessionManager.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteSessionManager</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal owner of a session's remote-session and remote-topic state.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORemoteTopic.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDORemoteTopic</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal topic within a <a href="InternalCDORemoteSessionManager.html" title="interface in org.eclipse.emf.spi.cdo"><code>InternalCDORemoteSessionManager</code></a>.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
@@ -322,7 +328,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for the client-side connection to a CDO repository.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="InternalCDOSession.CommitToken.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOSession.CommitToken</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -338,7 +344,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionConfiguration</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal extension of the public session configuration used while constructing a <a href="InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo"><code>InternalCDOSession</code></a>.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionInvalidationEvent</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
@@ -346,15 +352,16 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal transaction contract that connects the public transaction API to a CDO view and the transaction strategy.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="InternalCDOTransaction.ApplyChangeSetResult.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Summarizes the effects of applying a goal change set to a transaction, including the normalized change set, any ID
+ remappings, and the objects whose references had to be adjusted.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab5"><a href="InternalCDOTransaction.ChangeSetOutdatedException.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ChangeSetOutdatedException</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab5">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Signals that a change set can no longer be applied against the target revision state used to define it.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOTransaction.InternalCDOCommitContext.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction.InternalCDOCommitContext</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
@@ -362,15 +369,16 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOUserSavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserSavepoint</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal node in a user transaction's savepoint chain.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal transaction contract for user-managed transactions, where savepoints are retained as a linked sequence and
+ the transaction exposes its current endpoint for rollback and commit handling.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a repository view's object cache and invalidation lifecycle.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="InternalCDOView.ViewAndState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOView.ViewAndState</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -382,23 +390,23 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOViewSet.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOViewSet</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal registry for the views belonging to one EMF resource set.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOXASavepoint.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXASavepoint</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Savepoint representation for a CDO XA transaction.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOXATransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal coordinator for an XA transaction spanning multiple CDO transactions.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOXATransaction.InternalCDOXACommitContext.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction.InternalCDOXACommitContext</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Per-operation state passed through an XA commit.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="InternalCDOXATransaction.InternalCDOXACommitContext.CDOXAState.html" title="class in org.eclipse.emf.spi.cdo">InternalCDOXATransaction.InternalCDOXACommitContext.CDOXAState</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">A phase in the XA commit state machine.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ViewResourceSetConfigurer.html" title="class in org.eclipse.emf.spi.cdo">ViewResourceSetConfigurer</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">

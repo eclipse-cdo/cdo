@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOPackageUnit</span><span class="extends-implements">
 extends <a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal lifecycle and transport contract for a group of related EPackages registered together in CDO. It loads or
+ resolves the packages through a package loader, records their original type and timestamp, and reads or writes the
+ unit as repository package metadata.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

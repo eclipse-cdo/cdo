@@ -192,7 +192,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal mutable form of a <a href="../CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a>, used by revision managers and transaction code to load, edit,
+ serialize, and rebase versioned object state.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../../spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a> that implement <a href="../CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></span></div>
@@ -203,22 +204,23 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/AbstractCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Common implementation for revision objects that supplies class metadata, branch-time validity, permission checks, and
+ traversal of currently loaded feature values.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/common/revision/BaseCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Standard mutable revision representation used by CDO's revision factory.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/DelegatingCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Wrapper base for revision decorators that must preserve the complete <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><code>InternalCDORevision</code></a> contract.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/common/revision/DetachedCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Synthetic revision marker for an object that has been detached from a branch.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/PointerCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a></code></div>
@@ -229,7 +231,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/common/revision/StubCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Minimal revision shell for code that needs revision identity or class metadata without a mutable feature store.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/common/revision/SyntheticCDORevision.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></code></div>

@@ -97,15 +97,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Common implementation for revision objects that supplies class metadata, branch-time validity, permission checks, and
+ traversal of currently loaded feature values.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Standard mutable revision representation used by CDO's revision factory.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOFeatureDeltaVisitorImpl.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureDeltaVisitorImpl</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Convenience visitor for revision deltas whose default behavior is to ignore each feature-change kind and recursively
+ visit the child operations of list deltas.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOFeatureMapEntry.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOFeatureMapEntry</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">Deprecated.
@@ -113,19 +115,21 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOIDMapper.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDOIDMapper</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Reference-adjustment policy backed by the ID mapping returned from a commit.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOReferenceAdjustable.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjustable</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implemented by revision data structures whose stored object references can be rewritten through a
+ <a href="CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><code>CDOReferenceAdjuster</code></a>, for example when temporary IDs are replaced after commit.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOReferenceAdjuster.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDOReferenceAdjuster</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Policy consulted while a revision rewrites a stored reference.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDORevisionMerger.html" title="class in org.eclipse.emf.cdo.spi.common.revision">CDORevisionMerger</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Applies a <a href="../../../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>CDORevisionDelta</code></a> to an internal revision by visiting its feature changes and updating the
+ corresponding feature values and containment metadata.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDORevisionProviderWithSynthetics.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionProviderWithSynthetics</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
@@ -137,35 +141,36 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Wrapper base for revision decorators that must preserve the complete <a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision"><code>InternalCDORevision</code></a> contract.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DelegatingCDORevisionManager.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevisionManager</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Wrapper base for revision-manager decorators.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DetachedCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Synthetic revision marker for an object that has been detached from a branch.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal extension contract for feature changes that need to participate in list-index adjustment during delta
+ application.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOFeatureDelta.ListIndexAffecting.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.ListIndexAffecting</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Contract for a list operation that changes the indices of other pending operations.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOFeatureDelta.ListTargetAdding.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.ListTargetAdding</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Identifies a value being added to a list delta so other edits can adjust or cancel that pending target insertion.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOFeatureDelta.WithIndex.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOFeatureDelta.WithIndex</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Marks a list feature delta whose operation has a meaningful position in the current list.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDOList.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Revision-owned list implementation contract for many-valued features.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDOList.ConfigurableEquality.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.ConfigurableEquality</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
@@ -177,31 +182,34 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal mutable form of a <a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a>, used by revision managers and transaction code to load, edit,
+ serialize, and rebase versioned object state.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionCache.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionCache</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal cache and interner for revisions shared by a revision manager.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Mutable internal form of a revision delta used while building, applying, and rebasing changes to one object.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal owner of revision loading, interning, and caching for a session or repository.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Storage boundary used by the revision manager to retrieve revision state and enumerate historical revisions.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader2.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader2</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Revision-loader extension for retrieving an object's lifetime at a branch point, enabling the manager to answer
+ whether the object existed there without loading its full feature state.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader3.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader3</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Revision-loader extension for batch loading revision metadata and values using the older explicit chunk and
+ prefetch options.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLoader4.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLoader4</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
@@ -209,7 +217,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Lock used to keep a multi-step revision request atomic with respect to other loads for the same key.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ManagedRevisionProvider.html" title="class in org.eclipse.emf.cdo.spi.common.revision">ManagedRevisionProvider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
@@ -231,35 +239,35 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Request and response record used by the revision-loading protocol for one object at a branch point.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Common request form for an object revision found in branch history.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Detached.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Detached</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Revision lookup result indicating that the object's latest relevant state is a detachment.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Normal.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Normal</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Revision lookup result for an object whose state is available directly at the requested branch point.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Available.Pointer.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available.Pointer</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Revision lookup result for an object whose available state points to another branch version.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="RevisionInfo.Missing.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Missing</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Revision lookup result for an object with no state available at the requested history point.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab3"><a href="RevisionInfo.Type.html" title="enum class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Type</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab3">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Wire-level category for a revision lookup result.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Minimal revision shell for code that needs revision identity or class metadata without a mutable feature store.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">

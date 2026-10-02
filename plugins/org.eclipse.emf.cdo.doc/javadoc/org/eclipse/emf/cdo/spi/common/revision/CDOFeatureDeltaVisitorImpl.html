@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDOFeatureDeltaVisitorImpl</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../../../common/revision/delta/CDOFeatureDeltaVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDeltaVisitor</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Convenience visitor for revision deltas whose default behavior is to ignore each feature-change kind and recursively
+ visit the child operations of list deltas. Subclasses override only the changes relevant to their operation.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

@@ -105,7 +105,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">LongIDStoreAccessor</span>
 <span class="extends-implements">extends <a href="StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Store-accessor base paired with <a href="LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server"><code>LongIDStore</code></a>. It delegates permanent ID allocation to that store so reader
+ and writer implementations share the store's repository versus local-branch ID policy.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

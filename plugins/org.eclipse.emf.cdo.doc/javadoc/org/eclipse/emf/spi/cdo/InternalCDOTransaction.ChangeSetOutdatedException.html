@@ -107,7 +107,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">InternalCDOTransaction.ChangeSetOutdatedException</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/RuntimeException.html" title="class or interface in java.lang" class="external-link">RuntimeException</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Signals that a change set can no longer be applied against the target revision state used to define it. Callers
+ receive this when the expected versions or base state have moved and must obtain current change data before retrying.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.1</dd>

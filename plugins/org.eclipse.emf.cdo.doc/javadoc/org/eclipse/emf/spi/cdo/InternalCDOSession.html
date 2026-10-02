@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOSession</span><span class="extends-implements">
 extends <a href="../../cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>, <a href="../../cdo/spi/common/model/InternalCDOPackageRegistry.PackageProcessor.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageProcessor</a>, <a href="../../cdo/spi/common/model/InternalCDOPackageRegistry.PackageLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry.PackageLoader</a>, <a href="../../cdo/spi/common/revision/InternalCDORevisionManager.RevisionLocker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionManager.RevisionLocker</a>, <a href="../../cdo/spi/common/revision/CDORevisionUnchunker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a>, <a href="../../cdo/common/lob/CDOLobLoader.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>, org.eclipse.net4j.util.lifecycle.ILifecycle, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for the client-side connection to a CDO repository. It owns the session's views and managers,
+ translates protocol notifications into cache, invalidation, lock, and permission updates, and supplies the services
+ those views and transactions share.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

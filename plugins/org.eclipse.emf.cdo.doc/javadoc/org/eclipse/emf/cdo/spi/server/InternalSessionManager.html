@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalSessionManager</span><span class="extends-implements">
 extends <a href="../../server/ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a>, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Repository service that owns connected sessions and coordinates their authentication and notification flow. It opens
+ and closes session state, routes repository changes to relevant clients, and delegates user and permission decisions
+ to the configured security services.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

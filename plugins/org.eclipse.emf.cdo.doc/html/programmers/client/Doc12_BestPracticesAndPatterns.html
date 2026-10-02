@@ -119,14 +119,16 @@ function maximize(id)
  AutoCloseable resources.
  <p>
  Close a transaction before its session, remove listeners before disposing the observed component, and release a LOB
- stream before closing the view or session that supplies it. See 
+ stream before closing the view or session that supplies it. The example below shows the owning component opening
+ its own transaction, committing one bounded operation, rolling back failures, and closing the transaction:
+ 
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_OwnershipAndLifecycle_1"></a>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">commitOrRollback</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">InTransaction.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('OwnershipAndLifecycle_1')" id="max_OwnershipAndLifecycle_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -137,14 +139,22 @@ function maximize(id)
         <div id="editor_content_1_OwnershipAndLifecycle_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_OwnershipAndLifecycle_1" style="padding:8px;">
             <code>
+            CDOTransaction&nbsp;transaction&nbsp;=&nbsp;session.openTransaction();<br/>
             <font color="#7f0055"><b>try</b></font><br/>
             {<br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(transaction.isDirty())<br/>
-            &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;transaction.commit();<br/>
-            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;operation.accept(transaction);<br/>
+            &nbsp;&nbsp;transaction.commit();<br/>
             }<br/>
             <font color="#7f0055"><b>catch&nbsp;</b></font>(CommitException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!transaction.isClosed()&nbsp;&amp;&amp;&nbsp;transaction.isDirty())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;transaction.rollback();<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(RuntimeException&nbsp;|&nbsp;Error&nbsp;ex)<br/>
             {<br/>
             &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!transaction.isClosed()&nbsp;&amp;&amp;&nbsp;transaction.isDirty())<br/>
             &nbsp;&nbsp;{<br/>
@@ -169,7 +179,6 @@ function maximize(id)
 </div>
 <p>
 
- for a small failure-safe transaction boundary.
 
 <h2><a name="SessionViewAndTransactionBoundaries"></a>2&nbsp;&nbsp;Reuse Sessions, Keep Views Purposeful, and Bound Transactions</h2>
 <p>

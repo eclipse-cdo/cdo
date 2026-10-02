@@ -104,7 +104,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">CDODataInputImpl</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.io.ExtendedDataInput.Delegating
 implements <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Shared decoder for CDO protocol values layered over an extended data input. It reconstructs revisions, change sets,
+ model metadata, locks, and branch references using the receiving session's registries and managers.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>

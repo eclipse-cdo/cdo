@@ -99,7 +99,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDOChangeSubscriptionAdapter</span>
 <span class="extends-implements">extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterImpl.html" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">AdapterImpl</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">An adapter for registering selected <a href="../../cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a>s for change notifications in a <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a>. When attached
+ to an object, it makes the view's change-subscription policy accept that object; the adapter tracks those notifiers
+ so they can be detached together when the subscription is reset or disposed.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

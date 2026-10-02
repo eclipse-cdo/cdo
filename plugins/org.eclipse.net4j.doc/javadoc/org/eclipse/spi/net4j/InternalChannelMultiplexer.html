@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalChannelMultiplexer</span><span class="extends-implements">
 extends <a href="../../net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a>, <a href="../../net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>, <a href="../../net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a transport that multiplexes logical channels over a connection and supplies their buffers. It also provides the
+ hooks used by channels to submit buffers and by the transport to close channels.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

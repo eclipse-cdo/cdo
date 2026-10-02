@@ -101,7 +101,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">InternalCDOCommitInfoManager.CommitInfoLoader</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Storage boundary for reading a branch's commit history and the detailed change data for an individual commit. The
+ manager uses it to fulfill history queries without requiring every commit to be held in memory.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

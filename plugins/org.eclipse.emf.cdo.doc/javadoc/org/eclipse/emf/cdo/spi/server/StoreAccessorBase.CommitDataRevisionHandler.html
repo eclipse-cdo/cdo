@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public static class </span><span class="element-name type-name-label">StoreAccessorBase.CommitDataRevisionHandler</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Builds the <a href="../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitData</code></a> for one commit timestamp by enumerating the revisions and package units stored at
+ that point. The resulting lists distinguish new, changed, and detached objects for commit-history consumers.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

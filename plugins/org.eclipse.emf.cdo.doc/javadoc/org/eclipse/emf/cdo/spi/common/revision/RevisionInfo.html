@@ -97,7 +97,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">RevisionInfo</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Request and response record used by the revision-loading protocol for one object at a branch point. Concrete variants
+ distinguish a directly available revision, an inherited or detached synthetic result, and an object missing from
+ that history; the record also carries the loaded result back to the revision manager.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
@@ -121,17 +123,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="RevisionInfo.Available.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Available</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Common request form for an object revision found in branch history.</div>
 </div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="RevisionInfo.Missing.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Missing</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Revision lookup result for an object with no state available at the requested history point.</div>
 </div>
 <div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="RevisionInfo.Type.html" class="type-name-link" title="enum class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo.Type</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Wire-level category for a revision lookup result.</div>
 </div>
 </div>
 </section>

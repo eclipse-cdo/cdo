@@ -78,10 +78,13 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- A repository has a stable name, an existing <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>store</code></a>, repository properties, and a lifecycle. Use
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerUtil</code></a> for simple embedded setup, then register the repository in its
- <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>managed container</code></a>. Production XML configuration and its complete store/acceptor syntax
- are described by <a href="../../operators/Doc01_ConfiguringRepositories.html" title="Article in CDO Model Repository Documentation">Configuring Repositories</a>, not repeated here.
+ A repository has a stable name within its container, a configured <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>store</code></a>, repository properties,
+ optional initial package definitions, and a lifecycle. The application chooses a store and properties, creates the
+ repository, applies initial packages before activation, and registers it in the owning <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IManagedContainer</code></a>.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#addRepository(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.addRepository(IManagedContainer, IRepository)</code></a> retains and activates it; the container owns its
+ shutdown. The store determines persistence and capabilities, while XML/server configuration composes the same
+ pieces declaratively. Production XML and database operation syntax are described by
+ <a href="../../operators/Doc01_ConfiguringRepositories.html" title="Article in CDO Model Repository Documentation">Configuring Repositories</a>.
  <p>
 <table border="0">
 <tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc05_CreatingAndConfiguringRepositories.html#ProgrammaticSetup" title="Chapter in CDO Model Repository Documentation">Programmatic Repository Setup</a></td></tr>
@@ -93,17 +96,31 @@ function maximize(id)
 
 <h2><a name="ProgrammaticSetup"></a>1&nbsp;&nbsp;Programmatic Repository Setup</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepository(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map<java.lang.String,java.lang.String>)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createRepository(String, IStore, java.util.Map)</code></a> creates a repository with its name, store,
- and properties. <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#addRepository(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.addRepository(IManagedContainer, IRepository)</code></a> registers and activates it.
- Set initial packages before activation when a repository must know packages immediately; model packages can also
- be supplied on demand. Deactivate an application-owned repository during application shutdown.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepository(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map<java.lang.String,java.lang.String>)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createRepository(String, IStore, Map)</code></a> creates an inactive repository from its container
+ name, store and property map. The name is the lookup identity within that container and should remain stable for
+ configuration and client connection. Properties configure repository behavior such as auditing, branching,
+ locking and ID generation; use <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.Props.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>IRepository.Props</code></a> constants and confirm that the selected store supports
+ the requested feature. Set <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html#setInitialPackages(org.eclipse.emf.ecore.EPackage[])" title="Method in org.eclipse.emf.cdo.server.IRepository"><code>initial packages</code></a> before activation
+ when model metadata must be available from startup. Otherwise package registration is governed by repository mode
+ and security policy.
+ <p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#addRepository(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.addRepository(IManagedContainer, IRepository)</code></a> assigns the container when needed, retains
+ the repository under the repository-factory group/type/name, and activates it. That transfers lifecycle ownership
+ to the container. A repository that is never registered must be explicitly deactivated by its creator if it was
+ activated separately. At shutdown, stop extensions that use the repository and then deactivate the owning
+ container. Capability checks should use the repository's advertised information; do not infer support from a
+ requested property alone.
 
 <h2><a name="EmbeddedRepositories"></a>2&nbsp;&nbsp;MEMStore and Embedded Repositories</h2>
 <p>
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/mem/MEMStoreUtil.html" title="Class in org.eclipse.emf.cdo.server.mem"><code>MEMStoreUtil</code></a> is suitable for an in-memory repository used by an embedded application, test, or short-lived
- service. CDOEmbeddedRepositoryConfig is the higher-level embedded-server API: subclasses provide a store,
- properties, optional initial packages, and can open a local client session. Its activation manages the embedded
- repository and JVM acceptor lifecycle.
+ service. Its model data is not a durable substitute for a persistent store. CDOEmbeddedRepositoryConfig
+ is the higher-level embedded-server API: subclasses provide a store, properties, and optional initial packages,
+ and can open a local client session. Its activation manages the embedded repository and JVM acceptor lifecycle. Use
+ direct repository APIs when the application already owns container and transport assembly; use embedded
+ configuration when it wants that complete local-server lifecycle packaged together. An embedded convenience API
+ can own the repository/container and optionally open a local client session; direct APIs are appropriate when the
+ application already owns those boundaries.
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -111,7 +128,7 @@ function maximize(id)
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateMemoryRepository.java</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">WithMemoryRepository.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('EmbeddedRepositories_1')" id="max_EmbeddedRepositories_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -122,10 +139,26 @@ function maximize(id)
         <div id="editor_content_1_EmbeddedRepositories_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_EmbeddedRepositories_1" style="padding:8px;">
             <code>
-            IStore&nbsp;store&nbsp;=&nbsp;MEMStoreUtil.createMEMStore();<br/>
-            IRepository&nbsp;repository&nbsp;=&nbsp;CDOServerUtil.createRepository(<font color="#2a00ff">&#34;inventory&#34;</font>,&nbsp;store,&nbsp;Collections.emptyMap());<br/>
-            CDOServerUtil.addRepository(container,&nbsp;repository);<br/>
-            <font color="#7f0055"><b>return&nbsp;</b></font>repository;            </code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;IStore&nbsp;store&nbsp;=&nbsp;MEMStoreUtil.createMEMStore();<br/>
+            &nbsp;&nbsp;Map&lt;String,&nbsp;String&gt;&nbsp;properties&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>HashMap&lt;&gt;();<br/>
+            &nbsp;&nbsp;properties.put(IRepository.Props.OVERRIDE_UUID,&nbsp;repositoryUUID);<br/>
+            <br/>
+            &nbsp;&nbsp;IRepository&nbsp;repository&nbsp;=&nbsp;CDOServerUtil.createRepository(<font color="#2a00ff">&#34;inventory&#34;</font>,&nbsp;store,&nbsp;properties);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(initialPackages.length&nbsp;!=&nbsp;<font color="#990000">0</font>)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;repository.setInitialPackages(initialPackages);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;CDOServerUtil.addRepository(container,&nbsp;repository);<br/>
+            &nbsp;&nbsp;operation.accept(repository);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;container.deactivate();<br/>
+            }            </code>
 
           </div>
         </div>
@@ -138,11 +171,13 @@ function maximize(id)
 
 <h2><a name="PersistentStoreConfiguration"></a>3&nbsp;&nbsp;Existing Persistent Stores</h2>
 <p>
- For a DBStore, configure the supplied DB adapter, datasource, and mapping strategy at the application or server
- configuration level, then attach the resulting store to the repository in the same way. Store capabilities govern
- auditing, branching, and ID behavior. Database installation, credentials, schema operation, and tuning remain
- <a href="../../operators/Doc01_ConfiguringRepositories.html" title="Article in CDO Model Repository Documentation">Operator's Guide concerns</a>. Do not implement a store merely to customize repository behavior; use the handlers and
- services in the later articles instead.
+ A persistent store changes how the <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a> is created and configured, not the repository registration
+ lifecycle. Configure the selected DB adapter, datasource, and mapping strategy through application setup or the
+ server XML store element, then pass the resulting store to createRepository (or let the repository
+ configurator do so). Repository properties still describe repository behavior; store configuration describes
+ persistence. Database installation, credentials, schema operation, and tuning remain
+ <a href="../../operators/Doc01_ConfiguringRepositories.html" title="Article in CDO Model Repository Documentation">Operator's Guide concerns</a>. Do not implement a store merely to customize
+ repository behavior; use handlers and services instead.
 
 <p align="right">
 <a href="Doc04_ApplicationExtensions.html" title="Backward to Application Extensions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc06_RepositoryServicesAndEvents.html" title="Forward to Repository Services and Events"><img src="../../../images/forward.png" border="0"></a></p>

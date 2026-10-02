@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract static class </span><span class="element-name type-name-label">InternalSecurityManager.CommitHandler2.WithUser</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="InternalSecurityManager.CommitHandler2.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler2</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Convenience base for post-commit handlers that need the user associated with the commit. It stores that user in
+ the commit context before the commit and passes it to the post-commit callback.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

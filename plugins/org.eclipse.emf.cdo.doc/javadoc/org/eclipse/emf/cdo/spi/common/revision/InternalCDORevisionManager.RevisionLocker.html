@@ -97,7 +97,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">InternalCDORevisionManager.RevisionLocker</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Lock used to keep a multi-step revision request atomic with respect to other loads for the same key. The manager
+ acquires it before the request and releases it after the related revisions have been resolved.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

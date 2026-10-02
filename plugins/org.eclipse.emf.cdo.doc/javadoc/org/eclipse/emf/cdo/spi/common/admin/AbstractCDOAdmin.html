@@ -112,7 +112,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractCDOAdmin</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.container.SetContainer&lt;<a href="../../../common/admin/CDOAdminRepository.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdminRepository</a>&gt;
 implements <a href="../../../common/admin/CDOAdmin.html" title="interface in org.eclipse.emf.cdo.common.admin">CDOAdmin</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Shared implementation for administrative connections that discover, create, and delete repository instances. It
+ tracks the repositories announced by the remote admin service and waits for the corresponding lifecycle event after
+ a create or delete request completes.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.1</dd>

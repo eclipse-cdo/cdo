@@ -78,8 +78,9 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- Security and query handling are specialized extension domains: use their deliberately supported contracts instead
- of general read/write handlers when the problem is authentication, authorization, or a query language. Deployment
+ Security first authenticates a repository user and then authorizes that identity's operations. Query handling is a
+ separate extension domain with a language/factory contract. Use these supported seams instead of general handlers
+ for authentication, authorization, or a custom query language. Deployment
  credentials, password files, TLS, and directory-server configuration remain
  <a href="https://wiki.eclipse.org/CDO/Security_Manager" title="Article in CDO Model Repository Documentation">Operator's Guide topics</a>.
  <p>
@@ -96,11 +97,86 @@ function maximize(id)
 <h2><a name="SecurityModel"></a>1&nbsp;&nbsp;Repository Protection</h2>
 <p>
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepositoryProtector</code></a> protects a repository by combining a <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.UserAuthenticator.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>UserAuthenticator</code></a>, authorization
- strategy, revision authorizers, and commit handlers. The authenticator establishes repository user identity;
+ strategy, revision authorizers, and commit handlers. Authentication answers “which repository user presented
+ these credentials?” Returning null rejects session opening; a returned identity becomes the user ID in the
+ server session. Authorization answers “what may this identity do?” and is evaluated on repository reads and
+ commits; authentication alone grants no access. Delegate credential verification to application policy rather
+ than embedding password storage in this integration.
+ <p>
+ The authenticator establishes repository user identity;
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.AuthorizationStrategy.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>IRepositoryProtector.AuthorizationStrategy</code></a> combines permissions; a
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.RevisionAuthorizer.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>IRepositoryProtector.RevisionAuthorizer</code></a> decides revision permissions; and a
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.CommitHandler.html" title="Class in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>IRepositoryProtector.CommitHandler</code></a> runs before security checking and after a successful protected commit.
- The protector's product groups make those elements container-configurable.
+ In server XML, the repository's <protector type="default"> extension selects a product from
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryProtector.html#PRODUCT_GROUP" title="Field in org.eclipse.emf.cdo.server.IRepositoryProtector"><code>IRepositoryProtector.PRODUCT_GROUP</code></a>; its child elements select authenticator, authorization-strategy,
+ revision-authorizer, and commit-handler products. This core repository-configurator extension is distinct from
+ the optional security module. When org.eclipse.emf.cdo.server.security is installed, its application
+ extension recognizes a separate <securityManager type="default" description="..."> element and creates
+ the module's realm-backed security manager; an optional <permissionCache> child selects its cache creator.
+ See <a href="../../operators/Doc01_ConfiguringRepositories.html#Element_securityManager" title="Chapter in CDO Model Repository Documentation">Element securityManager</a> for the canonical manager and cache XML, and
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SecurityModel_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-xml.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">cdo-server-repository.xml</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SecurityModel_1')" id="max_SecurityModel_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SecurityModel_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SecurityModel_1" style="padding:8px;">
+            <code>
+<font color="#0000e1">&lt;?xml&nbsp;version=</font><font color="#000080">"1.0"<font color="#0000e1">&nbsp;encoding=</font><font color="#000080">"UTF-8"<font color="#0000e1">?&gt;</font><font color="#000080"><br/>
+</font><font color="#0000e1">&lt;cdoServer&gt;</font><font color="#000080"><br/>
+<br/>
+&nbsp;&nbsp;</font><font color="#0000e1">&lt;repository&nbsp;name=</font><font color="#000080">"repo1"<font color="#0000e1">&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"overrideUUID"<font color="#0000e1">&nbsp;value=</font><font color="#000080">""<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"supportingAudits"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"true"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"supportingBranches"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"true"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"ensureReferentialIntegrity"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"false"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"allowInterruptRunningQueries"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"true"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"idGenerationLocation"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"STORE"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"serializeCommits"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"false"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"optimisticLockingTimeout"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"10000"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;store&nbsp;type=</font><font color="#000080">"db"<font color="#0000e1">&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"connectionKeepAlivePeriod"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"60"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"readerPoolCapacity"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"20"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"writerPoolCapacity"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"20"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;mappingStrategy&nbsp;type=</font><font color="#000080">"horizontal"<font color="#0000e1">&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;property&nbsp;name=</font><font color="#000080">"qualifiedNames"<font color="#0000e1">&nbsp;value=</font><font color="#000080">"true"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;/mappingStrategy&gt;</font><font color="#000080"><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;dbAdapter&nbsp;name=</font><font color="#000080">"h2"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;dataSource<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;class=</font><font color="#000080">"org.h2.jdbcx.JdbcDataSource"<font color="#0000e1"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;URL=</font><font color="#000080">"jdbc:h2:database/repo1"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;/store&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;</font><font color="#0000e1">&lt;/repository&gt;</font><font color="#000080"><br/>
+<br/>
+&nbsp;&nbsp;</font><font color="#3f7f5f">&lt;!--&nbsp;other&nbsp;acceptors&nbsp;and&nbsp;repositories&nbsp;--&gt;</font><font color="#000080"><br/>
+<br/>
+</font><font color="#0000e1">&lt;/cdoServer&gt;</font><font color="#000080"><br/>
+</font>            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+ for the surrounding repository configuration. A custom
+ protector product must be registered in its product group; applications do not implement
+ IRepositoryProtector directly.
  <p>
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/IPermissionManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>IPermissionManager</code></a> is the legacy permission-management API used by the security model. The optional
  org.eclipse.emf.cdo.server.security module supplies its own ISecurityManager; use its public API
@@ -109,24 +185,40 @@ function maximize(id)
 <h2><a name="PermissionCacheSPI"></a>2&nbsp;&nbsp;Permission Cache SPI</h2>
 <p>
  The optional org.eclipse.emf.cdo.server.security module provides the PermissionCache and
- PermissionCacheFactory SPIs for applications that need an alternative resource-permission cache. The
- module's InternalSecurityManager exposes the creator configuration point.
- The security manager conservatively separates resource-stable permissions, which can contribute to a cached
- resource baseline, from dynamic or context-sensitive permissions, which are evaluated for each authorization. Custom
- Permission and PermissionFilter implementations are dynamic by default. A security-manager
- subclass can opt a custom permission or filter into resource caching through its protected
- isResourceCacheable(...) hooks only when its result does not depend on request-local state, transaction
- state, arbitrary object contents, or AuthorizationContext.
+ PermissionCacheFactory SPIs for applications that need an alternative resource-permission cache. Register
+ a PermissionCacheFactory product in its managed-container product group, then select its type and optional description with
+ repository properties security.permissionCache.type and
+ security.permissionCache.description. The built-in factory type is default; its description can
+ set creator capacity (for example |capacity=50000). The optional repository property
+ security.permissionCache.default.capacity also supplies that capacity when no description suffix is
+ present. Invalid or nonpositive capacity fails factory creation and therefore repository startup. The security extension also accepts one permissionCache child under
+ securityManager; omitting its type selects the default cache. The default implementation has a configurable
+ capacity, whose documented default is 100,000 entries. The internal security-manager setter is not an application
+ configuration API.
+ <p>
+ Authorization evaluates resource, class, object, and global policy. The cache stores only a resource node's
+ permission and the baseline inherited by ordinary contained objects; other policy checks remain separate. The
+ security manager caches a resource baseline in two separate slots for each resource-node ID: permission on the
+ resource node itself, and the baseline inherited by ordinary objects in that resource. The built-in resource
+ permissions and resource filters can contribute to this baseline. Composed filters are cacheable only when their
+ operands are cacheable; arbitrary class and package filters are not automatically treated as resource-stable.
+ Custom Permission and PermissionFilter implementations are dynamic by default. The implementation
+ has protected resource-cache classification hooks, but they are not a public application extension point; do not
+ subclass an internal security-manager implementation to reach them. Keep custom policy dynamic, especially when
+ it depends on request-local state, transactions, object contents, or AuthorizationContext.
  <p>
  Cached authorization applies only to reads at the current branch head. Historical reads and commit authorization
  remain uncached. Cache generations are isolated by repository, user, and branch, and relevant realm or
- resource-tree changes replace affected generations. This also applies independently to secondary repositories.
+ resource-tree changes invalidate affected generations. A custom implementation must ensure that writes racing with
+ invalidation cannot populate the replacement generation. This also applies independently to secondary repositories.
  A dynamic permission that depends on AuthorizationContext is evaluated outside the cached resource
  baseline on each authorization.
  <p>
  A custom PermissionCache.Creator must return a fresh logical generation for each repository/user/branch
  scope and keep late writes to an obsolete generation from becoming visible through its replacement. The cache
- implementation must support concurrent authorization access.
+ implementation must support concurrent authorization access. The built-in cache's 100,000-entry capacity is shared
+ by its creator's backing store; it is not a separate quota for every user or branch. Invalid capacity
+ configuration prevents creator creation and therefore repository startup.
 
 <h2><a name="AuthenticationExample"></a>3&nbsp;&nbsp;Authentication Example</h2>
 <p>
@@ -176,12 +268,20 @@ function maximize(id)
 
 <h2><a name="QueryHandlers"></a>4&nbsp;&nbsp;Query Handlers</h2>
 <p>
- An <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>IQueryHandler</code></a> executes the <a href="../../../javadoc/org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="Interface in org.eclipse.emf.cdo.common.util"><code>query info</code></a> selected by a repository's query-handler
- provider. It submits results through <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryContext.html#addResult(java.lang.Object)" title="Method in org.eclipse.emf.cdo.server.IQueryContext"><code>IQueryContext.addResult(Object)</code></a> and stops when that method returns
+ The client creates a query with a language identifier, query string, and named parameters. The server provider
+ selects a factory by language; that factory creates an <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>IQueryHandler</code></a>, which receives
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/util/CDOQueryInfo.html" title="Interface in org.eclipse.emf.cdo.common.util"><code>query info</code></a> and an <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryContext.html" title="Interface in org.eclipse.emf.cdo.server"><code>IQueryContext</code></a> carrying server view/session and branch-point context.
+ Results flow through <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryContext.html#addResult(java.lang.Object)" title="Method in org.eclipse.emf.cdo.server.IQueryContext"><code>IQueryContext.addResult(Object)</code></a>; the handler stops when that method returns
  false or the context is cancelled. Register handler factories in
  <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/QueryHandlerFactory.html#PRODUCT_GROUP" title="Field in org.eclipse.emf.cdo.spi.server.QueryHandlerFactory"><code>QueryHandlerFactory.PRODUCT_GROUP</code></a>; the factory type is the query language, so container configuration can
  select the handler. Implement <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.PotentiallySlow.html" title="Interface in org.eclipse.emf.cdo.server.IQueryHandler"><code>IQueryHandler.PotentiallySlow</code></a> when a handler can identify slow query forms.
- OCL is a supplied optional handler integration; this guide does not teach the OCL language itself.
+ OCL is a supplied optional handler integration; this guide does not teach the OCL language itself. A custom
+ language becomes reachable only after its factory is registered in the server container; the client's language
+ string must match the factory type.
+ A useful custom handler often adapts an application-owned, repository-aware index: parse a query string or
+ parameter, find matching persistent IDs, and pass them to the context. The index must honor the query's branch and
+ time semantics; a global current-state index is not correct for historical views. The handler must check
+ cancellation during long scans and stop when <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryContext.html#addResult(java.lang.Object)" title="Method in org.eclipse.emf.cdo.server.IQueryContext"><code>IQueryContext.addResult(Object)</code></a> returns false.
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -189,7 +289,7 @@ function maximize(id)
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateViewIdentifierHandler.java</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateProductLookupHandler.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('QueryHandlers_1')" id="max_QueryHandlers_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -201,11 +301,86 @@ function maximize(id)
           <div id="editor_content_2_QueryHandlers_1" style="padding:8px;">
             <code>
             <font color="#7f0055"><b>return&nbsp;</b></font>(info,&nbsp;context)&nbsp;-&gt;&nbsp;{<br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!context.isCancelled())<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(context.isCancelled())<br/>
             &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;context.addResult(context.getView().getViewID());<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return</b></font>;<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;String&nbsp;productKey&nbsp;=&nbsp;info.getParameter(<font color="#2a00ff">&#34;key&#34;</font>);<br/>
+            &nbsp;&nbsp;CDOID&nbsp;productID&nbsp;=&nbsp;findProductID.apply(productKey);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(productID&nbsp;!=&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>&amp;&amp;&nbsp;!context.isCancelled())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;context.addResult(productID);<br/>
             &nbsp;&nbsp;}<br/>
             };            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_QueryHandlers_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">RegisterProductLookupFactory.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('QueryHandlers_2')" id="max_QueryHandlers_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_QueryHandlers_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_QueryHandlers_2" style="padding:8px;">
+            <code>
+            container.registerFactory(<font color="#7f0055"><b>new&nbsp;</b></font>QueryHandlerFactory(<font color="#2a00ff">&#34;product_lookup&#34;</font>)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font>IQueryHandler&nbsp;create(String&nbsp;description)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font>createProductLookupHandler(findProductID);<br/>
+            &nbsp;&nbsp;}<br/>
+            });            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_QueryHandlers_3"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">QueryProduct.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('QueryHandlers_3')" id="max_QueryHandlers_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_QueryHandlers_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_QueryHandlers_3" style="padding:8px;">
+            <code>
+            CDOQuery&nbsp;query&nbsp;=&nbsp;view.createQuery(<font color="#2a00ff">&#34;product_lookup&#34;</font>,&nbsp;<font color="#2a00ff">&#34;byKey&#34;</font>);<br/>
+            query.setParameter(<font color="#2a00ff">&#34;key&#34;</font>,&nbsp;productKey);<br/>
+            query.setMaxResults(<font color="#990000">1</font>);<br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>query.getResultValue(CDOID.<font color="#7f0055"><b>class</b></font>);            </code>
 
           </div>
         </div>

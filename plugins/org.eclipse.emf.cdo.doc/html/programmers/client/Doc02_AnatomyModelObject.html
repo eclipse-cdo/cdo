@@ -38,16 +38,19 @@ function windowTitle()
  CDO extends the capabilities of EMF by providing a distributed shared model framework that enables collaborative editing
  of EMF models in a distributed environment. CDO achieves this by introducing the concept of a CDO repository, which
  is a central server that manages the storage and retrieval of EMF models. Clients connect to the repository to
- access and manipulate the shared model. In a CDO client application, model objects are represented as instances of
- <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html" title="Interface in org.eclipse.emf.cdo"><code>CDOObject</code></a>, which extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObject</code></a>. This article provides an overview of the anatomy of a CDOObject
- and its key features.
+ access and manipulate the shared model. In native model mode, a CDO-backed object implements <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html" title="Interface in org.eclipse.emf.cdo"><code>CDOObject</code></a>,
+ which extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObject</code></a>. With a legacy generated model, CDO adapts the generated EObject; use
+ CDOUtil when crossing between the EMF and CDO contracts instead of assuming the concrete Java object
+ implements both. This article explains the identity, revision data, owning view, and lifecycle state of an object.
  <p>
- A CDOObject is a specialized EObject that is designed to work with CDO's distributed shared model framework.
- CDOObjects have several key features that distinguish them from regular EObjects. They are:
+ A CDO object is still an EMF object, but its features are backed by revision data managed in a view. Its Java
+ identity is local to that view and lifetime; the repository identity is its <a href="../../../javadoc/org/eclipse/emf/cdo/common/id/CDOID.html" title="Interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>. Its state reports the
+ object's role in the owning view, not a global repository status. Common properties are:
  <ul>
  <li><b>Persistent:</b> CDOObjects are persistent, meaning that they can be stored and retrieved from a CDO repository.
  <li><b>Transactional:</b> CDOObjects support transactions, which allow multiple changes to be made to the model as a single atomic operation.
- <li><b>Scalable:</b> CDOObjects are designed to be scalable, allowing large models to be managed efficiently in a distributed environment.
+ <li><b>Scalable:</b> feature values are represented by a revision, and objects can be loaded on demand rather than
+     eagerly materializing the entire repository graph.
  <li><b>Concurrent access:</b> CDOObjects support concurrent single accesses. Use the view critical section for a sequence
  of accesses that must remain consistent; see <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>.
  <li><b>Identifiable:</b> CDOObjects have a unique identifier that is used to identify them in the repository.
@@ -55,48 +58,46 @@ function windowTitle()
  <li><b>Stateful:</b> CDOObjects maintain state information, such as whether they are new, dirty, or deleted.
  </ul>
  <p>
- For these unique features to work, CDOObjects have a fundamentally different anatomy than regular EObjects. Especially,
- to achieve scalability, CDOObjects do not contain their attributes and references directly. Instead, they delegate
- the storage and retrieval of their data to a <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a>.
+ To support repository-backed access, CDO objects obtain feature data through a <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a>. References in
+ revision data are represented by CDOIDs and resolved to Java objects as the view loads or navigates the graph.
+ A revision is therefore not the same object as the EObject: the revision is the data snapshot, while the
+ object is the view-bound EMF facade on which application code operates.
  <p>
  <p>
  <p>
  <img src="AnatomyCDOObject.png"/>
  <p>
- In summary, a CDOObject is a specialized EObject that is designed to work with CDO's distributed shared model framework.
- To turn a regular EMF model into a CDO model, the model must be migrated to use CDO and regenerated to produce CDOObject
- subclasses. This is explained in the article <a href="../Doc04_PreparingModels.html" title="Article in CDO Model Repository Documentation">Preparing the Models</a>.
+ For native generated models, preparation generates CDO-aware implementations; ordinary generated models can still
+ be used through legacy compatibility. See <a href="../Doc04_PreparingModels.html" title="Article in CDO Model Repository Documentation">Preparing the Models</a>. Regardless of model mode, objects belong
+ to the view that loaded or created them. Once that view closes, the object is no longer a usable live repository
+ object; copy out application values or retain the CDOID and reopen it in a new view instead.
  <p>
  Note that CDOObjects and CDOViews are client-side concepts. On the server side, CDO uses only CDORevisions to
  represent model objects. CDORevisions are also used as the unit of storage and retrieval in the CDO repository,
  as well as the unit of data transfer between clients and the server.
  <p>
- The internet provides a wealth of information about EMF and CDO, including tutorials, documentation, and forums.
- Here are some useful links:
- <ul>
- <li>The blog article <a href="https://thegordian.blogspot.com/2008/11/how-scalable-are-my-models.html">How Scalable are my Models?</a> provides
- an introduction to the concepts of scalability in EMF and CDO.
- <li>The blog article <a href="https://thegordian.blogspot.com/2011/07/concurrent-access-to-models.html">Concurrent Access to Models</a> provides
- an introduction to the concepts of concurrency in EMF and CDO.
- </ul>
+ Object feature access follows the concurrency rules of the owning view. A single access is synchronized by the
+ view, but a sequence that must observe one consistent state needs the view's critical section. Do not share an
+ object between views or use it after closing its view. See <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a> for synchronization.
 
 <h2><a name="DocID"></a>1&nbsp;&nbsp;CDOID</h2>
 <p>
- A <a href="../../../javadoc/org/eclipse/emf/cdo/common/id/CDOID.html" title="Interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> is a unique identifier for a CDOObject within a CDO repository. It is used to identify and reference
- CDOObjects in a distributed environment. CDOIDs are immutable and are assigned to CDOObjects when they are
- created. CDOIDs can be of different types, such as long, string, or UUID, depending on the configuration of the
- CDO repository.
+ A <a href="../../../javadoc/org/eclipse/emf/cdo/common/id/CDOID.html" title="Interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> identifies a logical object independently of the view-bound Java instance and its revisions.
+ Newly attached objects can initially have a temporary ID; the repository assigns or confirms persistent identity
+ during commit. Persisted IDs are suitable for locating the same object in a later view. ID representation and
+ generation policy depend on repository configuration.
  <p>
  The identifier of a CDOObject can be accessed using the <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoID()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoID()</code></a> method.
 
 <h2><a name="DocRevision"></a>2&nbsp;&nbsp;CDORevision</h2>
 <p>
- A CDORevision is a lightweight representation of an object's state at a specific point in time. It contains the
- attributes and references of the object, as well as metadata such as the object's identifier, branch and version.
+ A <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a> is the data for one object's state at a historical coordinate. It contains feature values
+ and metadata such as object ID, branch, version, and time; it does not contain the owning Java object's identity.
  <p>
- CDORevisions are immutable and are created when an object is first loaded from the repository or when an object is
- modified and committed to the repository. Each time an object is modified and committed, a new CDORevision is
- created, allowing CDO to maintain a history of changes to the object over time.
+ Committed revisions are historical records. A loaded object's current revision can be replaced as its view
+ advances, while a transaction keeps a mutable working revision for local edits. A successful commit stores a new
+ revision for each changed object; unchanged objects do not acquire a revision just because another object was
+ committed.
  <p>
  A CDORevision references other model objects by their
  CDOID, not by direct object references. This indirection allows CDO to manage large object graphs efficiently,
@@ -110,17 +111,22 @@ function windowTitle()
 
 <h2><a name="DocView"></a>3&nbsp;&nbsp;CDOView</h2>
 <p>
- CDOObjects are managed by a <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a>, which provides a context for accessing and manipulating the model.
- CDOViews are associated with a specific branch and, optionally, a specific point in time. They provide methods for
- loading and unloading objects, as well as for managing the state of objects (e.g., marking them as dirty or
- new). An object and its resources must not be used after the owning view has been closed.
+ Every CDO object belongs to the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> that owns its loaded instance. The view determines branch and time
+ context, resource set, synchronization boundary, and transaction state. A second view can load the same CDOID into
+ a distinct Java instance with different state. Closing the owning view releases this context; retaining the old
+ reference does not keep its repository access alive.
  <p>
  The view of a CDOObject can be accessed using the <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoView()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoView()</code></a> method.
 
 <h2><a name="DocState"></a>4&nbsp;&nbsp;CDOState</h2>
 <p>
- CDOObjects maintain state information that indicates their current status within the CDO framework. This state
- is managed by a state machine that is part of the CDOView. The state machine tracks various states, such as:
+ CDOState describes the object's lifecycle in its owning view. A newly created, unattached EMF object is
+ transient; attaching it to a transaction makes it new. A persisted object is clean after loading. Its first
+ effective local write makes it dirty, and undoing all local changes can return it to clean. Loading a proxy
+ materializes its data. A remote invalidation can refresh a clean object or leave it as a proxy for lazy reload;
+ if the transaction has local edits, an incoming change can instead produce a conflict state. Detaching and
+ rollback have state-dependent effects, so state names should not be treated as a substitute for transaction
+ semantics; see the transaction and notification chapters.
  <p>
  <img src="StateMachine.png"/>
  <p>

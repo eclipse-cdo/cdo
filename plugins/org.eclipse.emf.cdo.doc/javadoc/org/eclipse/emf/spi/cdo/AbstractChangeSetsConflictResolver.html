@@ -104,7 +104,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractChangeSetsConflictResolver</span>
 <span class="extends-implements">extends <a href="AbstractConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractConflictResolver</a>
 implements <a href="../../cdo/transaction/CDOConflictResolver.NonConflictAware.html" title="interface in org.eclipse.emf.cdo.transaction">CDOConflictResolver.NonConflictAware</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for resolvers that compare a transaction's local change set with change sets received through session
+ invalidations. It tracks transaction edits and queues relevant remote invalidations so subclasses can merge changes
+ against the transaction's clean revisions and reset that tracking after commit or rollback.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

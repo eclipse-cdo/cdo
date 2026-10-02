@@ -106,7 +106,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Store</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle
 implements <a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a>, org.eclipse.net4j.util.collection.Entity.Store.Provider, org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for repository storage backends. It binds a store to its repository, advertises the revision and change formats
+ the backend can support, and creates or reuses reader and writer accessors for session and transaction operations.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

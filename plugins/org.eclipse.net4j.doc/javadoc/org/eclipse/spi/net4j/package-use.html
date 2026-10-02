@@ -87,15 +87,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><a href="class-use/Acceptor.html#org.eclipse.net4j">Acceptor</a></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Manages a listening Net4j transport endpoint and the connectors accepted through it.</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/InternalAcceptor.html#org.eclipse.net4j">InternalAcceptor</a></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal acceptor contract that combines the public acceptor API with transport configuration and negotiator support required by Net4j
+ acceptor implementations.</div>
 </div>
 <div class="col-first even-row-color"><a href="class-use/InternalConnector.html#org.eclipse.net4j">InternalConnector</a></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal connector contract that combines the public connector API with channel multiplexing and negotiator configuration.</div>
 </div>
 </div>
 </section>
@@ -125,7 +126,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/ServerProtocolFactory.html#org.eclipse.net4j.signal.heartbeat">ServerProtocolFactory</a></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates server-side protocol instances for the Net4j server protocol extension point.</div>
 </div>
 </div>
 </section>
@@ -159,15 +160,17 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><a href="class-use/ChannelMultiplexer.html#org.eclipse.spi.net4j">ChannelMultiplexer</a></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements the shared channel-multiplexing machinery for a connector or acceptor, routing buffers between logical channels and the
+ underlying transport while managing channel registration and lifecycle.</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/InternalAcceptor.html#org.eclipse.spi.net4j">InternalAcceptor</a></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal acceptor contract that combines the public acceptor API with transport configuration and negotiator support required by Net4j
+ acceptor implementations.</div>
 </div>
 <div class="col-first even-row-color"><a href="class-use/InternalChannel.html#org.eclipse.spi.net4j">InternalChannel</a></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal channel contract for managing channel identity, its multiplexer, buffer flow, lifecycle, and queued outgoing buffers.</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/InternalChannel.SendQueueEvent.Type.html#org.eclipse.spi.net4j">InternalChannel.SendQueueEvent.Type</a></div>
 <div class="col-last odd-row-color">
@@ -175,15 +178,15 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><a href="class-use/InternalChannelMultiplexer.html#org.eclipse.spi.net4j">InternalChannelMultiplexer</a></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a transport that multiplexes logical channels over a connection and supplies their buffers.</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/InternalConnector.html#org.eclipse.spi.net4j">InternalConnector</a></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal connector contract that combines the public connector API with channel multiplexing and negotiator configuration.</div>
 </div>
 <div class="col-first even-row-color"><a href="class-use/InverseCloseable.html#org.eclipse.spi.net4j">InverseCloseable</a></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Provides the inverse-close operation used when a resource must be closed from the opposite side of a bidirectional lifecycle relationship.</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/Protocol.html#org.eclipse.spi.net4j">Protocol</a></div>
 <div class="col-last odd-row-color">

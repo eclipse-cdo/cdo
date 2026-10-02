@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOPackageInfo</span><span class="extends-implements">
 extends <a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.Internal.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter.Internal</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Registry metadata attached to an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EPackage</code></a> that associates it with its containing CDO package unit. The
+ registry serializes this record with the package URI and parent relationship so package units can be loaded and
+ reconstructed across sessions.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

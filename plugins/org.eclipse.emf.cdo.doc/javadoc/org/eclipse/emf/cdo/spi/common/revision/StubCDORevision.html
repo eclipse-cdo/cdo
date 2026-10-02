@@ -103,7 +103,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">StubCDORevision</span>
 <span class="extends-implements">extends <a href="AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Minimal revision shell for code that needs revision identity or class metadata without a mutable feature store.
+ Unsupported mutations make accidental use as a loaded object revision fail immediately; specialized internal uses
+ can supply only the revision behavior they require.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

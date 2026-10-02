@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalTransaction</span><span class="extends-implements">
 extends <a href="../../server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>, <a href="InternalView.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalView</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Server-side transaction extension of a view that creates the commit context used to validate and persist a client
+ commit. It also retains the latest commit attempt so transaction processing can associate retries with their
+ repository timestamps.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

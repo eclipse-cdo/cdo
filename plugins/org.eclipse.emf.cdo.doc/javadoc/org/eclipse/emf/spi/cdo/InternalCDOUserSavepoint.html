@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOUserSavepoint</span><span class="extends-implements">
 extends <a href="../../cdo/transaction/CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserSavepoint</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal node in a user transaction's savepoint chain. The transaction uses the links to restore or traverse retained
+ savepoints while preserving the public <a href="../../cdo/transaction/CDOUserSavepoint.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOUserSavepoint</code></a> view of the same state.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

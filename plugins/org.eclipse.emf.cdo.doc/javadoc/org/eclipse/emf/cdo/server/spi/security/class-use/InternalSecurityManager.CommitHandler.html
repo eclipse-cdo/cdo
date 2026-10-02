@@ -74,7 +74,8 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../InternalSecurityManager.CommitHandler2.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler2</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Commit-handler extension that receives a callback after a commit succeeds, allowing security state to be updated
+ only once the repository has accepted the change.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../package-summary.html">org.eclipse.emf.cdo.server.spi.security</a> that implement <a href="../InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></span></div>
@@ -85,17 +86,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../AnnotationHandler.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.spi.security">AnnotationHandler</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Commit handler that reads CDO security annotations from newly registered EPackages and translates them into realm
+ roles with package- or class-level read and write permissions.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../HomeFolderHandler.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.spi.security">HomeFolderHandler</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Security commit handler that provisions a home resource folder and grants its owner access when users are added to
+ the realm.</div>
 </div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../InternalSecurityManager.CommitHandler2.WithUser.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler2.WithUser</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Convenience base for post-commit handlers that need the user associated with the commit.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.server.spi.security</a> that return <a href="../InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></span></div>

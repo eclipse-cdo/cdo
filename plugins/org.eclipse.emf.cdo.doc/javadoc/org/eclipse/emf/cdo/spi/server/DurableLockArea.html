@@ -102,7 +102,8 @@ implements <a href="../../common/lock/IDurableLockingManager.LockArea.html" titl
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="../../common/lock/CDOLockUtil.html#createLockArea(java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.Map)"><code>CDOLockUtil.createLockArea(String, String, CDOBranchPoint, boolean, Map)</code></a> instead</div>
 </div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Deprecated value object for a persisted durable-locking session: it records the user, branch point, read-only status,
+ and locks restored when that session resumes. New code should use the lock-area factory on <a href="../../common/lock/CDOLockUtil.html" title="class in org.eclipse.emf.cdo.common.lock"><code>CDOLockUtil</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

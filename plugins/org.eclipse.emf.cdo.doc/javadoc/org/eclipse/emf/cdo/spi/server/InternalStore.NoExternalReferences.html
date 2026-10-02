@@ -97,7 +97,8 @@ loadScripts(document, 'script');</script>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.6 use IRepositoryConfig.CAPABILITY_EXTERNAL_REFS.</div>
 </div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Legacy capability marker for stores whose data model permits no references that point outside the repository. New
+ repositories should express this capability through <code>IRepositoryConfig.CAPABILITY_EXTERNAL_REFS</code>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalStore</span><span class="extends-implements">
 extends <a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal lifecycle and repository-binding contract for a storage backend. The repository uses it to configure the
+ store's revision behavior and to maintain branch and commit timestamp state across activation.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
@@ -120,17 +121,18 @@ extends <a href="../../server/IStore.html" title="interface in org.eclipse.emf.c
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalStore.NoChangeSets.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoChangeSets</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Capability marker for stores that cannot produce change-set data for a time interval.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalStore.NoCommitInfos.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoCommitInfos</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Capability marker for stores that do not retain commit-info history.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalStore.NoDurableLocking.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoDurableLocking</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Capability marker for stores that do not support durable lock areas, so a client cannot resume locks through this
+ backend after its session is closed.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalStore.NoExternalReferences.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoExternalReferences</a></code></div>
@@ -149,22 +151,22 @@ extends <a href="../../server/IStore.html" title="interface in org.eclipse.emf.c
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalStore.NoHandleRevisions.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoHandleRevisions</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Capability marker for stores that cannot enumerate revisions through the revision-handler API.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalStore.NoLargeObjects.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoLargeObjects</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Capability marker for stores that do not persist or retrieve CDO large objects such as blobs and character objects.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalStore.NoQueryXRefs.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoQueryXRefs</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Capability marker for stores that cannot answer cross-reference queries.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalStore.NoRawAccess.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore.NoRawAccess</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Capability marker for stores that cannot expose raw storage data for replication.</div>
 </div>
 </div>
 <div class="inherited-list">

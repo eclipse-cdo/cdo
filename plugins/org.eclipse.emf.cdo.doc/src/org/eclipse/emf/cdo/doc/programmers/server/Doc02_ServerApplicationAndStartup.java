@@ -8,7 +8,9 @@ package org.eclipse.emf.cdo.doc.programmers.server;
 import org.eclipse.emf.cdo.doc.operators.Doc00_OperatingServer;
 import org.eclipse.emf.cdo.doc.operators.Doc02_ConfiguringAcceptors;
 import org.eclipse.emf.cdo.spi.server.IAppExtension;
+import org.eclipse.emf.cdo.spi.server.IAppExtension2;
 import org.eclipse.emf.cdo.spi.server.IAppExtension3;
+import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 
 /**

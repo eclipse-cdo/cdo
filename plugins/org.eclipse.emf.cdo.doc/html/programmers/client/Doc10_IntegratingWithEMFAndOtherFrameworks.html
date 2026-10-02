@@ -201,8 +201,7 @@ function maximize(id)
           <div id="editor_content_2_CDOURIs_1" style="padding:8px;">
             <code>
             CDOURIData&nbsp;data&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>CDOURIData(uri);<br/>
-            <font color="#7f0055"><b>return&nbsp;</b></font>data.getScheme()&nbsp;+&nbsp;<font color="#2a00ff">&#34;:&#34;&nbsp;</font>+&nbsp;data.getRepositoryName()&nbsp;+&nbsp;CDOURIUtil.SEGMENT_SEPARATOR<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;data.getResourcePath().toPortableString();            </code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>data.getScheme()&nbsp;+&nbsp;<font color="#2a00ff">&#34;:&#34;&nbsp;</font>+&nbsp;data.getRepositoryName()&nbsp;+&nbsp;CDOURIUtil.SEGMENT_SEPARATOR&nbsp;+&nbsp;data.getResourcePath().toPortableString();            </code>
 
           </div>
         </div>
@@ -314,7 +313,7 @@ function maximize(id)
 
 <h2><a name="AdapterIntegration"></a>7&nbsp;&nbsp;Adapters and Remote Changes</h2>
 <p>
- Ordinary EMF Adapter adapters can be attached to CDO objects. CDO-specific <a href="../../../javadoc/org/eclipse/emf/cdo/CDOAdapter.html" title="Interface in org.eclipse.emf.cdo"><code>adapters</code></a>
+ Ordinary EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" target="_blank" title="Interface in org.eclipse.emf.common.notify"><code>adapters</code></a> can be attached to CDO objects. CDO-specific <a href="../../../javadoc/org/eclipse/emf/cdo/CDOAdapter.html" title="Interface in org.eclipse.emf.cdo"><code>adapters</code></a>
  and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOAdapterPolicy</code></a> change-subscription policies are available when an application needs selected remote
  changes delivered to adapters. A policy controls subscription and delivery; it does not replace passive updates or
  view invalidation.

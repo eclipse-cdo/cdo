@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">RepositoryUserManager</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle
 implements org.eclipse.net4j.util.security.IUserManager, org.eclipse.net4j.util.security.IAuthenticator</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Repository-scoped source of user credentials that also authenticates clients against those credentials. The managed
+ container injects the repository context so subclasses can retrieve a user's password from the repository they serve.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
@@ -124,17 +125,17 @@ implements org.eclipse.net4j.util.security.IUserManager, org.eclipse.net4j.util.
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="RepositoryUserManager.RepositoryAuthenticatorFactory.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryAuthenticatorFactory</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Factory for installing a repository-backed <a href="RepositoryUserManager.html" title="class in org.eclipse.emf.cdo.spi.server"><code>RepositoryUserManager</code></a> as an authenticator.</div>
 </div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="RepositoryUserManager.RepositoryInjector.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryInjector</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Container post-processor that injects the managed container into each repository user manager.</div>
 </div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="RepositoryUserManager.RepositoryUserManagerFactory.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">RepositoryUserManager.RepositoryUserManagerFactory</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Factory for installing a repository-backed <a href="RepositoryUserManager.html" title="class in org.eclipse.emf.cdo.spi.server"><code>RepositoryUserManager</code></a> as a user manager.</div>
 </div>
 </div>
 <div class="inherited-list">

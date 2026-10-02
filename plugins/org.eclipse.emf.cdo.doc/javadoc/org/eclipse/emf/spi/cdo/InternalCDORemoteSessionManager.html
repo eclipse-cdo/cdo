@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDORemoteSessionManager</span><span class="extends-implements">
 extends <a href="../../cdo/session/remote/CDORemoteSessionManager.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSessionManager</a>, org.eclipse.net4j.util.lifecycle.ILifecycle, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal owner of a session's remote-session and remote-topic state. It translates protocol notifications into
+ lifecycle, subscription, and message updates on the corresponding remote-session objects.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

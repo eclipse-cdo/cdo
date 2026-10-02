@@ -145,11 +145,13 @@ function windowTitle()
 <h3><a name="Client"></a>2.1&nbsp;&nbsp;Client Architecture</h3>
 <p>
  <p>
- The architecture of a CDO application is characterized by its mandatory dependency on EMF, the Eclipse Modeling
- Framework. Most of the time an application interacts with the object graph of the model through standard EMF APIs
- because CDO model graph objects are <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a>. While CDO's basic functionality integrates nicely and
- transparently with EMF's extension mechanisms some of the more advanced functions may require to add direct
- dependencies on CDO to your application code.
+ A CDO client combines an EMF model object graph with repository-aware loading and persistence. Application code
+ normally uses generated model interfaces and EMF APIs for domain behavior, then uses CDO APIs to connect, choose a
+ branch or time, manage a view, commit changes, and observe repository events. The session, view, and transaction
+ connect these levels: a session owns connection-wide services; a view loads revision data into its resource set; a
+ transaction tracks local edits and sends them for commit. Revision managers and caches support loading and reuse,
+ while the session protocol carries requests to the server. These managers and the transport are infrastructure;
+ applications generally configure them through session and connector APIs instead of implementing them.
  <p>
  The following diagram illustrates the major building blocks of a CDO application: <p align="center"><img src="programmers/client/application-architecture.png">
 <p><b>See Also:</b></p>
@@ -161,13 +163,27 @@ function windowTitle()
 <h3><a name="Repository"></a>2.2&nbsp;&nbsp;Repository Architecture</h3>
 <p>
  <p>
- A CDO server hosts one or more <a href="../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>repositories</code></a>. Each repository combines a generic CDO core with
- a store and a protocol boundary; applications normally configure, observe, and customize the repository rather than
- either boundary. The managed container supplies the factories and named elements that assemble those parts.
+ A CDO server hosts one or more <a href="../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>repositories</code></a>. Each repository combines model and history
+ services with a store and a protocol boundary; applications normally configure, observe, and customize the
+ repository rather than either boundary. The managed container supplies the factories and named elements that
+ assemble those parts.
  <p>
  The diagram shows the architectural separation. It is deliberately not a deployment topology:
  <p align="center"><img src="programmers/server/repository-architecture.png">
 
+ <p>
+ A typical request starts when a client connector reaches a server acceptor and creates a server session. The session
+ opens a server view or transaction on a repository. A read then uses the revision manager and store; a query is
+ dispatched to a registered query handler; a commit passes through supported validation/interception and conflict
+ handling before the store persists its change set. The resulting commit information and notifications update
+ interested clients. The protocol carries these requests and responses, but its individual indications are not a
+ stable application extension seam.
+ <p>
+ Repository managers divide responsibilities: the package registry supplies model metadata; the branch manager
+ resolves branches and points; the revision manager loads current or historical object data; the commit-info manager
+ exposes commit metadata; the session manager tracks connected clients; the locking manager coordinates explicit
+ repository locks; and, when enabled, the unit manager handles bounded model subtrees. Repository handlers and
+ protectors intercept supported operations; they do not replace the store or repository factory.
  <p>
  This guide uses normal API and intentional extension SPI. In particular, internal repository, session,
  commit-manager, protocol-indication, and store classes are implementation details and are not server application

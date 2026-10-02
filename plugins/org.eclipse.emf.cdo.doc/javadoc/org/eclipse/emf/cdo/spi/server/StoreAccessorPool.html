@@ -93,7 +93,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">StoreAccessorPool</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Reuses passivated store accessors managed by an <a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server"><code>IStore</code></a>. A pool may be shared or scoped to a session or view;
+ checkout restores the accessor's active context, while excess or unusable accessors are deactivated.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

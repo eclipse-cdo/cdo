@@ -93,20 +93,44 @@ function maximize(id)
 
 <h2><a name="SynchronizationAndFailover"></a>1&nbsp;&nbsp;Synchronization and Failover</h2>
 <p>
+ An offline clone or failover participant is assembled from a local <a href="../../../javadoc/org/eclipse/emf/cdo/server/IStore.html" title="Interface in org.eclipse.emf.cdo.server"><code>IStore</code></a>, repository properties, and an
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepositorySynchronizer</code></a>. Create the synchronizer from a remote <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSessionConfigurationFactory</code></a>;
+ that factory supplies the remote session configuration, including connector and repository name. Configure retry
+ and recommit policy before activation, create the specialized repository with
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map<java.lang.String,java.lang.String>,org.eclipse.emf.cdo.server.IRepositorySynchronizer)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createOfflineClone(String, IStore, Map, IRepositorySynchronizer)</code></a> or a failover-participant
+ factory, then register it with the owning container. Repository activation starts synchronization; container
+ deactivation stops the repository and synchronizer. The synchronizer owns the remote session it opens, while the
+ application still owns the container, local store resources, and separately created connector infrastructure.
+ <p>
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISynchronizableRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>ISynchronizableRepository</code></a> is a repository that synchronizes against a master through an
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepositorySynchronizer</code></a>. It exposes the synchronizer, replicator session, replication progress, and
- explicit online/offline transition. <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)</code></a>
- creates the supplied synchronizer from a remote session configuration factory. The same utility offers offline
- clone and failover-participant creation. Treat source/target selection, retry policy, and lifecycle as part of the
- application design; production failover topology and recovery procedures belong to the Operator's Guide.
+ explicit online/offline transition. The last replicated branch ID and commit timestamp describe replication
+ progress; <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISynchronizableRepository.html#hasBeenReplicated()" title="Method in org.eclipse.emf.cdo.server.ISynchronizableRepository"><code>ISynchronizableRepository.hasBeenReplicated()</code></a> distinguishes a repository that has completed an
+ initial replication from one that has not. These values are progress information, not a promise that the remote
+ repository is currently reachable or that a promotion is safe.
+ <p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createRepositorySynchronizer(CDOSessionConfigurationFactory)</code></a> creates the supplied
+ synchronizer from a remote session configuration factory. The synchronizer owns the remote session it opens and
+ exposes retry and recommit controls. Keep the local repository and synchronizer under a clear lifecycle owner so
+ shutdown closes the replication connection with the repository. These APIs expose state and transitions; they do
+ not select a master, detect safe promotion, resolve split-brain, or guarantee automatic high availability. Those
+ decisions and storage durability remain application and operations responsibilities. Progress and state events
+ are useful inputs, but are not an operational failover protocol.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map<java.lang.String,java.lang.String>,org.eclipse.emf.cdo.server.IRepositorySynchronizer)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createOfflineClone(String, IStore, Map, IRepositorySynchronizer)</code></a> and the
+ failover-participant factories assemble specialized repository variants, but the
+ application must still choose and coordinate the master, backup, storage, and transition policy. The API does not
+ itself establish an operational failover topology or guarantee promotion safety. Treat source/target selection,
+ retry policy, and lifecycle as application design; production failover and recovery procedures belong to the
+ Operator's Guide.
 
 <h2><a name="MonitoringAndDiagnostics"></a>2&nbsp;&nbsp;Monitoring and Activity Logs</h2>
 <p>
  Repository state, manager containers, lifecycle events, and commit information provide lightweight programmatic
- diagnostics. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>RepositoryActivityLog</code></a> is a lifecycle hook that records repository activation, sessions,
- views, transactions, and commit start/finish events. Its supplied rolling implementation can be attached to an
- application-owned repository. Keep custom diagnostics bounded and do not treat an activity log as an operational
- retention policy.
+ diagnostics. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/RepositoryActivityLog.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>RepositoryActivityLog</code></a> is a lifecycle hook that registers a session-manager listener and a
+ write-access handler while active. The rolling implementation records repository activation, session/view and
+ transaction lifecycle, and commit start/finish events. Deactivating it removes those hooks and closes the rolling
+ log. Keep the log active only while its repository is active, and treat it as diagnostic output rather than an
+ audit trail or retention policy.
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -114,7 +138,7 @@ function maximize(id)
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateActivityLog.java</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">WithActivityLog.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('MonitoringAndDiagnostics_1')" id="max_MonitoringAndDiagnostics_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -127,8 +151,17 @@ function maximize(id)
             <code>
             RepositoryActivityLog&nbsp;log&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>RepositoryActivityLog.Rolling(<font color="#2a00ff">&#34;activities&#34;</font>,&nbsp;<font color="#990000">1000000L</font>,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
             log.setRepository(repository);<br/>
-            LifecycleUtil.activate(log);<br/>
-            <font color="#7f0055"><b>return&nbsp;</b></font>log;            </code>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;LifecycleUtil.activate(log);<br/>
+            &nbsp;&nbsp;applicationWork.run();<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;LifecycleUtil.deactivate(log);<br/>
+            &nbsp;&nbsp;log.setRepository(<font color="#7f0055"><b>null</b></font>);<br/>
+            }            </code>
 
           </div>
         </div>
@@ -141,9 +174,61 @@ function maximize(id)
 
 <h2><a name="ImportAndExport"></a>3&nbsp;&nbsp;Import and Export</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerExporter.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerExporter</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerImporter.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerImporter</code></a> are the programmatic transfer boundaries for repository
- contents and history. Subclass or configure them only through their documented API for controlled application
- migration and interchange. Backup schedules, storage retention, and restore runbooks are operational concerns.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerExporter.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerExporter</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerImporter.html" title="Class in org.eclipse.emf.cdo.server"><code>CDOServerImporter</code></a> are stream-based programmatic transfer boundaries. Choose
+ matching XML or binary implementations. An exporter reads package metadata, branches/revisions, large-object
+ contents, and commit information. It flushes but does not close the caller's output stream, and it temporarily
+ activates a repository only if it was inactive. An importer targets a newly constructed inactive repository: its
+ constructor prepares the target store to drop existing data and activates the target before reading. Never point
+ it at a live repository whose data must be preserved. It consumes but does not own the input stream. The caller
+ closes streams and deactivates the target after import, including when import fails. A failed transfer may leave
+ partial target data; discard that target and retry into a fresh one.
+ <p>
+ This sequence is useful for controlled migration/interchange. It is not an atomic backup or restore operation.
+ The example uses an application-owned file as the transfer boundary.
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ImportAndExport_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">TransferRepository.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ImportAndExport_1')" id="max_ImportAndExport_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ImportAndExport_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ImportAndExport_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(OutputStream&nbsp;output&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>FileOutputStream(exchangeFile))<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>CDOServerExporter.XML(source).exportRepository(output);<br/>
+            }<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(InputStream&nbsp;input&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>FileInputStream(exchangeFile))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>CDOServerImporter.XML(emptyTarget).importRepository(input);<br/>
+            &nbsp;&nbsp;}<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;LifecycleUtil.deactivate(emptyTarget);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ Backup consistency, scheduling, storage retention, and recovery runbooks remain Operator's Guide concerns.
 
 <h2><a name="IntegrationBoundary"></a>4&nbsp;&nbsp;Net4j and Other Intentional Extensions</h2>
 <p>

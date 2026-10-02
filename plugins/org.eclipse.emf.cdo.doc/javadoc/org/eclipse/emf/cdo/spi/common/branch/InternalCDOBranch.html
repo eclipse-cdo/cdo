@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOBranch</span><span class="extends-implements">
 extends <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal branch node maintained by <a href="InternalCDOBranchManager.html" title="interface in org.eclipse.emf.cdo.spi.common.branch"><code>InternalCDOBranchManager</code></a>. Besides the public branch history, it retains
+ loader metadata and mutable child links needed while branches are lazily loaded, created, or removed.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

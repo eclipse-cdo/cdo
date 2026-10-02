@@ -98,7 +98,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDORawReplicationContext</span><span class="extends-implements">
 extends <a href="CDOReplicationInfo.html" title="interface in org.eclipse.emf.cdo.spi.common">CDOReplicationInfo</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Replication target that accepts the repository's raw replication stream. A raw context is used when replication data
+ can be transferred in the source store's native representation instead of replaying individual branch, commit, and
+ lock callbacks.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

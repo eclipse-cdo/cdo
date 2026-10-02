@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalChannel</span><span class="extends-implements">
 extends <a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>, <a href="../../net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal channel contract for managing channel identity, its multiplexer, buffer flow, lifecycle, and queued outgoing buffers. It extends
+ the public channel API with operations used by the Net4j transport implementation.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

@@ -98,7 +98,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOObject</span><span class="extends-implements">
 extends <a href="../../cdo/CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>, <a href="InternalCDOLoadable.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOLoadable</a>, <a href="../../cdo/common/model/CDOPackageTypeRegistry.CDOObjectMarker.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry.CDOObjectMarker</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract implemented by objects managed by a CDO view. It joins the EMF object with its CDO identity,
+ revision, view, and state, and supplies the lifecycle hooks that the CDO state machine invokes during attachment,
+ loading, invalidation, commit, rollback, and detachment.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

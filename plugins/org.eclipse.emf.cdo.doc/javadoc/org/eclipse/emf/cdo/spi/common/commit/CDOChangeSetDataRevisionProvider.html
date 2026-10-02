@@ -98,7 +98,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDOChangeSetDataRevisionProvider</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../../../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, <a href="../../../common/commit/CDOChangeSetDataProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetDataProvider</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Presents a change set as a <a href="../../../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionProvider</code></a> layered over an existing revision source. New revisions and
+ changed revisions can be supplied eagerly in the change set or fetched lazily through callbacks, while detached IDs
+ resolve to no revision.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

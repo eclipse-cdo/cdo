@@ -97,7 +97,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDOSessionInvalidationEventQueue</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Collects <a href="../../cdo/session/CDOSessionInvalidationEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionInvalidationEvent</code></a>s emitted by a <a href="../../cdo/session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a> so a consumer can retrieve them later.
+ The queue registers a session listener for its lifetime, and <a href="#dispose()"><code>dispose()</code></a> removes that listener after clearing
+ pending events.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>

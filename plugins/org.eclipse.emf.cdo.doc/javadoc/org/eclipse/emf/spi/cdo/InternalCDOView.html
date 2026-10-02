@@ -98,7 +98,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOView</span><span class="extends-implements">
 extends <a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>, <a href="../../cdo/common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>, <a href="../../cdo/common/lob/CDOLobLoader.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>, org.eclipse.net4j.util.lifecycle.ILifecycle, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a repository view's object cache and invalidation lifecycle. A view uses it to resolve and
+ load revisions for its branch point, while session invalidations update the objects and permissions visible through
+ that view.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

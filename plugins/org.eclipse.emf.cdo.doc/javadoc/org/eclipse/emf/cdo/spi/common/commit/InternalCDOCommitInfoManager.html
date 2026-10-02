@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOCommitInfoManager</span><span class="extends-implements">
 extends <a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal manager for a repository's commit history. It creates commit-info objects, serves commit-data loading
+ requests through a <a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit"><code>InternalCDOCommitInfoManager.CommitInfoLoader</code></a>, and notifies handlers as commits become available.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
@@ -120,7 +121,7 @@ extends <a href="../../../common/commit/CDOCommitInfoManager.html" title="interf
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Storage boundary for reading a branch's commit history and the detailed change data for an individual commit.</div>
 </div>
 </div>
 <div class="inherited-list">

@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDOChangeKindCache</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashMap.html" title="class or interface in java.util" class="external-link">HashMap</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../../../common/commit/CDOChangeKind.html" title="enum class in org.eclipse.emf.cdo.common.commit">CDOChangeKind</a>&gt;
 implements <a href="../../../common/commit/CDOChangeKindProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeKindProvider</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Indexes a <a href="../../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>CDOChangeSetData</code></a> by object ID so callers can determine whether each object is new, changed, or
+ detached without scanning the three change-set lists repeatedly.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

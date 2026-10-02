@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOUserTransaction</span><span class="extends-implements">
 extends <a href="../../cdo/transaction/CDOUserTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOUserTransaction</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal transaction contract for user-managed transactions, where savepoints are retained as a linked sequence and
+ the transaction exposes its current endpoint for rollback and commit handling.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

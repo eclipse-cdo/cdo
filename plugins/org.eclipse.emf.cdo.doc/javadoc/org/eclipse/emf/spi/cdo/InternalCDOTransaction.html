@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOTransaction</span><span class="extends-implements">
 extends <a href="../../cdo/transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>, <a href="InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a>, <a href="InternalCDOView.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOView</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal transaction contract that connects the public transaction API to a CDO view and the transaction strategy.
+ It tracks clean revisions and local deltas, builds commit contexts, applies change sets, and maintains savepoint and
+ conflict state needed to reconcile the local model with repository commits.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
@@ -120,12 +122,13 @@ extends <a href="../../cdo/transaction/CDOTransaction.html" title="interface in 
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOTransaction.ApplyChangeSetResult.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ApplyChangeSetResult</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Summarizes the effects of applying a goal change set to a transaction, including the normalized change set, any ID
+ remappings, and the objects whose references had to be adjusted.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalCDOTransaction.ChangeSetOutdatedException.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">InternalCDOTransaction.ChangeSetOutdatedException</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Signals that a change set can no longer be applied against the target revision state used to define it.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOTransaction.InternalCDOCommitContext.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction.InternalCDOCommitContext</a></code></div>

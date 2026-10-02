@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalSession</span><span class="extends-implements">
 extends <a href="../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>, <a href="../../common/id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>, <a href="../../common/security/CDOPermissionProvider.html" title="interface in org.eclipse.emf.cdo.common.security">CDOPermissionProvider</a>, <a href="../../common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</a>, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider, org.eclipse.net4j.util.collection.Entity.Store.Provider</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Server representation of one connected client session. It owns that client's views and protocol, supplies ID and
+ permission context for requests, and projects repository notifications—including ordered lock changes—into the
+ state visible to that client.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>

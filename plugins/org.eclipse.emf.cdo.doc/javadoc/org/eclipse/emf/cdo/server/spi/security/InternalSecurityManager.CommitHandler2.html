@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">InternalSecurityManager.CommitHandler2</span><span class="extends-implements">
 extends <a href="InternalSecurityManager.CommitHandler.html" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Commit-handler extension that receives a callback after a commit succeeds, allowing security state to be updated
+ only once the repository has accepted the change.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>
@@ -124,7 +125,7 @@ extends <a href="InternalSecurityManager.CommitHandler.html" title="interface in
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalSecurityManager.CommitHandler2.WithUser.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler2.WithUser</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Convenience base for post-commit handlers that need the user associated with the commit.</div>
 </div>
 </div>
 <div class="inherited-list">

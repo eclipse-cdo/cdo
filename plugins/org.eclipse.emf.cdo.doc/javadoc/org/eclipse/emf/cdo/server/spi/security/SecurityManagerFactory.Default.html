@@ -106,7 +106,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public static class </span><span class="element-name type-name-label">SecurityManagerFactory.Default</span>
 <span class="extends-implements">extends <a href="SecurityManagerFactory.html" title="class in org.eclipse.emf.cdo.server.spi.security">SecurityManagerFactory</a>
 implements org.eclipse.net4j.util.container.IManagedContainer.ContainerAware</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Default factory that creates a realm-backed security manager for a repository. It resolves the configured commit
+ handlers from the container and associates the manager with the repository it protects.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

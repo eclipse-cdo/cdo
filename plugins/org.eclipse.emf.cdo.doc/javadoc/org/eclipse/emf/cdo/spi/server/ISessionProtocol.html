@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">ISessionProtocol</span><span class="extends-implements">
 extends <a href="../../common/protocol/CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a>, <a href="IAuthenticationProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">IAuthenticationProtocol</a>, org.eclipse.net4j.util.event.INotifier</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Server-side protocol contract for a connected CDO session. Repository, branch, commit, remote-session, and lock
+ changes are sent through it so the client can update the state visible in its session.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

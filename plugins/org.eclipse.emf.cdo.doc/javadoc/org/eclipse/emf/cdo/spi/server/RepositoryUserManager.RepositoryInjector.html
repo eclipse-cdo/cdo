@@ -102,7 +102,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public static class </span><span class="element-name type-name-label">RepositoryUserManager.RepositoryInjector</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements org.eclipse.net4j.util.container.IElementProcessor</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Container post-processor that injects the managed container into each repository user manager. The manager then
+ resolves its configured repository when it authenticates a user or retrieves credentials.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

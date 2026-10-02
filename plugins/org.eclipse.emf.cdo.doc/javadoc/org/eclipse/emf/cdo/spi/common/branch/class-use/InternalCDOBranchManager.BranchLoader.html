@@ -184,22 +184,23 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../InternalCDOBranchManager.BranchLoader2.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader2</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Compatibility extension of the branch persistence contract for branch deletion and renaming.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../InternalCDOBranchManager.BranchLoader3.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader3</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Branch-loader extension that persists a rename with both the old and new names, allowing the store to detect
+ duplicate names and report them as a branch-specific error.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../InternalCDOBranchManager.BranchLoader4.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader4</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Branch-loader extension that persists branch-tag changes and streams stored tags back to the manager during load.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../InternalCDOBranchManager.BranchLoader5.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader5</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Branch-loader extension for deleting a branch together with its descendants.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.spi.common.branch</a> that return <a href="../InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a></span></div>
@@ -233,17 +234,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../server/InternalFailoverParticipant.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Synchronizable repository participating in failover.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../server/InternalRepository.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal composition point for a running CDO repository.</div>
 </div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../server/InternalSynchronizableRepository.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Repository-side contract for a repository that participates in replication.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that implement <a href="../InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a></span></div>
@@ -254,17 +255,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../server/LongIDStoreAccessor.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">LongIDStoreAccessor</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Store-accessor base paired with <a href="../../../server/LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server"><code>LongIDStore</code></a>.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../server/StoreAccessor.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for store accessors that implement repository reads and writes for one session or transaction.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../server/StoreAccessorBase.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Shared lifecycle and commit pipeline for store readers and writers.</div>
 </div>
 </div>
 </section>
@@ -280,7 +281,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../../../spi/cdo/CDOSessionProtocol.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Defines the client-side operations for communicating with a CDO repository over a session protocol.</div>
 </div>
 </div>
 </section>

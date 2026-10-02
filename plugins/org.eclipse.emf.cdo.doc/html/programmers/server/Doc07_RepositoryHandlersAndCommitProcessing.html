@@ -92,26 +92,38 @@ function maximize(id)
 
 <h2><a name="AccessHandlers"></a>1&nbsp;&nbsp;Read and Write Access</h2>
 <p>
- A <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>ReadAccessHandler</code></a> receives revisions before they are sent to a client. It rejects the requested set by
- throwing a runtime exception, and may remove optimizer-supplied additional revisions. A
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>WriteAccessHandler</code></a> runs before a transaction reaches the store and again after a successful commit. The
- before callback can reject semantic validation with <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.TransactionValidationException.html" title="Class in org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler"><code>WriteAccessHandler.TransactionValidationException</code></a>; its
- message reaches the client. The after callback is observation-only: it must not alter the commit context.
- <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>ObjectWriteAccessHandler</code></a> is the supported SPI base for object-level write checks.
+ A <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>ReadAccessHandler</code></a> receives the exact requested revisions and a separate list of optimizer-supplied
+ additional revisions. If any requested revision is forbidden, throw to reject the request; the handler cannot
+ silently remove only part of that array. It may remove speculative additional revisions that the client did not
+ request. Keep checks bounded because they execute on the read path.
+ <p>
+ A <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>WriteAccessHandler</code></a> runs before a transaction reaches the store and, after a successful persistence,
+ again in its after-commit callback. The before callback receives the server transaction, commit context, and
+ progress monitor. Use <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.TransactionValidationException.html" title="Class in org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler"><code>WriteAccessHandler.TransactionValidationException</code></a> for semantic validation; its
+ message is returned to the client. The commit context is for inspection; if a supported mutation is needed, use
+ its documented modify(...) operation rather than altering its internal state directly. The after callback
+ is observation-only and must not mutate the context. Both callbacks are on the commit path and should avoid slow
+ work. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>ObjectWriteAccessHandler</code></a> is the supported SPI base for object-level write checks.
 
 <h2><a name="CommitObservationAndConflicts"></a>2&nbsp;&nbsp;Commit Information and Conflicts</h2>
 <p>
- Register a <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoHandler</code></a> with the repository's commit-info manager to observe commit information
- after it is available. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>ICommitConflictResolver</code></a> is an expert SPI for conflict resolution and is configured
- as part of repository setup; its contract intentionally exposes commit-context SPI, so it should be used only when
- merge policy cannot be expressed through ordinary transaction validation.
+ A write handler's after-commit callback observes the specific transaction and commit context immediately after its
+ store commit. A <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoHandler</code></a> registered with the repository's commit-info manager observes completed
+ commit-info records, which is a better seam for indexing or auditing that is organized around commit metadata.
+ Neither callback should perform unbounded work inline; copy the required immutable values and submit expensive
+ processing to an application executor. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>ICommitConflictResolver</code></a> is an expert SPI for resolving eligible
+ transaction conflicts and is configured as part of repository setup. Its contract exposes commit-context SPI, so
+ use it only when policy cannot be expressed through ordinary validation and client conflict handling.
 
 <h2><a name="CommitFlow"></a>3&nbsp;&nbsp;Application-facing Commit Flow</h2>
 <p>
- A client transaction arrives with session and transaction context. Repository security and write handlers can
- validate or veto it; conflict policy can resolve eligible conflicts; the configured store persists the accepted
- change; and commit information plus after-commit handlers observe the result. Exact indication and store-internal
- sequencing is deliberately not an application contract.
+ A client transaction arrives with authenticated session and transaction context. Repository protection and
+ authorization decide whether the user may read or write; before-commit handlers apply application validation;
+ conflict policy handles eligible concurrent changes; and the configured store persists the accepted change. The
+ repository then publishes commit information and update notifications, while after-commit handlers observe the
+ result. These are conceptual application phases; exact signal and store-internal sequencing is not a contract.
+ The snippets show a read gate, a validation rule, and completed-commit observation.
+ <p>
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -119,7 +131,7 @@ function maximize(id)
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">InstallReadCheck.java</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">Read&nbsp;check:&nbsp;InstallReadCheck.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CommitFlow_1')" id="max_CommitFlow_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -143,6 +155,86 @@ function maximize(id)
             };<br/>
             <br/>
             repository.addHandler(handler);<br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>handler;            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_CommitFlow_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">Semantic&nbsp;validation:&nbsp;RequireCommitComment.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CommitFlow_2')" id="max_CommitFlow_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_CommitFlow_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_CommitFlow_2" style="padding:8px;">
+            <code>
+            WriteAccessHandler&nbsp;handler&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>WriteAccessHandler()<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>handleTransactionBeforeCommitting(ITransaction&nbsp;transaction,&nbsp;IStoreAccessor.CommitContext&nbsp;commitContext,&nbsp;OMMonitor&nbsp;monitor)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;comment&nbsp;=&nbsp;commitContext.getCommitComment();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(comment&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;comment.trim().isEmpty())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>TransactionValidationException(<font color="#2a00ff">&#34;A&nbsp;commit&nbsp;comment&nbsp;is&nbsp;required&#34;</font>);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>handleTransactionAfterCommitted(ITransaction&nbsp;transaction,&nbsp;IStoreAccessor.CommitContext&nbsp;commitContext,&nbsp;OMMonitor&nbsp;monitor)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Keep&nbsp;the&nbsp;after-commit&nbsp;callback&nbsp;observation-only&nbsp;and&nbsp;quick.</font><br/>
+            &nbsp;&nbsp;}<br/>
+            };<br/>
+            <br/>
+            repository.addHandler(handler);<br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>handler;            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_CommitFlow_3"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">Commit&nbsp;observation:&nbsp;ObserveCommitInfo.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CommitFlow_3')" id="max_CommitFlow_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_CommitFlow_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_CommitFlow_3" style="padding:8px;">
+            <code>
+            CDOCommitInfoHandler&nbsp;handler&nbsp;=&nbsp;enqueue::accept;<br/>
+            repository.getCommitInfoManager().addCommitInfoHandler(handler);<br/>
             <font color="#7f0055"><b>return&nbsp;</b></font>handler;            </code>
 
           </div>

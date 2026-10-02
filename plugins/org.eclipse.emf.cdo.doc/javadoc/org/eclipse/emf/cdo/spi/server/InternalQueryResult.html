@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalQueryResult</span><span class="extends-implements">
 extends <a href="../../common/util/BlockingCloseableIterator.html" title="interface in org.eclipse.emf.cdo.common.util">BlockingCloseableIterator</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Server-side result stream for a query executing against a view. The query manager exposes it as a blocking iterator
+ backed by a queue, while retaining the handler and query metadata needed for cancellation and lifecycle management.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

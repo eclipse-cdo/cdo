@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDORevisionCache</span><span class="extends-implements">
 extends <a href="../../../common/revision/CDORevisionCache.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCache</a>, <a href="../../../common/revision/CDORevisionInterner.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionInterner</a>, <a href="../../../common/revision/CDOAllRevisionsProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOAllRevisionsProvider</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal cache and interner for revisions shared by a revision manager. It indexes revisions by object and branch
+ version, supports branch-scoped eviction, and participates in the manager's lifecycle.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

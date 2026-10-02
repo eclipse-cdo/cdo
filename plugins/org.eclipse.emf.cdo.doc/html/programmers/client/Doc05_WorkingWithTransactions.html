@@ -334,9 +334,12 @@ function maximize(id)
 <h2><a name="PartialCommits"></a>6&nbsp;&nbsp;Partial Commits</h2>
 <p>
  A transaction can restrict one commit to a set of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>committable objects</code></a> with
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set<? extends org.eclipse.emf.ecore.EObject>)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommittables(Set)</code></a>. Objects not selected remain local and the transaction remains dirty;
- dependencies required by the selected objects must also be included. This is useful for staged work, but it is a
- deliberate consistency boundary and should not be used as a substitute for designing independent transactions.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set<? extends org.eclipse.emf.ecore.EObject>)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommittables(Set)</code></a>. CDO filters the transaction's new, dirty, and detached objects against
+ this set; it does not automatically compute a dependency closure. If a selected object refers to a new object that
+ is not selected, the intended commit may be incomplete or violate model constraints. Include the full set needed
+ for a valid repository change. Non-selected changes remain local and the transaction stays dirty. Use partial
+ commits only when those staged boundaries make sense to the domain; independent business units are usually easier
+ to reason about as separate transactions.
 
  
 
@@ -356,7 +359,7 @@ function maximize(id)
         <div id="editor_content_1_PartialCommits_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_PartialCommits_1" style="padding:8px;">
             <code>
-            transaction.setCommittables(Collections.singleton(object));<br/>
+            transaction.setCommittables(committables);<br/>
             transaction.commit();            </code>
 
           </div>
@@ -588,9 +591,12 @@ function maximize(id)
 <p>
  General querying is covered in the Views chapter. A transaction additionally offers
  <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#createQuery(java.lang.String,java.lang.String,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.createQuery(String, String, boolean)</code></a> and its context overload, whose
- considerDirtyState argument controls whether the query considers the transaction's local uncommitted
- changes. Use true only when the query is intended to describe the transaction's working state rather than
- the repository state alone.
+ considerDirtyState argument controls whether CDO adds the transaction's local change-set data to the
+ query request. This lets query implementations that support change-set data account for new, modified, and
+ detached objects alongside repository results. It does not execute an arbitrary query over a complete in-memory
+ copy, and a custom query handler must honor the supplied change-set data for the option to affect its results.
+ Use true when asking about the transaction's working state; the default repository-only query answers a
+ different question.
 
  
 

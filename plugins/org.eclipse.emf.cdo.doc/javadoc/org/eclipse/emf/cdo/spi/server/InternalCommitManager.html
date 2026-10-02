@@ -89,7 +89,8 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCommitManager</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Repository service that schedules transaction commit contexts and lets callers await, remove, or roll back the
+ pending work. Its pre-commit phase can run asynchronously before the store write and commit phases proceed.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>

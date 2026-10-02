@@ -94,7 +94,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOBranchManager</span><span class="extends-implements">
 extends <a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal owner of a repository's branch tree and branch tags. It combines the in-memory branch objects with a
+ <a href="InternalCDOBranchManager.BranchLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.branch"><code>InternalCDOBranchManager.BranchLoader</code></a> that persists, creates, and lazily loads branch metadata, and propagates branch and tag changes
+ to registered handlers.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
@@ -120,27 +122,28 @@ extends <a href="../../../common/branch/CDOBranchManager.html" title="interface 
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOBranchManager.BranchLoader.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Persistence boundary used by the branch manager to allocate branches and load branch metadata and descendants.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalCDOBranchManager.BranchLoader2.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader2</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Compatibility extension of the branch persistence contract for branch deletion and renaming.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOBranchManager.BranchLoader3.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader3</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Branch-loader extension that persists a rename with both the old and new names, allowing the store to detect
+ duplicate names and report them as a branch-specific error.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalCDOBranchManager.BranchLoader4.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader4</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Branch-loader extension that persists branch-tag changes and streams stored tags back to the manager during load.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOBranchManager.BranchLoader5.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.BranchLoader5</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Branch-loader extension for deleting a branch together with its descendants.</div>
 </div>
 <div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalCDOBranchManager.TagChangeKind.html" class="type-name-link" title="enum class in org.eclipse.emf.cdo.spi.common.branch">InternalCDOBranchManager.TagChangeKind</a></code></div>

@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalSecurityManager</span><span class="extends-implements">
 extends <a href="../../security/ISecurityManager.html" title="interface in org.eclipse.emf.cdo.server.security">ISecurityManager</a>, org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal security service bound to a repository. It evaluates operations against a realm, coordinates secondary
+ repositories and permission caches, and invokes commit handlers around repository writes.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -118,12 +119,13 @@ extends <a href="../../security/ISecurityManager.html" title="interface in org.e
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalSecurityManager.CommitHandler.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Repository extension invoked before a commit is security-checked and written.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="InternalSecurityManager.CommitHandler2.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.server.spi.security">InternalSecurityManager.CommitHandler2</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Commit-handler extension that receives a callback after a commit succeeds, allowing security state to be updated
+ only once the repository has accepted the change.</div>
 </div>
 </div>
 <div class="inherited-list">

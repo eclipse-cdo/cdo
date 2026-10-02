@@ -136,17 +136,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/cdo/AbstractChangeSetsConflictResolver.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">AbstractChangeSetsConflictResolver</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for resolvers that compare a transaction's local change set with change sets received through session
+ invalidations.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/cdo/AbstractConflictResolver.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">AbstractConflictResolver</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for conflict resolvers that retain a transaction association while that transaction is open.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/cdo/AbstractObjectConflictResolver.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for resolvers that make a resolution decision separately for each conflicting <a href="../../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a>.</div>
 </div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/cdo/AbstractObjectConflictResolver.MergeLocalChangesPerFeature.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver.MergeLocalChangesPerFeature</a></code></div>
@@ -163,12 +164,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../../spi/cdo/AbstractObjectConflictResolver.ThreeWayMerge.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver.ThreeWayMerge</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Older three-way resolution framework that observes local feature edits and remote revision deltas for each object.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../spi/cdo/CDOMergingConflictResolver.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">CDOMergingConflictResolver</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Reconciles local transaction edits with change sets received from the repository by passing both sides to a
+ <a href="../CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction"><code>CDOMerger</code></a>.</div>
 </div>
 </div>
 </section>

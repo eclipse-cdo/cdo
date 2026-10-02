@@ -102,7 +102,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractCDORevision</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>, <a href="InternalCDOList.Owner.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDOList.Owner</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Common implementation for revision objects that supplies class metadata, branch-time validity, permission checks, and
+ traversal of currently loaded feature values. Concrete revisions build on this behavior to store and exchange the
+ versioned state of one CDO object.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

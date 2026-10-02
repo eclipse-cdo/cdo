@@ -78,9 +78,12 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- An <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>application extension</code></a> is a supported SPI for application-specific server startup work. It
- is contributed to the server's IAppExtension#EXT_POINT extension point. Use it to wire application
- services, install repository handlers or listeners, and remove those contributions at shutdown.
+ An <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>application extension</code></a> is a supported SPI for application-level server startup work. An OSGi
+ bundle contributes an appExtension element to org.eclipse.emf.cdo.server.appExtensions; the server
+ instantiates the declared class, so its no-argument construction must not depend on a repository already existing.
+ Choose a callback interface for the context and lifecycle you need, install repository-specific listeners or
+ handlers in that callback, and remove those exact registrations on stop. An application extension orchestrates
+ application behavior; it is not itself a repository handler, a repository listener, or a managed-container factory.
  <p>
 <table border="0">
 <tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_ApplicationExtensions.html#VariantsAndContext" title="Chapter in CDO Model Repository Documentation">Choosing an Extension Variant</a></td></tr>
@@ -92,25 +95,42 @@ function maximize(id)
 
 <h2><a name="VariantsAndContext"></a>1&nbsp;&nbsp;Choosing an Extension Variant</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> receives the configuration file in <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html#start(java.io.File)" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension"><code>IAppExtension.start(File)</code></a> and has a matching
- <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html#stop()" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension"><code>IAppExtension.stop()</code></a> callback. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension2.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension2</code></a> additionally supports a reader for each dynamically
- managed repository configuration; instances can be started more than once and stop when their repository is
- deleted. Prefer <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension3.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension3</code></a> when startup requires the configured <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>repositories</code></a>.
+ The interfaces extend the base <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension</code></a> lifecycle. The packaged server constructs one contributed
+ instance at startup, then calls <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html#start(java.io.File)" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension"><code>IAppExtension.start(File)</code></a> and later <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension.html#stop()" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension"><code>IAppExtension.stop()</code></a>. The base
+ form receives the application XML file, but no repository array; look repositories up through a supported
+ container context only when appropriate.
  <p>
- Implement <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension4.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension4</code></a> to set a priority, and <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension5</code></a> to provide a name and choose the
- pre-repository phase. These are orthogonal refinements, not separate extension points.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension2.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension2</code></a> adds <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension2.html#startDynamic(java.io.Reader)" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension2"><code>IAppExtension2.startDynamic(Reader)</code></a> for each dynamically configured
+ repository. The repository-configuration manager creates a separate extension instance for each dynamic start,
+ passes that repository's XML, and calls that instance's stop() when the repository deactivates. A dynamic
+ extension must therefore keep per-instance cleanup state and must not assume its base start(File) was
+ called for that dynamic instance.
+ <p>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension3.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension3</code></a> receives the initially configured <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html" title="Interface in org.eclipse.emf.cdo.server"><code>repositories</code></a> and config file in its
+ repository-aware start callback, with a matching repository-array stop callback instead of the base callback
+ pair. It is the clearest choice for installing one listener/handler per configured repository. The array describes
+ initial startup; later dynamic repositories have their own configuration lifecycle and do not appear in it.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension4.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension4</code></a> supplies a numeric priority: smaller values start first within their phase and stop in
+ reverse order; extensions without it use the default priority. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>IAppExtension5</code></a> supplies a logging name and
+ selects the early phase through <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/IAppExtension5.html#startBeforeRepositories()" title="Method in org.eclipse.emf.cdo.spi.server.IAppExtension5"><code>IAppExtension5.startBeforeRepositories()</code></a>. Early callbacks run before the
+ repository configurator and must not use repository state. These are orthogonal choices; an extension can
+ implement more than one variant.
 
 <h2><a name="LifecycleDiscipline"></a>2&nbsp;&nbsp;Lifecycle Discipline</h2>
 <p>
- Extension callbacks run as part of server startup and shutdown. Keep them bounded, make start failure-safe, and
- retain only the resources needed to undo installation in stop. The application catches and logs extension
- exceptions, so an extension must not assume that a failure has rolled back work it already performed. Do not use
- internal repository types merely because the packaged application happens to use them.
+ Startup and stop callbacks run synchronously on the server application lifecycle path. Keep them bounded. Retain
+ only the repository/listener/handler pairs needed for teardown. If setup fails after installing some listeners,
+ remove the partial set in the start method's failure path: the packaged application logs an extension exception
+ and continues, but does not call stop() as rollback for a failed start. On normal stop, remove those
+ registrations before the owning repositories deactivate. Repository listener callbacks may run on the event
+ delivery thread, so queue expensive work elsewhere. The contribution's predecessor attribute suppresses
+ a competing extension implementation; it is not an ordering mechanism. Do not depend on internal repository
+ classes merely because the packaged application uses them.
 
 <h2><a name="Examples"></a>3&nbsp;&nbsp;Repository-aware Extension Example</h2>
 <p>
  This repository-aware extension notifies an application service when its session state changes. It stores every
- listener that it adds and removes exactly those listeners during shutdown.
+ listener that it adds, unwinds partial setup if installation fails, and removes exactly those listeners on shutdown.
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -141,30 +161,42 @@ function maximize(id)
             &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
             &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>start(IRepository[]&nbsp;repositories,&nbsp;File&nbsp;configFile)<br/>
             &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>for&nbsp;</b></font>(IRepository&nbsp;repository&nbsp;:&nbsp;repositories)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
             &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IListener&nbsp;listener&nbsp;=&nbsp;event&nbsp;-&gt;&nbsp;sessionStateChanged.accept(repository);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repository.getSessionManager().addListener(listener);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listeners.put(repository,&nbsp;listener);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>for&nbsp;</b></font>(IRepository&nbsp;repository&nbsp;:&nbsp;repositories)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IListener&nbsp;listener&nbsp;=&nbsp;event&nbsp;-&gt;&nbsp;sessionStateChanged.accept(repository);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repository.getSessionManager().addListener(listener);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;listeners.put(repository,&nbsp;listener);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>catch&nbsp;</b></font>(RuntimeException&nbsp;|&nbsp;Error&nbsp;ex)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;removeListeners();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>private&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>removeListeners()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>for&nbsp;</b></font>(Map.Entry&lt;IRepository,&nbsp;IListener&gt;&nbsp;entry&nbsp;:&nbsp;listeners.entrySet())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entry.getKey().getSessionManager().removeListener(entry.getValue());<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;listeners.clear();<br/>
             &nbsp;&nbsp;}<br/>
             <br/>
             &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
             &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>stop(IRepository[]&nbsp;repositories)<br/>
             &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>for&nbsp;</b></font>(IRepository&nbsp;repository&nbsp;:&nbsp;repositories)<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IListener&nbsp;listener&nbsp;=&nbsp;listeners.remove(repository);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(listener&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repository.getSessionManager().removeListener(listener);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;removeListeners();<br/>
             &nbsp;&nbsp;}<br/>
             <br/>
             &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
             &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>stop()<br/>
             &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;removeListeners();<br/>
             &nbsp;&nbsp;}<br/>
             };            </code>
 
@@ -176,6 +208,41 @@ function maximize(id)
 </div>
 <p>
 
+ <p>
+ Contribute the extension from its bundle's plugin.xml with
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Examples_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-xml.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">plugin.xml</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Examples_2')" id="max_Examples_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Examples_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Examples_2" style="padding:8px;">
+            <code>
+</font><font color="#0000e1">&lt;plugin&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;</font><font color="#0000e1">&lt;extension&nbsp;point=</font><font color="#000080">"org.eclipse.emf.cdo.server.appExtensions"<font color="#0000e1">&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#0000e1">&lt;appExtension&nbsp;class=</font><font color="#000080">"com.example.server.SessionObserverExtension"<font color="#0000e1">/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;</font><font color="#0000e1">&lt;/extension&gt;</font><font color="#000080"><br/>
+</font><font color="#0000e1">&lt;/plugin&gt;</font><font color="#000080"><br/>
+</font>            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+.
 
 <p align="right">
 <a href="Doc03_ManagedContainer.html" title="Backward to The Managed Container"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_CreatingAndConfiguringRepositories.html" title="Forward to Creating and Configuring Repositories"><img src="../../../images/forward.png" border="0"></a></p>

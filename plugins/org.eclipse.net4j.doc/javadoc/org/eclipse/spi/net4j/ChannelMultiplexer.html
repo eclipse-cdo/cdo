@@ -110,7 +110,8 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">ChannelMultiplexer</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.container.Container&lt;<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;
 implements <a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a>, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider, <a href="InverseCloseable.html" title="interface in org.eclipse.spi.net4j">InverseCloseable</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements the shared channel-multiplexing machinery for a connector or acceptor, routing buffers between logical channels and the
+ underlying transport while managing channel registration and lifecycle.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

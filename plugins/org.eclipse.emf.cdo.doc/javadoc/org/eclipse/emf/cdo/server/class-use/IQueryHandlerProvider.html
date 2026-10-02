@@ -195,17 +195,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/server/InternalFailoverParticipant.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalFailoverParticipant</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Synchronizable repository participating in failover.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../spi/server/InternalRepository.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal composition point for a running CDO repository.</div>
 </div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/server/InternalSynchronizableRepository.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.server">InternalSynchronizableRepository</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Repository-side contract for a repository that participates in replication.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> that implement <a href="../IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></span></div>
@@ -216,27 +216,28 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/server/ContainerQueryHandlerProvider.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">ContainerQueryHandlerProvider</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Resolves repository query handlers through the managed container, which holds the registered language-specific
+ <a href="../../spi/server/QueryHandlerFactory.html" title="class in org.eclipse.emf.cdo.spi.server"><code>QueryHandlerFactory</code></a> extensions.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../spi/server/FactoriesQueryHandlerProvider.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">FactoriesQueryHandlerProvider</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Resolves query handlers from an explicit registry of factories keyed by query language.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/server/LongIDStoreAccessor.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">LongIDStoreAccessor</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Store-accessor base paired with <a href="../../spi/server/LongIDStore.html" title="class in org.eclipse.emf.cdo.spi.server"><code>LongIDStore</code></a>.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../spi/server/StoreAccessor.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for store accessors that implement repository reads and writes for one session or transaction.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/server/StoreAccessorBase.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Shared lifecycle and commit pipeline for store readers and writers.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> with parameters of type <a href="../IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></span></div>

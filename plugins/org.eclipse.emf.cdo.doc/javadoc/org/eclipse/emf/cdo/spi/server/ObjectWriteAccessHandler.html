@@ -98,7 +98,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ObjectWriteAccessHandler</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
 implements <a href="../../server/IRepository.WriteAccessHandler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.WriteAccessHandler</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Convenience base for repository write-access hooks that need EMF objects while a transaction is committing. It opens
+ a temporary view over the commit context, resolves the new and dirty revisions to objects, and releases that view
+ after each pre-commit or post-commit callback.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>

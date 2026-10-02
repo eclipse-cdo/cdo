@@ -84,17 +84,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="Acceptor.html" title="class in org.eclipse.spi.net4j">Acceptor</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Manages a listening Net4j transport endpoint and the connectors accepted through it.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Acceptor.ConnectorPreparer.html" title="interface in org.eclipse.spi.net4j">Acceptor.ConnectorPreparer</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AcceptorFactory.html" title="class in org.eclipse.spi.net4j">AcceptorFactory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates acceptor implementations for the Net4j acceptor extension point.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Channel.html" title="class in org.eclipse.spi.net4j">Channel</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements a logical Net4j channel that sends and receives buffers through a channel multiplexer and dispatches received data to its
+ configured receiver.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="ChannelContainer.html" title="class in org.eclipse.spi.net4j">ChannelContainer</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
@@ -102,31 +103,33 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements the shared channel-multiplexing machinery for a connector or acceptor, routing buffers between logical channels and the
+ underlying transport while managing channel registration and lifecycle.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="ClientProtocolFactory.html" title="class in org.eclipse.spi.net4j">ClientProtocolFactory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates client-side protocol instances for the Net4j client protocol extension point.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Connector.html" title="class in org.eclipse.spi.net4j">Connector</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Multiplexes Net4j channels over a physical connection and manages connection establishment, negotiation, authentication, and shutdown.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="ConnectorFactory.html" title="class in org.eclipse.spi.net4j">ConnectorFactory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates connector implementations for the Net4j connector extension point.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalAcceptor.html" title="interface in org.eclipse.spi.net4j">InternalAcceptor</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal acceptor contract that combines the public acceptor API with transport configuration and negotiator support required by Net4j
+ acceptor implementations.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalBuffer.html" title="interface in org.eclipse.spi.net4j">InternalBuffer</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal buffer contract that allows the transport to associate a buffer with its provider and dispose it when processing is complete.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal channel contract for managing channel identity, its multiplexer, buffer flow, lifecycle, and queued outgoing buffers.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalChannel.CountersChangedEvent.html" title="interface in org.eclipse.spi.net4j">InternalChannel.CountersChangedEvent</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
@@ -143,17 +146,17 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a transport that multiplexes logical channels over a connection and supplies their buffers.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InternalChannelMultiplexer.BufferMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer.BufferMultiplexer</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal connector contract that combines the public connector API with channel multiplexing and negotiator configuration.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="InverseCloseable.html" title="interface in org.eclipse.spi.net4j">InverseCloseable</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Provides the inverse-close operation used when a resource must be closed from the opposite side of a bidirectional lifecycle relationship.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Protocol.html" title="class in org.eclipse.spi.net4j">Protocol</a>&lt;INFRA_STRUCTURE&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
@@ -161,7 +164,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="ServerProtocolFactory.html" title="class in org.eclipse.spi.net4j">ServerProtocolFactory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Creates server-side protocol instances for the Net4j server protocol extension point.</div>
 </div>
 </div>
 </div>

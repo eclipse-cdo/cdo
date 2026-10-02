@@ -98,7 +98,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOReplicationContext</span><span class="extends-implements">
 extends <a href="CDOReplicationInfo.html" title="interface in org.eclipse.emf.cdo.spi.common">CDOReplicationInfo</a>, <a href="../../common/branch/CDOBranchHandler.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchHandler</a>, <a href="../../common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a>, <a href="../../common/lock/IDurableLockingManager.LockArea.Handler.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea.Handler</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Target-side callback contract for replaying repository history into another repository. It receives branch and
+ commit information together with durable lock-area data as the replication process walks the source history.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

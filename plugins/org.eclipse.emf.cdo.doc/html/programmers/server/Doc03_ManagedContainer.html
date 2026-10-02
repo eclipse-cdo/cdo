@@ -78,38 +78,88 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- An <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IManagedContainer</code></a> is the CDO and Net4j registry for factories and named runtime elements. A factory is
- addressed by its product group and type; an element also has a description. The container can create an element on
- demand, retain one supplied by <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#putElement(java.lang.String,java.lang.String,java.lang.String,java.lang.Object)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.putElement(String, String, String, Object)</code></a>, and notify
- container listeners when elements are added or removed.
+ An <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IManagedContainer</code></a> combines a factory registry with a registry of named runtime elements. A product group
+ identifies a service family, a factory type selects an implementation, and a description carries the instance key
+ or configuration (for example, a TCP endpoint). A lookup that needs an absent product can create it through the
+ matching factory; a put retains an already-created object. Container events report additions and removals. The
+ container coordinates lifecycle for elements it owns, including dependencies acquired by factory products. Choose
+ the shared OSGi container for bundle-managed server applications and an independent initialized container for a
+ standalone application. Do not deactivate the shared plugin container.
  <p>
 <table border="0">
 <tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#FactoriesAndElements" title="Chapter in CDO Model Repository Documentation">Factories, Product Groups, and Lookup</a></td></tr>
 <tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#LifecycleAndConfiguration" title="Chapter in CDO Model Repository Documentation">Lifecycle and Configuration</a></td></tr>
-<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#Examples" title="Chapter in CDO Model Repository Documentation">Repository Lookup Example</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc03_ManagedContainer.html#Examples" title="Chapter in CDO Model Repository Documentation">Standalone Container Example</a></td></tr>
 </table>
 </p>
 
 
 <h2><a name="FactoriesAndElements"></a>1&nbsp;&nbsp;Factories, Product Groups, and Lookup</h2>
 <p>
- Register an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactory.html" title="Interface in org.eclipse.net4j.util.factory"><code>factory</code></a> before asking the container to create its product. Use
- <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#getProductGroups()" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.getProductGroups()</code></a> and <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryTypes(java.lang.String)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.getFactoryTypes(String)</code></a> for discovery,
- and use a component's factory constants rather than literal keys. Creation resolves the selected factory and its
- dependencies; lookup can activate the resulting lifecycle object. Repositories use
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryFactory.html#PRODUCT_GROUP" title="Field in org.eclipse.emf.cdo.server.IRepositoryFactory"><code>RepositoryFactory.PRODUCT_GROUP</code></a> and are normally obtained with <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.getRepository(IManagedContainer, String)</code></a>.
+ Register an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactory.html" title="Interface in org.eclipse.net4j.util.factory"><code>factory</code></a> before asking a raw, unprepared container to create its product. An
+ <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#registerFactory(org.eclipse.net4j.util.factory.IFactory)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>registered factory</code></a> is selected by its own product group and type; an
+ OSGi application's declarative factories are contributed by bundles and become available through the plugin
+ container. Use <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#getProductGroups()" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.getProductGroups()</code></a> and <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#getFactoryTypes(java.lang.String)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.getFactoryTypes(String)</code></a>
+ for discovery, and use component constants rather than literal keys. getElement resolves a factory,
+ creates the product if necessary, retains it under the group/type/description key, and activates lifecycle
+ products. getElementOrNull only returns an existing element; putElement retains a caller-created
+ element. A factory can obtain dependencies from the same container, which makes container ownership extend to the
+ assembled runtime graph.
+ <p>
+ Repositories use <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositoryFactory.html#PRODUCT_GROUP" title="Field in org.eclipse.emf.cdo.server.IRepositoryFactory"><code>RepositoryFactory.PRODUCT_GROUP</code></a> and are normally obtained with
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.getRepository(IManagedContainer, String)</code></a>. The factory creates a repository; the container
+ locates and owns the registered instance. The short lookup form is shown in
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_FactoriesAndElements_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">RepositoryLookup.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('FactoriesAndElements_1')" id="max_FactoriesAndElements_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_FactoriesAndElements_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_FactoriesAndElements_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>CDOServerUtil.getRepository(container,&nbsp;repositoryName);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+.
 
 <h2><a name="LifecycleAndConfiguration"></a>2&nbsp;&nbsp;Lifecycle and Configuration</h2>
 <p>
- A container is also a lifecycle object. Populate it before activation when possible, then let component activation
- acquire dependencies. <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IManagedContainer.html#loadElements(java.io.InputStream)" title="Method in org.eclipse.net4j.util.container.IManagedContainer"><code>IManagedContainer.loadElements(java.io.InputStream)</code></a> supports container
- configuration; server XML configuration is normally handled by the repository configurator instead. Avoid sharing
- mutable application objects under ambiguous descriptions, and remove or deactivate owned elements during teardown.
+ <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/ContainerUtil.html#createContainer()" title="Method in org.eclipse.net4j.util.container.ContainerUtil"><code>ContainerUtil.createContainer()</code></a> returns an empty, inactive ManagedContainer; it has no CDO/Net4j
+ factory contributions until the application registers or prepares them. For ordinary standalone use,
+ <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/ContainerUtil.html#createInitializedContainer()" title="Method in org.eclipse.net4j.util.container.ContainerUtil"><code>ContainerUtil.createInitializedContainer()</code></a> creates a distinct container, loads available platform and
+ declarative factory/element-processor contributions, initializes it, and activates it for immediate lookup.
+ “Initialized” does not mean that the application's repositories or acceptors already exist: factories are ready,
+ while products are created as requested. The convenience method is current; do not call deprecated
+ ContainerUtil.prepareContainer, CDOServerUtil.prepareContainer, or component-specific preparation
+ methods on its result. A deliberately raw container can instead be prepared through the supported OMBundle
+ mechanism and activated by its owner. In OSGi, the shared plugin container is managed globally.
+ <p>
+ Products created through the container are activated as they are created and stopped when removed or when the
+ owner deactivates. Products inserted with putElement are retained and become container-owned; do not
+ independently close a product after transferring ownership. For server XML, use the repository configurator
+ described in <a href="Doc02_ServerApplicationAndStartup.html" title="Article in CDO Model Repository Documentation">CDO Server Application and Startup</a>, not generic container configuration. Deactivate an
+ application-owned container at shutdown so its elements and dependencies are released.
 
-<h2><a name="Examples"></a>3&nbsp;&nbsp;Repository Lookup Example</h2>
+<h2><a name="Examples"></a>3&nbsp;&nbsp;Standalone Container Example</h2>
 <p>
- This lookup reuses a repository already registered under its repository-factory identity. The returned repository
- remains container-owned; an extension should remove listeners and handlers that it added before shutdown.
+ The initialized container is the owner of the acceptor created through it. The caller's work runs while that
+ acceptor is active; deactivating the container releases it even when the work fails.
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -117,7 +167,7 @@ function maximize(id)
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">FindRepository.java</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">WithStandaloneAcceptor.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Examples_1')" id="max_Examples_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -128,7 +178,16 @@ function maximize(id)
         <div id="editor_content_1_Examples_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_Examples_1" style="padding:8px;">
             <code>
-            <font color="#7f0055"><b>return&nbsp;</b></font>CDOServerUtil.getRepository(container,&nbsp;repositoryName);            </code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;ITCPAcceptor&nbsp;acceptor&nbsp;=&nbsp;TCPUtil.getAcceptor(container,&nbsp;endpoint);<br/>
+            &nbsp;&nbsp;serverWork.accept(acceptor);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;container.deactivate();<br/>
+            }            </code>
 
           </div>
         </div>

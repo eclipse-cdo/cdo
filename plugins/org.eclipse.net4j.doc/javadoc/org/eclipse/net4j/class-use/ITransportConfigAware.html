@@ -74,17 +74,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/net4j/InternalAcceptor.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalAcceptor</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal acceptor contract that combines the public acceptor API with transport configuration and negotiator support required by Net4j
+ acceptor implementations.</div>
 </div>
 <div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../spi/net4j/InternalChannelMultiplexer.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal contract for a transport that multiplexes logical channels over a connection and supplies their buffers.</div>
 </div>
 <div class="col-first even-row-color"><code>interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/net4j/InternalConnector.html" class="type-name-link" title="interface in org.eclipse.spi.net4j">InternalConnector</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal connector contract that combines the public connector API with channel multiplexing and negotiator configuration.</div>
 </div>
 </div>
 <div class="caption"><span>Classes in <a href="../../spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> that implement <a href="../ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</a></span></div>
@@ -95,17 +96,18 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/net4j/Acceptor.html" class="type-name-link" title="class in org.eclipse.spi.net4j">Acceptor</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Manages a listening Net4j transport endpoint and the connectors accepted through it.</div>
 </div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../spi/net4j/ChannelMultiplexer.html" class="type-name-link" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Implements the shared channel-multiplexing machinery for a connector or acceptor, routing buffers between logical channels and the
+ underlying transport while managing channel registration and lifecycle.</div>
 </div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../spi/net4j/Connector.html" class="type-name-link" title="class in org.eclipse.spi.net4j">Connector</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Multiplexes Net4j channels over a physical connection and manages connection establishment, negotiation, authentication, and shutdown.</div>
 </div>
 </div>
 </section>

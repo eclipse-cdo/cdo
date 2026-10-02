@@ -110,7 +110,9 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public abstract static class </span><span class="element-name type-name-label">AbstractObjectConflictResolver.ThreeWayMerge</span>
 <span class="extends-implements">extends <a href="AbstractObjectConflictResolver.html" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver</a>
 implements <a href="../../cdo/view/CDOAdapterPolicy.html" title="interface in org.eclipse.emf.cdo.view">CDOAdapterPolicy</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Older three-way resolution framework that observes local feature edits and remote revision deltas for each object.
+ Subclasses use those two streams to decide how a conflicting object should be updated; newer implementations
+ generally use <a href="CDOMergingConflictResolver.html" title="class in org.eclipse.emf.spi.cdo"><code>CDOMergingConflictResolver</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
@@ -132,7 +134,7 @@ implements <a href="../../cdo/view/CDOAdapterPolicy.html" title="interface in or
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="AbstractObjectConflictResolver.ThreeWayMerge.RevisionDeltaCollector.html" class="type-name-link" title="class in org.eclipse.emf.spi.cdo">AbstractObjectConflictResolver.ThreeWayMerge.RevisionDeltaCollector</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Collects remote <a href="../../cdo/common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta"><code>CDORevisionDelta</code></a>s by notifier while remote invalidation events are being processed.</div>
 </div>
 </div>
 <div class="inherited-list">

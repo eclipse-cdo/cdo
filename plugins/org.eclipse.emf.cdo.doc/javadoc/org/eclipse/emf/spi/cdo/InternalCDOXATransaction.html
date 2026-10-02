@@ -94,7 +94,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOXATransaction</span><span class="extends-implements">
 extends <a href="../../cdo/transaction/CDOXATransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOXATransaction</a>, <a href="InternalCDOUserTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOUserTransaction</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Internal coordinator for an XA transaction spanning multiple CDO transactions. It collects participating
+ transactions and their savepoints, then drives their commit or rollback as one coordinated operation.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
@@ -120,7 +121,7 @@ extends <a href="../../cdo/transaction/CDOXATransaction.html" title="interface i
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="InternalCDOXATransaction.InternalCDOXACommitContext.html" class="type-name-link" title="interface in org.eclipse.emf.spi.cdo">InternalCDOXATransaction.InternalCDOXACommitContext</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Per-operation state passed through an XA commit.</div>
 </div>
 </div>
 </section>

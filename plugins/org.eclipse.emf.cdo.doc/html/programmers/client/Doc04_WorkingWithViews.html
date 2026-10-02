@@ -81,17 +81,225 @@ function maximize(id)
  This chapter covers view management, resource handling, querying, transactions, and related options in CDO client
  applications. Views are central to accessing and interacting with model data in a CDO repository. Understanding how
  to use views effectively is key to building responsive and scalable applications.
+ <p>
+ <b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#UnderstandingViewsAndTheirTypes" title="Chapter in CDO Model Repository Documentation">Understanding Views and Their Types</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#OpeningAndClosingViews" title="Chapter in CDO Model Repository Documentation">Opening and Closing Views</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#ThreadSafety" title="Chapter in CDO Model Repository Documentation">Thread Safety</a></td></tr>
+<tr><td></td><td>3.1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#UsingCriticalSections" title="Chapter in CDO Model Repository Documentation">Using Critical Sections</a></td></tr>
+<tr><td></td><td>3.2&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#UsingDelegableLock" title="Chapter in CDO Model Repository Documentation">Using a Delegable Lock</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#UnderstandingTheCDOFileSystem" title="Chapter in CDO Model Repository Documentation">Understanding the CDO File System</a></td></tr>
+<tr><td></td><td>4.1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#TheRootResource" title="Chapter in CDO Model Repository Documentation">The Root Resource</a></td></tr>
+<tr><td></td><td>4.2&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#ResourceFolders" title="Chapter in CDO Model Repository Documentation">Resource Folders</a></td></tr>
+<tr><td></td><td>4.3&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#ModelResources" title="Chapter in CDO Model Repository Documentation">Model Resources</a></td></tr>
+<tr><td></td><td>4.4&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#BinaryResources" title="Chapter in CDO Model Repository Documentation">Binary Resources</a></td></tr>
+<tr><td></td><td>4.5&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#TextResources" title="Chapter in CDO Model Repository Documentation">Text Resources</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#ResourceSetsAndTheirUsage" title="Chapter in CDO Model Repository Documentation">Resource Sets and Their Usage</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#NavigatingModels" title="Chapter in CDO Model Repository Documentation">Navigating Models</a></td></tr>
+<tr><td>7&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#WaitingForUpdates" title="Chapter in CDO Model Repository Documentation">Waiting For Updates</a></td></tr>
+<tr><td>8&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#QueryingResources" title="Chapter in CDO Model Repository Documentation">Querying Resources</a></td></tr>
+<tr><td>9&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#QueryingModelObjects" title="Chapter in CDO Model Repository Documentation">Querying Model Objects</a></td></tr>
+<tr><td>10&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#QueryingCrossReferences" title="Chapter in CDO Model Repository Documentation">Querying Cross References</a></td></tr>
+<tr><td>11&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#CustomQueries" title="Chapter in CDO Model Repository Documentation">Custom Queries</a></td></tr>
+<tr><td>12&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#Units" title="Chapter in CDO Model Repository Documentation">Units</a></td></tr>
+<tr><td>13&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#ViewEvents" title="Chapter in CDO Model Repository Documentation">View Events</a></td></tr>
+<tr><td>14&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#ViewOptions" title="Chapter in CDO Model Repository Documentation">View Options</a></td></tr>
+<tr><td>15&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#ViewProperties" title="Chapter in CDO Model Repository Documentation">View Properties</a></td></tr>
+</table>
+</p>
+
 
 <h2><a name="UnderstandingViewsAndTheirTypes"></a>1&nbsp;&nbsp;Understanding Views and Their Types</h2>
 <p>
- CDO provides several types of views, including read-only views and transactional views. Read-only views allow safe
- navigation of repository data without risk of modification, while transactional views enable changes and commits.
- This section explains the differences, use cases, and lifecycle of each view type.
+ A view binds one client-side <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> and its objects to a session, a resource set,
+ and a branch point. Use a read-only view for navigation, queries, or a stable historical target; use a
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> when the operation must stage local edits and commit them. A normal head view can receive
+ remote invalidations as repository commits arrive, so it is not a frozen snapshot. Audit or historical views read
+ an explicit branch/time point and are read-only. Objects are view-scoped: reopen by persistent ID in another view
+ instead of carrying model objects across view lifetimes.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_UnderstandingViewsAndTheirTypes_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">OpenReadOnlyView.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UnderstandingViewsAndTheirTypes_1')" id="max_UnderstandingViewsAndTheirTypes_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_UnderstandingViewsAndTheirTypes_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_UnderstandingViewsAndTheirTypes_1" style="padding:8px;">
+            <code>
+            CDOView&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Opened&nbsp;view&nbsp;with&nbsp;ID:&nbsp;&#34;&nbsp;</font>+&nbsp;view.getViewID());<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;view.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+ shows a short-lived read; the transaction example
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_UnderstandingViewsAndTheirTypes_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ModifyAndCommit.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UnderstandingViewsAndTheirTypes_2')" id="max_UnderstandingViewsAndTheirTypes_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_UnderstandingViewsAndTheirTypes_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_UnderstandingViewsAndTheirTypes_2" style="padding:8px;">
+            <code>
+            CDOTransaction&nbsp;transaction&nbsp;=&nbsp;session.openTransaction();<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;CDOObject&nbsp;object&nbsp;=&nbsp;transaction.getObject(objectID);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!object.eClass().getEAllStructuralFeatures().contains(feature))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalArgumentException(<font color="#2a00ff">&#34;Feature&nbsp;does&nbsp;not&nbsp;belong&nbsp;to&nbsp;the&nbsp;object's&nbsp;EClass&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;object.eSet(feature,&nbsp;value);<br/>
+            &nbsp;&nbsp;transaction.commit();<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(CommitException&nbsp;|&nbsp;RuntimeException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;transaction.rollback();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;transaction.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+ shows an editable view and its commit boundary.
 
 <h2><a name="OpeningAndClosingViews"></a>2&nbsp;&nbsp;Opening and Closing Views</h2>
 <p>
- Learn how to open views to access repository data and close them to release resources. Proper management of view
- lifecycles helps prevent memory leaks and ensures efficient resource usage.
+ Open views from a session with <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()" title="Method in org.eclipse.emf.cdo.view.CDOViewContainer"><code>CDOSession.openView()</code></a> for the current branch head, or choose an explicit
+ branch point through the session's view-opener overloads. Open a transaction when the operation must modify data;
+ a historical view is read-only. The session tracks its open views, their resource sets, caches, listeners, and
+ remote view state, so close each view in a finally block or try-with-resources pattern when the work ends.
+ Closing a view releases those resources and ends the validity of its model-object context. It does not close the
+ session, which may create later views. Avoid sharing a single long-lived view across unrelated operations just to
+ avoid reopening it; view lifetime should match the consistency and object-identity scope the application needs.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_OpeningAndClosingViews_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">OpenReadOnlyView.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('OpeningAndClosingViews_1')" id="max_OpeningAndClosingViews_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_OpeningAndClosingViews_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_OpeningAndClosingViews_1" style="padding:8px;">
+            <code>
+            CDOView&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Opened&nbsp;view&nbsp;with&nbsp;ID:&nbsp;&#34;&nbsp;</font>+&nbsp;view.getViewID());<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;view.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+ and
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_OpeningAndClosingViews_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ModifyAndCommit.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('OpeningAndClosingViews_2')" id="max_OpeningAndClosingViews_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_OpeningAndClosingViews_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_OpeningAndClosingViews_2" style="padding:8px;">
+            <code>
+            CDOTransaction&nbsp;transaction&nbsp;=&nbsp;session.openTransaction();<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;CDOObject&nbsp;object&nbsp;=&nbsp;transaction.getObject(objectID);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!object.eClass().getEAllStructuralFeatures().contains(feature))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalArgumentException(<font color="#2a00ff">&#34;Feature&nbsp;does&nbsp;not&nbsp;belong&nbsp;to&nbsp;the&nbsp;object's&nbsp;EClass&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;object.eSet(feature,&nbsp;value);<br/>
+            &nbsp;&nbsp;transaction.commit();<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(CommitException&nbsp;|&nbsp;RuntimeException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;transaction.rollback();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;transaction.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+ shows the transaction cleanup pattern.
 
 <h2><a name="ThreadSafety"></a>3&nbsp;&nbsp;Thread Safety</h2>
 <p>
@@ -99,15 +307,10 @@ function maximize(id)
  <b>multiple</b> operations that need to be atomic or consistent, developers must use a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html" title="Interface in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> to
  synchronize access to the view. A CDO view provides its critical section via the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a>.
  <p>
- Thread safety of CDO views is absolutely essential, even in single-threaded applications. The reason is that CDO
- views are accessed by background threads for tasks such as asynchronous updates, notifications, and
- event handling. If a view were not thread-safe, these background operations could lead to data corruption,
- inconsistent states, and unpredictable behavior in the application. By ensuring that views are thread-safe,
- CDO allows developers to build robust applications that can safely handle concurrent operations without risking
- data integrity.
- <p>
- This section discusses best practices for managing concurrent access,
- synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
+ Each individual access to a view or one of its objects is synchronized with the view's internal work. This does
+ not make a sequence of separate calls atomic: an invalidation may occur between calls. Use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a>
+ around the smallest multi-call operation that must observe one coherent state. Keep that critical section short;
+ do not wait for network work, block on another thread, or call arbitrary application callbacks while holding it.
 
 <h3><a name="UsingCriticalSections"></a>3.1&nbsp;&nbsp;Using Critical Sections</h3>
 <p>
@@ -168,7 +371,7 @@ function maximize(id)
  <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#newCondition()" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>newCondition()</code></a> - Creates a new Condition associated with the critical section.
  </ul>
  <p>
- A view's critical section uses a real reentrant lock. The default is a non-fair lock; a lock supplied with
+ A view's critical section uses a real reentrant lock; the current default is a non-fair reentrant lock. A lock supplied with
  <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#setNextViewLock(java.util.concurrent.locks.Lock)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>CDOUtil.setNextViewLock(Lock)</code></a> or the session's delegable-lock option is used when configured. Synchronizing
  directly on the view object is unsupported. By default, CDO detects this when a view lock is next entered and throws
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/UnsupportedOperationException.html" target="_blank" title="Class in java.lang"><code>UnsupportedOperationException</code></a>, directing the caller to <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a>. Set
@@ -201,18 +404,25 @@ function maximize(id)
             <code>
             Lock&nbsp;customLock&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ReentrantLock();<br/>
             CDOUtil.setNextViewLock(customLock);<br/>
-            <br/>
-            CDOView&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
-            CriticalSection&nbsp;sync&nbsp;=&nbsp;view.sync();<br/>
-            <br/>
-            <font color="#7f0055"><b>if&nbsp;</b></font>(sync&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>LockedCriticalSection)<br/>
+            CDOView&nbsp;view&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
             {<br/>
-            &nbsp;&nbsp;Lock&nbsp;lock&nbsp;=&nbsp;((LockedCriticalSection)sync).getLock();<br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>assert&nbsp;</b></font>lock&nbsp;==&nbsp;customLock;<br/>
+            &nbsp;&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
+            &nbsp;&nbsp;CriticalSection&nbsp;sync&nbsp;=&nbsp;view.sync();<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(!(sync&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>LockedCriticalSection)&nbsp;||&nbsp;((LockedCriticalSection)sync).getLock()&nbsp;!=&nbsp;customLock)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;The&nbsp;configured&nbsp;lock&nbsp;was&nbsp;not&nbsp;installed&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
             }<br/>
-            <font color="#7f0055"><b>else</b></font><br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
             {<br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(view&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;view.close();<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;CDOUtil.setNextViewLock(<font color="#7f0055"><b>null</b></font>);<br/>
             }            </code>
 
           </div>
@@ -224,8 +434,10 @@ function maximize(id)
 <p>
 
  <p>
- The following chapter describes how to use a special kind of lock, a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="Class in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a>, that
- allows to delegate the lock ownership to a different thread.
+ A <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="Class in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a> is useful when a framework synchronously hands work to another thread that must
+ access the same view, such as an SWT UI callback. It solves that specific lock-ownership handoff; it is not a
+ reason to hold the critical section across arbitrary blocking work. Register the relevant delegate detector and
+ enable the session option or install the lock before opening the view.
 
 <h3><a name="UsingDelegableLock"></a>3.2&nbsp;&nbsp;Using a Delegable Lock</h3>
 <p>
@@ -521,8 +733,11 @@ function maximize(id)
 
 <h3><a name="ResourceFolders"></a>4.2&nbsp;&nbsp;Resource Folders</h3>
 <p>
- Resource folders organize model resources into logical groups. Learn how to create, navigate, and manage folders
- to structure your repository effectively.
+ The CDO resource hierarchy is a repository-side virtual file system. A <a href="../../../javadoc/org/eclipse/emf/cdo/eresource/CDOResourceFolder.html" title="Interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a> is a persistent
+ model object that contains resource nodes; those nodes may be folders, model resources, binary resources, or text
+ resources. Use folders when resource paths need meaningful grouping and use the node APIs to enumerate children
+ without loading every model's contents. Folder creation is a transaction change and becomes visible to other
+ views only after commit.
  <p>
  For creating resource folders you need a CDOTransaction. Here is an example that illustrates how to create
  folders and subfolders:
@@ -619,8 +834,11 @@ function maximize(id)
 
 <h3><a name="ModelResources"></a>4.3&nbsp;&nbsp;Model Resources</h3>
 <p>
- Model resources store EMF model data in the repository. This section explains how to load, save, and query model
- resources, and how they relate to EMF ResourceSet.
+ A <a href="../../../javadoc/org/eclipse/emf/cdo/eresource/CDOResource.html" title="Interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a> is an EMF resource backed by a CDO view. Its root objects and resource metadata participate
+ in the view's model and notification behavior; creating a resource or changing its contents requires a
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a>. Loading it in a read-only view gives access to repository state through that view's
+ ResourceSet. Adding a resource to an ordinary EMF ResourceSet does not persist it in CDO; use the
+ CDO transaction's resource-creation APIs and commit the transaction to publish the change.
  <p>
  For creating model resources you need a CDOTransaction. Here is an example that illustrates how to create
  model resources:
@@ -898,18 +1116,26 @@ function maximize(id)
 
 <h2><a name="ResourceSetsAndTheirUsage"></a>5&nbsp;&nbsp;Resource Sets and Their Usage</h2>
 <p>
- Resource sets are collections of resources managed together. Learn how to use EMF ResourceSet with CDO, manage
- resource lifecycles, and optimize performance for large models.
+ A view is associated with a ResourceSet; resources loaded through it contain objects owned by that view.
+ Keep the resource set with the view that created it and close the view when the application is done. Do not move
+ CDO resources or their objects to another resource set and assume their view context changes with them. A
+ ResourceSet can also contain ordinary EMF resources, but their persistence and lifecycle remain the
+ responsibility of their own resource implementation. See <a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Article in CDO Model Repository Documentation">Integrating with EMF and Other Frameworks</a> for
+ URI-based loading and resource factories.
 
 <h2><a name="NavigatingModels"></a>6&nbsp;&nbsp;Navigating Models</h2>
 <p>
- This section provides techniques for traversing and querying model objects within views, including use of EMF APIs
- and CDO-specific features for efficient navigation.
+ Use ordinary EMF navigation for a known, bounded part of the graph. References may be proxies, so reading one can
+ trigger additional loading. A broad walk can therefore cause many round trips and retain many objects. When the
+ desired result is defined by a type or predicate over repository contents, prefer a repository query and load
+ only the returned objects. Choose deliberately between traversal and query; neither is always cheaper.
 
 <h2><a name="WaitingForUpdates"></a>7&nbsp;&nbsp;Waiting For Updates</h2>
 <p>
- Learn how to synchronize your client with repository changes, block for updates, and react to notifications to keep
- your application state current.
+ Passive updates advance or invalidate a live head view according to its session update mode. An application that
+ needs to wait for such updates can use the view/session update-waiting API; a fixed-time historical view does not
+ move forward. Waiting should happen outside a view critical section, because update processing may need that same
+ synchronization boundary. Use view or session events for notification rather than polling model values.
 
 <h2><a name="QueryingResources"></a>8&nbsp;&nbsp;Querying Resources</h2>
 <p>
@@ -919,37 +1145,53 @@ function maximize(id)
 
 <h2><a name="QueryingModelObjects"></a>9&nbsp;&nbsp;Querying Model Objects</h2>
 <p>
- A client selects a repository-supported query language and supplies its expression and parameters. OCL is one
- optional language integration; query-language syntax is not part of the client API contract.
+ A query runs against the view's repository coordinate and returns objects associated with that view. Select a
+ language supported by both the client and server, bind parameters instead of building expressions from untrusted
+ strings, and close asynchronous result iterators. For a transaction, query options determine whether local dirty
+ state participates; this does not turn a repository query into arbitrary in-memory graph evaluation. OCL is an
+ optional integration, not a universally available language.
 
 <h2><a name="QueryingCrossReferences"></a>10&nbsp;&nbsp;Querying Cross References</h2>
 <p>
- Use normal EMF reference navigation when the relevant objects are already loaded. Use a repository query when
- cross-reference discovery would otherwise require loading an unbounded graph.
+ queryXRefs asks the repository for objects whose selected source references point at one or more target
+ objects. This is useful when reverse navigation is not already loaded locally. Restrict the source reference set
+ where possible, and use the asynchronous iterator for large results so the whole result list need not be retained
+ at once. The iterator is a resource and must be closed.
 
 <h2><a name="CustomQueries"></a>11&nbsp;&nbsp;Custom Queries</h2>
 <p>
- Clients execute custom query languages exactly like other CDO queries. Defining and registering the corresponding
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>server query handler</code></a> is server programming and is covered in
+ A custom query language is only usable when the server has a matching <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>server query handler</code></a>
+ registered and the client supplies the language identifier and parameters that handler expects. It is not enough
+ to install a parser on the client. Handler registration and result delivery are covered in
  <a href="../server/Doc08_SecurityQueriesAndSpecializedExtensions.html#QueryHandlers" title="Chapter in CDO Model Repository Documentation">Query Handlers</a>.
 
 <h2><a name="Units"></a>12&nbsp;&nbsp;Units</h2>
 <p>
- Units are disjunct subtrees of model objects that can be managed independently. This section explains how to
- create, open, and close units, and how they can improve performance and consistency in your application.
+ A unit is a repository-defined subtree that the view can treat as a bounded working set. Units can help an
+ application load and manage a coherent part of a large model, but they do not make unrelated object access free
+ or replace transaction boundaries. Unit membership and lifecycle must follow the repository's unit-manager
+ support; close units and views according to the APIs that opened them.
 
 <h2><a name="ViewEvents"></a>13&nbsp;&nbsp;View Events</h2>
 <p>
- Views emit events for changes, updates, and errors. This section explains how to listen for and handle view events
- to build responsive applications.
+ View events report lifecycle and target/update changes for that view. Register listeners only for the period in
+ which the application needs them and remove them when the owning component is disposed. Event callbacks may run
+ on a CDO-managed thread; capture the data needed by the UI and dispatch UI work to its thread instead of blocking
+ the callback. See <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a> for event categories and threading guidance.
 
 <h2><a name="ViewOptions"></a>14&nbsp;&nbsp;View Options</h2>
 <p>
- Configure view options to customize behavior, such as passive updates, notification handling, and more.
+ View options control view-local behavior such as invalidation, object-cache references, adapters, and locking or
+ notification details. Configure options before relying on the resulting policy, and distinguish them from
+ session options that apply to all views opened by that session. A view option cannot enable a repository feature
+ that the server/store does not provide.
 
 <h2><a name="ViewProperties"></a>15&nbsp;&nbsp;View Properties</h2>
 <p>
- Access and modify view properties to store custom metadata and configuration values.
+ View properties are an application-owned key/value area associated with a view. They are useful for associating
+ client-side metadata with that view; they are not persisted model features, are not shared with the repository,
+ and should not be used to smuggle objects between views. Remove values that retain large application objects
+ when they are no longer needed.
 
 <p align="right">
 <a href="Doc03_WorkingWithSessions.html" title="Backward to Working with Sessions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_WorkingWithTransactions.html" title="Forward to Working with Transactions"><img src="../../../images/forward.png" border="0"></a></p>

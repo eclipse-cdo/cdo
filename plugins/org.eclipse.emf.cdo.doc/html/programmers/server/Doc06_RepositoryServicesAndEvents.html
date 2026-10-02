@@ -78,42 +78,49 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- A repository is a running service object. Its managers expose server-side state; its containers and lifecycle
- notifiers expose meaningful changes. Observe those services from an application extension and unregister every
- listener at shutdown.
+ A repository is the lifetime boundary for server-side state. It owns a session manager; each server session owns
+ its open server views, including transactions. Managers attached to the repository expose history, model, lock,
+ and unit services. Notifiers report changes to these live objects. Observe them from an application extension, copy
+ the context needed by background work, and remove every listener before repository shutdown. Commit interception
+ belongs to <a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Article in CDO Model Repository Documentation">Repository Handlers and Commit Processing</a>.
  <p>
 <table border="0">
-<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#Services" title="Chapter in CDO Model Repository Documentation">Services</a></td></tr>
-<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#ServerSideContexts" title="Chapter in CDO Model Repository Documentation">Sessions, Views, and Transactions</a></td></tr>
-<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#Events" title="Chapter in CDO Model Repository Documentation">Event Families</a></td></tr>
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#Services" title="Chapter in CDO Model Repository Documentation">Repository Services</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#ServerSideContexts" title="Chapter in CDO Model Repository Documentation">Server Session, View, and Transaction Context</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc06_RepositoryServicesAndEvents.html#Events" title="Chapter in CDO Model Repository Documentation">Events and Listener Lifetimes</a></td></tr>
 </table>
 </p>
 
 
-<h2><a name="Services"></a>1&nbsp;&nbsp;Services</h2>
+<h2><a name="Services"></a>1&nbsp;&nbsp;Repository Services</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html#getSessionManager()" title="Method in org.eclipse.emf.cdo.server.IRepository"><code>IRepository.getSessionManager()</code></a> exposes active <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISession.html" title="Interface in org.eclipse.emf.cdo.server"><code>sessions</code></a>. The branch, revision, and
- commit-info managers (<a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionManager</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoManager</code></a>)
- provide repository history services. The package registry (<a href="../../../javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="Interface in org.eclipse.emf.cdo.common.model"><code>CDOPackageRegistry</code></a>),
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/ILockingManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>locking manager</code></a>, and optional <a href="../../../javadoc/org/eclipse/emf/cdo/server/IUnitManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>unit manager</code></a> complete the commonly
- useful services. Inspect their capability and lifecycle contracts instead of assuming that every store supports
- every historical or branching operation.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html#getSessionManager()" title="Method in org.eclipse.emf.cdo.server.IRepository"><code>IRepository.getSessionManager()</code></a> owns active <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISession.html" title="Interface in org.eclipse.emf.cdo.server"><code>sessions</code></a>. Each session owns its <a href="../../../javadoc/org/eclipse/emf/cdo/server/IView.html" title="Interface in org.eclipse.emf.cdo.server"><code>server views</code></a>, and the <a href="../../../javadoc/org/eclipse/emf/cdo/server/ITransaction.html" title="Interface in org.eclipse.emf.cdo.server"><code>transaction</code></a> subtype is the mutable commit context for a client
+ operation. The repository's <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionManager.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revision manager</code></a>,
+ and <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info manager</code></a> expose history services; the <a href="../../../javadoc/org/eclipse/emf/cdo/common/model/CDOPackageRegistry.html" title="Interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a> supplies model metadata, the <a href="../../../javadoc/org/eclipse/emf/cdo/server/ILockingManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>locking manager</code></a> coordinates locks, and an
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IUnitManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>unit manager</code></a> is available when repository configuration enables it. Check repository/store
+ capabilities before depending on optional history or unit behavior.
 
-<h2><a name="ServerSideContexts"></a>2&nbsp;&nbsp;Sessions, Views, and Transactions</h2>
+<h2><a name="ServerSideContexts"></a>2&nbsp;&nbsp;Server Session, View, and Transaction Context</h2>
 <p>
- An <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISession.html" title="Interface in org.eclipse.emf.cdo.server"><code>ISession</code></a> is the server-side representation of a client session. Its <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISessionManager.html" title="Interface in org.eclipse.emf.cdo.server"><code>manager</code></a>
- owns the session, and the session owns server <a href="../../../javadoc/org/eclipse/emf/cdo/server/IView.html" title="Interface in org.eclipse.emf.cdo.server"><code>views</code></a>; <a href="../../../javadoc/org/eclipse/emf/cdo/server/ITransaction.html" title="Interface in org.eclipse.emf.cdo.server"><code>ITransaction</code></a> is the transaction form of
- a view. They carry server-visible user, session, view, branch-point, and repository context. Applications may
- inspect that context and use it in supported handlers, but should not retain closed sessions or invoke internal
- commit machinery.
+ A server <a href="../../../javadoc/org/eclipse/emf/cdo/server/ISession.html" title="Interface in org.eclipse.emf.cdo.server"><code>ISession</code></a> is the repository-side connection identity and authenticated user context, not the
+ client's CDOSession. Its server <a href="../../../javadoc/org/eclipse/emf/cdo/server/IView.html" title="Interface in org.eclipse.emf.cdo.server"><code>IView</code></a> instances carry view IDs and branch points; transactions
+ additionally represent mutable commit work. These objects are live runtime context, not durable records. On a
+ removal event, capture values such as session ID, user ID, view ID, branch and transaction kind before scheduling
+ work. Never queue a session, view, or transaction for later use after it can close.
 
-<h2><a name="Events"></a>3&nbsp;&nbsp;Event Families</h2>
+<h2><a name="Events"></a>3&nbsp;&nbsp;Events and Listener Lifetimes</h2>
 <p>
- Repository and container lifecycle events identify activation and removal. The session manager emits container
- events for session open and close; each session emits container events for views and transactions. Commit-info
- handlers observe completed commit information. Branch and locking managers have their own notifier contracts.
- Listener callbacks run in the notifier's execution path; keep them quick and hand off slow work instead of making
- unsupported assumptions about a global callback thread.
+ The session manager emits container add/remove events for sessions; each session emits container events for views
+ and transactions. Repository lifecycle, branch-manager, and locking-manager notifications cover other transitions.
+ Commit-info handlers observe completed commit metadata; validation and commit interception are covered in
+ <a href="Doc07_RepositoryHandlersAndCommitProcessing.html" title="Article in CDO Model Repository Documentation">Repository Handlers and Commit Processing</a>. These are distinct event contracts, so inspect the event
+ type or use a container event adapter appropriate to the notifier.
+ <p>
+ Listener callbacks execute in the notifier's delivery path. Keep callbacks short: copy immutable scalar values and
+ pass them to an application-owned executor or consumer for slow persistence, network, or UI work. Coordinate that
+ executor's shutdown with the extension. Retain the exact listener instances; remove the session-manager listener
+ from its manager and each nested view listener from its session during extension stop. Removal events should also
+ detach nested listeners promptly, because a closed session is no longer a usable context.
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -121,7 +128,7 @@ function maximize(id)
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ObserveSessions.java</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateLifecycleObserver.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Events_1')" id="max_Events_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -132,12 +139,119 @@ function maximize(id)
         <div id="editor_content_1_Events_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_Events_1" style="padding:8px;">
             <code>
-            IListener&nbsp;listener&nbsp;=&nbsp;event&nbsp;-&gt;&nbsp;{<br/>
-            &nbsp;&nbsp;repository.getSessionManager().getSessions();<br/>
-            };<br/>
+            <font color="#7f0055"><b>return&nbsp;new&nbsp;</b></font>IAppExtension3()<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>private&nbsp;final&nbsp;</b></font>Map&lt;IRepository,&nbsp;IListener&gt;&nbsp;repositoryListeners&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>IdentityHashMap&lt;&gt;();<br/>
             <br/>
-            repository.getSessionManager().addListener(listener);<br/>
-            <font color="#7f0055"><b>return&nbsp;</b></font>listener;            </code>
+            &nbsp;&nbsp;<font color="#7f0055"><b>private&nbsp;final&nbsp;</b></font>Map&lt;ISession,&nbsp;IListener&gt;&nbsp;sessionListeners&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>IdentityHashMap&lt;&gt;();<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>start(File&nbsp;configFile)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>start(IRepository[]&nbsp;repositories,&nbsp;File&nbsp;configFile)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>for&nbsp;</b></font>(IRepository&nbsp;repository&nbsp;:&nbsp;repositories)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IListener&nbsp;listener&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ContainerEventAdapter&lt;ISession&gt;()<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>onAdded(IContainer&lt;ISession&gt;&nbsp;container,&nbsp;ISession&nbsp;session)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>sessionID&nbsp;=&nbsp;session.getSessionID();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;userID&nbsp;=&nbsp;session.getUserID();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recordSink.accept(<font color="#2a00ff">&#34;session&nbsp;opened&nbsp;id=&#34;&nbsp;</font>+&nbsp;sessionID&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;user=&#34;&nbsp;</font>+&nbsp;userID);<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IListener&nbsp;viewListener&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ContainerEventAdapter&lt;IView&gt;()<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>onAdded(IContainer&lt;IView&gt;&nbsp;container,&nbsp;IView&nbsp;view)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recordSink.accept(<font color="#2a00ff">&#34;view&nbsp;opened&nbsp;session=&#34;&nbsp;</font>+&nbsp;sessionID&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;view=&#34;&nbsp;</font>+&nbsp;view.getViewID()&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;transaction=&#34;&nbsp;</font>+&nbsp;(view&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>ITransaction));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>onRemoved(IContainer&lt;IView&gt;&nbsp;container,&nbsp;IView&nbsp;view)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recordSink.accept(<font color="#2a00ff">&#34;view&nbsp;closed&nbsp;session=&#34;&nbsp;</font>+&nbsp;sessionID&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;view=&#34;&nbsp;</font>+&nbsp;view.getViewID()&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;transaction=&#34;&nbsp;</font>+&nbsp;(view&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>ITransaction));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>synchronized&nbsp;</b></font>(sessionListeners)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sessionListeners.put(session,&nbsp;viewListener);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;session.addListener(viewListener);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>onRemoved(IContainer&lt;ISession&gt;&nbsp;container,&nbsp;ISession&nbsp;session)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>sessionID&nbsp;=&nbsp;session.getSessionID();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;userID&nbsp;=&nbsp;session.getUserID();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IListener&nbsp;viewListener;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>synchronized&nbsp;</b></font>(sessionListeners)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;viewListener&nbsp;=&nbsp;sessionListeners.remove(session);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(viewListener&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;session.removeListener(viewListener);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;recordSink.accept(<font color="#2a00ff">&#34;session&nbsp;closed&nbsp;id=&#34;&nbsp;</font>+&nbsp;sessionID&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;user=&#34;&nbsp;</font>+&nbsp;userID);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;};<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repositoryListeners.put(repository,&nbsp;listener);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;repository.getSessionManager().addListener(listener);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>catch&nbsp;</b></font>(RuntimeException&nbsp;|&nbsp;Error&nbsp;ex)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;removeListeners();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>private&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>removeListeners()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>for&nbsp;</b></font>(Map.Entry&lt;IRepository,&nbsp;IListener&gt;&nbsp;entry&nbsp;:&nbsp;repositoryListeners.entrySet())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entry.getKey().getSessionManager().removeListener(entry.getValue());<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;repositoryListeners.clear();<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>synchronized&nbsp;</b></font>(sessionListeners)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>for&nbsp;</b></font>(Map.Entry&lt;ISession,&nbsp;IListener&gt;&nbsp;entry&nbsp;:&nbsp;sessionListeners.entrySet())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;entry.getKey().removeListener(entry.getValue());<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sessionListeners.clear();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>stop(IRepository[]&nbsp;repositories)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;removeListeners();<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>stop()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;removeListeners();<br/>
+            &nbsp;&nbsp;}<br/>
+            };            </code>
 
           </div>
         </div>

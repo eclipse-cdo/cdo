@@ -107,7 +107,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">StoreAccessor</span>
 <span class="extends-implements">extends <a href="StoreAccessorBase.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a></span></div>
-<div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
+<div class="block">Base for store accessors that implement repository reads and writes for one session or transaction. It provides the
+ common context and lifecycle behavior; storage backends implement the actual revision and commit operations.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>

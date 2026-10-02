@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 
 /**
  * Internal capability for mappings that can create their physical schema before transactional data is written.
+ *
+ * @author Eike Stepper
  */
 interface ISchemaPreparable
 {

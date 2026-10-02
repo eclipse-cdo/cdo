@@ -1016,6 +1016,7 @@ public final class EMFUtil
    * An extension of {@link ResourceSetImpl} that allows demandLoading of resources and delegation of resource lookups,
    * to be switched on/off as desired.
    *
+   * @author Eike Stepper
    * @since 4.0
    */
   public static class ExtResourceSet extends ResourceSetImpl

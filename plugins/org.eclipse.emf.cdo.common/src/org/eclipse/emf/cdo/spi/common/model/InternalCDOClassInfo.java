@@ -112,6 +112,8 @@ public interface InternalCDOClassInfo extends CDOClassInfo
    * in some other feature (the filtering feature). Other models may apply other
    * transformations to features that require partial or otherwise custom
    * persistence rules.
+   *
+   * @author Eike Stepper
    */
   public interface PersistenceFilter
   {

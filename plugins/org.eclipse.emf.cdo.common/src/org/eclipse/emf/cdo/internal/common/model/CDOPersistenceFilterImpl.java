@@ -30,6 +30,7 @@ import java.util.Collections;
  * transformations to features that require partial or otherwise custom
  * persistence rules.
  *
+ * @author Eike Stepper
  * @since 4.2
  */
 public class CDOPersistenceFilterImpl implements PersistenceFilter

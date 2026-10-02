@@ -351,6 +351,9 @@ public abstract class MultiViewersView extends ViewPart implements ISetSelection
     fillLocalToolBar(bars.getToolBarManager());
   }
 
+  /**
+   * @author Eike Stepper
+   */
   protected static enum MessageType
   {
     INFORMATION, ERROR, WARNING, CONFIRM, QUESTION

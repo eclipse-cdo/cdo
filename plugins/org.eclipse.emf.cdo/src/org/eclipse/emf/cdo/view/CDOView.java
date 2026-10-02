@@ -1120,6 +1120,7 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
      * An {@link IOptionsEvent options event} fired from view {@link CDOView#options() options} when the
      * {@link Options#setStaleReferenceBehaviour(CDOStaleReferencePolicy) stale reference type} option has changed.
      *
+     * @author Eike Stepper
      * @since 3.0
      * @noextend This interface is not intended to be extended by clients.
      * @noimplement This interface is not intended to be implemented by clients.

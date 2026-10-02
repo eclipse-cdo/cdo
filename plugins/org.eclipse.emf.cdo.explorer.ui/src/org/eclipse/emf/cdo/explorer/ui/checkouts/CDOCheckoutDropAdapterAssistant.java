@@ -354,7 +354,7 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       {
         return false;
       }
-      
+
       for (EObject object : objects)
       {
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
@@ -621,6 +621,9 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
         final EObject target = getTarget();
         final EObject[] objects = getObjects();
 
+        /**
+         * @author Eike Stepper
+         */
         class FeatureUsage
         {
           private final int upperBound;

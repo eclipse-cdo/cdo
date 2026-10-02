@@ -481,7 +481,7 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     if (securityManager == null)
     {
       // We are initializing ahead of the Security Manager. Wait for it
-      getManagedContainer().addListener(new ContainerEventAdapter<Object>()
+      getManagedContainer().addListener(new ContainerEventAdapter<>()
       {
         @Override
         protected void onAdded(IContainer<Object> container, Object element)
@@ -603,6 +603,9 @@ public class DefaultCDORepositoryConfigurationManager extends Lifecycle implemen
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   protected static interface CatalogOperation<T>
   {
     public T execute(RepositoryCatalog catalog) throws Exception;

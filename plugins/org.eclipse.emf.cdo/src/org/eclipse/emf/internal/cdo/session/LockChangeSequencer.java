@@ -16,6 +16,8 @@ import java.util.function.Consumer;
 
 /**
  * Serializes server-authoritative lock changes by their session lock modification count.
+ *
+ * @author Eike Stepper
  */
 final class LockChangeSequencer
 {

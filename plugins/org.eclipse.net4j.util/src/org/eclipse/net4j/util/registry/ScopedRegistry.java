@@ -29,6 +29,7 @@ import java.util.Set;
  *
  * @param <K> the logical key type
  * @param <V> the value type
+ * @author Eike Stepper
  * @since 3.31
  */
 public class ScopedRegistry<K, V> extends Registry<K, V>
@@ -54,6 +55,7 @@ public class ScopedRegistry<K, V> extends Registry<K, V>
    *
    * @param <K> the logical key type
    * @param <V> the value type
+   * @author Eike Stepper
    */
   public static class Store<K, V>
   {

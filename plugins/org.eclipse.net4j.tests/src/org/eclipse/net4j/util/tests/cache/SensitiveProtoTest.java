@@ -61,6 +61,9 @@ public class SensitiveProtoTest extends AbstractOMTest
     assertEquals(10, map.size());
   }
 
+  /**
+   * @author Eike Stepper
+   */
   public static class KeyedAndValuedWeakReference<K, T> extends KeyedWeakReference<K, T>
   {
     private T value;

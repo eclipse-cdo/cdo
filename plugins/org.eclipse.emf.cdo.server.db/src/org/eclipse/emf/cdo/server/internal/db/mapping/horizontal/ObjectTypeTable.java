@@ -742,6 +742,9 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     return defaultValue;
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private enum DuplicatePolicy
   {
     SAFE, FAIL

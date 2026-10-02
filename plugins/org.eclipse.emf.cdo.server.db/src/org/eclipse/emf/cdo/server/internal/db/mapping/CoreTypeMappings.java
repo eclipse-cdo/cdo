@@ -723,6 +723,9 @@ public class CoreTypeMappings
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private abstract static class ByteArrayTypeMapping extends AbstractTypeMapping
   {
     @Override

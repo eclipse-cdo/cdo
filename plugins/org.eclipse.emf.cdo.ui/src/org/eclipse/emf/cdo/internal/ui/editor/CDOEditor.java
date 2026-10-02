@@ -827,7 +827,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * @author Eike Stepper
+   * <!-- end-user-doc -->
    * @generated
    */
   public class ReverseAdapterFactoryContentProvider extends AdapterFactoryContentProvider
@@ -3210,6 +3212,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   /**
    * Adapter that provides the current EditingDomain
    *
+   * @author Eike Stepper
    * @since 2.0
    */
   protected class EditingDomainProviderAdapter implements Adapter, IEditingDomainProvider

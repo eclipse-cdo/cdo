@@ -13,6 +13,7 @@ import org.eclipse.net4j.util.event.IEvent;
 /**
  * Event fired by the real transaction after a scope has opened.
  *
+ * @author Eike Stepper
  * @since 4.30
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.

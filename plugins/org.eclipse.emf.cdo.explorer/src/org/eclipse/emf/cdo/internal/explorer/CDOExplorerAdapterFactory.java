@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.core.runtime.IAdapterFactory;
 
 /**
+ * @author Eike Stepper
  * @since 4.4
  */
 public class CDOExplorerAdapterFactory implements IAdapterFactory

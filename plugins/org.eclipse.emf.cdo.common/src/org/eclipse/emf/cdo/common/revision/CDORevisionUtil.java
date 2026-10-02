@@ -807,6 +807,7 @@ public final class CDORevisionUtil
    * Dumps {@link CDORevision revisions}, sorted and grouped by {@link CDOBranch branch}, to various output formats and
    * targets. Concrete output formats and targets are implemented by subclasses.
    *
+   * @author Eike Stepper
    * @since 4.0
    */
   public static abstract class AllRevisionsDumper

@@ -42,12 +42,12 @@ import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author Martin Fluegge
- */
 /*
  * TODO remove this suppress warning as soon as I have found a way to workaround the problem that the Graphiti editor
  * which is extended is internal
+ */
+/**
+ * @author Martin Fluegge
  */
 public class DawnGraphitiEditorSupport extends DawnAbstractEditorSupport
 {

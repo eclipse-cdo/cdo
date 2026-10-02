@@ -57,6 +57,8 @@ public interface PermissionCache
 
   /**
    * Creates independent logical cache generations for repository, user, and branch scopes.
+   *
+   * @author Eike Stepper
    */
   @FunctionalInterface
   public interface Creator

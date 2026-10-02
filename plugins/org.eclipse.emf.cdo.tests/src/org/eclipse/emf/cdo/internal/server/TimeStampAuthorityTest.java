@@ -178,6 +178,8 @@ public class TimeStampAuthorityTest extends TestCase
 
   /**
    * A deterministic time provider that can signal when a caller has entered a wait.
+   *
+   * @author Eike Stepper
    */
   private static final class ScriptedTimeProvider implements CDOTimeProvider
   {

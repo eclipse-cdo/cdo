@@ -32,6 +32,7 @@ public interface CDORenameContext
    * A {@link CDORenameContext rename context} that provides access to the {@link #getElement() element}
    * to be renamed.
    *
+   * @author Eike Stepper
    * @since 4.15
    */
   public interface WithElement extends CDORenameContext

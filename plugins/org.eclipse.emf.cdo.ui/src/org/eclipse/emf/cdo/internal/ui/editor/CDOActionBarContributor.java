@@ -714,6 +714,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
   /**
    * An interface implemented by {@link CDOCreateChildAction} and {@link CDOCreateSiblingAction} to provide access to the data in the descriptor.
+   *
+   * @author Eike Stepper
    */
   public interface EObjectProvider
   {
@@ -722,6 +724,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
   /**
    * A create child action subclass that provides access to the {@link #descriptor} and specializes {@link #run()} to show the properties view.
+   *
+   * @author Eike Stepper
    */
   public class CDOCreateChildAction extends CreateChildAction implements EObjectProvider
   {
@@ -770,6 +774,8 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
 
   /**
    * A create sibling action subclass that provides access to the {@link #descriptor} and specializes {@link #run()} to show the properties view.
+   *
+   * @author Eike Stepper
    */
   public class CDOCreateSiblingAction extends CreateSiblingAction implements EObjectProvider
   {

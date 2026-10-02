@@ -49,6 +49,7 @@ import org.eclipse.ui.model.IWorkbenchAdapter;
 import org.eclipse.ui.model.WorkbenchAdapter;
 
 /**
+ * @author Eike Stepper
  * @since 4.4
  */
 public class ExplorerUIAdapterFactory implements IAdapterFactory

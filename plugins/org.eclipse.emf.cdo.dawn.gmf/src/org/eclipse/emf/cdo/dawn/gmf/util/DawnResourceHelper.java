@@ -11,13 +11,6 @@
  */
 package org.eclipse.emf.cdo.dawn.gmf.util;
 
-/**
- *
- * @author Martin Fluegge
- */
-
-//import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
-
 import org.eclipse.emf.cdo.dawn.internal.util.bundle.OM;
 import org.eclipse.emf.cdo.dawn.util.exceptions.EClassIncompatibleException;
 
@@ -75,6 +68,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * @author Martin Fluegge
  * @since 1.0
  */
 public class DawnResourceHelper

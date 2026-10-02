@@ -17,6 +17,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Test subclass proving that implementation subclasses are dynamic by default.
+ *
+ * @author Eike Stepper
  */
 public class CustomResourceFilter extends ResourceFilterImpl
 {

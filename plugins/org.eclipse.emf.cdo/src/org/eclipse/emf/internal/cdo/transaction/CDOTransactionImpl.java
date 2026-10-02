@@ -7142,6 +7142,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private final class StartedEvent extends Event implements CDOTransactionStartedEvent
   {
     private static final long serialVersionUID = 1L;

@@ -23,6 +23,7 @@ import java.util.Set;
  *          the key type
  * @param <V>
  *          the value type
+ * @author Eike Stepper
  */
 public class UnmodifiableRegistry<K, V> implements IRegistry<K, V>
 {

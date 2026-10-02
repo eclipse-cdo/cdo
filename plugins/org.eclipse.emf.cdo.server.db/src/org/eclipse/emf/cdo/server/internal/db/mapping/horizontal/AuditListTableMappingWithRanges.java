@@ -2125,6 +2125,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       moveOneDown(accessor, id, oldVersion, newVersion, startIndex, endIndex);
     }
 
+    /**
+     * @author Eike Stepper
+     */
     private final class MovePayload
     {
       private final LogicalListPlan.PlanElement element;

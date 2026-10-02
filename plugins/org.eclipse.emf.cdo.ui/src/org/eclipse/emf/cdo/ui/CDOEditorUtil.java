@@ -134,11 +134,13 @@ public final class CDOEditorUtil
    * @param editingDomain the editing domain to associate with the editor input
    *
    * @return the editing-domain-providing editor input
-   *
    * @since 4.3
    */
   public static CDOEditorInput createCDOEditorInputWithEditingDomain(CDOView view, String resourcePath, boolean viewOwned, EditingDomain editingDomain)
   {
+    /**
+     * @author Eike Stepper
+     */
     class CDOEditorInputWithEditingDomain extends CDOEditorInputImpl implements IEditingDomainProvider
     {
       private final EditingDomain editingDomain;

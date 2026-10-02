@@ -59,6 +59,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 
 /**
+ * @author Eike Stepper
  * @since 3.9
  */
 public abstract class ContainerView extends ViewPart implements ISelectionProvider, ISetSelectionTarget

@@ -38,6 +38,9 @@ public interface ICollaboration extends IMembershipContainer, IBuddyProvider, IA
 
   public IFacility getFacility(String type);
 
+  /**
+   * @author Eike Stepper
+   */
   public enum Visibility
   {
     PRIVATE, PUBLIC

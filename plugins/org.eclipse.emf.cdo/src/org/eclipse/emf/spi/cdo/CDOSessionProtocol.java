@@ -1617,6 +1617,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * Describes the outcome of a repository object-lock request, including whether the requested locks were obtained and
    * the lock-state information the client needs to update its view.
    *
+   * @author Eike Stepper
    * @since 4.0
    */
   public static final class LockObjectsResult
@@ -1759,6 +1760,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * Carries the repository's response to an object-unlock request, including the lock changes and their update timestamp
    * so the client can bring its lock state in line with the repository.
    *
+   * @author Eike Stepper
    * @since 4.1
    */
   public static final class UnlockObjectsResult

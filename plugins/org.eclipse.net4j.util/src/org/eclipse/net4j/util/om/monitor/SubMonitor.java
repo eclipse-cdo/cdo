@@ -108,9 +108,10 @@ public class SubMonitor implements IProgressMonitorWithBlocking
   /**
    * The RootInfo holds information about the root progress monitor. A SubMonitor and
    * its active descendants share the same RootInfo.
+   *
+   * @author Eike Stepper
    */
-  // Can't be private because ProbingSubMonitor uses it.
-  static final class RootInfo
+  static final class RootInfo // Can't be private because ProbingSubMonitor uses it.
   {
     private final IProgressMonitor root;
 

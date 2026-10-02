@@ -37,6 +37,9 @@ public final class SessionUtil
   {
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static void addRootResourceExclusionCheckAdapter(ResourceSet resourceSet)
   {
     class RootResourceExclusionCheckAdapter extends AdapterImpl

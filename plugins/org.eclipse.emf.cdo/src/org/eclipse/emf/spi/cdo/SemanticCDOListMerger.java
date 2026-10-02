@@ -85,6 +85,8 @@ import java.util.Set;
  * validated alternatives. An ordinary unresolved semantic conflict returns {@code null} and records a conflict;
  * malformed executable history or an internal invariant violation throws an {@link IllegalStateException} with the
  * available semantic dump.
+ *
+ * @author Eike Stepper
  */
 final class SemanticCDOListMerger
 {
@@ -2109,6 +2111,8 @@ final class SemanticCDOListMerger
 
   /**
    * States of the independent encoder replay check used solely for truthful diagnostics.
+   *
+   * @author Eike Stepper
    */
   private enum ReplayStatus
   {
@@ -3403,6 +3407,8 @@ final class SemanticCDOListMerger
 
     /**
      * Mutable Kahn traversal state private to one linearization/validation pass.
+     *
+     * @author Eike Stepper
      */
     public final class Topology
     {

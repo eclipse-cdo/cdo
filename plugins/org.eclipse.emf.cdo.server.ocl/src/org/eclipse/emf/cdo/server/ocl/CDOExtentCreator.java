@@ -243,7 +243,7 @@ public class CDOExtentCreator implements OCLExtentCreator
     @Override
     protected Set<EObject> createExtent(EClass eClass, IStoreAccessor accessor, CDOBranch branch, long timeStamp, AtomicBoolean canceled)
     {
-      return new Set<EObject>()
+      return new Set<>()
       {
         private final CountDownLatch emptyKnown = new CountDownLatch(1);
 
@@ -287,6 +287,9 @@ public class CDOExtentCreator implements OCLExtentCreator
           LinkedList<CDOID> ids = new LinkedList<>();
           boolean[] done = { false };
 
+          /**
+           * @author Eike Stepper
+           */
           class OCLExtentIterator implements Runnable
           {
             @Override
@@ -368,7 +371,7 @@ public class CDOExtentCreator implements OCLExtentCreator
           ExecutorService threadPool = ConcurrencyUtil.getExecutorService(getView());
           threadPool.submit(StoreThreadLocal.wrap(serverSession, new OCLExtentIterator()));
 
-          return new Iterator<EObject>()
+          return new Iterator<>()
           {
             private CDOID next;
 

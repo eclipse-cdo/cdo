@@ -35,6 +35,9 @@ import org.eclipse.ui.PlatformUI;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+/**
+ * @author Eike Stepper
+ */
 public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPUT>
     implements ITreeContentProvider, ILabelProvider, IColorProvider, IFontProvider, IStyledLabelProvider
 {

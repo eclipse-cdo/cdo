@@ -27,7 +27,6 @@ import org.eclipse.swt.widgets.Shell;
  * @author Eike Stepper
  * @since 2.0
  */
-// Under development
 @Deprecated
 public class AuditScale extends Composite
 {

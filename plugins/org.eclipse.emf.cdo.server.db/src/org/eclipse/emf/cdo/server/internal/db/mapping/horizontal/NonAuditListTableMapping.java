@@ -567,6 +567,9 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     }
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private final class NonAuditDeltaBatch
   {
     private final IDBStoreAccessor accessor;

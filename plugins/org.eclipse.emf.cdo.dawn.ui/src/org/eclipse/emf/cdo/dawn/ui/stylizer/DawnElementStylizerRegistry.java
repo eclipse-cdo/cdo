@@ -136,6 +136,9 @@ public class DawnElementStylizerRegistry
     return stylizerFactories;
   }
 
+  /**
+   * @author Martin Fluegge
+   */
   private class FactoryContainer
   {
     private int priority;

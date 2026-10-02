@@ -28,12 +28,18 @@ import org.eclipse.emf.workspace.impl.WorkspaceCommandStackImpl;
 import org.eclipse.core.commands.operations.IOperationHistory;
 import org.eclipse.gmf.runtime.diagram.core.DiagramEditingDomainFactory;
 
+/**
+ * @author Martin Fluegge
+ */
 public class DawnDiagramEditingDomainFactory extends DiagramEditingDomainFactory
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, DawnDiagramEditingDomainFactory.class);
 
   private static DawnDiagramEditingDomainFactory instance = new DawnDiagramEditingDomainFactory();
 
+  /**
+   * @author Martin Fluegge
+   */
   protected static class DawnDiagramEditingDomain extends DiagramEditingDomain
   {
     public DawnDiagramEditingDomain(AdapterFactory adapterFactory, ResourceSet resourceSet)

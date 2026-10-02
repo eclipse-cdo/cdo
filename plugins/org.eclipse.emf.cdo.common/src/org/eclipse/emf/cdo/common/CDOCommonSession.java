@@ -171,6 +171,7 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
      * Enumerates the possible {@link CDOCommonSession.Options#getLockNotificationMode() lock notification modes} of a
      * CDO session.
      *
+     * @author Eike Stepper
      * @since 4.1
      */
     public enum LockNotificationMode
@@ -228,6 +229,7 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
      * An {@link IOptionsEvent options event} fired when the {@link LockNotificationMode lock notification mode} of a
      * CDO session has changed.
      *
+     * @author Eike Stepper
      * @since 4.15
      */
     public interface LockNotificationEvent extends LockNotificationModeEvent

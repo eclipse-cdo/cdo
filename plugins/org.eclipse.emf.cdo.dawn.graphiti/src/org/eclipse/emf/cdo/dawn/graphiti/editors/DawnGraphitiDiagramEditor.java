@@ -32,12 +32,12 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
 
-/**
- * @author Martin Fluegge
- */
 /*
  * TODO remove this suppress warning as soon as I have found a way to workaround the problem that the Graphiti editor
  * which is extended is internal
+ */
+/**
+ * @author Martin Fluegge
  */
 @SuppressWarnings("restriction")
 public class DawnGraphitiDiagramEditor extends DiagramEditor implements IDawnEditor

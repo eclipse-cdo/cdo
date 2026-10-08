@@ -344,7 +344,10 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     Map<CDOID, CDORevision> map = CDOIDUtil.createMap();
     for (CDORevision revision : revisions)
     {
-      map.put(revision.getID(), revision);
+      if (revision != null)
+      {
+        map.put(revision.getID(), revision);
+      }
     }
 
     for (CDORevision revision : additionalRevisions)
@@ -356,7 +359,14 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
     for (CDORevision revision : revisions)
     {
-      prefetchRevision(depth, (InternalCDORevision)revision, additionalInfos, additionalRevisions, map, monitor.fork());
+      if (revision != null)
+      {
+        prefetchRevision(depth, (InternalCDORevision)revision, additionalInfos, additionalRevisions, map, monitor.fork());
+      }
+      else
+      {
+        monitor.worked();
+      }
     }
   }
 

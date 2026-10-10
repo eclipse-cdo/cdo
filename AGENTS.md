@@ -20,14 +20,17 @@
 
 ## Avoid unjustified implementation downcasts
 
-Production code should use API/SPI abstractions where they represent a real architectural boundary. Do not downcast such abstractions merely to reach implementation-specific functionality that properly belongs on that abstraction.
+Production code should respect existing API/SPI abstraction boundaries. When code operates on an abstraction, use that abstraction consistently. Do not downcast to concrete implementations merely to access functionality that conceptually belongs to the abstraction.
 
-However, do not introduce new `Internal*` interfaces, SPI methods, adapters, or other abstraction layers solely to eliminate a downcast. Within implementation code, a downcast to a concrete implementation class is acceptable when the concrete type is an intentional implementation invariant or when the collaborating classes are inherently implementation-specific.
+Extend an existing abstraction when necessary to express its responsibilities, even if the required operation currently has only one caller. Do not introduce new `Internal*` interfaces, adapters, or other abstraction layers solely to eliminate a downcast.
+
+Within implementation code, a downcast to a concrete implementation class is acceptable when the concrete type is an intentional implementation invariant or when the collaborating classes are inherently implementation-specific. Concrete implementation checks must reflect genuine implementation-specific behavior, not compensate for missing functionality in an existing abstraction.
 
 When deciding, prefer the simplest architecture that reflects the actual ownership and coupling:
 
-- Fix or extend an existing abstraction when the required capability conceptually belongs to that abstraction and is useful beyond one implementation-specific caller.
-- Keep implementation-specific collaboration concrete when introducing an abstraction would only mirror implementation details or serve a single tightly coupled implementation path.
+- Fix or extend an existing abstraction when the required capability conceptually belongs to that abstraction, regardless of the number of callers.
+- Use an existing abstraction consistently rather than introducing implementation-specific branches with different semantics.
+- Keep implementation-specific collaboration concrete when introducing an abstraction would only mirror implementation details or serve a tightly coupled implementation path.
 - Tests may freely use and downcast to concrete implementation classes. Do not add production API/SPI solely for tests.
 
 Do not hide questionable casts behind helpers, reflection, or artificial interfaces. The goal is correct abstraction boundaries, not elimination of casts as such.

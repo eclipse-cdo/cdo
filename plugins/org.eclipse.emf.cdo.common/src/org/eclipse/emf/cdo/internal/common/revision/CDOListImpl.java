@@ -8,15 +8,12 @@ package org.eclipse.emf.cdo.internal.common.revision;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
-import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 
 import org.eclipse.emf.common.util.BasicEList;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -33,30 +30,11 @@ public class CDOListImpl extends BasicEList<Object> implements InternalCDOList
 
   private static final Object CONSTRUCTION = new Object();
 
-  public static final CDOListFactory FACTORY = new CDOListFactory()
-  {
-    @Override
-    public CDOList createList(int initialCapacity, int size, int initialChunk)
-    {
-      return new CDOListImpl(initialCapacity, size);
-    }
-
-    @Override
-    public CDOList createList(EStructuralFeature feature, int initialCapacity, int size, int initialChunk)
-    {
-      boolean partial = initialChunk != CDORevision.UNCHUNKED && initialChunk < size;
-      if (partial)
-      {
-        return feature != null && feature instanceof EAttribute //
-            ? new CDOPCLListWithEqualsImpl(initialCapacity, size) //
-            : new CDOPCLListImpl(initialCapacity, size);
-      }
-
-      return feature != null && feature instanceof EAttribute //
-          ? new CDOListWithEqualsImpl(initialCapacity, size) //
-          : new CDOListImpl(initialCapacity, size);
-    }
-  };
+  /**
+   * @deprecated As of 4.29 use {@link CDOListFactory#DEFAULT} instead.
+   */
+  @Deprecated
+  public static final CDOListFactory FACTORY = CDOListFactory.DEFAULT;
 
   private transient InternalCDOList.Owner owner;
 

@@ -13,7 +13,11 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDOListWithEqualsImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDOPCLListImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDOPCLListWithEqualsImpl;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
@@ -24,7 +28,30 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  */
 public interface CDOListFactory
 {
-  public static final CDOListFactory DEFAULT = CDOListImpl.FACTORY;
+  public static final CDOListFactory DEFAULT = new CDOListFactory()
+  {
+    @Override
+    public CDOList createList(int initialCapacity, int size, int initialChunk)
+    {
+      return new CDOListImpl(initialCapacity, size);
+    }
+
+    @Override
+    public CDOList createList(EStructuralFeature feature, int initialCapacity, int size, int initialChunk)
+    {
+      boolean partial = initialChunk != CDORevision.UNCHUNKED && initialChunk < size;
+      if (partial)
+      {
+        return feature != null && feature instanceof EAttribute //
+            ? new CDOPCLListWithEqualsImpl(initialCapacity, size) //
+            : new CDOPCLListImpl(initialCapacity, size);
+      }
+
+      return feature != null && feature instanceof EAttribute //
+          ? new CDOListWithEqualsImpl(initialCapacity, size) //
+          : new CDOListImpl(initialCapacity, size);
+    }
+  };
 
   public CDOList createList(int intitialCapacity, int size, int initialChunk);
 

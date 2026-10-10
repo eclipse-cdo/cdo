@@ -2610,9 +2610,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       try (Access access = access())
       {
+        EStore eStore = eStore();
+        if (!(eStore instanceof CDOStore))
+        {
+          return super.move(targetIndex, sourceIndex);
+        }
+
         ++modCount;
 
-        CDOStore store = (CDOStore)eStore();
+        CDOStore store = (CDOStore)eStore;
         int size = store.sizeUnsynced(owner, eStructuralFeature);
 
         if (targetIndex >= size || targetIndex < 0)

@@ -904,6 +904,69 @@ public class ViewSynchronizationTest extends AbstractCDOTest
     assertTrue(category.getTopProducts().isEmpty());
   }
 
+  public void testTransientStoreListMove() throws Exception
+  {
+    Category category = getModel1Factory().createCategory();
+    Product1 product1 = getModel1Factory().createProduct1();
+    Product1 product2 = getModel1Factory().createProduct1();
+    Product1 product3 = getModel1Factory().createProduct1();
+
+    assertNull(CDOUtil.getCDOObject(category).cdoView());
+    assertTrue(getModel1Package().getCategory_TopProducts().isOrdered());
+    category.getTopProducts().add(product1);
+    category.getTopProducts().add(product2);
+    category.getTopProducts().add(product3);
+
+    AtomicReference<Notification> moveNotification = new AtomicReference<>();
+    category.eAdapters().add(new AdapterImpl()
+    {
+      @Override
+      public void notifyChanged(Notification notification)
+      {
+        if (notification.getEventType() == Notification.MOVE)
+        {
+          moveNotification.set(notification);
+        }
+      }
+    });
+
+    assertSame(product1, category.getTopProducts().move(2, 0));
+    assertSame(product2, category.getTopProducts().get(0));
+    assertSame(product3, category.getTopProducts().get(1));
+    assertSame(product1, category.getTopProducts().get(2));
+
+    Notification notification = moveNotification.get();
+    assertNotNull(notification);
+    assertSame(category, notification.getNotifier());
+    assertSame(getModel1Package().getCategory_TopProducts(), notification.getFeature());
+    assertEquals(Notification.MOVE, notification.getEventType());
+    assertEquals(2, notification.getPosition());
+    assertEquals(Integer.valueOf(0), notification.getOldValue());
+    assertSame(product1, notification.getNewValue());
+
+    CDOTransaction transaction = openSession().openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/transient-list-move"));
+    resource.getContents().add(category);
+    resource.getContents().add(product1);
+    resource.getContents().add(product2);
+    resource.getContents().add(product3);
+    transaction.commit();
+
+    CDOID categoryID = CDOUtil.getCDOObject(category).cdoID();
+    assertSame(product1, category.getTopProducts().move(0, 2));
+    category.getTopProducts().move(2, product1);
+    assertSame(product2, category.getTopProducts().get(0));
+    assertSame(product3, category.getTopProducts().get(1));
+    assertSame(product1, category.getTopProducts().get(2));
+    transaction.commit();
+
+    CDOView view = transaction.getSession().openView();
+    Category persistedCategory = (Category)CDOUtil.getEObject(view.getObject(categoryID));
+    assertSame(CDOUtil.getEObject(view.getObject(CDOUtil.getCDOObject(product2).cdoID())), persistedCategory.getTopProducts().get(0));
+    assertSame(CDOUtil.getEObject(view.getObject(CDOUtil.getCDOObject(product3).cdoID())), persistedCategory.getTopProducts().get(1));
+    assertSame(CDOUtil.getEObject(view.getObject(CDOUtil.getCDOObject(product1).cdoID())), persistedCategory.getTopProducts().get(2));
+  }
+
   public void testAddAcquisitionBreakdown() throws Exception
   {
     skipTest(!getModelConfig().isNative());

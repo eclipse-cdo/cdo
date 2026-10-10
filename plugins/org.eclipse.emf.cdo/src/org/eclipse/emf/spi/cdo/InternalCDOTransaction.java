@@ -176,6 +176,32 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public void registerFeatureDeltaUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision);
 
   /**
+   * Notifies transaction handlers that an object is about to be modified without changing transaction bookkeeping.
+   * The owning transaction/view lock must already be held.
+   *
+   * @since 4.31
+   */
+  public void notifyModifyingObjectUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta);
+
+  /**
+   * Registers a feature delta without notifying transaction handlers. The owning transaction/view lock must already
+   * be held. This operation is used after a modifying-object notification has completed and the corresponding
+   * revision change is ready to be published.
+   *
+   * @since 4.31
+   */
+  public void registerFeatureDeltaOnlyUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision);
+
+  /**
+   * Registers the first dirty transition of a persistent object without reacquiring the owning transaction lock.
+   * The modifying-object handlers must already have been notified successfully.
+   *
+   * @since 4.31
+   */
+  public void registerFirstDirtyUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision,
+      InternalCDORevision dirtyRevision);
+
+  /**
    * @since 4.3
    */
   public void registerFeatureDelta(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision);

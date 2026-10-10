@@ -3584,6 +3584,18 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public final void registerFeatureDeltaUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision)
   {
+    registerFeatureDeltaOnlyUnsynced(object, featureDelta, cleanRevision);
+    notifyModifyingObjectUnsynced(object, featureDelta);
+  }
+
+  /**
+   * Registers a feature delta without notifying transaction handlers. The owning transaction/view lock must already
+   * be held. This is used after a modifying-object notification has completed and the corresponding revision change
+   * is ready to be published.
+   */
+  @Override
+  public final void registerFeatureDeltaOnlyUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision)
+  {
     CDOID id = object.cdoID();
     boolean needToSaveFeatureDelta = true;
 
@@ -3616,7 +3628,15 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       CDOOriginSizeProvider originSizeProvider = getOriginSizeProvider(object, featureDelta, cleanRevision);
       revisionDelta.addFeatureDelta(featureDelta, originSizeProvider);
     }
+  }
 
+  /**
+   * Notifies transaction handlers that an object is about to be modified without changing transaction bookkeeping.
+   * The owning transaction/view lock must already be held.
+   */
+  @Override
+  public final void notifyModifyingObjectUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta)
+  {
     CDOTransactionHandler1[] handlers = getTransactionHandlers1();
     boolean oldDeferLockChangeWait = deferLockChangeWait.get();
     deferLockChangeWait.set(Boolean.TRUE);
@@ -3638,17 +3658,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * Registers the first dirty transition of a persistent object without reacquiring the owning transaction lock.
    * This operation is intended for the built-in state-machine path after it has established that lock ownership.
-   * It stores the clean revision, replaces the object's revision, registers the feature delta and synchronously
-   * notifies transaction handlers before registering the object as dirty.
+   * It stores the clean revision, replaces the object's revision, registers the feature delta, and registers the
+   * object as dirty. The modifying-object handlers must already have been notified successfully.
    * <p>
-   * The owning transaction/view lock must already be held for the entire operation. Transaction-handler callbacks
-   * execute synchronously under that same lock, and exceptions from them are propagated to the caller.
+   * The owning transaction/view lock must already be held for the entire operation.
    *
    * @param object the persistent object making its first transition to the dirty state
    * @param featureDelta the feature change to register, or {@code null} if the transition has no feature change
    * @param cleanRevision the revision of the object before the transition
    * @param revision the replacement revision containing the change
    */
+  @Override
   public final void registerFirstDirtyUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta, InternalCDORevision cleanRevision,
       InternalCDORevision revision)
   {
@@ -3662,7 +3682,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
     if (featureDelta != null)
     {
-      registerFeatureDeltaUnsynced(object, featureDelta, cleanRevision);
+      registerFeatureDeltaOnlyUnsynced(object, featureDelta, cleanRevision);
     }
 
     registerDirtyObject(object);

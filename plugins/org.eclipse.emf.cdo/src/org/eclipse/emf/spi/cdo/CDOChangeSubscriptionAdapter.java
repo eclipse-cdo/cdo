@@ -21,6 +21,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -73,33 +74,156 @@ public class CDOChangeSubscriptionAdapter extends AdapterImpl
 
   public void attach(CDOObject notifier)
   {
-    if (notifiers.add(notifier))
+    if (notifiers.contains(notifier))
     {
-      notifier.eAdapters().add(this);
+      return;
+    }
+
+    EList<Adapter> adapters = notifier.eAdapters();
+    boolean wasAttached = adapters.contains(this);
+
+    if (!notifiers.add(notifier))
+    {
+      return;
+    }
+
+    try
+    {
+      adapters.add(this);
+
+      if (!adapters.contains(this))
+      {
+        notifiers.remove(notifier);
+      }
+    }
+    catch (RuntimeException | Error failure)
+    {
+      if (!wasAttached)
+      {
+        try
+        {
+          if (adapters.contains(this))
+          {
+            adapters.remove(this);
+          }
+        }
+        catch (RuntimeException | Error cleanupFailure)
+        {
+          if (cleanupFailure != failure)
+          {
+            failure.addSuppressed(cleanupFailure);
+          }
+        }
+      }
+
+      try
+      {
+        if (!adapters.contains(this))
+        {
+          notifiers.remove(notifier);
+        }
+      }
+      catch (RuntimeException | Error inspectionFailure)
+      {
+        if (inspectionFailure != failure)
+        {
+          failure.addSuppressed(inspectionFailure);
+        }
+      }
+
+      throw failure;
     }
   }
 
   public void reset()
   {
-    for (CDOObject notifier : notifiers)
+    for (Iterator<CDOObject> it = notifiers.iterator(); it.hasNext();)
     {
+      CDOObject notifier = it.next();
+      boolean attached = true;
+      boolean inspectionFailed = false;
+      Error failure = null;
+      EList<Adapter> adapters = null;
+
       try
       {
         if (notifier != null)
         {
-          EList<Adapter> adapters = notifier.eAdapters();
-          if (adapters != null)
-          {
-            adapters.remove(this);
-          }
+          adapters = notifier.eAdapters();
         }
       }
       catch (Exception ex)
       {
-        //$FALL-THROUGH$
+        inspectionFailed = true;
+      }
+
+      if (notifier == null || !inspectionFailed && adapters == null)
+      {
+        attached = false;
+      }
+      else if (!inspectionFailed)
+      {
+        try
+        {
+          adapters.remove(this);
+        }
+        catch (Exception ex)
+        {
+          //$FALL-THROUGH$
+        }
+        catch (Error ex)
+        {
+          failure = ex;
+        }
+
+        try
+        {
+          attached = adapters.contains(this);
+        }
+        catch (Exception ex)
+        {
+          if (failure != null)
+          {
+            failure.addSuppressed(ex);
+          }
+        }
+        catch (Error ex)
+        {
+          if (failure == null)
+          {
+            failure = ex;
+          }
+          else if (failure != ex)
+          {
+            failure.addSuppressed(ex);
+          }
+        }
+      }
+
+      if (!attached)
+      {
+        try
+        {
+          it.remove();
+        }
+        catch (RuntimeException | Error ex)
+        {
+          if (failure == null)
+          {
+            throw ex;
+          }
+
+          if (failure != ex)
+          {
+            failure.addSuppressed(ex);
+          }
+        }
+      }
+
+      if (failure != null)
+      {
+        throw failure;
       }
     }
-
-    notifiers.clear();
   }
 }

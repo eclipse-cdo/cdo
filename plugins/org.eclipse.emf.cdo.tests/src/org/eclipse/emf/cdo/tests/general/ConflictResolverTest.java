@@ -12,6 +12,8 @@
  */
 package org.eclipse.emf.cdo.tests.general;
 
+import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta.Type;
@@ -32,23 +34,402 @@ import org.eclipse.emf.cdo.tests.model3.PolygonWithDuplicates;
 import org.eclipse.emf.cdo.tests.model3.subpackage.Class2;
 import org.eclipse.emf.cdo.tests.model3.subpackage.SubpackageFactory;
 import org.eclipse.emf.cdo.transaction.CDOConflictResolver;
+import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.CDOChangeSubscriptionAdapter;
 import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Simon McDuff
  */
 public class ConflictResolverTest extends AbstractCDOTest
 {
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testInterruptedSetterWithMergingConflictResolver() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.options().addConflictResolver(new CDOMergingConflictResolver());
+
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setPrice(1);
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(orderDetail);
+    transaction.commit();
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(orderDetail);
+    AtomicReference<Throwable> workerFailure = new AtomicReference<>();
+
+    Thread worker = new Thread(() -> {
+      Thread.currentThread().interrupt();
+
+      try
+      {
+        orderDetail.setPrice(2);
+      }
+      catch (Throwable failure)
+      {
+        workerFailure.set(failure);
+      }
+    }, "interrupted-price-setter");
+    worker.start();
+    worker.join();
+
+    String stateAfterSetter = describeTransactionState(transaction, cdoObject, orderDetail);
+    Throwable emptyCommitFailure = captureFailure(transaction::commit);
+    Throwable normalModificationFailure = captureFailure(() -> {
+      orderDetail.setPrice(3);
+      transaction.commit();
+    });
+
+    float freshPrice = Float.NaN;
+    Throwable freshReadFailure = null;
+
+    try
+    {
+      CDOSession freshSession = openSession();
+      CDOTransaction freshTransaction = freshSession.openTransaction();
+      OrderDetail freshOrderDetail = (OrderDetail)freshTransaction.getResource(getResourcePath("/res1")).getContents().get(0);
+      freshPrice = freshOrderDetail.getPrice();
+    }
+    catch (Throwable failure)
+    {
+      freshReadFailure = failure;
+    }
+
+    assertNotNull("The interrupted setter must propagate its exception", workerFailure.get());
+    assertTrue("Expected an interruption-related cause: " + describeCauseChain(workerFailure.get()), hasCause(workerFailure.get(), InterruptedException.class));
+    assertEquals(
+        "price=1.0, state=CLEAN, dirty=false, dirtyObjects=[], revisionDeltas=[]; emptyCommit=<none>; normalModification=<none>; freshPrice=3.0; freshRead=<none>",
+        stateAfterSetter + "; emptyCommit=" + describeCauseChain(emptyCommitFailure) + "; normalModification=" + describeCauseChain(normalModificationFailure)
+            + "; freshPrice=" + freshPrice + "; freshRead=" + describeCauseChain(freshReadFailure));
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testInterruptedChangeSubscriptionAttachmentCanRetry() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setPrice(1);
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(orderDetail);
+    transaction.commit();
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(orderDetail);
+    CDOChangeSubscriptionAdapter adapter = new CDOChangeSubscriptionAdapter(transaction);
+    AtomicBoolean modifyingCallbackEntered = new AtomicBoolean();
+    transaction.addTransactionHandler(new CDODefaultTransactionHandler()
+    {
+      @Override
+      public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+      {
+        modifyingCallbackEntered.set(true);
+        adapter.attach(object);
+      }
+    });
+
+    AtomicReference<Throwable> workerFailure = new AtomicReference<>();
+    Thread worker = new Thread(() -> {
+      Thread.currentThread().interrupt();
+
+      try
+      {
+        orderDetail.setPrice(2);
+      }
+      catch (Throwable failure)
+      {
+        workerFailure.set(failure);
+      }
+    }, "interrupted-subscription-attachment");
+    worker.start();
+    worker.join();
+
+    assertNotNull("The interrupted subscription request must propagate its exception", workerFailure.get());
+    assertTrue("Expected an interruption-related cause: " + describeCauseChain(workerFailure.get()), hasCause(workerFailure.get(), InterruptedException.class));
+    assertTrue("The modifyingObject callback must reach subscription attachment", modifyingCallbackEntered.get());
+    assertFalse("Failed attachment must be compensated on the object", orderDetail.eAdapters().contains(adapter));
+    assertFalse("Failed attachment must not remain in adapter bookkeeping", adapter.getNotifiers().contains(cdoObject));
+    assertEquals(1.0f, orderDetail.getPrice());
+    assertEquals(CDOState.CLEAN, cdoObject.cdoState());
+    assertFalse(transaction.isDirty());
+    assertTrue(transaction.getDirtyObjects().isEmpty());
+    assertTrue(transaction.getRevisionDeltas().isEmpty());
+
+    orderDetail.setPrice(3);
+
+    assertTrue("A later attachment must succeed", orderDetail.eAdapters().contains(adapter));
+    assertTrue(adapter.getNotifiers().contains(cdoObject));
+    transaction.commit();
+    adapter.dispose();
+
+    assertFalse("Disposal must remove the successful attachment", orderDetail.eAdapters().contains(adapter));
+    assertFalse("Disposal must clear notifier bookkeeping", adapter.getNotifiers().contains(cdoObject));
+  }
+
+  private String describeTransactionState(CDOTransaction transaction, CDOObject cdoObject, OrderDetail orderDetail)
+  {
+    return "price=" + orderDetail.getPrice() + ", state=" + cdoObject.cdoState() + ", dirty=" + transaction.isDirty() + ", dirtyObjects="
+        + transaction.getDirtyObjects().keySet() + ", revisionDeltas=" + transaction.getRevisionDeltas().keySet();
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testThrowingModifyingHandlerOnCleanObject() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setPrice(1);
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(orderDetail);
+    transaction.commit();
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(orderDetail);
+    IllegalStateException expectedFailure = new IllegalStateException("modifyingObject veto");
+    transaction.addTransactionHandler(new FailingModifyingObjectHandler(cdoObject, expectedFailure));
+
+    Throwable failure = captureFailure(() -> orderDetail.setPrice(2));
+
+    assertSame(expectedFailure, failure);
+    assertEquals(1.0f, orderDetail.getPrice());
+    assertEquals(CDOState.CLEAN, cdoObject.cdoState());
+    assertEquals(false, transaction.isDirty());
+    assertTrue(transaction.getDirtyObjects().isEmpty());
+    assertTrue(transaction.getRevisionDeltas().isEmpty());
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testThrowingModifyingHandlerOnDirtyObject() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setPrice(1);
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(orderDetail);
+    transaction.commit();
+
+    orderDetail.setPrice(2);
+    CDOObject cdoObject = CDOUtil.getCDOObject(orderDetail);
+    String previousDelta = transaction.getRevisionDeltas().get(cdoObject.cdoID()).toString();
+    IllegalStateException expectedFailure = new IllegalStateException("modifyingObject veto");
+    transaction.addTransactionHandler(new FailingModifyingObjectHandler(cdoObject, expectedFailure));
+
+    Throwable failure = captureFailure(() -> orderDetail.setPrice(3));
+
+    assertSame(expectedFailure, failure);
+    assertEquals(2.0f, orderDetail.getPrice());
+    assertEquals(CDOState.DIRTY, cdoObject.cdoState());
+    assertEquals(true, transaction.isDirty());
+    assertSame(cdoObject, transaction.getDirtyObjects().get(cdoObject.cdoID()));
+    assertEquals(previousDelta, transaction.getRevisionDeltas().get(cdoObject.cdoID()).toString());
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testThrowingModifyingHandlerOnNewObject() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    OrderDetail orderDetail = getModel1Factory().createOrderDetail();
+    orderDetail.setPrice(1);
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(orderDetail);
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(orderDetail);
+    String newObjects = transaction.getNewObjects().keySet().toString();
+    String dirtyObjects = transaction.getDirtyObjects().keySet().toString();
+    String revisionDeltas = transaction.getRevisionDeltas().toString();
+    boolean dirty = transaction.isDirty();
+    IllegalStateException expectedFailure = new IllegalStateException("modifyingObject veto");
+    transaction.addTransactionHandler(new FailingModifyingObjectHandler(cdoObject, expectedFailure));
+
+    Throwable failure = captureFailure(() -> orderDetail.setPrice(2));
+
+    assertSame(expectedFailure, failure);
+    assertEquals(1.0f, orderDetail.getPrice());
+    assertEquals(CDOState.NEW, cdoObject.cdoState());
+    assertEquals(dirty, transaction.isDirty());
+    assertEquals(newObjects, transaction.getNewObjects().keySet().toString());
+    assertEquals(dirtyObjects, transaction.getDirtyObjects().keySet().toString());
+    assertEquals(revisionDeltas, transaction.getRevisionDeltas().toString());
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testReentrantModifyingHandlerOnSameObject() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    Address address = getModel1Factory().createAddress();
+    address.setCity("before");
+    address.setName("before");
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(address);
+    transaction.commit();
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(address);
+    transaction.addTransactionHandler(new ReentrantModifyingObjectHandler(cdoObject, "city", () -> address.setName("nested"), null));
+
+    address.setCity("outer");
+
+    assertEquals("outer", address.getCity());
+    assertEquals("nested", address.getName());
+    assertEquals(CDOState.DIRTY, cdoObject.cdoState());
+    assertEquals(2, transaction.getRevisionDeltas().get(cdoObject.cdoID()).getFeatureDeltas().size());
+    transaction.commit();
+
+    CDOTransaction freshTransaction = session.openTransaction();
+    Address freshAddress = (Address)freshTransaction.getResource(getResourcePath("/res1")).getContents().get(0);
+    assertEquals("outer", freshAddress.getCity());
+    assertEquals("nested", freshAddress.getName());
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testThrowingReentrantModifyingHandlerPreservesNestedWrite() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    Address address = getModel1Factory().createAddress();
+    address.setCity("before");
+    address.setName("before");
+    transaction.getOrCreateResource(getResourcePath("/res1")).getContents().add(address);
+    transaction.commit();
+
+    CDOObject cdoObject = CDOUtil.getCDOObject(address);
+    IllegalStateException expectedFailure = new IllegalStateException("outer modifyingObject veto");
+    transaction.addTransactionHandler(new ReentrantModifyingObjectHandler(cdoObject, "city", () -> address.setName("nested"), expectedFailure));
+
+    Throwable failure = captureFailure(() -> address.setCity("rejected"));
+
+    assertSame(expectedFailure, failure);
+    assertEquals("before", address.getCity());
+    assertEquals("nested", address.getName());
+    assertEquals(CDOState.DIRTY, cdoObject.cdoState());
+    assertEquals(true, transaction.isDirty());
+    assertSame(cdoObject, transaction.getDirtyObjects().get(cdoObject.cdoID()));
+    assertEquals(1, transaction.getRevisionDeltas().get(cdoObject.cdoID()).getFeatureDeltas().size());
+    assertEquals("name", transaction.getRevisionDeltas().get(cdoObject.cdoID()).getFeatureDeltas().get(0).getFeature().getName());
+
+    transaction.commit();
+    CDOTransaction freshTransaction = session.openTransaction();
+    Address freshAddress = (Address)freshTransaction.getResource(getResourcePath("/res1")).getContents().get(0);
+    assertEquals("before", freshAddress.getCity());
+    assertEquals("nested", freshAddress.getName());
+  }
+
+  private Throwable captureFailure(ThrowingRunnable operation)
+  {
+    try
+    {
+      operation.run();
+      return null;
+    }
+    catch (Throwable failure)
+    {
+      return failure;
+    }
+  }
+
+  private boolean hasCause(Throwable failure, Class<? extends Throwable> type)
+  {
+    for (Throwable cause = failure; cause != null; cause = cause.getCause())
+    {
+      if (type.isInstance(cause))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private String describeCauseChain(Throwable failure)
+  {
+    if (failure == null)
+    {
+      return "<none>";
+    }
+
+    StringBuilder builder = new StringBuilder();
+    for (Throwable cause = failure; cause != null; cause = cause.getCause())
+    {
+      if (builder.length() != 0)
+      {
+        builder.append(" <- ");
+      }
+
+      builder.append(cause.getClass().getName()).append(": ").append(cause.getMessage());
+    }
+
+    return builder.toString();
+  }
+
+  private static final class FailingModifyingObjectHandler extends CDODefaultTransactionHandler
+  {
+    private final CDOObject object;
+
+    private final RuntimeException failure;
+
+    public FailingModifyingObjectHandler(CDOObject object, RuntimeException failure)
+    {
+      this.object = object;
+      this.failure = failure;
+    }
+
+    @Override
+    public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+    {
+      if (object == this.object)
+      {
+        throw failure;
+      }
+    }
+  }
+
+  private static final class ReentrantModifyingObjectHandler extends CDODefaultTransactionHandler
+  {
+    private final CDOObject object;
+
+    private final String triggerFeature;
+
+    private final Runnable nestedModification;
+
+    private final RuntimeException failure;
+
+    private final AtomicBoolean invoked = new AtomicBoolean();
+
+    public ReentrantModifyingObjectHandler(CDOObject object, String triggerFeature, Runnable nestedModification, RuntimeException failure)
+    {
+      this.object = object;
+      this.triggerFeature = triggerFeature;
+      this.nestedModification = nestedModification;
+      this.failure = failure;
+    }
+
+    @Override
+    public void modifyingObject(CDOTransaction transaction, CDOObject object, CDOFeatureDelta featureDelta)
+    {
+      if (object == this.object && triggerFeature.equals(featureDelta.getFeature().getName()) && invoked.compareAndSet(false, true))
+      {
+        nestedModification.run();
+        if (failure != null)
+        {
+          throw failure;
+        }
+      }
+    }
+  }
+
+  @FunctionalInterface
+  private interface ThrowingRunnable
+  {
+    void run() throws Throwable;
+  }
+
   @Skips(IModelConfig.CAPABILITY_LEGACY)
   public void testMergeLocalChangesPerFeature_Basic() throws Exception
   {

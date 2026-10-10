@@ -46,7 +46,6 @@ import org.eclipse.emf.internal.cdo.CDORevisionTransitionUtil;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
 import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
-import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.transaction.TransactionHistory;
 import org.eclipse.emf.internal.cdo.transaction.TransactionSegment;
 
@@ -1085,14 +1084,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     @Override
     protected Object execute(InternalCDOObject object, InternalCDOTransaction transaction, CDOFeatureDelta featureDelta, InternalCDORevision revision)
     {
-      Object result = null;
-      if (featureDelta != null)
-      {
-        result = featureDelta.applyTo(revision);
-      }
-
-      transaction.registerFeatureDeltaUnsynced(object, featureDelta, null);
-      return result;
+      transaction.notifyModifyingObjectUnsynced(object, featureDelta);
+      return publishWriteAfterNotification(object, transaction, featureDelta);
     }
   }
 
@@ -1124,13 +1117,12 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     {
       InternalCDORevision revision = cleanRevision.copy();
 
-      Object result = null;
       if (featureDelta != null)
       {
         CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(cleanRevision, featureDelta, transaction.getSession());
 
         revision = cleanRevision.copy();
-        result = featureDelta.applyTo(revision);
+        featureDelta.copy().applyTo(revision);
 
         if (!transaction.hasMultipleSavepoints())
         {
@@ -1142,20 +1134,65 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
       }
 
-      if (transaction instanceof CDOTransactionImpl)
+      if (featureDelta != null)
       {
-        ((CDOTransactionImpl)transaction).registerFirstDirtyUnsynced(object, featureDelta, cleanRevision, revision);
-      }
-      else
-      {
-        transaction.getCleanRevisions().put(object, cleanRevision);
-        object.cdoInternalSetRevision(revision);
-        transaction.registerDirty(object, featureDelta, cleanRevision);
+        transaction.notifyModifyingObjectUnsynced(object, featureDelta);
       }
 
-      changeState(object, CDOState.DIRTY);
-      return result;
+      return publishWriteAfterNotification(object, transaction, featureDelta);
     }
+  }
+
+  private Object publishWriteAfterNotification(InternalCDOObject object, InternalCDOTransaction transaction, CDOFeatureDelta featureDelta)
+  {
+    CDOState state = object.cdoState();
+    InternalCDORevision currentRevision = object.cdoRevision();
+    CDOFeatureDelta publishDelta = featureDelta == null ? null : featureDelta.copy();
+    InternalCDORevision revision = currentRevision.copy();
+    Object result = null;
+
+    switch (state)
+    {
+    case CLEAN:
+      if (publishDelta != null)
+      {
+        CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(currentRevision, publishDelta, transaction.getSession());
+        revision = currentRevision.copy();
+        result = publishDelta.applyTo(revision);
+      }
+
+      transaction.registerFirstDirtyUnsynced(object, publishDelta, currentRevision, revision);
+      changeState(object, CDOState.DIRTY);
+      break;
+
+    case DIRTY:
+    case CONFLICT:
+      if (publishDelta != null)
+      {
+        CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(currentRevision, publishDelta, transaction.getSession());
+        revision = currentRevision.copy();
+        result = publishDelta.applyTo(revision);
+      }
+
+      object.cdoInternalSetRevision(revision);
+      transaction.registerFeatureDeltaOnlyUnsynced(object, publishDelta, transaction.getCleanRevisionsUnsynced().get(object));
+      break;
+
+    case NEW:
+      if (publishDelta != null)
+      {
+        result = publishDelta.applyTo(revision);
+      }
+
+      object.cdoInternalSetRevision(revision);
+      transaction.registerFeatureDeltaOnlyUnsynced(object, publishDelta, null);
+      break;
+
+    default:
+      throw new IllegalStateException("Object state changed during modifyingObject callback: " + state);
+    }
+
+    return result;
   }
 
   /**
@@ -1174,13 +1211,15 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       {
         CDORevisionTransitionUtil.ensureCoordinateChangingFeaturesFullyLoaded(revision, featureDelta, transaction.getSession());
 
-        result = featureDelta.applyTo(revision);
+        InternalCDORevision proposedRevision = revision.copy();
+        result = featureDelta.copy().applyTo(proposedRevision);
 
         if (!transaction.hasMultipleSavepoints())
         {
           CDOUndoDetector undoDetector = transaction.options().getUndoDetector();
-          if (undoDetector.detectUndo(transaction, cleanRevision, revision, featureDelta))
+          if (undoDetector.detectUndo(transaction, cleanRevision, proposedRevision, featureDelta))
           {
+            result = featureDelta.applyTo(revision);
             CDOID id = revision.getID();
 
             TransactionHistory history = transactionHistory(transaction);
@@ -1230,8 +1269,8 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
         }
       }
 
-      transaction.registerFeatureDeltaUnsynced(object, featureDelta, cleanRevision);
-      return result;
+      transaction.notifyModifyingObjectUnsynced(object, featureDelta);
+      return publishWriteAfterNotification(object, transaction, featureDelta);
     }
   }
 

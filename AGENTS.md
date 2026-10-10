@@ -1,3 +1,23 @@
+## Code Formatting: Logical Grouping and Blank Lines
+
+### Logical Statement Grouping
+
+- Separate distinct logical operations and processing phases with exactly one blank line.
+- Keep semantically related statements together without intervening blank lines.
+- Keep object creation, configuration, and immediate use in one contiguous block. Avoid interleaving operations on unrelated objects.
+- Prepare dependencies before creating the objects that use them. Declare local variables close to their first use.
+- Related declarations and operations may share a block when they form one coherent step.
+
+### Control Flow and Braces
+
+- Precede control-flow statements with one blank line, except immediately after an opening brace.
+- For `if` and `switch`, omit the preceding blank line when the condition primarily uses a variable initialized immediately before them.
+- Never insert blank lines immediately before or after an opening brace.
+- Insert one blank line after a closing brace before the next independent statement, except when followed by another closing brace.
+- Keep syntactically connected branches (`else`, `else if`, `catch`, `finally`) together without blank lines.
+- Format `do`/`while` with `} while (condition);` on the same line.
+- Separate independent `switch` case/default groups with one blank line. Keep consecutive labels belonging to the same group together.
+
 ## Avoid unjustified implementation downcasts
 
 Production code should use API/SPI abstractions where they represent a real architectural boundary. Do not downcast such abstractions merely to reach implementation-specific functionality that properly belongs on that abstraction.
@@ -81,7 +101,7 @@ Before adding a new test, determine whether it needs repository/session/model sc
 - CDO tests launched through Eclipse MCP are ordinary JUnit tests and must use `pluginTest=false`.
 - The few Lifecycle Management tests that require p2 at runtime are the exception and require a PDE Plug-in Test launch; this is not the normal CDO test mode.
 
-## Installer example mirrors
+## CDO Installer example mirrors
 
 Never modify files under these repository-relative paths unless the user explicitly instructs otherwise:
 

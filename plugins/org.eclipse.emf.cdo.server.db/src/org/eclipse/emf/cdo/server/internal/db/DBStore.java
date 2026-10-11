@@ -83,6 +83,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
 
 /**
@@ -182,6 +183,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   private UnitMappingTable unitMappingTable;
 
   private IMappingStrategy mappingStrategy;
+
+  private final Map<String, ResourceNamespaceLockEntry> resourceNamespaceLocks = new HashMap<>();
 
   private IDBDatabase database;
 
@@ -1414,11 +1417,80 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     }
   }
 
+  public ResourceNamespaceLock acquireResourceNamespaceLock(int branchID, CDOID containerID)
+  {
+    String key = branchID + ":" + containerID; //$NON-NLS-1$
+    ResourceNamespaceLockEntry entry;
+
+    synchronized (resourceNamespaceLocks)
+    {
+      entry = resourceNamespaceLocks.computeIfAbsent(key, keyString -> new ResourceNamespaceLockEntry());
+      ++entry.users;
+    }
+
+    entry.lock.lock();
+    return new ResourceNamespaceLock(key, entry);
+  }
+
+  private void releaseResourceNamespaceLock(String key, ResourceNamespaceLockEntry entry)
+  {
+    entry.lock.unlock();
+
+    synchronized (resourceNamespaceLocks)
+    {
+      if (--entry.users == 0)
+      {
+        resourceNamespaceLocks.remove(key, entry);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public final class ResourceNamespaceLock
+  {
+    private final String key;
+
+    private final ResourceNamespaceLockEntry entry;
+
+    private boolean released;
+
+    private ResourceNamespaceLock(String key, ResourceNamespaceLockEntry entry)
+    {
+      this.key = key;
+      this.entry = entry;
+    }
+
+    public void release()
+    {
+      if (!released)
+      {
+        released = true;
+        releaseResourceNamespaceLock(key, entry);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ResourceNamespaceLockEntry
+  {
+    public final ReentrantLock lock = new ReentrantLock();
+
+    public int users;
+  }
+
   /**
    * @author Eike Stepper
    */
   private abstract class SchemaMigrator
   {
+    public SchemaMigrator()
+    {
+    }
+
     public abstract void migrateSchema(Connection connection) throws Exception;
 
     protected final IDBSchema createFakeSchema(Connection connection)

@@ -110,6 +110,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -156,6 +157,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   private boolean schemaPreparationComplete;
 
   private List<IDBTable> createdTables;
+
+  private final List<DBStore.ResourceNamespaceLock> resourceNamespaceLocks = new ArrayList<>();
 
   public DBStoreAccessor(DBStore store, ISession session) throws DBException
   {
@@ -447,6 +450,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     try
     {
+      checkResourceNamespace(context);
+
       // With eager table creation, mapping construction itself can execute DDL. Do it before any CDO data is written.
       mappingStrategy.createMapping(connection, context.getNewPackageUnits(), monitor.fork()); // Fork-1
 
@@ -472,6 +477,107 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     {
       monitor.done();
     }
+  }
+
+  private void checkResourceNamespace(InternalCommitContext context)
+  {
+    if (getStore().getRepository().getRootResourceID() == null)
+    {
+      return;
+    }
+
+    Map<CDOID, InternalCDORevision> changedResources = new HashMap<>();
+    Set<CDOID> detachedIDs = new HashSet<>();
+
+    for (CDOID id : context.getDetachedObjects())
+    {
+      detachedIDs.add(id);
+    }
+
+    for (InternalCDORevision revision : context.getNewObjects())
+    {
+      if (revision.isResourceNode())
+      {
+        changedResources.put(revision.getID(), revision);
+      }
+    }
+
+    for (InternalCDORevision revision : context.getDirtyObjects())
+    {
+      if (!(revision instanceof DetachedCDORevision) && !detachedIDs.contains(revision.getID()) && revision.isResourceNode())
+      {
+        changedResources.put(revision.getID(), revision);
+      }
+    }
+
+    CDOBranchPoint branchHead = context.getBranchPoint().getBranch().getHead();
+    Set<CDOID> foldersToLock = new HashSet<>();
+
+    for (InternalCDORevision revision : changedResources.values())
+    {
+      CDOID folderID = (CDOID)revision.data().getContainerID();
+      foldersToLock.add(folderID == null ? CDOID.NULL : folderID);
+    }
+
+    Map<CDOID, InternalCDORevision> oldRevisions = context.getOldRevisions();
+    Set<CDOID> affectedIDs = new HashSet<>(changedResources.keySet());
+    affectedIDs.addAll(detachedIDs);
+
+    for (CDOID id : affectedIDs)
+    {
+      InternalCDORevision oldRevision = oldRevisions.get(id);
+      if (oldRevision != null && oldRevision.isResourceNode())
+      {
+        CDOID oldFolderID = (CDOID)oldRevision.data().getContainerID();
+        foldersToLock.add(oldFolderID == null ? CDOID.NULL : oldFolderID);
+      }
+    }
+
+    List<CDOID> sortedFolders = new ArrayList<>(foldersToLock);
+    Collections.sort(sortedFolders, (left, right) -> String.valueOf(left).compareTo(String.valueOf(right)));
+    int branchID = context.getBranchPoint().getBranch().getID();
+
+    for (CDOID folderID : sortedFolders)
+    {
+      resourceNamespaceLocks.add(getStore().acquireResourceNamespaceLock(branchID, folderID));
+    }
+
+    branchHead = context.getBranchPoint().getBranch().getHead();
+    Map<CDOID, Set<String>> namesByFolder = new HashMap<>();
+
+    for (InternalCDORevision revision : changedResources.values())
+    {
+      CDOID folderID = (CDOID)revision.data().getContainerID();
+      String name = (String)revision.data().get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0);
+
+      Set<String> names = namesByFolder.computeIfAbsent(folderID, key -> new HashSet<>());
+      if (!names.add(name))
+      {
+        throw new IllegalStateException("Duplicate resource node in folder " + folderID + ": " + name); //$NON-NLS-1$
+      }
+
+      CDOID existingID = readResourceID(folderID, name, branchHead);
+      if (existingID != null && !existingID.equals(revision.getID()))
+      {
+        InternalCDORevision changed = changedResources.get(existingID);
+        boolean releasesName = changed != null
+            && (!folderID.equals(changed.data().getContainerID()) || !name.equals(changed.data().get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0)));
+        if (!releasesName && !detachedIDs.contains(existingID))
+        {
+          throw new IllegalStateException("Duplicate resource node in folder " + folderID + ": " + name); //$NON-NLS-1$
+        }
+      }
+    }
+  }
+
+  private void releaseResourceNamespaceLocks()
+  {
+    for (int i = resourceNamespaceLocks.size() - 1; i >= 0; i--)
+    {
+      resourceNamespaceLocks.get(i).release();
+    }
+
+    resourceNamespaceLocks.clear();
   }
 
   @Override
@@ -721,35 +827,42 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected final void doRollback(IStoreAccessor.CommitContext commitContext)
   {
-    discardBatchingContext();
-
-    if (objectAttacher != null)
-    {
-      objectAttacher.finishedCommit(false);
-      objectAttacher = null;
-    }
-
-    IDBStore store = getStore();
-    IMetaDataManager metaDataManager = store.getMetaDataManager();
-    metaDataManager.clearMetaIDMappings();
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("--- DB ROLLBACK ---"); //$NON-NLS-1$
-    }
-
     try
     {
-      connection.rollback();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
+      discardBatchingContext();
 
-    // Bug 298632: Must rollback DBSchema to its prior state and drop the tables
-    IMappingStrategy mappingStrategy = store.getMappingStrategy();
-    mappingStrategy.removeMapping(connection, commitContext.getNewPackageUnits());
+      if (objectAttacher != null)
+      {
+        objectAttacher.finishedCommit(false);
+        objectAttacher = null;
+      }
+
+      IDBStore store = getStore();
+      IMetaDataManager metaDataManager = store.getMetaDataManager();
+      metaDataManager.clearMetaIDMappings();
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("--- DB ROLLBACK ---"); //$NON-NLS-1$
+      }
+
+      try
+      {
+        connection.rollback();
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+
+      // Bug 298632: Must rollback DBSchema to its prior state and drop the tables
+      IMappingStrategy mappingStrategy = store.getMappingStrategy();
+      mappingStrategy.removeMapping(connection, commitContext.getNewPackageUnits());
+    }
+    finally
+    {
+      releaseResourceNamespaceLocks();
+    }
   }
 
   @Override
@@ -779,6 +892,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void doDeactivate() throws Exception
   {
+    releaseResourceNamespaceLocks();
     discardBatchingContext();
 
     connectionKeepAliveTask.cancel();
@@ -798,6 +912,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     // this is called when the accessor is put back into the pool
     // we want to make sure that no DB lock is held (see Bug 276926)
     connection.rollback();
+    releaseResourceNamespaceLocks();
 
     if (createdTables != null)
     {

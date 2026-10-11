@@ -28,9 +28,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore.ValueHandler;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
@@ -61,7 +59,10 @@ import com.mongodb.QueryOperators;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
@@ -227,7 +228,7 @@ public class Commits extends Coll
     DBObject query = new BasicDBObject();
     query.put(UNITS, new BasicDBObject("$exists", true));
 
-    new QueryEmbeddedUnits<Object>(query)
+    new QueryEmbeddedUnits<>(query)
     {
       @Override
       protected Object handleEmbedded(DBObject doc, DBObject embedded)
@@ -311,7 +312,7 @@ public class Commits extends Coll
     DBObject query = new BasicDBObject();
     query.put(UNITS, new BasicDBObject("$exists", true));
 
-    new QueryEmbeddedUnits<Object>(query)
+    new QueryEmbeddedUnits<>(query)
     {
       @Override
       protected Object handleEmbedded(DBObject doc, DBObject embedded)
@@ -391,6 +392,8 @@ public class Commits extends Coll
       accessor.addIDMappings(context, monitor.fork());
       context.applyIDMappings(monitor.fork());
 
+      checkResourceNamespace(accessor, context);
+
       List<DBObject> docs = new ArrayList<>();
       marshalRevisions(docs, context, context.getNewObjects(), CDOChangeKind.NEW);
       marshalRevisions(docs, context, context.getDirtyObjects(), CDOChangeKind.CHANGED);
@@ -412,6 +415,71 @@ public class Commits extends Coll
     }
   }
 
+  private void checkResourceNamespace(MongoDBStoreAccessor accessor, InternalCommitContext context)
+  {
+    Map<CDOID, InternalCDORevision> changedResources = new HashMap<>();
+
+    for (InternalCDORevision revision : context.getNewObjects())
+    {
+      if (!(revision instanceof SyntheticCDORevision) && revision.isResourceNode())
+      {
+        changedResources.put(revision.getID(), revision);
+      }
+    }
+
+    for (InternalCDORevision revision : context.getDirtyObjects())
+    {
+      if (!(revision instanceof SyntheticCDORevision) && !(revision instanceof DetachedCDORevision) && revision.isResourceNode())
+      {
+        changedResources.put(revision.getID(), revision);
+      }
+    }
+
+    Set<CDOID> detachedIDs = new HashSet<>();
+
+    for (CDOID id : context.getDetachedObjects())
+    {
+      detachedIDs.add(id);
+    }
+
+    Map<CDOID, Set<String>> namesByFolder = new HashMap<>();
+    CDOBranchPoint branchHead = context.getBranchPoint().getBranch().getHead();
+
+    for (InternalCDORevision revision : changedResources.values())
+    {
+      CDOID containerID = (CDOID)revision.getContainerID();
+      String name = (String)revision.data().get(resourceNameFeature(revision), 0);
+
+      Set<String> names = namesByFolder.computeIfAbsent(containerID, key -> new HashSet<>());
+      if (!names.add(name))
+      {
+        throw new IllegalStateException("Duplicate resource: name=" + name + ", folderID=" + containerID); //$NON-NLS-1$
+      }
+
+      CDOID existingID = accessor.readResourceID(containerID, name, branchHead);
+      if (existingID != null && !existingID.equals(revision.getID()))
+      {
+        InternalCDORevision changed = changedResources.get(existingID);
+        boolean releasesName = changed != null
+            && (!containerID.equals(changed.getContainerID()) || !name.equals(changed.data().get(resourceNameFeature(changed), 0)));
+        if (!releasesName && !detachedIDs.contains(existingID))
+        {
+          throw new IllegalStateException("Duplicate resource: name=" + name + ", folderID=" + containerID); //$NON-NLS-1$
+        }
+      }
+    }
+  }
+
+  private EStructuralFeature resourceNameFeature(InternalCDORevision revision)
+  {
+    if (resourceNameFeature == null)
+    {
+      resourceNameFeature = revision.getEClass().getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
+    }
+
+    return resourceNameFeature;
+  }
+
   private void marshalRevisions(List<DBObject> docs, InternalCommitContext context, InternalCDORevision[] revisions, CDOChangeKind changeKind)
   {
     for (InternalCDORevision revision : revisions)
@@ -423,10 +491,10 @@ public class Commits extends Coll
 
   private DBObject marshallRevision(InternalCommitContext context, InternalCDORevision revision, CDOChangeKind changeKind)
   {
-    boolean resource = !(revision instanceof SyntheticCDORevision) && revision.isResource();
-    if (resource && resourceNameFeature == null)
+    boolean resource = !(revision instanceof SyntheticCDORevision) && revision.isResourceNode();
+    if (resource)
     {
-      resourceNameFeature = revision.getEClass().getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
+      resourceNameFeature(revision);
     }
 
     DBObject doc = new BasicDBObject();
@@ -451,18 +519,6 @@ public class Commits extends Coll
 
     int featureID = revision.getContainerFeatureID();
     doc.put(REVISIONS_FEATURE, featureID);
-
-    if (resource && changeKind != CDOChangeKind.DETACHED)
-    {
-      String name = (String)revision.data().get(resourceNameFeature, 0);
-      IStoreAccessor accessor = StoreThreadLocal.getAccessor();
-
-      CDOID existingID = accessor.readResourceID(containerID, name, revision);
-      if (existingID != null && !existingID.equals(revision.getID()) && !isBeingDetached(context, existingID))
-      {
-        throw new IllegalStateException("Duplicate resource: name=" + name + ", folderID=" + containerID); //$NON-NLS-1$ //$NON-NLS-2$
-      }
-    }
 
     CDOClassInfo classInfo = revision.getClassInfo();
     for (EStructuralFeature feature : classInfo.getAllPersistentFeatures())
@@ -523,19 +579,6 @@ public class Commits extends Coll
     }
 
     return doc;
-  }
-
-  private boolean isBeingDetached(InternalCommitContext context, CDOID id)
-  {
-    for (CDOID idBeingDetached : context.getDetachedObjects())
-    {
-      if (id.equals(idBeingDetached))
-      {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   public void queryResources(final QueryResourcesContext context)
@@ -887,7 +930,7 @@ public class Commits extends Coll
     final InternalCDOBranchManager branchManager = repository.getBranchManager();
     final InternalCDOCommitInfoManager commitManager = repository.getCommitInfoManager();
 
-    new Query<Object>(query)
+    new Query<>(query)
     {
       @Override
       public Object execute()

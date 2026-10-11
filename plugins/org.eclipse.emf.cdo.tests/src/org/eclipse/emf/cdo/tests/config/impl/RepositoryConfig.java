@@ -53,8 +53,8 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.internal.embedded.ServerBranchLoader;
 import org.eclipse.emf.cdo.server.internal.embedded.ServerRevisionLoader;
-import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory;
+import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory;
@@ -182,6 +182,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   private boolean supportingExtRefs = true;
 
+  private boolean serializeCommits;
+
   private IDGenerationLocation idGenerationLocation = IDGenerationLocation.STORE;
 
   private ListOrdering listOrdering = ListOrdering.ORDERED;
@@ -219,6 +221,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     if (supportingExtRefs())
     {
       capabilities.add(CAPABILITY_EXTERNAL_REFS);
+    }
+
+    if (serializeCommits())
+    {
+      capabilities.add(CAPABILITY_SERIALIZE_COMMITS);
     }
 
     if (listOrdering() != ListOrdering.ORDERED)
@@ -304,6 +311,18 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public RepositoryConfig supportingExtRefs(boolean supportingExtRefs)
   {
     this.supportingExtRefs = supportingExtRefs;
+    return this;
+  }
+
+  @Override
+  public boolean serializeCommits()
+  {
+    return serializeCommits;
+  }
+
+  public RepositoryConfig serializeCommits(boolean serializeCommits)
+  {
+    this.serializeCommits = serializeCommits;
     return this;
   }
 
@@ -540,6 +559,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     props.put(Props.OVERRIDE_UUID, ""); // UUID := name !!!
     props.put(Props.SUPPORTING_AUDITS, Boolean.toString(supportingAudits));
     props.put(Props.SUPPORTING_BRANCHES, Boolean.toString(supportingBranches));
+    props.put(Props.SERIALIZE_COMMITS, Boolean.toString(serializeCommits));
     props.put(Props.ID_GENERATION_LOCATION, idGenerationLocation.toString());
 
     // TODO list-ordering

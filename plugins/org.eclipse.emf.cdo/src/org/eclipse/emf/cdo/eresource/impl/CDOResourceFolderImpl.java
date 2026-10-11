@@ -140,7 +140,21 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
         protected CDOResourceNode validate(int index, CDOResourceNode newNode)
         {
           String newPath = getPath() + CDOURIUtil.SEGMENT_SEPARATOR + newNode.getName();
-          CDOResourceFolderImpl.this.checkDuplicates(newPath);
+
+          if (FSMUtil.isTransient(CDOResourceFolderImpl.this))
+          {
+            for (CDOResourceNode sibling : this)
+            {
+              if (sibling != newNode && ObjectUtil.equals(sibling.getName(), newNode.getName()))
+              {
+                throw CDOResourceFolderImpl.this.createDuplicateResourceException(newPath);
+              }
+            }
+          }
+          else
+          {
+            CDOResourceFolderImpl.this.checkDuplicates(newPath);
+          }
 
           return super.validate(index, newNode);
         }

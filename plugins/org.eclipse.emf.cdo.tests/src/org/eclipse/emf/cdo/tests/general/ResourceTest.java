@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.eresource.CDOTextResource;
+import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ModelConfig;
@@ -76,6 +77,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Eike Stepper
@@ -739,6 +744,349 @@ public class ResourceTest extends AbstractCDOTest
 
     transaction.createResource(getResourcePath("/my/resource"));
     transaction.commit();
+    session.close();
+  }
+
+  public void testDuplicatePathCannotBeCommittedWhenClientCheckIsBypassed() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/duplicate-a"));
+    CDOResource anotherResource = transaction.createResource(getResourcePath("/duplicate-b"));
+
+    ((CDOResourceNodeImpl)resource).basicSetName("duplicate", false);
+    ((CDOResourceNodeImpl)anotherResource).basicSetName("duplicate", false);
+
+    try
+    {
+      transaction.commit();
+      fail("Duplicate resource path must be rejected by the server");
+    }
+    catch (CommitException expected)
+    {
+      assertTrue(expected.getMessage(), expected.getMessage().toLowerCase().contains("duplicate"));
+    }
+    finally
+    {
+      session.close();
+    }
+  }
+
+  public void testDuplicatePathAcrossResourceNodeTypesCannotBeCommittedWhenClientCheckIsBypassed() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/duplicate-resource"));
+    CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("/duplicate-folder"));
+
+    ((CDOResourceNodeImpl)resource).basicSetName("duplicate", false);
+    ((CDOResourceNodeImpl)folder).basicSetName("duplicate", false);
+
+    try
+    {
+      transaction.commit();
+      fail("Duplicate resource path must be rejected by the server");
+    }
+    catch (CommitException expected)
+    {
+      assertTrue(expected.getMessage(), expected.getMessage().toLowerCase().contains("duplicate"));
+    }
+    finally
+    {
+      session.close();
+    }
+  }
+
+  public void testDuplicateExistingResourceNamesCannotBeCommittedWhenClientCheckIsBypassed() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource first = transaction.createResource(getResourcePath("/first"));
+    CDOResource second = transaction.createResource(getResourcePath("/second"));
+    transaction.commit();
+
+    ((CDOResourceNodeImpl)first).basicSetName("same", false);
+    ((CDOResourceNodeImpl)second).basicSetName("same", false);
+
+    try
+    {
+      transaction.commit();
+      fail("Duplicate resource path must be rejected by the server");
+    }
+    catch (CommitException expected)
+    {
+      // SUCCESS
+    }
+    finally
+    {
+      session.close();
+    }
+
+    session = openSession();
+    transaction = session.openTransaction();
+    assertNotNull(transaction.getResource(getResourcePath("/first")));
+    assertNotNull(transaction.getResource(getResourcePath("/second")));
+    assertNull(transaction.getResource(getResourcePath("/same"), false));
+    session.close();
+  }
+
+  public void testNewAndRenamedResourceNamesCannotBeCommittedWhenClientCheckIsBypassed() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource existing = transaction.createResource(getResourcePath("/existing"));
+    transaction.commit();
+
+    CDOResource created = transaction.createResource(getResourcePath("/created"));
+    ((CDOResourceNodeImpl)existing).basicSetName("same", false);
+    ((CDOResourceNodeImpl)created).basicSetName("same", false);
+
+    try
+    {
+      transaction.commit();
+      fail("Duplicate resource path must be rejected by the server");
+    }
+    catch (CommitException expected)
+    {
+      // SUCCESS
+    }
+    finally
+    {
+      session.close();
+    }
+
+    session = openSession();
+    transaction = session.openTransaction();
+    assertNotNull(transaction.getResource(getResourcePath("/existing")));
+    assertNull(transaction.getResource(getResourcePath("/same"), false));
+    assertNull(transaction.getResource(getResourcePath("/created"), false));
+    session.close();
+  }
+
+  public void testExistingResourcesCanExchangeNamesInOneCommit() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource first = transaction.createResource(getResourcePath("/first"));
+    CDOResource second = transaction.createResource(getResourcePath("/second"));
+    transaction.commit();
+
+    String firstName = first.getName();
+    String secondName = second.getName();
+    CDOID firstID = first.cdoID();
+    CDOID secondID = second.cdoID();
+    ((CDOResourceNodeImpl)first).basicSetName(secondName, false);
+    ((CDOResourceNodeImpl)second).basicSetName(firstName, false);
+    transaction.commit();
+
+    session.close();
+    session = openSession();
+    transaction = session.openTransaction();
+    assertEquals(secondID, transaction.getResource(getResourcePath("/first")).cdoID());
+    assertEquals(firstID, transaction.getResource(getResourcePath("/second")).cdoID());
+    session.close();
+  }
+
+  public void testResourceNameCanBeReusedAfterDeleteInSameCommit() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource existing = transaction.createResource(getResourcePath("/same"));
+    transaction.commit();
+
+    existing.delete(null);
+    CDOResource replacement = transaction.createResource(getResourcePath("/same"));
+    assertNotNull(replacement);
+    transaction.commit();
+    session.close();
+
+    session = openSession();
+    transaction = session.openTransaction();
+    assertNotNull(transaction.getResource(getResourcePath("/same")));
+    session.close();
+  }
+
+  public void testResourcesCanExchangeFoldersWithoutNameCollision() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResourceFolder firstFolder = transaction.createResourceFolder(getResourcePath("/first"));
+    CDOResourceFolder secondFolder = transaction.createResourceFolder(getResourcePath("/second"));
+    CDOResource first = transaction.createResource(getResourcePath("/first/one"));
+    CDOResource second = transaction.createResource(getResourcePath("/second/two"));
+    transaction.commit();
+
+    firstFolder.getNodes().add(second);
+    secondFolder.getNodes().add(first);
+    transaction.commit();
+    session.close();
+  }
+
+  public void testSameResourceNameCanExistInDifferentFolders() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    transaction.createResourceFolder(getResourcePath("/first"));
+    transaction.createResourceFolder(getResourcePath("/second"));
+    transaction.createResource(getResourcePath("/first/same"));
+    transaction.createResource(getResourcePath("/second/same"));
+    transaction.commit();
+    session.close();
+  }
+
+  public void testConcurrentResourcePathCreationIsUnique() throws Exception
+  {
+    for (int i = 0; i < 10; i++)
+    {
+      assertConcurrentResourcePathIsUnique(getResourcePath("/concurrent-" + i));
+    }
+  }
+
+  private void assertConcurrentResourcePathIsUnique(String path) throws Exception
+  {
+    CountDownLatch prepared = new CountDownLatch(2);
+    CountDownLatch start = new CountDownLatch(1);
+    CountDownLatch finished = new CountDownLatch(2);
+    AtomicInteger committed = new AtomicInteger();
+    AtomicReference<Throwable> failure = new AtomicReference<>();
+
+    Runnable commit = () -> {
+      CDOSession session = null;
+      try
+      {
+        session = openSession();
+        CDOTransaction transaction = session.openTransaction();
+        transaction.createResource(path);
+        prepared.countDown();
+        if (!start.await(30, TimeUnit.SECONDS))
+        {
+          throw new AssertionError("Timed out waiting for concurrent commit start");
+        }
+
+        try
+        {
+          transaction.commit();
+          committed.incrementAndGet();
+        }
+        catch (CommitException expected)
+        {
+          // A conflicting transaction must be rejected.
+        }
+      }
+      catch (Throwable ex)
+      {
+        failure.compareAndSet(null, ex);
+      }
+      finally
+      {
+        if (session != null)
+        {
+          session.close();
+        }
+
+        finished.countDown();
+      }
+    };
+
+    Thread first = new Thread(commit, "ResourceTest concurrent commit 1"); //$NON-NLS-1$
+    Thread second = new Thread(commit, "ResourceTest concurrent commit 2"); //$NON-NLS-1$
+    first.start();
+    second.start();
+    assertTrue("Both transactions must prepare the same path", prepared.await(30, TimeUnit.SECONDS)); //$NON-NLS-1$
+    start.countDown();
+    assertTrue("Both commit attempts must finish", finished.await(60, TimeUnit.SECONDS)); //$NON-NLS-1$
+
+    if (failure.get() != null)
+    {
+      throw new AssertionError("Concurrent resource commit failed", failure.get()); //$NON-NLS-1$
+    }
+
+    assertEquals(1, committed.get());
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    assertNotNull(transaction.getResource(path));
+    session.close();
+  }
+
+  public void testMovingResourceIntoFolderWithDuplicateNameIsRejectedByServer() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("/folder"));
+    CDOResource resource = transaction.createResource(getResourcePath("/source"));
+    transaction.createResource(getResourcePath("/folder/same"));
+    transaction.commit();
+
+    ((CDOResourceNodeImpl)resource).basicSetName("temporary", false);
+    folder.getNodes().add(resource);
+    ((CDOResourceNodeImpl)resource).basicSetName("same", false);
+
+    try
+    {
+      transaction.commit();
+      fail("Duplicate resource path must be rejected by the server");
+    }
+    catch (CommitException expected)
+    {
+      // SUCCESS
+    }
+    finally
+    {
+      session.close();
+    }
+
+    session = openSession();
+    transaction = session.openTransaction();
+    assertNotNull(transaction.getResource(getResourcePath("/source")));
+    assertNotNull(transaction.getResource(getResourcePath("/folder/same")));
+    assertNull(transaction.getResource(getResourcePath("/folder/temporary"), false));
+    session.close();
+  }
+
+  public void testDuplicateNamesInNewFolderAreRejected() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("/new-folder"));
+    CDOResource first = transaction.createResource(getResourcePath("/first"));
+    CDOResource second = transaction.createResource(getResourcePath("/second"));
+
+    ((CDOResourceNodeImpl)first).basicSetName("same", false);
+    ((CDOResourceNodeImpl)second).basicSetName("same", false);
+    folder.getNodes().add(first);
+
+    try
+    {
+      folder.getNodes().add(second);
+      fail("CDODuplicateResourceException expected");
+    }
+    catch (CDODuplicateResourceException expected)
+    {
+      // SUCCESS
+    }
+    finally
+    {
+      session.close();
+    }
+  }
+
+  public void testAddAllToNewFolderPreservesNodes() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("/new-folder"));
+    CDOResource first = transaction.createResource(getResourcePath("/first"));
+    CDOResource second = transaction.createResource(getResourcePath("/second"));
+    CDOResource third = transaction.createResource(getResourcePath("/third"));
+    EList<CDOResourceNode> nodes = folder.getNodes();
+
+    nodes.addAll(Arrays.asList(first, second));
+    nodes.addAll(1, Arrays.asList(third));
+
+    assertEquals(3, nodes.size());
+    assertSame(first, nodes.get(0));
+    assertSame(third, nodes.get(1));
+    assertSame(second, nodes.get(2));
     session.close();
   }
 

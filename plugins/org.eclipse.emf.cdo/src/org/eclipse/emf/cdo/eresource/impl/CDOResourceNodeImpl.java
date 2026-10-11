@@ -423,6 +423,18 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     }
   }
 
+  /**
+   * Creates the exception used when a resource node path is already present.
+   *
+   * @param newPath
+   *          the duplicate path
+   * @return the exception describing the duplicate path
+   */
+  CDODuplicateResourceException createDuplicateResourceException(String newPath)
+  {
+    return new CDODuplicateResourceException(MessageFormat.format(Messages.getString("CDOResourceNodeImpl.5"), newPath)); //$NON-NLS-1$
+  }
+
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {

@@ -41,6 +41,8 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
 
   public static final String CAPABILITY_EXTERNAL_REFS = "repository.external.refs";
 
+  public static final String CAPABILITY_SERIALIZE_COMMITS = "repository.serialize.commits";
+
   public static final String CAPABILITY_UNORDERED_LISTS = "repository.unordered.lists";
 
   public static final String CAPABILITY_UUIDS = "repository.uuids";
@@ -62,6 +64,8 @@ public interface IRepositoryConfig extends IConfig, IRepositoryProvider
   public boolean supportingChunks();
 
   public boolean supportingExtRefs();
+
+  public boolean serializeCommits();
 
   public IDGenerationLocation idGenerationLocation();
 

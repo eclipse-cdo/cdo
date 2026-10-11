@@ -1378,8 +1378,47 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     CDOID resourceID = accessor.readResourceID(revisionFolder, revisionName, revision);
     if (!CDOIDUtil.isNull(resourceID))
     {
-      throw new IllegalStateException("Duplicate resource: name=" + revisionName + ", folderID=" + revisionFolder); //$NON-NLS-1$ //$NON-NLS-2$
+      boolean releasesName = false;
+
+      IStoreAccessor.CommitContext context = StoreThreadLocal.getCommitContext();
+      if (context != null)
+      {
+        for (CDOID detachedID : context.getDetachedObjects())
+        {
+          if (resourceID.equals(detachedID))
+          {
+            releasesName = true;
+            break;
+          }
+        }
+
+        if (!releasesName)
+        {
+          releasesName = releasesName(context.getNewObjects(), resourceID, revisionFolder, revisionName)
+              || releasesName(context.getDirtyObjects(), resourceID, revisionFolder, revisionName);
+        }
+      }
+
+      if (!releasesName)
+      {
+        throw new IllegalStateException("Duplicate resource: name=" + revisionName + ", folderID=" + revisionFolder); //$NON-NLS-1$ //$NON-NLS-2$
+      }
     }
+  }
+
+  private boolean releasesName(InternalCDORevision[] revisions, CDOID resourceID, CDOID folderID, String name)
+  {
+    for (InternalCDORevision revision : revisions)
+    {
+      if (resourceID.equals(revision.getID()))
+      {
+        CDOID finalFolderID = (CDOID)revision.data().getContainerID();
+        String finalName = (String)revision.data().get(resourceNameFeature, 0);
+        return !folderID.equals(finalFolderID) || !name.equals(finalName);
+      }
+    }
+
+    return false;
   }
 
   private void enforceListLimit(List<InternalCDORevision> list)

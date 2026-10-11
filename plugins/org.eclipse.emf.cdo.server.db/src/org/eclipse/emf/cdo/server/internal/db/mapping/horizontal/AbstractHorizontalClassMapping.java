@@ -33,7 +33,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOClearFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
 import org.eclipse.emf.cdo.common.revision.delta.CDOMoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
-import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -646,18 +645,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return MessageFormat.format("{0}[{1} -> {2}]", getClass().getSimpleName(), eClass, table);
   }
 
-  protected void checkDuplicateResources(IDBStoreAccessor accessor, CDORevision revision) throws IllegalStateException
-  {
-    CDOID folderID = (CDOID)revision.data().getContainerID();
-    String name = (String)revision.data().get(EresourcePackage.eINSTANCE.getCDOResourceNode_Name(), 0);
-
-    CDOID existingID = accessor.readResourceID(folderID, name, revision.getBranch().getHead());
-    if (existingID != null && !existingID.equals(revision.getID()))
-    {
-      throw new IllegalStateException("Duplicate resource node in folder " + folderID + ": " + name); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-  }
-
   protected void writeLists(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean raw)
   {
     for (IListMapping listMapping : listMappings)
@@ -700,12 +687,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       return;
     }
 
-    // If the repository's root resource ID is not yet set, then this must be the initial initRootResource()
-    // commit. The duplicate check is certainly not needed in this case, and it appears that Mysql has problems
-    // with it (Table definition has changed, please retry transaction), see bug 482886.
-    boolean duplicateResourcesCheckNeeded = revision.isResourceNode() && mappingStrategy.getStore().getRepository().getRootResourceID() != null;
-
-    monitor.begin(duplicateResourcesCheckNeeded ? 10 : 9);
+    monitor.begin(9);
     Async async = null;
 
     try
@@ -732,22 +714,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         if (async != null)
         {
           async.stop();
-        }
-      }
-
-      if (duplicateResourcesCheckNeeded)
-      {
-        try
-        {
-          async = monitor.forkAsync();
-          checkDuplicateResources(accessor, revision);
-        }
-        finally
-        {
-          if (async != null)
-          {
-            async.stop();
-          }
         }
       }
 
@@ -946,12 +912,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       {
         mapping.objectDetached(accessor, id, revised);
       }
-    }
-
-    boolean duplicateResourcesCheckNeeded = revision.isResourceNode() && mappingStrategy.getStore().getRepository().getRootResourceID() != null;
-    if (duplicateResourcesCheckNeeded)
-    {
-      checkDuplicateResources(accessor, revision);
     }
   }
 

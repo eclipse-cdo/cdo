@@ -36,8 +36,8 @@ import java.util.function.Consumer;
  * Duplicate names, unknown names, empty names or options, and malformed boolean values are rejected.
  * <p>
  * The generic capabilities are {@code audits}, {@code branches}, {@code chunks}, {@code extRefs}, {@code clientIDs},
- * and {@code unorderedLists}. {@code clientIDs=true} selects client-side IDs and {@code clientIDs=false} selects
- * store-side IDs, as represented by
+ * {@code unorderedLists}, and {@code serializeCommits}. {@code clientIDs=true} selects client-side IDs and
+ * {@code clientIDs=false} selects store-side IDs, as represented by
  * {@link org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation}. Similarly,
  * {@code unorderedLists=true} selects unordered lists and {@code unorderedLists=false} selects ordered lists, as
  * represented by {@link org.eclipse.emf.cdo.common.CDOCommonRepository.ListOrdering}. These are intentionally
@@ -69,6 +69,8 @@ public abstract class RepositoryConfigFactory<C extends RepositoryConfig> extend
   private static final String CLIENT_IDS = "clientIDs";
 
   private static final String UNORDERED_LISTS = "unorderedLists";
+
+  private static final String SERIALIZE_COMMITS = "serializeCommits";
 
   protected RepositoryConfigFactory(String type)
   {
@@ -207,8 +209,8 @@ public abstract class RepositoryConfigFactory<C extends RepositoryConfig> extend
 
   private boolean isCapability(String name)
   {
-    return AUDITS.equals(name) || BRANCHES.equals(name) || CHUNKS.equals(name) || EXT_REFS.equals(name) || CLIENT_IDS.equals(name)
-        || UNORDERED_LISTS.equals(name) || isAdditionalCapability(name);
+    return AUDITS.equals(name) || BRANCHES.equals(name) || CHUNKS.equals(name) || EXT_REFS.equals(name) || SERIALIZE_COMMITS.equals(name)
+        || CLIENT_IDS.equals(name) || UNORDERED_LISTS.equals(name) || isAdditionalCapability(name);
   }
 
   private void validate(C config, Map<String, Boolean> options, String description)
@@ -228,6 +230,7 @@ public abstract class RepositoryConfigFactory<C extends RepositoryConfig> extend
     applyBoolean(options, AUDITS, config::supportingAudits);
     applyBoolean(options, CHUNKS, config::supportingChunks);
     applyBoolean(options, EXT_REFS, config::supportingExtRefs);
+    applyBoolean(options, SERIALIZE_COMMITS, config::serializeCommits);
     applyBoolean(options, CLIENT_IDS, value -> config.idGenerationLocation(value ? IDGenerationLocation.CLIENT : IDGenerationLocation.STORE));
     applyBoolean(options, UNORDERED_LISTS, value -> config.listOrdering(value ? ListOrdering.UNORDERED : ListOrdering.ORDERED));
     applyAdditional(config, options);

@@ -760,12 +760,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       return;
     }
 
-    // If the repository's root resource ID is not yet set, then this must be the initial initRootResource()
-    // commit. The duplicate check is certainly not needed in this case, and it appears that Mysql has problems
-    // with it (Table definition has changed, please retry transaction), see bug 482886.
-    boolean duplicateResourcesCheckNeeded = revision.isResourceNode() && getMappingStrategy().getStore().getRepository().getRootResourceID() != null;
-
-    monitor.begin(duplicateResourcesCheckNeeded ? 10 : 9);
+    monitor.begin(9);
     Async async = null;
 
     try
@@ -802,22 +797,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (async != null)
         {
           async.stop();
-        }
-      }
-
-      if (duplicateResourcesCheckNeeded)
-      {
-        try
-        {
-          async = monitor.forkAsync();
-          checkDuplicateResources(accessor, revision);
-        }
-        finally
-        {
-          if (async != null)
-          {
-            async.stop();
-          }
         }
       }
 

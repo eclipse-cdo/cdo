@@ -2629,7 +2629,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     private int getNumberOfValidAdapters(InternalCDOObject object)
     {
       int count = 0;
-      if (!FSMUtil.isTransient(object) && !FSMUtil.isNew(object))
+      if (!FSMUtil.isTransientOrNew(object))
       {
         if (object.eNotificationRequired())
         {

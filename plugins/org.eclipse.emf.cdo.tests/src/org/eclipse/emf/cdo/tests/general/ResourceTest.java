@@ -1048,6 +1048,7 @@ public class ResourceTest extends AbstractCDOTest
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("/new-folder"));
+    assertNew(folder, transaction);
     CDOResource first = transaction.createResource(getResourcePath("/first"));
     CDOResource second = transaction.createResource(getResourcePath("/second"));
 

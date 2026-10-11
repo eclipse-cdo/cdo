@@ -141,7 +141,7 @@ public class CDOResourceFolderImpl extends CDOResourceNodeImpl implements CDORes
         {
           String newPath = getPath() + CDOURIUtil.SEGMENT_SEPARATOR + newNode.getName();
 
-          if (FSMUtil.isTransient(CDOResourceFolderImpl.this))
+          if (FSMUtil.isTransientOrNew(CDOResourceFolderImpl.this))
           {
             for (CDOResourceNode sibling : this)
             {

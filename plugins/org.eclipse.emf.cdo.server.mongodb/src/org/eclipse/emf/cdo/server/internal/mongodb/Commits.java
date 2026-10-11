@@ -392,8 +392,6 @@ public class Commits extends Coll
       accessor.addIDMappings(context, monitor.fork());
       context.applyIDMappings(monitor.fork());
 
-      checkResourceNamespace(accessor, context);
-
       List<DBObject> docs = new ArrayList<>();
       marshalRevisions(docs, context, context.getNewObjects(), CDOChangeKind.NEW);
       marshalRevisions(docs, context, context.getDirtyObjects(), CDOChangeKind.CHANGED);
@@ -406,7 +404,14 @@ public class Commits extends Coll
 
       monitor.worked();
 
-      collection.insert(doc);
+      // The repository may run commits concurrently. Protect the final-state namespace check and its corresponding
+      // durable insert together so another writer cannot pass the same check before this commit becomes visible.
+      synchronized (this)
+      {
+        checkResourceNamespace(accessor, context);
+        collection.insert(doc);
+      }
+
       monitor.worked(100);
     }
     finally

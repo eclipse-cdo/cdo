@@ -2161,7 +2161,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     if (onlyPersistedID)
     {
-      if (FSMUtil.isTransient(object) || FSMUtil.isNew(object))
+      if (FSMUtil.isTransientOrNew(object))
       {
         return null;
       }

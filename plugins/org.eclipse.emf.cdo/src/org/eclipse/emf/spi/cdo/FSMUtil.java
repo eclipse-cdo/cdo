@@ -49,6 +49,15 @@ public final class FSMUtil
     return state == CDOState.TRANSIENT || state == CDOState.PREPARED;
   }
 
+  /**
+   * @since 4.31
+   */
+  public static boolean isTransientOrNew(CDOObject object)
+  {
+    CDOState state = object.cdoState();
+    return state == CDOState.TRANSIENT || state == CDOState.PREPARED || state == CDOState.NEW;
+  }
+
   public static boolean isInvalid(CDOObject object)
   {
     CDOState state = object.cdoState();
@@ -152,7 +161,7 @@ public final class FSMUtil
 
   public static Iterator<InternalCDOObject> iterator(final Iterator<?> delegate, final InternalCDOView view)
   {
-    return new Iterator<InternalCDOObject>()
+    return new Iterator<>()
     {
       private Object next;
 

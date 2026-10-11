@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -47,7 +47,7 @@ public class ResourceNodeInsertionPerformanceTest extends AbstractCDOTest
     msg("330 child nodes, no commit; baseline emulates one full path lookup per insertion");
     msg("add(): baseline=" + baselineAdd / 1_000_000.0 + " ms, optimized=" + optimizedAdd / 1_000_000.0 + " ms");
     msg("addAll(): baseline=" + baselineAddAll / 1_000_000.0 + " ms, optimized=" + optimizedAddAll / 1_000_000.0 + " ms");
-    msg("Path lookups: baseline=330 per case; optimized=0 for the transient-folder fast path");
+    msg("Path lookups: baseline=330 modeled lookups per case; optimized=0 during NEW-folder insertion");
 
     String outputPath = System.getProperty("cdo.resourceNodeBenchmark.output");
     if (outputPath != null)
@@ -55,7 +55,7 @@ public class ResourceNodeInsertionPerformanceTest extends AbstractCDOTest
       Files.writeString(Path.of(outputPath),
           "scenario=" + getScenario() + "\n" + "children=" + CHILD_COUNT + "\n" + "baseline.add.ns=" + baselineAdd + "\n" + "optimized.add.ns=" + optimizedAdd
               + "\n" + "baseline.addAll.ns=" + baselineAddAll + "\n" + "optimized.addAll.ns=" + optimizedAddAll + "\n"
-              + "baseline.pathLookups=330 per case\noptimized.pathLookups=0 for transient-folder fast path\n");
+              + "baseline.pathLookups=330 modeled lookups per case\noptimized.pathLookups=0 during NEW-folder insertion\n");
     }
 
     session.close();
@@ -64,6 +64,7 @@ public class ResourceNodeInsertionPerformanceTest extends AbstractCDOTest
   private long measure(CDOTransaction transaction, String prefix, boolean baseline, boolean bulk)
   {
     CDOResourceFolder folder = transaction.createResourceFolder(getResourcePath("/" + prefix));
+    assertNew(folder, transaction);
     List<CDOResourceNode> children = createChildren(transaction, prefix);
     EList<CDOResourceNode> nodes = folder.getNodes();
 
@@ -75,7 +76,8 @@ public class ResourceNodeInsertionPerformanceTest extends AbstractCDOTest
         String path = folder.getPath() + "/" + child.getName();
         try
         {
-          ((InternalCDOTransaction)transaction).getResourceNodeID(path);
+          ((InternalCDOView)transaction).clearResourcePathCacheIfNecessary(null);
+          ((InternalCDOView)transaction).getResourceNodeID(path);
           fail("Expected the new child path to be absent: " + path);
         }
         catch (CDOResourceNodeNotFoundException expected)

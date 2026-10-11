@@ -18,6 +18,105 @@
 - Format `do`/`while` with `} while (condition);` on the same line.
 - Separate independent `switch` case/default groups with one blank line. Keep consecutive labels belonging to the same group together.
 
+## Java Visibility
+
+Use Java visibility according to the actual API relationship.
+
+- Use `private` when a member is only used by its declaring type.
+- Use `public` when production code in another type needs to access the member.
+- Use `protected` only when inheritance is genuinely part of the design.
+- Do not use `protected` merely to obtain its package visibility.
+- Avoid package-private visibility as an artificial package boundary.
+- In particular, do not make production APIs package-private merely because all current callers happen to reside in the same package.
+- Do not force tests into production packages merely to access package-private production code.
+- Do not introduce production test seams solely to make a test easier to write.
+
+## Java Type Layout
+
+Nested types must always be placed at the end of their enclosing type.
+
+This applies to:
+
+- nested classes
+- nested interfaces
+- nested enums
+- nested records
+
+Do not place nested types between fields, constructors, or ordinary methods.
+
+## Javadoc
+
+Every Java type must have Javadoc.
+
+This includes:
+
+- top-level classes
+- top-level interfaces
+- top-level enums
+- top-level records
+- nested classes
+- nested interfaces
+- nested enums
+- nested records
+
+Every type Javadoc must contain:
+
+```java
+@author <Full Name>
+```
+
+Never generate one-line Javadoc comments.
+
+Bad:
+
+```java
+/** Represents a capture result. */
+```
+
+Use normal multi-line Javadoc instead:
+
+```java
+/**
+ * Represents a capture result.
+ *
+ * @author Eike Stepper
+ */
+```
+
+There must always be an empty Javadoc line before the Javadoc tag list.
+
+The empty line must contain only the normal Javadoc prefix:
+
+```java
+ *
+```
+
+For example:
+
+```java
+/**
+ * Coordinates the Capture AI workflow for a pending paper.
+ *
+ * @author Eike Stepper
+ */
+```
+
+Do not place `@author`, `@param`, `@return`, `@throws`, or other tags directly after the description without that empty Javadoc line.
+
+Do not generate mechanical Javadoc that merely restates the Java declaration in prose.
+
+Use correct capitalization for domain and technology names such as:
+
+- CDO
+- MCP
+- AI
+- PDF
+- JSON
+- SWT
+- JFace
+- Eclipse
+- Java
+
 ## Avoid unjustified implementation downcasts
 
 Production code should respect existing API/SPI abstraction boundaries. When code operates on an abstraction, use that abstraction consistently. Do not downcast to concrete implementations merely to access functionality that conceptually belongs to the abstraction.

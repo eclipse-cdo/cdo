@@ -244,9 +244,9 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   @Override
   protected void doRollback(CommitContext context)
   {
-    if (newRevisions != null)
+    synchronized (store)
     {
-      synchronized (store)
+      if (newRevisions != null)
       {
         for (int i = newRevisions.size() - 1; i >= 0; i--)
         {
@@ -261,10 +261,10 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
           }
         }
       }
-    }
 
-    newRevisions = null;
-    undoRevisions = null;
+      newRevisions = null;
+      undoRevisions = null;
+    }
   }
 
   @Override

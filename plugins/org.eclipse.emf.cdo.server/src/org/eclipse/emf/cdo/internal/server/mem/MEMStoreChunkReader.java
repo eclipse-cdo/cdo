@@ -36,28 +36,6 @@ public class MEMStoreChunkReader extends StoreChunkReader
     super(accessor, revision, feature);
   }
 
-  @Override
-  public List<Chunk> executeRead()
-  {
-    CDOID id = getRevision().getID();
-    CDOBranchVersion branchVersion = getRevision();
-
-    MEMStore store = getAccessor().getStore();
-    List<Chunk> chunks = getChunks();
-    for (Chunk chunk : chunks)
-    {
-      int startIndex = chunk.getStartIndex();
-      InternalCDORevision revision = store.getRevisionByVersion(id, branchVersion);
-      for (int i = 0; i < chunk.size(); i++)
-      {
-        Object object = revision.get(getFeature(), startIndex + i);
-        chunk.add(i, object);
-      }
-    }
-
-    return chunks;
-  }
-
   /**
    * @since 2.0
    */
@@ -65,5 +43,32 @@ public class MEMStoreChunkReader extends StoreChunkReader
   public MEMStoreAccessor getAccessor()
   {
     return (MEMStoreAccessor)super.getAccessor();
+  }
+
+  @Override
+  public List<Chunk> executeRead()
+  {
+    MEMStore store = getAccessor().getStore();
+
+    synchronized (store)
+    {
+      CDOID id = getRevision().getID();
+      CDOBranchVersion branchVersion = getRevision();
+      List<Chunk> chunks = getChunks();
+
+      for (Chunk chunk : chunks)
+      {
+        int startIndex = chunk.getStartIndex();
+        InternalCDORevision revision = store.getRevisionByVersion(id, branchVersion);
+
+        for (int i = 0; i < chunk.size(); i++)
+        {
+          Object object = revision.get(getFeature(), startIndex + i);
+          chunk.add(i, object);
+        }
+      }
+
+      return chunks;
+    }
   }
 }

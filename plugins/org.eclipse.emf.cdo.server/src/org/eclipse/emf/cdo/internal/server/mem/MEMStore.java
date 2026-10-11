@@ -314,7 +314,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   }
 
   @Override
-  public void renameBranch(int branchID, String oldName, String newName)
+  public synchronized void renameBranch(int branchID, String oldName, String newName)
   {
     BranchInfo branchInfo = branchInfos.get(branchID);
     if (branchInfo != null)
@@ -518,7 +518,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
    * @since 2.0
    */
   @Override
-  public int getListLimit()
+  public synchronized int getListLimit()
   {
     return listLimit;
   }
@@ -1050,7 +1050,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
 
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    for (Map.Entry<String, Object> entry : lobs.entrySet())
+    Map<String, Object> lobSnapshot;
+    synchronized (this)
+    {
+      lobSnapshot = new HashMap<>(lobs);
+    }
+
+    for (Map.Entry<String, Object> entry : lobSnapshot.entrySet())
     {
       byte[] id = HexUtil.hexToBytes(entry.getKey());
       Object lob = entry.getValue();
@@ -1114,18 +1120,28 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
   }
 
-  public synchronized void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
+  public void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     IOUtil.copyBinary(inputStream, out, size);
-    lobs.put(HexUtil.bytesToHex(id), out.toByteArray());
+    byte[] blob = out.toByteArray();
+
+    synchronized (this)
+    {
+      lobs.put(HexUtil.bytesToHex(id), blob);
+    }
   }
 
-  public synchronized void writeClob(byte[] id, long size, Reader reader) throws IOException
+  public void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
     CharArrayWriter out = new CharArrayWriter();
     IOUtil.copyCharacter(reader, out, size);
-    lobs.put(HexUtil.bytesToHex(id), out.toCharArray());
+    char[] clob = out.toCharArray();
+
+    synchronized (this)
+    {
+      lobs.put(HexUtil.bytesToHex(id), clob);
+    }
   }
 
   @Override
@@ -1147,13 +1163,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
    * @since 2.0
    */
   @Override
-  public long getCreationTime()
+  public synchronized long getCreationTime()
   {
     return creationTime;
   }
 
   @Override
-  public void setCreationTime(long creationTime)
+  public synchronized void setCreationTime(long creationTime)
   {
     this.creationTime = creationTime;
   }
@@ -1203,7 +1219,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    creationTime = getRepository().getTimeStamp();
+    synchronized (this)
+    {
+      creationTime = getRepository().getTimeStamp();
+    }
 
     if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
     {
@@ -1214,14 +1233,18 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   @Override
   protected void doDeactivate() throws Exception
   {
-    revisions.clear();
-    branchInfos.clear();
-    commitInfos.clear();
-    objectTypes.clear();
-    properties.clear();
-    resourceNameFeature = null;
-    lastBranchID = 0;
-    lastLocalBranchID = 0;
+    synchronized (this)
+    {
+      revisions.clear();
+      branchInfos.clear();
+      commitInfos.clear();
+      objectTypes.clear();
+      properties.clear();
+      resourceNameFeature = null;
+      lastBranchID = 0;
+      lastLocalBranchID = 0;
+    }
+
     super.doDeactivate();
   }
 

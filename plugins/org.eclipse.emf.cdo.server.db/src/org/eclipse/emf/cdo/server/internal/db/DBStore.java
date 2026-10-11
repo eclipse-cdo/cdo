@@ -81,9 +81,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.Timer;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.Semaphore;
 import java.util.function.Consumer;
 
 /**
@@ -184,8 +185,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
 
   private IMappingStrategy mappingStrategy;
 
-  private final Map<String, ResourceNamespaceLockEntry> resourceNamespaceLocks = new HashMap<>();
-
   private IDBDatabase database;
 
   private IDBAdapter dbAdapter;
@@ -193,6 +192,9 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   private IDBConnectionProvider dbConnectionProvider;
 
   private IModelEvolutionSupport modelEvolutionSupport;
+
+  @ExcludeFromDump
+  private final Map<ResourceNamespaceLockKey, ResourceNamespaceLockEntry> resourceNamespaceLocks = new HashMap<>();
 
   @ExcludeFromDump
   private transient ProgressDistributor accessorWriteDistributor = createProgressDistributor();
@@ -1417,24 +1419,36 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     }
   }
 
-  public ResourceNamespaceLock acquireResourceNamespaceLock(int branchID, CDOID containerID)
+  public ResourceNamespaceLock acquireResourceNamespaceLock(int branchID, CDOID containerID, String name)
   {
-    String key = branchID + ":" + containerID; //$NON-NLS-1$
+    ResourceNamespaceLockKey key = new ResourceNamespaceLockKey(branchID, containerID, name);
     ResourceNamespaceLockEntry entry;
 
     synchronized (resourceNamespaceLocks)
     {
-      entry = resourceNamespaceLocks.computeIfAbsent(key, keyString -> new ResourceNamespaceLockEntry());
+      entry = resourceNamespaceLocks.computeIfAbsent(key, keyObject -> new ResourceNamespaceLockEntry());
       ++entry.users;
     }
 
-    entry.lock.lock();
+    if (!entry.semaphore.tryAcquire())
+    {
+      synchronized (resourceNamespaceLocks)
+      {
+        if (--entry.users == 0)
+        {
+          resourceNamespaceLocks.remove(key, entry);
+        }
+      }
+
+      return null;
+    }
+
     return new ResourceNamespaceLock(key, entry);
   }
 
-  private void releaseResourceNamespaceLock(String key, ResourceNamespaceLockEntry entry)
+  private void releaseResourceNamespaceLock(ResourceNamespaceLockKey key, ResourceNamespaceLockEntry entry)
   {
-    entry.lock.unlock();
+    entry.semaphore.release();
 
     synchronized (resourceNamespaceLocks)
     {
@@ -1450,19 +1464,19 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
    */
   public final class ResourceNamespaceLock
   {
-    private final String key;
+    private final ResourceNamespaceLockKey key;
 
     private final ResourceNamespaceLockEntry entry;
 
     private boolean released;
 
-    private ResourceNamespaceLock(String key, ResourceNamespaceLockEntry entry)
+    private ResourceNamespaceLock(ResourceNamespaceLockKey key, ResourceNamespaceLockEntry entry)
     {
       this.key = key;
       this.entry = entry;
     }
 
-    public void release()
+    public synchronized void release()
     {
       if (!released)
       {
@@ -1475,9 +1489,77 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   /**
    * @author Eike Stepper
    */
+  public static final class ResourceNamespaceLockKey implements Comparable<ResourceNamespaceLockKey>
+  {
+    public final int branchID;
+
+    public final CDOID containerID;
+
+    public final String name;
+
+    public ResourceNamespaceLockKey(int branchID, CDOID containerID, String name)
+    {
+      this.branchID = branchID;
+      this.containerID = containerID;
+      this.name = name;
+    }
+
+    @Override
+    public int compareTo(ResourceNamespaceLockKey other)
+    {
+      int result = Integer.compare(branchID, other.branchID);
+      if (result == 0)
+      {
+        result = String.valueOf(containerID).compareTo(String.valueOf(other.containerID));
+      }
+
+      if (result == 0)
+      {
+        result = String.valueOf(name).compareTo(String.valueOf(other.name));
+      }
+
+      return result;
+    }
+
+    @Override
+    public int hashCode()
+    {
+      int result = Integer.hashCode(branchID);
+      result = 31 * result + (containerID == null ? 0 : containerID.hashCode());
+      result = 31 * result + Objects.hashCode(name);
+      return result;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (this == obj)
+      {
+        return true;
+      }
+
+      if (!(obj instanceof ResourceNamespaceLockKey))
+      {
+        return false;
+      }
+
+      ResourceNamespaceLockKey other = (ResourceNamespaceLockKey)obj;
+      return branchID == other.branchID && Objects.equals(containerID, other.containerID) && Objects.equals(name, other.name);
+    }
+
+    @Override
+    public String toString()
+    {
+      return branchID + ":" + containerID + ":" + name; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static final class ResourceNamespaceLockEntry
   {
-    public final ReentrantLock lock = new ReentrantLock();
+    public final Semaphore semaphore = new Semaphore(1, true);
 
     public int users;
   }

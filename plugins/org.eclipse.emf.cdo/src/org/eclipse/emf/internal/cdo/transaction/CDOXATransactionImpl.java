@@ -421,7 +421,7 @@ public class CDOXATransactionImpl implements InternalCDOXATransaction
     for (CDOSavepoint indexSavePoint : savepoints)
     {
       InternalCDOTransaction transaction = (InternalCDOTransaction)indexSavePoint.getTransaction();
-      CDOSingleTransactionStrategyImpl.INSTANCE.rollback(transaction, (InternalCDOUserSavepoint)indexSavePoint);
+      transaction.rollbackToSavepoint((InternalCDOUserSavepoint)indexSavePoint, CDOSingleTransactionStrategyImpl.INSTANCE);
     }
 
     lastSavepoint = savepoint;

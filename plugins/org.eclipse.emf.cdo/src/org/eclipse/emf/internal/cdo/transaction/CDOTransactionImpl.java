@@ -2826,20 +2826,52 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public void rollbackToSavepoint(InternalCDOUserSavepoint savepoint)
   {
-    try (Access access = access())
-    {
-      boolean previous = rollingBackToSavepoint;
-      rollingBackToSavepoint = true;
+    rollbackToSavepoint(savepoint, getTransactionStrategy(), true);
+  }
 
-      try
+  @Override
+  public void rollbackToSavepoint(InternalCDOUserSavepoint savepoint, CDOTransactionStrategy strategy)
+  {
+    rollbackToSavepoint(savepoint, strategy, false);
+  }
+
+  private void rollbackToSavepoint(InternalCDOUserSavepoint savepoint, CDOTransactionStrategy strategy, boolean suppressRootRollbackLifecycle)
+  {
+    boolean oldDeferLockChangeWait = deferLockChangeWait.get();
+    deferLockChangeWait.set(Boolean.TRUE);
+
+    try
+    {
+      try (Access access = access())
       {
-        CDOTransactionStrategy strategy = getTransactionStrategy();
-        strategy.rollback(this, savepoint);
+        if (suppressRootRollbackLifecycle)
+        {
+          boolean previous = rollingBackToSavepoint;
+          rollingBackToSavepoint = true;
+
+          try
+          {
+            strategy.rollback(this, savepoint);
+          }
+          finally
+          {
+            rollingBackToSavepoint = previous;
+          }
+        }
+        else
+        {
+          strategy.rollback(this, savepoint);
+        }
       }
-      finally
+
+      if (!oldDeferLockChangeWait)
       {
-        rollingBackToSavepoint = previous;
+        awaitPendingLockChange();
       }
+    }
+    finally
+    {
+      deferLockChangeWait.set(oldDeferLockChangeWait);
     }
   }
 

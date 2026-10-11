@@ -60,13 +60,6 @@ public abstract class StoreAccessor extends StoreAccessorBase
   @Override
   protected void doWrite(InternalCommitContext context, OMMonitor monitor)
   {
-    CDOBranch branch = context.getBranchPoint().getBranch();
-    long timeStamp = context.getBranchPoint().getTimeStamp();
-    long previousTimeStamp = context.getPreviousTimeStamp();
-    String userID = context.getUserID();
-    String commitComment = context.getCommitComment();
-    CDOBranchPoint mergeSource = context.getCommitMergeSource();
-
     Store store = getStore();
     boolean deltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
 
@@ -94,96 +87,128 @@ public abstract class StoreAccessor extends StoreAccessorBase
       // re-initialized. See below...
       applyIDMappings(context, monitor.fork()); // Fork-2
 
-      if (context.getOriginalCommmitData() != null)
-      {
-        // The various ChangeSet variables need to be re-initialized because the attached write access handler have
-        // modified the committed change set via CommitContext.modify().
-        newObjects = context.getNewObjects();
-        detachedObjects = context.getDetachedObjects();
-        dirtyObjectDeltas = context.getDirtyObjectDeltas();
-        dirtyObjects = context.getDirtyObjects();
-
-        dirtyCount = deltas ? dirtyObjectDeltas.length : dirtyObjects.length;
-        postProcessCount = needsRevisionPostProcessing() ? newObjects.length + detachedObjects.length + dirtyCount : 0;
-      }
-
-      prepareSchema(context, monitor.fork()); // Fork-3
-
-      writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, mergeSource, monitor.fork()); // Fork-4
-      writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
-
-      if (detachedObjects.length != 0)
-      {
-        detachObjects(detachedObjects, branch, timeStamp, monitor.fork(detachedObjects.length));
-      }
-
-      if (newObjects.length != 0)
-      {
-        writeNewObjectRevisions(context, newObjects, branch, monitor.fork(newObjects.length));
-      }
-
-      if (dirtyCount != 0)
-      {
-        if (deltas)
-        {
-          writeRevisionDeltas(dirtyObjectDeltas, branch, timeStamp, monitor.fork(dirtyCount));
-        }
-        else
-        {
-          writeDirtyObjectRevisions(context, dirtyObjects, branch, monitor.fork(dirtyCount));
-        }
-      }
-
-      if (needsRevisionPostProcessing())
-      {
-        postProcessRevisions(context, monitor.fork(postProcessCount));
-      }
-
-      ExtendedDataInputStream in = context.getLobs();
-      if (in != null)
-      {
-        Async async = monitor.forkAsync(); // Fork-5
-
-        try
-        {
-          int count = in.readInt();
-          for (int i = 0; i < count; i++)
-          {
-            byte[] id = in.readByteArray();
-
-            // Size of CDOBlob is in bytes.
-            // Size of CDOClob is in characters.
-            long size = in.readLong();
-
-            boolean binary = in.readBoolean();
-            if (binary)
-            {
-              writeBlob(id, size, new LimitedInputStream(in, size, false));
-            }
-            else
-            {
-              long byteCount = in.readLong();
-              writeClob(id, size, new InputStreamReader(new LimitedInputStream(in, byteCount, false)));
-            }
-          }
-        }
-        catch (IOException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
-        finally
-        {
-          async.stop();
-        }
-      }
-      else
-      {
-        monitor.worked();
-      }
+      writeStoreData(context, monitor);
     }
     finally
     {
       monitor.done();
+    }
+  }
+
+  /**
+   * Writes the commit data after store-assigned IDs and write-access modifications have been applied. Store
+   * implementations may override this method to protect the complete visible mutation as one critical section. The
+   * ID-mapping step is deliberately completed before this method is called because XA mapping can wait for a later
+   * protocol phase.
+   *
+   * @since 4.27
+   */
+  protected void writeStoreData(InternalCommitContext context, OMMonitor monitor)
+  {
+    CDOBranch branch = context.getBranchPoint().getBranch();
+    long timeStamp = context.getBranchPoint().getTimeStamp();
+    long previousTimeStamp = context.getPreviousTimeStamp();
+    String userID = context.getUserID();
+    String commitComment = context.getCommitComment();
+    CDOBranchPoint mergeSource = context.getCommitMergeSource();
+
+    Store store = getStore();
+    boolean deltas = store.getSupportedChangeFormats().contains(IStore.ChangeFormat.DELTA);
+
+    InternalCDOPackageUnit[] newPackageUnits = context.getNewPackageUnits();
+    InternalCDORevision[] newObjects = context.getNewObjects();
+    CDOID[] detachedObjects = context.getDetachedObjects();
+    InternalCDORevisionDelta[] dirtyObjectDeltas = context.getDirtyObjectDeltas();
+    InternalCDORevision[] dirtyObjects = context.getDirtyObjects();
+
+    int dirtyCount = deltas ? dirtyObjectDeltas.length : dirtyObjects.length;
+    int postProcessCount = needsRevisionPostProcessing() ? newObjects.length + detachedObjects.length + dirtyCount : 0;
+
+    if (context.getOriginalCommmitData() != null)
+    {
+      // The various ChangeSet variables need to be re-initialized because the attached write access handlers have
+      // modified the committed change set.
+      newObjects = context.getNewObjects();
+      detachedObjects = context.getDetachedObjects();
+      dirtyObjectDeltas = context.getDirtyObjectDeltas();
+      dirtyObjects = context.getDirtyObjects();
+
+      dirtyCount = deltas ? dirtyObjectDeltas.length : dirtyObjects.length;
+      postProcessCount = needsRevisionPostProcessing() ? newObjects.length + detachedObjects.length + dirtyCount : 0;
+    }
+
+    prepareSchema(context, monitor.fork()); // Fork-3
+
+    writeCommitInfo(branch, timeStamp, previousTimeStamp, userID, commitComment, mergeSource, monitor.fork()); // Fork-4
+    writePackageUnits(newPackageUnits, monitor.fork(newPackageUnits.length));
+
+    if (detachedObjects.length != 0)
+    {
+      detachObjects(detachedObjects, branch, timeStamp, monitor.fork(detachedObjects.length));
+    }
+
+    if (newObjects.length != 0)
+    {
+      writeNewObjectRevisions(context, newObjects, branch, monitor.fork(newObjects.length));
+    }
+
+    if (dirtyCount != 0)
+    {
+      if (deltas)
+      {
+        writeRevisionDeltas(dirtyObjectDeltas, branch, timeStamp, monitor.fork(dirtyCount));
+      }
+      else
+      {
+        writeDirtyObjectRevisions(context, dirtyObjects, branch, monitor.fork(dirtyCount));
+      }
+    }
+
+    if (needsRevisionPostProcessing())
+    {
+      postProcessRevisions(context, monitor.fork(postProcessCount));
+    }
+
+    ExtendedDataInputStream in = context.getLobs();
+    if (in != null)
+    {
+      Async async = monitor.forkAsync(); // Fork-5
+
+      try
+      {
+        int count = in.readInt();
+        for (int i = 0; i < count; i++)
+        {
+          byte[] id = in.readByteArray();
+
+          // Size of CDOBlob is in bytes.
+          // Size of CDOClob is in characters.
+          long size = in.readLong();
+
+          boolean binary = in.readBoolean();
+          if (binary)
+          {
+            writeBlob(id, size, new LimitedInputStream(in, size, false));
+          }
+          else
+          {
+            long byteCount = in.readLong();
+            writeClob(id, size, new InputStreamReader(new LimitedInputStream(in, byteCount, false)));
+          }
+        }
+      }
+      catch (IOException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+      finally
+      {
+        async.stop();
+      }
+    }
+    else
+    {
+      monitor.worked();
     }
   }
 
@@ -223,13 +248,6 @@ public abstract class StoreAccessor extends StoreAccessorBase
     monitor.begin();
     monitor.done();
   }
-
-  /**
-   * @since 4.0
-   * @deprecated As of 4.6 override {@link #writeCommitInfo(CDOBranch, long, long, String, String, CDOBranchPoint, OMMonitor)}.
-   */
-  @Deprecated
-  protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor);
 
   /**
    * @since 4.6
@@ -280,4 +298,11 @@ public abstract class StoreAccessor extends StoreAccessorBase
    * @since 4.0
    */
   protected abstract void writeClob(byte[] id, long size, Reader reader) throws IOException;
+
+  /**
+   * @since 4.0
+   * @deprecated As of 4.6 override {@link #writeCommitInfo(CDOBranch, long, long, String, String, CDOBranchPoint, OMMonitor)}.
+   */
+  @Deprecated
+  protected abstract void writeCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, OMMonitor monitor);
 }

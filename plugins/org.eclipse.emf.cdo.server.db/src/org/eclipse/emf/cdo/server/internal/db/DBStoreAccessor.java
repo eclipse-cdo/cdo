@@ -511,12 +511,19 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     }
 
     CDOBranchPoint branchHead = context.getBranchPoint().getBranch().getHead();
-    Set<CDOID> foldersToLock = new HashSet<>();
+    int branchID = context.getBranchPoint().getBranch().getID();
+    Set<DBStore.ResourceNamespaceLockKey> namespaceKeysToLock = new HashSet<>();
 
     for (InternalCDORevision revision : changedResources.values())
     {
       CDOID folderID = (CDOID)revision.data().getContainerID();
-      foldersToLock.add(folderID == null ? CDOID.NULL : folderID);
+      String name = (String)revision.data().get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0);
+
+      // The synthetic repository root has no name and is not a named namespace entry.
+      if (name != null)
+      {
+        namespaceKeysToLock.add(new DBStore.ResourceNamespaceLockKey(branchID, folderID == null ? CDOID.NULL : folderID, name));
+      }
     }
 
     Map<CDOID, InternalCDORevision> oldRevisions = context.getOldRevisions();
@@ -529,17 +536,34 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       if (oldRevision != null && oldRevision.isResourceNode())
       {
         CDOID oldFolderID = (CDOID)oldRevision.data().getContainerID();
-        foldersToLock.add(oldFolderID == null ? CDOID.NULL : oldFolderID);
+        String oldName = (String)oldRevision.data().get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0);
+        if (oldName != null)
+        {
+          namespaceKeysToLock.add(new DBStore.ResourceNamespaceLockKey(branchID, oldFolderID == null ? CDOID.NULL : oldFolderID, oldName));
+        }
       }
     }
 
-    List<CDOID> sortedFolders = new ArrayList<>(foldersToLock);
-    Collections.sort(sortedFolders, (left, right) -> String.valueOf(left).compareTo(String.valueOf(right)));
-    int branchID = context.getBranchPoint().getBranch().getID();
+    List<DBStore.ResourceNamespaceLockKey> sortedNamespaceKeys = new ArrayList<>(namespaceKeysToLock);
+    Collections.sort(sortedNamespaceKeys);
 
-    for (CDOID folderID : sortedFolders)
+    try
     {
-      resourceNamespaceLocks.add(getStore().acquireResourceNamespaceLock(branchID, folderID));
+      for (DBStore.ResourceNamespaceLockKey namespaceKey : sortedNamespaceKeys)
+      {
+        DBStore.ResourceNamespaceLock lock = getStore().acquireResourceNamespaceLock(namespaceKey.branchID, namespaceKey.containerID, namespaceKey.name);
+        if (lock == null)
+        {
+          throw new IllegalStateException("Concurrent resource namespace change for " + namespaceKey); //$NON-NLS-1$
+        }
+
+        resourceNamespaceLocks.add(lock);
+      }
+    }
+    catch (RuntimeException ex)
+    {
+      releaseResourceNamespaceLocks();
+      throw ex;
     }
 
     branchHead = context.getBranchPoint().getBranch().getHead();
@@ -549,6 +573,10 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     {
       CDOID folderID = (CDOID)revision.data().getContainerID();
       String name = (String)revision.data().get(EresourcePackage.Literals.CDO_RESOURCE_NODE__NAME, 0);
+      if (name == null)
+      {
+        continue;
+      }
 
       Set<String> names = namesByFolder.computeIfAbsent(folderID, key -> new HashSet<>());
       if (!names.add(name))

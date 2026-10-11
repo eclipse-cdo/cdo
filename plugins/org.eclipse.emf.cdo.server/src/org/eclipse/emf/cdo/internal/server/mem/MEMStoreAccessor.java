@@ -208,11 +208,29 @@ public class MEMStoreAccessor extends LongIDStoreAccessor implements Raw2, Durab
   }
 
   @Override
-  public void doWrite(InternalCommitContext context, OMMonitor monitor)
+  protected void writeStoreData(InternalCommitContext context, OMMonitor monitor)
   {
+    // ID mapping has completed before this hook, so the store monitor can protect the complete visible mutation
+    // without preventing another XA participant from reaching the next protocol phase.
     synchronized (store)
     {
-      super.doWrite(context, monitor);
+      try
+      {
+        super.writeStoreData(context, monitor);
+      }
+      catch (RuntimeException ex)
+      {
+        try
+        {
+          rollback();
+        }
+        catch (RuntimeException rollbackFailure)
+        {
+          ex.addSuppressed(rollbackFailure);
+        }
+
+        throw ex;
+      }
     }
   }
 

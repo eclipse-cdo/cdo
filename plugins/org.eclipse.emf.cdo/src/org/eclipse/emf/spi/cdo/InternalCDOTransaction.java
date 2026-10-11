@@ -118,6 +118,14 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
    */
   public void rollbackToSavepoint(InternalCDOUserSavepoint savepoint);
 
+  /**
+   * Restores this transaction to a savepoint using the given strategy. This operation is used by compound transaction
+   * coordinators to roll back a participant without re-entering the coordinator's strategy.
+   *
+   * @since 4.31
+   */
+  public void rollbackToSavepoint(InternalCDOUserSavepoint savepoint, CDOTransactionStrategy strategy);
+
   public CDOTransactionStrategy getTransactionStrategy();
 
   public void setTransactionStrategy(CDOTransactionStrategy transactionStrategy);

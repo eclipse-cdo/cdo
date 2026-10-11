@@ -134,7 +134,9 @@ When deciding, prefer the simplest architecture that reflects the actual ownersh
 
 Do not hide questionable casts behind helpers, reflection, or artificial interfaces. The goal is correct abstraction boundaries, not elimination of casts as such.
 
-## CDO Native/Legacy Model Compatibility in Tests
+## CDO Test Design and Execution
+
+### CDO Native/Legacy Model Compatibility in Tests
 
 CDO tests must remain compatible with both **Native** and **Legacy** model configurations unless a test explicitly targets only one mode.
 
@@ -167,13 +169,13 @@ In Legacy Mode, generated EMF model objects are not necessarily CDO-native imple
 When adding or generating tests, preserve this abstraction consistently. Never assume that the concrete Java object simultaneously implements both the generated model interface and `CDOObject`.
 
 
-## CDO Test Resource Paths
+### CDO Test Resource Paths
 
 - In tests, do not normally use complete model resource paths as hard-coded string literals. Fixed full paths can collide with resources created by other test cases.
 - Construct test resource paths with `getResourcePath(String path)` so that the test framework can provide the test-specific resource location.
 - Use a literal full resource path only when a test intentionally needs a specific globally fixed path and that requirement is explicit.
 
-## CDO Test Placement and Base Classes
+### CDO Test Placement and Base Classes
 
 Tests in `org.eclipse.emf.cdo.tests` must use the established config-test hierarchy and package-based suite discovery.
 
@@ -196,12 +198,23 @@ Tests in `org.eclipse.emf.cdo.tests` must use the established config-test hierar
 
 Before adding a new test, determine whether it needs repository/session/model scenario configuration. If it does not, use `PlainTest` in `.plain`; otherwise use the appropriate config-test base class and package.
 
-## CDO Test Scenario Selection
+### CDO Test Scenario Selection
 
 - For external CDO test-scenario selection, do not guess property names, syntax, factory types, or capabilities. Read the canonical test-framework JavaDocs starting at `IScenario`; consult `RepositoryConfigFactory` for repository capabilities and `DBConfigFactory` for DB extensions.
 - The primary system properties are `cdo.test.scenario`, `cdo.test.repository`, `cdo.test.session`, and `cdo.test.model`. For syntax, precedence, valid factory types, and capabilities, consult the canonical JavaDocs above.
 - CDO tests launched through Eclipse MCP are ordinary JUnit tests and must use `pluginTest=false`.
 - The few Lifecycle Management tests that require p2 at runtime are the exception and require a PDE Plug-in Test launch; this is not the normal CDO test mode.
+
+### CDO Test Suite Execution
+
+- Run complete CDO test suites through their established static `suite()` methods, such as `AllTestsMEMBranches.suite()` or `AllTestsMEMAudit.suite()`.
+- Never substitute project-wide, package-wide, or automatic JUnit test-class discovery for an established CDO test suite.
+- The `ConfigTestSuite` infrastructure applies scenario-specific `@Requires` and `@Skips` constraints during suite construction. Bypassing it can execute tests under unsupported repository configurations and produce misleading failures.
+- Direct execution of individual test classes or methods is permitted for focused testing and diagnostics, but does not replace suite-based validation. Verify the effective scenario and required capabilities.
+- Before starting a complete suite, verify that the JUnit launch targets the intended suite and honors its `suite()` method.
+- If the available test launcher cannot execute the suite correctly, report this limitation instead of substituting a different launch mechanism or claiming full-suite validation.
+- Always report the executed suite, effective scenario, test counts, failures, errors, and whether execution completed normally.
+- Use ordinary JUnit with `pluginTest=false`, as specified above.
 
 ## CDO Installer example mirrors
 

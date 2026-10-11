@@ -88,6 +88,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -104,25 +105,29 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
 {
   public static final String TYPE = "mem"; //$NON-NLS-1$
 
+  private static final int XREF_IDENTITY_LOOKUP_THRESHOLD = 2;
+
+  private final Map<String, String> properties = new HashMap<>();
+
+  private final Map<Integer, BranchInfo> branchInfos = new HashMap<>();
+
+  private final Map<Object, Object> revisions = new HashMap<>();
+
+  private final List<CommitInfo> commitInfos = new ArrayList<>();
+
+  private final Map<CDOID, EClass> objectTypes = CDOIDUtil.createMap();
+
+  private final Map<String, LockArea> lockAreas = new HashMap<>();
+
+  private final Map<String, Object> lobs = new HashMap<>();
+
   private long creationTime;
 
-  private Map<String, String> properties = new HashMap<>();
-
-  private Map<Integer, BranchInfo> branchInfos = new HashMap<>();
+  private boolean auditing;
 
   private int lastBranchID;
 
   private int lastLocalBranchID;
-
-  private Map<Object, List<InternalCDORevision>> revisions = new HashMap<>();
-
-  private List<CommitInfo> commitInfos = new ArrayList<>();
-
-  private Map<CDOID, EClass> objectTypes = CDOIDUtil.createMap();
-
-  private Map<String, LockArea> lockAreas = new HashMap<>();
-
-  private Map<String, Object> lobs = new HashMap<>();
 
   private int listLimit;
 
@@ -273,9 +278,9 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
 
     monitor.begin(revisions.size());
 
-    for (Iterator<Map.Entry<Object, List<InternalCDORevision>>> it = revisions.entrySet().iterator(); it.hasNext();)
+    for (Iterator<Map.Entry<Object, Object>> it = revisions.entrySet().iterator(); it.hasNext();)
     {
-      Map.Entry<Object, List<InternalCDORevision>> entry = it.next();
+      Map.Entry<Object, Object> entry = it.next();
 
       CDOBranch revisionBranch = getBranch(entry.getKey());
       if (deletedBranches.contains(revisionBranch))
@@ -298,6 +303,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     for (Iterator<Map.Entry<String, LockArea>> it = lockAreas.entrySet().iterator(); it.hasNext();)
     {
       Map.Entry<String, LockArea> entry = it.next();
+
       LockArea lockArea = entry.getValue();
       if (deletedBranches.contains(lockArea.getBranch()))
       {
@@ -425,11 +431,19 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   public synchronized Set<CDOID> readChangeSet(CDOChangeSetSegment[] segments)
   {
     Set<CDOID> ids = new HashSet<>();
+
     for (CDOChangeSetSegment segment : segments)
     {
-      for (List<InternalCDORevision> list : revisions.values())
+      for (Object value : revisions.values())
       {
-        readChangeSet(segment, list, ids);
+        if (value instanceof InternalCDORevision)
+        {
+          readChangeSet(segment, (InternalCDORevision)value, ids);
+        }
+        else
+        {
+          readChangeSet(segment, asRevisionList(value), ids);
+        }
       }
     }
 
@@ -440,11 +454,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   {
     long startTime = segment.getTimeStamp();
     long endTime = segment.getEndTime();
-
     boolean listCheckDone = false;
+
     for (InternalCDORevision revision : list)
     {
       CDOID id = revision.getID();
+
       if (!listCheckDone)
       {
         if (ids.contains(id))
@@ -467,15 +482,38 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
   }
 
+  private void readChangeSet(CDOChangeSetSegment segment, InternalCDORevision revision, Set<CDOID> ids)
+  {
+    if (ids.contains(revision.getID()) || revision.getBranch() != segment.getBranch())
+    {
+      return;
+    }
+
+    if (CDOCommonUtil.isValidTimeStamp(revision.getTimeStamp(), segment.getTimeStamp(), segment.getEndTime()))
+    {
+      ids.add(revision.getID());
+    }
+  }
+
   public synchronized void handleRevisions(EClass eClass, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
-    for (List<InternalCDORevision> list : revisions.values())
+    for (Object value : revisions.values())
     {
-      for (InternalCDORevision revision : list)
+      if (value instanceof InternalCDORevision)
       {
-        if (!handleRevision(revision, eClass, branch, timeStamp, exactTime, handler))
+        if (!handleRevision((InternalCDORevision)value, eClass, branch, timeStamp, exactTime, handler))
         {
           return;
+        }
+      }
+      else
+      {
+        for (InternalCDORevision revision : asRevisionList(value))
+        {
+          if (!handleRevision(revision, eClass, branch, timeStamp, exactTime, handler))
+          {
+            return;
+          }
         }
       }
     }
@@ -531,9 +569,23 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   {
     if (listLimit != UNLIMITED && this.listLimit != listLimit)
     {
-      for (List<InternalCDORevision> list : revisions.values())
+      this.listLimit = listLimit;
+
+      for (Iterator<Map.Entry<Object, Object>> it = revisions.entrySet().iterator(); it.hasNext();)
       {
-        enforceListLimit(list);
+        Map.Entry<Object, Object> entry = it.next();
+
+        Object value = entry.getValue();
+        if (value instanceof List<?>)
+        {
+          List<InternalCDORevision> list = asRevisionList(value);
+          enforceListLimit(list);
+          compactRevisionList(entry.getKey(), list, it);
+        }
+        else if (listLimit == 0)
+        {
+          it.remove();
+        }
       }
     }
 
@@ -546,12 +598,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   public synchronized List<InternalCDORevision> getCurrentRevisions()
   {
     ArrayList<InternalCDORevision> simpleRevisions = new ArrayList<>();
-    Iterator<List<InternalCDORevision>> itr = revisions.values().iterator();
-    while (itr.hasNext())
+
+    for (Object value : revisions.values())
     {
-      List<InternalCDORevision> list = itr.next();
-      InternalCDORevision revision = list.get(list.size() - 1);
-      simpleRevisions.add(revision);
+      simpleRevisions.add(getCurrentRevision(value));
     }
 
     return simpleRevisions;
@@ -560,13 +610,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   public synchronized InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
   {
     Object listKey = createListKey(id, branchVersion.getBranch());
-    List<InternalCDORevision> list = revisions.get(listKey);
-    if (list == null)
+
+    Object value = revisions.get(listKey);
+    if (value == null)
     {
       return null;
     }
 
-    return getRevisionByVersion(list, branchVersion.getVersion());
+    return getRevisionByVersion(value, branchVersion.getVersion());
   }
 
   /**
@@ -575,29 +626,30 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   public synchronized InternalCDORevision getRevision(CDOID id, CDOBranchPoint branchPoint)
   {
     Object listKey = createListKey(id, branchPoint.getBranch());
+
     if (branchPoint.getTimeStamp() == CDORevision.UNSPECIFIED_DATE)
     {
-      List<InternalCDORevision> list = revisions.get(listKey);
-      if (list == null)
+      Object value = revisions.get(listKey);
+      if (value == null)
       {
         return null;
       }
 
-      return list.get(list.size() - 1);
+      return getCurrentRevision(value);
     }
 
-    if (!getRepository().isSupportingAudits())
+    if (!auditing)
     {
       throw new UnsupportedOperationException("Auditing not supported");
     }
 
-    List<InternalCDORevision> list = revisions.get(listKey);
-    if (list == null)
+    Object value = revisions.get(listKey);
+    if (value == null)
     {
       return null;
     }
 
-    return getRevision(list, branchPoint);
+    return getRevision(value, branchPoint);
   }
 
   public synchronized void addRevision(InternalCDORevision revision, boolean raw)
@@ -609,14 +661,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
 
     Object listKey = createListKey(revision.getID(), branch);
-    List<InternalCDORevision> list = revisions.get(listKey);
-    if (list == null)
-    {
-      list = new ArrayList<>();
-      revisions.put(listKey, list);
-    }
-
-    addRevision(list, revision, raw);
+    addRevisionAtKey(listKey, revision, raw);
 
     if (raw)
     {
@@ -624,9 +669,36 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
   }
 
+  private void addRevisionAtKey(Object listKey, InternalCDORevision revision, boolean raw)
+  {
+    Object value = revisions.get(listKey);
+    if (value == null)
+    {
+      if (auditing)
+      {
+        List<InternalCDORevision> list = new ArrayList<>();
+        revisions.put(listKey, list);
+        addRevision(listKey, list, revision, raw);
+      }
+      else
+      {
+        addRevision(listKey, (InternalCDORevision)null, revision, raw);
+      }
+    }
+    else if (auditing || value instanceof List<?>)
+    {
+      addRevision(listKey, asRevisionList(value), revision, raw);
+    }
+    else
+    {
+      addRevision(listKey, (InternalCDORevision)value, revision, raw);
+    }
+  }
+
   public synchronized void addCommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource)
   {
     int index = commitInfos.size() - 1;
+
     while (index >= 0)
     {
       CommitInfo info = commitInfos.get(index);
@@ -652,11 +724,31 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     int version = revision.getVersion();
 
     Object listKey = createListKey(id, branch);
-    List<InternalCDORevision> list = revisions.get(listKey);
-    if (list == null)
+
+    Object value = revisions.get(listKey);
+    if (value == null)
     {
       return false;
     }
+
+    if (value instanceof InternalCDORevision)
+    {
+      InternalCDORevision existing = (InternalCDORevision)value;
+      if (existing.getVersion() == version)
+      {
+        revisions.remove(listKey);
+        return true;
+      }
+
+      if (existing.getVersion() == version - 1)
+      {
+        existing.setRevised(CDORevision.UNSPECIFIED_DATE);
+      }
+
+      return false;
+    }
+
+    List<InternalCDORevision> list = asRevisionList(value);
 
     for (Iterator<InternalCDORevision> it = list.iterator(); it.hasNext();)
     {
@@ -664,9 +756,11 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
       if (rev.getVersion() == version)
       {
         it.remove();
+        compactRevisionList(listKey, list);
         return true;
       }
-      else if (rev.getVersion() == version - 1)
+
+      if (rev.getVersion() == version - 1)
       {
         rev.setRevised(CDORevision.UNSPECIFIED_DATE);
       }
@@ -680,30 +774,56 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
    */
   public synchronized void restoreRevision(InternalCDORevision revision)
   {
-    Object listKey = createListKey(revision.getID(), revision.getBranch());
+    CDOID id = revision.getID();
+    Object listKey = createListKey(id, revision.getBranch());
 
-    List<InternalCDORevision> list = revisions.get(listKey);
-    if (list == null)
+    Object value = revisions.get(listKey);
+    if (value == null)
     {
-      list = new ArrayList<>();
-      revisions.put(listKey, list);
+      if (auditing)
+      {
+        List<InternalCDORevision> list = new ArrayList<>();
+        list.add(revision);
+        revisions.put(listKey, list);
+      }
+      else
+      {
+        revisions.put(listKey, revision);
+      }
+
+      objectTypes.putIfAbsent(id, revision.getEClass());
+      return;
     }
 
-    InternalCDORevision existing = getRevisionByVersion(list, revision.getVersion());
+    InternalCDORevision existing = getRevisionByVersion(value, revision.getVersion());
     if (existing != null)
     {
       existing.setRevised(revision.getRevised());
       return;
     }
 
+    List<InternalCDORevision> list;
+    if (value instanceof InternalCDORevision)
+    {
+      list = new ArrayList<>();
+      list.add((InternalCDORevision)value);
+      revisions.put(listKey, list);
+    }
+    else
+    {
+      list = asRevisionList(value);
+    }
+
     int index = 0;
-    while (index < list.size() && list.get(index).getVersion() < revision.getVersion())
+    int size = list.size();
+
+    while (index < size && list.get(index).getVersion() < revision.getVersion())
     {
       index++;
     }
 
     list.add(index, revision);
-    objectTypes.putIfAbsent(revision.getID(), revision.getEClass());
+    objectTypes.putIfAbsent(id, revision.getEClass());
   }
 
   /**
@@ -712,10 +832,11 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   public synchronized DetachedCDORevision detachObject(CDOID id, CDOBranch branch, long timeStamp)
   {
     Object listKey = createListKey(id, branch);
-    List<InternalCDORevision> list = revisions.get(listKey);
-    if (list != null)
+
+    Object value = revisions.get(listKey);
+    if (value != null)
     {
-      InternalCDORevision revision = getRevision(list, branch.getHead());
+      InternalCDORevision revision = getRevision(value, branch.getHead());
       if (revision != null)
       {
         revision.setRevised(timeStamp - 1);
@@ -723,20 +844,19 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
 
     int version;
-    if (list == null)
+
+    if (value == null)
     {
-      list = new ArrayList<>();
-      revisions.put(listKey, list);
       version = CDOBranchVersion.FIRST_VERSION;
     }
     else
     {
-      version = getHighestVersion(list) + 1;
+      version = getHighestVersion(value) + 1;
     }
 
     EClass eClass = getObjectType(id);
     DetachedCDORevision detached = new DetachedCDORevision(eClass, id, branch, version, timeStamp);
-    addRevision(list, detached, false);
+    addRevisionAtKey(listKey, detached, false);
     return detached;
   }
 
@@ -748,7 +868,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     CDOID folderID = context.getFolderID();
     String name = context.getName();
     boolean exactMatch = context.exactMatch();
-    for (Map.Entry<Object, List<InternalCDORevision>> entry : revisions.entrySet())
+
+    for (Map.Entry<Object, Object> entry : revisions.entrySet())
     {
       CDOBranch branch = getBranch(entry.getKey());
       if (branch != context.getBranch())
@@ -756,13 +877,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
         continue;
       }
 
-      List<InternalCDORevision> list = entry.getValue();
-      if (list.isEmpty())
+      Object value = entry.getValue();
+      InternalCDORevision firstRevision = getFirstRevision(value);
+      if (firstRevision == null)
       {
         continue;
       }
 
-      InternalCDORevision revision = list.get(0);
+      InternalCDORevision revision = firstRevision;
       if (revision instanceof SyntheticCDORevision)
       {
         continue;
@@ -773,7 +895,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
         continue;
       }
 
-      revision = getRevision(list, context);
+      revision = getRevision(value, context);
       if (revision == null || revision instanceof DetachedCDORevision)
       {
         continue;
@@ -800,9 +922,17 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   public synchronized void queryXRefs(QueryXRefsContext context)
   {
     Set<CDOID> targetIDs = context.getTargetObjects().keySet();
+    Set<CDOID> targetIDLookup = null;
+
+    if (targetIDs.size() > XREF_IDENTITY_LOOKUP_THRESHOLD)
+    {
+      targetIDLookup = Collections.newSetFromMap(new IdentityHashMap<>(targetIDs.size()));
+      targetIDLookup.addAll(targetIDs);
+    }
+
     Map<EClass, List<EReference>> sourceCandidates = context.getSourceCandidates();
 
-    for (Map.Entry<Object, List<InternalCDORevision>> entry : revisions.entrySet())
+    for (Map.Entry<Object, Object> entry : revisions.entrySet())
     {
       CDOBranch branch = getBranch(entry.getKey());
       if (branch != context.getBranch())
@@ -810,13 +940,9 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
         continue;
       }
 
-      List<InternalCDORevision> list = entry.getValue();
-      if (list.isEmpty())
-      {
-        continue;
-      }
+      Object storedValue = entry.getValue();
 
-      InternalCDORevision revision = getRevision(list, context);
+      InternalCDORevision revision = getRevision(storedValue, context);
       if (revision == null || revision instanceof SyntheticCDORevision)
       {
         continue;
@@ -838,9 +964,10 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
               @SuppressWarnings("unchecked")
               List<CDOID> ids = (List<CDOID>)value;
               int index = 0;
+
               for (CDOID id : ids)
               {
-                if (!queryXRefs(context, targetIDs, id, sourceID, eReference, index++))
+                if (!queryXRefs(context, targetIDs, targetIDLookup, id, sourceID, eReference, index++))
                 {
                   return;
                 }
@@ -849,7 +976,8 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
             else
             {
               CDOID id = (CDOID)value;
-              if (!queryXRefs(context, targetIDs, id, sourceID, eReference, 0))
+
+              if (!queryXRefs(context, targetIDs, targetIDLookup, id, sourceID, eReference, 0))
               {
                 return;
               }
@@ -860,8 +988,14 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
   }
 
-  private boolean queryXRefs(QueryXRefsContext context, Set<CDOID> targetIDs, CDOID targetID, CDOID sourceID, EReference sourceReference, int index)
+  private boolean queryXRefs(QueryXRefsContext context, Set<CDOID> targetIDs, Set<CDOID> targetIDLookup, CDOID targetID, CDOID sourceID,
+      EReference sourceReference, int index)
   {
+    if (targetIDLookup != null)
+    {
+      return !targetIDLookup.contains(targetID) || context.addXRef(targetID, sourceID, sourceReference, index);
+    }
+
     for (CDOID id : targetIDs)
     {
       if (id == targetID)
@@ -892,15 +1026,27 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   public synchronized void rawDelete(CDOID id, int version, CDOBranch branch)
   {
     Object listKey = createListKey(id, branch);
-    List<InternalCDORevision> list = revisions.get(listKey);
-    if (list != null)
+
+    Object value = revisions.get(listKey);
+    if (value instanceof InternalCDORevision)
     {
+      InternalCDORevision revision = (InternalCDORevision)value;
+      if (revision.getVersion() == version)
+      {
+        revisions.remove(listKey);
+      }
+    }
+    else if (value != null)
+    {
+      List<InternalCDORevision> list = asRevisionList(value);
+
       for (Iterator<InternalCDORevision> it = list.iterator(); it.hasNext();)
       {
-        InternalCDORevision rev = it.next();
-        if (rev.getVersion() == version)
+        InternalCDORevision revision = it.next();
+        if (revision.getVersion() == version)
         {
           it.remove();
+          compactRevisionList(listKey, list);
           break;
         }
       }
@@ -1183,8 +1329,9 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   @Override
   public synchronized Map<CDOBranch, List<CDORevision>> getAllRevisions()
   {
-    Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
+
+    Map<CDOBranch, List<CDORevision>> result = new HashMap<>();
     result.put(branchManager.getMainBranch(), new ArrayList<>());
 
     for (Integer branchID : branchInfos.keySet())
@@ -1193,13 +1340,21 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
       result.put(branch, new ArrayList<>());
     }
 
-    for (List<InternalCDORevision> list : revisions.values())
+    for (Object value : revisions.values())
     {
-      for (InternalCDORevision revision : list)
+      if (value instanceof InternalCDORevision)
       {
-        CDOBranch branch = revision.getBranch();
-        List<CDORevision> resultList = result.get(branch);
-        resultList.add(revision);
+        InternalCDORevision revision = (InternalCDORevision)value;
+        result.get(revision.getBranch()).add(revision);
+      }
+      else
+      {
+        for (InternalCDORevision revision : asRevisionList(value))
+        {
+          CDOBranch branch = revision.getBranch();
+          List<CDORevision> resultList = result.get(branch);
+          resultList.add(revision);
+        }
       }
     }
 
@@ -1219,9 +1374,11 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
     synchronized (this)
     {
       creationTime = getRepository().getTimeStamp();
+      auditing = getRepository().isSupportingAudits();
     }
 
     if (getRepository().getIDGenerationLocation() == IDGenerationLocation.CLIENT)
@@ -1269,22 +1426,61 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
       return id;
     }
 
-    return new ListKey(id, branch);
+    return new BranchingListKey(id, branch);
   }
 
   private CDOBranch getBranch(Object key)
   {
-    if (key instanceof ListKey)
+    if (key instanceof BranchingListKey)
     {
-      return ((ListKey)key).getBranch();
+      return ((BranchingListKey)key).getBranch();
     }
 
     return getRepository().getBranchManager().getMainBranch();
   }
 
+  private InternalCDORevision getCurrentRevision(Object value)
+  {
+    if (value instanceof InternalCDORevision)
+    {
+      return (InternalCDORevision)value;
+    }
+
+    List<InternalCDORevision> list = asRevisionList(value);
+    return list.get(list.size() - 1);
+  }
+
+  private InternalCDORevision getFirstRevision(Object value)
+  {
+    if (value instanceof InternalCDORevision)
+    {
+      return (InternalCDORevision)value;
+    }
+
+    List<InternalCDORevision> list = asRevisionList(value);
+    return list.isEmpty() ? null : list.get(0);
+  }
+
+  private int getHighestVersion(Object value)
+  {
+    if (value instanceof InternalCDORevision)
+    {
+      return ((InternalCDORevision)value).getVersion();
+    }
+
+    return getHighestVersion(asRevisionList(value));
+  }
+
   private int getHighestVersion(List<InternalCDORevision> list)
   {
+    if (auditing)
+    {
+      int size = list.size();
+      return size == 0 ? CDOBranchVersion.UNSPECIFIED_VERSION : list.get(size - 1).getVersion();
+    }
+
     int version = CDOBranchVersion.UNSPECIFIED_VERSION;
+
     for (InternalCDORevision revision : list)
     {
       if (revision.getVersion() > version)
@@ -1296,8 +1492,63 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     return version;
   }
 
+  private InternalCDORevision getRevisionByVersion(Object value, int version)
+  {
+    if (value instanceof InternalCDORevision)
+    {
+      InternalCDORevision revision = (InternalCDORevision)value;
+      return revision.getVersion() == version ? revision : null;
+    }
+
+    return getRevisionByVersion(asRevisionList(value), version);
+  }
+
   private InternalCDORevision getRevisionByVersion(List<InternalCDORevision> list, int version)
   {
+    if (auditing)
+    {
+      int lastIndex = list.size() - 1;
+      if (lastIndex < 0)
+      {
+        return null;
+      }
+
+      InternalCDORevision lastRevision = list.get(lastIndex);
+      if (lastRevision.getVersion() == version)
+      {
+        while (lastIndex > 0 && list.get(lastIndex - 1).getVersion() == version)
+        {
+          lastIndex--;
+        }
+
+        return list.get(lastIndex);
+      }
+
+      int low = 0;
+      int high = lastIndex;
+
+      while (low < high)
+      {
+        int middle = low + high >>> 1;
+
+        if (list.get(middle).getVersion() < version)
+        {
+          low = middle + 1;
+        }
+        else
+        {
+          high = middle;
+        }
+      }
+
+      if (list.get(low).getVersion() == version)
+      {
+        return list.get(low);
+      }
+
+      return null;
+    }
+
     for (InternalCDORevision revision : list)
     {
       if (revision.getVersion() == version)
@@ -1309,9 +1560,28 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     return null;
   }
 
+  private InternalCDORevision getRevision(Object value, CDOBranchPoint branchPoint)
+  {
+    if (value instanceof InternalCDORevision)
+    {
+      InternalCDORevision revision = (InternalCDORevision)value;
+
+      long timeStamp = branchPoint.getTimeStamp();
+      if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+      {
+        return revision.isHistorical() ? null : revision;
+      }
+
+      return revision.isValid(timeStamp) ? revision : null;
+    }
+
+    return getRevision(asRevisionList(value), branchPoint);
+  }
+
   private InternalCDORevision getRevision(List<InternalCDORevision> list, CDOBranchPoint branchPoint)
   {
     long timeStamp = branchPoint.getTimeStamp();
+
     for (InternalCDORevision revision : list)
     {
       if (timeStamp == CDORevision.UNSPECIFIED_DATE)
@@ -1333,18 +1603,16 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     return null;
   }
 
-  private void addRevision(List<InternalCDORevision> list, InternalCDORevision revision, boolean raw)
+  private void addRevision(Object listKey, List<InternalCDORevision> list, InternalCDORevision revision, boolean raw)
   {
-    boolean resource = !(revision instanceof SyntheticCDORevision) && revision.isResourceNode();
-    if (resource && resourceNameFeature == null)
-    {
-      resourceNameFeature = revision.getEClass().getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
-    }
+    boolean resource = isResourceRevision(revision);
+    prepareRevision(revision);
 
     if (!raw)
     {
       // Check version conflict
       int version = revision.getVersion();
+
       InternalCDORevision rev = getRevisionByVersion(list, version);
       if (rev != null)
       {
@@ -1359,7 +1627,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
         InternalCDORevision oldRevision = getRevisionByVersion(list, oldVersion);
         if (oldRevision != null)
         {
-          if (getRepository().isSupportingAudits())
+          if (auditing)
           {
             oldRevision.setRevised(revision.getTimeStamp() - 1);
           }
@@ -1378,16 +1646,158 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
 
     // Adjust the list
-    list.add(revision);
+    if (auditing)
+    {
+      int size = list.size();
+
+      int lastIndex = size - 1;
+      if (lastIndex < 0 || revision.getVersion() > list.get(lastIndex).getVersion())
+      {
+        list.add(revision);
+      }
+      else
+      {
+        int low = 0;
+        int high = size;
+
+        while (low < high)
+        {
+          int middle = low + high >>> 1;
+
+          if (list.get(middle).getVersion() <= revision.getVersion())
+          {
+            low = middle + 1;
+          }
+          else
+          {
+            high = middle;
+          }
+        }
+
+        list.add(low, revision);
+      }
+    }
+    else
+    {
+      list.add(revision);
+    }
+
     if (listLimit != UNLIMITED)
     {
       enforceListLimit(list);
     }
 
+    setObjectType(revision);
+    compactRevisionList(listKey, list);
+  }
+
+  private void addRevision(Object listKey, InternalCDORevision existing, InternalCDORevision revision, boolean raw)
+  {
+    prepareRevision(revision);
+
+    if (!raw)
+    {
+      if (existing != null && existing.getVersion() == revision.getVersion())
+      {
+        throw new IllegalStateException("Concurrent modification of " + existing.getEClass().getName() + "@"
+            + new CDORevisionKeyImpl(existing.getID(), existing.getBranch(), revision.getVersion()));
+      }
+
+      if (existing != null && existing.getVersion() == revision.getVersion() - 1)
+      {
+        revisions.remove(listKey);
+
+        if (isResourceRevision(revision))
+        {
+          checkDuplicateResource(revision);
+        }
+
+        if (listLimit != 0)
+        {
+          revisions.put(listKey, revision);
+        }
+
+        setObjectType(revision);
+        return;
+      }
+
+      if (isResourceRevision(revision))
+      {
+        checkDuplicateResource(revision);
+      }
+    }
+
+    if (existing == null)
+    {
+      if (listLimit != 0)
+      {
+        revisions.put(listKey, revision);
+      }
+
+      setObjectType(revision);
+      return;
+    }
+
+    List<InternalCDORevision> list = new ArrayList<>();
+    list.add(existing);
+    list.add(revision);
+
+    if (listLimit != UNLIMITED)
+    {
+      enforceListLimit(list);
+    }
+
+    revisions.put(listKey, list);
+    compactRevisionList(listKey, list);
+    setObjectType(revision);
+  }
+
+  private void prepareRevision(InternalCDORevision revision)
+  {
+    if (isResourceRevision(revision) && resourceNameFeature == null)
+    {
+      resourceNameFeature = revision.getEClass().getEStructuralFeature(CDOModelConstants.RESOURCE_NODE_NAME_ATTRIBUTE);
+    }
+  }
+
+  private boolean isResourceRevision(InternalCDORevision revision)
+  {
+    return !(revision instanceof SyntheticCDORevision) && revision.isResourceNode();
+  }
+
+  private void setObjectType(InternalCDORevision revision)
+  {
     CDOID id = revision.getID();
+
     if (!objectTypes.containsKey(id))
     {
       objectTypes.put(id, revision.getEClass());
+    }
+  }
+
+  private void compactRevisionList(Object listKey, List<InternalCDORevision> list)
+  {
+    int size = list.size();
+    if (size == 0)
+    {
+      revisions.remove(listKey);
+    }
+    else if (size == 1 && !auditing)
+    {
+      revisions.put(listKey, list.get(0));
+    }
+  }
+
+  private void compactRevisionList(Object listKey, List<InternalCDORevision> list, Iterator<Map.Entry<Object, Object>> iterator)
+  {
+    int size = list.size();
+    if (size == 0)
+    {
+      iterator.remove();
+    }
+    else if (size == 1 && !auditing)
+    {
+      revisions.put(listKey, list.get(0));
     }
   }
 
@@ -1452,6 +1862,12 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
     }
   }
 
+  @SuppressWarnings("unchecked")
+  private static List<InternalCDORevision> asRevisionList(Object value)
+  {
+    return (List<InternalCDORevision>)value;
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -1493,13 +1909,13 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
   /**
    * @author Eike Stepper
    */
-  private static final class ListKey
+  private static final class BranchingListKey
   {
-    private CDOID id;
+    private final CDOID id;
 
-    private CDOBranch branch;
+    private final CDOBranch branch;
 
-    public ListKey(CDOID id, CDOBranch branch)
+    public BranchingListKey(CDOID id, CDOBranch branch)
     {
       this.id = id;
       this.branch = branch;
@@ -1529,9 +1945,9 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
         return true;
       }
 
-      if (obj instanceof ListKey)
+      if (obj instanceof BranchingListKey)
       {
-        ListKey that = (ListKey)obj;
+        BranchingListKey that = (BranchingListKey)obj;
         return id == that.getID() && branch == that.getBranch();
       }
 
@@ -1550,7 +1966,7 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
    */
   private static class CommitInfoKey implements CDOTimeProvider, Comparable<CommitInfoKey>
   {
-    private long timeStamp;
+    private final long timeStamp;
 
     public CommitInfoKey(long timeStamp)
     {
@@ -1575,15 +1991,15 @@ public class MEMStore extends LongIDStore implements IMEMStore, BranchLoader5, D
    */
   private static final class CommitInfo extends CommitInfoKey
   {
-    private CDOBranch branch;
+    private final CDOBranch branch;
 
-    private long previousTimeStamp;
+    private final long previousTimeStamp;
 
-    private String userID;
+    private final String userID;
 
-    private String comment;
+    private final String comment;
 
-    private CDOBranchPoint mergeSource;
+    private final CDOBranchPoint mergeSource;
 
     public CommitInfo(CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment, CDOBranchPoint mergeSource)
     {

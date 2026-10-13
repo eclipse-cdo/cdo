@@ -13,6 +13,12 @@ package org.eclipse.net4j.db.dml;
 
 /**
  * A boolean SQL expression that can also be projected or ordered when supported by a dialect.
+ * Conditions created with {@link #and(SQLCondition)} and {@link #or(SQLCondition)} retain their
+ * explicit tree structure; the compiler adds parentheses where needed. By contrast, connector
+ * calls in a fluent WHERE, HAVING, or JOIN ON clause follow SQL operator precedence, where AND
+ * binds more tightly than OR. Use complete composed conditions when a particular grouping is
+ * required. Comparisons to SQL NULL are not rewritten; use {@link SQL#isNull(SQLExpression)} or
+ * {@link SQL#isNotNull(SQLExpression)} for SQL NULL tests.
  *
  * @author Eike Stepper
  * @since 4.15

@@ -15,7 +15,7 @@ import org.eclipse.net4j.db.dml.SQLCondition;
 import org.eclipse.net4j.db.dml.SQLExpression;
 
 /**
- * A DELETE statement that may be completed directly or given a WHERE clause.
+ * A DELETE statement that may be completed directly or given a WHERE clause. Building it without a WHERE clause is valid and may remove every row in the target table.
  *
  * @author Eike Stepper
  * @since 4.15

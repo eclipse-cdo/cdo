@@ -14,7 +14,7 @@ package org.eclipse.net4j.db.dml.fluent;
 import org.eclipse.net4j.db.dml.SQLExpression;
 
 /**
- * An INSERT with explicit columns that requires its values before completion.
+ * An INSERT with explicit columns that requires its positional values before completion. This form cannot be combined with implicit values or named assignments; the compiler checks the column/value counts.
  *
  * @author Eike Stepper
  * @since 4.15
@@ -24,7 +24,7 @@ import org.eclipse.net4j.db.dml.SQLExpression;
 public interface SQLInsertColumnsStep
 {
   /**
-   * Supplies values positionally corresponding to the explicit target columns.
+   * Supplies values positionally corresponding to the explicit target columns. The compiler validates that the number of values matches the number of columns.
    *
    * @param first the first expression value
    * @param others additional values in matching column order

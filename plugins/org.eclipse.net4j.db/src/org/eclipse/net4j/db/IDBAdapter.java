@@ -262,6 +262,19 @@ public interface IDBAdapter extends IDBAdapterID
   }
 
   /**
+   * Validates whether the given value can be rendered as a SQL literal by this adapter.
+   * The default implementation performs no additional validation; adapters with dialect-specific
+   * restrictions may reject values during DML compilation.
+   *
+   * @param value the Java value, possibly {@code null}
+   * @throws IllegalArgumentException if the value is not supported
+   * @since 4.15
+   */
+  public default void validateSQLLiteral(Object value)
+  {
+  }
+
+  /**
    * @since 4.2
    */
   public String sqlRenameField(IDBField field, String oldName);

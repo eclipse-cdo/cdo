@@ -18,7 +18,10 @@ import org.eclipse.net4j.db.dml.SQLOrderItem;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 
 /**
- * A SELECT stage with a source clause and optional further clauses.
+ * A SELECT stage with a source clause and optional further clauses. Repeated FROM additions create
+ * comma-separated sources when there are no joins. If joins follow multiple FROM sources, the
+ * compiler combines those initial sources with CROSS JOIN and groups them as the left operand;
+ * subsequent joins associate left-to-right. Arbitrary explicit join-tree nesting is not supported.
  *
  * @author Eike Stepper
  * @since 4.15
@@ -28,7 +31,7 @@ import org.eclipse.net4j.db.dml.SQLTableRef;
 public interface SQLSelectSourceStep extends SQLSelectBuildStep
 {
   /**
-   * Starts an INNER JOIN that must receive an ON condition before it can be completed.
+   * Starts an INNER JOIN that must receive a complete condition or comparison through ON before it can be completed. Joins following multiple FROM sources apply to their grouped CROSS JOIN expression.
    *
    * @param table the schema table or table occurrence
    * @return the next valid fluent stage
@@ -37,7 +40,7 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
   public SQLSelectJoinStep join(IDBTable table);
 
   /**
-   * Starts an INNER JOIN that must receive an ON condition before it can be completed.
+   * Starts an INNER JOIN that must receive a complete condition or comparison through ON before it can be completed. Joins following multiple FROM sources apply to their grouped CROSS JOIN expression.
    *
    * @param table the schema table or table occurrence
    * @return the next valid fluent stage
@@ -46,7 +49,7 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
   public SQLSelectJoinStep join(SQLTableRef table);
 
   /**
-   * Starts a LEFT JOIN that must receive an ON condition before it can be completed.
+   * Starts a LEFT JOIN that must receive a complete condition or comparison through ON before it can be completed. Joins following multiple FROM sources apply to their grouped CROSS JOIN expression.
    *
    * @param table the schema table or table occurrence
    * @return the next valid fluent stage
@@ -55,7 +58,7 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
   public SQLSelectJoinStep leftJoin(IDBTable table);
 
   /**
-   * Starts a LEFT JOIN that must receive an ON condition before it can be completed.
+   * Starts a LEFT JOIN that must receive a complete condition or comparison through ON before it can be completed. Joins following multiple FROM sources apply to their grouped CROSS JOIN expression.
    *
    * @param table the schema table or table occurrence
    * @return the next valid fluent stage
@@ -64,7 +67,7 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
   public SQLSelectJoinStep leftJoin(SQLTableRef table);
 
   /**
-   * Supplies a complete WHERE condition or begins a comparison that must be completed before the clause stage is available.
+   * Supplies a complete reusable WHERE condition or begins a comparison. Complete conditions may be composed with explicit grouping; simple connector chains use SQL operator precedence.
    *
    * @param left the left expression of a comparison
    * @return the next valid fluent stage
@@ -73,7 +76,7 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
   public SQLComparisonStep<SQLSelectWhereStep> where(SQLExpression left);
 
   /**
-   * Supplies a complete WHERE condition or begins a comparison that must be completed before the clause stage is available.
+   * Supplies a complete reusable WHERE condition or begins a comparison. Complete conditions may be composed with explicit grouping; simple connector chains use SQL operator precedence.
    *
    * @param condition the complete condition to add
    * @return the next valid fluent stage

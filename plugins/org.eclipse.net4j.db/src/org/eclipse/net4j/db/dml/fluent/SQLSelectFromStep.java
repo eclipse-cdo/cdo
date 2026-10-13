@@ -15,7 +15,9 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 
 /**
- * A SELECT source stage that permits adding more comma-separated tables before any JOIN.
+ * A SELECT source stage that permits adding more comma-separated tables before any JOIN. If JOINs
+ * follow multiple FROM sources, the compiler groups those sources as a CROSS JOIN expression before
+ * applying the subsequent joins from left to right.
  *
  * @author Eike Stepper
  * @since 4.15

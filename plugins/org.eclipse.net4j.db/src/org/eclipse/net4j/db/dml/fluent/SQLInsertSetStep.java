@@ -14,7 +14,7 @@ package org.eclipse.net4j.db.dml.fluent;
 import org.eclipse.net4j.db.ddl.IDBField;
 
 /**
- * An INSERT with at least one complete assignment; further assignments may be added dynamically.
+ * An INSERT with at least one complete explicit named assignment; further assignments may be added dynamically. This form cannot be mixed with implicit values or an explicit columns/value list.
  *
  * @author Eike Stepper
  * @since 4.15

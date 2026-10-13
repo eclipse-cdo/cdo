@@ -15,7 +15,9 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.dml.SQLExpression;
 
 /**
- * An INSERT target that can accept values, an explicit column list, or its first named assignment.
+ * An INSERT target offering three alternative forms: values in schema field order, an explicit
+ * column list followed by positional values, or explicit named assignments. These forms cannot be
+ * mixed in one INSERT; column/value counts are checked during compilation.
  *
  * @author Eike Stepper
  * @since 4.15
@@ -25,7 +27,7 @@ import org.eclipse.net4j.db.dml.SQLExpression;
 public interface SQLInsertStartStep
 {
   /**
-   * Selects the INSERT target columns and returns a stage that requires a corresponding value list.
+   * Selects explicit target columns and returns a stage that requires positionally corresponding values. This form is an alternative to implicit schema-order values and named assignments.
    *
    * @param first the first target column for the INSERT
    * @param others additional target columns in value order
@@ -36,7 +38,7 @@ public interface SQLInsertStartStep
   public SQLInsertColumnsStep columns(IDBField first, IDBField... others);
 
   /**
-   * Supplies values for the INSERT target. When explicit columns were selected, values correspond positionally to those columns.
+   * Supplies values for the INSERT target. Without an explicit column list, values correspond to schema fields in field order; after {@code columns(...)} they correspond positionally to that list. Counts are validated during compilation.
    *
    * @param first the first expression value
    * @param others additional values in matching column order
@@ -47,7 +49,7 @@ public interface SQLInsertStartStep
   public SQLInsertValuesStep values(SQLExpression first, SQLExpression... others);
 
   /**
-   * Begins an assignment to an existing schema column. The returned assignment stage must receive a value before the statement can be completed.
+   * Begins an explicit named INSERT assignment. Named assignments avoid relying on implicit target-column order and cannot be mixed with {@code columns(...)} or {@code values(...)}.
    *
    * @param column the existing schema column
    * @return the next valid fluent stage

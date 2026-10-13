@@ -14,7 +14,7 @@ package org.eclipse.net4j.db.dml.fluent;
 import org.eclipse.net4j.db.ddl.IDBField;
 
 /**
- * An UPDATE statement awaiting its first assignment.
+ * An UPDATE statement awaiting its first assignment. Building an UPDATE without a WHERE clause is valid and may modify every row in the target table.
  *
  * @author Eike Stepper
  * @since 4.15

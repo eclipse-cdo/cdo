@@ -15,7 +15,8 @@ import org.eclipse.net4j.db.dml.SQLCondition;
 import org.eclipse.net4j.db.dml.SQLExpression;
 
 /**
- * A JOIN awaiting its ON condition.
+ * A JOIN awaiting its ON condition. Supply a complete {@link SQLCondition} to preserve explicit
+ * grouping, or use a simple comparison chain whose AND/OR operators follow SQL precedence.
  *
  * @author Eike Stepper
  * @since 4.15
@@ -25,7 +26,7 @@ import org.eclipse.net4j.db.dml.SQLExpression;
 public interface SQLSelectJoinStep
 {
   /**
-   * Supplies a complete ON condition or begins a comparison whose completion returns to the joined SELECT stage.
+   * Supplies a complete ON condition or begins a comparison whose completion returns to the joined SELECT stage. Complete conditions can express explicit grouping.
    *
    * @param left the left expression of a comparison
    * @return the next valid fluent stage
@@ -34,7 +35,7 @@ public interface SQLSelectJoinStep
   public SQLComparisonStep<SQLSelectJoinedStep> on(SQLExpression left);
 
   /**
-   * Supplies a complete ON condition or begins a comparison whose completion returns to the joined SELECT stage.
+   * Supplies a complete ON condition or begins a comparison whose completion returns to the joined SELECT stage. Complete conditions can express explicit grouping.
    *
    * @param condition the complete condition to add
    * @return the next valid fluent stage

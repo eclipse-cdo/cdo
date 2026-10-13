@@ -24,6 +24,10 @@ import org.eclipse.net4j.db.dml.SQLSubSelect;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 
 import java.lang.reflect.Array;
+import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -58,7 +62,17 @@ public class Expression implements SQLExpression
   public Expression(Kind kind, Object... operands)
   {
     this.kind = Objects.requireNonNull(kind, "kind");
-    this.operands = Collections.unmodifiableList(Arrays.asList(Objects.requireNonNull(operands, "operands").clone()));
+    Object[] operandCopy = Objects.requireNonNull(operands, "operands").clone();
+
+    if (kind == Kind.LITERAL)
+    {
+      for (int i = 0; i < operandCopy.length; i++)
+      {
+        operandCopy[i] = copyTemporalLiteral(operandCopy[i]);
+      }
+    }
+
+    this.operands = Collections.unmodifiableList(Arrays.asList(operandCopy));
   }
 
   public Kind getKind()
@@ -68,7 +82,42 @@ public class Expression implements SQLExpression
 
   public List<Object> getOperands()
   {
+    if (kind == Kind.LITERAL)
+    {
+      List<Object> copy = new ArrayList<>(operands.size());
+
+      for (Object operand : operands)
+      {
+        copy.add(copyTemporalLiteral(operand));
+      }
+
+      return Collections.unmodifiableList(copy);
+    }
+
     return operands;
+  }
+
+  private static Object copyTemporalLiteral(Object value)
+  {
+    if (value instanceof Timestamp)
+    {
+      Timestamp timestamp = (Timestamp)value;
+      Timestamp copy = new Timestamp(timestamp.getTime());
+      copy.setNanos(timestamp.getNanos());
+      return copy;
+    }
+
+    if (value instanceof Date)
+    {
+      return new Date(((Date)value).getTime());
+    }
+
+    if (value instanceof Time)
+    {
+      return new Time(((Time)value).getTime());
+    }
+
+    return value;
   }
 
   @Override

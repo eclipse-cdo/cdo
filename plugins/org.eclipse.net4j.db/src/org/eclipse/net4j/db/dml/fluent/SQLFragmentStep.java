@@ -22,8 +22,10 @@ import org.eclipse.net4j.db.dml.SQLParameter;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 
 /**
- * A structured fragment builder. Raw SQL text is trusted input; identifiers and parameters are
- * represented as separate structured parts so a future compiler can process them safely.
+ * A structured fragment builder. Raw SQL text is trusted input and is not parsed; identifiers and
+ * parameters are represented as separate structured parts so the compiler can quote identifiers
+ * and track parameter occurrences. Prefer structured expressions for operators and explicitly
+ * group a fragment expression when its internal precedence matters.
  *
  * @author Eike Stepper
  * @since 4.15
@@ -36,7 +38,7 @@ public interface SQLFragmentStep
    * Appends trusted SQL text to the fragment. Raw text is not parsed and must not contain {@code ?}, even inside a quoted SQL literal.
    * Represent every JDBC parameter placeholder with {@link SQL#param()} or a structured fragment parameter token.
    * Generated literals such as {@code SQL.literal("?")} are separate structured expressions and are allowed. This restriction keeps positional
-   * and identity-based JDBC binding reliable in Phase 3.
+   * and identity-based JDBC binding reliable.
    *
    * @param trustedSQL trusted SQL text, supplied as a literal
    * @return the next valid fluent stage
@@ -117,9 +119,9 @@ public interface SQLFragmentStep
   public SQLFragmentStep fragment(SQLFragment fragment);
 
   /**
-   * Captures the operations completed so far in a new immutable template. Later calls through a retained builder stage do not alter an already built template.
+   * Captures the parts completed so far in a new immutable fragment. Later calls through a retained builder stage do not alter an already built fragment.
    *
-   * @return an immutable definition snapshot
+   * @return an immutable SQL fragment
    * @since 4.15
    */
   public SQLFragment build();

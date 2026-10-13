@@ -26,6 +26,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -143,6 +144,22 @@ public class OracleAdapter extends DBAdapter
     }
 
     return super.adaptType(type);
+  }
+
+  /**
+   * Rejects Boolean and {@link Time} values that cannot be rendered as literals by this Oracle
+   * adapter. These values should be supplied as parameters when supported by the database schema.
+   *
+   * @param value the Java literal value to validate
+   * @throws IllegalArgumentException if the value is Boolean or {@link Time}
+   */
+  @Override
+  public void validateSQLLiteral(Object value)
+  {
+    if (value instanceof Boolean || value instanceof Time)
+    {
+      throw new IllegalArgumentException("Unsupported Oracle SQL literal type: " + value.getClass().getName());
+    }
   }
 
   @Override

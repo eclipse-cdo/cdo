@@ -252,6 +252,12 @@ public class DelegatingDBAdapter implements IDBAdapter
   }
 
   @Override
+  public void validateSQLLiteral(Object value)
+  {
+    delegate.validateSQLLiteral(value);
+  }
+
+  @Override
   public String sqlRenameField(IDBField field, String oldName)
   {
     return delegate.sqlRenameField(field, oldName);

@@ -26,7 +26,7 @@ import org.eclipse.net4j.db.dml.SQLOrderItem;
 public interface SQLSelectGroupByStep extends SQLSelectBuildStep
 {
   /**
-   * Supplies a complete HAVING condition or begins a comparison that must be completed before ordering or completion.
+   * Supplies a complete reusable HAVING condition or begins a comparison. Complete conditions may be composed with explicit grouping; simple connector chains use SQL operator precedence.
    *
    * @param left the left expression of a comparison
    * @return the next valid fluent stage
@@ -35,7 +35,7 @@ public interface SQLSelectGroupByStep extends SQLSelectBuildStep
   public SQLComparisonStep<SQLSelectHavingStep> having(SQLExpression left);
 
   /**
-   * Supplies a complete HAVING condition or begins a comparison that must be completed before ordering or completion.
+   * Supplies a complete reusable HAVING condition or begins a comparison. Complete conditions may be composed with explicit grouping; simple connector chains use SQL operator precedence.
    *
    * @param condition the complete condition to add
    * @return the next valid fluent stage

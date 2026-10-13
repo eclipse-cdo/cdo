@@ -1252,6 +1252,8 @@ public final class Compiler
 
     private void renderLiteral(Object literal, StringBuilder target)
     {
+      adapter.validateSQLLiteral(literal);
+
       if (literal == null)
       {
         target.append("NULL");
@@ -1312,7 +1314,7 @@ public final class Compiler
 
         if (ref.getAlias() != null)
         {
-          target.append(" AS ").append(adapter.quoteIdentifier(ref.getAlias()));
+          target.append(' ').append(adapter.quoteIdentifier(ref.getAlias()));
         }
       }
       else if (value instanceof IDBTable)

@@ -16,6 +16,8 @@ import org.eclipse.net4j.db.dml.SQLSubSelect;
 
 /**
  * The right-hand comparison stage. Completing an operator returns the enclosing clause stage.
+ * Equality and ordering comparisons retain SQL NULL semantics; use {@link #isNull()} or
+ * {@link #isNotNull()} to test for NULL explicitly.
  *
  * @param <NEXT> the stage available after the comparison is completed
  * @author Eike Stepper

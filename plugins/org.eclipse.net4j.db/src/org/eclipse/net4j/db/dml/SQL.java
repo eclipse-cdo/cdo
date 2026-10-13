@@ -44,6 +44,12 @@ import java.util.function.Function;
  *     .orderByDesc(SQL.count(id)) //
  *     .build();
  * </pre>
+ * <p>
+ * {@link #literal(Object)} values are checked by the selected adapter during compilation and may
+ * not be portable across dialects; application values should generally be supplied through
+ * {@link #param()}. SQL comparisons with a literal or bound NULL retain ordinary SQL comparison
+ * semantics and are not rewritten to {@code IS NULL}.
+ * </p>
  *
  * @author Eike Stepper
  * @since 4.15
@@ -92,7 +98,7 @@ public final class SQL
   }
 
   /**
-   * Begins an UPDATE definition for the supplied schema table. A complete assignment is required before the definition can be built.
+   * Begins an UPDATE definition for the supplied schema table. A complete assignment is required before the definition can be built. Without a WHERE clause, the UPDATE may modify every row in the table.
    *
    * @param table the existing schema table
    * @return the corresponding staged builder
@@ -116,7 +122,7 @@ public final class SQL
   }
 
   /**
-   * Begins a DELETE definition. It may be built directly or completed with a WHERE condition.
+   * Begins a DELETE definition. It may be built directly or completed with a WHERE condition. Without a WHERE clause, the DELETE may remove every row in the table.
    *
    * @param table the existing schema table
    * @return the corresponding staged builder
@@ -280,8 +286,13 @@ public final class SQL
 
   /**
    * Creates an expression from an explicit literal value. Compilation supports null, strings,
-   * characters, booleans, finite numeric values, and SQL date/time values. Other Java types are
-   * rejected rather than rendered through arbitrary {@code toString()} conversion.
+   * characters, booleans, finite numeric values, and SQL date/time values, subject to validation
+   * by the compiling adapter. Other Java types are rejected rather than rendered through arbitrary
+   * {@code toString()} conversion. Mutable SQL date, time, and timestamp values are snapshotted when
+   * this expression is created. Literals such as Boolean or SQL NULL may have dialect-specific
+   * semantics; use parameters for portable application values. Comparisons to NULL are not
+   * rewritten to {@code IS NULL}; use {@link #isNull(SQLExpression)} or
+   * {@link #isNotNull(SQLExpression)} explicitly.
    *
    * @param value the literal value represented by this expression
    * @return the corresponding immutable SQL API value
@@ -293,7 +304,9 @@ public final class SQL
   }
 
   /**
-   * Uses a complete SELECT definition as a scalar expression.
+   * Uses a complete SELECT definition as a scalar expression. It must project exactly one column;
+   * this is validated during compilation. Whether the query returns zero, one, or multiple rows is
+   * determined by SQL and the database at execution time.
    *
    * @param query the complete SELECT definition used by this expression
    * @return the corresponding immutable SQL API value
@@ -305,7 +318,8 @@ public final class SQL
   }
 
   /**
-   * Creates an EXISTS condition over a complete SELECT definition.
+   * Creates an EXISTS condition over a complete SELECT definition. Unlike scalar and IN subqueries,
+   * EXISTS does not require a single-column projection; width validation occurs during compilation.
    *
    * @param query the complete SELECT definition used by this expression
    * @return the corresponding immutable SQL API value
@@ -317,7 +331,8 @@ public final class SQL
   }
 
   /**
-   * Creates a NOT EXISTS condition over a complete SELECT definition.
+   * Creates a NOT EXISTS condition over a complete SELECT definition. Unlike scalar and IN subqueries,
+   * NOT EXISTS does not require a single-column projection; width validation occurs during compilation.
    *
    * @param query the complete SELECT definition used by this expression
    * @return the corresponding immutable SQL API value
@@ -464,7 +479,9 @@ public final class SQL
   }
 
   /**
-   * Creates an equality condition.
+   * Creates an equality condition using ordinary SQL comparison semantics. If either operand is
+   * SQL NULL, the result is not rewritten to {@code IS NULL}; use {@link #isNull(SQLExpression)}
+   * for a NULL test.
    *
    * @param left the left operand
    * @param right the right operand
@@ -632,7 +649,8 @@ public final class SQL
   }
 
   /**
-   * Creates an IN condition whose values come from a complete SELECT definition.
+   * Creates an IN condition whose values come from a complete SELECT definition. The subquery must
+   * project exactly one column; this is validated during compilation.
    *
    * @param expression the SQL expression to wrap or aggregate
    * @param subSelect the complete SELECT definition used by this expression
@@ -645,7 +663,10 @@ public final class SQL
   }
 
   /**
-   * Begins a structured fragment. Raw text is trusted SQL; identifiers and parameters should be supplied through their typed methods.
+   * Begins a structured fragment. Raw text is trusted SQL, is not parsed for operator precedence,
+   * and must not contain {@code ?}, even in a quoted string. Add identifiers and parameters through
+   * their typed methods. Prefer structured expressions for operators; explicitly group fragment
+   * expressions when their internal precedence matters.
    *
    * @return the corresponding staged builder
    * @since 4.15
@@ -656,7 +677,9 @@ public final class SQL
   }
 
   /**
-   * Wraps a structured fragment as an expression using the canonical factory.
+   * Wraps a structured fragment as an expression using the canonical factory. Structured operator
+   * expressions allow compiler-managed precedence; raw fragment text is not parsed, so explicitly
+   * group it where required.
    *
    * @param fragment the structured SQL fragment
    * @return the corresponding immutable SQL API value

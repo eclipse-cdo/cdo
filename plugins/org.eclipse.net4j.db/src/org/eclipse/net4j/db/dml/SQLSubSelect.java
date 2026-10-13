@@ -12,7 +12,10 @@
 package org.eclipse.net4j.db.dml;
 
 /**
- * A complete SELECT definition usable in scalar, EXISTS, or IN contexts.
+ * A complete SELECT definition usable in scalar, EXISTS, or IN contexts. Scalar and IN subqueries
+ * must project exactly one column; EXISTS and NOT EXISTS accept any projection width. The compiler
+ * validates projection width during compilation. For a scalar subquery, the database remains
+ * responsible for runtime row-count semantics.
  *
  * @author Eike Stepper
  * @since 4.15

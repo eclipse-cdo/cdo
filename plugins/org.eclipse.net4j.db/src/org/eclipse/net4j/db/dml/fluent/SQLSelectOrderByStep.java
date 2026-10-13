@@ -11,11 +11,15 @@
  */
 package org.eclipse.net4j.db.dml.fluent;
 
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLExpression;
 import org.eclipse.net4j.db.dml.SQLOrderItem;
 
 /**
- * A complete SELECT ordering clause that can accept further ordering items.
+ * A complete SELECT ordering clause that can accept further ordering items. A {@link SQLExpression}
+ * is also an ordering item and defaults to ascending order; use {@link SQL#asc(SQLExpression)} or
+ * {@link SQL#desc(SQLExpression)} for an explicit direction. {@code orderByDesc()} and
+ * {@code thenByDesc()} are convenience alternatives. Items retain their supplied order.
  *
  * @author Eike Stepper
  * @since 4.15
@@ -25,7 +29,7 @@ import org.eclipse.net4j.db.dml.SQLOrderItem;
 public interface SQLSelectOrderByStep extends SQLSelectBuildStep
 {
   /**
-   * Appends an ordering item after the current ORDER BY items.
+   * Appends an ordering item after the current ORDER BY items. A direct expression is ascending by default.
    *
    * @param item the next ordering item
    * @return the next valid fluent stage

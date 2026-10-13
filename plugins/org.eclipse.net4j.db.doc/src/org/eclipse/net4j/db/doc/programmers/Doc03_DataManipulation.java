@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
@@ -493,6 +493,9 @@ public class Doc03_DataManipulation
    * A converter transforms non-null values before default binding. Null input bypasses a converter, and a converter
    * that produces null follows typed-NULL rules. An explicit {@link SQLParameterBinder} takes precedence and controls
    * the JDBC setter for each occurrence, receiving the original value even when it is null.
+   * <p>
+   * The binary binder below is a separate specialized example: it assumes an application-defined {@code ATTACHMENT}
+   * table with a binary {@code PAYLOAD} field and does not extend the shared {@code SALES} schema.
    * <p>
    * {@link #setCustomerEmailToNull(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) SetCustomerEmailToNull.java}
    * {@link #insertBinaryValue(IDBAdapter, IDBConnection, IDBTable, IDBField, byte[]) InsertBinaryValue.java}

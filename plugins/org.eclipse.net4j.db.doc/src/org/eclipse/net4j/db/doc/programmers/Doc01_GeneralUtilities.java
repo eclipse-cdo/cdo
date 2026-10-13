@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
@@ -138,8 +138,8 @@ public class Doc01_GeneralUtilities
    * explicit {@code commit()} or {@code rollback()}. This JDBC transaction is independent of the schema working
    * copy and its adapter-driven DDL lifecycle.
    * <p>
-   * The following example updates a customer through a managed connection, returns its statement to the connection,
-   * and commits the row change: {@link #updateCustomer(IDBDatabase, String) UpdateCustomer.java}.
+   * The following example executes and commits a customer update before closing its statement and managed
+   * connection: {@link #updateCustomer(IDBDatabase, String) UpdateCustomer.java}.
    *
    * @author Eike Stepper
    */
@@ -251,7 +251,7 @@ public class Doc01_GeneralUtilities
         try (IDBSchemaTransaction schemaTransaction = connection.openSchemaTransaction())
         {
           IDBTable customer = schemaTransaction.getWorkingCopy().getTable("CUSTOMER");
-          customer.addField("EMAIL", DBType.VARCHAR, 254, false);
+          customer.addField("LOYALTY_CODE", DBType.VARCHAR, 32, false);
           schemaTransaction.commit();
         }
 

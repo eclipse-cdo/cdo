@@ -72,7 +72,7 @@
   <text x="765" y="520" text-anchor="middle" class="body">Obtains READ access after the writer;</text>
   <text x="765" y="544" text-anchor="middle" class="body">cache lookup cannot return invalidated SQL</text>
 
-  <path d="M917 399 C917 432 379 430 379 464" class="line"/>
+  <path d="M917 399 L917 438 L379 438 L379 464" class="line"/>
   <path d="M537 517 L584 517" class="line"/>
 
   <rect x="44" y="606" width="1031" height="52" class="step"/>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
@@ -171,8 +171,11 @@ public class Doc02_DataDefinition
    * and which alterations they support. Keep application data migration and schema changes as explicit deployment
    * steps when they need ordering or recovery logic.
    * <p>
-   * {@link #addEmailColumn(IDBDatabase) AddEmailColumn.java}
-   * {@link #addStatusColumn(IDBConnection) AddStatusColumn.java}
+   * The shared base schema already contains {@code CUSTOMER.EMAIL} and {@code ORDERS.STATUS}. These examples evolve
+   * it by adding {@code CUSTOMER.LOYALTY_CODE} and {@code ORDERS.PROMOTION_CODE} fields.
+   * <p>
+   * {@link #addLoyaltyCodeColumn(IDBDatabase) AddLoyaltyCodeColumn.java}
+   * {@link #addPromotionCodeColumn(IDBConnection) AddPromotionCodeColumn.java}
    *
    * @author Eike Stepper
    */
@@ -181,16 +184,13 @@ public class Doc02_DataDefinition
     /**
      * @snip
      */
-    public void addEmailColumn(IDBDatabase database)
+    public void addLoyaltyCodeColumn(IDBDatabase database)
     {
       // Input: an open database whose managed schema includes CUSTOMER.
       try (IDBSchemaTransaction transaction = database.openSchemaTransaction())
       {
         IDBTable customer = transaction.getWorkingCopy().getTable("CUSTOMER");
-        if (customer.getField("EMAIL") == null)
-        {
-          customer.addField("EMAIL", DBType.VARCHAR, 254, false);
-        }
+        customer.addField("LOYALTY_CODE", DBType.VARCHAR, 32, false);
 
         IDBSchemaDelta delta = transaction.getSchemaDelta();
         System.out.println("Proposed schema delta has " + delta.getTableDeltaCount() + " table changes");
@@ -201,16 +201,13 @@ public class Doc02_DataDefinition
     /**
      * @snip
      */
-    public void addStatusColumn(IDBConnection connection)
+    public void addPromotionCodeColumn(IDBConnection connection)
     {
       // Input: an open managed connection; close all its prepared statements before committing this schema change.
       try (IDBSchemaTransaction transaction = connection.openSchemaTransaction())
       {
         IDBTable orders = transaction.getWorkingCopy().getTable("ORDERS");
-        if (orders.getField("STATUS") == null)
-        {
-          orders.addField("STATUS", DBType.VARCHAR, 24, true);
-        }
+        orders.addField("PROMOTION_CODE", DBType.VARCHAR, 32, false);
 
         transaction.commit();
       }

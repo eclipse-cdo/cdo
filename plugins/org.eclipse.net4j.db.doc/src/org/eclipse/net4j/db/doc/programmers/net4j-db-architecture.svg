@@ -36,7 +36,7 @@
   <text x="535" y="258" text-anchor="middle" class="small">cache capacity setting; caches live per connection</text>
 
   <path d="M285 137 C330 137 340 170 390 180" class="line"/>
-  <text x="326" y="132" class="small">configures</text>
+  <text x="326" y="116" class="small">configures</text>
   <path d="M285 265 C332 265 341 244 390 237" class="line"/>
   <text x="323" y="278" class="small">provides</text>
 
@@ -44,13 +44,13 @@
   <text x="940" y="119" text-anchor="middle" class="label">IDBSchema</text>
   <text x="940" y="145" text-anchor="middle" class="small">managed metadata snapshot; tables, fields, indexes</text>
   <path d="M680 172 C720 172 730 132 780 132" class="line"/>
-  <text x="705" y="147" class="small">owns/locks</text>
+  <text x="704" y="196" class="small">owns/locks</text>
 
   <rect x="780" y="218" width="320" height="92" class="box gold"/>
   <text x="940" y="252" text-anchor="middle" class="label">IDBSchemaTransaction</text>
   <text x="940" y="278" text-anchor="middle" class="small">working copy · delta · adapter-backed update</text>
   <path d="M680 238 C718 238 738 264 780 264" class="line"/>
-  <text x="698" y="256" class="small">opens</text>
+  <text x="713" y="222" class="small">opens</text>
   <path d="M940 218 L940 179" class="line dash"/>
   <text x="950" y="204" class="small">edits by delta</text>
 
@@ -58,7 +58,7 @@
   <text x="535" y="394" text-anchor="middle" class="label">IDBConnection</text>
   <text x="535" y="420" text-anchor="middle" class="small">wraps JDBC; coordinates schema access</text>
   <path d="M535 280 L535 360" class="line"/>
-  <text x="545" y="330" class="small">creates/tracks</text>
+  <text x="558" y="340" class="small">creates/tracks</text>
 
   <rect x="55" y="510" width="230" height="92" class="box green"/>
   <text x="170" y="544" text-anchor="middle" class="label">SQLTemplate</text>
@@ -69,13 +69,13 @@
   <text x="535" y="544" text-anchor="middle" class="label">SQLStatement</text>
   <text x="535" y="570" text-anchor="middle" class="small">compiled SQL and parameter metadata</text>
   <path d="M285 556 L390 556" class="compile"/>
-  <text x="337" y="541" text-anchor="middle" class="small">compile(adapter)</text>
+  <text x="337" y="523" text-anchor="middle" class="small">compile(adapter)</text>
 
   <rect x="780" y="510" width="320" height="92" class="box gold"/>
   <text x="940" y="544" text-anchor="middle" class="label">IDBPreparedStatement</text>
   <text x="940" y="570" text-anchor="middle" class="small">checked out for use; close returns or releases it</text>
   <path d="M680 556 L780 556" class="compile"/>
-  <text x="730" y="541" text-anchor="middle" class="small">prepare(connection)</text>
+  <text x="730" y="523" text-anchor="middle" class="small">prepare(connection)</text>
   <path d="M620 452 C705 475 746 490 830 510" class="line"/>
   <text x="694" y="475" class="small">per-connection cache</text>
 

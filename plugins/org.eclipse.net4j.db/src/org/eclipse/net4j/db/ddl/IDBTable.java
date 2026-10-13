@@ -12,6 +12,8 @@
 package org.eclipse.net4j.db.ddl;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLTableRef;
 
 /**
  * A table specification in a {@link IDBSchema DB schema}.
@@ -116,5 +118,24 @@ public interface IDBTable extends IDBSchemaElement
 
   public IDBIndex getPrimaryKeyIndex();
 
+  /**
+   * Creates a table reference with the given SQL alias.
+   *
+   * @param alias the alias used to qualify columns and render the table in SQL
+   * @return an immutable reference to this table
+   * @since 4.15
+   */
+  public default SQLTableRef as(String alias)
+  {
+    return SQL.as(this, alias);
+  }
+
+  /**
+   * Creates legacy INSERT SQL text for this table.
+   *
+   * @return the INSERT statement text
+   * @deprecated Use {@link SQL#insertInto(IDBTable)} to create a structured INSERT definition.
+   */
+  @Deprecated
   public String sqlInsert();
 }

@@ -12,6 +12,7 @@
 package org.eclipse.net4j.db.ddl;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.dml.SQLExpression;
 import org.eclipse.net4j.util.collection.PositionProvider;
 
 /**
@@ -21,7 +22,7 @@ import org.eclipse.net4j.util.collection.PositionProvider;
  * @noimplement This interface is not intended to be implemented by clients.
  * @noextend This interface is not intended to be extended by clients.
  */
-public interface IDBField extends IDBSchemaElement, PositionProvider
+public interface IDBField extends IDBSchemaElement, PositionProvider, SQLExpression
 {
   public static final int DEFAULT = -1;
 

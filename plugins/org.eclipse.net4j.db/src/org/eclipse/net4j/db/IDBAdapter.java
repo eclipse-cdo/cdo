@@ -29,6 +29,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -239,6 +240,26 @@ public interface IDBAdapter extends IDBAdapterID
    * @since 4.2
    */
   public boolean isColumnNotFoundException(SQLException ex);
+
+  /**
+   * Quotes one SQL identifier using the adapter's identifier delimiter. Qualified names must be
+   * split into their individual components before calling this method. Quoting can be disabled
+   * globally with {@link DBUtil#DISABLE_QUOTED_NAMES}.
+   *
+   * @param identifier one unqualified SQL identifier
+   * @return the identifier, quoted and escaped according to this adapter
+   * @since 4.15
+   */
+  public default String quoteIdentifier(String identifier)
+  {
+    Objects.requireNonNull(identifier, "identifier");
+    if (DBUtil.DISABLE_QUOTED_NAMES)
+    {
+      return identifier;
+    }
+
+    return DBUtil.QUOTE + identifier.replace(DBUtil.QUOTE, DBUtil.QUOTE + DBUtil.QUOTE) + DBUtil.QUOTE;
+  }
 
   /**
    * @since 4.2

@@ -19,6 +19,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
 
 /**
@@ -239,7 +240,14 @@ public final class DelegatingDBTable extends DelegatingDBSchemaElement implement
     getDelegate().removeIndex(unwrap(indexToRemove));
   }
 
+  /**
+   * Delegates legacy INSERT SQL generation to the wrapped table.
+   *
+   * @return the INSERT statement text from the wrapped table
+   * @deprecated Use {@link SQL#insertInto(IDBTable)} to create a structured INSERT definition.
+   */
   @Override
+  @Deprecated
   public String sqlInsert()
   {
     return getDelegate().sqlInsert();

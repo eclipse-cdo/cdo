@@ -23,6 +23,7 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Objects;
 
 /**
  * A {@link IDBAdapter DB adapter} for <a href="http://www.mysql.com/">MySQL</a> databases.
@@ -58,6 +59,26 @@ public class MYSQLAdapter extends DBAdapter
   public MYSQLAdapter()
   {
     super(NAME, VERSION);
+  }
+
+  /**
+   * Quotes one identifier with MySQL's backtick delimiter, escaping embedded backticks by doubling them.
+   *
+   * @param identifier one unqualified SQL identifier
+   * @return the quoted identifier, or the original identifier when quoting is globally disabled
+   * @since 4.5
+   */
+  @Override
+  public String quoteIdentifier(String identifier)
+  {
+    Objects.requireNonNull(identifier, "identifier");
+
+    if (DBUtil.DISABLE_QUOTED_NAMES)
+    {
+      return identifier;
+    }
+
+    return "`" + identifier.replace("`", "``") + "`";
   }
 
   /**

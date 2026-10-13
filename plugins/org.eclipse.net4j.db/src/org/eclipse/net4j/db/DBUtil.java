@@ -381,8 +381,7 @@ public final class DBUtil
    *
    * @since 4.14
    */
-  public static BatchedStatement batched(PreparedStatement delegate, int batchSize, BatchedStatement.Context context, String diagnosticName)
-      throws DBException
+  public static BatchedStatement batched(PreparedStatement delegate, int batchSize, BatchedStatement.Context context, String diagnosticName) throws DBException
   {
     return new BatchedStatementImpl(delegate, batchSize, context, diagnosticName);
   }

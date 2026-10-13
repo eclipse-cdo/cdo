@@ -21,6 +21,7 @@ import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.spi.db.ddl.InternalDBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
@@ -386,28 +387,6 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
   }
 
   @Override
-  public String sqlInsert()
-  {
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(getName());
-    builder.append(" VALUES ("); //$NON-NLS-1$
-
-    for (int i = 0; i < fields.size(); i++)
-    {
-      if (i > 0)
-      {
-        builder.append(", "); //$NON-NLS-1$
-      }
-
-      builder.append("?"); //$NON-NLS-1$
-    }
-
-    builder.append(")"); //$NON-NLS-1$
-    return builder.toString();
-  }
-
-  @Override
   public String toString()
   {
     String name = super.toString();
@@ -457,5 +436,34 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
     }
 
     return false;
+  }
+
+  /**
+   * Creates legacy INSERT SQL text for this table.
+   *
+   * @return the INSERT statement text
+   * @deprecated Use {@link SQL#insertInto(IDBTable)} to create a structured INSERT definition.
+   */
+  @Override
+  @Deprecated
+  public String sqlInsert()
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("INSERT INTO "); //$NON-NLS-1$
+    builder.append(getName());
+    builder.append(" VALUES ("); //$NON-NLS-1$
+
+    for (int i = 0; i < fields.size(); i++)
+    {
+      if (i > 0)
+      {
+        builder.append(", "); //$NON-NLS-1$
+      }
+
+      builder.append("?"); //$NON-NLS-1$
+    }
+
+    builder.append(")"); //$NON-NLS-1$
+    return builder.toString();
   }
 }

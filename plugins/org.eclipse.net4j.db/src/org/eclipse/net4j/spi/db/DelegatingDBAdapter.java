@@ -246,6 +246,12 @@ public class DelegatingDBAdapter implements IDBAdapter
   }
 
   @Override
+  public String quoteIdentifier(String identifier)
+  {
+    return delegate.quoteIdentifier(identifier);
+  }
+
+  @Override
   public String sqlRenameField(IDBField field, String oldName)
   {
     return delegate.sqlRenameField(field, oldName);

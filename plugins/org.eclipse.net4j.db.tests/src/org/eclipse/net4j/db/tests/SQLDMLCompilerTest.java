@@ -30,12 +30,15 @@ import org.eclipse.net4j.db.dml.fluent.SQLSelectFromStep;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.db.mysql.MYSQLAdapter;
 import org.eclipse.net4j.internal.db.dml.CompiledStatement;
+import org.eclipse.net4j.internal.db.dml.Expression;
 import org.eclipse.net4j.internal.db.dml.Fragment;
 import org.eclipse.net4j.internal.db.dml.Template;
 import org.eclipse.net4j.spi.db.DelegatingDBAdapter;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,9 +90,9 @@ public class SQLDMLCompilerTest extends TestCase
         .from(employee) //
         .build();
 
-    assertEquals("SELECT DISTINCT \"e\".*, COUNT(\"id\") AS \"total\" FROM \"hr\".\"employees\" AS \"e\"", template.compile(ansiAdapter).getSQL());
+    assertEquals("SELECT DISTINCT \"e\".*, COUNT(\"id\") AS \"total\" FROM \"hr\".\"employees\" \"e\"", template.compile(ansiAdapter).getSQL());
     assertEquals("SELECT * FROM \"hr\".\"employees\"", SQL.selectAll().from(schema.table).build().compile(ansiAdapter).getSQL());
-    assertEquals("SELECT \"e\".\"id\" FROM \"hr\".\"employees\" AS \"e\"",
+    assertEquals("SELECT \"e\".\"id\" FROM \"hr\".\"employees\" \"e\"",
         SQL.select(employee.column(schema.id)).from(employee).build().compile(ansiAdapter).getSQL());
   }
 
@@ -115,7 +118,7 @@ public class SQLDMLCompilerTest extends TestCase
         .build();
 
     assertEquals(
-        "SELECT * FROM (\"joins\".\"a\" AS \"a\" CROSS JOIN \"joins\".\"b\" AS \"b\") INNER JOIN \"joins\".\"c\" AS \"c\" ON \"a\".\"id\" = \"c\".\"id\" LEFT JOIN \"joins\".\"d\" AS \"d\" ON \"d\".\"id\" = \"c\".\"id\"",
+        "SELECT * FROM (\"joins\".\"a\" \"a\" CROSS JOIN \"joins\".\"b\" \"b\") INNER JOIN \"joins\".\"c\" \"c\" ON \"a\".\"id\" = \"c\".\"id\" LEFT JOIN \"joins\".\"d\" \"d\" ON \"d\".\"id\" = \"c\".\"id\"",
         template.compile(ansiAdapter).getSQL());
   }
 
@@ -134,6 +137,85 @@ public class SQLDMLCompilerTest extends TestCase
     SQLCondition nested = SQL.not(SQL.eq(schema.id, first).or(SQL.isNull(schema.name)));
     assertEquals("SELECT * FROM \"items\" WHERE NOT (\"id\" = ? OR \"name\" IS NULL)",
         SQL.selectAll().from(schema.table).where(nested).build().compile(ansiAdapter).getSQL());
+  }
+
+  public void testFluentSQLPrecedenceAndExplicitGrouping()
+  {
+    Schema schema = schema("condition_precedence", "items", false);
+    SQLParameter first = SQL.param();
+    SQLParameter second = SQL.param();
+    SQLParameter third = SQL.param();
+
+    SQLStatement fluent = SQL.selectAll().from(schema.table).where(schema.id).eq(first).or(schema.name).eq(second).and(schema.id).eq(third).build()
+        .compile(ansiAdapter);
+    assertEquals("SELECT * FROM \"items\" WHERE \"id\" = ? OR \"name\" = ? AND \"id\" = ?", fluent.getSQL());
+    assertEquals(Arrays.asList(first, second, third), occurrences(fluent));
+
+    SQLCondition grouped = SQL.eq(schema.id, first).or(SQL.eq(schema.name, second)).and(SQL.eq(schema.id, third));
+    SQLStatement explicitlyGrouped = SQL.selectAll().from(schema.table).where(grouped).build().compile(ansiAdapter);
+    assertEquals("SELECT * FROM \"items\" WHERE ((\"id\" = ? OR \"name\" = ?) AND \"id\" = ?)", explicitlyGrouped.getSQL());
+    assertEquals(Arrays.asList(first, second, third), occurrences(explicitlyGrouped));
+
+    SQLStatement composed = SQL.selectAll().from(schema.table).where(SQL.eq(schema.id, first).or(SQL.eq(schema.name, second))).and(SQL.eq(schema.id, third))
+        .build().compile(ansiAdapter);
+    assertEquals("SELECT * FROM \"items\" WHERE (\"id\" = ? OR \"name\" = ?) AND \"id\" = ?", composed.getSQL());
+    assertEquals(Arrays.asList(first, second, third), occurrences(composed));
+  }
+
+  public void testAdapterSQLLiteralValidationAndDelegation()
+  {
+    Schema schema = schema("literal_validation", "items", false);
+    final int[] validations = { 0 };
+    IDBAdapter validatingAdapter = new H2Adapter()
+    {
+      @Override
+      public void validateSQLLiteral(Object value)
+      {
+        validations[0]++;
+        if (value instanceof Boolean || value instanceof Time)
+        {
+          throw new IllegalArgumentException("Unsupported test literal type: " + value.getClass().getName());
+        }
+      }
+    };
+
+    SQLTemplate booleanTemplate = SQL.select(SQL.literal(Boolean.TRUE)).from(schema.table).build();
+    assertEquals(0, validations[0]);
+    assertIllegalArgument(() -> booleanTemplate.compile(validatingAdapter), "Unsupported test literal type: java.lang.Boolean");
+    assertEquals(1, validations[0]);
+
+    IDBAdapter delegating = new DelegatingDBAdapter(validatingAdapter);
+    assertIllegalArgument(() -> booleanTemplate.compile(delegating), "Unsupported test literal type: java.lang.Boolean");
+    assertEquals(2, validations[0]);
+    SQLTemplate timeTemplate = SQL.select(SQL.literal(Time.valueOf("12:34:56"))).from(schema.table).build();
+    assertIllegalArgument(() -> timeTemplate.compile(delegating), "Unsupported test literal type: java.sql.Time");
+    assertEquals(3, validations[0]);
+    assertEquals("SELECT 7 FROM \"items\"", SQL.select(SQL.literal(7)).from(schema.table).build().compile(delegating).getSQL());
+    assertEquals(4, validations[0]);
+  }
+
+  public void testMutableTemporalLiteralsAreDefensiveSnapshots()
+  {
+    Schema schema = schema("temporal_snapshot", "items", false);
+    Date date = Date.valueOf("2026-10-13");
+    Time time = Time.valueOf("12:34:56");
+    Timestamp timestamp = Timestamp.valueOf("2026-10-13 12:34:56.123456789");
+    Expression dateLiteral = (Expression)SQL.literal(date);
+    Expression timeLiteral = (Expression)SQL.literal(time);
+    Expression timestampLiteral = (Expression)SQL.literal(timestamp);
+    SQLTemplate template = SQL.select(dateLiteral, timeLiteral, timestampLiteral).from(schema.table).build();
+
+    date.setTime(0L);
+    time.setTime(0L);
+    timestamp.setTime(0L);
+    timestamp.setNanos(0);
+    ((Date)dateLiteral.getOperands().get(0)).setTime(1L);
+    ((Time)timeLiteral.getOperands().get(0)).setTime(1L);
+    Timestamp exposedTimestamp = (Timestamp)timestampLiteral.getOperands().get(0);
+    exposedTimestamp.setTime(1L);
+    exposedTimestamp.setNanos(1);
+
+    assertEquals("SELECT DATE '2026-10-13', TIME '12:34:56', TIMESTAMP '2026-10-13 12:34:56.123456789' FROM \"items\"", template.compile(ansiAdapter).getSQL());
   }
 
   public void testGroupingAggregatesAndOrdering()
@@ -312,7 +394,7 @@ public class SQLDMLCompilerTest extends TestCase
     SQLTableRef threeAlias = threeColumnTable.as("three");
     SQLSubSelect qualifiedSingle = SQL.select(SQL.all(oneAlias)).from(oneAlias).subSelect();
     SQLSubSelect unqualifiedSingle = SQL.selectAll().from(oneColumnTable).subSelect();
-    assertEquals("SELECT (SELECT \"one\".* FROM \"one_column\" AS \"one\") FROM \"records\"",
+    assertEquals("SELECT (SELECT \"one\".* FROM \"one_column\" \"one\") FROM \"records\"",
         SQL.select(SQL.scalar(qualifiedSingle)).from(schema.table).build().compile(ansiAdapter).getSQL());
     assertEquals("SELECT (SELECT * FROM \"one_column\") FROM \"records\"",
         SQL.select(SQL.scalar(unqualifiedSingle)).from(schema.table).build().compile(ansiAdapter).getSQL());
@@ -398,8 +480,8 @@ public class SQLDMLCompilerTest extends TestCase
     SQLStatement ansi = template.compile(ansiAdapter);
     SQLStatement mysql = template.compile(new MYSQLAdapter());
 
-    assertEquals("SELECT \"a`b\".\"id\" FROM \"my\"\"schema\".\"odd\"\"table\" AS \"a`b\"", ansi.getSQL());
-    assertEquals("SELECT `a``b`.`id` FROM `my\"schema`.`odd\"table` AS `a``b`", mysql.getSQL());
+    assertEquals("SELECT \"a`b\".\"id\" FROM \"my\"\"schema\".\"odd\"\"table\" \"a`b\"", ansi.getSQL());
+    assertEquals("SELECT `a``b`.`id` FROM `my\"schema`.`odd\"table` `a``b`", mysql.getSQL());
     assertEquals(ansi.getSQL(), template.compile(ansiAdapter).getSQL());
   }
 

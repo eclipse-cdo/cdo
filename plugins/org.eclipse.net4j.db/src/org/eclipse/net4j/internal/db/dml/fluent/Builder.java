@@ -42,7 +42,7 @@ import org.eclipse.net4j.db.dml.fluent.SQLUpdateAssignmentStep;
 import org.eclipse.net4j.db.dml.fluent.SQLUpdateSetStep;
 import org.eclipse.net4j.db.dml.fluent.SQLUpdateStartStep;
 import org.eclipse.net4j.db.dml.fluent.SQLUpdateWhereStep;
-import org.eclipse.net4j.internal.db.dml.Definition;
+import org.eclipse.net4j.internal.db.dml.Template;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,19 +65,19 @@ public final class Builder
   public static SQLSelectProjectionStep select(boolean distinct, SQLSelectItem first, SQLSelectItem... others)
   {
     Objects.requireNonNull(first, "first");
-    State state = new State("SELECT", null);
+    State state = new State(Template.Kind.SELECT, null);
     SelectProjection step = new SelectProjection(state);
     state.start(step);
-    state.add(step, "projection", first);
+    state.add(step, Template.Operation.Kind.PROJECTION, first);
 
     for (SQLSelectItem other : others)
     {
-      state.add(step, "projection", Objects.requireNonNull(other, "projection item"));
+      state.add(step, Template.Operation.Kind.PROJECTION, Objects.requireNonNull(other, "projection item"));
     }
 
     if (distinct)
     {
-      state.add(step, "distinct");
+      state.add(step, Template.Operation.Kind.DISTINCT);
     }
 
     return step;
@@ -85,7 +85,7 @@ public final class Builder
 
   public static SQLUpdateStartStep update(IDBTable table)
   {
-    State state = new State("UPDATE", Objects.requireNonNull(table, "table"));
+    State state = new State(Template.Kind.UPDATE, Objects.requireNonNull(table, "table"));
     UpdateStart step = new UpdateStart(state);
     state.start(step);
     return step;
@@ -93,7 +93,7 @@ public final class Builder
 
   public static SQLInsertStartStep insert(IDBTable table)
   {
-    State state = new State("INSERT", Objects.requireNonNull(table, "table"));
+    State state = new State(Template.Kind.INSERT, Objects.requireNonNull(table, "table"));
     InsertStart step = new InsertStart(state);
     state.start(step);
     return step;
@@ -101,13 +101,13 @@ public final class Builder
 
   public static SQLDeleteStep delete(IDBTable table)
   {
-    State state = new State("DELETE", Objects.requireNonNull(table, "table"));
+    State state = new State(Template.Kind.DELETE, Objects.requireNonNull(table, "table"));
     Delete step = new Delete(state);
     state.start(step);
     return step;
   }
 
-  private static void addAll(State state, Object stage, String operation, Object first, Object[] others)
+  private static void addAll(State state, Object stage, Template.Operation.Kind operation, Object first, Object[] others)
   {
     state.add(stage, operation, Objects.requireNonNull(first, "first"));
 
@@ -125,18 +125,18 @@ public final class Builder
    */
   private static class State
   {
-    private final String kind;
+    private final Template.Kind kind;
 
-    private final Object target;
+    private final IDBTable table;
 
-    private final List<Object> operations = new ArrayList<>();
+    private final List<Template.Operation> operations = new ArrayList<>();
 
     private Object activeStage;
 
-    public State(String kind, Object target)
+    public State(Template.Kind kind, IDBTable table)
     {
       this.kind = kind;
-      this.target = target;
+      this.table = table;
     }
 
     public void start(Object stage)
@@ -157,10 +157,10 @@ public final class Builder
       }
     }
 
-    public void add(Object stage, String operation, Object... operands)
+    public void add(Object stage, Template.Operation.Kind operation, Object... operands)
     {
       check(stage);
-      operations.add(new Definition.Operation(operation, operands));
+      operations.add(new Template.Operation(operation, operands));
     }
 
     public <STAGE> STAGE advance(Object stage, STAGE next)
@@ -170,10 +170,10 @@ public final class Builder
       return next;
     }
 
-    public Definition build(Object stage)
+    public Template build(Object stage)
     {
       check(stage);
-      return new Definition(kind, target, operations.toArray());
+      return new Template(kind, table, operations.toArray(new Template.Operation[operations.size()]));
     }
   }
 
@@ -193,7 +193,7 @@ public final class Builder
     }
 
     @Override
-    public Definition build()
+    public Template build()
     {
       return state.build(this);
     }
@@ -215,7 +215,7 @@ public final class Builder
     @Override
     public SQLSubSelect subSelect()
     {
-      return state.build(this);
+      return state.build(this).asSubSelect();
     }
   }
 
@@ -235,21 +235,21 @@ public final class Builder
     @Override
     public SQLSelectProjectionStep distinct()
     {
-      state.add(this, "distinct");
+      state.add(this, Template.Operation.Kind.DISTINCT);
       return this;
     }
 
     @Override
     public SQLSelectFromStep from(IDBTable first, IDBTable... others)
     {
-      addAll(state, this, "from", first, others);
+      addAll(state, this, Template.Operation.Kind.FROM, first, others);
       return state.advance(this, new SelectFrom(state));
     }
 
     @Override
     public SQLSelectFromStep from(SQLTableRef first, SQLTableRef... others)
     {
-      addAll(state, this, "from", first, others);
+      addAll(state, this, Template.Operation.Kind.FROM, first, others);
       return state.advance(this, new SelectFrom(state));
     }
   }
@@ -270,28 +270,28 @@ public final class Builder
     @Override
     public SQLSelectJoinStep join(IDBTable table)
     {
-      return joinTable("JOIN", table);
+      return joinTable(Template.Operation.Kind.JOIN, table);
     }
 
     @Override
     public SQLSelectJoinStep join(SQLTableRef table)
     {
-      return joinTable("JOIN", table);
+      return joinTable(Template.Operation.Kind.JOIN, table);
     }
 
     @Override
     public SQLSelectJoinStep leftJoin(IDBTable table)
     {
-      return joinTable("LEFT_JOIN", table);
+      return joinTable(Template.Operation.Kind.LEFT_JOIN, table);
     }
 
     @Override
     public SQLSelectJoinStep leftJoin(SQLTableRef table)
     {
-      return joinTable("LEFT_JOIN", table);
+      return joinTable(Template.Operation.Kind.LEFT_JOIN, table);
     }
 
-    private SQLSelectJoinStep joinTable(String operation, Object table)
+    private SQLSelectJoinStep joinTable(Template.Operation.Kind operation, Object table)
     {
       state.add(this, operation, Objects.requireNonNull(table, "table"));
       return state.advance(this, new SelectJoin(state));
@@ -301,7 +301,7 @@ public final class Builder
     public SQLComparisonStep<SQLSelectWhereStep> where(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "where");
+      state.add(this, Template.Operation.Kind.WHERE);
       Comparison<SQLSelectWhereStep> comparison = new Comparison<>(state, left, () -> new SelectWhere(state));
       return state.advance(this, comparison);
     }
@@ -309,28 +309,28 @@ public final class Builder
     @Override
     public SQLSelectWhereStep where(SQLCondition condition)
     {
-      state.add(this, "where", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.WHERE, Objects.requireNonNull(condition, "condition"));
       return state.advance(this, new SelectWhere(state));
     }
 
     @Override
     public SQLSelectGroupByStep groupBy(SQLExpression first, SQLExpression... others)
     {
-      addAll(state, this, "groupBy", first, others);
+      addAll(state, this, Template.Operation.Kind.GROUP_BY, first, others);
       return state.advance(this, new SelectGroupBy(state));
     }
 
     @Override
     public SQLSelectOrderByStep orderBy(SQLOrderItem first, SQLOrderItem... others)
     {
-      addAll(state, this, "orderBy", first, others);
+      addAll(state, this, Template.Operation.Kind.ORDER_BY, first, others);
       return state.advance(this, new SelectOrderBy(state));
     }
 
     @Override
     public SQLSelectOrderByStep orderByDesc(SQLExpression expression)
     {
-      state.add(this, "orderByDesc", Objects.requireNonNull(expression, "expression"));
+      state.add(this, Template.Operation.Kind.ORDER_BY_DESC, Objects.requireNonNull(expression, "expression"));
       return state.advance(this, new SelectOrderBy(state));
     }
   }
@@ -351,14 +351,14 @@ public final class Builder
     @Override
     public SQLSelectFromStep from(IDBTable first, IDBTable... others)
     {
-      addAll(state, this, "from", first, others);
+      addAll(state, this, Template.Operation.Kind.FROM, first, others);
       return this;
     }
 
     @Override
     public SQLSelectFromStep from(SQLTableRef first, SQLTableRef... others)
     {
-      addAll(state, this, "from", first, others);
+      addAll(state, this, Template.Operation.Kind.FROM, first, others);
       return this;
     }
   }
@@ -396,7 +396,7 @@ public final class Builder
     public SQLComparisonStep<SQLSelectJoinedStep> on(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "on");
+      state.add(this, Template.Operation.Kind.ON);
       Comparison<SQLSelectJoinedStep> comparison = new Comparison<>(state, left, () -> new SelectJoined(state));
       return state.advance(this, comparison);
     }
@@ -404,7 +404,7 @@ public final class Builder
     @Override
     public SQLSelectJoinedStep on(SQLCondition condition)
     {
-      state.add(this, "on", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.ON, Objects.requireNonNull(condition, "condition"));
       return state.advance(this, new SelectJoined(state));
     }
   }
@@ -426,7 +426,7 @@ public final class Builder
     public SQLComparisonStep<SQLSelectWhereStep> and(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "and");
+      state.add(this, Template.Operation.Kind.AND);
       Comparison<SQLSelectWhereStep> comparison = new Comparison<>(state, left, () -> new SelectWhere(state));
       return state.advance(this, comparison);
     }
@@ -435,7 +435,7 @@ public final class Builder
     public SQLComparisonStep<SQLSelectWhereStep> or(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "or");
+      state.add(this, Template.Operation.Kind.OR);
       Comparison<SQLSelectWhereStep> comparison = new Comparison<>(state, left, () -> new SelectWhere(state));
       return state.advance(this, comparison);
     }
@@ -443,35 +443,35 @@ public final class Builder
     @Override
     public SQLSelectWhereStep and(SQLCondition condition)
     {
-      state.add(this, "and", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.AND, Objects.requireNonNull(condition, "condition"));
       return this;
     }
 
     @Override
     public SQLSelectWhereStep or(SQLCondition condition)
     {
-      state.add(this, "or", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.OR, Objects.requireNonNull(condition, "condition"));
       return this;
     }
 
     @Override
     public SQLSelectGroupByStep groupBy(SQLExpression first, SQLExpression... others)
     {
-      addAll(state, this, "groupBy", first, others);
+      addAll(state, this, Template.Operation.Kind.GROUP_BY, first, others);
       return state.advance(this, new SelectGroupBy(state));
     }
 
     @Override
     public SQLSelectOrderByStep orderBy(SQLOrderItem first, SQLOrderItem... others)
     {
-      addAll(state, this, "orderBy", first, others);
+      addAll(state, this, Template.Operation.Kind.ORDER_BY, first, others);
       return state.advance(this, new SelectOrderBy(state));
     }
 
     @Override
     public SQLSelectOrderByStep orderByDesc(SQLExpression expression)
     {
-      state.add(this, "orderByDesc", Objects.requireNonNull(expression, "expression"));
+      state.add(this, Template.Operation.Kind.ORDER_BY_DESC, Objects.requireNonNull(expression, "expression"));
       return state.advance(this, new SelectOrderBy(state));
     }
   }
@@ -493,7 +493,7 @@ public final class Builder
     public SQLComparisonStep<SQLSelectHavingStep> having(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "having");
+      state.add(this, Template.Operation.Kind.HAVING);
       Comparison<SQLSelectHavingStep> comparison = new Comparison<>(state, left, () -> new SelectHaving(state));
       return state.advance(this, comparison);
     }
@@ -501,21 +501,21 @@ public final class Builder
     @Override
     public SQLSelectHavingStep having(SQLCondition condition)
     {
-      state.add(this, "having", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.HAVING, Objects.requireNonNull(condition, "condition"));
       return state.advance(this, new SelectHaving(state));
     }
 
     @Override
     public SQLSelectOrderByStep orderBy(SQLOrderItem first, SQLOrderItem... others)
     {
-      addAll(state, this, "orderBy", first, others);
+      addAll(state, this, Template.Operation.Kind.ORDER_BY, first, others);
       return state.advance(this, new SelectOrderBy(state));
     }
 
     @Override
     public SQLSelectOrderByStep orderByDesc(SQLExpression expression)
     {
-      state.add(this, "orderByDesc", Objects.requireNonNull(expression, "expression"));
+      state.add(this, Template.Operation.Kind.ORDER_BY_DESC, Objects.requireNonNull(expression, "expression"));
       return state.advance(this, new SelectOrderBy(state));
     }
   }
@@ -537,7 +537,7 @@ public final class Builder
     public SQLComparisonStep<SQLSelectHavingStep> and(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "and");
+      state.add(this, Template.Operation.Kind.AND);
       Comparison<SQLSelectHavingStep> comparison = new Comparison<>(state, left, () -> new SelectHaving(state));
       return state.advance(this, comparison);
     }
@@ -546,7 +546,7 @@ public final class Builder
     public SQLComparisonStep<SQLSelectHavingStep> or(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "or");
+      state.add(this, Template.Operation.Kind.OR);
       Comparison<SQLSelectHavingStep> comparison = new Comparison<>(state, left, () -> new SelectHaving(state));
       return state.advance(this, comparison);
     }
@@ -554,28 +554,28 @@ public final class Builder
     @Override
     public SQLSelectHavingStep and(SQLCondition condition)
     {
-      state.add(this, "and", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.AND, Objects.requireNonNull(condition, "condition"));
       return this;
     }
 
     @Override
     public SQLSelectHavingStep or(SQLCondition condition)
     {
-      state.add(this, "or", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.OR, Objects.requireNonNull(condition, "condition"));
       return this;
     }
 
     @Override
     public SQLSelectOrderByStep orderBy(SQLOrderItem first, SQLOrderItem... others)
     {
-      addAll(state, this, "orderBy", first, others);
+      addAll(state, this, Template.Operation.Kind.ORDER_BY, first, others);
       return state.advance(this, new SelectOrderBy(state));
     }
 
     @Override
     public SQLSelectOrderByStep orderByDesc(SQLExpression expression)
     {
-      state.add(this, "orderByDesc", Objects.requireNonNull(expression, "expression"));
+      state.add(this, Template.Operation.Kind.ORDER_BY_DESC, Objects.requireNonNull(expression, "expression"));
       return state.advance(this, new SelectOrderBy(state));
     }
   }
@@ -596,14 +596,14 @@ public final class Builder
     @Override
     public SQLSelectOrderByStep thenBy(SQLOrderItem item)
     {
-      state.add(this, "thenBy", Objects.requireNonNull(item, "item"));
+      state.add(this, Template.Operation.Kind.THEN_BY, Objects.requireNonNull(item, "item"));
       return this;
     }
 
     @Override
     public SQLSelectOrderByStep thenByDesc(SQLExpression expression)
     {
-      state.add(this, "thenByDesc", Objects.requireNonNull(expression, "expression"));
+      state.add(this, Template.Operation.Kind.THEN_BY_DESC, Objects.requireNonNull(expression, "expression"));
       return this;
     }
   }
@@ -629,7 +629,7 @@ public final class Builder
       this.nextFactory = nextFactory;
     }
 
-    private NEXT compare(String operator, Object... operands)
+    private NEXT compare(Template.Operation.Kind operator, Object... operands)
     {
       for (Object operand : operands)
       {
@@ -646,67 +646,67 @@ public final class Builder
     @Override
     public NEXT eq(SQLExpression right)
     {
-      return compare("=", right);
+      return compare(Template.Operation.Kind.EQ, right);
     }
 
     @Override
     public NEXT ne(SQLExpression right)
     {
-      return compare("<>", right);
+      return compare(Template.Operation.Kind.NE, right);
     }
 
     @Override
     public NEXT lt(SQLExpression right)
     {
-      return compare("<", right);
+      return compare(Template.Operation.Kind.LT, right);
     }
 
     @Override
     public NEXT le(SQLExpression right)
     {
-      return compare("<=", right);
+      return compare(Template.Operation.Kind.LE, right);
     }
 
     @Override
     public NEXT gt(SQLExpression right)
     {
-      return compare(">", right);
+      return compare(Template.Operation.Kind.GT, right);
     }
 
     @Override
     public NEXT ge(SQLExpression right)
     {
-      return compare(">=", right);
+      return compare(Template.Operation.Kind.GE, right);
     }
 
     @Override
     public NEXT like(SQLExpression right)
     {
-      return compare("LIKE", right);
+      return compare(Template.Operation.Kind.LIKE, right);
     }
 
     @Override
     public NEXT between(SQLExpression lower, SQLExpression upper)
     {
-      return compare("BETWEEN", lower, upper);
+      return compare(Template.Operation.Kind.BETWEEN, lower, upper);
     }
 
     @Override
     public NEXT in(SQLSubSelect query)
     {
-      return compare("IN", query);
+      return compare(Template.Operation.Kind.IN, query);
     }
 
     @Override
     public NEXT isNull()
     {
-      return compare("IS_NULL");
+      return compare(Template.Operation.Kind.IS_NULL);
     }
 
     @Override
     public NEXT isNotNull()
     {
-      return compare("IS_NOT_NULL");
+      return compare(Template.Operation.Kind.IS_NOT_NULL);
     }
   }
 
@@ -754,7 +754,7 @@ public final class Builder
     @Override
     public SQLUpdateSetStep to(SQLExpression value)
     {
-      state.add(this, "set", column, Objects.requireNonNull(value, "value"));
+      state.add(this, Template.Operation.Kind.SET, column, Objects.requireNonNull(value, "value"));
       return state.advance(this, new UpdateSet(state));
     }
   }
@@ -783,7 +783,7 @@ public final class Builder
     public SQLComparisonStep<SQLUpdateWhereStep> where(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "where");
+      state.add(this, Template.Operation.Kind.WHERE);
       Comparison<SQLUpdateWhereStep> comparison = new Comparison<>(state, left, () -> new UpdateWhere(state));
       return state.advance(this, comparison);
     }
@@ -791,7 +791,7 @@ public final class Builder
     @Override
     public SQLUpdateWhereStep where(SQLCondition condition)
     {
-      state.add(this, "where", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.WHERE, Objects.requireNonNull(condition, "condition"));
       return state.advance(this, new UpdateWhere(state));
     }
   }
@@ -813,7 +813,7 @@ public final class Builder
     public SQLComparisonStep<SQLUpdateWhereStep> and(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "and");
+      state.add(this, Template.Operation.Kind.AND);
       Comparison<SQLUpdateWhereStep> comparison = new Comparison<>(state, left, () -> new UpdateWhere(state));
       return state.advance(this, comparison);
     }
@@ -822,7 +822,7 @@ public final class Builder
     public SQLComparisonStep<SQLUpdateWhereStep> or(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "or");
+      state.add(this, Template.Operation.Kind.OR);
       Comparison<SQLUpdateWhereStep> comparison = new Comparison<>(state, left, () -> new UpdateWhere(state));
       return state.advance(this, comparison);
     }
@@ -830,14 +830,14 @@ public final class Builder
     @Override
     public SQLUpdateWhereStep and(SQLCondition condition)
     {
-      state.add(this, "and", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.AND, Objects.requireNonNull(condition, "condition"));
       return this;
     }
 
     @Override
     public SQLUpdateWhereStep or(SQLCondition condition)
     {
-      state.add(this, "or", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.OR, Objects.requireNonNull(condition, "condition"));
       return this;
     }
   }
@@ -860,14 +860,14 @@ public final class Builder
     @Override
     public SQLInsertColumnsStep columns(IDBField first, IDBField... others)
     {
-      addAll(state, this, "columns", first, others);
+      addAll(state, this, Template.Operation.Kind.COLUMNS, first, others);
       return state.advance(this, new InsertColumns(state));
     }
 
     @Override
     public SQLInsertValuesStep values(SQLExpression first, SQLExpression... others)
     {
-      addAll(state, this, "values", first, others);
+      addAll(state, this, Template.Operation.Kind.VALUES, first, others);
       return state.advance(this, new InsertValues(state));
     }
 
@@ -897,7 +897,7 @@ public final class Builder
     @Override
     public SQLInsertValuesStep values(SQLExpression first, SQLExpression... others)
     {
-      addAll(state, this, "values", first, others);
+      addAll(state, this, Template.Operation.Kind.VALUES, first, others);
       return state.advance(this, new InsertValues(state));
     }
   }
@@ -923,7 +923,7 @@ public final class Builder
     @Override
     public SQLInsertSetStep to(SQLExpression value)
     {
-      state.add(this, "set", column, Objects.requireNonNull(value, "value"));
+      state.add(this, Template.Operation.Kind.SET, column, Objects.requireNonNull(value, "value"));
       return state.advance(this, new InsertSet(state));
     }
   }
@@ -980,7 +980,7 @@ public final class Builder
     public SQLComparisonStep<SQLDeleteWhereStep> where(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "where");
+      state.add(this, Template.Operation.Kind.WHERE);
       Comparison<SQLDeleteWhereStep> comparison = new Comparison<>(state, left, () -> new DeleteWhere(state));
       return state.advance(this, comparison);
     }
@@ -988,7 +988,7 @@ public final class Builder
     @Override
     public SQLDeleteWhereStep where(SQLCondition condition)
     {
-      state.add(this, "where", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.WHERE, Objects.requireNonNull(condition, "condition"));
       return state.advance(this, new DeleteWhere(state));
     }
   }
@@ -1010,7 +1010,7 @@ public final class Builder
     public SQLComparisonStep<SQLDeleteWhereStep> and(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "and");
+      state.add(this, Template.Operation.Kind.AND);
       Comparison<SQLDeleteWhereStep> comparison = new Comparison<>(state, left, () -> new DeleteWhere(state));
       return state.advance(this, comparison);
     }
@@ -1019,7 +1019,7 @@ public final class Builder
     public SQLComparisonStep<SQLDeleteWhereStep> or(SQLExpression left)
     {
       Objects.requireNonNull(left, "left");
-      state.add(this, "or");
+      state.add(this, Template.Operation.Kind.OR);
       Comparison<SQLDeleteWhereStep> comparison = new Comparison<>(state, left, () -> new DeleteWhere(state));
       return state.advance(this, comparison);
     }
@@ -1027,14 +1027,14 @@ public final class Builder
     @Override
     public SQLDeleteWhereStep and(SQLCondition condition)
     {
-      state.add(this, "and", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.AND, Objects.requireNonNull(condition, "condition"));
       return this;
     }
 
     @Override
     public SQLDeleteWhereStep or(SQLCondition condition)
     {
-      state.add(this, "or", Objects.requireNonNull(condition, "condition"));
+      state.add(this, Template.Operation.Kind.OR, Objects.requireNonNull(condition, "condition"));
       return this;
     }
   }

@@ -53,4 +53,10 @@ public final class TableRef implements SQLTableRef
   {
     return new Expression.Column(Objects.requireNonNull(column, "column"), this);
   }
+
+  @Override
+  public String toString()
+  {
+    return alias == null ? table.getName() : table.getName() + " AS " + alias;
+  }
 }

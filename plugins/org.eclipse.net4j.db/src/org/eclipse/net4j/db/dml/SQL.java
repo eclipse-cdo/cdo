@@ -18,10 +18,10 @@ import org.eclipse.net4j.db.dml.fluent.SQLFragmentStep;
 import org.eclipse.net4j.db.dml.fluent.SQLInsertStartStep;
 import org.eclipse.net4j.db.dml.fluent.SQLSelectProjectionStep;
 import org.eclipse.net4j.db.dml.fluent.SQLUpdateStartStep;
-import org.eclipse.net4j.internal.db.dml.Definition;
 import org.eclipse.net4j.internal.db.dml.Expression;
 import org.eclipse.net4j.internal.db.dml.Parameter;
 import org.eclipse.net4j.internal.db.dml.TableRef;
+import org.eclipse.net4j.internal.db.dml.Template;
 import org.eclipse.net4j.internal.db.dml.fluent.Builder;
 import org.eclipse.net4j.internal.db.dml.fluent.FragmentBuilder;
 
@@ -289,7 +289,7 @@ public final class SQL
    */
   public static SQLExpression literal(Object value)
   {
-    return Expression.of("LITERAL", value);
+    return Expression.of(Expression.Kind.LITERAL, value);
   }
 
   /**
@@ -301,7 +301,7 @@ public final class SQL
    */
   public static SQLExpression scalar(SQLSubSelect query)
   {
-    return Expression.of("SCALAR", Objects.requireNonNull(query, "query"));
+    return Expression.of(Expression.Kind.SCALAR_SUBQUERY, Objects.requireNonNull(query, "query"));
   }
 
   /**
@@ -313,7 +313,7 @@ public final class SQL
    */
   public static SQLCondition exists(SQLSubSelect query)
   {
-    return Expression.condition("EXISTS", Objects.requireNonNull(query, "query"));
+    return Expression.condition(Expression.Kind.EXISTS, Objects.requireNonNull(query, "query"));
   }
 
   /**
@@ -325,7 +325,7 @@ public final class SQL
    */
   public static SQLCondition notExists(SQLSubSelect query)
   {
-    return Expression.condition("NOT_EXISTS", Objects.requireNonNull(query, "query"));
+    return Expression.condition(Expression.Kind.NOT_EXISTS, Objects.requireNonNull(query, "query"));
   }
 
   /**
@@ -336,7 +336,7 @@ public final class SQL
    */
   public static SQLExpression count()
   {
-    return Expression.of("COUNT_ALL");
+    return Expression.of(Expression.Kind.COUNT_ALL);
   }
 
   /**
@@ -348,7 +348,7 @@ public final class SQL
    */
   public static SQLExpression count(SQLExpression expression)
   {
-    return Expression.of("COUNT", Objects.requireNonNull(expression, "expression"));
+    return Expression.of(Expression.Kind.COUNT, Objects.requireNonNull(expression, "expression"));
   }
 
   /**
@@ -360,7 +360,7 @@ public final class SQL
    */
   public static SQLExpression countDistinct(SQLExpression expression)
   {
-    return Expression.of("COUNT_DISTINCT", Objects.requireNonNull(expression, "expression"));
+    return Expression.of(Expression.Kind.COUNT_DISTINCT, Objects.requireNonNull(expression, "expression"));
   }
 
   /**
@@ -372,7 +372,7 @@ public final class SQL
    */
   public static SQLExpression min(SQLExpression expression)
   {
-    return Expression.of("MIN", Objects.requireNonNull(expression, "expression"));
+    return Expression.of(Expression.Kind.MIN, Objects.requireNonNull(expression, "expression"));
   }
 
   /**
@@ -384,7 +384,7 @@ public final class SQL
    */
   public static SQLExpression max(SQLExpression expression)
   {
-    return Expression.of("MAX", Objects.requireNonNull(expression, "expression"));
+    return Expression.of(Expression.Kind.MAX, Objects.requireNonNull(expression, "expression"));
   }
 
   /**
@@ -396,7 +396,7 @@ public final class SQL
    */
   public static SQLExpression sum(SQLExpression expression)
   {
-    return Expression.of("SUM", Objects.requireNonNull(expression, "expression"));
+    return Expression.of(Expression.Kind.SUM, Objects.requireNonNull(expression, "expression"));
   }
 
   /**
@@ -408,7 +408,7 @@ public final class SQL
    */
   public static SQLExpression avg(SQLExpression expression)
   {
-    return Expression.of("AVG", Objects.requireNonNull(expression, "expression"));
+    return Expression.of(Expression.Kind.AVG, Objects.requireNonNull(expression, "expression"));
   }
 
   /**
@@ -421,7 +421,7 @@ public final class SQL
    */
   public static SQLExpression add(SQLExpression left, SQLExpression right)
   {
-    return Expression.of("+", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.of(Expression.Kind.ADD, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -434,7 +434,7 @@ public final class SQL
    */
   public static SQLExpression subtract(SQLExpression left, SQLExpression right)
   {
-    return Expression.of("-", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.of(Expression.Kind.SUBTRACT, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -447,7 +447,7 @@ public final class SQL
    */
   public static SQLExpression multiply(SQLExpression left, SQLExpression right)
   {
-    return Expression.of("*", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.of(Expression.Kind.MULTIPLY, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -460,7 +460,7 @@ public final class SQL
    */
   public static SQLExpression divide(SQLExpression left, SQLExpression right)
   {
-    return Expression.of("/", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.of(Expression.Kind.DIVIDE, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -473,7 +473,7 @@ public final class SQL
    */
   public static SQLCondition eq(SQLExpression left, SQLExpression right)
   {
-    return Expression.condition("=", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.EQUALS, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -486,7 +486,7 @@ public final class SQL
    */
   public static SQLCondition ne(SQLExpression left, SQLExpression right)
   {
-    return Expression.condition("<>", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.NOT_EQUALS, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -499,7 +499,7 @@ public final class SQL
    */
   public static SQLCondition lt(SQLExpression left, SQLExpression right)
   {
-    return Expression.condition("<", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.LESS_THAN, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -512,7 +512,7 @@ public final class SQL
    */
   public static SQLCondition le(SQLExpression left, SQLExpression right)
   {
-    return Expression.condition("<=", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.LESS_THAN_OR_EQUAL, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -525,7 +525,7 @@ public final class SQL
    */
   public static SQLCondition gt(SQLExpression left, SQLExpression right)
   {
-    return Expression.condition(">", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.GREATER_THAN, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -538,7 +538,7 @@ public final class SQL
    */
   public static SQLCondition ge(SQLExpression left, SQLExpression right)
   {
-    return Expression.condition(">=", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.GREATER_THAN_OR_EQUAL, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -551,7 +551,7 @@ public final class SQL
    */
   public static SQLCondition like(SQLExpression left, SQLExpression right)
   {
-    return Expression.condition("LIKE", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.LIKE, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -565,7 +565,7 @@ public final class SQL
    */
   public static SQLCondition between(SQLExpression expression, SQLExpression lower, SQLExpression upper)
   {
-    return Expression.condition("BETWEEN", Objects.requireNonNull(expression, "expression"), Objects.requireNonNull(lower, "lower"),
+    return Expression.condition(Expression.Kind.BETWEEN, Objects.requireNonNull(expression, "expression"), Objects.requireNonNull(lower, "lower"),
         Objects.requireNonNull(upper, "upper"));
   }
 
@@ -578,7 +578,7 @@ public final class SQL
    */
   public static SQLCondition isNull(SQLExpression expression)
   {
-    return Expression.condition("IS_NULL", Objects.requireNonNull(expression, "expression"));
+    return Expression.condition(Expression.Kind.IS_NULL, Objects.requireNonNull(expression, "expression"));
   }
 
   /**
@@ -590,7 +590,7 @@ public final class SQL
    */
   public static SQLCondition isNotNull(SQLExpression expression)
   {
-    return Expression.condition("IS_NOT_NULL", Objects.requireNonNull(expression, "expression"));
+    return Expression.condition(Expression.Kind.IS_NOT_NULL, Objects.requireNonNull(expression, "expression"));
   }
 
   /**
@@ -603,7 +603,7 @@ public final class SQL
    */
   public static SQLCondition and(SQLCondition left, SQLCondition right)
   {
-    return Expression.condition("AND", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.AND, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -616,7 +616,7 @@ public final class SQL
    */
   public static SQLCondition or(SQLCondition left, SQLCondition right)
   {
-    return Expression.condition("OR", Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
+    return Expression.condition(Expression.Kind.OR, Objects.requireNonNull(left, "left"), Objects.requireNonNull(right, "right"));
   }
 
   /**
@@ -628,7 +628,7 @@ public final class SQL
    */
   public static SQLCondition not(SQLCondition condition)
   {
-    return Expression.condition("NOT", Objects.requireNonNull(condition, "condition"));
+    return Expression.condition(Expression.Kind.NOT, Objects.requireNonNull(condition, "condition"));
   }
 
   /**
@@ -641,7 +641,7 @@ public final class SQL
    */
   public static SQLCondition in(SQLExpression expression, SQLSubSelect subSelect)
   {
-    return Expression.condition("IN_SUB", Objects.requireNonNull(expression, "expression"), Objects.requireNonNull(subSelect, "subSelect"));
+    return Expression.condition(Expression.Kind.IN_SUBQUERY, Objects.requireNonNull(expression, "expression"), Objects.requireNonNull(subSelect, "subSelect"));
   }
 
   /**
@@ -664,7 +664,7 @@ public final class SQL
    */
   public static SQLExpression expression(SQLFragment fragment)
   {
-    return Expression.of("FRAGMENT", Objects.requireNonNull(fragment, "fragment"));
+    return Expression.of(Expression.Kind.FRAGMENT, Objects.requireNonNull(fragment, "fragment"));
   }
 
   /**
@@ -676,7 +676,7 @@ public final class SQL
    */
   public static SQLCondition condition(SQLFragment fragment)
   {
-    return Expression.condition("FRAGMENT", Objects.requireNonNull(fragment, "fragment"));
+    return Expression.condition(Expression.Kind.FRAGMENT, Objects.requireNonNull(fragment, "fragment"));
   }
 
   /**
@@ -688,6 +688,6 @@ public final class SQL
    */
   public static SQLTemplate build(SQLFragment fragment)
   {
-    return new Definition("FRAGMENT", null, Objects.requireNonNull(fragment, "fragment"));
+    return new Template(Objects.requireNonNull(fragment, "fragment"));
   }
 }

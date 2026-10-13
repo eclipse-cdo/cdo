@@ -182,6 +182,12 @@ public final class CompiledStatement implements SQLStatement
     }
   }
 
+  @Override
+  public String toString()
+  {
+    return sql;
+  }
+
   private <JAVA> void bindOccurrence(PreparedStatement stmt, int index, ParameterOccurrence occurrence, JAVA value, SQLParameterBinder<? super JAVA> binder)
       throws SQLException
   {

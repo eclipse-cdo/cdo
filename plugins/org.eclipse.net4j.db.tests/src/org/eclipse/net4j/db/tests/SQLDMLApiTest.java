@@ -38,9 +38,9 @@ import org.eclipse.net4j.db.dml.fluent.SQLSelectWhereStep;
 import org.eclipse.net4j.db.dml.fluent.SQLUpdateAssignmentStep;
 import org.eclipse.net4j.db.dml.fluent.SQLUpdateSetStep;
 import org.eclipse.net4j.db.dml.fluent.SQLUpdateStartStep;
-import org.eclipse.net4j.internal.db.dml.Definition;
 import org.eclipse.net4j.internal.db.dml.Expression;
 import org.eclipse.net4j.internal.db.dml.Fragment;
+import org.eclipse.net4j.internal.db.dml.Template;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -67,26 +67,27 @@ public class SQLDMLApiTest extends TestCase
     SQLParameter distinct = SQL.param();
 
     assertNotSame(reused, distinct);
-    assertTrue(subSelect instanceof SQLTemplate);
+    assertTrue(subSelect instanceof Template.SelectSubquery);
+    assertFalse(Template.class.isInstance(subSelect));
     assertFalse(subSelect instanceof SQLExpression);
 
     Expression addition = (Expression)SQL.add(schema.id, SQL.literal(1));
-    assertEquals("+", addition.getOperation());
+    assertEquals(Expression.Kind.ADD, addition.getKind());
     assertSame(schema.id, addition.getOperands().get(0));
 
     SQLCondition combined = SQL.eq(addition, SQL.literal(2)) //
         .and(SQL.isNull(schema.name).not());
     Expression combinedNode = (Expression)combined;
-    assertEquals("AND", combinedNode.getOperation());
-    assertEquals("=", ((Expression)combinedNode.getOperands().get(0)).getOperation());
-    assertEquals("NOT", ((Expression)combinedNode.getOperands().get(1)).getOperation());
+    assertEquals(Expression.Kind.AND, combinedNode.getKind());
+    assertEquals(Expression.Kind.EQUALS, ((Expression)combinedNode.getOperands().get(0)).getKind());
+    assertEquals(Expression.Kind.NOT, ((Expression)combinedNode.getOperands().get(1)).getKind());
 
-    Definition where = definition(SQL.selectAll() //
+    Template where = definition(SQL.selectAll() //
         .from(schema.table) //
         .where(schema.id).eq(reused) //
         .or(schema.name).eq(reused) //
         .build());
-    List<Definition.Operation> operations = operations(where);
+    List<Template.Operation> operations = operations(where);
     assertEquals(Arrays.asList("projection", "from", "where", "=", "or", "="), names(operations));
     assertSame(reused, operations.get(3).getOperands()[1]);
     assertSame(reused, operations.get(5).getOperands()[1]);
@@ -97,18 +98,18 @@ public class SQLDMLApiTest extends TestCase
     Schema schema = createSchema("dmlSnapshotTest");
     SQLTemplate firstBuilder = SQL.select(schema.id).from(schema.table).build();
     SQLTemplate secondBuilder = SQL.select(schema.name).from(schema.table).build();
-    Definition firstDefinition = definition(firstBuilder);
-    Definition secondDefinition = definition(secondBuilder);
+    Template firstTemplate = definition(firstBuilder);
+    Template secondTemplate = definition(secondBuilder);
 
-    assertSame(schema.id, operations(firstDefinition).get(0).getOperands()[0]);
-    assertSame(schema.name, operations(secondDefinition).get(0).getOperands()[0]);
+    assertSame(schema.id, operations(firstTemplate).get(0).getOperands()[0]);
+    assertSame(schema.name, operations(secondTemplate).get(0).getOperands()[0]);
 
     SQLUpdateStartStep update = SQL.update(schema.table);
     SQLUpdateSetStep assignments = update.set(schema.id).to(SQL.literal(1));
-    Definition before = definition(assignments.build());
+    Template before = definition(assignments.build());
     SQLUpdateAssignmentStep pending = assignments.set(schema.name);
     SQLTemplate afterTemplate = pending.to(SQL.literal("changed")).build();
-    Definition after = definition(afterTemplate);
+    Template after = definition(afterTemplate);
 
     assertEquals(Arrays.asList("set"), names(operations(before)));
     assertEquals(Arrays.asList("set", "set"), names(operations(after)));
@@ -116,13 +117,88 @@ public class SQLDMLApiTest extends TestCase
 
     try
     {
-      before.getParts().clear();
+      before.getOperations().clear();
       fail("A built template must expose an immutable operation list");
     }
     catch (UnsupportedOperationException expected)
     {
       // Expected: template snapshots cannot be edited through their public collections.
     }
+  }
+
+  public void testTemplateKindInvariantsAndSelectSubquerySnapshot()
+  {
+    Schema schema = createSchema("dmlSubquerySnapshotTest");
+    SQLSelectFromStep select = SQL.select(schema.id).from(schema.table);
+    SQLSubSelect subSelect = select.subSelect();
+    Template subqueryTemplate = ((Template.SelectSubquery)subSelect).getTemplate();
+
+    assertEquals(Template.Kind.SELECT, subqueryTemplate.getKind());
+    assertEquals(2, subqueryTemplate.getOperations().size());
+    assertNull(subqueryTemplate.getTable());
+    assertNull(subqueryTemplate.getFragment());
+
+    Template laterSnapshot = definition(select.where(schema.id).eq(SQL.param()).build());
+    assertEquals(2, subqueryTemplate.getOperations().size());
+    assertEquals(4, laterSnapshot.getOperations().size());
+
+    Template insert = definition(SQL.insertInto(schema.table).values(SQL.param(), SQL.param()).build());
+    assertFalse(SQLSubSelect.class.isAssignableFrom(insert.getClass()));
+    assertIllegalState(() -> insert.asSubSelect(), "Only SELECT templates");
+    assertIllegalArgument(() -> new Template(Template.Kind.SELECT, schema.table), "must not have a table");
+    assertIllegalArgument(() -> new Template(Template.Kind.INSERT, null), "requires a table");
+    assertIllegalArgument(() -> new Template(Template.Kind.FRAGMENT, null), "FRAGMENT templates");
+  }
+
+  public void testDiagnosticToStringRepresentations()
+  {
+    Schema schema = createSchema("dmlToStringTest");
+    SQLTableRef alias = schema.table.as("o");
+    SQLParameter parameter = SQL.param(value -> value);
+    SQLParameter otherParameter = SQL.param();
+
+    Template select = definition(SQL.select(schema.id).from(alias).build());
+    Template insert = definition(SQL.insertInto(schema.table).values(SQL.param(), SQL.param()).build());
+    Template update = definition(SQL.update(schema.table).set(schema.name).to(SQL.param()).build());
+    Template delete = definition(SQL.deleteFrom(schema.table).build());
+    Template fragment = definition(SQL.build(SQL.fragment().sql("COALESCE(").param(parameter).sql(", 0)").build()));
+
+    assertEquals("SELECT [operations=2]", select.toString());
+    assertEquals("INSERT objects [operations=2]", insert.toString());
+    assertEquals("UPDATE objects [operations=1]", update.toString());
+    assertEquals("DELETE objects [operations=0]", delete.toString());
+    assertEquals("FRAGMENT [parts=3]", fragment.toString());
+    assertEquals("objects AS o", alias.toString());
+
+    String operation = select.getOperations().get(1).toString();
+    assertTrue(operation.startsWith("FROM["));
+    assertTrue(operation.contains("objects AS o"));
+    String operands = new Template.Operation(Template.Operation.Kind.VALUES, new int[] { 1, 2 }, Arrays.asList(parameter, "private-value")).toString();
+    assertTrue(operands.contains("Integer"));
+    assertTrue(operands.contains(parameter.toString()));
+    assertTrue(operands.contains("String"));
+    assertFalse(operands.contains("[I@"));
+    assertFalse(operands.contains("private-value"));
+
+    Expression nested = (Expression)SQL.and(SQL.eq(alias.column(schema.id), parameter), SQL.gt(schema.id, SQL.literal("sensitive-value")));
+    String diagnostic = nested.toString();
+    assertTrue(diagnostic.startsWith("AND["));
+    assertTrue(diagnostic.contains("EQUALS["));
+    assertTrue(diagnostic.contains("o.id"));
+    assertTrue(diagnostic.contains(parameter.toString()));
+    assertTrue(diagnostic.contains("LITERAL[String]"));
+    assertFalse(diagnostic.contains("sensitive-value"));
+    assertFalse(diagnostic.contains("value ->"));
+    assertFalse(parameter.toString().equals(otherParameter.toString()));
+
+    SQLExpression deep = SQL.literal(0);
+    for (int i = 0; i < 40; i++)
+    {
+      deep = SQL.add(deep, SQL.literal(i));
+    }
+
+    assertTrue(deep.toString().length() <= 512);
+    assertTrue(deep.toString().contains("..."));
   }
 
   public void testSelectDistinctAliasesWildcardsJoinAndSubselectOrder()
@@ -142,7 +218,7 @@ public class SQLDMLApiTest extends TestCase
         .distinct() //
         .from(objects) //
         .from(otherTable);
-    Definition definition = definition(select.leftJoin(other) //
+    Template definition = definition(select.leftJoin(other) //
         .on(objects.column(schema.id)).eq(other.column(otherID)) //
         .where(schema.id).in(nested) //
         .groupBy(schema.name) //
@@ -151,26 +227,26 @@ public class SQLDMLApiTest extends TestCase
         .thenBy(SQL.asc(label)) //
         .build());
 
-    List<Definition.Operation> operations = operations(definition);
+    List<Template.Operation> operations = operations(definition);
     assertEquals(Arrays.asList("projection", "projection", "distinct", "from", "from", "LEFT_JOIN", "on", "=", "where", "IN", "groupBy", "having", ">",
         "orderBy", "orderBy", "thenBy"), names(operations));
-    assertEquals("ALL", ((Expression)operations.get(0).getOperands()[0]).getOperation());
+    assertEquals(Expression.Kind.ALL, ((Expression)operations.get(0).getOperands()[0]).getKind());
     assertSame(objects, ((Expression)operations.get(0).getOperands()[0]).getOperands().get(0));
-    assertEquals("AS", ((Expression)operations.get(1).getOperands()[0]).getOperation());
+    assertEquals(Expression.Kind.ALIAS, ((Expression)operations.get(1).getOperands()[0]).getKind());
     assertSame(nested, operations.get(9).getOperands()[1]);
-    assertTrue(operations(definition((SQLTemplate)nested)).size() > 0);
+    assertTrue(((Template.SelectSubquery)nested).getTemplate().getOperations().size() > 0);
   }
 
   public void testAllInsertFormsUpdateAndDelete()
   {
     Schema schema = createSchema("dmlWriteTest");
 
-    Definition values = definition(SQL.insertInto(schema.table) //
+    Template values = definition(SQL.insertInto(schema.table) //
         .values(SQL.param(), SQL.param()) //
         .build());
     assertEquals(Arrays.asList("values", "values"), names(operations(values)));
 
-    Definition columnsAndValues = definition(SQL.insertInto(schema.table) //
+    Template columnsAndValues = definition(SQL.insertInto(schema.table) //
         .columns(schema.id, schema.name) //
         .values(SQL.param(), SQL.param()) //
         .build());
@@ -179,10 +255,10 @@ public class SQLDMLApiTest extends TestCase
     SQLInsertStartStep insert = SQL.insertInto(schema.table);
     SQLInsertSetStep assignments = insert.set(schema.id).to(SQL.param()) //
         .set(schema.name).to(SQL.param());
-    Definition setInsert = definition(assignments.build());
+    Template setInsert = definition(assignments.build());
     assertEquals(Arrays.asList("set", "set"), names(operations(setInsert)));
 
-    Definition update = definition(SQL.update(schema.table) //
+    Template update = definition(SQL.update(schema.table) //
         .set(schema.name).to(SQL.add(schema.name, SQL.literal("!"))) //
         .where(schema.id).eq(SQL.param()) //
         .build());
@@ -211,7 +287,10 @@ public class SQLDMLApiTest extends TestCase
     assertEquals(Arrays.asList("SELECT ", schema.id, " FROM ", schema.table, " WHERE ", schema.name, " = ", parameter), internal.getParts());
     assertSame(fragment, ((Expression)fragment.expression()).getOperands().get(0));
     assertSame(fragment, ((Expression)fragment.condition()).getOperands().get(0));
-    assertSame(fragment, definition(SQL.build(fragment)).getParts().get(0));
+    Template fragmentTemplate = definition(SQL.build(fragment));
+    assertEquals(Template.Kind.FRAGMENT, fragmentTemplate.getKind());
+    assertTrue(fragmentTemplate.getOperations().isEmpty());
+    assertSame(fragment, fragmentTemplate.getFragment());
 
     try
     {
@@ -264,11 +343,11 @@ public class SQLDMLApiTest extends TestCase
     SQLSelectWhereStep where = SQL.selectAll().from(schema.table).where(schema.id).eq(SQL.param());
     SQLSelectOrderByStep orderBy = where.orderBy(SQL.asc(schema.id));
     assertIllegalState(() -> where.and(SQL.isNull(schema.name)));
-    Definition firstOrder = definition(orderBy.build());
+    Template firstOrder = definition(orderBy.build());
     assertEquals(names(operations(firstOrder)), names(operations(definition(orderBy.build()))));
     orderBy.thenByDesc(schema.name).thenBy(SQL.asc(otherID));
     assertEquals(Arrays.asList("projection", "from", "where", "=", "orderBy"), names(operations(firstOrder)));
-    Definition repeatedOrder = definition(orderBy.build());
+    Template repeatedOrder = definition(orderBy.build());
     assertEquals(Arrays.asList("projection", "from", "where", "=", "orderBy", "thenByDesc", "thenBy"), names(operations(repeatedOrder)));
     assertEquals(names(operations(repeatedOrder)), names(operations(definition(orderBy.build()))));
 
@@ -385,32 +464,50 @@ public class SQLDMLApiTest extends TestCase
     }
   }
 
-  private static Definition definition(SQLTemplate template)
+  private static void assertIllegalArgument(Runnable operation, String message)
   {
-    assertTrue("The production builder must return its internal immutable definition", template instanceof Definition);
-    return (Definition)template;
-  }
-
-  private static List<Definition.Operation> operations(Definition definition)
-  {
-    List<Definition.Operation> result = new ArrayList<>();
-
-    for (Object part : definition.getParts())
+    try
     {
-      assertTrue("Every statement part must retain its ordered operation structure", part instanceof Definition.Operation);
-      result.add((Definition.Operation)part);
+      operation.run();
+      fail("The invalid internal template must be rejected");
     }
-
-    return result;
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains(message));
+    }
   }
 
-  private static List<String> names(List<Definition.Operation> operations)
+  private static void assertIllegalState(Runnable operation, String message)
+  {
+    try
+    {
+      operation.run();
+      fail("The invalid internal template state must be rejected");
+    }
+    catch (IllegalStateException expected)
+    {
+      assertTrue(expected.getMessage().contains(message));
+    }
+  }
+
+  private static Template definition(SQLTemplate template)
+  {
+    assertTrue("The production builder must return its internal immutable definition", template instanceof Template);
+    return (Template)template;
+  }
+
+  private static List<Template.Operation> operations(Template definition)
+  {
+    return definition.getOperations();
+  }
+
+  private static List<String> names(List<Template.Operation> operations)
   {
     List<String> result = new ArrayList<>();
 
-    for (Definition.Operation operation : operations)
+    for (Template.Operation operation : operations)
     {
-      result.add(operation.getName());
+      result.add(operation.getKind().getDescription());
     }
 
     return result;

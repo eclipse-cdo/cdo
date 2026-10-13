@@ -58,7 +58,7 @@ public final class Compiler
    * @param adapter the adapter used for identifier quoting
    * @return an immutable SQL statement with ordered parameter occurrence metadata
    */
-  public static SQLStatement compile(Definition definition, IDBAdapter adapter)
+  public static SQLStatement compile(Template definition, IDBAdapter adapter)
   {
     Objects.requireNonNull(definition, "definition");
     Renderer renderer = new Renderer(Objects.requireNonNull(adapter, "adapter"));
@@ -81,49 +81,44 @@ public final class Compiler
       this.adapter = adapter;
     }
 
-    public SQLStatement compile(Definition definition)
+    public SQLStatement compile(Template definition)
     {
       switch (definition.getKind())
       {
-      case "SELECT":
+      case SELECT:
         renderSelect(definition);
         break;
 
-      case "INSERT":
+      case INSERT:
         renderInsert(definition);
         break;
 
-      case "UPDATE":
+      case UPDATE:
         renderUpdate(definition);
         break;
 
-      case "DELETE":
+      case DELETE:
         renderDelete(definition);
         break;
 
-      case "FRAGMENT":
-        if (definition.getParts().size() != 1 || !(definition.getParts().get(0) instanceof SQLFragment))
-        {
-          throw invalid("FRAGMENT", "expected exactly one structured fragment");
-        }
-
-        renderFragment((SQLFragment)definition.getParts().get(0));
+      case FRAGMENT:
+        renderFragment(definition.getFragment());
         break;
 
       default:
-        throw invalid(definition.getKind(), "unknown definition kind");
+        throw invalid(definition.getKind().name(), "unknown definition kind");
       }
 
       return new CompiledStatement(sql.toString(), occurrences, adapter);
     }
 
-    private void renderSelect(Definition definition)
+    private void renderSelect(Template definition)
     {
-      List<Definition.Operation> operations = operations(definition);
+      List<Template.Operation> operations = operations(definition);
       List<Object> projection = new ArrayList<>();
       List<Object> from = new ArrayList<>();
       List<Join> joins = new ArrayList<>();
-      List<Definition.Operation> trailing = new ArrayList<>();
+      List<Template.Operation> trailing = new ArrayList<>();
 
       boolean distinct = false;
       boolean joinStarted = false;
@@ -138,10 +133,12 @@ public final class Compiler
 
       while (index < operations.size())
       {
-        Definition.Operation operation = operations.get(index);
+        Template.Operation operation = operations.get(index);
 
-        String name = operation.getName();
-        if ("projection".equals(name))
+        Template.Operation.Kind kind = operation.getKind();
+        String name = kind.getDescription();
+
+        if (kind == Template.Operation.Kind.PROJECTION)
         {
           if (phase != 0)
           {
@@ -151,7 +148,7 @@ public final class Compiler
           projection.add(one(operation, "projection"));
           index++;
         }
-        else if ("distinct".equals(name))
+        else if (kind == Template.Operation.Kind.DISTINCT)
         {
           if (phase != 0 || projection.isEmpty())
           {
@@ -162,7 +159,7 @@ public final class Compiler
           distinct = true;
           index++;
         }
-        else if ("from".equals(name))
+        else if (kind == Template.Operation.Kind.FROM)
         {
           if (phase > 1 || joinStarted)
           {
@@ -173,7 +170,7 @@ public final class Compiler
           from.add(one(operation, "FROM"));
           index++;
         }
-        else if (isJoin(name))
+        else if (isJoin(kind))
         {
           if (phase > 1 || from.isEmpty())
           {
@@ -185,18 +182,18 @@ public final class Compiler
           Object table = one(operation, name);
           index++;
 
-          if (index >= operations.size() || !"on".equals(operations.get(index).getName()))
+          if (index >= operations.size() || operations.get(index).getKind() != Template.Operation.Kind.ON)
           {
             throw invalid(name, "JOIN is missing its ON condition");
           }
 
           int conditionEnd = findConditionEnd(operations, index);
-          joins.add(new Join(name, table, new ArrayList<>(operations.subList(index, conditionEnd))));
+          joins.add(new Join(kind, table, new ArrayList<>(operations.subList(index, conditionEnd))));
           index = conditionEnd;
         }
         else
         {
-          int operationPhase = selectPhase(name);
+          int operationPhase = selectPhase(kind);
           if (operationPhase == 0)
           {
             trailing.add(operation);
@@ -209,36 +206,36 @@ public final class Compiler
             throw invalid(name, "clause appears out of SELECT order");
           }
 
-          if ("where".equals(name) && whereSeen)
+          if (kind == Template.Operation.Kind.WHERE && whereSeen)
           {
             throw invalid(name, "WHERE may appear only once");
           }
 
-          if ("groupBy".equals(name) && havingSeen)
+          if (kind == Template.Operation.Kind.GROUP_BY && havingSeen)
           {
             throw invalid(name, "GROUP BY must precede HAVING");
           }
 
-          if ("having".equals(name) && (!groupSeen || havingSeen))
+          if (kind == Template.Operation.Kind.HAVING && (!groupSeen || havingSeen))
           {
             throw invalid(name, "HAVING requires a preceding GROUP BY and may appear only once");
           }
 
-          if (name.startsWith("thenBy") && !orderSeen)
+          if (isThenBy(kind) && !orderSeen)
           {
             throw invalid(name, "thenBy requires a preceding ORDER BY");
           }
 
-          if (name.startsWith("orderBy") && thenSeen)
+          if (isOrderBy(kind) && thenSeen)
           {
             throw invalid(name, "ORDER BY cannot follow thenBy");
           }
 
-          whereSeen |= "where".equals(name);
-          groupSeen |= "groupBy".equals(name);
-          havingSeen |= "having".equals(name);
-          orderSeen |= name.startsWith("orderBy");
-          thenSeen |= name.startsWith("thenBy");
+          whereSeen |= kind == Template.Operation.Kind.WHERE;
+          groupSeen |= kind == Template.Operation.Kind.GROUP_BY;
+          havingSeen |= kind == Template.Operation.Kind.HAVING;
+          orderSeen |= isOrderBy(kind);
+          thenSeen |= isThenBy(kind);
           phase = operationPhase;
           trailing.add(operation);
 
@@ -293,14 +290,14 @@ public final class Compiler
 
           for (Join join : joins)
           {
-            sql.append("LEFT_JOIN".equals(join.operation) ? " LEFT JOIN " : " INNER JOIN ");
+            sql.append(join.operation == Template.Operation.Kind.LEFT_JOIN ? " LEFT JOIN " : " INNER JOIN ");
 
             renderTable(join.table);
             ConditionResult condition = parseCondition(join.condition, 0, true);
 
             if (condition.nextIndex != join.condition.size())
             {
-              throw invalid(join.operation, "unexpected operation after ON condition");
+              throw invalid(join.operation.getDescription(), "unexpected operation after ON condition");
             }
 
             sql.append(" ON ").append(condition.sql);
@@ -315,47 +312,48 @@ public final class Compiler
       renderTrailing(trailing);
     }
 
-    private void renderTrailing(List<Definition.Operation> operations)
+    private void renderTrailing(List<Template.Operation> operations)
     {
       int index = 0;
 
       while (index < operations.size())
       {
-        Definition.Operation operation = operations.get(index);
+        Template.Operation operation = operations.get(index);
 
-        String name = operation.getName();
-        if ("where".equals(name) || "having".equals(name))
+        Template.Operation.Kind kind = operation.getKind();
+        String name = kind.getDescription();
+        if (kind == Template.Operation.Kind.WHERE || kind == Template.Operation.Kind.HAVING)
         {
           ConditionResult condition = parseCondition(operations, index, false);
-          sql.append("where".equals(name) ? " WHERE " : " HAVING ").append(condition.sql);
+          sql.append(kind == Template.Operation.Kind.WHERE ? " WHERE " : " HAVING ").append(condition.sql);
           index = condition.nextIndex;
         }
-        else if ("groupBy".equals(name))
+        else if (kind == Template.Operation.Kind.GROUP_BY)
         {
           sql.append(hasGroupByBefore(operations, index) ? ", " : " GROUP BY ");
           renderCommaSeparated(operands(operation, "GROUP BY"), value -> renderExpression(value, 0, false));
           index++;
         }
-        else if ("orderBy".equals(name))
+        else if (kind == Template.Operation.Kind.ORDER_BY)
         {
           sql.append(index > 0 && hasOrderByBefore(operations, index) ? ", " : " ORDER BY ");
           renderOrderItem(one(operation, "ORDER BY"));
           index++;
         }
-        else if ("orderByDesc".equals(name))
+        else if (kind == Template.Operation.Kind.ORDER_BY_DESC)
         {
           sql.append(index > 0 && hasOrderByBefore(operations, index) ? ", " : " ORDER BY ");
           renderExpression(one(operation, "ORDER BY"), 0, false);
           sql.append(" DESC");
           index++;
         }
-        else if ("thenBy".equals(name))
+        else if (kind == Template.Operation.Kind.THEN_BY)
         {
           sql.append(", ");
           renderOrderItem(one(operation, "ORDER BY"));
           index++;
         }
-        else if ("thenByDesc".equals(name))
+        else if (kind == Template.Operation.Kind.THEN_BY_DESC)
         {
           sql.append(", ");
           renderExpression(one(operation, "ORDER BY"), 0, false);
@@ -369,12 +367,12 @@ public final class Compiler
       }
     }
 
-    private boolean hasOrderByBefore(List<Definition.Operation> operations, int index)
+    private boolean hasOrderByBefore(List<Template.Operation> operations, int index)
     {
       for (int i = 0; i < index; i++)
       {
-        String name = operations.get(i).getName();
-        if (name.startsWith("orderBy") || name.startsWith("thenBy"))
+        Template.Operation.Kind kind = operations.get(i).getKind();
+        if (isOrderBy(kind) || isThenBy(kind))
         {
           return true;
         }
@@ -383,11 +381,11 @@ public final class Compiler
       return false;
     }
 
-    private boolean hasGroupByBefore(List<Definition.Operation> operations, int index)
+    private boolean hasGroupByBefore(List<Template.Operation> operations, int index)
     {
       for (int i = 0; i < index; i++)
       {
-        if ("groupBy".equals(operations.get(i).getName()))
+        if (operations.get(i).getKind() == Template.Operation.Kind.GROUP_BY)
         {
           return true;
         }
@@ -396,10 +394,10 @@ public final class Compiler
       return false;
     }
 
-    private ConditionResult parseCondition(List<Definition.Operation> operations, int markerIndex, boolean joinCondition)
+    private ConditionResult parseCondition(List<Template.Operation> operations, int markerIndex, boolean joinCondition)
     {
-      Definition.Operation marker = operations.get(markerIndex);
-      String markerName = marker.getName();
+      Template.Operation marker = operations.get(markerIndex);
+      String markerName = marker.getKind().getDescription();
 
       List<String> terms = new ArrayList<>();
       List<String> connectors = new ArrayList<>();
@@ -414,20 +412,21 @@ public final class Compiler
 
       while (index < operations.size())
       {
-        Definition.Operation operation = operations.get(index);
+        Template.Operation operation = operations.get(index);
 
-        String name = operation.getName();
-        if (isClauseStart(name) || joinCondition && isJoin(name))
+        Template.Operation.Kind kind = operation.getKind();
+        String name = kind.getDescription();
+        if (isClauseStart(kind) || joinCondition && isJoin(kind))
         {
           break;
         }
 
-        if (!"and".equals(name) && !"or".equals(name))
+        if (kind != Template.Operation.Kind.AND && kind != Template.Operation.Kind.OR)
         {
           throw invalid(markerName, "unexpected operation " + name + " in condition");
         }
 
-        connectors.add(name.toUpperCase());
+        connectors.add(kind == Template.Operation.Kind.AND ? "AND" : "OR");
         terms.add(renderConditionTerm(operation, operations, index + 1, markerName));
         index += operation.getOperands().length == 0 ? 2 : 1;
       }
@@ -442,7 +441,7 @@ public final class Compiler
       return new ConditionResult(result.toString(), index);
     }
 
-    private String renderConditionTerm(Definition.Operation operation, List<Definition.Operation> operations, int followingIndex, String clause)
+    private String renderConditionTerm(Template.Operation operation, List<Template.Operation> operations, int followingIndex, String clause)
     {
       Object[] operands = operation.getOperands();
       if (operands.length == 1 && operands[0] instanceof SQLCondition)
@@ -457,10 +456,10 @@ public final class Compiler
           throw invalid(clause, "comparison is missing");
         }
 
-        Definition.Operation comparison = operations.get(followingIndex);
-        if (!isComparison(comparison.getName()))
+        Template.Operation comparison = operations.get(followingIndex);
+        if (!isComparison(comparison.getKind()))
         {
-          throw invalid(clause, "expected a comparison but found " + comparison.getName());
+          throw invalid(clause, "expected a comparison but found " + comparison.getKind().getDescription());
         }
 
         return renderRecordedComparison(comparison);
@@ -469,49 +468,81 @@ public final class Compiler
       throw invalid(clause, "condition marker has invalid operands");
     }
 
-    private String renderRecordedComparison(Definition.Operation operation)
+    private String renderRecordedComparison(Template.Operation operation)
     {
       Object[] operands = operation.getOperands();
-      String name = operation.getName();
-      int expected = "BETWEEN".equals(name) ? 3 : "IS_NULL".equals(name) || "IS_NOT_NULL".equals(name) ? 1 : 2;
+      Template.Operation.Kind kind = operation.getKind();
+      int expected = kind == Template.Operation.Kind.BETWEEN //
+          ? 3 //
+          : kind == Template.Operation.Kind.IS_NULL || kind == Template.Operation.Kind.IS_NOT_NULL ? 1 : 2;
       requireArity(operation, expected);
 
       StringBuilder result = new StringBuilder();
       IDBField leftType = fieldOf(operands[0]);
       IDBField rightType = expected > 1 ? fieldOf(operands[1]) : null;
-      renderExpression(operands[0], 0, false, result, leftType == null ? rightType : null);
-      appendConditionOperator(result, name, operands, 1);
+      renderExpression(operands[0], 4, false, result, leftType == null ? rightType : null);
+      appendConditionOperator(result, kind, operands, 1);
       return result.toString();
     }
 
-    private void appendConditionOperator(StringBuilder target, String name, Object[] operands, int firstRight)
+    private void appendConditionOperator(StringBuilder target, Template.Operation.Kind kind, Object[] operands, int firstRight)
     {
-      switch (name)
+      switch (kind)
       {
-      case "IS_NULL":
+      case IS_NULL:
         target.append(" IS NULL");
         break;
 
-      case "IS_NOT_NULL":
+      case IS_NOT_NULL:
         target.append(" IS NOT NULL");
         break;
 
-      case "BETWEEN":
+      case BETWEEN:
         target.append(" BETWEEN ");
-        renderExpression(operands[firstRight], 0, false, target, fieldOf(operands[0]));
+        renderExpression(operands[firstRight], 4, false, target, fieldOf(operands[0]));
         target.append(" AND ");
-        renderExpression(operands[firstRight + 1], 0, false, target, fieldOf(operands[0]));
+        renderExpression(operands[firstRight + 1], 4, false, target, fieldOf(operands[0]));
         break;
 
-      case "IN":
-      case "IN_SUB":
+      case IN:
         target.append(" IN ");
         renderSubqueryOperand(operands[firstRight], target);
         break;
 
       default:
-        target.append(' ').append(sqlOperator(name)).append(' ');
-        renderExpression(operands[firstRight], 0, false, target, fieldOf(operands[0]));
+        target.append(' ').append(kind.getSqlOperator()).append(' ');
+        renderExpression(operands[firstRight], 4, false, target, fieldOf(operands[0]));
+        break;
+      }
+    }
+
+    private void appendConditionOperator(StringBuilder target, Expression.Kind kind, Object[] operands, int firstRight)
+    {
+      switch (kind)
+      {
+      case IS_NULL:
+        target.append(" IS NULL");
+        break;
+
+      case IS_NOT_NULL:
+        target.append(" IS NOT NULL");
+        break;
+
+      case BETWEEN:
+        target.append(" BETWEEN ");
+        renderExpression(operands[firstRight], 4, false, target, fieldOf(operands[0]));
+        target.append(" AND ");
+        renderExpression(operands[firstRight + 1], 4, false, target, fieldOf(operands[0]));
+        break;
+
+      case IN_SUBQUERY:
+        target.append(" IN ");
+        renderSubqueryOperand(operands[firstRight], target);
+        break;
+
+      default:
+        target.append(' ').append(kind.getSqlOperator()).append(' ');
+        renderExpression(operands[firstRight], 4, false, target, fieldOf(operands[0]));
         break;
       }
     }
@@ -539,15 +570,15 @@ public final class Compiler
       }
 
       target.append('(');
-      renderSubquery((SQLSubSelect)operand, target);
+      renderSubquery((SQLSubSelect)operand, target, "IN subquery");
       target.append(')');
     }
 
-    private void renderInsert(Definition definition)
+    private void renderInsert(Template definition)
     {
-      IDBTable table = target(definition, "INSERT");
+      IDBTable table = definition.getTable();
 
-      List<Definition.Operation> operations = operations(definition);
+      List<Template.Operation> operations = operations(definition);
       List<IDBField> columns = new ArrayList<>();
       List<Object> values = new ArrayList<>();
 
@@ -555,11 +586,11 @@ public final class Compiler
       boolean assignments = false;
       boolean valuesStarted = false;
 
-      for (Definition.Operation operation : operations)
+      for (Template.Operation operation : operations)
       {
-        switch (operation.getName())
+        switch (operation.getKind())
         {
-        case "columns":
+        case COLUMNS:
           if (valuesStarted || assignments)
           {
             throw invalid("INSERT columns", "columns must be specified once before values");
@@ -573,7 +604,7 @@ public final class Compiler
 
           break;
 
-        case "values":
+        case VALUES:
           if (assignments)
           {
             throw invalid("INSERT values", "values cannot be mixed with assignments");
@@ -583,7 +614,7 @@ public final class Compiler
           values.addAll(operands(operation, "INSERT values"));
           break;
 
-        case "set":
+        case SET:
           if (valuesStarted || explicitColumns)
           {
             throw invalid("INSERT assignment", "assignment form cannot be mixed with columns or values");
@@ -597,7 +628,7 @@ public final class Compiler
           break;
 
         default:
-          throw invalid(operation.getName(), "operation is not valid in INSERT");
+          throw invalid(operation.getKind().getDescription(), "operation is not valid in INSERT");
         }
       }
 
@@ -649,32 +680,32 @@ public final class Compiler
       sql.append(')');
     }
 
-    private void renderUpdate(Definition definition)
+    private void renderUpdate(Template definition)
     {
-      IDBTable table = target(definition, "UPDATE");
+      IDBTable table = definition.getTable();
 
-      List<Definition.Operation> operations = operations(definition);
+      List<Template.Operation> operations = operations(definition);
       List<Assignment> assignments = new ArrayList<>();
 
       int whereIndex = -1;
 
       for (int i = 0; i < operations.size(); i++)
       {
-        Definition.Operation operation = operations.get(i);
-        if ("set".equals(operation.getName()))
+        Template.Operation operation = operations.get(i);
+        if (operation.getKind() == Template.Operation.Kind.SET)
         {
           Object[] values = operation.getOperands();
           requireArity(operation, 2);
           assignments.add(new Assignment(field(values[0], table, "UPDATE assignment target"), values[1]));
         }
-        else if ("where".equals(operation.getName()))
+        else if (operation.getKind() == Template.Operation.Kind.WHERE)
         {
           whereIndex = i;
           break;
         }
         else
         {
-          throw invalid(operation.getName(), "operation is not valid in UPDATE");
+          throw invalid(operation.getKind().getDescription(), "operation is not valid in UPDATE");
         }
       }
 
@@ -705,7 +736,7 @@ public final class Compiler
         Assignment assignment = assignments.get(i);
         renderColumnName(assignment.column);
         sql.append(" = ");
-        renderExpression(assignment.value, 0, false, sql, assignment.column);
+        renderExpression(assignment.value, 4, false, sql, assignment.column);
       }
 
       if (whereIndex >= 0)
@@ -720,17 +751,17 @@ public final class Compiler
       }
     }
 
-    private void renderDelete(Definition definition)
+    private void renderDelete(Template definition)
     {
-      IDBTable table = target(definition, "DELETE");
+      IDBTable table = definition.getTable();
 
-      List<Definition.Operation> operations = operations(definition);
+      List<Template.Operation> operations = operations(definition);
       sql.append("DELETE FROM ");
       renderTable(table);
 
       if (!operations.isEmpty())
       {
-        if (operations.size() == 0 || !"where".equals(operations.get(0).getName()))
+        if (operations.size() == 0 || operations.get(0).getKind() != Template.Operation.Kind.WHERE)
         {
           throw invalid("DELETE", "only a WHERE condition is supported");
         }
@@ -747,21 +778,165 @@ public final class Compiler
 
     private void renderSubquery(SQLSubSelect subSelect, StringBuilder target)
     {
-      if (!(subSelect instanceof Definition))
+      renderSubquery(subSelect, target, null);
+    }
+
+    private void renderSubquery(SQLSubSelect subSelect, StringBuilder target, String singleColumnContext)
+    {
+      if (!(subSelect instanceof Template.SelectSubquery))
       {
         throw invalid("subquery", "unsupported SQLSubSelect implementation " + subSelect.getClass().getName());
       }
 
-      Definition definition = (Definition)subSelect;
-      if (!"SELECT".equals(definition.getKind()))
+      Template definition = ((Template.SelectSubquery)subSelect).getTemplate();
+      if (singleColumnContext != null)
       {
-        throw invalid("subquery", "only SELECT definitions are valid subqueries");
+        validateSingleColumnProjection(definition, singleColumnContext);
       }
 
       Renderer nested = new Renderer(adapter);
       SQLStatement statement = nested.compile(definition);
       target.append(statement.getSQL());
       occurrences.addAll(nested.occurrences);
+    }
+
+    private void validateSingleColumnProjection(Template definition, String context)
+    {
+      int width = projectionWidth(definition);
+      if (width != 1)
+      {
+        String actualWidth = width < 0 ? "unknown" : String.valueOf(width);
+        throw invalid(context, "expected exactly one projected column but found " + actualWidth);
+      }
+    }
+
+    private int projectionWidth(Template definition)
+    {
+      List<Object> projections = new ArrayList<>();
+      List<Object> sources = new ArrayList<>();
+
+      for (Template.Operation operation : definition.getOperations())
+      {
+        switch (operation.getKind())
+        {
+        case PROJECTION:
+          Collections.addAll(projections, operation.getOperands());
+          break;
+
+        case FROM:
+        case JOIN:
+        case LEFT_JOIN:
+          Object[] operands = operation.getOperands();
+          if (operands.length != 1)
+          {
+            return -1;
+          }
+
+          sources.add(operands[0]);
+          break;
+
+        default:
+          break;
+        }
+      }
+
+      if (projections.isEmpty())
+      {
+        return -1;
+      }
+
+      int width = 0;
+
+      for (Object projection : projections)
+      {
+        int itemWidth = projectionItemWidth(projection, sources);
+        if (itemWidth < 0 || width > Integer.MAX_VALUE - itemWidth)
+        {
+          return -1;
+        }
+
+        width += itemWidth;
+      }
+
+      return width;
+    }
+
+    private int projectionItemWidth(Object item, List<Object> sources)
+    {
+      if (item instanceof Expression)
+      {
+        Expression expression = (Expression)item;
+        List<Object> operands = expression.getOperands();
+
+        if (expression.getKind() == Expression.Kind.ALIAS)
+        {
+          return operands.isEmpty() ? -1 : projectionItemWidth(operands.get(0), sources);
+        }
+
+        if (expression.getKind() == Expression.Kind.ALL)
+        {
+          if (operands.size() != 1)
+          {
+            return -1;
+          }
+
+          Object tableRef = operands.get(0);
+          if (tableRef != null)
+          {
+            return tableWidth(tableRef);
+          }
+
+          if (sources.isEmpty())
+          {
+            return -1;
+          }
+
+          int width = 0;
+
+          for (Object source : sources)
+          {
+            int sourceWidth = tableWidth(source);
+            if (sourceWidth < 0 || width > Integer.MAX_VALUE - sourceWidth)
+            {
+              return -1;
+            }
+
+            width += sourceWidth;
+          }
+
+          return width;
+        }
+
+        return 1;
+      }
+
+      return item instanceof SQLColumnRef || item instanceof IDBField ? 1 : -1;
+    }
+
+    private int tableWidth(Object tableReference)
+    {
+      IDBTable table;
+
+      if (tableReference instanceof SQLTableRef)
+      {
+        table = ((SQLTableRef)tableReference).getTable();
+      }
+      else if (tableReference instanceof IDBTable)
+      {
+        table = (IDBTable)tableReference;
+      }
+      else
+      {
+        return -1;
+      }
+
+      if (table == null)
+      {
+        return -1;
+      }
+
+      int fieldCount = table.getFieldCount();
+      return fieldCount < 0 ? -1 : fieldCount;
     }
 
     private void renderSelectItem(Object item)
@@ -850,7 +1025,8 @@ public final class Compiler
       }
 
       Expression expression = (Expression)value;
-      String operation = expression.getOperation();
+      Expression.Kind operation = expression.getKind();
+      String operationName = operation.getDescription();
       List<Object> operands = expression.getOperands();
       int precedence = precedence(operation);
 
@@ -862,7 +1038,7 @@ public final class Compiler
 
       switch (operation)
       {
-      case "COLUMN":
+      case COLUMN:
         if (operands.size() != 2 || !(operands.get(0) instanceof IDBField))
         {
           throw invalid("COLUMN", "expected a schema field and optional table reference");
@@ -872,7 +1048,7 @@ public final class Compiler
         renderColumn((IDBField)operands.get(0), tableRef, target);
         break;
 
-      case "ALL":
+      case ALL:
         if (operands.size() != 1)
         {
           throw invalid("ALL", "expected an optional table reference");
@@ -892,7 +1068,7 @@ public final class Compiler
         target.append('*');
         break;
 
-      case "AS":
+      case ALIAS:
         if (operands.size() != 2 || !(operands.get(1) instanceof String))
         {
           throw invalid("AS", "expected an expression and result-column alias");
@@ -902,7 +1078,7 @@ public final class Compiler
         target.append(" AS ").append(adapter.quoteIdentifier((String)operands.get(1)));
         break;
 
-      case "LITERAL":
+      case LITERAL:
         if (operands.size() != 1)
         {
           throw invalid("LITERAL", "expected one literal value");
@@ -911,99 +1087,98 @@ public final class Compiler
         renderLiteral(operands.get(0), target);
         break;
 
-      case "COUNT_ALL":
+      case COUNT_ALL:
         requireExpressionArity(operation, operands, 0);
         target.append("COUNT(*)");
         break;
 
-      case "COUNT":
-      case "COUNT_DISTINCT":
-      case "MIN":
-      case "MAX":
-      case "SUM":
-      case "AVG":
+      case COUNT:
+      case COUNT_DISTINCT:
+      case MIN:
+      case MAX:
+      case SUM:
+      case AVG:
         requireExpressionArity(operation, operands, 1);
-        target.append(operation.startsWith("COUNT_") ? "COUNT(DISTINCT " : operation + "(");
+        target.append(operation == Expression.Kind.COUNT_DISTINCT ? "COUNT(DISTINCT " : operationName + "(");
         renderExpression(operands.get(0), 0, false, target);
         target.append(')');
         break;
 
-      case "SCALAR":
+      case SCALAR_SUBQUERY:
         requireExpressionArity(operation, operands, 1);
         if (!(operands.get(0) instanceof SQLSubSelect))
         {
-          throw invalid(operation, "expected a SELECT subquery");
+          throw invalid(operationName, "expected a SELECT subquery");
         }
 
         target.append('(');
-        renderSubquery((SQLSubSelect)operands.get(0), target);
+        renderSubquery((SQLSubSelect)operands.get(0), target, "scalar subquery");
         target.append(')');
         break;
 
-      case "EXISTS":
-      case "NOT_EXISTS":
+      case EXISTS:
+      case NOT_EXISTS:
         requireExpressionArity(operation, operands, 1);
         if (!(operands.get(0) instanceof SQLSubSelect))
         {
-          throw invalid(operation, "expected a SELECT subquery");
+          throw invalid(operationName, "expected a SELECT subquery");
         }
 
-        target.append("NOT_EXISTS".equals(operation) ? "NOT EXISTS (" : "EXISTS (");
+        target.append(operation == Expression.Kind.NOT_EXISTS ? "NOT EXISTS (" : "EXISTS (");
         renderSubquery((SQLSubSelect)operands.get(0), target);
         target.append(')');
         break;
 
-      case "FRAGMENT":
+      case FRAGMENT:
         requireExpressionArity(operation, operands, 1);
         if (!(operands.get(0) instanceof SQLFragment))
         {
-          throw invalid(operation, "expected a structured SQL fragment");
+          throw invalid(operationName, "expected a structured SQL fragment");
         }
 
         renderFragment((SQLFragment)operands.get(0), target);
         break;
 
-      case "+":
-      case "-":
-      case "*":
-      case "/":
+      case ADD:
+      case SUBTRACT:
+      case MULTIPLY:
+      case DIVIDE:
         requireExpressionArity(operation, operands, 2);
         renderExpression(operands.get(0), precedence, false, target);
-        target.append(' ').append(operation).append(' ');
+        target.append(' ').append(operation.getSqlOperator()).append(' ');
         renderExpression(operands.get(1), precedence, true, target);
         break;
 
-      case "=":
-      case "<>":
-      case "<":
-      case "<=":
-      case ">":
-      case ">=":
-      case "LIKE":
-      case "BETWEEN":
-      case "IN":
-      case "IN_SUB":
-      case "IS_NULL":
-      case "IS_NOT_NULL":
+      case EQUALS:
+      case NOT_EQUALS:
+      case LESS_THAN:
+      case LESS_THAN_OR_EQUAL:
+      case GREATER_THAN:
+      case GREATER_THAN_OR_EQUAL:
+      case LIKE:
+      case BETWEEN:
+      case IN_SUBQUERY:
+      case IS_NULL:
+      case IS_NOT_NULL:
         renderConditionExpression(operation, operands, target);
         break;
 
-      case "AND":
-      case "OR":
+      case AND:
+      case OR:
         requireExpressionArity(operation, operands, 2);
         renderExpression(operands.get(0), precedence, false, target);
-        target.append("AND".equals(operation) ? " AND " : " OR ");
+        target.append(operation == Expression.Kind.AND ? " AND " : " OR ");
         renderExpression(operands.get(1), precedence, true, target);
         break;
 
-      case "NOT":
+      case NOT:
         requireExpressionArity(operation, operands, 1);
         target.append("NOT ");
         renderExpression(operands.get(0), precedence, true, target);
         break;
 
       default:
-        throw invalid(operation, "unknown expression operation");
+        throw invalid(operationName, "unknown expression operation");
       }
 
       if (parentheses)
@@ -1012,15 +1187,15 @@ public final class Compiler
       }
     }
 
-    private void renderConditionExpression(String operation, List<Object> operands, StringBuilder target)
+    private void renderConditionExpression(Expression.Kind operation, List<Object> operands, StringBuilder target)
     {
-      int arity = "BETWEEN".equals(operation) ? 3 : "IS_NULL".equals(operation) || "IS_NOT_NULL".equals(operation) ? 1 : 2;
+      int arity = operation == Expression.Kind.BETWEEN ? 3 : operation == Expression.Kind.IS_NULL || operation == Expression.Kind.IS_NOT_NULL ? 1 : 2;
       requireExpressionArity(operation, operands, arity);
 
       Object[] values = operands.toArray();
       IDBField leftType = fieldOf(values[0]);
       IDBField rightType = arity > 1 ? fieldOf(values[1]) : null;
-      renderExpression(values[0], 0, false, target, leftType == null ? rightType : null);
+      renderExpression(values[0], 4, false, target, leftType == null ? rightType : null);
       appendConditionOperator(target, operation, values, 1);
     }
 
@@ -1211,11 +1386,11 @@ public final class Compiler
       target.append(adapter.quoteIdentifier(((IDBField)value).getName()));
     }
 
-    private void requireExpressionArity(String operation, List<Object> operands, int expected)
+    private void requireExpressionArity(Expression.Kind operation, List<Object> operands, int expected)
     {
       if (operands.size() != expected)
       {
-        throw invalid(operation, "expected " + expected + " operands but found " + operands.size());
+        throw invalid(operation.getDescription(), "expected " + expected + " operands but found " + operands.size());
       }
     }
 
@@ -1232,24 +1407,24 @@ public final class Compiler
       }
     }
 
-    private static int selectPhase(String name)
+    private static int selectPhase(Template.Operation.Kind kind)
     {
-      if ("where".equals(name))
+      if (kind == Template.Operation.Kind.WHERE)
       {
         return 2;
       }
 
-      if ("groupBy".equals(name))
+      if (kind == Template.Operation.Kind.GROUP_BY)
       {
         return 3;
       }
 
-      if ("having".equals(name))
+      if (kind == Template.Operation.Kind.HAVING)
       {
         return 4;
       }
 
-      if (name.startsWith("orderBy") || name.startsWith("thenBy"))
+      if (isOrderBy(kind) || isThenBy(kind))
       {
         return 5;
       }
@@ -1257,7 +1432,7 @@ public final class Compiler
       return 0;
     }
 
-    private static int findConditionEnd(List<Definition.Operation> operations, int markerIndex)
+    private static int findConditionEnd(List<Template.Operation> operations, int markerIndex)
     {
       int index = markerIndex + 1;
 
@@ -1268,13 +1443,14 @@ public final class Compiler
 
       while (index < operations.size())
       {
-        String name = operations.get(index).getName();
-        if (isClauseStart(name) || isJoin(name))
+        Template.Operation.Kind kind = operations.get(index).getKind();
+        String name = kind.getDescription();
+        if (isClauseStart(kind) || isJoin(kind))
         {
           break;
         }
 
-        if ("and".equals(name) || "or".equals(name))
+        if (kind == Template.Operation.Kind.AND || kind == Template.Operation.Kind.OR)
         {
           index += operations.get(index).getOperands().length == 0 ? 2 : 1;
         }
@@ -1287,30 +1463,18 @@ public final class Compiler
       return index;
     }
 
-    private static List<Definition.Operation> operations(Definition definition)
+    private static List<Template.Operation> operations(Template definition)
     {
-      List<Definition.Operation> result = new ArrayList<>();
-
-      for (Object part : definition.getParts())
-      {
-        if (!(part instanceof Definition.Operation))
-        {
-          throw invalid(definition.getKind(), "expected ordered operation records");
-        }
-
-        result.add((Definition.Operation)part);
-      }
-
-      return result;
+      return definition.getOperations();
     }
 
-    private static Object one(Definition.Operation operation, String construct)
+    private static Object one(Template.Operation operation, String construct)
     {
       requireArity(operation, 1);
       return operation.getOperands()[0];
     }
 
-    private static List<Object> operands(Definition.Operation operation, String construct)
+    private static List<Object> operands(Template.Operation operation, String construct)
     {
       Object[] values = operation.getOperands();
       if (values.length == 0)
@@ -1323,22 +1487,12 @@ public final class Compiler
       return result;
     }
 
-    private static void requireArity(Definition.Operation operation, int expected)
+    private static void requireArity(Template.Operation operation, int expected)
     {
       if (operation.getOperands().length != expected)
       {
-        throw invalid(operation.getName(), "expected " + expected + " operands but found " + operation.getOperands().length);
+        throw invalid(operation.getKind().getDescription(), "expected " + expected + " operands but found " + operation.getOperands().length);
       }
-    }
-
-    private static IDBTable target(Definition definition, String kind)
-    {
-      if (!(definition.getTarget() instanceof IDBTable))
-      {
-        throw invalid(kind, "expected a schema table target");
-      }
-
-      return (IDBTable)definition.getTarget();
     }
 
     private static IDBField field(Object value, IDBTable table, String construct)
@@ -1370,71 +1524,114 @@ public final class Compiler
       }
     }
 
-    private static boolean isJoin(String name)
+    private static boolean isJoin(Template.Operation.Kind kind)
     {
-      return "JOIN".equals(name) || "LEFT_JOIN".equals(name);
+      return kind == Template.Operation.Kind.JOIN || kind == Template.Operation.Kind.LEFT_JOIN;
     }
 
-    private static boolean isClauseStart(String name)
+    private static boolean isClauseStart(Template.Operation.Kind kind)
     {
-      return "where".equals(name) || "groupBy".equals(name) || "having".equals(name) || "orderBy".equals(name) || "orderByDesc".equals(name)
-          || "thenBy".equals(name) || "thenByDesc".equals(name);
+      return kind == Template.Operation.Kind.WHERE || kind == Template.Operation.Kind.GROUP_BY //
+          || kind == Template.Operation.Kind.HAVING || isOrderBy(kind) || isThenBy(kind);
     }
 
-    private static boolean isComparison(String name)
+    private static boolean isOrderBy(Template.Operation.Kind kind)
     {
-      return "=".equals(name) || "<>".equals(name) || "<".equals(name) || "<=".equals(name) || ">".equals(name) || ">=".equals(name) || "LIKE".equals(name)
-          || "BETWEEN".equals(name) || "IN".equals(name) || "IS_NULL".equals(name) || "IS_NOT_NULL".equals(name);
+      return kind == Template.Operation.Kind.ORDER_BY || kind == Template.Operation.Kind.ORDER_BY_DESC;
     }
 
-    private static boolean isArithmetic(String operation)
+    private static boolean isThenBy(Template.Operation.Kind kind)
     {
-      return "+".equals(operation) || "-".equals(operation) || "*".equals(operation) || "/".equals(operation);
+      return kind == Template.Operation.Kind.THEN_BY || kind == Template.Operation.Kind.THEN_BY_DESC;
     }
 
-    private static int precedence(String operation)
+    private static boolean isComparison(Template.Operation.Kind kind)
     {
-      if ("OR".equals(operation))
+      switch (kind)
+      {
+      case EQ:
+      case NE:
+      case LT:
+      case LE:
+      case GT:
+      case GE:
+      case LIKE:
+      case BETWEEN:
+      case IN:
+      case IS_NULL:
+      case IS_NOT_NULL:
+        return true;
+
+      default:
+        return false;
+      }
+    }
+
+    private static boolean isComparison(Expression.Kind kind)
+    {
+      switch (kind)
+      {
+      case EQUALS:
+      case NOT_EQUALS:
+      case LESS_THAN:
+      case LESS_THAN_OR_EQUAL:
+      case GREATER_THAN:
+      case GREATER_THAN_OR_EQUAL:
+      case LIKE:
+      case BETWEEN:
+      case IN_SUBQUERY:
+      case IS_NULL:
+      case IS_NOT_NULL:
+        return true;
+
+      default:
+        return false;
+      }
+    }
+
+    private static boolean isArithmetic(Expression.Kind kind)
+    {
+      return kind == Expression.Kind.ADD || kind == Expression.Kind.SUBTRACT || kind == Expression.Kind.MULTIPLY || kind == Expression.Kind.DIVIDE;
+    }
+
+    private static int precedence(Expression.Kind kind)
+    {
+      if (kind == Expression.Kind.FRAGMENT)
+      {
+        return 0;
+      }
+
+      if (kind == Expression.Kind.OR)
       {
         return 1;
       }
 
-      if ("AND".equals(operation))
+      if (kind == Expression.Kind.AND)
       {
         return 2;
       }
 
-      if ("NOT".equals(operation))
+      if (kind == Expression.Kind.NOT)
       {
         return 3;
       }
 
-      if (isComparison(operation) || "IN_SUB".equals(operation) || "EXISTS".equals(operation) || "NOT_EXISTS".equals(operation))
+      if (isComparison(kind) || kind == Expression.Kind.EXISTS || kind == Expression.Kind.NOT_EXISTS)
       {
         return 4;
       }
 
-      if ("+".equals(operation) || "-".equals(operation))
+      if (kind == Expression.Kind.ADD || kind == Expression.Kind.SUBTRACT)
       {
         return 5;
       }
 
-      if ("*".equals(operation) || "/".equals(operation))
+      if (kind == Expression.Kind.MULTIPLY || kind == Expression.Kind.DIVIDE)
       {
         return 6;
       }
 
       return 10;
-    }
-
-    private static String sqlOperator(String operation)
-    {
-      if ("IN_SUB".equals(operation))
-      {
-        return "IN";
-      }
-
-      return operation;
     }
 
     private static String typeName(Object value)
@@ -1453,13 +1650,13 @@ public final class Compiler
    */
   private static final class Join
   {
-    private final String operation;
+    private final Template.Operation.Kind operation;
 
     private final Object table;
 
-    private final List<Definition.Operation> condition;
+    private final List<Template.Operation> condition;
 
-    public Join(String operation, Object table, List<Definition.Operation> condition)
+    public Join(Template.Operation.Kind operation, Object table, List<Template.Operation> condition)
     {
       this.operation = operation;
       this.table = table;

@@ -29,7 +29,7 @@ public final class Parameter extends Expression implements SQLParameter
 
   public Parameter(Integer sqlType, Function<?, ?> converter)
   {
-    super("PARAMETER");
+    super(Kind.PARAMETER);
     this.sqlType = sqlType;
     this.converter = converter;
   }
@@ -42,5 +42,11 @@ public final class Parameter extends Expression implements SQLParameter
   public Function<?, ?> getConverter()
   {
     return converter;
+  }
+
+  @Override
+  public String toString()
+  {
+    return "Parameter@" + Integer.toHexString(System.identityHashCode(this));
   }
 }

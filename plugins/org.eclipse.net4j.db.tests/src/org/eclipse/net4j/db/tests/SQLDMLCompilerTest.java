@@ -19,6 +19,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLExpression;
 import org.eclipse.net4j.db.dml.SQLFragment;
 import org.eclipse.net4j.db.dml.SQLParameter;
 import org.eclipse.net4j.db.dml.SQLStatement;
@@ -29,8 +30,8 @@ import org.eclipse.net4j.db.dml.fluent.SQLSelectFromStep;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.db.mysql.MYSQLAdapter;
 import org.eclipse.net4j.internal.db.dml.CompiledStatement;
-import org.eclipse.net4j.internal.db.dml.Definition;
 import org.eclipse.net4j.internal.db.dml.Fragment;
+import org.eclipse.net4j.internal.db.dml.Template;
 import org.eclipse.net4j.spi.db.DelegatingDBAdapter;
 
 import java.math.BigDecimal;
@@ -188,8 +189,62 @@ public class SQLDMLCompilerTest extends TestCase
     SQLFragment condition = SQL.fragment().column(schema.id).sql(" = ").param(conditionParameter).build();
 
     SQLStatement statement = SQL.select(projection.expression()).from(schema.table).where(condition.condition()).build().compile(ansiAdapter);
-    assertEquals("SELECT COALESCE(?, 0) FROM \"parts\" WHERE \"id\" = ?", statement.getSQL());
+    assertEquals("SELECT COALESCE(?, 0) FROM \"parts\" WHERE (\"id\" = ?)", statement.getSQL());
     assertEquals(Arrays.asList(projectionParameter, conditionParameter), occurrences(statement));
+  }
+
+  public void testFragmentExpressionPrecedence()
+  {
+    Schema schema = schema("fragment_precedence", "items", false);
+    SQLCondition fragmentOr = SQL.fragment().sql("a = 1 OR b = 2").build().condition();
+    SQLCondition fragmentAnd = SQL.fragment().sql("a = 1 AND b = 2").build().condition();
+
+    assertEquals("SELECT * FROM \"items\" WHERE (a = 1 OR b = 2) AND \"id\" = 3",
+        SQL.selectAll().from(schema.table).where(fragmentOr).and(SQL.eq(schema.id, SQL.literal(3))).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT * FROM \"items\" WHERE (a = 1 AND b = 2) OR \"id\" = 3",
+        SQL.selectAll().from(schema.table).where(fragmentAnd).or(SQL.eq(schema.id, SQL.literal(3))).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT * FROM \"items\" WHERE NOT (a = 1 OR b = 2)",
+        SQL.selectAll().from(schema.table).where(SQL.not(fragmentOr)).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT * FROM \"items\" WHERE (a = 1 OR b = 2)", SQL.selectAll().from(schema.table).where(fragmentOr).build().compile(ansiAdapter).getSQL());
+
+    SQLExpression expression = SQL.fragment().sql("left + right").build().expression();
+    assertEquals("SELECT (left + right) + 1 FROM \"items\"",
+        SQL.select(SQL.add(expression, SQL.literal(1))).from(schema.table).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT (left = 1 OR right = 2) = \"id\" FROM \"items\"", SQL
+        .select(SQL.eq(SQL.fragment().sql("left = 1 OR right = 2").build().expression(), schema.id)).from(schema.table).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT \"id\" = (left = 1 OR right = 2) FROM \"items\"", SQL
+        .select(SQL.eq(schema.id, SQL.fragment().sql("left = 1 OR right = 2").build().expression())).from(schema.table).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT left = 1 OR right = 2 FROM \"items\"",
+        SQL.select(SQL.fragment().sql("left = 1 OR right = 2").build().expression()).from(schema.table).build().compile(ansiAdapter).getSQL());
+  }
+
+  public void testFragmentPrecedenceAcrossClausesAndParameterOrder()
+  {
+    Schema schema = schema("fragment_clauses", "items", false);
+    IDBTable joined = schema.schema.addTable("joined_items");
+    SQLCondition onCondition = SQL.fragment().sql("left_value = 1 OR right_value = 2").build().condition();
+
+    assertEquals("SELECT * FROM \"items\" INNER JOIN \"joined_items\" ON (left_value = 1 OR right_value = 2)",
+        SQL.selectAll().from(schema.table).join(joined).on(onCondition).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT COUNT(*) FROM \"items\" GROUP BY \"id\" HAVING (left_value = 1 OR right_value = 2)",
+        SQL.select(SQL.count()).from(schema.table).groupBy(schema.id).having(onCondition).build().compile(ansiAdapter).getSQL());
+    assertEquals("UPDATE \"items\" SET \"id\" = (left_value = 1 OR right_value = 2)", SQL.update(schema.table).set(schema.id)
+        .to(SQL.fragment().sql("left_value = 1 OR right_value = 2").build().expression()).build().compile(ansiAdapter).getSQL());
+
+    SQLFragment nested = SQL.fragment().sql("a OR b").build();
+    assertEquals("prefix a OR b suffix", SQL.build(SQL.fragment().sql("prefix ").fragment(nested).sql(" suffix").build()).compile(ansiAdapter).getSQL());
+
+    SQLParameter first = SQL.param();
+    SQLParameter second = SQL.param();
+    SQLParameter third = SQL.param();
+    SQLFragment parameterizedCondition = SQL.fragment().sql("left_value = ").param(first).sql(" OR right_value = ").param(second).build();
+    SQLStatement statement = SQL.selectAll().from(schema.table).where(parameterizedCondition.condition()).and(SQL.eq(schema.id, third)).build()
+        .compile(ansiAdapter);
+    assertEquals("SELECT * FROM \"items\" WHERE (left_value = ? OR right_value = ?) AND \"id\" = ?", statement.getSQL());
+    assertEquals(3, statement.getParameterCount());
+    assertSame(first, occurrences(statement).get(0));
+    assertSame(second, occurrences(statement).get(1));
+    assertSame(third, occurrences(statement).get(2));
   }
 
   public void testSubqueriesFragmentsAndRenderedParameterOrder()
@@ -215,6 +270,106 @@ public class SQLDMLCompilerTest extends TestCase
         "SELECT * FROM \"records\" WHERE (EXISTS (SELECT \"id\" FROM \"records\" WHERE \"name\" = ?) OR NOT EXISTS (SELECT \"id\" FROM \"records\" WHERE \"name\" = ?))",
         existsStatement.getSQL());
     assertEquals(Arrays.asList(conditionParameter, conditionParameter), occurrences(existsStatement));
+  }
+
+  public void testScalarAndInSubqueriesRequireOneProjection()
+  {
+    Schema schema = schema("subquery_width", "records", false);
+    SQLSubSelect oneColumn = SQL.select(schema.id).from(schema.table).subSelect();
+    SQLSubSelect twoColumns = SQL.select(schema.id, schema.name).from(schema.table).subSelect();
+
+    assertEquals("SELECT (SELECT \"id\" FROM \"records\") FROM \"records\"",
+        SQL.select(SQL.scalar(oneColumn)).from(schema.table).build().compile(ansiAdapter).getSQL());
+    assertIllegalArgument(() -> SQL.select(SQL.scalar(twoColumns)).from(schema.table).build().compile(ansiAdapter),
+        "scalar subquery: expected exactly one projected column but found 2");
+
+    assertEquals("SELECT * FROM \"records\" WHERE \"id\" IN (SELECT \"id\" FROM \"records\")",
+        SQL.selectAll().from(schema.table).where(SQL.in(schema.id, oneColumn)).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT * FROM \"records\" WHERE \"id\" IN (SELECT \"id\" FROM \"records\")",
+        SQL.selectAll().from(schema.table).where(schema.id).in(oneColumn).build().compile(ansiAdapter).getSQL());
+    assertIllegalArgument(() -> SQL.selectAll().from(schema.table).where(SQL.in(schema.id, twoColumns)).build().compile(ansiAdapter),
+        "IN subquery: expected exactly one projected column but found 2");
+    assertIllegalArgument(() -> SQL.selectAll().from(schema.table).where(schema.id).in(twoColumns).build().compile(ansiAdapter),
+        "IN subquery: expected exactly one projected column but found 2");
+
+    assertEquals("SELECT * FROM \"records\" WHERE EXISTS (SELECT \"id\", \"name\" FROM \"records\")",
+        SQL.selectAll().from(schema.table).where(SQL.exists(twoColumns)).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT * FROM \"records\" WHERE NOT EXISTS (SELECT \"id\", \"name\" FROM \"records\")",
+        SQL.selectAll().from(schema.table).where(SQL.notExists(twoColumns)).build().compile(ansiAdapter).getSQL());
+  }
+
+  public void testSubqueryProjectionWidthsWithWildcardsAndExpressions()
+  {
+    Schema schema = schema("wildcard_width", "records", false);
+    IDBTable oneColumnTable = schema.schema.addTable("one_column");
+    IDBField oneColumn = oneColumnTable.addField("value", DBType.INTEGER);
+    IDBTable threeColumnTable = schema.schema.addTable("three_column");
+    IDBField first = threeColumnTable.addField("first", DBType.INTEGER);
+    threeColumnTable.addField("second", DBType.VARCHAR);
+    threeColumnTable.addField("third", DBType.BOOLEAN);
+
+    SQLTableRef oneAlias = oneColumnTable.as("one");
+    SQLTableRef threeAlias = threeColumnTable.as("three");
+    SQLSubSelect qualifiedSingle = SQL.select(SQL.all(oneAlias)).from(oneAlias).subSelect();
+    SQLSubSelect unqualifiedSingle = SQL.selectAll().from(oneColumnTable).subSelect();
+    assertEquals("SELECT (SELECT \"one\".* FROM \"one_column\" AS \"one\") FROM \"records\"",
+        SQL.select(SQL.scalar(qualifiedSingle)).from(schema.table).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT (SELECT * FROM \"one_column\") FROM \"records\"",
+        SQL.select(SQL.scalar(unqualifiedSingle)).from(schema.table).build().compile(ansiAdapter).getSQL());
+
+    SQLSubSelect qualifiedMultiple = SQL.select(SQL.all(threeAlias)).from(threeAlias).subSelect();
+    SQLSubSelect unqualifiedMultiple = SQL.selectAll().from(threeColumnTable).subSelect();
+    assertIllegalArgument(() -> SQL.select(SQL.scalar(qualifiedMultiple)).from(schema.table).build().compile(ansiAdapter),
+        "scalar subquery: expected exactly one projected column but found 3");
+    assertIllegalArgument(() -> SQL.selectAll().from(schema.table).where(SQL.in(schema.id, qualifiedMultiple)).build().compile(ansiAdapter),
+        "IN subquery: expected exactly one projected column but found 3");
+    assertIllegalArgument(() -> SQL.select(SQL.scalar(unqualifiedMultiple)).from(schema.table).build().compile(ansiAdapter),
+        "scalar subquery: expected exactly one projected column but found 3");
+    assertIllegalArgument(() -> SQL.selectAll().from(schema.table).where(schema.id).in(unqualifiedMultiple).build().compile(ansiAdapter),
+        "IN subquery: expected exactly one projected column but found 3");
+
+    SQLSubSelect mixed = SQL.select(oneColumn, SQL.all(oneColumnTable.as("mixed"))).from(oneColumnTable).subSelect();
+    assertIllegalArgument(() -> SQL.select(SQL.scalar(mixed)).from(schema.table).build().compile(ansiAdapter),
+        "scalar subquery: expected exactly one projected column but found 2");
+
+    SQLSubSelect expression = SQL.select(SQL.add(oneColumn, SQL.literal(1))).from(oneColumnTable).subSelect();
+    SQLSubSelect fragment = SQL.select(SQL.fragment().sql("COALESCE(value, 0)").build().expression()).from(oneColumnTable).subSelect();
+    assertEquals("SELECT (SELECT \"value\" + 1 FROM \"one_column\") FROM \"records\"",
+        SQL.select(SQL.scalar(expression)).from(schema.table).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT (SELECT COALESCE(value, 0) FROM \"one_column\") FROM \"records\"",
+        SQL.select(SQL.scalar(fragment)).from(schema.table).build().compile(ansiAdapter).getSQL());
+
+    SQLSubSelect joined = SQL.selectAll().from(oneAlias).join(threeAlias).on(oneAlias.column(oneColumn)).eq(threeAlias.column(first)).subSelect();
+    assertIllegalArgument(() -> SQL.select(SQL.scalar(joined)).from(schema.table).build().compile(ansiAdapter),
+        "scalar subquery: expected exactly one projected column but found 4");
+    SQLSubSelect multipleSources = SQL.selectAll().from(oneAlias, oneColumnTable.as("one_again")).join(threeAlias).on(oneAlias.column(oneColumn))
+        .eq(threeAlias.column(first)).subSelect();
+    assertIllegalArgument(() -> SQL.select(SQL.scalar(multipleSources)).from(schema.table).build().compile(ansiAdapter),
+        "scalar subquery: expected exactly one projected column but found 5");
+    SQLSubSelect repeatedTable = SQL.selectAll().from(threeAlias).join(threeColumnTable.as("three_again")).on(threeAlias.column(first))
+        .eq(threeColumnTable.as("three_again").column(first)).subSelect();
+    assertIllegalArgument(() -> SQL.selectAll().from(schema.table).where(SQL.in(schema.id, repeatedTable)).build().compile(ansiAdapter),
+        "IN subquery: expected exactly one projected column but found 6");
+  }
+
+  public void testSubqueryWidthValidationPreservesParameterOccurrences()
+  {
+    Schema schema = schema("subquery_parameters", "records", false);
+    SQLParameter scalarParameter = SQL.param();
+    SQLParameter outerParameter = SQL.param();
+    SQLSubSelect scalarSubquery = SQL.select(schema.id).from(schema.table).where(schema.name).eq(scalarParameter).subSelect();
+    SQLStatement scalar = SQL.select(SQL.scalar(scalarSubquery)).from(schema.table).where(schema.id).eq(outerParameter).build().compile(ansiAdapter);
+    assertEquals("SELECT (SELECT \"id\" FROM \"records\" WHERE \"name\" = ?) FROM \"records\" WHERE \"id\" = ?", scalar.getSQL());
+    assertEquals(2, scalar.getParameterCount());
+    assertSame(scalarParameter, occurrences(scalar).get(0));
+    assertSame(outerParameter, occurrences(scalar).get(1));
+
+    SQLParameter inParameter = SQL.param();
+    SQLSubSelect inSubquery = SQL.select(inParameter).from(schema.table).subSelect();
+    SQLStatement in = SQL.selectAll().from(schema.table).where(schema.id).in(inSubquery).build().compile(ansiAdapter);
+    assertEquals("SELECT * FROM \"records\" WHERE \"id\" IN (SELECT ? FROM \"records\")", in.getSQL());
+    assertEquals(1, in.getParameterCount());
+    assertSame(inParameter, occurrences(in).get(0));
   }
 
   public void testLiteralsNullAndRepeatedLogicalParameterOccurrences()
@@ -265,10 +420,12 @@ public class SQLDMLCompilerTest extends TestCase
     SQLStatement firstCompilation = withParameter.compile(ansiAdapter);
     SQLStatement secondCompilation = withParameter.compile(ansiAdapter);
     assertEquals("SELECT ? FROM \"rows\"", firstCompilation.getSQL());
+    assertEquals(firstCompilation.getSQL(), firstCompilation.toString());
     assertEquals(1, firstCompilation.getParameterCount());
     assertEquals(1, secondCompilation.getParameterCount());
     assertSame(parameter, occurrences(firstCompilation).get(0));
     assertSame(parameter, occurrences(secondCompilation).get(0));
+    assertEquals(1, occurrences(firstCompilation).size());
     try
     {
       occurrences(withParameter.compile(ansiAdapter)).clear();
@@ -280,23 +437,22 @@ public class SQLDMLCompilerTest extends TestCase
     }
   }
 
-  public void testInvalidLiteralsAndInsertDefinitionsAreRejected()
+  public void testInvalidLiteralsAndInsertTemplatesAreRejected()
   {
     Schema schema = schema("invalid", "target", false);
     SQLTemplate unsupported = SQL.select(SQL.literal(new Object())).from(schema.table).build();
     assertIllegalArgument(() -> unsupported.compile(ansiAdapter), "unsupported literal type");
 
-    Definition mismatch = new Definition("INSERT", schema.table, new Definition.Operation("columns", schema.id),
-        new Definition.Operation("values", SQL.param(), SQL.param()));
+    Template mismatch = new Template(Template.Kind.INSERT, schema.table, new Template.Operation(Template.Operation.Kind.COLUMNS, schema.id),
+        new Template.Operation(Template.Operation.Kind.VALUES, SQL.param(), SQL.param()));
     assertIllegalArgument(() -> mismatch.compile(ansiAdapter), "does not match column count");
 
-    Definition duplicate = new Definition("INSERT", schema.table, new Definition.Operation("columns", schema.id, schema.id),
-        new Definition.Operation("values", SQL.param(), SQL.param()));
+    Template duplicate = new Template(Template.Kind.INSERT, schema.table, new Template.Operation(Template.Operation.Kind.COLUMNS, schema.id, schema.id),
+        new Template.Operation(Template.Operation.Kind.VALUES, SQL.param(), SQL.param()));
     assertIllegalArgument(() -> duplicate.compile(ansiAdapter), "duplicate column");
 
-    Definition unknown = new Definition("SELECT", null, new Definition.Operation("projection", SQL.all()),
-        new Definition.Operation("projection", SQL.literal(0)), new Definition.Operation("unknown"));
-    assertIllegalArgument(() -> unknown.compile(ansiAdapter), "operation is not valid");
+    Template invalidOperation = new Template(Template.Kind.INSERT, schema.table, new Template.Operation(Template.Operation.Kind.PROJECTION, SQL.all()));
+    assertIllegalArgument(() -> invalidOperation.compile(ansiAdapter), "operation is not valid");
   }
 
   public void testQuotingDisabledBehaviorAndDelegation()

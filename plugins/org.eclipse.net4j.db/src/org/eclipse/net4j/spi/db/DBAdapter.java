@@ -59,6 +59,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -1019,13 +1020,13 @@ public abstract class DBAdapter implements IDBAdapter
 
       for (String reservedWord : getReservedWords())
       {
-        set.add(reservedWord.toUpperCase());
+        set.add(reservedWord.toUpperCase(Locale.ROOT));
       }
 
       reservedWords = set;
     }
 
-    word = word.toUpperCase();
+    word = word.toUpperCase(Locale.ROOT);
     return set.contains(word);
   }
 

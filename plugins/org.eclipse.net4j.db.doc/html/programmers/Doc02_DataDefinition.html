@@ -1,0 +1,357 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Data Definition (Net4j DB Framework Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Data Definition (Net4j DB Framework Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j DB Framework Documentation">Net4j DB Framework Documentation</a> > <a href="index.html" title="Category in Net4j DB Framework Documentation">Programmer's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Data Definition</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_GeneralUtilities.html" title="Backward to Architecture and Core Concepts"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_DataManipulation.html" title="Forward to Data Manipulation"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ Net4j DB models database structure as metadata, then delegates physical DDL to the selected adapter. That separation
+ gives an application one schema vocabulary for a standalone desired model, a catalog snapshot, or the managed
+ schema owned by <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>. The model itself is not the database: adding a field to an ordinary schema
+ changes Java metadata, while creating or evolving a managed schema requires a database operation.
+ <p>
+ Schema evolution also connects Article 1's managed connections and caches. A schema transaction updates the
+ managed model through the adapter and then coordinates cache invalidation across the database's managed
+ connections. This coordination does not make every vendor's DDL transactional or place all physical DDL under the
+ cache-coordination lock. For the broader architecture, see <a href="Doc01_GeneralUtilities.html" title="Article in Net4j DB Framework Documentation">Architecture and Core Concepts</a>; for row-level SQL, see
+ <a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a>.
+ <p>
+ <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#SchemaModel" title="Chapter in Net4j DB Framework Documentation">Standalone and Managed Schema Models</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#TablesFieldsAndIndexes" title="Chapter in Net4j DB Framework Documentation">Tables, Fields, Indexes, and Types</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#SchemaInspectionAndComparison" title="Chapter in Net4j DB Framework Documentation">Creating, Reading, and Comparing Schemas</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#SchemaTransactions" title="Chapter in Net4j DB Framework Documentation">Schema Transactions and Working Copies</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#EnsureAndMigrationPolicies" title="Chapter in Net4j DB Framework Documentation">Ensure Policies and Migration Review</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#DDLBoundaries" title="Chapter in Net4j DB Framework Documentation">Limitations and Failure Boundaries</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="SchemaModel"></a>1&nbsp;&nbsp;Standalone and Managed Schema Models</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> creates an independent, mutable metadata model. It is appropriate for
+ defining an application's desired tables before opening a database. <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.readSchema(IDBAdapter,
+ Connection, String)</code></a> obtains a catalog snapshot through an adapter. When <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.openDatabase</code></a> creates a
+ managed database, its implementation reads a schema and locks that model; callers should use
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getSchema()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getSchema()</code></a> for inspection and use an <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Interface in org.eclipse.net4j.db"><code>IDBSchemaTransaction</code></a> working copy for edits.
+ <p>
+ A standalone schema can be copied, compared, exported, created, or dropped using the overload appropriate to
+ the application. Those methods call the supplied adapter and may use the supplied connection, data source, or
+ provider. They perform actual DDL only when an operation explicitly asks for creation or dropping. They do not
+ create a coordinated managed database merely because the schema model is passed to them.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SchemaModel_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">DefineSalesSchema.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SchemaModel_1')" id="max_SchemaModel_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SchemaModel_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SchemaModel_1" style="padding:8px;">
+            <code>
+            IDBSchema&nbsp;sales&nbsp;=&nbsp;DBUtil.createSchema(<font color="#2a00ff">&#34;SALES&#34;</font>);<br/>
+            <br/>
+            IDBTable&nbsp;customer&nbsp;=&nbsp;sales.addTable(<font color="#2a00ff">&#34;CUSTOMER&#34;</font>);<br/>
+            IDBField&nbsp;customerID&nbsp;=&nbsp;customer.addField(<font color="#2a00ff">&#34;ID&#34;</font>,&nbsp;DBType.INTEGER,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            customer.addField(<font color="#2a00ff">&#34;NAME&#34;</font>,&nbsp;DBType.VARCHAR,&nbsp;<font color="#990000">160</font>,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            customer.addField(<font color="#2a00ff">&#34;EMAIL&#34;</font>,&nbsp;DBType.VARCHAR,&nbsp;<font color="#990000">254</font>,&nbsp;<font color="#7f0055"><b>false</b></font>);<br/>
+            customer.addIndex(<font color="#2a00ff">&#34;PK_CUSTOMER&#34;</font>,&nbsp;IDBIndex.Type.PRIMARY_KEY,&nbsp;customerID);<br/>
+            customer.addIndex(<font color="#2a00ff">&#34;UQ_CUSTOMER_EMAIL&#34;</font>,&nbsp;IDBIndex.Type.UNIQUE,&nbsp;<font color="#2a00ff">&#34;EMAIL&#34;</font>);<br/>
+            <br/>
+            IDBTable&nbsp;orders&nbsp;=&nbsp;sales.addTable(<font color="#2a00ff">&#34;ORDERS&#34;</font>);<br/>
+            IDBField&nbsp;orderID&nbsp;=&nbsp;orders.addField(<font color="#2a00ff">&#34;ID&#34;</font>,&nbsp;DBType.BIGINT,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            IDBField&nbsp;orderCustomerID&nbsp;=&nbsp;orders.addField(<font color="#2a00ff">&#34;CUSTOMER_ID&#34;</font>,&nbsp;DBType.INTEGER,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            orders.addField(<font color="#2a00ff">&#34;TOTAL&#34;</font>,&nbsp;DBType.DECIMAL,&nbsp;<font color="#990000">12</font>,&nbsp;<font color="#990000">2</font>,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            orders.addField(<font color="#2a00ff">&#34;STATUS&#34;</font>,&nbsp;DBType.VARCHAR,&nbsp;<font color="#990000">24</font>,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            orders.addIndex(<font color="#2a00ff">&#34;PK_ORDERS&#34;</font>,&nbsp;IDBIndex.Type.PRIMARY_KEY,&nbsp;orderID);<br/>
+            orders.addIndex(<font color="#2a00ff">&#34;IX_ORDERS_CUSTOMER&#34;</font>,&nbsp;IDBIndex.Type.NON_UNIQUE,&nbsp;orderCustomerID);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="TablesFieldsAndIndexes"></a>2&nbsp;&nbsp;Tables, Fields, Indexes, and Types</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ A table owns ordered fields and indexes. A field records a logical <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>, precision, scale, and
+ nullability. An index records its kind (primary key, unique, or non-unique) and ordered fields. The model checks
+ structural relationships such as whether an index field belongs to its table; it does not prove that a target
+ database accepts every type, name, precision, or index form. The adapter supplies type adaptation, identifier
+ rules, maximum lengths, and vendor-specific DDL.
+ <p>
+ Use descriptive, stable names and model constraints explicitly. For example, CUSTOMER.EMAIL can have a
+ unique index, while ORDERS.CUSTOMER_ID can have a non-unique index for common customer order lookups.
+ A model-level index does not itself create or verify a physical index.
+
+<h2><a name="SchemaInspectionAndComparison"></a>3&nbsp;&nbsp;Creating, Reading, and Comparing Schemas</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,javax.sql.DataSource)" title="Method in org.eclipse.net4j.db.ddl.IDBSchema"><code>IDBSchema.create(IDBAdapter, DataSource)</code></a> delegates creation to the adapter. The overloads accepting a
+ JDBC connection or IDBConnectionProvider let the caller choose resource ownership. Creation returns the
+ tables created; it is not a reconciliation operation and should not be treated as idempotent. To inspect an
+ existing catalog, read it through the adapter. To determine differences, compare two schema models. Comparison
+ is in-memory and emits a typed <a href="../../javadoc/org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="Interface in org.eclipse.net4j.db.ddl.delta"><code>IDBSchemaDelta</code></a>; it executes no SQL.
+ <p>
+ A delta can be inspected, visited under a policy, or applied to a schema model. Applying it to a model changes
+ that model only. The adapter's updateSchema operation is what maps a delta to database-specific DDL.
+ Review removals, type changes, and constraint changes before applying them to production data.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SchemaInspectionAndComparison_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">InspectCurrentSchema.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SchemaInspectionAndComparison_1')" id="max_SchemaInspectionAndComparison_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SchemaInspectionAndComparison_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SchemaInspectionAndComparison_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;an&nbsp;adapter&nbsp;and&nbsp;an&nbsp;open&nbsp;JDBC&nbsp;connection&nbsp;for&nbsp;the&nbsp;catalog&nbsp;being&nbsp;inspected.</font><br/>
+            IDBSchema&nbsp;actual&nbsp;=&nbsp;DBUtil.readSchema(adapter,&nbsp;connection,&nbsp;<font color="#2a00ff">&#34;SALES&#34;</font>);<br/>
+            IDBSchema&nbsp;desired&nbsp;=&nbsp;DBUtil.createSchema(<font color="#2a00ff">&#34;SALES&#34;</font>);<br/>
+            <br/>
+            IDBTable&nbsp;customer&nbsp;=&nbsp;desired.addTable(<font color="#2a00ff">&#34;CUSTOMER&#34;</font>);<br/>
+            IDBField&nbsp;customerID&nbsp;=&nbsp;customer.addField(<font color="#2a00ff">&#34;ID&#34;</font>,&nbsp;DBType.INTEGER,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            customer.addField(<font color="#2a00ff">&#34;NAME&#34;</font>,&nbsp;DBType.VARCHAR,&nbsp;<font color="#990000">160</font>,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            customer.addIndex(<font color="#2a00ff">&#34;PK_CUSTOMER&#34;</font>,&nbsp;IDBIndex.Type.PRIMARY_KEY,&nbsp;customerID);<br/>
+            <br/>
+            IDBSchemaDelta&nbsp;delta&nbsp;=&nbsp;desired.compare(actual);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Tables&nbsp;differing:&nbsp;&#34;&nbsp;</font>+&nbsp;delta.getTableDeltaCount());<br/>
+            <br/>
+            <font color="#7f0055"><b>for&nbsp;</b></font>(IDBTableDelta&nbsp;tableDelta&nbsp;:&nbsp;delta.getTableDeltasSortedByName())<br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(tableDelta.getChangeKind()&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;&#34;&nbsp;</font>+&nbsp;tableDelta.getName());<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="SchemaTransactions"></a>4&nbsp;&nbsp;Schema Transactions and Working Copies</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.openSchemaTransaction()</code></a> snapshots the current managed schema into a working copy. Edit the
+ copy, inspect <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#getSchemaDelta()" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.getSchemaDelta()</code></a>, and commit the transaction to invoke the adapter's
+ update operation. Closing an uncommitted transaction abandons the working copy. A transaction can instead be
+ opened through <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>IDBConnection.openSchemaTransaction()</code></a>; this associates its schema update with that
+ existing managed connection. In that form, schema transaction commit() commits the connection after the
+ update/completion path. In the database-opened form, Net4j obtains a managed connection for the update and
+ commits it through its connection-execution helper.
+ <p>
+ Neither form is an ordinary application transaction around arbitrary row updates. Do not assume that JDBC
+ rollback can undo DDL: databases differ in whether DDL is transactional, whether it causes an implicit commit,
+ and which alterations they support. Keep application data migration and schema changes as explicit deployment
+ steps when they need ordering or recovery logic.
+ <p>
+ The shared base schema already contains CUSTOMER.EMAIL and ORDERS.STATUS. These examples evolve
+ it by adding CUSTOMER.LOYALTY_CODE and ORDERS.PROMOTION_CODE fields.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SchemaTransactions_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">AddLoyaltyCodeColumn.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SchemaTransactions_1')" id="max_SchemaTransactions_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SchemaTransactions_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SchemaTransactions_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Input:&nbsp;an&nbsp;open&nbsp;database&nbsp;whose&nbsp;managed&nbsp;schema&nbsp;includes&nbsp;CUSTOMER.</font><br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBSchemaTransaction&nbsp;transaction&nbsp;=&nbsp;database.openSchemaTransaction())<br/>
+            {<br/>
+            &nbsp;&nbsp;IDBTable&nbsp;customer&nbsp;=&nbsp;transaction.getWorkingCopy().getTable(<font color="#2a00ff">&#34;CUSTOMER&#34;</font>);<br/>
+            &nbsp;&nbsp;customer.addField(<font color="#2a00ff">&#34;LOYALTY_CODE&#34;</font>,&nbsp;DBType.VARCHAR,&nbsp;<font color="#990000">32</font>,&nbsp;<font color="#7f0055"><b>false</b></font>);<br/>
+            <br/>
+            &nbsp;&nbsp;IDBSchemaDelta&nbsp;delta&nbsp;=&nbsp;transaction.getSchemaDelta();<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Proposed&nbsp;schema&nbsp;delta&nbsp;has&nbsp;&#34;&nbsp;</font>+&nbsp;delta.getTableDeltaCount()&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;table&nbsp;changes&#34;</font>);<br/>
+            &nbsp;&nbsp;transaction.commit();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SchemaTransactions_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">AddPromotionCodeColumn.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SchemaTransactions_2')" id="max_SchemaTransactions_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SchemaTransactions_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SchemaTransactions_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Input:&nbsp;an&nbsp;open&nbsp;managed&nbsp;connection;&nbsp;close&nbsp;all&nbsp;its&nbsp;prepared&nbsp;statements&nbsp;before&nbsp;committing&nbsp;this&nbsp;schema&nbsp;change.</font><br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBSchemaTransaction&nbsp;transaction&nbsp;=&nbsp;connection.openSchemaTransaction())<br/>
+            {<br/>
+            &nbsp;&nbsp;IDBTable&nbsp;orders&nbsp;=&nbsp;transaction.getWorkingCopy().getTable(<font color="#2a00ff">&#34;ORDERS&#34;</font>);<br/>
+            &nbsp;&nbsp;orders.addField(<font color="#2a00ff">&#34;PROMOTION_CODE&#34;</font>,&nbsp;DBType.VARCHAR,&nbsp;<font color="#990000">32</font>,&nbsp;<font color="#7f0055"><b>false</b></font>);<br/>
+            <br/>
+            &nbsp;&nbsp;transaction.commit();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="EnsureAndMigrationPolicies"></a>5&nbsp;&nbsp;Ensure Policies and Migration Review</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.ensureSchema(IDBSchema)</code></a> compares a desired model with the transaction's working
+ copy, filters the delta under a policy, copies allowed changes, applies them to the working copy, and returns the
+ accepted delta. The default policy allows additions and a schema-level change; removals and ordinary element
+ changes are ignored. This is deliberately conservative. An explicit policy can allow or forbid combinations of
+ delta type and change kind, but allowing a change does not make it safe for existing data or supported by every
+ adapter.
+ <p>
+ Before commit, inspect the proposed delta and plan any required data backfill. Adding a non-null field to a
+ populated table may fail unless the database or migration process supplies a value for existing rows. A structural
+ delta does not describe data conversion, default-value rollout, or application compatibility across versions.
+ In the base adapter, the delta is applied to managed in-memory metadata before adapter DDL is executed. The
+ transaction completion path then coordinates invalidation of managed connection caches as explained in
+ <a href="Doc01_GeneralUtilities.html#SchemaAccessAndCaching" title="Chapter in Net4j DB Framework Documentation">Coordinated Schema Access and Statement Caches</a>.
+
+<h2><a name="DDLBoundaries"></a>6&nbsp;&nbsp;Limitations and Failure Boundaries</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ Adapter support determines how table creation, field alterations, indexes, and drops are rendered. The physical
+ database determines accepted syntax, DDL transaction behavior, locking, and preservation of data. Net4j DB's
+ managed schema model is metadata, not a replacement for migration tooling or a database catalog. If an adapter
+ operation fails after some DDL has run, the framework's JDBC rollback attempt cannot establish a portable claim
+ that all physical changes were undone. Confirm the resulting catalog and data state using the target database's
+ supported inspection tools before retrying a deployment.
+
+<p align="right">
+<a href="Doc01_GeneralUtilities.html" title="Backward to Architecture and Core Concepts"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_DataManipulation.html" title="Forward to Data Manipulation"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j DB Framework Documentation">Net4j DB Framework Documentation</a> > <a href="index.html" title="Category in Net4j DB Framework Documentation">Programmer's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

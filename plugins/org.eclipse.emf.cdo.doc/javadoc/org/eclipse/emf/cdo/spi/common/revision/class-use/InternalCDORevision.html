@@ -934,11 +934,26 @@ loadScripts(document, 'script');</script>
  <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#registerFeatureDeltaUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaUnsynced</a><wbr>(<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#registerFeatureDeltaOnlyUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaOnlyUnsynced</a><wbr>(<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
  <a href="../../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
  <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Registers a feature delta without notifying transaction handlers.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#registerFeatureDeltaUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaUnsynced</a><wbr>(<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Registers a feature delta without acquiring the transaction/view lock.</div>
+</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../../../../../spi/cdo/InternalCDOTransaction.html#registerFirstDirtyUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFirstDirtyUnsynced</a><wbr>(<a href="../../../../../spi/cdo/InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision,
+ <a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;dirtyRevision)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Registers the first dirty transition of a persistent object without reacquiring the owning transaction lock.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOStore.</span><code><a href="../../../../../spi/cdo/CDOStore.html#resolveProxy(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">resolveProxy</a><wbr>(<a href="../InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,

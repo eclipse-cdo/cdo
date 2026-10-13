@@ -68,6 +68,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The Net4j DB framework concepts for the abstraction of schema deltas.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.dml">org.eclipse.net4j.db.dml</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Structured SQL data manipulation for the Net4j DB framework.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db.dml.fluent">org.eclipse.net4j.db.dml.fluent</a></div>
+<div class="col-last even-row-color">
+<div class="block">Staged fluent builders for SQL data manipulation.</div>
+</div>
 <div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.h2">org.eclipse.net4j.db.h2</a></div>
 <div class="col-last odd-row-color">
 <div class="block">The Net4j DB Framework support for H2 databases.</div>
@@ -271,6 +279,92 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">IDBTableDelta.</span><code><a href="../delta/IDBTableDelta.html#getSchemaElement(org.eclipse.net4j.db.ddl.IDBSchema)" class="member-name-link">getSchemaElement</a><wbr>(<a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.net4j.db.dml">
+<h2>Uses of <a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a> in <a href="../../dml/package-summary.html">org.eclipse.net4j.db.dml</a></h2>
+<div class="caption"><span>Methods in <a href="../../dml/package-summary.html">org.eclipse.net4j.db.dml</a> that return <a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLTableRef.</span><code><a href="../../dml/SQLTableRef.html#getTable()" class="member-name-link">getTable</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the schema table represented by this occurrence.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../dml/package-summary.html">org.eclipse.net4j.db.dml</a> with parameters of type <a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../dml/SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../../dml/SQL.html#as(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a table occurrence with a SQL alias.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../../dml/fluent/SQLDeleteStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLDeleteStep</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../../dml/SQL.html#deleteFrom(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">deleteFrom</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Begins a DELETE definition.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../../dml/fluent/SQLInsertStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInsertStartStep</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../../dml/SQL.html#insertInto(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">insertInto</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Begins an INSERT definition.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../../dml/SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../../dml/SQL.html#table(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">table</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates an unaliased occurrence of a schema table for use in a statement.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../../dml/fluent/SQLUpdateStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLUpdateStartStep</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../../dml/SQL.html#update(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">update</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Begins an UPDATE definition for the supplied schema table.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.net4j.db.dml.fluent">
+<h2>Uses of <a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a> in <a href="../../dml/fluent/package-summary.html">org.eclipse.net4j.db.dml.fluent</a></h2>
+<div class="caption"><span>Methods in <a href="../../dml/fluent/package-summary.html">org.eclipse.net4j.db.dml.fluent</a> with parameters of type <a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../../dml/fluent/SQLSelectFromStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectFromStep</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLSelectFromStep.</span><code><a href="../../dml/fluent/SQLSelectFromStep.html#from(org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.IDBTable...)" class="member-name-link">from</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;first,
+ <a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>...&nbsp;others)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Adds one or more comma-separated table occurrences.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../dml/fluent/SQLSelectFromStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectFromStep</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLSelectProjectionStep.</span><code><a href="../../dml/fluent/SQLSelectProjectionStep.html#from(org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.IDBTable...)" class="member-name-link">from</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;first,
+ <a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>...&nbsp;others)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Adds one or more comma-separated table occurrences.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../../dml/fluent/SQLSelectJoinStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectJoinStep</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLSelectSourceStep.</span><code><a href="../../dml/fluent/SQLSelectSourceStep.html#join(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">join</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Starts an INNER JOIN that must receive a complete condition or comparison through ON before it can be completed.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../../dml/fluent/SQLSelectJoinStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectJoinStep</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLSelectSourceStep.</span><code><a href="../../dml/fluent/SQLSelectSourceStep.html#leftJoin(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">leftJoin</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Starts a LEFT JOIN that must receive a complete condition or comparison through ON before it can be completed.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../../dml/fluent/SQLFragmentStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLFragmentStep</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLFragmentStep.</span><code><a href="../../dml/fluent/SQLFragmentStep.html#table(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">table</a><wbr>(<a href="../IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Appends a schema table identifier or table reference as a structured fragment part.</div>
+</div>
 </div>
 </section>
 </li>

@@ -68,6 +68,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The Net4j DB Framework support for Derby databases.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.dml">org.eclipse.net4j.db.dml</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Structured SQL data manipulation for the Net4j DB framework.</div>
+</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db.dml.fluent">org.eclipse.net4j.db.dml.fluent</a></div>
+<div class="col-last even-row-color">
+<div class="block">Staged fluent builders for SQL data manipulation.</div>
+</div>
 <div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.h2">org.eclipse.net4j.db.h2</a></div>
 <div class="col-last odd-row-color">
 <div class="block">The Net4j DB Framework support for H2 databases.</div>
@@ -259,6 +267,39 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><code><a href="../derby/EmbeddedDerbyAdapter.html" class="type-name-link" title="class in org.eclipse.net4j.db.derby">EmbeddedDerbyAdapter</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">A <a href="../derby/DerbyAdapter.html" title="class in org.eclipse.net4j.db.derby"><code>Derby adapter</code></a> for <a href="http://db.apache.org/derby/papers/DerbyTut/embedded_intro.html">embedded</a> databases.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.net4j.db.dml">
+<h2>Uses of <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a> in <a href="../dml/package-summary.html">org.eclipse.net4j.db.dml</a></h2>
+<div class="caption"><span>Methods in <a href="../dml/package-summary.html">org.eclipse.net4j.db.dml</a> with parameters of type <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLTemplate.</span><code><a href="../dml/SQLTemplate.html#compile(org.eclipse.net4j.db.IDBAdapter)" class="member-name-link">compile</a><wbr>(<a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Compiles this immutable definition into SQL text and ordered parameter occurrence metadata.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.net4j.db.dml.fluent">
+<h2>Uses of <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a> in <a href="../dml/fluent/package-summary.html">org.eclipse.net4j.db.dml.fluent</a></h2>
+<div class="caption"><span>Methods in <a href="../dml/fluent/package-summary.html">org.eclipse.net4j.db.dml.fluent</a> with parameters of type <a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>default <a href="../dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLBuildStep.</span><code><a href="../dml/fluent/SQLBuildStep.html#compile(org.eclipse.net4j.db.IDBAdapter)" class="member-name-link">compile</a><wbr>(<a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Compiles this complete definition for an adapter, rendering adapter-specific identifier quoting and recording parameter
+ occurrences in generated SQL order.</div>
 </div>
 </div>
 </section>

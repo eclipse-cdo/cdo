@@ -792,27 +792,40 @@ loadScripts(document, 'script');</script>
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a>&nbsp;adapter)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerAttached(org.eclipse.emf.spi.cdo.InternalCDOObject,boolean)" class="member-name-link">registerAttached</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#notifyModifyingObjectUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">notifyModifyingObjectUnsynced</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Notifies transaction handlers that an object is about to be modified without changing transaction bookkeeping.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerAttached(org.eclipse.emf.spi.cdo.InternalCDOObject,boolean)" class="member-name-link">registerAttached</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
  boolean&nbsp;isNew)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerDirty(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">registerDirty</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
- <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerDirty(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerDirty</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
- <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
- <a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerDirty(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">registerDirty</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerFeatureDelta(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">registerFeatureDelta</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
- <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerFeatureDelta(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDelta</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerDirty(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerDirty</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
  <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
  <a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerFeatureDelta(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">registerFeatureDelta</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerFeatureDelta(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDelta</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerFeatureDeltaOnlyUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaOnlyUnsynced</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Registers a feature delta without notifying transaction handlers.</div>
+</div>
 <div class="col-first odd-row-color"><code>void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerFeatureDeltaUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaUnsynced</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
  <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
@@ -821,14 +834,22 @@ loadScripts(document, 'script');</script>
 <div class="block">Registers a feature delta without acquiring the transaction/view lock.</div>
 </div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#registerObject(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">registerObject</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#registerFirstDirtyUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFirstDirtyUnsynced</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object,
+ <a href="../../../cdo/common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;featureDelta,
+ <a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;cleanRevision,
+ <a href="../../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;dirtyRevision)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Registers the first dirty transition of a persistent object without reacquiring the owning transaction lock.</div>
+</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#removeConflict(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">removeConflict</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOView.</span><code><a href="../InternalCDOView.html#registerObject(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">registerObject</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#setConflict(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">setConflict</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#removeConflict(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">removeConflict</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDOTransaction.</span><code><a href="../InternalCDOTransaction.html#setConflict(org.eclipse.emf.spi.cdo.InternalCDOObject)" class="member-name-link">setConflict</a><wbr>(<a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&nbsp;object)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../package-summary.html">org.eclipse.emf.spi.cdo</a> with type arguments of type <a href="../InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a></span></div>
 <div class="summary-table three-column-summary">

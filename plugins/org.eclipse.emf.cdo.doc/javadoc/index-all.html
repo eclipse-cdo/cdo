@@ -32555,6 +32555,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOFeatureFilter.html#isTransient(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">isTransient(EStructuralFeature)</a> - Method in class org.eclipse.emf.cdo.compare.<a href="org/eclipse/emf/cdo/compare/CDOCompare.CDOFeatureFilter.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOFeatureFilter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/FSMUtil.html#isTransientOrNew(org.eclipse.emf.cdo.CDOObject)" class="member-name-link">isTransientOrNew(CDOObject)</a> - Static method in class org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/FSMUtil.html" title="class in org.eclipse.emf.spi.cdo">FSMUtil</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/InternalCommitContext.html#isTreeRestructuring()" class="member-name-link">isTreeRestructuring()</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html#isTreeRestructuring(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta%5B%5D)" class="member-name-link">isTreeRestructuring(InternalCDORevisionDelta[])</a> - Static method in class org.eclipse.emf.cdo.common.revision.<a href="org/eclipse/emf/cdo/common/revision/CDORevisionUtil.html" title="class in org.eclipse.emf.cdo.common.revision">CDORevisionUtil</a></dt>
@@ -35905,6 +35907,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/transfer/ui/swt/TransferDetailsComposite.html#notifyMappingEvent(org.eclipse.emf.cdo.transfer.CDOTransfer.MappingEvent)" class="member-name-link">notifyMappingEvent(CDOTransfer.MappingEvent)</a> - Method in class org.eclipse.emf.cdo.transfer.ui.swt.<a href="org/eclipse/emf/cdo/transfer/ui/swt/TransferDetailsComposite.html" title="class in org.eclipse.emf.cdo.transfer.ui.swt">TransferDetailsComposite</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#notifyModifyingObjectUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta)" class="member-name-link">notifyModifyingObjectUnsynced(InternalCDOObject, CDOFeatureDelta)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></dt>
+<dd>
+<div class="block">Notifies transaction handlers that an object is about to be modified without changing transaction bookkeeping.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/common/branch/CDOBranchManager.EventAdapter.html#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">notifyOtherEvent(IEvent)</a> - Method in class org.eclipse.emf.cdo.common.branch.<a href="org/eclipse/emf/cdo/common/branch/CDOBranchManager.EventAdapter.html" title="class in org.eclipse.emf.cdo.common.branch">CDOBranchManager.EventAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/common/util/CDOCommonEventAdapter.html#notifyOtherEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">notifyOtherEvent(IEvent)</a> - Method in class org.eclipse.emf.cdo.common.util.<a href="org/eclipse/emf/cdo/common/util/CDOCommonEventAdapter.html" title="class in org.eclipse.emf.cdo.common.util">CDOCommonEventAdapter</a></dt>
@@ -39265,9 +39271,17 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#registerFeatureDelta(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDelta(InternalCDOObject, CDOFeatureDelta, InternalCDORevision)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#registerFeatureDeltaOnlyUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaOnlyUnsynced(InternalCDOObject, CDOFeatureDelta, InternalCDORevision)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></dt>
+<dd>
+<div class="block">Registers a feature delta without notifying transaction handlers.</div>
+</dd>
 <dt><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#registerFeatureDeltaUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFeatureDeltaUnsynced(InternalCDOObject, CDOFeatureDelta, InternalCDORevision)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></dt>
 <dd>
 <div class="block">Registers a feature delta without acquiring the transaction/view lock.</div>
+</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#registerFirstDirtyUnsynced(org.eclipse.emf.spi.cdo.InternalCDOObject,org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">registerFirstDirtyUnsynced(InternalCDOObject, CDOFeatureDelta, InternalCDORevision, InternalCDORevision)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></dt>
+<dd>
+<div class="block">Registers the first dirty transition of a persistent object without reacquiring the owning transaction lock.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/common/model/CDOPackageTypeRegistry.html#registerLegacy(java.lang.String)" class="member-name-link">registerLegacy(String)</a> - Method in class org.eclipse.emf.cdo.common.model.<a href="org/eclipse/emf/cdo/common/model/CDOPackageTypeRegistry.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry</a></dt>
 <dd>&nbsp;</dd>
@@ -40980,6 +40994,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Restores this transaction to a retained public savepoint without reporting
  that the root transaction itself has been rolled back.</div>
+</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#rollbackToSavepoint(org.eclipse.emf.spi.cdo.InternalCDOUserSavepoint,org.eclipse.emf.spi.cdo.CDOTransactionStrategy)" class="member-name-link">rollbackToSavepoint(InternalCDOUserSavepoint, CDOTransactionStrategy)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a></dt>
+<dd>
+<div class="block">Restores this transaction to a savepoint using the given strategy.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/transaction/CDOAutoCommitter.html#rollbackTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">rollbackTransaction(CDOTransaction)</a> - Method in class org.eclipse.emf.cdo.transaction.<a href="org/eclipse/emf/cdo/transaction/CDOAutoCommitter.html" title="class in org.eclipse.emf.cdo.transaction">CDOAutoCommitter</a></dt>
 <dd>&nbsp;</dd>
@@ -48646,6 +48664,10 @@ the order they are declared.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/StoreAccessor.html#writeRevisions(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisions(InternalCDORevision[], CDOBranch, OMMonitor)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/spi/server/StoreAccessor.html#writeStoreData(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeStoreData(InternalCommitContext, OMMonitor)</a> - Method in class org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/StoreAccessor.html" title="class in org.eclipse.emf.cdo.spi.server">StoreAccessor</a></dt>
+<dd>
+<div class="block">Writes the commit data after store-assigned IDs and write-access modifications have been applied.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html#writeSystemValues(org.eclipse.emf.cdo.common.protocol.CDODataOutput)" class="member-name-link">writeSystemValues(CDODataOutput)</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/IStoreAccessor.UnitSupport.html#writeUnits(java.util.Map,long)" class="member-name-link">writeUnits(Map&lt;CDOID, CDOID&gt;, long)</a> - Method in interface org.eclipse.emf.cdo.server.<a href="org/eclipse/emf/cdo/server/IStoreAccessor.UnitSupport.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.UnitSupport</a></dt>

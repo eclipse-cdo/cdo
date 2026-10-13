@@ -1,0 +1,118 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Programmer's Guide (Net4j DB Framework Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Programmer's Guide (Net4j DB Framework Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j DB Framework Documentation">Net4j DB Framework Documentation</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Programmer's Guide</h1></td>
+		<td align="right" valign="middle" nowrap><a href="../schema/index.html" title="Backward to Extension Point Reference"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc01_GeneralUtilities.html" title="Forward to Architecture and Core Concepts"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p>
+<table border="0">
+<tr><td><img src="../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc01_GeneralUtilities.html" title="Article in Net4j DB Framework Documentation">Architecture and Core Concepts</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#Architecture" title="Chapter in Net4j DB Framework Documentation">How the Pieces Fit Together</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#AdaptersAndDatabases" title="Chapter in Net4j DB Framework Documentation">Adapters, Providers, and Database Instances</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#ManagedSchemasAndConnections" title="Chapter in Net4j DB Framework Documentation">Managed Schema and Connections</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#SchemaAccessAndCaching" title="Chapter in Net4j DB Framework Documentation">Coordinated Schema Access and Statement Caches</a></td></tr>
+<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#LifecycleAndFailures" title="Chapter in Net4j DB Framework Documentation">Ownership, Transactions, and Failure Handling</a></td></tr>
+<tr><td></td><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#Utilities" title="Chapter in Net4j DB Framework Documentation">DBUtil and Supporting Facilities</a></td></tr>
+<tr><td><img src="../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc02_DataDefinition.html" title="Article in Net4j DB Framework Documentation">Data Definition</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#SchemaModel" title="Chapter in Net4j DB Framework Documentation">Standalone and Managed Schema Models</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#TablesFieldsAndIndexes" title="Chapter in Net4j DB Framework Documentation">Tables, Fields, Indexes, and Types</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#SchemaInspectionAndComparison" title="Chapter in Net4j DB Framework Documentation">Creating, Reading, and Comparing Schemas</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#SchemaTransactions" title="Chapter in Net4j DB Framework Documentation">Schema Transactions and Working Copies</a></td></tr>
+<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#EnsureAndMigrationPolicies" title="Chapter in Net4j DB Framework Documentation">Ensure Policies and Migration Review</a></td></tr>
+<tr><td></td><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#DDLBoundaries" title="Chapter in Net4j DB Framework Documentation">Limitations and Failure Boundaries</a></td></tr>
+<tr><td><img src="../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#DefinitionsAndStages" title="Chapter in Net4j DB Framework Documentation">Definitions and Fluent Stages</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#SelectQueries" title="Chapter in Net4j DB Framework Documentation">SELECT with Parameters</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#ConditionsAndComposition" title="Chapter in Net4j DB Framework Documentation">Explicit Conditions and Optional Filters</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#JoinsAndGrouping" title="Chapter in Net4j DB Framework Documentation">Aliases, Joins, Ordering, and Grouping</a></td></tr>
+<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#Subqueries" title="Chapter in Net4j DB Framework Documentation">Subqueries and Aggregates</a></td></tr>
+<tr><td></td><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#DataChanges" title="Chapter in Net4j DB Framework Documentation">INSERT, UPDATE, and DELETE</a></td></tr>
+<tr><td></td><td>7&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#TemplatesAndCompilation" title="Chapter in Net4j DB Framework Documentation">Templates and Adapter Compilation</a></td></tr>
+<tr><td></td><td>8&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#ParameterBinding" title="Chapter in Net4j DB Framework Documentation">Positional and Identity-Based Binding</a></td></tr>
+<tr><td></td><td>9&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#TypedAndCustomBinding" title="Chapter in Net4j DB Framework Documentation">Typed NULL Values and Custom Binders</a></td></tr>
+<tr><td></td><td>10&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#ReuseAndLifecycle" title="Chapter in Net4j DB Framework Documentation">Reusing a Template and Managed Prepared Statement</a></td></tr>
+<tr><td></td><td>11&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#Fragments" title="Chapter in Net4j DB Framework Documentation">Advanced Composition with SQL Fragments</a></td></tr>
+<tr><td></td><td>12&nbsp;</td><td class="te" colspan="3"><a href="Doc03_DataManipulation.html#Portability" title="Chapter in Net4j DB Framework Documentation">Portability Boundaries</a></td></tr>
+</table>
+</p>
+
+
+<p align="right">
+<a href="../schema/index.html" title="Backward to Extension Point Reference"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc01_GeneralUtilities.html" title="Forward to Architecture and Core Concepts"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j DB Framework Documentation">Net4j DB Framework Documentation</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

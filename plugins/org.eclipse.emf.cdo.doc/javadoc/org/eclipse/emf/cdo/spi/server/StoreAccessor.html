@@ -266,6 +266,12 @@ loadScripts(document, 'script');</script>
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeStoreData(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeStoreData</a><wbr>(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Writes the commit data after store-assigned IDs and write-access modifications have been applied.</div>
+</div>
 </div>
 </div>
 </div>
@@ -343,6 +349,21 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="writeStoreData(org.eclipse.emf.cdo.spi.server.InternalCommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<h3>writeStoreData</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeStoreData</span><wbr><span class="parameters">(<a href="InternalCommitContext.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalCommitContext</a>&nbsp;context,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span></div>
+<div class="block">Writes the commit data after store-assigned IDs and write-access modifications have been applied. Store
+ implementations may override this method to protect the complete visible mutation as one critical section. The
+ ID-mapping step is deliberately completed before this method is called because XA mapping can wait for a later
+ protocol phase.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="needsRevisionPostProcessing()">
 <h3>needsRevisionPostProcessing</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">needsRevisionPostProcessing</span>()</div>
@@ -386,25 +407,6 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.26</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.net4j.util.om.monitor.OMMonitor)">
-<h3>writeCommitInfo</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeCommitInfo</span><wbr><span class="parameters">(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
- long&nbsp;timeStamp,
- long&nbsp;previousTimeStamp,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
- org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">As of 4.6 override <a href="#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>writeCommitInfo(CDOBranch, long, long, String, String, CDOBranchPoint, OMMonitor)</code></a>.</div>
-</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>4.0</dd>
 </dl>
 </section>
 </li>
@@ -513,6 +515,25 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
+<dd>4.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<h3>writeCommitInfo</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeCommitInfo</span><wbr><span class="parameters">(<a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;timeStamp,
+ long&nbsp;previousTimeStamp,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.6 override <a href="#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>writeCommitInfo(CDOBranch, long, long, String, String, CDOBranchPoint, OMMonitor)</code></a>.</div>
+</div>
+<dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
 </dl>

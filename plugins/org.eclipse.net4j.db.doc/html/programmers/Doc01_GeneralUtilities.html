@@ -1,0 +1,402 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Architecture and Core Concepts (Net4j DB Framework Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Architecture and Core Concepts (Net4j DB Framework Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j DB Framework Documentation">Net4j DB Framework Documentation</a> > <a href="index.html" title="Category in Net4j DB Framework Documentation">Programmer's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Architecture and Core Concepts</h1></td>
+		<td align="right" valign="middle" nowrap><a href="index.html" title="Backward to Programmer's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_DataDefinition.html" title="Forward to Data Definition"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ Net4j DB connects database dialects, a managed schema model, coordinated schema evolution, managed JDBC
+ connections, per-connection prepared-statement caches, and structured SQL construction. The parts are useful
+ individually, but their cooperation is what lets an application keep running managed queries while schema
+ metadata evolves and cached statements are invalidated coherently.
+ <p>
+ JDBC remains the execution substrate: drivers provide Connection, SQL execution, transactions, and result
+ sets. Net4j DB adds a database ownership boundary, adapter-directed metadata and DDL, statement lifecycle
+ coordination, and a DML compilation pipeline. It does not pool connections or replace database-server
+ transaction isolation. This article introduces the shared architecture; <a href="Doc02_DataDefinition.html" title="Article in Net4j DB Framework Documentation">Data Definition</a> explains
+ schema design and evolution, and <a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a> explains SQL construction and binding.
+ <p>
+ <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#Architecture" title="Chapter in Net4j DB Framework Documentation">How the Pieces Fit Together</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#AdaptersAndDatabases" title="Chapter in Net4j DB Framework Documentation">Adapters, Providers, and Database Instances</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#ManagedSchemasAndConnections" title="Chapter in Net4j DB Framework Documentation">Managed Schema and Connections</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#SchemaAccessAndCaching" title="Chapter in Net4j DB Framework Documentation">Coordinated Schema Access and Statement Caches</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#LifecycleAndFailures" title="Chapter in Net4j DB Framework Documentation">Ownership, Transactions, and Failure Handling</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#Utilities" title="Chapter in Net4j DB Framework Documentation">DBUtil and Supporting Facilities</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Architecture"></a>1&nbsp;&nbsp;How the Pieces Fit Together</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ Start from <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>. It is created with an <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> and an
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnectionProvider</code></a>; it reads and locks a managed <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html" title="Interface in org.eclipse.net4j.db.ddl"><code>IDBSchema</code></a>, creates and tracks
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>s, opens schema transactions, and coordinates schema-change notifications and cache
+ invalidation. Each managed connection wraps one JDBC connection and owns its own prepared-statement cache.
+ <p>
+ DML definitions use schema metadata to create an adapter-neutral <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLTemplate.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLTemplate</code></a>.
+ Compiling the template with the adapter produces an adapter-specific <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLStatement.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLStatement</code></a>; preparing it on a managed connection checks out an
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html" title="Interface in org.eclipse.net4j.db"><code>IDBPreparedStatement</code></a> from that connection's cache or JDBC driver. The returned statement is still a
+ caller-managed resource.
+ <p>
+ The first diagram shows these relationships at the public API level. Arrows distinguish creation and ownership
+ from compilation and preparation. The database coordinates schema access across its managed connections but
+ does not own a single shared statement cache.
+ <p>
+ <embed src="net4j-db-architecture.svg">
+
+ <p>
+ Follow the lower path for query execution: schema-backed expressions are captured in a template, compiled by the
+ adapter, and prepared through a managed connection. The upper path shows that the same database instance owns
+ the managed schema snapshot and connection population, while each connection retains its own statement cache.
+
+<h2><a name="AdaptersAndDatabases"></a>2&nbsp;&nbsp;Adapters, Providers, and Database Instances</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ An <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> handles vendor-sensitive behavior: identifier quoting, logical type adaptation, schema
+ inspection and updates, and selected SQL-generation or exception-classification rules. It is not a pool and does
+ not supply the application's connection-management policy. An <a href="../../javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnectionProvider</code></a> supplies JDBC
+ connections; applications commonly adapt a DataSource with the <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html" title="Class in org.eclipse.net4j.db"><code>DBUtil</code></a> helper method
+ createConnectionProvider(DataSource).
+ <p>
+ Obtain contributed adapters from <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#getDBAdapter(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.getDBAdapter(String)</code></a> or the current
+ IDBAdapter.Registry.INSTANCE. In an Eclipse runtime the adapter registry can be populated by the
+ org.eclipse.net4j.db.dbAdapters extension point. Standalone applications must register or otherwise make
+ their adapter available. Adapter identity includes a name and version. The registry lookup by name selects the
+ highest registered version; select an exact identity when reproducible adapter behavior is important.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_AdaptersAndDatabases_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">OpenManagedDatabase.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('AdaptersAndDatabases_1')" id="max_AdaptersAndDatabases_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_AdaptersAndDatabases_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_AdaptersAndDatabases_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;a&nbsp;registered&nbsp;adapter&nbsp;name&nbsp;and&nbsp;a&nbsp;provider&nbsp;backed&nbsp;by&nbsp;the&nbsp;application's&nbsp;DataSource.</font><br/>
+            IDBAdapter&nbsp;adapter&nbsp;=&nbsp;DBUtil.getDBAdapter(adapterName);<br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(adapter&nbsp;==&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>DBException(<font color="#2a00ff">&#34;No&nbsp;registered&nbsp;database&nbsp;adapter:&nbsp;&#34;&nbsp;</font>+&nbsp;adapterName);<br/>
+            }<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBDatabase&nbsp;database&nbsp;=&nbsp;DBUtil.openDatabase(adapter,&nbsp;provider,&nbsp;<font color="#7f0055"><b>null</b></font>))<br/>
+            {<br/>
+            &nbsp;&nbsp;IDBSchema&nbsp;schema&nbsp;=&nbsp;database.getSchema();<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Connected&nbsp;to&nbsp;schema&nbsp;&#34;&nbsp;</font>+&nbsp;schema.getName()&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;with&nbsp;&#34;&nbsp;</font>+&nbsp;schema.getTables().length&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;tables&#34;</font>);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="ManagedSchemasAndConnections"></a>3&nbsp;&nbsp;Managed Schema and Connections</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ A standalone schema made with <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> is an ordinary mutable metadata model. It does
+ not represent a live catalog until an API reads from or writes to a database. When <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.openDatabase</code></a>
+ constructs an <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>, the implementation reads the selected catalog through a connection and locks
+ that schema model. Callers should treat <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getSchema()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getSchema()</code></a> as the database's managed snapshot, not
+ as an editable draft. For changes, open an <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Interface in org.eclipse.net4j.db"><code>IDBSchemaTransaction</code></a>; its working copy is the intended edit
+ surface. See <a href="Doc02_DataDefinition.html#SchemaModel" title="Chapter in Net4j DB Framework Documentation">Standalone and Managed Schema Models</a>.
+ <p>
+ Each call to <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getConnection()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getConnection()</code></a> asks the provider for a JDBC connection, lets the adapter
+ modify it, wraps it as an <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>, and registers it with the database. The database can then
+ coordinate cache invalidation across those open connections. Closing the database closes its managed
+ connections. Close individual connections when finished even when the database itself is long-lived.
+ <p>
+ A connection created by the framework is put into manual-commit mode. Ordinary row changes therefore need an
+ explicit commit() or rollback(). This JDBC transaction is independent of the schema working
+ copy and its adapter-driven DDL lifecycle.
+ <p>
+ The following example executes and commits a customer update before closing its statement and managed
+ connection: 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ManagedSchemasAndConnections_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">UpdateCustomer.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ManagedSchemasAndConnections_1')" id="max_ManagedSchemasAndConnections_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ManagedSchemasAndConnections_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ManagedSchemasAndConnections_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Input:&nbsp;an&nbsp;open&nbsp;managed&nbsp;database;&nbsp;this&nbsp;operation&nbsp;owns&nbsp;the&nbsp;connection&nbsp;it&nbsp;obtains.</font><br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBConnection&nbsp;connection&nbsp;=&nbsp;database.getConnection())<br/>
+            {<br/>
+            &nbsp;&nbsp;IDBPreparedStatement&nbsp;statement&nbsp;=&nbsp;connection.prepareStatement(<font color="#2a00ff">&#34;UPDATE&nbsp;CUSTOMER&nbsp;SET&nbsp;NAME&nbsp;=&nbsp;?&nbsp;WHERE&nbsp;ID&nbsp;=&nbsp;?&#34;</font>,&nbsp;ReuseProbability.HIGH);<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;statement.setString(<font color="#990000">1</font>,&nbsp;customerName);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;statement.setInt(<font color="#990000">2</font>,&nbsp;<font color="#990000">42</font>);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;statement.executeUpdate();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;connection.commit();<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>catch&nbsp;</b></font>(SQLException&nbsp;|&nbsp;RuntimeException&nbsp;ex)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;connection.rollback();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;statement.close();<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+.
+
+<h2><a name="SchemaAccessAndCaching"></a>4&nbsp;&nbsp;Coordinated Schema Access and Statement Caches</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ Net4j DB coordinates managed preparation with schema transaction completion so that a statement already in use
+ is not silently reused across a schema-cache invalidation. When DBConnection.prepareStatement(...) is
+ called, it first asks its database for a schema read-access token. The token is associated with the checked-out
+ DBPreparedStatement. It remains active for the statement's checkout lifetime, including execution and
+ result processing, and is released in the statement-close/return path. Returning a statement can put it into that
+ connection's local cache, but the token is released after the return operation.
+ <p>
+ When a nonempty schema delta reaches transaction completion, DBDatabase.closeSchemaTransaction(...)
+ requests exclusive schema write access. The queue admits compatible readers together, orders writers against
+ readers, and prevents later readers from continually passing a waiting writer. A writer waits until earlier
+ read tokens have ended. The wait is bounded by the implementation's schema-access timeout; a timeout is a
+ runtime failure, not a database-server lock timeout. A checked-out statement that is forgotten can therefore
+ delay schema completion until that timeout. Close each statement promptly, even when its SQL is likely to be
+ reused.
+ <p>
+ Once exclusive access reaches the head of the queue, the database invalidates each currently managed
+ connection's local cached statements, emits a schema-changed event carrying the delta, and then releases the
+ write token. A later managed preparation obtains a read token after this phase and cannot take a stale entry
+ from the cleared caches. The optional DBConnection.checkOuts structure is enabled only by
+ VALIDATE_CHECKOUTS; it adds validation at invalidation time and is not the synchronization mechanism.
+ The queue and tokens provide the coordination.
+ <p>
+ The second diagram separates this cache-coordination phase from physical DDL. In the current implementation,
+ DBSchemaTransaction.run() calls IDBAdapter.updateSchema(...) first. In the base
+ DBAdapter, updateSchema applies the delta to in-memory schema metadata before traversing it to
+ execute DDL. The transaction's finally path then calls completion with that delta even if the adapter
+ update throws, so a nonempty delta can still trigger cache invalidation and event delivery on a failing DDL
+ path. An event or the current in-memory model is not proof that the physical update succeeded. In the
+ connection-backed form, commit() calls JDBC commit() after run() returns; when
+ run() throws a checked SQL failure, the implementation attempts rollback instead. This ordering does not
+ put all DDL execution under the schema-access writer, establish server isolation, or guarantee identical DDL rollback
+ behavior across adapters. An adapter or database may have its own DDL behavior, including implicit commits.
+ <p>
+ Only preparations made through managed <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>s participate. Raw JDBC connections/statements
+ acquired elsewhere bypass these tokens and cache invalidation.
+ <p>
+ <embed src="net4j-db-schema-coordination.svg">
+
+ <p>
+ The practical rule is simple: finish and close every statement before committing a schema change, especially
+ when the schema transaction is opened on that same connection. Otherwise the writer can wait on a read token
+ held by the caller itself until the queue timeout. After completion, prepare through the managed connection
+ again; the old cached statement objects have been discarded.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SchemaAccessAndCaching_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CoordinateStatementAndSchemaChange.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SchemaAccessAndCaching_1')" id="max_SchemaAccessAndCaching_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SchemaAccessAndCaching_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SchemaAccessAndCaching_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;an&nbsp;open&nbsp;database&nbsp;whose&nbsp;managed&nbsp;schema&nbsp;contains&nbsp;CUSTOMER.ID.</font><br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBConnection&nbsp;connection&nbsp;=&nbsp;database.getConnection())<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;beforeChange&nbsp;=&nbsp;connection.prepareStatement(<font color="#2a00ff">&#34;SELECT&nbsp;ID&nbsp;FROM&nbsp;CUSTOMER&nbsp;WHERE&nbsp;ID&nbsp;=&nbsp;?&#34;</font>,&nbsp;ReuseProbability.HIGH))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;beforeChange.setInt(<font color="#990000">1</font>,&nbsp;<font color="#990000">42</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;beforeChange.executeQuery())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Customer&nbsp;ID:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getInt(<font color="#990000">1</font>));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBSchemaTransaction&nbsp;schemaTransaction&nbsp;=&nbsp;connection.openSchemaTransaction())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;IDBTable&nbsp;customer&nbsp;=&nbsp;schemaTransaction.getWorkingCopy().getTable(<font color="#2a00ff">&#34;CUSTOMER&#34;</font>);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;customer.addField(<font color="#2a00ff">&#34;LOYALTY_CODE&#34;</font>,&nbsp;DBType.VARCHAR,&nbsp;<font color="#990000">32</font>,&nbsp;<font color="#7f0055"><b>false</b></font>);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;schemaTransaction.commit();<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;afterChange&nbsp;=&nbsp;connection.prepareStatement(<font color="#2a00ff">&#34;SELECT&nbsp;ID&nbsp;FROM&nbsp;CUSTOMER&nbsp;WHERE&nbsp;ID&nbsp;=&nbsp;?&#34;</font>,&nbsp;ReuseProbability.HIGH))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;afterChange.setInt(<font color="#990000">1</font>,&nbsp;<font color="#990000">42</font>);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;afterChange.executeQuery())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Customer&nbsp;ID&nbsp;after&nbsp;schema&nbsp;change:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getInt(<font color="#990000">1</font>));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="LifecycleAndFailures"></a>5&nbsp;&nbsp;Ownership, Transactions, and Failure Handling</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ A managed connection belongs to the <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a> while open and should also be closed by the code that
+ acquired it. A prepared statement belongs to that connection; close it after closing its result sets. For a
+ query, closing the <a href="../../javadoc/org/eclipse/net4j/db/IDBResultSet.html" title="Interface in org.eclipse.net4j.db"><code>IDBResultSet</code></a> does not return the prepared statement to its cache. For updates, decide
+ whether the surrounding JDBC transaction should commit or roll back before releasing the connection. The
+ connection's close path performs cleanup, but it is not a substitute for handling the operation's outcome.
+ <p>
+ A schema transaction is separate. <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.openSchemaTransaction()</code></a> opens one that obtains a
+ connection for its adapter update when committed; <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>IDBConnection.openSchemaTransaction()</code></a> associates the
+ schema transaction with that existing managed connection. In the latter case, the schema transaction's commit
+ path commits that connection after the adapter update and cache-coordination completion. Do not assume the
+ operation has portable atomic-DDL semantics. Close the schema transaction in a finally block; after a successful
+ commit it has already completed, so the subsequent close is safe cleanup.
+ <p>
+ Net4j wraps JDBC/provider/adapter failures as <a href="../../javadoc/org/eclipse/net4j/db/DBException.html" title="Class in org.eclipse.net4j.db"><code>DBException</code></a> in APIs whose contracts are unchecked, while
+ inherited JDBC methods can still throw SQLException. Preserve the cause and report which phase failed:
+ connection acquisition, prepare/bind, SQL execution, DDL update, coordination timeout, or commit. If schema
+ completion fails, do not infer the physical database state solely from the in-memory model or event; inspect the
+ target database using its supported tooling and adapter behavior.
+
+<h2><a name="Utilities"></a>6&nbsp;&nbsp;DBUtil and Supporting Facilities</h2>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html" title="Class in org.eclipse.net4j.db"><code>DBUtil</code></a> provides focused helpers around the architecture: adapter lookup, connection-provider creation,
+ opening a database, creating/copying/reading schema models, SQL-type lookup, naming and identifier utilities,
+ transaction helpers, and quiet resource cleanup. Use managed database APIs where coordination and caching matter;
+ direct JDBC utilities remain appropriate for standalone metadata work or integrations that intentionally do not
+ use a managed database instance. <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a> represents Net4j's logical SQL types; adapters decide how those
+ types map to a particular database. The current structured DML API is described in
+ <a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a>.
+
+<p align="right">
+<a href="index.html" title="Backward to Programmer's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_DataDefinition.html" title="Forward to Data Definition"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j DB Framework Documentation">Net4j DB Framework Documentation</a> > <a href="index.html" title="Category in Net4j DB Framework Documentation">Programmer's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

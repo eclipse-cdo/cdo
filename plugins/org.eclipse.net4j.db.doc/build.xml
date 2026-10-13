@@ -107,6 +107,8 @@
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/*.java" />
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/ddl/*.java" />
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/ddl/delta/*.java" />
+				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/dml/*.java" />
+				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/db/dml/fluent/*.java" />
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/spi/db/*.java" />
 				<include name="org.eclipse.net4j.db/src/org/eclipse/net4j/spi/db/ddl/*.java" />
       </fileset>
@@ -115,6 +117,8 @@
 				<package name="org.eclipse.net4j.db" />
 				<package name="org.eclipse.net4j.db.ddl" />
 				<package name="org.eclipse.net4j.db.ddl.delta" />
+				<package name="org.eclipse.net4j.db.dml" />
+				<package name="org.eclipse.net4j.db.dml.fluent" />
 				<package name="org.eclipse.net4j.spi.db" />
 				<package name="org.eclipse.net4j.spi.db.ddl" />
 			</group>
@@ -279,6 +283,7 @@
 
 			<package name="org.eclipse.net4j.db.doc" />
 			<package name="org.eclipse.net4j.db.doc.online" />
+			<package name="org.eclipse.net4j.db.doc.programmers" />
 			<package name="org.eclipse.net4j.db.doc.reference" />
 			<package name="org.eclipse.net4j.db.doc.reference.api" />
 			<package name="org.eclipse.net4j.db.doc.reference.schema" />

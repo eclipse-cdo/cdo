@@ -3,7 +3,6 @@
 
 <toc label="Net4j DB Framework Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" icon="article" />
-  <topic label="DML Developer Guide" href="html/DML-Developer-Guide.html" icon="article" />
   <topic label="API Reference" href="javadoc/overview-summary.html">
     <topic label="Net4j DB Framework" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.db" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="package">
@@ -74,6 +73,48 @@
         <topic label="IDBSchemaDelta" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" icon="interface" />
         <topic label="IDBTableDelta" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" icon="interface" />
       </topic>
+      <topic label="org.eclipse.net4j.db.dml" href="javadoc/org/eclipse/net4j/db/dml/package-summary.html" icon="package">
+        <topic label="SQL" href="javadoc/org/eclipse/net4j/db/dml/SQL.html" icon="class" />
+        <topic label="SQLColumnRef" href="javadoc/org/eclipse/net4j/db/dml/SQLColumnRef.html" icon="interface" />
+        <topic label="SQLCondition" href="javadoc/org/eclipse/net4j/db/dml/SQLCondition.html" icon="interface" />
+        <topic label="SQLExpression" href="javadoc/org/eclipse/net4j/db/dml/SQLExpression.html" icon="interface" />
+        <topic label="SQLFragment" href="javadoc/org/eclipse/net4j/db/dml/SQLFragment.html" icon="interface" />
+        <topic label="SQLOrderItem" href="javadoc/org/eclipse/net4j/db/dml/SQLOrderItem.html" icon="interface" />
+        <topic label="SQLParameter" href="javadoc/org/eclipse/net4j/db/dml/SQLParameter.html" icon="interface" />
+        <topic label="SQLParameterBinder&lt;JAVA&gt;" href="javadoc/org/eclipse/net4j/db/dml/SQLParameterBinder.html" icon="interface" />
+        <topic label="SQLSelectItem" href="javadoc/org/eclipse/net4j/db/dml/SQLSelectItem.html" icon="interface" />
+        <topic label="SQLStatement" href="javadoc/org/eclipse/net4j/db/dml/SQLStatement.html" icon="interface" />
+        <topic label="SQLSubSelect" href="javadoc/org/eclipse/net4j/db/dml/SQLSubSelect.html" icon="interface" />
+        <topic label="SQLTableRef" href="javadoc/org/eclipse/net4j/db/dml/SQLTableRef.html" icon="interface" />
+        <topic label="SQLTemplate" href="javadoc/org/eclipse/net4j/db/dml/SQLTemplate.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.db.dml.fluent" href="javadoc/org/eclipse/net4j/db/dml/fluent/package-summary.html" icon="package">
+        <topic label="SQLBuildStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLBuildStep.html" icon="interface" />
+        <topic label="SQLComparisonStep&lt;NEXT&gt;" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLComparisonStep.html" icon="interface" />
+        <topic label="SQLConditionStep&lt;NEXT&gt;" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLConditionStep.html" icon="interface" />
+        <topic label="SQLDeleteStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLDeleteStep.html" icon="interface" />
+        <topic label="SQLDeleteWhereStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLDeleteWhereStep.html" icon="interface" />
+        <topic label="SQLFragmentStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLFragmentStep.html" icon="interface" />
+        <topic label="SQLInsertAssignmentStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInsertAssignmentStep.html" icon="interface" />
+        <topic label="SQLInsertColumnsStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInsertColumnsStep.html" icon="interface" />
+        <topic label="SQLInsertSetStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInsertSetStep.html" icon="interface" />
+        <topic label="SQLInsertStartStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInsertStartStep.html" icon="interface" />
+        <topic label="SQLInsertValuesStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInsertValuesStep.html" icon="interface" />
+        <topic label="SQLSelectBuildStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectBuildStep.html" icon="interface" />
+        <topic label="SQLSelectFromStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectFromStep.html" icon="interface" />
+        <topic label="SQLSelectGroupByStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectGroupByStep.html" icon="interface" />
+        <topic label="SQLSelectHavingStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectHavingStep.html" icon="interface" />
+        <topic label="SQLSelectJoinedStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectJoinedStep.html" icon="interface" />
+        <topic label="SQLSelectJoinStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectJoinStep.html" icon="interface" />
+        <topic label="SQLSelectOrderByStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectOrderByStep.html" icon="interface" />
+        <topic label="SQLSelectProjectionStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectProjectionStep.html" icon="interface" />
+        <topic label="SQLSelectSourceStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html" icon="interface" />
+        <topic label="SQLSelectWhereStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectWhereStep.html" icon="interface" />
+        <topic label="SQLUpdateAssignmentStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLUpdateAssignmentStep.html" icon="interface" />
+        <topic label="SQLUpdateSetStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLUpdateSetStep.html" icon="interface" />
+        <topic label="SQLUpdateStartStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLUpdateStartStep.html" icon="interface" />
+        <topic label="SQLUpdateWhereStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLUpdateWhereStep.html" icon="interface" />
+      </topic>
       <topic label="org.eclipse.net4j.spi.db" href="javadoc/org/eclipse/net4j/spi/db/package-summary.html" icon="package">
         <topic label="DBAdapter" href="javadoc/org/eclipse/net4j/spi/db/DBAdapter.html" icon="class" />
         <topic label="DBAdapter.FieldInfo" href="javadoc/org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" icon="class" />
@@ -132,6 +173,38 @@
   <topic label="Extension Point Reference" href="html/schema/index.html">
     <topic label="Net4j DB Framework" href="schemadoc/org_eclipse_net4j_db_dbAdapters.html" icon="plugin">
       <topic label="dbAdapters" href="schemadoc/org_eclipse_net4j_db_dbAdapters.html" icon="extpoint" />
+    </topic>
+  </topic>
+  <topic label="Programmer's Guide" href="html/programmers/index.html">
+    <topic label="Architecture and Core Concepts" href="html/programmers/Doc01_GeneralUtilities.html" icon="article">
+      <topic label="How the Pieces Fit Together" href="html/programmers/Doc01_GeneralUtilities.html#Architecture" icon="chapter" />
+      <topic label="Adapters, Providers, and Database Instances" href="html/programmers/Doc01_GeneralUtilities.html#AdaptersAndDatabases" icon="chapter" />
+      <topic label="Managed Schema and Connections" href="html/programmers/Doc01_GeneralUtilities.html#ManagedSchemasAndConnections" icon="chapter" />
+      <topic label="Coordinated Schema Access and Statement Caches" href="html/programmers/Doc01_GeneralUtilities.html#SchemaAccessAndCaching" icon="chapter" />
+      <topic label="Ownership, Transactions, and Failure Handling" href="html/programmers/Doc01_GeneralUtilities.html#LifecycleAndFailures" icon="chapter" />
+      <topic label="DBUtil and Supporting Facilities" href="html/programmers/Doc01_GeneralUtilities.html#Utilities" icon="chapter" />
+    </topic>
+    <topic label="Data Definition" href="html/programmers/Doc02_DataDefinition.html" icon="article">
+      <topic label="Standalone and Managed Schema Models" href="html/programmers/Doc02_DataDefinition.html#SchemaModel" icon="chapter" />
+      <topic label="Tables, Fields, Indexes, and Types" href="html/programmers/Doc02_DataDefinition.html#TablesFieldsAndIndexes" icon="chapter" />
+      <topic label="Creating, Reading, and Comparing Schemas" href="html/programmers/Doc02_DataDefinition.html#SchemaInspectionAndComparison" icon="chapter" />
+      <topic label="Schema Transactions and Working Copies" href="html/programmers/Doc02_DataDefinition.html#SchemaTransactions" icon="chapter" />
+      <topic label="Ensure Policies and Migration Review" href="html/programmers/Doc02_DataDefinition.html#EnsureAndMigrationPolicies" icon="chapter" />
+      <topic label="Limitations and Failure Boundaries" href="html/programmers/Doc02_DataDefinition.html#DDLBoundaries" icon="chapter" />
+    </topic>
+    <topic label="Data Manipulation" href="html/programmers/Doc03_DataManipulation.html" icon="article">
+      <topic label="Definitions and Fluent Stages" href="html/programmers/Doc03_DataManipulation.html#DefinitionsAndStages" icon="chapter" />
+      <topic label="SELECT with Parameters" href="html/programmers/Doc03_DataManipulation.html#SelectQueries" icon="chapter" />
+      <topic label="Explicit Conditions and Optional Filters" href="html/programmers/Doc03_DataManipulation.html#ConditionsAndComposition" icon="chapter" />
+      <topic label="Aliases, Joins, Ordering, and Grouping" href="html/programmers/Doc03_DataManipulation.html#JoinsAndGrouping" icon="chapter" />
+      <topic label="Subqueries and Aggregates" href="html/programmers/Doc03_DataManipulation.html#Subqueries" icon="chapter" />
+      <topic label="INSERT, UPDATE, and DELETE" href="html/programmers/Doc03_DataManipulation.html#DataChanges" icon="chapter" />
+      <topic label="Templates and Adapter Compilation" href="html/programmers/Doc03_DataManipulation.html#TemplatesAndCompilation" icon="chapter" />
+      <topic label="Positional and Identity-Based Binding" href="html/programmers/Doc03_DataManipulation.html#ParameterBinding" icon="chapter" />
+      <topic label="Typed NULL Values and Custom Binders" href="html/programmers/Doc03_DataManipulation.html#TypedAndCustomBinding" icon="chapter" />
+      <topic label="Reusing a Template and Managed Prepared Statement" href="html/programmers/Doc03_DataManipulation.html#ReuseAndLifecycle" icon="chapter" />
+      <topic label="Advanced Composition with SQL Fragments" href="html/programmers/Doc03_DataManipulation.html#Fragments" icon="chapter" />
+      <topic label="Portability Boundaries" href="html/programmers/Doc03_DataManipulation.html#Portability" icon="chapter" />
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2025 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.db.doc.programmers;
 
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
@@ -28,23 +29,29 @@ import org.eclipse.net4j.db.dml.SQLSubSelect;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.db.dml.SQLTemplate;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.sql.Types;
 
 /**
  * Data Manipulation
  * <p>
- * Net4j DB's DML API builds structured SELECT, INSERT, UPDATE, and DELETE definitions from schema objects. It
- * separates statement construction from adapter-specific SQL rendering and from connection-bound JDBC work. The
- * public API is in {@code org.eclipse.net4j.db.dml} and its staged builder contracts are in
- * {@code org.eclipse.net4j.db.dml.fluent}. Builders make clause order explicit; immutable templates can be compiled
- * for a particular adapter and then prepared on a connection.
+ * Net4j DB's structured DML API turns schema-aware definitions into prepared JDBC statements through a clear
+ * lifecycle: schema metadata → {@link SQLTemplate} → adapter-compiled {@link SQLStatement} → managed
+ * {@link IDBPreparedStatement} → JDBC execution. The template and compiled statement are independent of a particular
+ * connection or JDBC statement and can be retained as reusable definitions. The adapter controls compilation;
+ * {@link IDBConnection} controls preparation and its local statement cache.
  * <p>
- * The examples assume schema tables and fields already exist. Define and evolve those through
- * {@link Doc02_DataDefinition}; database, connection, and statement ownership are introduced in
- * {@link Doc01_GeneralUtilities}. SQL fragments are trusted SQL text, while values should be parameters. This API
- * does not provide result-to-object mapping or promise that every construct is supported identically by every SQL
- * dialect.
+ * The fluent interfaces constrain clause order and keep identifiers connected to schema metadata. Parameter objects
+ * separate values from SQL text. This improves composition and avoids concatenating user values, but raw SQL fragment
+ * text remains trusted input and is not made portable or safe automatically. For database/schema setup see
+ * {@link Doc02_DataDefinition}; for the managed connection and schema-coordination model see
+ * {@link Doc01_GeneralUtilities}.
+ * <p>
+ * The examples use a {@code SALES} schema containing {@code CUSTOMER(ID, NAME, EMAIL)} and
+ * {@code ORDERS(ID, CUSTOMER_ID, TOTAL, STATUS)}. Establish {@code adapter}, {@code connection}, and the listed
+ * schema table/field objects as application-owned inputs where a snippet says it expects them. The method declaration
+ * is not shown when a snippet is embedded, so each such example identifies its inputs in a code comment.
  * <p>
  * {@toc}
  *
@@ -53,18 +60,17 @@ import java.sql.Types;
 public class Doc03_DataManipulation
 {
   /**
-   * Definitions, Expressions, and Builder Stages
+   * Definitions and Fluent Stages
    * <p>
-   * {@link SQL} is the factory for definitions and expressions. {@code SQLExpression} represents a value,
-   * {@code SQLCondition} a boolean predicate, and {@code SQLSubSelect} a complete SELECT usable as a nested query.
-   * The fluent interfaces constrain which operation is available next: SELECT progresses from projection to source
-   * and optional clauses; comparisons require a right-hand operand; assignments require a value; joins require an
-   * ON condition. Retain the current stage only while building. Stale stages reject mutation after the builder has
-   * advanced.
+   * {@link SQL} is the factory for expressions, conditions, fragments, parameters, and statement builders.
+   * {@code SQLExpression} represents a value; {@link SQLCondition} represents a predicate; a complete
+   * {@link SQLSubSelect} can participate in another expression. The staged interfaces in
+   * {@code org.eclipse.net4j.db.dml.fluent} expose only the next legal operation. For example, a comparison stage
+   * must receive its right operand before the builder can proceed to later SELECT clauses.
    * <p>
-   * The builder's {@code build()} method captures an adapter-neutral {@link SQLTemplate}. The template is an
-   * immutable snapshot, so later builder operations do not alter it. Compile it with an {@link IDBAdapter} to obtain
-   * an {@link SQLStatement} containing SQL and parameter occurrence metadata.
+   * Builders are mutable while being assembled. Once advanced, an earlier stage is stale and cannot be used to
+   * mutate the builder. Calling {@code build()} captures an immutable adapter-neutral template snapshot; a later
+   * valid builder operation does not alter an earlier snapshot.
    *
    * @author Eike Stepper
    */
@@ -73,15 +79,16 @@ public class Doc03_DataManipulation
   }
 
   /**
-   * SELECT, Aliases, and Joins
+   * SELECT with Parameters
    * <p>
-   * Projections and predicates use schema fields as expressions. A table occurrence can be aliased with
-   * {@link IDBTable#as(String)}; qualify its columns with {@code SQLTableRef.column(field)}. This is distinct from
-   * {@code expression.as("label")}, which aliases a projected value. The API supports projections, wildcard
-   * selection, multiple FROM sources, INNER and LEFT joins, WHERE, GROUP BY, HAVING, and ORDER BY.
+   * A SELECT projects fields or expressions from one or more schema tables. Bind values as parameters rather than
+   * inserting them into SQL text. The compiled statement contains a placeholder at each parameter occurrence; the
+   * application binds those occurrences and then executes the prepared statement. Close the result set and prepared
+   * statement before closing the managed connection. The connection's cache can reuse a returned statement on a
+   * later preparation.
    * <p>
-   * {@link #selectRows(IDBAdapter, IDBTable, IDBField, IDBField) SelectRows.java}
-   * {@link #joinRows(IDBTable, IDBField, IDBTable, IDBField) JoinRows.java}
+   * The example expects the application to supply the adapter, managed connection, and {@code CUSTOMER.ID} field.
+   * {@link #findCustomers(IDBAdapter, IDBConnection, IDBTable, IDBField) FindCustomers.java}
    *
    * @author Eike Stepper
    */
@@ -90,91 +97,228 @@ public class Doc03_DataManipulation
     /**
      * @snip
      */
-    public SQLStatement selectRows(IDBAdapter adapter, IDBTable table, IDBField id, IDBField name)
+    public void findCustomers(IDBAdapter adapter, IDBConnection connection, IDBTable customer, IDBField customerID) throws SQLException
     {
-      return SQL.select(id, name) //
-          .from(table) //
-          .where(id).eq(SQL.param()) //
-          .compile(adapter);
-    }
-
-    /**
-     * @snip
-     */
-    public SQLTemplate joinRows(IDBTable objects, IDBField objectID, IDBTable details, IDBField detailObjectID)
-    {
-      SQLTableRef o = objects.as("o");
-      SQLTableRef d = details.as("d");
-
-      return SQL.select(o.column(objectID), d.column(detailObjectID)) //
-          .from(o) //
-          .leftJoin(d) //
-          .on(o.column(objectID)).eq(d.column(detailObjectID)) //
+      // Inputs: registered adapter, open managed connection, and CUSTOMER table/ID field.
+      SQLParameter requestedID = SQL.param();
+      SQLTemplate template = SQL.selectAll() //
+          .from(customer) //
+          .where(customerID).eq(requestedID) //
           .build();
+      SQLStatement statement = template.compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.HIGH))
+      {
+        statement.bind(prepared, 42);
+
+        try (IDBResultSet rows = prepared.executeQuery())
+        {
+          while (rows.next())
+          {
+            System.out.println("Customer ID: " + rows.getInt("ID"));
+          }
+        }
+      }
     }
   }
 
   /**
-   * Conditions, Aggregates, and Subqueries
+   * Explicit Conditions and Optional Filters
    * <p>
-   * Conditions can be composed using AND, OR, and NOT and can be assembled before they are supplied to a builder.
-   * Comparison factories cover equality and ordering, LIKE, BETWEEN, and IN. Aggregate expressions include COUNT,
-   * COUNT DISTINCT, MIN, MAX, SUM, and AVG. Complete SELECT definitions can be wrapped as scalar, EXISTS, or IN
-   * subqueries. Keep each condition complete before combining it; this makes optional filters explicit and keeps
-   * parameter order tied to the final SQL rendering.
+   * Conditions are immutable values that can be named, combined, and supplied to a builder. This is useful when
+   * predicates are conditional: compose only complete conditions, then attach the result at the WHERE stage. The
+   * order in which the final condition tree renders determines positional parameter order. Grouping the conditions
+   * explicitly also makes the intended boolean logic visible in code.
    * <p>
-   * {@link #groupedQuery(IDBAdapter, IDBTable, IDBField, IDBField) GroupedQuery.java}
+   * The example expects {@code ORDERS} plus its {@code STATUS} and {@code TOTAL} fields.
+   * {@link #findOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, boolean) FindOrders.java}
    *
    * @author Eike Stepper
    */
-  public class ConditionsAndSubqueries
+  public class ConditionsAndComposition
   {
     /**
      * @snip
      */
-    public SQLStatement groupedQuery(IDBAdapter adapter, IDBTable table, IDBField category, IDBField created)
+    public void findOrders(IDBAdapter adapter, IDBConnection connection, IDBTable orders, IDBField status, IDBField total, boolean filterByMinimum)
+        throws SQLException
     {
-      SQLCondition active = SQL.eq(category, SQL.param());
-      SQLCondition recent = SQL.ge(created, SQL.param());
+      // Inputs: adapter, managed connection, ORDERS table, STATUS and TOTAL fields, and the filter choice.
+      SQLParameter statusValue = SQL.param();
+      SQLCondition filter = SQL.eq(status, statusValue);
+      SQLParameter minimumValue = null;
 
-      return SQL.select(category, SQL.count().as("total")) //
-          .from(table) //
-          .where(active.and(recent)) //
-          .groupBy(category) //
-          .having(SQL.count()).gt(SQL.param()) //
-          .orderBy(SQL.asc(category)) //
-          .compile(adapter);
+      if (filterByMinimum)
+      {
+        minimumValue = SQL.param();
+        filter = filter.and(SQL.ge(total, minimumValue));
+      }
+
+      SQLTemplate template = SQL.selectAll() //
+          .from(orders) //
+          .where(filter) //
+          .build();
+      SQLStatement statement = template.compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.HIGH))
+      {
+        if (filterByMinimum)
+        {
+          statement.bind(prepared, "OPEN", new BigDecimal("100.00"));
+        }
+        else
+        {
+          statement.bind(prepared, "OPEN");
+        }
+
+        try (IDBResultSet rows = prepared.executeQuery())
+        {
+          while (rows.next())
+          {
+            System.out.println("Order total: " + rows.getBigDecimal("TOTAL"));
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Aliases, Joins, Ordering, and Grouping
+   * <p>
+   * A {@link SQLTableRef} represents one table occurrence and can qualify its columns. This matters when a query
+   * joins a table to itself or when two joined tables have fields with the same name. An alias on a table reference
+   * differs from an alias on a projected expression: the former qualifies source columns; the latter labels an
+   * output value. SELECT builders also provide ordering, grouping, and HAVING stages. Supported join and ordering
+   * forms still have to be accepted by the target database.
+   * <p>
+   * This example expects the {@code CUSTOMER} and {@code ORDERS} tables with their key fields.
+   * {@link #customerOrderJoin(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBTable, IDBField) CustomerOrderJoin.java}
+   * The aggregate example groups orders by status and filters the grouped result with HAVING:
+   * {@link #summarizeOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) SummarizeOrders.java}
+   *
+   * @author Eike Stepper
+   */
+  public class JoinsAndGrouping
+  {
+    /**
+     * @snip
+     */
+    public void customerOrderJoin(IDBAdapter adapter, IDBConnection connection, IDBTable customer, IDBField customerID, IDBTable orders,
+        IDBField orderCustomerID) throws SQLException
+    {
+      // Inputs: adapter, managed connection, CUSTOMER.ID, and ORDERS.CUSTOMER_ID.
+      SQLTableRef c = customer.as("c");
+      SQLTableRef o = orders.as("o");
+      SQLTemplate template = SQL.select(c.column(customerID), o.column(orderCustomerID)) //
+          .from(c) //
+          .join(o) //
+          .on(c.column(customerID)).eq(o.column(orderCustomerID)) //
+          .orderBy(SQL.asc(c.column(customerID))) //
+          .build();
+      SQLStatement statement = template.compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW); //
+          IDBResultSet rows = prepared.executeQuery())
+      {
+        while (rows.next())
+        {
+          System.out.println("Customer/order key: " + rows.getInt(1) + "/" + rows.getInt(2));
+        }
+      }
     }
 
     /**
      * @snip
      */
-    public SQLTemplate selectWithSubquery(IDBTable objects, IDBField id, IDBTable details, IDBField detailObjectID, IDBField status)
+    public void summarizeOrders(IDBAdapter adapter, IDBConnection connection, IDBTable orders, IDBField status, IDBField total) throws SQLException
     {
-      SQLSubSelect matchingIDs = SQL.select(detailObjectID) //
-          .from(details) //
-          .where(status).eq(SQL.param()) //
-          .subSelect();
-
-      return SQL.select(id) //
-          .from(objects) //
-          .where(id).in(matchingIDs) //
+      // Inputs: adapter, managed connection, ORDERS table, STATUS and TOTAL fields.
+      SQLParameter selectedStatus = SQL.param();
+      SQLTemplate template = SQL.select(status, SQL.count().as("ORDER_COUNT"), SQL.sum(total).as("GROSS_TOTAL")) //
+          .from(orders) //
+          .where(status).eq(selectedStatus) //
+          .groupBy(status) //
+          .having(SQL.count()).gt(SQL.param()) //
+          .orderBy(SQL.asc(status)) //
           .build();
+      SQLStatement statement = template.compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW))
+      {
+        statement.bind(prepared, "CLOSED", 0);
+
+        try (IDBResultSet rows = prepared.executeQuery())
+        {
+          while (rows.next())
+          {
+            System.out.println(rows.getString("STATUS") + ": " + rows.getLong("ORDER_COUNT"));
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Subqueries and Aggregates
+   * <p>
+   * A complete SELECT can be converted to {@link SQLSubSelect} and used in an IN, EXISTS, or scalar context. Aggregate
+   * expressions can appear in projections and HAVING clauses. The subquery's parameters participate in the outer
+   * statement's rendered occurrence order, so positional binding must account for the complete compiled statement.
+   * Prefer structured subqueries when their shape is supported; a fragment is not needed merely to nest a SELECT.
+   * <p>
+   * The example expects {@code CUSTOMER.ID}, {@code ORDERS.CUSTOMER_ID}, and {@code ORDERS.STATUS}.
+   * {@link #customersWithOpenOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBTable, IDBField, IDBField)
+   * CustomersWithOpenOrders.java}
+   *
+   * @author Eike Stepper
+   */
+  public class Subqueries
+  {
+    /**
+     * @snip
+     */
+    public void customersWithOpenOrders(IDBAdapter adapter, IDBConnection connection, IDBTable customer, IDBField customerID, IDBTable orders,
+        IDBField orderCustomerID, IDBField status) throws SQLException
+    {
+      // Inputs: adapter, connection, CUSTOMER.ID, ORDERS.CUSTOMER_ID, and ORDERS.STATUS.
+      SQLParameter openStatus = SQL.param();
+      SQLSubSelect openCustomers = SQL.select(orderCustomerID) //
+          .from(orders) //
+          .where(status).eq(openStatus) //
+          .subSelect();
+      SQLTemplate template = SQL.select(customerID) //
+          .from(customer) //
+          .where(customerID).in(openCustomers) //
+          .build();
+      SQLStatement statement = template.compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW))
+      {
+        statement.bind(prepared, "OPEN");
+
+        try (IDBResultSet rows = prepared.executeQuery())
+        {
+          while (rows.next())
+          {
+            System.out.println("Customer with open order: " + rows.getInt(1));
+          }
+        }
+      }
     }
   }
 
   /**
    * INSERT, UPDATE, and DELETE
    * <p>
-   * INSERT can use the table's physical column order, an explicit column list paired positionally with values, or
-   * named assignments. A values-only INSERT must provide one value for each physical table column in that order.
-   * UPDATE requires at least one complete assignment. DELETE can be built without a WHERE clause, so include a
-   * predicate whenever the operation must be restricted. As with SELECT, build a template once when the definition
-   * will be compiled more than once.
+   * An explicit INSERT column list pairs each column with the value at the same position. The values-only form instead
+   * depends on the table's physical field order and needs one value for each column. UPDATE requires at least one
+   * assignment. DELETE permits an absent WHERE clause, so make the scope of destructive operations explicit. These
+   * builders create definitions; compile and prepare them before binding and executing.
    * <p>
-   * {@link #insertTemplate(IDBTable, IDBField, IDBField) InsertTemplate.java}
-   * {@link #updateTemplate(IDBTable, IDBField, IDBField) UpdateTemplate.java}
-   * {@link #deleteTemplate(IDBTable, IDBField) DeleteTemplate.java}
+   * The examples expect the relevant table and fields from the shared SALES model.
+   * {@link #insertCustomer(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) InsertCustomer.java}
+   * {@link #updateOrderStatus(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) UpdateOrderStatus.java}
+   * {@link #deleteOrder(IDBAdapter, IDBConnection, IDBTable, IDBField) DeleteOrder.java}
    *
    * @author Eike Stepper
    */
@@ -183,82 +327,107 @@ public class Doc03_DataManipulation
     /**
      * @snip
      */
-    public SQLTemplate insertTemplate(IDBTable table, IDBField id, IDBField name)
+    public void insertCustomer(IDBAdapter adapter, IDBConnection connection, IDBTable customer, IDBField customerID, IDBField name) throws SQLException
     {
-      return SQL.insertInto(table) //
-          .columns(id, name) //
-          .values(SQL.param(), SQL.param()) //
+      // Inputs: adapter, connection, CUSTOMER table and its ID/NAME fields.
+      SQLParameter idValue = SQL.param();
+      SQLParameter nameValue = SQL.param();
+      SQLTemplate template = SQL.insertInto(customer) //
+          .columns(customerID, name) //
+          .values(idValue, nameValue) //
           .build();
+      SQLStatement statement = template.compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW))
+      {
+        statement.bind(prepared, 501, "Ada Lovelace");
+        prepared.executeUpdate();
+        connection.commit();
+      }
+      catch (SQLException | RuntimeException ex)
+      {
+        connection.rollback();
+        throw ex;
+      }
     }
 
     /**
      * @snip
      */
-    public SQLTemplate updateTemplate(IDBTable table, IDBField id, IDBField name)
+    public void updateOrderStatus(IDBAdapter adapter, IDBConnection connection, IDBTable orders, IDBField orderID, IDBField status) throws SQLException
     {
-      return SQL.update(table) //
-          .set(name).to(SQL.param()) //
-          .where(id).eq(SQL.param()) //
+      // Inputs: adapter, connection, ORDERS table and its ID/STATUS fields.
+      SQLTemplate template = SQL.update(orders) //
+          .set(status).to(SQL.param()) //
+          .where(orderID).eq(SQL.param()) //
           .build();
+      SQLStatement statement = template.compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.HIGH))
+      {
+        statement.bind(prepared, "SHIPPED", 9001L);
+        prepared.executeUpdate();
+        connection.commit();
+      }
+      catch (SQLException | RuntimeException ex)
+      {
+        connection.rollback();
+        throw ex;
+      }
     }
 
     /**
      * @snip
      */
-    public SQLTemplate deleteTemplate(IDBTable table, IDBField id)
+    public void deleteOrder(IDBAdapter adapter, IDBConnection connection, IDBTable orders, IDBField orderID) throws SQLException
     {
-      return SQL.deleteFrom(table) //
-          .where(id).eq(SQL.param()) //
+      // Inputs: adapter, connection, ORDERS table, and ORDERS.ID. This delete is intentionally restricted to one key.
+      SQLTemplate template = SQL.deleteFrom(orders) //
+          .where(orderID).eq(SQL.param()) //
           .build();
+      SQLStatement statement = template.compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW))
+      {
+        statement.bind(prepared, 9001L);
+        prepared.executeUpdate();
+        connection.commit();
+      }
+      catch (SQLException | RuntimeException ex)
+      {
+        connection.rollback();
+        throw ex;
+      }
     }
   }
 
   /**
-   * Templates, Compilation, and Adapter Behavior
+   * Templates and Adapter Compilation
    * <p>
-   * A template contains structured identifiers, expressions, and parameter references without retaining a
-   * connection. Compile it with the target adapter to produce database-specific SQL. The compiler quotes schema
-   * identifiers through the adapter, including names represented as structured table and column references. A
-   * template can therefore be compiled independently for multiple adapters; arbitrary SQL text inside a fragment is
-   * copied as supplied and is not rewritten into a dialect-neutral form.
-   * <p>
-   * The compiled statement retains no connection or JDBC statement. Preparing delegates to
-   * {@link IDBConnection#prepareStatement(String, ReuseProbability)} using the requested reuse hint. Preparation is
-   * separate from binding and execution.
-   * <p>
-   * {@link #compileForAdapter(IDBAdapter, IDBTable, IDBField) CompileForAdapter.java}
+   * A {@link SQLTemplate} is an immutable, adapter-neutral snapshot. Compile it with the target adapter to obtain
+   * {@link SQLStatement}: the adapter controls identifier quoting, SQL rendering for represented operations, and the
+   * JDBC type used for inferred typed NULL values. A compiled statement can be reused without retaining a connection
+   * or prepared statement. Compile the same template for another adapter when another dialect is needed. This does
+   * not rewrite arbitrary SQL fragment text into portable SQL.
    *
    * @author Eike Stepper
    */
-  public class Compilation
+  public class TemplatesAndCompilation
   {
-    /**
-     * @snip
-     */
-    public SQLStatement compileForAdapter(IDBAdapter adapter, IDBTable table, IDBField id)
-    {
-      SQLTemplate template = SQL.selectAll() //
-          .from(table) //
-          .where(id).eq(SQL.param()) //
-          .build();
-
-      return template.compile(adapter);
-    }
   }
 
   /**
-   * Parameters and Binding
+   * Positional and Identity-Based Binding
    * <p>
-   * Every {@code SQL.param()} creates a logical parameter identity. Each use renders as one JDBC placeholder
-   * occurrence. Positional binding supplies exactly one value for each occurrence in SQL order. Binding by
-   * {@link SQLParameter} identity sets every occurrence that refers to that same object. If an identity occurs more
-   * than once, the supplied value is bound at each occurrence in generated SQL order.
+   * Each {@code SQL.param()} call creates a distinct logical parameter. Positional binding supplies one value per
+   * rendered occurrence in SQL order. Identity binding targets one parameter object and sets each occurrence that
+   * refers to that same object. JDBC indexes remain one-based when binding a single position directly. The number of
+   * positional values is validated before setters run, but a failure during a later setter does not undo earlier
+   * values already placed on the statement.
    * <p>
-   * The varargs count is checked before setters run, but a later converter, binder, or JDBC failure may happen after
-   * earlier positions have been set; binding is not atomic. JDBC parameter indexes are one-based. An unknown
-   * parameter identity is rejected.
-   * <p>
-   * {@link #bindByIdentity(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindByIdentity.java}
+   * This example demonstrates both forms: two distinct placeholders are bound positionally, then one shared logical
+   * parameter appears twice on VARCHAR columns and is bound by identity.
+   * {@link #bindParameters(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, IDBField) BindParameters.java}
    *
    * @author Eike Stepper
    */
@@ -267,191 +436,228 @@ public class Doc03_DataManipulation
     /**
      * @snip
      */
-    public void bindByIdentity(IDBAdapter adapter, IDBConnection connection, IDBTable table, IDBField id, IDBField name) throws SQLException
+    public void bindParameters(IDBAdapter adapter, IDBConnection connection, IDBTable customer, IDBField customerID, IDBField name, IDBField email)
+        throws SQLException
     {
-      SQLParameter shared = SQL.param();
-      SQLStatement statement = SQL.selectAll() //
-          .from(table) //
-          .where(id).eq(shared) //
-          .or(name).eq(shared) //
-          .compile(adapter);
+      // Inputs: adapter, connection, CUSTOMER.ID, CUSTOMER.NAME, and CUSTOMER.EMAIL.
+      SQLParameter idParameter = SQL.param();
+      SQLParameter nameParameter = SQL.param();
+      SQLStatement positional = SQL.selectAll() //
+          .from(customer) //
+          .where(customerID).eq(idParameter) //
+          .and(name).eq(nameParameter) //
+          .build().compile(adapter);
 
-      IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.HIGH);
-
-      try
+      try (IDBPreparedStatement first = positional.prepare(connection, ReuseProbability.LOW))
       {
-        statement.bindParameter(prepared, shared, "Ada");
-
-        try (IDBResultSet resultSet = prepared.executeQuery())
+        positional.bind(first, 501, "Ada Lovelace");
+        try (IDBResultSet rows = first.executeQuery())
         {
-          while (resultSet.next())
+          while (rows.next())
           {
-            // Read the current row through the result-set API.
+            System.out.println("Matched customer: " + rows.getInt("ID"));
           }
         }
       }
-      finally
+
+      SQLParameter sharedID = SQL.param();
+      SQLStatement identity = SQL.selectAll() //
+          .from(customer) //
+          .where(name).eq(sharedID) //
+          .or(email).eq(sharedID) //
+          .build().compile(adapter);
+
+      try (IDBPreparedStatement second = identity.prepare(connection, ReuseProbability.LOW))
       {
-        prepared.close();
+        identity.bindParameter(second, sharedID, "Ada");
+        try (IDBResultSet rows = second.executeQuery())
+        {
+          while (rows.next())
+          {
+            System.out.println("Matched by shared value: " + rows.getInt("ID"));
+          }
+        }
       }
     }
   }
 
   /**
-   * NULL Values, Converters, and Custom Binders
+   * Typed NULL Values and Custom Binders
    * <p>
-   * A parameter created with {@code SQL.param(int)} carries a JDBC {@link Types} code. It controls typed
-   * NULL handling and typed {@code setObject}. Without an explicit code, NULL typing is inferred from a directly
-   * associated schema field and the adapter used to compile the statement. The inference does not propagate through
-   * arbitrary functions, arithmetic, fragments, or aggregate results. When no type can be established, binding fails
-   * rather than guessing.
+   * {@code SQL.param(int)} takes a JDBC {@code Types} code. It controls typed NULL binding and typed
+   * {@code setObject}. Without it, NULL typing can be inferred when a parameter is directly associated with a schema
+   * field; the compiled adapter supplies the JDBC type code for that field's {@link DBType}. The compiler does not
+   * propagate a field type through every arbitrary expression. If it cannot establish a type for a NULL, binding
+   * fails rather than guessing.
    * <p>
-   * A converter transforms a non-null Java value before default JDBC binding; null input bypasses conversion, and a
-   * converter result of null follows the same typed-NULL rules. An explicit {@link SQLParameterBinder} takes
-   * precedence and receives the original value, including null, at each occurrence. Use it for JDBC-specific setters
-   * or external type handlers.
+   * A converter transforms non-null values before default binding. Null input bypasses a converter, and a converter
+   * that produces null follows typed-NULL rules. An explicit {@link SQLParameterBinder} takes precedence and controls
+   * the JDBC setter for each occurrence, receiving the original value even when it is null.
    * <p>
-   * {@link #bindTypedNull(IDBAdapter, IDBConnection, IDBTable, IDBField) BindTypedNull.java}
-   * {@link #insertPayload(IDBAdapter, IDBConnection, IDBTable, IDBField, byte[]) InsertPayload.java}
+   * {@link #setCustomerEmailToNull(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) SetCustomerEmailToNull.java}
+   * {@link #insertBinaryValue(IDBAdapter, IDBConnection, IDBTable, IDBField, byte[]) InsertBinaryValue.java}
    *
    * @author Eike Stepper
    */
-  public class SpecializedBinding
+  public class TypedAndCustomBinding
   {
     /**
      * @snip
      */
-    public void bindTypedNull(IDBAdapter adapter, IDBConnection connection, IDBTable table, IDBField name) throws SQLException
+    public void setCustomerEmailToNull(IDBAdapter adapter, IDBConnection connection, IDBTable customer, IDBField customerID, IDBField email) throws SQLException
     {
-      SQLParameter nullableName = SQL.param(Types.VARCHAR);
-      SQLStatement statement = SQL.selectAll() //
-          .from(table) //
-          .where(name).eq(nullableName) //
+      // Inputs: adapter, connection, CUSTOMER table and ID/EMAIL fields.
+      SQLParameter missingEmail = SQL.param(Types.VARCHAR);
+      SQLStatement statement = SQL.update(customer) //
+          .set(email).to(missingEmail) //
+          .where(customerID).eq(SQL.param()) //
+          .build() //
           .compile(adapter);
 
-      IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW);
-
-      try
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW))
       {
-        statement.bindParameter(prepared, nullableName, null);
-      }
-      finally
-      {
-        prepared.close();
-      }
-    }
-
-    /**
-     * @snip
-     */
-    public void insertPayload(IDBAdapter adapter, IDBConnection connection, IDBTable table, IDBField payload, byte[] bytes) throws SQLException
-    {
-      SQLParameter parameter = SQL.param();
-      SQLParameterBinder<byte[]> binder = (statement, index, value) -> statement.setBytes(index, value);
-      SQLStatement insert = SQL.insertInto(table) //
-          .set(payload).to(parameter) //
-          .compile(adapter);
-
-      IDBPreparedStatement prepared = insert.prepare(connection, ReuseProbability.LOW);
-
-      try
-      {
-        insert.bindParameter(prepared, parameter, bytes, binder);
+        statement.bind(prepared, null, 501);
         prepared.executeUpdate();
+        connection.commit();
       }
-      finally
+      catch (SQLException | RuntimeException ex)
       {
-        prepared.close();
+        connection.rollback();
+        throw ex;
+      }
+    }
+
+    /**
+     * @snip
+     */
+    public void insertBinaryValue(IDBAdapter adapter, IDBConnection connection, IDBTable attachment, IDBField payload, byte[] bytes) throws SQLException
+    {
+      // Inputs: adapter, connection, an ATTACHMENT table with a binary PAYLOAD field, and the bytes to store.
+      SQLParameter payloadValue = SQL.param();
+      SQLParameterBinder<byte[]> binaryBinder = (statement, index, value) -> statement.setBytes(index, value);
+      SQLStatement insert = SQL.insertInto(attachment) //
+          .set(payload).to(payloadValue) //
+          .build().compile(adapter);
+
+      try (IDBPreparedStatement prepared = insert.prepare(connection, ReuseProbability.LOW))
+      {
+        insert.bindParameter(prepared, payloadValue, bytes, binaryBinder);
+        prepared.executeUpdate();
+        connection.commit();
+      }
+      catch (SQLException | RuntimeException ex)
+      {
+        connection.rollback();
+        throw ex;
       }
     }
   }
 
   /**
-   * Structured Fragments and Dynamic Conditions
+   * Reusing a Template and Managed Prepared Statement
    * <p>
-   * A fragment combines trusted SQL text with structured table, column, expression, condition, nested-fragment, and
-   * parameter parts. Raw SQL is not parsed or escaped. Never concatenate untrusted values into raw text; represent
-   * values with parameters and identifiers with structured references. Raw fragment text must not contain a question
-   * mark, even inside a quoted literal, because each placeholder must be represented by a structured parameter so
-   * that occurrence metadata remains aligned with JDBC positions.
+   * Reuse has two distinct scopes. The immutable template or compiled statement can be retained by an application
+   * independently of a connection. A prepared JDBC statement is connection-bound and checked out only for its use;
+   * closing it returns it to that connection's cache, subject to cache policy and capacity. {@link ReuseProbability}
+   * is a hint to the Net4j statement cache, not a guarantee that a particular JDBC handle will be reused.
    * <p>
-   * For optional predicates, compose complete conditions before passing them to the builder. This avoids retaining a
-   * partially completed comparison stage and makes the final parameter ordering visible in one definition.
-   * <p>
-   * {@link #buildFragment(IDBTable, IDBField, IDBField) BuildFragment.java}
-   * {@link #dynamicFilter(IDBTable, IDBField, IDBField, boolean) DynamicFilter.java}
+   * For long-running application code, reuse the definition and prepare/close around each operation. This promptly
+   * releases the schema read token associated with a checkout, allowing a queued schema change to progress.
+   * {@link #repeatCustomerLookup(IDBAdapter, IDBConnection, IDBTable, IDBField) RepeatCustomerLookup.java}
    *
    * @author Eike Stepper
    */
-  public class FragmentsAndDynamicQueries
+  public class ReuseAndLifecycle
   {
     /**
      * @snip
      */
-    public SQLTemplate buildFragment(IDBTable table, IDBField id, IDBField name)
+    public void repeatCustomerLookup(IDBAdapter adapter, IDBConnection connection, IDBTable customer, IDBField customerID) throws SQLException
     {
-      SQLParameter parameter = SQL.param();
+      // Inputs: adapter, connection, CUSTOMER table and ID field.
+      SQLParameter idValue = SQL.param();
+      SQLTemplate template = SQL.selectAll() //
+          .from(customer) //
+          .where(customerID).eq(idValue) //
+          .build();
+      SQLStatement statement = template.compile(adapter);
+
+      for (int id : new int[] { 501, 502, 503 })
+      {
+        try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.HIGH))
+        {
+          statement.bind(prepared, id);
+
+          try (IDBResultSet rows = prepared.executeQuery())
+          {
+            while (rows.next())
+            {
+              System.out.println("Customer " + rows.getInt("ID") + ": " + rows.getString("NAME"));
+            }
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Advanced Composition with SQL Fragments
+   * <p>
+   * Fragments combine trusted SQL text with structured tables, columns, expressions, conditions, and parameters.
+   * Raw text is neither parsed nor escaped. Never concatenate untrusted values into it. Represent a value with a
+   * structured parameter and an identifier with a table or column reference. Raw fragment text must not include a
+   * question mark, even inside a quoted literal: every placeholder must be represented by a parameter object so
+   * compiled occurrence metadata continues to match JDBC parameter positions.
+   * <p>
+   * Use fragments for a SQL shape the structured builders cannot express, while keeping identifiers and values
+   * structured where possible. Fragments do not turn vendor-specific syntax into portable SQL.
+   * {@link #searchByNameFragment(IDBAdapter, IDBConnection, IDBTable, IDBField) SearchByNameFragment.java}
+   *
+   * @author Eike Stepper
+   */
+  public class Fragments
+  {
+    /**
+     * @snip
+     */
+    public void searchByNameFragment(IDBAdapter adapter, IDBConnection connection, IDBTable customer, IDBField name) throws SQLException
+    {
+      // Inputs: adapter, connection, CUSTOMER table and NAME field.
+      SQLParameter nameValue = SQL.param();
       SQLFragment fragment = SQL.fragment() //
-          .sql("SELECT ").column(id) //
-          .sql(" FROM ").table(table) //
-          .sql(" WHERE ").column(name).sql(" = ").param(parameter) //
+          .sql("SELECT ").column(name) //
+          .sql(" FROM ").table(customer) //
+          .sql(" WHERE ").column(name).sql(" = ").param(nameValue) //
           .build();
+      SQLStatement statement = SQL.build(fragment).compile(adapter);
 
-      return SQL.build(fragment);
-    }
-
-    /**
-     * @snip
-     */
-    public SQLTemplate dynamicFilter(IDBTable table, IDBField status, IDBField created, boolean includeDate)
-    {
-      SQLCondition filter = SQL.eq(status, SQL.param());
-
-      if (includeDate)
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW))
       {
-        filter = filter.and(SQL.ge(created, SQL.param()));
-      }
+        statement.bindParameter(prepared, nameValue, "Ada Lovelace");
 
-      return SQL.selectAll() //
-          .from(table) //
-          .where(filter) //
-          .build();
+        try (IDBResultSet rows = prepared.executeQuery())
+        {
+          while (rows.next())
+          {
+            System.out.println("Customer name: " + rows.getString(1));
+          }
+        }
+      }
     }
   }
 
   /**
-   * Executing Statements and Resource Lifecycle
+   * Portability Boundaries
    * <p>
-   * Prepare the compiled statement on the connection that will execute it, bind all required values, then execute
-   * through the prepared statement. Close result sets before closing the prepared statement. Close the statement when
-   * finished even when execution or row processing fails. A template or compiled statement can be reused, but a JDBC
-   * statement belongs to its connection and must not outlive that connection.
-   * <p>
-   * SQL generation, binding, and execution fail at different boundaries: compilation may reject an invalid
-   * definition, binding may fail due to conversion or JDBC setters, and execution may fail with a vendor SQL error.
-   * These failures do not implicitly roll back a caller-managed transaction. Transaction ownership remains with the
-   * application code using the connection.
+   * The compiler renders the structured operations represented in its API and delegates identifier quoting and
+   * type-specific behavior to the adapter. It does not rewrite arbitrary fragment text, validate business rules,
+   * map result rows to objects, infer types through all expression trees, or generate DDL. SQL syntax support remains
+   * bounded by the adapter and target database. Keep portable definitions structured and isolate vendor-specific
+   * syntax in explicit adapter-aware code paths.
    *
    * @author Eike Stepper
    */
-  public class ExecutionAndLifecycle
-  {
-  }
-
-  /**
-   * Limits and Extension Points
-   * <p>
-   * Use adapter behavior for identifier quoting and inferred NULL JDBC types, a value converter for a pure Java
-   * transformation, and a parameter binder when the JDBC setter itself must be specialized. The compiler handles
-   * only constructs represented by the public DML API and does not infer arbitrary expression types, map result
-   * rows, parameterize raw fragments automatically, or generate DDL. Database syntax support still depends on the
-   * target adapter and server. The earlier temporary DML guide's material on stages, query forms, joins, aggregates,
-   * subqueries, insert variants, fragments, adapter compilation, parameter identity/order, NULL inference, binders,
-   * and statement ownership is now expressed here as Java-source documentation.
-   *
-   * @author Eike Stepper
-   */
-  public class LimitsAndExtensions
+  public class Portability
   {
   }
 }

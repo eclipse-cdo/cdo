@@ -23,7 +23,7 @@ import org.eclipse.net4j.util.event.IEvent;
  * @noextend This interface is not intended to be extended by clients.
  * @since 4.2
  */
-public interface IDBDatabase extends IContainer<IDBConnection>, IDBConnectionProvider2, Closeable
+public interface IDBDatabase extends IContainer<IDBConnection>, IDBConnectionProvider2, Closeable, AutoCloseable
 {
   public static final int DEFAULT_STATEMENT_CACHE_CAPACITY = 200;
 

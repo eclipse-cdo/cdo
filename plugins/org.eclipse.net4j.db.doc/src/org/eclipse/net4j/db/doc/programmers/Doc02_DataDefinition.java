@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2025 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
@@ -14,27 +14,34 @@ package org.eclipse.net4j.db.doc.programmers;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
+import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
+
+import javax.sql.DataSource;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 /**
  * Data Definition
  * <p>
- * The DDL API models the intended structure of a database independently from a particular JDBC connection. A schema
- * is a mutable metadata tree of tables, fields, and indexes; an adapter translates that model into database-specific
- * SQL. This distinction lets an application define its desired structure once, compare it with another schema, and
- * apply supported changes through a controlled schema transaction.
+ * Net4j DB models database structure as metadata, then delegates physical DDL to the selected adapter. That separation
+ * gives an application one schema vocabulary for a standalone desired model, a catalog snapshot, or the managed
+ * schema owned by {@link IDBDatabase}. The model itself is not the database: adding a field to an ordinary schema
+ * changes Java metadata, while creating or evolving a managed schema requires a database operation.
  * <p>
- * Use a schema model as a declaration of structure, not as a live database catalog. Mutating a model changes metadata
- * in memory. Database state changes only when a create/drop operation or an adapter-backed schema transaction runs.
- * For connection, adapter, and resource ownership fundamentals see {@link Doc01_GeneralUtilities}; for SQL that reads
- * or changes row data see {@link Doc03_DataManipulation}.
+ * Schema evolution also connects Article 1's managed connections and caches. A schema transaction updates the
+ * managed model through the adapter and then coordinates cache invalidation across the database's managed
+ * connections. This coordination does not make every vendor's DDL transactional or place all physical DDL under the
+ * cache-coordination lock. For the broader architecture, see {@link Doc01_GeneralUtilities}; for row-level SQL, see
+ * {@link Doc03_DataManipulation}.
  * <p>
  * {@toc}
  *
@@ -43,155 +50,209 @@ import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 public class Doc02_DataDefinition
 {
   /**
-   * Modeling Schemas
+   * Standalone and Managed Schema Models
    * <p>
-   * {@link DBUtil#createSchema(String)} creates a client-side schema model. Add tables, fields, and indexes through
-   * {@link IDBSchema} and {@link IDBTable}. Field order is significant for legacy table-level INSERT generation and
-   * for physical column ordering; explicitly listing columns in DML is generally clearer. Indexes distinguish
-   * primary keys, unique indexes, and non-unique indexes. Keep names and types aligned with the target database and
-   * use the selected {@link IDBAdapter} to account for vendor capabilities.
+   * {@link DBUtil#createSchema(String)} creates an independent, mutable metadata model. It is appropriate for
+   * defining an application's desired tables before opening a database. {@link DBUtil#readSchema(IDBAdapter,
+   * Connection, String)} obtains a catalog snapshot through an adapter. When {@link DBUtil#openDatabase} creates a
+   * managed database, its implementation reads a schema and locks that model; callers should use
+   * {@link IDBDatabase#getSchema()} for inspection and use an {@link IDBSchemaTransaction} working copy for edits.
    * <p>
-   * Case sensitivity and qualified table-name behavior are schema-model choices. They affect lookup/comparison and
-   * name handling; they do not create a database schema by themselves. {@link DBType} supplies logical database types,
-   * while the adapter may adapt a type or reject a capability such as indexing a particular type.
+   * A standalone schema can be copied, compared, exported, created, or dropped using the overload appropriate to
+   * the application. Those methods call the supplied adapter and may use the supplied connection, data source, or
+   * provider. They perform actual DDL only when an operation explicitly asks for creation or dropping. They do not
+   * create a coordinated managed database merely because the schema model is passed to them.
    * <p>
-   * {@link #defineSchema() DefineSchema.java}
+   * {@link #defineSalesSchema() DefineSalesSchema.java}
    *
    * @author Eike Stepper
    */
-  public class ModelingSchemas
+  public class SchemaModel
   {
     /**
      * @snip
      */
-    public IDBSchema defineSchema()
+    public void defineSalesSchema()
     {
-      IDBSchema schema = DBUtil.createSchema("APP");
+      IDBSchema sales = DBUtil.createSchema("SALES");
 
-      IDBTable customer = schema.addTable("CUSTOMER");
-      IDBField id = customer.addField("ID", DBType.INTEGER, true);
-      customer.addField("NAME", DBType.VARCHAR, 160, false);
-      customer.addIndex("PK_CUSTOMER", IDBIndex.Type.PRIMARY_KEY, id);
+      IDBTable customer = sales.addTable("CUSTOMER");
+      IDBField customerID = customer.addField("ID", DBType.INTEGER, true);
+      customer.addField("NAME", DBType.VARCHAR, 160, true);
+      customer.addField("EMAIL", DBType.VARCHAR, 254, false);
+      customer.addIndex("PK_CUSTOMER", IDBIndex.Type.PRIMARY_KEY, customerID);
+      customer.addIndex("UQ_CUSTOMER_EMAIL", IDBIndex.Type.UNIQUE, "EMAIL");
 
-      return schema;
+      IDBTable orders = sales.addTable("ORDERS");
+      IDBField orderID = orders.addField("ID", DBType.BIGINT, true);
+      IDBField orderCustomerID = orders.addField("CUSTOMER_ID", DBType.INTEGER, true);
+      orders.addField("TOTAL", DBType.DECIMAL, 12, 2, true);
+      orders.addField("STATUS", DBType.VARCHAR, 24, true);
+      orders.addIndex("PK_ORDERS", IDBIndex.Type.PRIMARY_KEY, orderID);
+      orders.addIndex("IX_ORDERS_CUSTOMER", IDBIndex.Type.NON_UNIQUE, orderCustomerID);
     }
   }
 
   /**
-   * Creating, Reading, and Exporting DDL
+   * Tables, Fields, Indexes, and Types
    * <p>
-   * {@link IDBSchema#create(IDBAdapter, java.sql.Connection)} asks the adapter to create the schema's table
-   * definitions on the supplied connection and returns the tables that were created. Overloads accept a
-   * {@code DataSource} or an {@code IDBConnectionProvider} when the caller wants the operation to acquire a
-   * connection. Adapter-generated DDL is database-specific, and database permissions, existing objects, and adapter
-   * support determine success. Creation is not an idempotent ensure operation: use schema comparison/evolution for
-   * reconciling an existing database.
+   * A table owns ordered fields and indexes. A field records a logical {@link DBType}, precision, scale, and
+   * nullability. An index records its kind (primary key, unique, or non-unique) and ordered fields. The model checks
+   * structural relationships such as whether an index field belongs to its table; it does not prove that a target
+   * database accepts every type, name, precision, or index form. The adapter supplies type adaptation, identifier
+   * rules, maximum lengths, and vendor-specific DDL.
    * <p>
-   * {@link DBUtil#readSchema(IDBAdapter, java.sql.Connection, String)} reads catalog metadata into a model. Reading
-   * observes database state; it does not update that state. {@link IDBSchema#export(java.sql.Connection,
-   * java.io.PrintStream)} exports schema information for diagnostics or scripts; do not treat export output as a
-   * portable migration language.
+   * Use descriptive, stable names and model constraints explicitly. For example, {@code CUSTOMER.EMAIL} can have a
+   * unique index, while {@code ORDERS.CUSTOMER_ID} can have a non-unique index for common customer order lookups.
+   * A model-level index does not itself create or verify a physical index.
    *
    * @author Eike Stepper
    */
-  public class CreatingAndInspectingSchemas
+  public class TablesFieldsAndIndexes
   {
   }
 
   /**
-   * Schema Comparison
+   * Creating, Reading, and Comparing Schemas
    * <p>
-   * {@link IDBSchema#compare(IDBSchema)} produces an {@link IDBSchemaDelta} describing differences between models.
-   * The comparison is a metadata operation: it issues no DDL. A delta is a tree whose nodes identify a schema, table,
-   * field, index, index-field, or property and classify each node as {@link ChangeKind#ADD}, {@link ChangeKind#REMOVE},
-   * or {@link ChangeKind#CHANGE}. Applying a delta to an {@link IDBSchema} changes that model in memory. Executing it
-   * against a database requires an adapter update operation or a schema transaction.
+   * {@link IDBSchema#create(IDBAdapter, DataSource)} delegates creation to the adapter. The overloads accepting a
+   * JDBC connection or {@code IDBConnectionProvider} let the caller choose resource ownership. Creation returns the
+   * tables created; it is not a reconciliation operation and should not be treated as idempotent. To inspect an
+   * existing catalog, read it through the adapter. To determine differences, compare two schema models. Comparison
+   * is in-memory and emits a typed {@link IDBSchemaDelta}; it executes no SQL.
    * <p>
-   * Deltas are useful for review and policy. Inspect a delta before applying it when removals, type changes, or
-   * constraint changes could affect existing data. A comparison tells you structural differences, not whether the
-   * database can safely perform a particular migration or whether existing values satisfy new constraints.
+   * A delta can be inspected, visited under a policy, or applied to a schema model. Applying it to a model changes
+   * that model only. The adapter's {@code updateSchema} operation is what maps a delta to database-specific DDL.
+   * Review removals, type changes, and constraint changes before applying them to production data.
    * <p>
-   * {@link #compareSchemas(IDBSchema, IDBSchema) CompareSchemas.java}
+   * {@link #inspectCurrentSchema(IDBAdapter, Connection) InspectCurrentSchema.java}
    *
    * @author Eike Stepper
    */
-  public class SchemaComparison
+  public class SchemaInspectionAndComparison
   {
     /**
      * @snip
      */
-    public IDBSchemaDelta compareSchemas(IDBSchema desired, IDBSchema current)
+    public void inspectCurrentSchema(IDBAdapter adapter, Connection connection) throws SQLException
     {
-      return desired.compare(current);
-    }
-  }
+      // Inputs: an adapter and an open JDBC connection for the catalog being inspected.
+      IDBSchema actual = DBUtil.readSchema(adapter, connection, "SALES");
+      IDBSchema desired = DBUtil.createSchema("SALES");
 
-  /**
-   * Schema Evolution and Schema Transactions
-   * <p>
-   * {@link IDBDatabase#openSchemaTransaction()} creates an isolated working copy of the database's current schema.
-   * Edit that working copy, review {@link IDBSchemaTransaction#getSchemaDelta()}, then call
-   * {@link IDBSchemaTransaction#commit()} to ask the adapter to update the physical schema and publish the new model.
-   * Closing without committing abandons the working changes. The schema transaction may acquire its own connection
-   * at commit time, or can be associated with an existing {@code IDBConnection} through the database/connection
-   * overload. This is a schema lifecycle, not a replacement for an application's JDBC row-data transaction.
-   * <p>
-   * {@link IDBSchemaTransaction#ensureSchema(IDBSchema)} merges a desired schema into the working copy and returns
-   * the delta it proposes. Its default policy allows additions and schema-level changes, while removals and ordinary
-   * element changes are ignored. This conservative default avoids silently dropping tables or changing existing
-   * columns. A custom {@code IDBDeltaVisitor.Filter.Policy} can allow or forbid specific delta kinds; choose it
-   * deliberately, inspect the returned delta, and commit only when the proposed migration is appropriate. The
-   * adapter still controls whether and how each operation is supported by the target database.
-   * <p>
-   * {@link #evolveSchema(IDBDatabase) EvolveSchema.java}
-   *
-   * @author Eike Stepper
-   */
-  public class SchemaEvolution
-  {
-    /**
-     * @snip
-     */
-    public IDBSchemaDelta evolveSchema(IDBDatabase database)
-    {
-      IDBSchema desired = DBUtil.createSchema("APP");
       IDBTable customer = desired.addTable("CUSTOMER");
-      IDBField id = customer.addField("ID", DBType.INTEGER, true);
-      customer.addField("NAME", DBType.VARCHAR, 160, false);
-      customer.addIndex("PK_CUSTOMER", IDBIndex.Type.PRIMARY_KEY, id);
+      IDBField customerID = customer.addField("ID", DBType.INTEGER, true);
+      customer.addField("NAME", DBType.VARCHAR, 160, true);
+      customer.addIndex("PK_CUSTOMER", IDBIndex.Type.PRIMARY_KEY, customerID);
 
-      IDBSchemaTransaction transaction = database.openSchemaTransaction();
+      IDBSchemaDelta delta = desired.compare(actual);
+      System.out.println("Tables differing: " + delta.getTableDeltaCount());
 
-      try
+      for (IDBTableDelta tableDelta : delta.getTableDeltasSortedByName())
       {
-        IDBSchemaDelta proposed = transaction.ensureSchema(desired);
-        IDBSchemaDelta applied = transaction.commit();
-        return applied == null ? proposed : applied;
-      }
-      finally
-      {
-        transaction.close();
+        System.out.println(tableDelta.getChangeKind() + " " + tableDelta.getName());
       }
     }
   }
 
   /**
-   * Delta Policies and Review
+   * Schema Transactions and Working Copies
    * <p>
-   * A delta visitor traverses the typed hierarchy and can accept, ignore, or reject changes under a policy. Policies
-   * can be scoped by {@code DeltaType}, {@code ChangeKind}, or their combination; a frozen policy cannot be edited.
-   * The standard ensure policy is intentionally conservative, so adding a non-null field to a populated table may
-   * still require an explicit migration plan or a database-specific default strategy. A metadata delta is not a data
-   * backfill plan.
+   * {@link IDBDatabase#openSchemaTransaction()} snapshots the current managed schema into a working copy. Edit the
+   * copy, inspect {@link IDBSchemaTransaction#getSchemaDelta()}, and commit the transaction to invoke the adapter's
+   * update operation. Closing an uncommitted transaction abandons the working copy. A transaction can instead be
+   * opened through {@link IDBConnection#openSchemaTransaction()}; this associates its schema update with that
+   * existing managed connection. In that form, schema transaction {@code commit()} commits the connection after the
+   * update/completion path. In the database-opened form, Net4j obtains a managed connection for the update and
+   * commits it through its connection-execution helper.
    * <p>
-   * Review schema transaction results and adapter failures as part of deployment. DDL transactional behavior varies
-   * by database. Although the schema transaction coordinates update and model publication, a database may commit DDL
-   * implicitly or support only a subset of alterations; do not assume a failed multi-step migration has been fully
-   * rolled back on every vendor.
+   * Neither form is an ordinary application transaction around arbitrary row updates. Do not assume that JDBC
+   * rollback can undo DDL: databases differ in whether DDL is transactional, whether it causes an implicit commit,
+   * and which alterations they support. Keep application data migration and schema changes as explicit deployment
+   * steps when they need ordering or recovery logic.
+   * <p>
+   * {@link #addEmailColumn(IDBDatabase) AddEmailColumn.java}
+   * {@link #addStatusColumn(IDBConnection) AddStatusColumn.java}
    *
    * @author Eike Stepper
    */
-  public class DeltaPoliciesAndReview
+  public class SchemaTransactions
+  {
+    /**
+     * @snip
+     */
+    public void addEmailColumn(IDBDatabase database)
+    {
+      // Input: an open database whose managed schema includes CUSTOMER.
+      try (IDBSchemaTransaction transaction = database.openSchemaTransaction())
+      {
+        IDBTable customer = transaction.getWorkingCopy().getTable("CUSTOMER");
+        if (customer.getField("EMAIL") == null)
+        {
+          customer.addField("EMAIL", DBType.VARCHAR, 254, false);
+        }
+
+        IDBSchemaDelta delta = transaction.getSchemaDelta();
+        System.out.println("Proposed schema delta has " + delta.getTableDeltaCount() + " table changes");
+        transaction.commit();
+      }
+    }
+
+    /**
+     * @snip
+     */
+    public void addStatusColumn(IDBConnection connection)
+    {
+      // Input: an open managed connection; close all its prepared statements before committing this schema change.
+      try (IDBSchemaTransaction transaction = connection.openSchemaTransaction())
+      {
+        IDBTable orders = transaction.getWorkingCopy().getTable("ORDERS");
+        if (orders.getField("STATUS") == null)
+        {
+          orders.addField("STATUS", DBType.VARCHAR, 24, true);
+        }
+
+        transaction.commit();
+      }
+    }
+  }
+
+  /**
+   * Ensure Policies and Migration Review
+   * <p>
+   * {@link IDBSchemaTransaction#ensureSchema(IDBSchema)} compares a desired model with the transaction's working
+   * copy, filters the delta under a policy, copies allowed changes, applies them to the working copy, and returns the
+   * accepted delta. The default policy allows additions and a schema-level change; removals and ordinary element
+   * changes are ignored. This is deliberately conservative. An explicit policy can allow or forbid combinations of
+   * delta type and change kind, but allowing a change does not make it safe for existing data or supported by every
+   * adapter.
+   * <p>
+   * Before commit, inspect the proposed delta and plan any required data backfill. Adding a non-null field to a
+   * populated table may fail unless the database or migration process supplies a value for existing rows. A structural
+   * delta does not describe data conversion, default-value rollout, or application compatibility across versions.
+   * In the base adapter, the delta is applied to managed in-memory metadata before adapter DDL is executed. The
+   * transaction completion path then coordinates invalidation of managed connection caches as explained in
+   * {@link Doc01_GeneralUtilities.SchemaAccessAndCaching}.
+   *
+   * @author Eike Stepper
+   */
+  public class EnsureAndMigrationPolicies
+  {
+  }
+
+  /**
+   * Limitations and Failure Boundaries
+   * <p>
+   * Adapter support determines how table creation, field alterations, indexes, and drops are rendered. The physical
+   * database determines accepted syntax, DDL transaction behavior, locking, and preservation of data. Net4j DB's
+   * managed schema model is metadata, not a replacement for migration tooling or a database catalog. If an adapter
+   * operation fails after some DDL has run, the framework's JDBC rollback attempt cannot establish a portable claim
+   * that all physical changes were undone. Confirm the resulting catalog and data state using the target database's
+   * supported inspection tools before retrying a deployment.
+   *
+   * @author Eike Stepper
+   */
+  public class DDLBoundaries
   {
   }
 }

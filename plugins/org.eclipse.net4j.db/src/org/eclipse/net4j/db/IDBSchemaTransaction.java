@@ -25,7 +25,7 @@ import org.eclipse.net4j.util.collection.Closeable;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBSchemaTransaction extends Closeable
+public interface IDBSchemaTransaction extends Closeable, AutoCloseable
 {
   public static final Policy DEFAULT_ENSURE_SCHEMA_POLICY = //
       new IDBDeltaVisitor.Filter.Policy().allow(DeltaType.SCHEMA, ChangeKind.CHANGE).allow(ChangeKind.ADD).freeze();

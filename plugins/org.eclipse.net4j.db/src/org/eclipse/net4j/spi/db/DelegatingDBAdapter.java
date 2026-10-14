@@ -72,6 +72,30 @@ public class DelegatingDBAdapter implements IDBAdapter
   }
 
   @Override
+  public String[] getDatabaseProductNames()
+  {
+    return delegate.getDatabaseProductNames();
+  }
+
+  @Override
+  public String getDatabaseProductNamePattern()
+  {
+    return delegate.getDatabaseProductNamePattern();
+  }
+
+  @Override
+  public String getDatabaseDriverNamePattern()
+  {
+    return delegate.getDatabaseDriverNamePattern();
+  }
+
+  @Override
+  public String getDatabaseURLPattern()
+  {
+    return delegate.getDatabaseURLPattern();
+  }
+
+  @Override
   public int hashCode()
   {
     return DBAdapterID.copy(this).hashCode();

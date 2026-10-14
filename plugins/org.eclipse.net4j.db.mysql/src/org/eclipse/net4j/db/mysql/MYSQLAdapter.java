@@ -68,6 +68,12 @@ public class MYSQLAdapter extends DBAdapter
     super(name, version);
   }
 
+  @Override
+  public String[] getDatabaseProductNames()
+  {
+    return new String[] { "MySQL", "MariaDB" };
+  }
+
   /**
    * @since 2.0
    */

@@ -79,6 +79,58 @@ public interface IDBAdapter extends IDBAdapterID
   public String getVersion();
 
   /**
+   * Returns the JDBC database product names recognized by this adapter. Product
+   * names are trimmed and compared case-insensitively. The default recognizes the
+   * adapter's declared name. Implementations may return additional aliases.
+   *
+   * @return the exact JDBC product names recognized by this adapter
+   * @since 4.15
+   */
+  public default String[] getDatabaseProductNames()
+  {
+    return new String[] { getName() };
+  }
+
+  /**
+   * Returns an optional regular expression for additional JDBC product-name
+   * matching. It is matched case-insensitively against the complete trimmed
+   * product name. A matching product name is required even when this pattern is
+   * configured.
+   *
+   * @return a product-name regular expression, or {@code null} if none is needed
+   * @since 4.15
+   */
+  public default String getDatabaseProductNamePattern()
+  {
+    return null;
+  }
+
+  /**
+   * Returns an optional regular expression that constrains JDBC driver-name
+   * matching. The complete driver name must match case-insensitively; a missing
+   * driver name does not match.
+   *
+   * @return a JDBC driver-name regular expression, or {@code null} if no driver constraint applies
+   * @since 4.15
+   */
+  public default String getDatabaseDriverNamePattern()
+  {
+    return null;
+  }
+
+  /**
+   * Returns an optional regular expression that constrains JDBC URL matching.
+   * The complete URL must match case-insensitively; a missing URL does not match.
+   *
+   * @return a JDBC URL regular expression, or {@code null} if no URL constraint applies
+   * @since 4.15
+   */
+  public default String getDatabaseURLPattern()
+  {
+    return null;
+  }
+
+  /**
    * @since 4.12
    */
   public boolean isCaseSensitive();
@@ -371,6 +423,8 @@ public interface IDBAdapter extends IDBAdapterID
    *
    * @author Eike Stepper
    * @since 4.14
+   * @noimplement This interface is not intended to be implemented by clients.
+   * @noextend This interface is not intended to be extended by clients.
    */
   public interface Registry extends IRegistry<String, IDBAdapter>
   {
@@ -437,5 +491,23 @@ public interface IDBAdapter extends IDBAdapterID
      * @return the highest-version adapter, or {@code null} if no version is registered
      */
     public IDBAdapter getAdapter(String adapterName);
+
+    /**
+     * Resolves the registered adapter for a JDBC connection. An adapter associated
+     * with an {@link IDBConnection} is authoritative. An ordinary JDBC connection is
+     * matched against registered adapter recognition metadata using its database
+     * product name and any declared driver-name or URL constraints. A direct adapter
+     * name match takes precedence over aliases; when different adapter names remain
+     * equally applicable, the result is ambiguous. Of multiple versions of one
+     * adapter name, the highest version is selected. A matching lazy descriptor is
+     * materialized only when selected. Metadata access failures are reported as
+     * {@link DBException}.
+     *
+     * @param connection the JDBC connection to inspect
+     * @return the selected adapter, or {@code null} if the product is unknown or
+     *         cannot be identified unambiguously
+     * @since 4.15
+     */
+    public IDBAdapter getAdapter(Connection connection);
   }
 }

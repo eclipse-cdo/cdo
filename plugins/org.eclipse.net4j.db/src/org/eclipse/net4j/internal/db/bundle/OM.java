@@ -71,8 +71,13 @@ public abstract class OM
         {
           String name = element.getAttribute("name");
           String version = element.getAttribute("version");
+          String productNames = element.getAttribute("productNames");
+          String productNamePattern = element.getAttribute("productNamePattern");
+          String driverNamePattern = element.getAttribute("driverNamePattern");
+          String urlPattern = element.getAttribute("urlPattern");
+          String[] productNameArray = productNames == null || productNames.trim().isEmpty() ? null : productNames.split("\\s*,\\s*");
 
-          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(name, version)
+          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(name, version, productNameArray, productNamePattern, driverNamePattern, urlPattern)
           {
             @Override
             public IDBAdapter createDBAdapter()

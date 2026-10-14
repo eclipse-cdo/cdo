@@ -27,6 +27,8 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.SQLTemplate;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 
 /**
@@ -93,12 +95,52 @@ public class Doc01_GeneralUtilities
    * their adapter available. Adapter identity includes a name and version. The registry lookup by name selects the
    * highest registered version; select an exact identity when reproducible adapter behavior is important.
    * <p>
-   * {@link #openManagedDatabase OpenManagedDatabase.java}
+   * To resolve an adapter from an existing JDBC connection, call
+   * {@code IDBAdapter.Registry.INSTANCE.getAdapter(connection)}. If the connection is an {@link IDBConnection} whose
+   * {@link IDBConnection#getDatabase() database} has an adapter, that association is authoritative and is returned
+   * directly. An ordinary {@link Connection} is resolved from {@link DatabaseMetaData#getDatabaseProductName()}
+   * and any optional driver-name or URL constraints declared for matching adapters. A metadata access failure is
+   * reported as {@link DBException}; an unknown or ambiguous product returns {@code null}. The lookup does not take
+   * ownership of or close the supplied connection.
+   * <p>
+   * The {@code dbAdapters} extension point lets a contribution describe recognition without constructing its adapter.
+   * Its optional {@code productNames} attribute lists comma-separated exact JDBC product names; when omitted, the
+   * adapter name is used. Product names are trimmed and compared case-insensitively. A product name containing a comma
+   * must be matched with {@code productNamePattern}. The optional
+   * {@code productNamePattern} is a case-insensitive Java regular expression matched against the complete trimmed
+   * product name, in addition to the exact names. Optional {@code driverNamePattern} and {@code urlPattern} regular
+   * expressions constrain the JDBC driver name and URL respectively; when present, each value must be available and
+   * match the complete trimmed value. Programmatic adapters provide the equivalent metadata by overriding
+   * {@link IDBAdapter#getDatabaseProductNames()}, {@link IDBAdapter#getDatabaseProductNamePattern()},
+   * {@link IDBAdapter#getDatabaseDriverNamePattern()}, and {@link IDBAdapter#getDatabaseURLPattern()}.
+   * <p>
+   * After metadata constraints are applied, a direct match between the product name and an adapter name takes priority
+   * over aliases. If multiple versions of the selected adapter name are registered, the highest adapter version is
+   * selected. If matches remain for different adapter names, the result is ambiguous and the lookup returns
+   * {@code null}. Only the selected lazy descriptor is materialized. Adapter versions describe adapter
+   * implementations; they are independent of the database product version and JDBC driver version.
+   * <p>
+   * {@link #openManagedDatabase OpenManagedDatabase.java} and {@link #resolveAdapter(Connection) ResolveAdapter.java}
    *
    * @author Eike Stepper
    */
   public class AdaptersAndDatabases
   {
+    /**
+     * @snip
+     */
+    public IDBAdapter resolveAdapter(Connection connection)
+    {
+      // Input: an open ordinary JDBC connection; this method leaves it open.
+      IDBAdapter adapter = IDBAdapter.Registry.INSTANCE.getAdapter(connection);
+      if (adapter == null)
+      {
+        throw new DBException("No unambiguous database adapter for JDBC connection");
+      }
+
+      return adapter;
+    }
+
     /**
      * @snip
      */

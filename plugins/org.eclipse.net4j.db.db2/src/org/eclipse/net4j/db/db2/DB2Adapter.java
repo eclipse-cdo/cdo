@@ -85,6 +85,18 @@ public class DB2Adapter extends DBAdapter
   }
 
   @Override
+  public String[] getDatabaseProductNames()
+  {
+    return new String[] { "DB2", "IBM DB2", "DB2 UDB" };
+  }
+
+  @Override
+  public String getDatabaseProductNamePattern()
+  {
+    return "DB2/.+|DB2 for Linux, Unix and Windows"; 
+  }
+
+  @Override
   public int getMaxTableNameLength()
   {
     return 128;

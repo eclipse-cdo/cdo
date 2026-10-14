@@ -13,13 +13,13 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.db.dbAdapters">
+   <extension point="org.eclipse.net4j.db.dbAdapters">
       <dbAdapter
             class="org.eclipse.net4j.db.db2.DB2Adapter"
             name="db2"
-            version="3.59.81">
-      </dbAdapter>
+            version="3.59.81"
+            productNames="DB2,IBM DB2,DB2 UDB"
+            productNamePattern="DB2/.+|DB2 for Linux, Unix and Windows"/>
    </extension>
 
 </plugin>

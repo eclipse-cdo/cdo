@@ -14,13 +14,12 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.db.dbAdapters">
+   <extension point="org.eclipse.net4j.db.dbAdapters">
       <dbAdapter
             class="org.eclipse.net4j.db.mysql.MYSQLAdapter"
             name="mysql"
-            version="5.1.5">
-      </dbAdapter>
+            version="5.1.5"
+            productNames="MySQL,MariaDB"/>
    </extension>
 
 </plugin>

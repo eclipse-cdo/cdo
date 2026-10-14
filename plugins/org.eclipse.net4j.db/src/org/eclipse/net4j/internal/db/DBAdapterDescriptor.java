@@ -36,6 +36,14 @@ public abstract class DBAdapterDescriptor implements IDBAdapterID
 
   private String version;
 
+  private final String[] databaseProductNames;
+
+  private final String databaseProductNamePattern;
+
+  private final String databaseDriverNamePattern;
+
+  private final String databaseURLPattern;
+
   public DBAdapterDescriptor(String name)
   {
     this(name, null);
@@ -43,8 +51,78 @@ public abstract class DBAdapterDescriptor implements IDBAdapterID
 
   public DBAdapterDescriptor(String name, String version)
   {
+    this(name, version, null, null, null, null);
+  }
+
+  /**
+   * Creates a lazy adapter descriptor with JDBC product recognition metadata.
+   * Exact product names are trimmed and compared case-insensitively. Optional
+   * regular expressions use case-insensitive full-string matching; product-name
+   * matching is an alternative between exact names and the product pattern, while
+   * URL and driver-name patterns are additional required conditions. A missing
+   * product-name array defaults to the declared adapter name.
+   *
+   * @param name the registered adapter name
+   * @param version the registered adapter version
+   * @param databaseProductNames exact JDBC product names, or {@code null} to use the adapter name
+   * @param databaseProductNamePattern an optional full-string product-name regular expression
+   * @param databaseDriverNamePattern an optional full-string JDBC driver-name regular expression
+   * @param databaseURLPattern an optional full-string JDBC URL regular expression
+   * @since 4.15
+   */
+  public DBAdapterDescriptor(String name, String version, String[] databaseProductNames, String databaseProductNamePattern, String databaseDriverNamePattern,
+      String databaseURLPattern)
+  {
     this.name = name;
     this.version = version;
+    this.databaseProductNames = databaseProductNames == null || databaseProductNames.length == 0 ? new String[] { name } : databaseProductNames.clone();
+    this.databaseProductNamePattern = databaseProductNamePattern;
+    this.databaseDriverNamePattern = databaseDriverNamePattern;
+    this.databaseURLPattern = databaseURLPattern;
+  }
+
+  /**
+   * Returns the exact JDBC product names associated with this descriptor.
+   *
+   * @return a defensive copy of the names
+   * @since 4.15
+   */
+  public String[] getDatabaseProductNames()
+  {
+    return databaseProductNames.clone();
+  }
+
+  /**
+   * Returns the optional product-name regular expression.
+   *
+   * @return the pattern, or {@code null}
+   * @since 4.15
+   */
+  public String getDatabaseProductNamePattern()
+  {
+    return databaseProductNamePattern;
+  }
+
+  /**
+   * Returns the optional JDBC driver-name regular expression.
+   *
+   * @return the pattern, or {@code null}
+   * @since 4.15
+   */
+  public String getDatabaseDriverNamePattern()
+  {
+    return databaseDriverNamePattern;
+  }
+
+  /**
+   * Returns the optional JDBC URL regular expression.
+   *
+   * @return the pattern, or {@code null}
+   * @since 4.15
+   */
+  public String getDatabaseURLPattern()
+  {
+    return databaseURLPattern;
   }
 
   @Override

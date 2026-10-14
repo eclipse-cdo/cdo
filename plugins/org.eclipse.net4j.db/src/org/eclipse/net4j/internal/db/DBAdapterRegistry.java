@@ -8,13 +8,19 @@
  */
 package org.eclipse.net4j.internal.db;
 
+import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBAdapter.Registry;
 import org.eclipse.net4j.db.IDBAdapterID;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.spi.db.DelegatingDBAdapter;
 import org.eclipse.net4j.util.container.Container;
 
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,7 +29,9 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Internal, thread-safe registry implementation for versioned database adapters.
@@ -39,26 +47,32 @@ public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdap
    */
   private final Map<IDBAdapterID, IDBAdapterID> entries;
 
+  private final Map<IDBAdapterID, DBAdapterDescriptor> descriptors;
+
   private volatile boolean autoCommit = true;
 
   public DBAdapterRegistry()
   {
     entries = new HashMap<>();
+    descriptors = new HashMap<>();
   }
 
   public DBAdapterRegistry(int initialCapacity)
   {
     entries = new HashMap<>(initialCapacity);
+    descriptors = new HashMap<>(initialCapacity);
   }
 
   public DBAdapterRegistry(int initialCapacity, float loadFactor)
   {
     entries = new HashMap<>(initialCapacity, loadFactor);
+    descriptors = new HashMap<>(initialCapacity, loadFactor);
   }
 
   public DBAdapterRegistry(Map<? extends String, ? extends IDBAdapter> map)
   {
     entries = new HashMap<>(map.size());
+    descriptors = new HashMap<>();
     putAll(map);
   }
 
@@ -152,6 +166,146 @@ public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdap
     }
 
     return null;
+  }
+
+  @Override
+  public IDBAdapter getAdapter(Connection connection)
+  {
+    Objects.requireNonNull(connection, "connection");
+
+    if (connection instanceof IDBConnection)
+    {
+      IDBConnection dbConnection = (IDBConnection)connection;
+
+      IDBDatabase database = dbConnection.getDatabase();
+      if (database != null)
+      {
+        IDBAdapter adapter = database.getAdapter();
+        if (adapter != null)
+        {
+          return adapter;
+        }
+      }
+    }
+
+    try
+    {
+      DatabaseMetaData metadata = connection.getMetaData();
+      if (metadata == null)
+      {
+        return null;
+      }
+
+      String productName = metadata.getDatabaseProductName();
+      if (productName == null || productName.trim().isEmpty())
+      {
+        return null;
+      }
+
+      Registration[] registrations = getRegistrations();
+      List<Registration> productMatches = new ArrayList<>();
+
+      boolean needsURL = false;
+      boolean needsDriverName = false;
+
+      for (Registration registration : registrations)
+      {
+        if (registration.matchesProduct(productName))
+        {
+          productMatches.add(registration);
+          needsURL |= registration.urlPattern != null;
+          needsDriverName |= registration.driverNamePattern != null;
+        }
+      }
+
+      if (productMatches.isEmpty())
+      {
+        return null;
+      }
+
+      String url = needsURL ? metadata.getURL() : null;
+      String driverName = needsDriverName ? metadata.getDriverName() : null;
+
+      List<Registration> matches = new ArrayList<>();
+      boolean hasDirectMatch = false;
+
+      for (Registration registration : productMatches)
+      {
+        if (registration.matchesMetadata(url, driverName))
+        {
+          matches.add(registration);
+          hasDirectMatch |= registration.id.getName().equalsIgnoreCase(productName.trim());
+        }
+      }
+
+      Registration selected = null;
+
+      for (Registration match : matches)
+      {
+        if (hasDirectMatch && !match.id.getName().equalsIgnoreCase(productName.trim()))
+        {
+          continue;
+        }
+
+        if (selected != null && !selected.id.getName().equalsIgnoreCase(match.id.getName()))
+        {
+          return null;
+        }
+
+        if (selected == null || DBAdapterID.copy(match.id).compareTo(DBAdapterID.copy(selected.id)) > 0)
+        {
+          selected = match;
+        }
+      }
+
+      return selected == null ? null : getAdapter(selected.id);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException("Could not resolve database adapter from JDBC metadata", ex);
+    }
+  }
+
+  private Registration[] getRegistrations()
+  {
+    List<Map.Entry<IDBAdapterID, IDBAdapterID>> snapshot = new ArrayList<>();
+
+    synchronized (this)
+    {
+      for (IDBAdapterID id : allKeys())
+      {
+        IDBAdapterID source = descriptors.get(id);
+        if (source == null)
+        {
+          source = entries.get(id);
+        }
+
+        snapshot.add(new AbstractMap.SimpleImmutableEntry<>(DBAdapterID.copy(id), source));
+      }
+    }
+
+    List<Registration> result = new ArrayList<>(snapshot.size());
+
+    for (Map.Entry<IDBAdapterID, IDBAdapterID> entry : snapshot)
+    {
+      IDBAdapterID id = entry.getKey();
+      IDBAdapterID value = entry.getValue();
+
+      if (value instanceof DBAdapterDescriptor)
+      {
+        DBAdapterDescriptor descriptor = (DBAdapterDescriptor)value;
+        result.add(new Registration(id, descriptor.getDatabaseProductNames(), descriptor.getDatabaseProductNamePattern(),
+            descriptor.getDatabaseDriverNamePattern(), descriptor.getDatabaseURLPattern()));
+      }
+      else if (value instanceof IDBAdapter)
+      {
+        IDBAdapter adapter = (IDBAdapter)value;
+        result.add(new Registration(id, adapter.getDatabaseProductNames(), adapter.getDatabaseProductNamePattern(), adapter.getDatabaseDriverNamePattern(),
+            adapter.getDatabaseURLPattern()));
+      }
+    }
+
+    return result.toArray(new Registration[0]);
   }
 
   @Override
@@ -343,7 +497,10 @@ public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdap
 
     DBAdapterID id = DBAdapterID.copy(descriptor);
     rejectDuplicate(id);
+
     entries.put(id, descriptor);
+    descriptors.put(id, descriptor);
+
     fireElementAddedEvent(entry(id, null));
     return descriptor;
   }
@@ -420,5 +577,68 @@ public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdap
   private static Map.Entry<String, IDBAdapter> entry(IDBAdapterID id, IDBAdapter adapter)
   {
     return new AbstractMap.SimpleImmutableEntry<>(id.getName(), adapter);
+  }
+
+  /**
+   * A registration snapshot used while matching JDBC metadata.
+   *
+   * @author Eike Stepper
+   */
+  private static final class Registration
+  {
+    private final IDBAdapterID id;
+
+    private final String[] productNames;
+
+    private final String productNamePattern;
+
+    private final String driverNamePattern;
+
+    private final String urlPattern;
+
+    public Registration(IDBAdapterID id, String[] productNames, String productNamePattern, String driverNamePattern, String urlPattern)
+    {
+      this.id = DBAdapterID.copy(id);
+      this.productNames = productNames == null ? new String[0] : productNames.clone();
+      this.productNamePattern = productNamePattern;
+      this.driverNamePattern = driverNamePattern;
+      this.urlPattern = urlPattern;
+    }
+
+    public boolean matchesProduct(String productName)
+    {
+      boolean productMatches = false;
+
+      for (String candidate : productNames)
+      {
+        if (candidate != null && candidate.trim().equalsIgnoreCase(productName.trim()))
+        {
+          productMatches = true;
+          break;
+        }
+      }
+
+      if (!productMatches && productNamePattern != null)
+      {
+        productMatches = matchesPattern(productNamePattern, productName);
+      }
+
+      return productMatches;
+    }
+
+    public boolean matchesMetadata(String url, String driverName)
+    {
+      return matchesConstraint(urlPattern, url) && matchesConstraint(driverNamePattern, driverName);
+    }
+
+    private static boolean matchesConstraint(String pattern, String value)
+    {
+      return pattern == null || value != null && matchesPattern(pattern, value);
+    }
+
+    private static boolean matchesPattern(String pattern, String value)
+    {
+      return Pattern.compile(pattern, Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE).matcher(value.trim()).matches();
+    }
   }
 }

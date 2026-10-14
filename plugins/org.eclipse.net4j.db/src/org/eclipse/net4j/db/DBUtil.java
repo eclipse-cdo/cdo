@@ -317,6 +317,23 @@ public final class DBUtil
   }
 
   /**
+   * Resolves the registered database adapter for a JDBC connection. An adapter
+   * associated with an {@link IDBConnection} takes precedence; an ordinary JDBC
+   * connection is matched using database product metadata and registered adapter
+   * recognition rules. Returns {@code null} if the product is unknown or ambiguous.
+   *
+   * @param connection the JDBC connection to inspect
+   * @return the matching adapter, or {@code null} if it cannot be identified unambiguously
+   * @throws DBException if JDBC metadata cannot be read
+   * @see IDBAdapter.Registry#getAdapter(Connection)
+   * @since 4.15
+   */
+  public static IDBAdapter getDBAdapter(Connection connection)
+  {
+    return IDBAdapter.Registry.INSTANCE.getAdapter(connection);
+  }
+
+  /**
    * Retrieves an {@link IDBAdapter adapter} from the {@link IDBAdapter#REGISTRY adapter registry}.
    * <p>
    * If Eclipse is running adapters are automatically created from descriptors that are contributed to the extension point <code>org.eclipse.net4j.db.dbAdapters</code>.
@@ -559,32 +576,23 @@ public final class DBUtil
     return name;
   }
 
-  private static IDBAdapter getDBAdapter(Connection connection)
-  {
-    if (connection instanceof IDBConnection)
-    {
-      IDBDatabase database = ((IDBConnection)connection).getDatabase();
-      return database == null ? null : database.getAdapter();
-    }
-
-    return null;
-  }
-
   private static String quoteIdentifier(Connection connection, String identifier)
   {
-    IDBAdapter dbAdapter = getDBAdapter(connection);
+    return quoteIdentifier(getDBAdapter(connection), identifier);
+  }
+
+  private static String quoteIdentifier(IDBAdapter dbAdapter, String identifier)
+  {
     return dbAdapter == null ? quoted(identifier) : dbAdapter.quoteIdentifier(identifier);
   }
 
-  private static String renderField(Connection connection, IDBField field)
+  private static String renderField(IDBAdapter dbAdapter, IDBField field)
   {
-    IDBAdapter dbAdapter = getDBAdapter(connection);
     return dbAdapter == null ? field.toString() : dbAdapter.quoteIdentifier(field.getName());
   }
 
-  private static String renderTable(Connection connection, IDBTable table)
+  private static String renderTable(IDBAdapter dbAdapter, IDBTable table)
   {
-    IDBAdapter dbAdapter = getDBAdapter(connection);
     return dbAdapter == null ? table.toString() : dbAdapter.quoteTableName(table);
   }
 
@@ -791,6 +799,7 @@ public final class DBUtil
    */
   public static List<Exception> dropAllTables(Connection connection, String schemaName, boolean caseSensitive)
   {
+    IDBAdapter dbAdapter = getDBAdapter(connection);
     Statement statement = null;
 
     try
@@ -800,7 +809,7 @@ public final class DBUtil
 
       for (String tableName : getAllTableNames(connection, schemaName, caseSensitive))
       {
-        String sql = trace("DROP TABLE " + quoteIdentifier(connection, tableName)); //$NON-NLS-1$
+        String sql = trace("DROP TABLE " + quoteIdentifier(dbAdapter, tableName)); //$NON-NLS-1$
 
         try
         {
@@ -888,13 +897,14 @@ public final class DBUtil
 
   private static Number getFunctionResult(Connection connection, IDBField field, String function, String... where) throws DBException
   {
+    IDBAdapter dbAdapter = getDBAdapter(connection);
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(function);
     builder.append("("); //$NON-NLS-1$
-    builder.append(renderField(connection, field));
+    builder.append(renderField(dbAdapter, field));
     builder.append(") FROM "); //$NON-NLS-1$
-    builder.append(renderTable(connection, field.getTable()));
+    builder.append(renderTable(dbAdapter, field.getTable()));
 
     for (int i = 0; i < where.length; i++)
     {
@@ -1126,12 +1136,13 @@ public final class DBUtil
    */
   public static int clearTable(Connection connection, String tableName)
   {
-    String sql = "DELETE FROM " + quoted(tableName);
+    String sql = "DELETE FROM " + quoteIdentifier(connection, tableName);
     return update(connection, sql);
   }
 
   public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields) throws DBException
   {
+    IDBAdapter dbAdapter = getDBAdapter(connection);
     IDBTable table = fields[0].getTable();
 
     for (int i = 1; i < fields.length; i++)
@@ -1152,11 +1163,11 @@ public final class DBUtil
         builder.append(", "); //$NON-NLS-1$
       }
 
-      builder.append(renderField(connection, fields[i]));
+      builder.append(renderField(dbAdapter, fields[i]));
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(renderTable(connection, table));
+    builder.append(renderTable(dbAdapter, table));
 
     if (!StringUtil.isEmpty(where))
     {
@@ -1354,6 +1365,7 @@ public final class DBUtil
   public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias, String sqlSuffix,
       SerializeRowHandler handler) throws DBException, IOException
   {
+    IDBAdapter dbAdapter = getDBAdapter(connection);
     IDBField[] fields = table.getFields();
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
@@ -1371,11 +1383,11 @@ public final class DBUtil
         builder.append("."); //$NON-NLS-1$
       }
 
-      builder.append(renderField(connection, fields[i]));
+      builder.append(renderField(dbAdapter, fields[i]));
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(renderTable(connection, table));
+    builder.append(renderTable(dbAdapter, table));
 
     if (tableAlias != null)
     {
@@ -1488,13 +1500,14 @@ public final class DBUtil
       return;
     }
 
+    IDBAdapter dbAdapter = getDBAdapter(connection);
     IDBField[] fields = table.getFields();
 
     StringBuilder builder = new StringBuilder();
     StringBuilder params = new StringBuilder();
 
     builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(renderTable(connection, table));
+    builder.append(renderTable(dbAdapter, table));
     builder.append("("); //$NON-NLS-1$
 
     for (int i = 0; i < fields.length; i++)
@@ -1505,7 +1518,7 @@ public final class DBUtil
         params.append(", "); //$NON-NLS-1$
       }
 
-      builder.append(renderField(connection, fields[i]));
+      builder.append(renderField(dbAdapter, fields[i]));
       params.append("?"); //$NON-NLS-1$
     }
 

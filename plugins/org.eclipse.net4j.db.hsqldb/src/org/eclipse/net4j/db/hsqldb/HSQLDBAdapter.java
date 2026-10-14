@@ -44,6 +44,12 @@ public class HSQLDBAdapter extends DBAdapter
   }
 
   @Override
+  public String[] getDatabaseProductNames()
+  {
+    return new String[] { "HSQL Database Engine" };
+  }
+
+  @Override
   protected String getTypeName(IDBField field)
   {
     DBType type = field.getType();

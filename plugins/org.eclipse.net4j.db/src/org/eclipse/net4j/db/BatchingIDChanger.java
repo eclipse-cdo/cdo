@@ -17,7 +17,6 @@ import org.eclipse.net4j.util.IDChanger;
 import org.eclipse.net4j.util.IDChanger.ChangeHandler;
 import org.eclipse.net4j.util.StringUtil;
 
-import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -67,7 +66,7 @@ public class BatchingIDChanger implements ChangeHandler
     this.batcher = Objects.requireNonNull(batcher);
     this.idField = Objects.requireNonNull(idField);
     this.table = Objects.requireNonNull(table);
-    dbAdapter = getDBAdapter(batcher.getConnection());
+    dbAdapter = DBUtil.getDBAdapter(batcher.getConnection());
   }
 
   @Override
@@ -104,16 +103,6 @@ public class BatchingIDChanger implements ChangeHandler
   private String quoteTable()
   {
     return dbAdapter == null ? table.toString() : dbAdapter.quoteTableName(table);
-  }
-
-  private static IDBAdapter getDBAdapter(Connection connection)
-  {
-    if (connection instanceof IDBConnection)
-    {
-      return ((IDBConnection)connection).getDatabase().getAdapter();
-    }
-
-    return null;
   }
 
   protected final void batch(Object newValueExpression, String whereCondition)

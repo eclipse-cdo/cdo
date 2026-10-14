@@ -15,13 +15,12 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.db.dbAdapters">
+   <extension point="org.eclipse.net4j.db.dbAdapters">
       <dbAdapter
             class="org.eclipse.net4j.db.postgresql.PostgreSQLAdapter"
             name="postgresql"
-            version="9.0">
-      </dbAdapter>
+            version="9.0"
+            productNames="PostgreSQL"/>
    </extension>
 
 </plugin>

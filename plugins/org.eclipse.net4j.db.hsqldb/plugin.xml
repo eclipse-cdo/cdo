@@ -14,13 +14,12 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.db.dbAdapters">
+   <extension point="org.eclipse.net4j.db.dbAdapters">
       <dbAdapter
             class="org.eclipse.net4j.db.hsqldb.HSQLDBAdapter"
             name="hsqldb"
-            version="1.8.0.8">
-      </dbAdapter>
+            version="1.8.0.8"
+            productNames="HSQL Database Engine"/>
    </extension>
 
 </plugin>

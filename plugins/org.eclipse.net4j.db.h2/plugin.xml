@@ -14,13 +14,12 @@
 
 <plugin>
 
-   <extension
-         point="org.eclipse.net4j.db.dbAdapters">
+   <extension point="org.eclipse.net4j.db.dbAdapters">
       <dbAdapter
             class="org.eclipse.net4j.db.h2.H2Adapter"
             name="h2"
-            version="1.1.114">
-      </dbAdapter>
+            version="1.1.114"
+            productNames="H2"/>
    </extension>
 
 </plugin>

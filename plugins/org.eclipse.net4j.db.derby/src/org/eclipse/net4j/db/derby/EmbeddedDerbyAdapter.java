@@ -26,6 +26,18 @@ public class EmbeddedDerbyAdapter extends DerbyAdapter
     super(NAME);
   }
 
+  @Override
+  public String[] getDatabaseProductNames()
+  {
+    return new String[] { "Apache Derby", "Derby" };
+  }
+
+  @Override
+  public String getDatabaseURLPattern()
+  {
+    return "jdbc:derby:(?!//).*";
+  }
+
   /**
    * @since 4.3
    */

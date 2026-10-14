@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.net4j.db" id="dbAdapters" name="Net4j DB Adapters"/>
       </appInfo>
       <documentation>
-         [Enter description of this extension point.]
+         Contributes database adapters to the Net4j DB registry. Recognition metadata is read from the contribution before its adapter class is instantiated, so JDBC connections can be matched lazily from database product names and optional driver-name and URL constraints. A product name must match an exact name or product-name pattern, and every configured driver-name and URL constraint must also match.
       </documentation>
    </annotation>
 
@@ -66,6 +66,34 @@
                <appInfo>
                   <meta.attribute kind="java" basedOn="org.eclipse.net4j.db.IDBAdapter:"/>
                </appInfo>
+            </annotation>
+         </attribute>
+         <attribute name="productNames" type="string" use="optional">
+            <annotation>
+               <documentation>
+                  Comma-separated exact JDBC database product names. Names are trimmed and matched case-insensitively. If omitted, the adapter's declared name is used. Use productNamePattern for product names that contain commas.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="productNamePattern" type="string" use="optional">
+            <annotation>
+               <documentation>
+                  Optional Java regular expression matched case-insensitively against the complete trimmed JDBC product name. It supplements the exact productNames matches.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="driverNamePattern" type="string" use="optional">
+            <annotation>
+               <documentation>
+                  Optional Java regular expression matched case-insensitively against the complete trimmed JDBC driver name. When present, the driver name must be available and match.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="urlPattern" type="string" use="optional">
+            <annotation>
+               <documentation>
+                  Optional Java regular expression matched case-insensitively against the complete trimmed JDBC URL. When present, the URL must be available and match.
+               </documentation>
             </annotation>
          </attribute>
       </complexType>

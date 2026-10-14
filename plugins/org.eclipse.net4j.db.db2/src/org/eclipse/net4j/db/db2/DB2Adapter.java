@@ -93,7 +93,7 @@ public class DB2Adapter extends DBAdapter
   @Override
   public String getDatabaseProductNamePattern()
   {
-    return "DB2/.+|DB2 for Linux, Unix and Windows"; 
+    return "DB2/.+|DB2 for Linux, Unix and Windows";
   }
 
   @Override

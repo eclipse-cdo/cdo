@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.IDChanger;
 import org.eclipse.net4j.util.IDChanger.ChangeHandler;
 import org.eclipse.net4j.util.StringUtil;
 
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -54,6 +55,8 @@ public class BatchingIDChanger implements ChangeHandler
 
   protected final IDBTable table;
 
+  private final IDBAdapter dbAdapter;
+
   public BatchingIDChanger(StatementBatcher batcher, IDBField idField)
   {
     this(batcher, idField, idField == null ? null : idField.getTable());
@@ -64,30 +67,53 @@ public class BatchingIDChanger implements ChangeHandler
     this.batcher = Objects.requireNonNull(batcher);
     this.idField = Objects.requireNonNull(idField);
     this.table = Objects.requireNonNull(table);
+    dbAdapter = getDBAdapter(batcher.getConnection());
   }
 
   @Override
   public void handleSingleChange(int oldID, int newID)
   {
-    batch(newID, idField + "=" + oldID);
+    batch(newID, quoteField() + "=" + oldID);
   }
 
   @Override
   public void handleConsecutiveChanges(int firstID, int lastID, int shift)
   {
-    batch(idField + shiftStr(shift), idField + " BETWEEN " + firstID + " AND " + lastID);
+    String idName = quoteField();
+    batch(idName + shiftStr(shift), idName + " BETWEEN " + firstID + " AND " + lastID);
   }
 
   @Override
   public void handleArbitraryChanges(List<Integer> affectedIDs, int shift)
   {
     String ids = affectedIDs.stream().map(String::valueOf).collect(Collectors.joining(","));
-    batch(idField + shiftStr(shift), idField + " IN (" + ids + ")");
+    String idName = quoteField();
+    batch(idName + shiftStr(shift), idName + " IN (" + ids + ")");
   }
 
   protected String sql(Object newValue, String condition)
   {
-    return "UPDATE " + table + " SET " + idField + "=" + newValue + " WHERE " + condition;
+    return "UPDATE " + quoteTable() + " SET " + quoteField() + "=" + newValue + " WHERE " + condition;
+  }
+
+  private String quoteField()
+  {
+    return dbAdapter == null ? idField.toString() : dbAdapter.quoteIdentifier(idField.getName());
+  }
+
+  private String quoteTable()
+  {
+    return dbAdapter == null ? table.toString() : dbAdapter.quoteTableName(table);
+  }
+
+  private static IDBAdapter getDBAdapter(Connection connection)
+  {
+    if (connection instanceof IDBConnection)
+    {
+      return ((IDBConnection)connection).getDatabase().getAdapter();
+    }
+
+    return null;
   }
 
   protected final void batch(Object newValueExpression, String whereCondition)

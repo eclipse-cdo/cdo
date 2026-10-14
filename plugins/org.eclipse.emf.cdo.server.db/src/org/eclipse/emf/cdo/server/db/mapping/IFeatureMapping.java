@@ -11,7 +11,10 @@
  */
 package org.eclipse.emf.cdo.server.db.mapping;
 
+import org.eclipse.emf.cdo.server.db.IDBStore;
+
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -27,9 +30,37 @@ import org.eclipse.emf.ecore.EStructuralFeature;
  *
  * @author Eike Stepper
  * @since 4.14
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IFeatureMapping
 {
+  /**
+   * @since 4.16
+   */
+  public default IMappingStrategy getMappingStrategy()
+  {
+    return null;
+  }
+
+  /**
+   * @since 4.16
+   */
+  public default IDBStore getStore()
+  {
+    IMappingStrategy mappingStrategy = getMappingStrategy();
+    return mappingStrategy == null ? null : mappingStrategy.getStore();
+  }
+
+  /**
+   * @since 4.16
+   */
+  public default IDBAdapter getDBAdapter()
+  {
+    IDBStore store = getStore();
+    return store == null ? null : store.getDBAdapter();
+  }
+
   /**
    * @return The feature which is associated with this feature mapping.
    */

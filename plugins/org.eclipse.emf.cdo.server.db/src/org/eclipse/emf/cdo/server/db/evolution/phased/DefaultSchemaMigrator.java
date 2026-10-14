@@ -5,7 +5,7 @@
  * which is available at https://www.eclipse.org/legal/epl-2.0
  *
  * SPDX-License-Identifier: EPL-2.0
- * 
+ *
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
@@ -25,6 +25,9 @@ import org.eclipse.emf.cdo.server.internal.db.MetaDataManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
@@ -152,8 +155,18 @@ public class DefaultSchemaMigrator extends BasicPhaseHandler
     PackageInfosTable packageInfos = store.tables().packageInfos();
     InternalCDOPackageRegistry packageRegistry = context.getSupport().getNewPackageRegistry();
 
+    String deletePackageUnitSQL = SQL.deleteFrom(packageUnits.id().getTable()) //
+        .where(packageUnits.id()).eq(SQL.param()) //
+        .compile(store.getDBAdapter()).getSQL();
+
+    String deletePackageInfosSQL = SQL.deleteFrom(packageInfos.unit().getTable()) //
+        .where(packageInfos.unit()).eq(SQL.param()) //
+        .compile(store.getDBAdapter()).getSQL();
+
     // Update the changed models in the database.
-    try (Statement statement = connection.createStatement())
+    try (Statement statement = connection.createStatement();
+        IDBPreparedStatement deletePackageUnit = connection.prepareStatement(deletePackageUnitSQL, ReuseProbability.HIGH);
+        IDBPreparedStatement deletePackageInfos = connection.prepareStatement(deletePackageInfosSQL, ReuseProbability.HIGH))
     {
       // Replace the changed package units and package infos.
       for (Model model : context.getChangeInfos().keySet())
@@ -162,12 +175,14 @@ public class DefaultSchemaMigrator extends BasicPhaseHandler
 
         // Delete the old package unit and package info(s).
         context.log("Deleting old package unit " + unitID);
-        int count1 = statement.executeUpdate("DELETE from " + packageUnits + " WHERE " + packageUnits.id() + "='" + unitID + "'");
+        deletePackageUnit.setString(1, unitID);
+        int count1 = deletePackageUnit.executeUpdate();
         context.incrementTotalUpdateCount(count1);
 
         // Delete the old package info(s).
         context.log("Deleting old package infos for " + unitID);
-        int count2 = statement.executeUpdate("DELETE from " + packageInfos + " WHERE " + packageInfos.unit() + "='" + unitID + "'");
+        deletePackageInfos.setString(1, unitID);
+        int count2 = deletePackageInfos.executeUpdate();
         context.incrementTotalUpdateCount(count2);
 
         // Get the registered package bytes.

@@ -252,6 +252,12 @@ public class DelegatingDBAdapter implements IDBAdapter
   }
 
   @Override
+  public String quoteTableName(IDBTable table)
+  {
+    return delegate.quoteTableName(table);
+  }
+
+  @Override
   public void validateSQLLiteral(Object value)
   {
     delegate.validateSQLLiteral(value);

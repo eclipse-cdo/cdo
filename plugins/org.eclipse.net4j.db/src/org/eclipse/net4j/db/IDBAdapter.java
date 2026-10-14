@@ -250,15 +250,31 @@ public interface IDBAdapter extends IDBAdapterID
    * @return the identifier, quoted and escaped according to this adapter
    * @since 4.15
    */
-  public default String quoteIdentifier(String identifier)
+  public String quoteIdentifier(String identifier);
+
+  /**
+   * Quotes the physical name of a table for use in SQL. When the table's schema enables qualified
+   * table names, the schema and table names are quoted independently and joined with a dot. This
+   * preserves the distinction between identifier components and avoids treating the dot as part
+   * of either identifier. Each component is escaped according to this adapter's
+   * {@link #quoteIdentifier(String)} implementation, and the global quoted-name compatibility
+   * setting remains in effect.
+   *
+   * @param table the schema table to render
+   * @return the adapter-specific table name, including its schema when configured
+   * @since 4.15
+   */
+  public default String quoteTableName(IDBTable table)
   {
-    Objects.requireNonNull(identifier, "identifier");
-    if (DBUtil.DISABLE_QUOTED_NAMES)
+    Objects.requireNonNull(table, "table");
+
+    IDBSchema schema = table.getSchema();
+    if (schema != null && schema.isQualifiedTableNames())
     {
-      return identifier;
+      return quoteIdentifier(schema.getName()) + '.' + quoteIdentifier(table.getName());
     }
 
-    return DBUtil.QUOTE + identifier.replace(DBUtil.QUOTE, DBUtil.QUOTE + DBUtil.QUOTE) + DBUtil.QUOTE;
+    return quoteIdentifier(table.getName());
   }
 
   /**

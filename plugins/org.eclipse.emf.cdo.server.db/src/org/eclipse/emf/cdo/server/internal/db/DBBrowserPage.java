@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
@@ -323,17 +324,18 @@ public abstract class DBBrowserPage extends AbstractPage
     @Override
     protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, IDBSchema schema)
     {
+      IDBAdapter dbAdapter = ((IDBStore)repository.getStore()).getDBAdapter();
       out.print("<table border=\"0\">\r\n");
       out.print("<tr>\r\n");
 
       out.print("<td valign=\"top\">\r\n");
-      String tableName = showTables(browser, out, connection, schema);
+      String tableName = showTables(browser, out, connection, schema, dbAdapter);
       out.print("</td>\r\n");
 
       if (tableName != null)
       {
         out.print("<td valign=\"top\">\r\n");
-        showTable(browser, out, connection, schema, tableName);
+        showTable(browser, out, connection, schema, dbAdapter, tableName);
         out.print("</td>\r\n");
       }
 
@@ -344,7 +346,7 @@ public abstract class DBBrowserPage extends AbstractPage
     /**
      * @since 4.0
      */
-    protected String showTables(CDOServerBrowser browser, PrintStream pout, Connection connection, IDBSchema schema)
+    protected String showTables(CDOServerBrowser browser, PrintStream pout, Connection connection, IDBSchema schema, IDBAdapter dbAdapter)
     {
       String currentTable = browser.getParam("table");
       boolean used = browser.isParam("used");
@@ -370,7 +372,7 @@ public abstract class DBBrowserPage extends AbstractPage
 
         String label = browser.escape(tableName);
 
-        int rowCount = DBUtil.getRowCount(connection, getTableName(tableName, schema));
+        int rowCount = DBUtil.getRowCount(connection, getTableName(tableName, schema, dbAdapter));
         if (rowCount > 0)
         {
           totalRows += rowCount;
@@ -414,7 +416,7 @@ public abstract class DBBrowserPage extends AbstractPage
     /**
      * @since 4.0
      */
-    protected void showTable(CDOServerBrowser browser, PrintStream pout, Connection connection, IDBSchema schema, String tableName)
+    protected void showTable(CDOServerBrowser browser, PrintStream pout, Connection connection, IDBSchema schema, IDBAdapter dbAdapter, String tableName)
     {
       String columns = "*";
       String firstColumn = null;
@@ -435,7 +437,7 @@ public abstract class DBBrowserPage extends AbstractPage
           }
 
           StringUtil.appendSeparator(builder, ", ");
-          builder.append(DBUtil.quoted(name));
+          builder.append(dbAdapter.quoteIdentifier(name));
         }
 
         columns = builder.toString();
@@ -449,12 +451,12 @@ public abstract class DBBrowserPage extends AbstractPage
         DBUtil.close(resultSet);
       }
 
-      String sqlTableName = getTableName(tableName, schema);
+      String sqlTableName = getTableName(tableName, schema, dbAdapter);
 
       String sql = "SELECT " + columns + " FROM " + sqlTableName;
       if (firstColumn != null)
       {
-        sql += " ORDER BY " + DBUtil.quoted(firstColumn) + " ASC";
+        sql += " ORDER BY " + dbAdapter.quoteIdentifier(firstColumn) + " ASC";
       }
 
       String title = tableName + "&nbsp;" + browser.href(Pair.create("&#x1F50D;", "Query"), Queries.NAME, "query", sql);
@@ -462,8 +464,15 @@ public abstract class DBBrowserPage extends AbstractPage
       try
       {
         String order = browser.getParam("order");
+        String direction = browser.getParam("direction");
+
+        if (!"DESC".equals(direction))
+        {
+          direction = "ASC";
+        }
+
         executeQuery(browser, pout, connection, title, true,
-            "SELECT * FROM " + sqlTableName + (order == null ? "" : " ORDER BY " + DBUtil.quoted(order) + " " + browser.getParam("direction")));
+            "SELECT * FROM " + sqlTableName + (order == null ? "" : " ORDER BY " + dbAdapter.quoteIdentifier(order) + " " + direction));
       }
       catch (Exception ex)
       {
@@ -506,13 +515,13 @@ public abstract class DBBrowserPage extends AbstractPage
       }
     }
 
-    private String getTableName(String tableName, IDBSchema schema)
+    private String getTableName(String tableName, IDBSchema schema, IDBAdapter dbAdapter)
     {
-      tableName = DBUtil.quoted(tableName);
+      tableName = dbAdapter.quoteIdentifier(tableName);
 
       if (schema.isQualifiedTableNames())
       {
-        tableName = DBUtil.quoted(schema.getName()) + '.' + tableName;
+        tableName = dbAdapter.quoteIdentifier(schema.getName()) + '.' + tableName;
       }
 
       return tableName;

@@ -26,6 +26,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -60,15 +61,9 @@ public class AuditListTableMapping extends AbstractListTableMapping
     versionField = table.getField(MappingNames.LIST_REVISION_VERSION);
 
     // ----------- clear list -------------------------
-    StringBuilder builder = new StringBuilder();
-    builder.append("DELETE FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlClear = builder.toString();
+    sqlClear = SQL.deleteFrom(table) //
+        .where(SQL.eq(sourceField, SQL.param()).and(SQL.eq(versionField, SQL.param()))) //
+        .compile(getDBAdapter()).getSQL();
   }
 
   @Override
@@ -80,7 +75,7 @@ public class AuditListTableMapping extends AbstractListTableMapping
   @Override
   protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     idHandler.setCDOID(stmt, 1, revision.getID());
     stmt.setInt(2, revision.getVersion());
   }
@@ -99,7 +94,7 @@ public class AuditListTableMapping extends AbstractListTableMapping
       initTable(accessor);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
 
     try

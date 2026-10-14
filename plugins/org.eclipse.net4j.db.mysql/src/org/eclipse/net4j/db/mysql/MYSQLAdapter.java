@@ -23,7 +23,6 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Objects;
 
 /**
  * A {@link IDBAdapter DB adapter} for <a href="http://www.mysql.com/">MySQL</a> databases.
@@ -59,26 +58,6 @@ public class MYSQLAdapter extends DBAdapter
   public MYSQLAdapter()
   {
     super(NAME, VERSION);
-  }
-
-  /**
-   * Quotes one identifier with MySQL's backtick delimiter, escaping embedded backticks by doubling them.
-   *
-   * @param identifier one unqualified SQL identifier
-   * @return the quoted identifier, or the original identifier when quoting is globally disabled
-   * @since 4.5
-   */
-  @Override
-  public String quoteIdentifier(String identifier)
-  {
-    Objects.requireNonNull(identifier, "identifier");
-
-    if (DBUtil.DISABLE_QUOTED_NAMES)
-    {
-      return identifier;
-    }
-
-    return "`" + identifier.replace("`", "``") + "`";
   }
 
   /**
@@ -142,7 +121,7 @@ public class MYSQLAdapter extends DBAdapter
   protected void dropPrimaryKey(IDBIndex index, StringBuilder builder)
   {
     builder.append("ALTER TABLE "); //$NON-NLS-1$
-    builder.append(index.getTable());
+    builder.append(quoteTableName(index.getTable()));
     builder.append(" DROP PRIMARY KEY"); //$NON-NLS-1$
   }
 
@@ -183,10 +162,24 @@ public class MYSQLAdapter extends DBAdapter
     return "23000".equals(ex.getSQLState());
   }
 
+  /**
+   * Returns MySQL's backtick identifier delimiter.
+   *
+   * @return the backtick delimiter
+   *
+   * @since 4.5
+   */
+  @Override
+  protected String getIdentifierQuote()
+  {
+    return "`";
+  }
+
   @Override
   public String sqlRenameField(IDBField field, String oldName)
   {
-    return "ALTER TABLE " + field.getTable() + " CHANGE COLUMN " + oldName + " " + field + " " + createFieldDefinition(field);
+    return "ALTER TABLE " + quoteTableName(field.getTable()) + " CHANGE COLUMN " + quoteIdentifier(oldName) + " " + quoteIdentifier(field.getName()) + " "
+        + createFieldDefinition(field);
   }
 
   @Override
@@ -286,20 +279,21 @@ public class MYSQLAdapter extends DBAdapter
       dataSource.setUser("root");
       // dataSource.setPassword("12345");
 
+      MYSQLAdapter adapter = new MYSQLAdapter();
       Connection connection = dataSource.getConnection();
 
       try
       {
         try
         {
-          DBUtil.execute(connection, "DROP DATABASE " + DB_NAME);
+          DBUtil.execute(connection, "DROP DATABASE " + adapter.quoteIdentifier(DB_NAME));
         }
         catch (Exception ignore)
         {
         }
 
-        DBUtil.execute(connection, "CREATE DATABASE " + DB_NAME);
-        DBUtil.execute(connection, "USE " + DB_NAME);
+        DBUtil.execute(connection, "CREATE DATABASE " + adapter.quoteIdentifier(DB_NAME));
+        DBUtil.execute(connection, "USE " + adapter.quoteIdentifier(DB_NAME));
 
         generateReservedWords(connection, WORDS);
       }

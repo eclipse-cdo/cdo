@@ -30,6 +30,9 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -79,40 +82,40 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   }
 
   @Override
-  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping, IDBTable attrTable, String attrSuffix) throws IOException
+  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping, IDBTable attrTable, String attrSuffix,
+      long fromCommitTime, long toCommitTime) throws IOException
   {
     super.rawExportList(out, connection, listMapping, attrTable, attrSuffix);
 
     for (IDBTable table : listMapping.getDBTables())
     {
-      rawExportListPostProcess(out, connection, attrTable, attrSuffix, table);
+      rawExportListPostProcess(out, connection, attrTable, fromCommitTime, toCommitTime, table);
     }
   }
 
-  private void rawExportListPostProcess(CDODataOutput out, IDBConnection connection, IDBTable attrTable, String attrSuffix, IDBTable table) throws IOException
+  private void rawExportListPostProcess(CDODataOutput out, IDBConnection connection, IDBTable attrTable, long fromCommitTime, long toCommitTime, IDBTable table)
+      throws IOException
   {
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT l_t.");
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_ID));
-    builder.append(", l_t.");
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH));
-    builder.append(", l_t.");
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED));
-    builder.append(", l_t.");
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED));
-    builder.append(", l_t.");
-    builder.append(DBUtil.quoted(MappingNames.LIST_IDX));
-    builder.append(" FROM ");
-    builder.append(table);
-    builder.append(" l_t, ");
-    builder.append(attrTable);
-    builder.append(" a_t");
-    builder.append(attrSuffix);
-    builder.append(getListJoinForPostProcess("a_t", "l_t"));
-    builder.append(" AND l_t.");
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED));
-    builder.append(" IS NOT NULL");
-    String sql = DBUtil.trace(builder.toString());
+    IDBField listID = table.getField(MappingNames.LIST_REVISION_ID);
+    IDBTable listTable = listID.getTable();
+    IDBField listBranch = listTable.getField(MappingNames.LIST_REVISION_BRANCH);
+    IDBField listVersionAdded = listTable.getField(MappingNames.LIST_REVISION_VERSION_ADDED);
+    IDBField listVersionRemoved = listTable.getField(MappingNames.LIST_REVISION_VERSION_REMOVED);
+    IDBField listIndex = listTable.getField(MappingNames.LIST_IDX);
+    IDBField attrID = attrTable.getField(MappingNames.ATTRIBUTES_ID);
+    IDBTable attributesTable = attrID.getTable();
+    IDBField attrBranch = attributesTable.getField(MappingNames.ATTRIBUTES_BRANCH);
+    IDBField attrVersion = attributesTable.getField(MappingNames.ATTRIBUTES_VERSION);
+    IDBField attrCreated = attributesTable.getField(MappingNames.ATTRIBUTES_CREATED);
+
+    SQLTableRef listRef = SQL.as(listTable, "l_t"); //$NON-NLS-1$
+    SQLTableRef attrRef = SQL.as(attributesTable, "a_t"); //$NON-NLS-1$
+    SQLCondition condition = SQL.eq(listRef.column(listID), attrRef.column(attrID)).and(SQL.eq(listRef.column(listVersionRemoved), attrRef.column(attrVersion)))
+        .and(SQL.eq(listRef.column(listBranch), attrRef.column(attrBranch)))
+        .and(SQL.between(attrRef.column(attrCreated), SQL.literal(fromCommitTime), SQL.literal(toCommitTime)))
+        .and(SQL.isNotNull(listRef.column(listVersionRemoved)));
+    String sql = DBUtil.trace(SQL.select(listRef.column(listID), listRef.column(listBranch), listRef.column(listVersionAdded),
+        listRef.column(listVersionRemoved), listRef.column(listIndex)).from(listRef).from(attrRef).where(condition).compile(getDBAdapter()).getSQL());
 
     IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
@@ -191,21 +194,17 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
       return;
     }
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("UPDATE "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" SET "); //$NON-NLS-1$
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED));
-    builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_ID));
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH));
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED));
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(DBUtil.quoted(MappingNames.LIST_IDX));
-    builder.append("=?"); //$NON-NLS-1$
-    String sql = DBUtil.trace(builder.toString());
+    IDBField versionRemovedColumn = table.getField(MappingNames.LIST_REVISION_VERSION_REMOVED);
+    IDBField sourceColumn = table.getField(MappingNames.LIST_REVISION_ID);
+    IDBField branchColumn = table.getField(MappingNames.LIST_REVISION_BRANCH);
+    IDBField versionAddedColumn = table.getField(MappingNames.LIST_REVISION_VERSION_ADDED);
+    IDBField indexColumn = table.getField(MappingNames.LIST_IDX);
+
+    String sql = DBUtil.trace(SQL.update(table) //
+        .set(versionRemovedColumn).to(SQL.param()) //
+        .where(SQL.eq(sourceColumn, SQL.param()).and(SQL.eq(branchColumn, SQL.param())).and(SQL.eq(versionAddedColumn, SQL.param()))
+            .and(SQL.eq(indexColumn, SQL.param()))) //
+        .compile(getDBAdapter()).getSQL());
 
     IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
@@ -276,33 +275,33 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     {
       if (forPostProcess)
       {
-        join += DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED);
+        join += getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_VERSION_REMOVED);
       }
       else
       {
-        join += DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED);
+        join += getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_VERSION_ADDED);
       }
 
-      join += "=" + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION);
+      join += "=" + attrTable + "." + getDBAdapter().quoteIdentifier(MappingNames.ATTRIBUTES_VERSION);
     }
     else
     {
-      join += DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED);
-      join += "<=" + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION);
-      join += " AND (" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED);
-      join += " IS NULL OR " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED);
-      join += ">" + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + ")";
+      join += getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_VERSION_ADDED);
+      join += "<=" + attrTable + "." + getDBAdapter().quoteIdentifier(MappingNames.ATTRIBUTES_VERSION);
+      join += " AND (" + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_VERSION_REMOVED);
+      join += " IS NULL OR " + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_VERSION_REMOVED);
+      join += ">" + attrTable + "." + getDBAdapter().quoteIdentifier(MappingNames.ATTRIBUTES_VERSION) + ")";
     }
 
-    join += " AND " + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH);
-    join += "=" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH);
+    join += " AND " + attrTable + "." + getDBAdapter().quoteIdentifier(MappingNames.ATTRIBUTES_BRANCH);
+    join += "=" + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_BRANCH);
 
     if (forRawExport && !forPostProcess)
     {
-      join += " ORDER BY " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_ID);
-      join += ", " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH);
-      join += ", " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED);
-      join += ", " + listTable + "." + DBUtil.quoted(MappingNames.LIST_IDX);
+      join += " ORDER BY " + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_ID);
+      join += ", " + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_BRANCH);
+      join += ", " + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_VERSION_ADDED);
+      join += ", " + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_IDX);
     }
 
     return join;
@@ -343,13 +342,16 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
 
       if (stmt == null)
       {
-        String sql = "UPDATE " + fields[0].getTable() //
-            + " SET " + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED) + "=?" //
-            + " WHERE " + DBUtil.quoted(MappingNames.LIST_REVISION_ID) + "=?" //
-            + " AND " + DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH) + "=?" //
-            + " AND " + DBUtil.quoted(MappingNames.LIST_IDX) + "=?" //
-            + " AND " + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED) + "<?" //
-            + " AND " + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED) + " IS NULL";
+        IDBTable table = fields[0].getTable();
+        IDBField versionRemoved = table.getField(MappingNames.LIST_REVISION_VERSION_REMOVED);
+        String sql = SQL.update(table) //
+            .set(versionRemoved).to(SQL.param()) //
+            .where(SQL.eq(table.getField(MappingNames.LIST_REVISION_ID), SQL.param()) //
+                .and(SQL.eq(table.getField(MappingNames.LIST_REVISION_BRANCH), SQL.param())) //
+                .and(SQL.eq(table.getField(MappingNames.LIST_IDX), SQL.param())) //
+                .and(SQL.lt(table.getField(MappingNames.LIST_REVISION_VERSION_ADDED), SQL.param())) //
+                .and(SQL.isNull(versionRemoved))) //
+            .compile(getDBAdapter()).getSQL();
         stmt = ((IDBConnection)connection).prepareStatement(sql, ReuseProbability.MEDIUM);
       }
 

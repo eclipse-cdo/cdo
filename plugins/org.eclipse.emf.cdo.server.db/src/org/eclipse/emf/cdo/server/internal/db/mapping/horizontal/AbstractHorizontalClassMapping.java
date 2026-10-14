@@ -61,6 +61,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
@@ -69,6 +70,14 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLFragment;
+import org.eclipse.net4j.db.dml.SQLSelectItem;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectFromStep;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectOrderByStep;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectProjectionStep;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectSourceStep;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
@@ -135,10 +144,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   private Map<EStructuralFeature, IDBField> listSizeFields;
 
   private Map<EStructuralFeature, IDBField> unsettableFields;
-
-  private String sqlSelectForHandle;
-
-  private String sqlSelectForChangeSet;
 
   public AbstractHorizontalClassMapping(AbstractHorizontalMappingStrategy mappingStrategy, EClass eClass)
   {
@@ -349,38 +354,26 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected void initSQLStrings()
   {
-    // ----------- Select all revisions (for handleRevisions) ---
-    StringBuilder builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(versionField);
-    appendSelectForHandleFields(builder);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    sqlSelectForHandle = builder.toString();
-
-    // ----------- Select all revisions (for readChangeSet) ---
-    builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    sqlSelectForChangeSet = builder.toString();
+    // Runtime-dependent conditions are composed at their operation-specific construction points.
   }
 
-  protected void appendSelectForHandleFields(StringBuilder builder)
+  protected void appendSelectForHandleFields(List<SQLSelectItem> items)
   {
     // Do nothing.
   }
 
-  protected String getSQLSelectForHandle()
+  protected SQLSelectProjectionStep selectForHandleRevisions()
   {
-    return sqlSelectForHandle;
+    List<SQLSelectItem> items = new ArrayList<>();
+    items.add(idField);
+    items.add(versionField);
+    appendSelectForHandleFields(items);
+    return SQL.select(items.get(0), items.subList(1, items.size()).toArray(new SQLSelectItem[items.size() - 1]));
   }
 
-  protected String getSQLSelectForChangeSet()
+  protected SQLSelectFromStep selectForChangeSet()
   {
-    return sqlSelectForChangeSet;
+    return SQL.selectDistinct(idField).from(table);
   }
 
   protected IDBField addContainerField(IDBTable table, DBType idType, int idLength)
@@ -413,7 +406,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       stmt.setMaxRows(1); // Optimization: only 1 row
       resultSet = stmt.executeQuery();
 
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IIDHandler idHandler = getStore().getIDHandler();
       if (!readValuesFromResultSet(resultSet, idHandler, revision, false, listChunk))
       {
         if (TRACER.isEnabled())
@@ -556,6 +549,16 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return mappingStrategy;
   }
 
+  protected final IDBStore getStore()
+  {
+    return mappingStrategy.getStore();
+  }
+
+  protected final IDBAdapter getDBAdapter()
+  {
+    return getStore().getDBAdapter();
+  }
+
   @Override
   public final EClass getEClass()
   {
@@ -571,7 +574,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   protected final String getMetaIDStr()
   {
     StringBuilder builder = new StringBuilder();
-    getMappingStrategy().getStore().getIDHandler().appendCDOID(builder, getMetaID());
+    getStore().getIDHandler().appendCDOID(builder, getMetaID());
     return builder.toString();
   }
 
@@ -959,50 +962,40 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     // TODO: test for timeStamp == INVALID_TIME and encode revision.isValid() as WHERE instead of fetching all revisions
     // in order to increase performance
 
-    StringBuilder builder = new StringBuilder(sqlSelectForHandle);
-
     int timeParameters = 0;
+    SQLCondition condition = null;
     if (timeStamp != CDOBranchPoint.INVALID_DATE)
     {
       if (exactTime)
       {
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          builder.append(" WHERE "); //$NON-NLS-1$
-          builder.append(createdField);
-          builder.append("=?"); //$NON-NLS-1$
+          condition = SQL.eq(createdField, SQL.param());
           timeParameters = 1;
         }
       }
       else
       {
-        builder.append(" WHERE "); //$NON-NLS-1$
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          builder.append(createdField);
-          builder.append("<=?"); //$NON-NLS-1$
-          builder.append(" AND ("); //$NON-NLS-1$
-          builder.append(revisedField);
-          builder.append(">=? OR "); //$NON-NLS-1$
-          builder.append(revisedField);
-          builder.append("=0)"); //$NON-NLS-1$
+          condition = SQL.le(createdField, SQL.param()).and(SQL.ge(revisedField, SQL.param()).or(SQL.eq(revisedField, SQL.ZERO)));
           timeParameters = 2;
         }
         else
         {
-          builder.append(revisedField);
-          builder.append("=0"); //$NON-NLS-1$
+          condition = SQL.eq(revisedField, SQL.ZERO);
         }
       }
     }
 
-    builder.append(" ORDER BY "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(versionField);
+    SQLSelectSourceStep select = selectForHandleRevisions().from(table);
+    SQLSelectOrderByStep ordered = condition == null //
+        ? select.orderBy(SQL.asc(idField), SQL.asc(versionField)) //
+        : select.where(condition).orderBy(SQL.asc(idField), SQL.asc(versionField));
+    String sql = ordered.compile(getDBAdapter()).getSQL();
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
+    IIDHandler idHandler = getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
@@ -1063,31 +1056,22 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       return result;
     }
 
-    StringBuilder builder = new StringBuilder(sqlSelectForChangeSet);
-    boolean isFirst = true;
-
+    SQLCondition condition = null;
     for (int i = 0; i < segments.length; i++)
     {
-      if (isFirst)
-      {
-        isFirst = false;
-      }
-      else
-      {
-        builder.append(" OR "); //$NON-NLS-1$
-      }
-
-      builder.append(createdField);
-      builder.append(">=?"); //$NON-NLS-1$
-      builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(revisedField);
-      builder.append("<=? OR "); //$NON-NLS-1$
-      builder.append(revisedField);
-      builder.append("=0)"); //$NON-NLS-1$
+      SQLCondition range = SQL.ge(createdField, SQL.param()).and(SQL.le(revisedField, SQL.param()).or(SQL.eq(revisedField, SQL.ZERO)));
+      condition = condition == null ? range : condition.or(range);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
+    if (condition == null)
+    {
+      return result;
+    }
+
+    String sql = selectForChangeSet().where(condition).compile(getDBAdapter()).getSQL();
+
+    IIDHandler idHandler = getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
@@ -1228,7 +1212,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         IListMapping listMapping = getListMapping(ref);
         String where = getListXRefsWhere(context);
 
-        boolean more = listMapping.queryXRefs(accessor, table.toString(), where, context, idString);
+        String tableName = getDBAdapter().quoteTableName(table);
+        boolean more = listMapping.queryXRefs(accessor, tableName, where, context, idString);
         if (!more)
         {
           return false;
@@ -1254,35 +1239,28 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected final boolean queryScalarXRefs(IDBStoreAccessor accessor, List<EReference> scalarRefs, QueryXRefsContext context, String idString)
   {
-    String where = getListXRefsWhere(context);
-
     for (EReference ref : scalarRefs)
     {
       ITypeMapping valueMapping = getValueMapping(ref);
       IDBField valueField = valueMapping.getField();
 
-      StringBuilder builder = new StringBuilder();
-      builder.append("SELECT ");
-      builder.append(idField);
-      builder.append(", ");
-      builder.append(valueField);
-      builder.append(" FROM ");
-      builder.append(table);
-      builder.append(" WHERE ");
-      builder.append(versionField);
-      builder.append(">0 AND ");
-      builder.append(where);
-      builder.append(" AND ");
-      builder.append(valueField);
-      builder.append(" IN ");
-      builder.append(idString);
-      String sql = builder.toString();
+      SQLFragment targetIDs = SQL.fragment() //
+          .column(valueField) //
+          .sql(" IN ") //
+          .sql(idString) //
+          .build();
+      SQLCondition condition = SQL.gt(versionField, SQL.ZERO).and(getScalarXRefsCondition(context)).and(targetIDs.condition());
+      String sql = SQL.select(idField, valueField) //
+          .from(table) //
+          .where(condition) //
+          .compile(getDBAdapter()).getSQL();
+
       if (TRACER.isEnabled())
       {
         TRACER.format("Query XRefs (attributes): {0}", sql);
       }
 
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IIDHandler idHandler = getStore().getIDHandler();
       IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
       ResultSet resultSet = null;
 
@@ -1327,6 +1305,8 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected abstract String getListXRefsWhere(QueryXRefsContext context);
 
+  protected abstract SQLCondition getScalarXRefsCondition(QueryXRefsContext context);
+
   protected abstract void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor fork);
 
   protected abstract void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long timeStamp);
@@ -1359,28 +1339,33 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return null;
   }
 
-  protected static void appendTypeMappingNames(StringBuilder builder, Collection<ITypeMapping> typeMappings)
+  protected static void appendTypeMappingNames(StringBuilder builder, Collection<ITypeMapping> typeMappings, IDBAdapter dbAdapter)
   {
     if (typeMappings != null)
     {
       for (ITypeMapping typeMapping : typeMappings)
       {
         builder.append(", "); //$NON-NLS-1$
-        builder.append(typeMapping.getField());
+        builder.append(dbAdapter.quoteIdentifier(typeMapping.getField().getName()));
       }
     }
   }
 
-  protected static void appendFieldNames(StringBuilder builder, Map<EStructuralFeature, IDBField> fields)
+  protected static void appendFieldNames(StringBuilder builder, Map<EStructuralFeature, IDBField> fields, IDBAdapter dbAdapter)
   {
     if (fields != null)
     {
       for (IDBField field : fields.values())
       {
         builder.append(", "); //$NON-NLS-1$
-        builder.append(field);
+        builder.append(dbAdapter.quoteIdentifier(field.getName()));
       }
     }
+  }
+
+  protected void appendField(StringBuilder builder, IDBField field)
+  {
+    builder.append(getDBAdapter().quoteIdentifier(field.getName()));
   }
 
   protected static void appendTypeMappingParameters(StringBuilder builder, Collection<ITypeMapping> typeMappings)

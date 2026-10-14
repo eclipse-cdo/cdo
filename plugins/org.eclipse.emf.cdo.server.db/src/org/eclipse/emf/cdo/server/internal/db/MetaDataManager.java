@@ -36,10 +36,12 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBRowHandler;
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -188,9 +190,12 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   public void writePackageUnit(IDBConnection connection, String unitID, int originalType, long timeStamp, byte[] packageBytes, OMMonitor monitor)
   {
     PackageUnitsTable packageUnits = store.tables().packageUnits();
+    IDBAdapter dbAdapter = store.getDBAdapter();
 
-    String sql = "INSERT INTO " + packageUnits + " (" + packageUnits.id() + ", " //$NON-NLS-1$ //$NON-NLS-2$
-        + packageUnits.originalType() + ", " + packageUnits.timeStamp() + ", " + packageUnits.packageData() + ") VALUES (?, ?, ?, ?)";
+    String sql = SQL.insertInto(packageUnits.id().getTable()) //
+        .columns(packageUnits.id(), packageUnits.originalType(), packageUnits.timeStamp(), packageUnits.packageData()) //
+        .values(SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
+        .compile(dbAdapter).getSQL();
     DBUtil.trace(sql);
 
     IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
@@ -230,8 +235,11 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   public void writePackageInfo(IDBConnection connection, String packageURI, String parentURI, String unitID, OMMonitor monitor)
   {
     PackageInfosTable packageInfos = store.tables().packageInfos();
-    String sql = "INSERT INTO " + packageInfos + " (" + packageInfos.uri() + ", " //$NON-NLS-1$ //$NON-NLS-2$
-        + packageInfos.parent() + ", " + packageInfos.unit() + ") VALUES (?, ?, ?)";
+    IDBAdapter dbAdapter = store.getDBAdapter();
+    String sql = SQL.insertInto(packageInfos.uri().getTable()) //
+        .columns(packageInfos.uri(), packageInfos.parent(), packageInfos.unit()) //
+        .values(SQL.param(), SQL.param(), SQL.param()) //
+        .compile(dbAdapter).getSQL();
     DBUtil.trace(sql);
 
     IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
@@ -270,17 +278,20 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   @Override
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
+    IDBAdapter dbAdapter = store.getDBAdapter();
+
     // Export package units
     PackageUnitsTable packageUnits = store.tables().packageUnits();
-    String where = " WHERE p_u." + packageUnits.id() + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + //
-        "' AND p_u." + packageUnits.id() + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + //
-        "' AND p_u." + packageUnits.id() + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + //
-        "' AND p_u." + packageUnits.timeStamp() + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    String where = " WHERE p_u." + dbAdapter.quoteIdentifier(packageUnits.id().getName()) + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + //
+        "' AND p_u." + dbAdapter.quoteIdentifier(packageUnits.id().getName()) + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + //
+        "' AND p_u." + dbAdapter.quoteIdentifier(packageUnits.id().getName()) + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + //
+        "' AND p_u." + dbAdapter.quoteIdentifier(packageUnits.timeStamp().getName()) + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, packageUnits.table(), "p_u", where);
 
     // Export package infos
     PackageInfosTable packageInfos = store.tables().packageInfos();
-    String join = ", " + packageUnits.table() + " p_u" + where + " AND p_i." + packageInfos.unit() + "=p_u." + packageUnits.id();
+    String join = ", " + dbAdapter.quoteTableName(packageUnits.table()) + " p_u" + where + " AND p_i."
+        + dbAdapter.quoteIdentifier(packageInfos.unit().getName()) + "=p_u." + dbAdapter.quoteIdentifier(packageUnits.id().getName());
     DBUtil.serializeTable(out, connection, packageInfos.table(), "p_i", join);
   }
 
@@ -438,9 +449,11 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     String where = null;
     if (fromCommitTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      where = packageUnitsTable.id() + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + "' AND " + packageUnitsTable.id() + "<>'"
-          + CDOModelConstants.RESOURCE_PACKAGE_URI + "' AND " + packageUnitsTable.id() + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + "' AND "
-          + packageUnitsTable.timeStamp() + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+      IDBAdapter dbAdapter = store.getDBAdapter();
+      String idName = dbAdapter.quoteIdentifier(packageUnitsTable.id().getName());
+      String timeStampName = dbAdapter.quoteIdentifier(packageUnitsTable.timeStamp().getName());
+      where = idName + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + "' AND " + idName + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + "' AND " + idName
+          + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + "' AND " + timeStampName + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     }
 
     DBUtil.select(connection, unitRowHandler, where, packageUnitsTable.id(), packageUnitsTable.originalType(), packageUnitsTable.timeStamp());

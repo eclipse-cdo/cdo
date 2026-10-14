@@ -100,7 +100,10 @@ public class Doc02_DataDefinition
    * nullability. An index records its kind (primary key, unique, or non-unique) and ordered fields. The model checks
    * structural relationships such as whether an index field belongs to its table; it does not prove that a target
    * database accepts every type, name, precision, or index form. The adapter supplies type adaptation, identifier
-   * rules, maximum lengths, and vendor-specific DDL.
+   * rules, maximum lengths, and vendor-specific DDL. SQL builders and DDL generators should use
+   * {@link IDBAdapter#quoteIdentifier(String)} for one identifier and {@link IDBAdapter#quoteTableName(IDBTable)}
+   * for a table, so schema-qualified names are quoted component by component. A schema element's {@code toString()}
+   * is a general representation and does not know which adapter will execute the SQL.
    * <p>
    * Use descriptive, stable names and model constraints explicitly. For example, {@code CUSTOMER.EMAIL} can have a
    * unique index, while {@code ORDERS.CUSTOMER_ID} can have a non-unique index for common customer order lookups.

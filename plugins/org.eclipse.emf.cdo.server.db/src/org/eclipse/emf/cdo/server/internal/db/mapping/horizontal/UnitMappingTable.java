@@ -38,6 +38,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -304,12 +305,21 @@ public class UnitMappingTable extends DBStoreTable
   {
     ObjectTypeTable objects = ((AbstractHorizontalMappingStrategy)store().getMappingStrategy()).objects();
 
-    sqlSelectRoots = "SELECT DISTINCT " + unit + " FROM " + table;
+    sqlSelectRoots = SQL.selectDistinct(unit) //
+        .from(table) //
+        .compile(adapter()).getSQL();
 
-    sqlInsertMappings = "INSERT INTO " + table + " (" + elem + ", " + unit + ") VALUES (?, ?)";
+    sqlInsertMappings = SQL.insertInto(table) //
+        .columns(elem, unit) //
+        .values(SQL.param(), SQL.param()) //
+        .compile(adapter()).getSQL();
 
-    sqlSelectClasses = "SELECT " + objects.clazz() + ", COUNT(" + elem + ") FROM " + table + ", " + objects + " WHERE " + elem + "=" + objects.id() + " AND "
-        + unit + "=? GROUP BY " + objects.clazz();
+    sqlSelectClasses = SQL.select(objects.clazz(), SQL.count(elem)) //
+        .from(table) //
+        .from(objects.table()) //
+        .where(SQL.eq(elem, objects.id()).and(SQL.eq(unit, SQL.param()))) //
+        .groupBy(objects.clazz()) //
+        .compile(adapter()).getSQL();
   }
 
   /**

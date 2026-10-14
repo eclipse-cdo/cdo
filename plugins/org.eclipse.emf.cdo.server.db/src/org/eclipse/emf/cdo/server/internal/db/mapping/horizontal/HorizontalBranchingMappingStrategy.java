@@ -26,7 +26,11 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
@@ -97,27 +101,45 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
 
   protected String modifyListJoin(String attrTable, String listTable, String join, boolean forRawExport)
   {
-    join += " AND " + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION);
-    join += "=" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION);
-    join += " AND " + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH);
-    join += "=" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH);
+    join += " AND " + attrTable + "." + getDBAdapter().quoteIdentifier(MappingNames.ATTRIBUTES_VERSION);
+    join += "=" + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_VERSION);
+    join += " AND " + attrTable + "." + getDBAdapter().quoteIdentifier(MappingNames.ATTRIBUTES_BRANCH);
+    join += "=" + listTable + "." + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_BRANCH);
     return join;
   }
 
   @Override
   protected void rawImportReviseOldRevisions(IDBConnection connection, IDBTable table, OMMonitor monitor)
   {
-    String sqlUpdate = "UPDATE " + table + " SET " + DBUtil.quoted(MappingNames.ATTRIBUTES_REVISED) + "=? WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID)
-        + "=? AND " + DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH) + "=? AND " + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "=?";
+    IDBField idField = table.getField(MappingNames.ATTRIBUTES_ID);
+    IDBField branchField = table.getField(MappingNames.ATTRIBUTES_BRANCH);
+    IDBField versionField = table.getField(MappingNames.ATTRIBUTES_VERSION);
+    IDBField createdField = table.getField(MappingNames.ATTRIBUTES_CREATED);
+    IDBField revisedField = table.getField(MappingNames.ATTRIBUTES_REVISED);
+    SQLTableRef first = SQL.as(table, "cdo1"); //$NON-NLS-1$
+    SQLTableRef second = SQL.as(table, "cdo2"); //$NON-NLS-1$
 
-    String sqlQuery = "SELECT cdo1." + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + ", cdo1." + DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH) + ", cdo1."
-        + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + ", cdo2." + DBUtil.quoted(MappingNames.ATTRIBUTES_CREATED) + " FROM " + table + " cdo1, " + table
-        + " cdo2 WHERE cdo1." + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + "=cdo2." + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + " AND cdo1."
-        + DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH) + "=cdo2." + DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH) + " AND (cdo1."
-        + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "=cdo2." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "-1 OR (cdo1."
-        + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "+cdo2." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "=-1 AND cdo1."
-        + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + ">cdo2." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + ")) AND cdo1."
-        + DBUtil.quoted(MappingNames.ATTRIBUTES_REVISED) + "=0";
+    SQLCondition versionCondition = SQL.eq(first.column(versionField), SQL.subtract(second.column(versionField), SQL.ONE)) //
+        .or(SQL.eq(SQL.add(first.column(versionField), second.column(versionField)), SQL.literal(-1)) //
+            .and(SQL.gt(first.column(versionField), second.column(versionField))));
+
+    SQLCondition queryCondition = SQL.eq(first.column(idField), second.column(idField)) //
+        .and(SQL.eq(first.column(branchField), second.column(branchField))) //
+        .and(versionCondition) //
+        .and(SQL.eq(first.column(revisedField), SQL.ZERO));
+
+    String sqlUpdate = SQL.update(table) //
+        .set(revisedField).to(SQL.param()) //
+        .where(SQL.eq(idField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.eq(versionField, SQL.param()))) //
+        .compile(getDBAdapter()).getSQL();
+
+    String sqlQuery = SQL.select(first.column(idField), first.column(branchField), first.column(versionField), second.column(createdField)) //
+        .from(first) //
+        .from(second) //
+        .where(queryCondition) //
+        .compile(getDBAdapter()).getSQL();
 
     IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate, ReuseProbability.MEDIUM);
@@ -177,9 +199,18 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
   @Override
   protected void rawImportUnreviseNewRevisions(IDBConnection connection, IDBTable table, long fromCommitTime, long toCommitTime, OMMonitor monitor)
   {
-    String sql = "UPDATE " + table + " SET " + DBUtil.quoted(MappingNames.ATTRIBUTES_REVISED) + "=0 WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH)
-        + ">=0 AND " + DBUtil.quoted(MappingNames.ATTRIBUTES_CREATED) + "<=" + toCommitTime + " AND " + DBUtil.quoted(MappingNames.ATTRIBUTES_REVISED) + ">"
-        + toCommitTime + " AND " + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + ">0";
+    IDBField branchField = table.getField(MappingNames.ATTRIBUTES_BRANCH);
+    IDBField createdField = table.getField(MappingNames.ATTRIBUTES_CREATED);
+    IDBField revisedField = table.getField(MappingNames.ATTRIBUTES_REVISED);
+    IDBField versionField = table.getField(MappingNames.ATTRIBUTES_VERSION);
+
+    String sql = SQL.update(table) //
+        .set(revisedField).to(SQL.ZERO) //
+        .where(SQL.ge(branchField, SQL.ZERO) //
+            .and(SQL.le(createdField, SQL.literal(toCommitTime))) //
+            .and(SQL.gt(revisedField, SQL.literal(toCommitTime))) //
+            .and(SQL.gt(versionField, SQL.ZERO))) //
+        .compile(getDBAdapter()).getSQL();
 
     IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
 

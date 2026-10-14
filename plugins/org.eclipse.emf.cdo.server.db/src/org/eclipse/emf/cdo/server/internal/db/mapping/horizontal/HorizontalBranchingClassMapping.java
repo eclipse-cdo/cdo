@@ -57,10 +57,19 @@ import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLExpression;
+import org.eclipse.net4j.db.dml.SQLSelectItem;
+import org.eclipse.net4j.db.dml.SQLTableRef;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectOrderByStep;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectSourceStep;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectWhereStep;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -119,128 +128,129 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected void initSQLStrings()
   {
     super.initSQLStrings();
-    IDBTable table = getTable();
 
     // ----------- Select Revision ---------------------------
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(createdField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(resourceField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(containerField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(featureField);
-    appendTypeMappingNames(builder, getValueMappings());
-    appendFieldNames(builder, getUnsettableFields());
-    appendFieldNames(builder, getListSizeFields());
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND ("); //$NON-NLS-1$
-    String sqlSelectAttributesPrefix = builder.toString();
-    builder.append(revisedField);
-    builder.append("=0)"); //$NON-NLS-1$
-    sqlSelectCurrentAttributes = builder.toString();
-
-    builder = new StringBuilder(sqlSelectAttributesPrefix);
-    builder.append(createdField);
-    builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append("=0 OR "); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append(">=?))"); //$NON-NLS-1$
-    sqlSelectAttributesByTime = builder.toString();
-
-    builder = new StringBuilder(sqlSelectAttributesPrefix);
-    builder.append("ABS("); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(")=?)"); //$NON-NLS-1$
-    sqlSelectAttributesByVersion = builder.toString();
+    sqlSelectCurrentAttributes = createSelectAttributesSQL(0);
+    sqlSelectAttributesByTime = createSelectAttributesSQL(1);
+    sqlSelectAttributesByVersion = createSelectAttributesSQL(2);
 
     // ----------- Insert Attributes -------------------------
-    builder = new StringBuilder();
-    builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append("("); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(createdField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(resourceField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(containerField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(featureField);
-    appendTypeMappingNames(builder, getValueMappings());
-    appendFieldNames(builder, getUnsettableFields());
-    appendFieldNames(builder, getListSizeFields());
-    builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
-    appendTypeMappingParameters(builder, getValueMappings());
-    appendFieldParameters(builder, getUnsettableFields());
-    appendFieldParameters(builder, getListSizeFields());
-    builder.append(")"); //$NON-NLS-1$
-    sqlInsertAttributes = builder.toString();
+    List<IDBField> insertFields = new ArrayList<>();
+    insertFields.add(idField);
+    insertFields.add(versionField);
+    insertFields.add(branchField);
+    insertFields.add(createdField);
+    insertFields.add(revisedField);
+    insertFields.add(resourceField);
+    insertFields.add(containerField);
+    insertFields.add(featureField);
+
+    for (ITypeMapping typeMapping : getValueMappings())
+    {
+      insertFields.add(typeMapping.getField());
+    }
+
+    if (getUnsettableFields() != null)
+    {
+      insertFields.addAll(getUnsettableFields().values());
+    }
+
+    if (getListSizeFields() != null)
+    {
+      insertFields.addAll(getListSizeFields().values());
+    }
+
+    List<SQLExpression> insertValues = new ArrayList<>();
+    for (int i = 0; i < insertFields.size(); i++)
+    {
+      insertValues.add(SQL.param());
+    }
+
+    sqlInsertAttributes = SQL.insertInto(table)
+        .columns(insertFields.get(0), insertFields.subList(1, insertFields.size()).toArray(new IDBField[insertFields.size() - 1]))
+        .values(insertValues.get(0), insertValues.subList(1, insertValues.size()).toArray(new SQLExpression[insertValues.size() - 1])).compile(getDBAdapter())
+        .getSQL();
 
     // ----------- Update to set revised ----------------
-    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" SET "); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append("=0"); //$NON-NLS-1$
-    sqlReviseAttributes = builder.toString();
+    sqlReviseAttributes = SQL.update(table) //
+        .set(revisedField).to(SQL.param()) //
+        .where(SQL.eq(idField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.eq(revisedField, SQL.ZERO))) //
+        .compile(getDBAdapter()).getSQL();
 
     // ----------- Select all unrevised Object IDs ------
-    builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append("=0"); //$NON-NLS-1$
-    sqlSelectAllObjectIDs = builder.toString();
+    sqlSelectAllObjectIDs = SQL.select(idField) //
+        .from(table) //
+        .where(revisedField).eq(SQL.ZERO) //
+        .compile(getDBAdapter()).getSQL();
 
     // ----------- Raw delete one specific revision ------
-    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlRawDeleteAttributes = builder.toString();
+    sqlRawDeleteAttributes = SQL.deleteFrom(table) //
+        .where(SQL.eq(idField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.eq(versionField, SQL.param()))) //
+        .compile(getDBAdapter()).getSQL();
+  }
+
+  private String createSelectAttributesSQL(int selection)
+  {
+    List<SQLSelectItem> attributes = new ArrayList<>();
+    attributes.add(versionField);
+    attributes.add(createdField);
+    attributes.add(revisedField);
+    attributes.add(resourceField);
+    attributes.add(containerField);
+    attributes.add(featureField);
+    for (ITypeMapping typeMapping : getValueMappings())
+    {
+      attributes.add(typeMapping.getField());
+    }
+
+    if (getUnsettableFields() != null)
+    {
+      attributes.addAll(getUnsettableFields().values());
+    }
+
+    if (getListSizeFields() != null)
+    {
+      attributes.addAll(getListSizeFields().values());
+    }
+
+    SQLSelectItem[] otherAttributes = attributes.subList(1, attributes.size()).toArray(new SQLSelectItem[attributes.size() - 1]);
+    SQLCondition condition = SQL.eq(idField, SQL.param()).and(SQL.eq(branchField, SQL.param()));
+    if (selection == 0)
+    {
+      condition = condition.and(SQL.eq(revisedField, SQL.ZERO));
+    }
+    else if (selection == 1)
+    {
+      condition = condition.and(SQL.le(createdField, SQL.param())).and(SQL.eq(revisedField, SQL.ZERO).or(SQL.ge(revisedField, SQL.param())));
+    }
+    else
+    {
+      // ABS is retained as a narrowly scoped function fragment because the fluent API has no ABS expression yet.
+      condition = condition.and(SQL.eq(SQL.fragment() //
+          .sql("ABS(") //
+          .column(versionField) //
+          .sql(")") //
+          .build() //
+          .expression() //
+          , SQL.param()));
+    }
+
+    return SQL.select(attributes.get(0), otherAttributes) //
+        .from(table) //
+        .where(condition) //
+        .compile(getDBAdapter()).getSQL();
   }
 
   @Override
-  protected void appendSelectForHandleFields(StringBuilder builder)
+  protected void appendSelectForHandleFields(List<SQLSelectItem> items)
   {
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(createdField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(revisedField);
+    items.add(branchField);
+    items.add(createdField);
+    items.add(revisedField);
   }
 
   @Override
@@ -249,7 +259,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     long timeStamp = revision.getTimeStamp();
     int branchID = revision.getBranch().getID();
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = null;
     boolean success = false;
 
@@ -297,7 +307,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public boolean readRevisionByVersion(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectAttributesByVersion, ReuseProbability.HIGH);
     boolean success = false;
 
@@ -335,7 +345,6 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
-    IDBTable table = getTable();
     if (table == null)
     {
       return null;
@@ -352,47 +361,31 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     int branchID = branchPoint.getBranch().getID();
     long timeStamp = branchPoint.getTimeStamp();
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(">0 AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(containerField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(nameValueMapping.getField());
+    SQLCondition condition = SQL.gt(versionField, SQL.ZERO).and(SQL.eq(branchField, SQL.param())).and(SQL.eq(containerField, SQL.param()));
     if (name == null)
     {
-      builder.append(" IS NULL"); //$NON-NLS-1$
+      condition = condition.and(SQL.isNull(nameValueMapping.getField()));
     }
     else
     {
-      builder.append(exactMatch ? " =?" : " LIKE ?"); //$NON-NLS-1$ //$NON-NLS-2$
+      condition = condition.and(exactMatch ? SQL.eq(nameValueMapping.getField(), SQL.param()) : SQL.like(nameValueMapping.getField(), SQL.param()));
     }
-
-    builder.append(" AND ("); //$NON-NLS-1$
 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(revisedField);
-      builder.append("=0)"); //$NON-NLS-1$
+      condition = condition.and(SQL.eq(revisedField, SQL.ZERO));
     }
     else
     {
-      builder.append(createdField);
-      builder.append("<=? AND ("); //$NON-NLS-1$
-      builder.append(revisedField);
-      builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(revisedField);
-      builder.append(">=?))"); //$NON-NLS-1$
+      condition = condition.and(SQL.le(createdField, SQL.param())).and(SQL.eq(revisedField, SQL.ZERO).or(SQL.ge(revisedField, SQL.param())));
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
+    IIDHandler idHandler = getStore().getIDHandler();
+    String sql = SQL.select(idField) //
+        .from(table) //
+        .where(condition) //
+        .compile(getDBAdapter()).getSQL();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
 
     try
     {
@@ -440,7 +433,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected final void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
     try
@@ -551,7 +544,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     try
     {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IIDHandler idHandler = getStore().getIDHandler();
 
       for (InternalCDORevision revision : revisions)
       {
@@ -635,7 +628,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor mon)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
     try
@@ -690,7 +683,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor fork)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlRawDeleteAttributes, ReuseProbability.HIGH);
 
     try
@@ -713,7 +706,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected void reviseOldRevision(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, long revised)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReviseAttributes, ReuseProbability.HIGH);
 
     try
@@ -736,7 +729,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public void writeRevision(IDBStoreAccessor accessor, InternalCDORevision revision, boolean firstRevision, boolean revise, OMMonitor monitor)
   {
-    if (getTable() == null)
+    if (table == null)
     {
       initTable(accessor);
     }
@@ -768,6 +761,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       try
       {
         async = monitor.forkAsync();
+
         if (firstRevision)
         {
           // Put new objects into objectTypeMapper
@@ -840,22 +834,15 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public void handleRevisions(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
-    if (getTable() == null)
+    if (table == null)
     {
       return;
     }
 
-    StringBuilder builder = new StringBuilder(getSQLSelectForHandle());
-    boolean whereAppend = false;
-
+    SQLCondition condition = null;
     if (branch != null)
     {
-      // TODO: Prepare this string literal
-      builder.append(" WHERE "); //$NON-NLS-1$
-      builder.append(branchField);
-      builder.append("=?"); //$NON-NLS-1$
-
-      whereAppend = true;
+      condition = SQL.eq(branchField, SQL.param());
     }
 
     int timeParameters = 0;
@@ -865,46 +852,39 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
       {
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-          builder.append(createdField);
-          builder.append("=?"); //$NON-NLS-1$
+          SQLCondition timeCondition = SQL.eq(createdField, SQL.param());
+          condition = condition == null ? timeCondition : condition.and(timeCondition);
           timeParameters = 1;
         }
       }
       else
       {
-        builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          builder.append(createdField);
-          builder.append("<=? AND ("); //$NON-NLS-1$
-          builder.append(revisedField);
-          builder.append("=0 OR "); //$NON-NLS-1$
-          builder.append(revisedField);
-          builder.append(">=?)"); //$NON-NLS-1$
+          SQLCondition timeCondition = SQL.le(createdField, SQL.param()).and(SQL.eq(revisedField, SQL.ZERO).or(SQL.ge(revisedField, SQL.param())));
+          condition = condition == null ? timeCondition : condition.and(timeCondition);
           timeParameters = 2;
         }
         else
         {
-          builder.append(revisedField);
-          builder.append("=0"); //$NON-NLS-1$
+          SQLCondition timeCondition = SQL.eq(revisedField, SQL.ZERO);
+          condition = condition == null ? timeCondition : condition.and(timeCondition);
         }
       }
     }
 
-    builder.append(" ORDER BY "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(branchField);
+    SQLSelectSourceStep select = selectForHandleRevisions().from(table);
+    SQLSelectOrderByStep ordered = condition == null //
+        ? select.orderBy(SQL.asc(idField), SQL.asc(versionField), SQL.asc(branchField)) //
+        : select.where(condition).orderBy(SQL.asc(idField), SQL.asc(versionField), SQL.asc(branchField));
+    String sql = ordered.compile(getDBAdapter()).getSQL();
 
     IRepository repository = accessor.getStore().getRepository();
     CDORevisionManager revisionManager = repository.getRevisionManager();
     CDOBranchManager branchManager = repository.getBranchManager();
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
+    IIDHandler idHandler = getStore().getIDHandler();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
@@ -966,23 +946,46 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
   {
-    IDBTable table = getTable();
     if (table == null)
     {
       return;
     }
 
     // Delete the revisions.
-    batch.add("DELETE FROM " + table + " WHERE " + branchField + " IN (" + idList + ")");
+    IDBAdapter dbAdapter = getDBAdapter();
+    String sql = SQL.deleteFrom(table) //
+        .where(SQL.fragment() //
+            .column(branchField) //
+            .sql(" IN (") //
+            .sql(idList) //
+            .sql(")") //
+            .build().condition()) //
+        .compile(dbAdapter).getSQL();
+    batch.add(sql);
 
     // Delete the type mappings.
     ObjectTypeTable objects = getMappingStrategy().objects();
+    IDBField objectID = objects.id();
+    IDBField objectClass = objects.clazz();
+    IDBTable objectsTable = objectID.getTable();
+    IDBTable classTable = idField.getTable();
     String metaID = getMetaIDStr();
+    IDBField classID = classTable.getField(idField.getName());
 
-    String join = "SELECT o." + objects.id() + " FROM " + objects + " o LEFT JOIN " + table + " c ON c." + objects.id() + "=o." + objects.id() + " WHERE o."
-        + objects.clazz() + "=" + metaID + " AND c." + objects.id() + " IS NULL";
-
-    batch.add("DELETE FROM " + objects + " WHERE " + objects.id() + " IN (" + join + ")");
+    SQLTableRef objectRef = SQL.as(objectsTable, "o"); //$NON-NLS-1$
+    SQLTableRef classRef = SQL.as(classTable, "c"); //$NON-NLS-1$
+    SQLCondition deleteObjectsCondition = SQL.eq(objectRef.column(objectClass), SQL.fragment() //
+        .sql(metaID) //
+        .build() //
+        .expression()).and(SQL.isNull(classRef.column(classID)));
+    SQLSelectWhereStep orphanObjects = SQL.select(objectRef.column(objectID)) //
+        .from(objectRef) //
+        .leftJoin(classRef).on(SQL.eq(classRef.column(classID), objectRef.column(objectID))) //
+        .where(deleteObjectsCondition);
+    String deleteObjectsSQL = SQL.deleteFrom(objectsTable) //
+        .where(SQL.in(objectID, orphanObjects.subSelect())) //
+        .compile(dbAdapter).getSQL();
+    batch.add(deleteObjectsSQL);
 
     // Delete the list elements.
     for (IListMapping listMapping : getListMappings())
@@ -998,46 +1001,36 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, CDOChangeSetSegment[] segments)
   {
     Set<CDOID> result = new HashSet<>();
-    if (getTable() == null)
+
+    if (table == null)
     {
       return result;
     }
 
-    StringBuilder builder = new StringBuilder(getSQLSelectForChangeSet());
-    boolean isFirst = true;
+    SQLCondition condition = null;
 
     for (int i = 0; i < segments.length; i++)
     {
-      if (isFirst)
-      {
-        isFirst = false;
-      }
-      else
-      {
-        builder.append(" OR "); //$NON-NLS-1$
-      }
-
-      builder.append(branchField);
-      builder.append("=? AND "); //$NON-NLS-1$
-
-      builder.append(createdField);
-      builder.append(">=?"); //$NON-NLS-1$
-      builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(revisedField);
-      builder.append("<=? OR "); //$NON-NLS-1$
-      builder.append(revisedField);
-      builder.append("=0)"); //$NON-NLS-1$
+      SQLCondition range = SQL.eq(branchField, SQL.param()).and(SQL.ge(createdField, SQL.param()))
+          .and(SQL.le(revisedField, SQL.param()).or(SQL.eq(revisedField, SQL.ZERO)));
+      condition = condition == null ? range : condition.or(range);
     }
 
-    String sql = builder.toString();
+    if (condition == null)
+    {
+      return result;
+    }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    String sql = selectForChangeSet().where(condition).compile(getDBAdapter()).getSQL();
+
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
       int column = 1;
+
       for (CDOChangeSetSegment segment : segments)
       {
         stmt.setInt(column++, segment.getBranch().getID());
@@ -1069,7 +1062,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected String getListXRefsWhere(QueryXRefsContext context)
   {
     StringBuilder builder = new StringBuilder();
-    builder.append(branchField);
+    appendField(builder, branchField);
     builder.append("=");
     builder.append(context.getBranch().getID());
     builder.append(" AND (");
@@ -1077,24 +1070,37 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     long timeStamp = context.getTimeStamp();
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(revisedField);
+      appendField(builder, revisedField);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(createdField);
+      appendField(builder, createdField);
       builder.append("<=");
       builder.append(timeStamp);
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(revisedField);
+      appendField(builder, revisedField);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(revisedField);
+      appendField(builder, revisedField);
       builder.append(">=");
       builder.append(timeStamp);
       builder.append("))"); //$NON-NLS-1$
     }
 
     return builder.toString();
+  }
+
+  @Override
+  protected SQLCondition getScalarXRefsCondition(QueryXRefsContext context)
+  {
+    SQLCondition condition = SQL.eq(branchField, SQL.literal(context.getBranch().getID()));
+    long timeStamp = context.getTimeStamp();
+    if (timeStamp == CDORevision.UNSPECIFIED_DATE)
+    {
+      return condition.and(SQL.eq(revisedField, SQL.ZERO));
+    }
+
+    return condition.and(SQL.le(createdField, SQL.literal(timeStamp))).and(SQL.eq(revisedField, SQL.ZERO).or(SQL.ge(revisedField, SQL.literal(timeStamp))));
   }
 
   @Override

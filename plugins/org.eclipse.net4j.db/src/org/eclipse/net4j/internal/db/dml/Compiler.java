@@ -14,7 +14,6 @@ package org.eclipse.net4j.internal.db.dml;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
-import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQLColumnRef;
 import org.eclipse.net4j.db.dml.SQLCondition;
@@ -581,6 +580,7 @@ public final class Compiler
       List<Template.Operation> operations = operations(definition);
       List<IDBField> columns = new ArrayList<>();
       List<Object> values = new ArrayList<>();
+      Template selectSource = null;
 
       boolean explicitColumns = false;
       boolean assignments = false;
@@ -605,13 +605,28 @@ public final class Compiler
           break;
 
         case VALUES:
-          if (assignments)
+          if (assignments || selectSource != null)
           {
             throw invalid("INSERT values", "values cannot be mixed with assignments");
           }
 
           valuesStarted = true;
           values.addAll(operands(operation, "INSERT values"));
+          break;
+
+        case INSERT_SELECT:
+          if (!explicitColumns || assignments || valuesStarted || selectSource != null)
+          {
+            throw invalid("INSERT SELECT", "a SELECT source requires one explicit column list and cannot be mixed with values or assignments");
+          }
+
+          Object source = one(operation, "INSERT SELECT");
+          if (!(source instanceof Template.SelectSubquery))
+          {
+            throw invalid("INSERT SELECT", "expected a SELECT definition");
+          }
+
+          selectSource = ((Template.SelectSubquery)source).getTemplate();
           break;
 
         case SET:
@@ -632,7 +647,7 @@ public final class Compiler
         }
       }
 
-      if (values.isEmpty())
+      if (values.isEmpty() && selectSource == null)
       {
         throw invalid("INSERT", "values are missing");
       }
@@ -649,7 +664,7 @@ public final class Compiler
           throw invalid("INSERT values", "value count " + values.size() + " does not match table column count " + columns.size());
         }
       }
-      else if (columns.size() != values.size())
+      else if (selectSource == null && columns.size() != values.size())
       {
         throw invalid("INSERT values", "value count " + values.size() + " does not match column count " + columns.size());
       }
@@ -663,6 +678,28 @@ public final class Compiler
         sql.append(" (");
         renderCommaSeparated(columns, this::renderColumnName);
         sql.append(')');
+      }
+
+      if (selectSource != null)
+      {
+        int projectionCount = 0;
+
+        for (Template.Operation operation : operations(selectSource))
+        {
+          if (operation.getKind() == Template.Operation.Kind.PROJECTION)
+          {
+            projectionCount++;
+          }
+        }
+
+        if (projectionCount != columns.size())
+        {
+          throw invalid("INSERT SELECT", "source projection count " + projectionCount + " does not match target column count " + columns.size());
+        }
+
+        sql.append(' ');
+        renderSelect(selectSource);
+        return;
       }
 
       sql.append(" VALUES (");
@@ -1330,14 +1367,7 @@ public final class Compiler
     private void renderPhysicalTable(IDBTable table, StringBuilder target)
     {
       Objects.requireNonNull(table, "table");
-
-      IDBSchema schema = table.getSchema();
-      if (schema != null && schema.isQualifiedTableNames())
-      {
-        target.append(adapter.quoteIdentifier(schema.getName())).append('.');
-      }
-
-      target.append(adapter.quoteIdentifier(table.getName()));
+      target.append(adapter.quoteTableName(table));
     }
 
     private void renderTableQualifier(SQLTableRef tableRef, StringBuilder target)

@@ -60,6 +60,22 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/db/mapping/IListMapping.java" type="org.eclipse.emf.cdo.server.db.mapping.IListMapping">
+        <filter id="576782386">
+            <message_arguments>
+                <message_argument value="IFeatureMapping"/>
+                <message_argument value="IListMapping"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.java" type="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping">
+        <filter id="576782386">
+            <message_arguments>
+                <message_argument value="IFeatureMapping"/>
+                <message_argument value="ITypeMapping"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/db/DBStoreAccessor.java" type="org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor">
         <filter id="574660632">
             <message_arguments>

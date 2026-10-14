@@ -61,6 +61,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.StringJoiner;
 import java.util.function.Consumer;
@@ -201,7 +202,7 @@ public abstract class DBAdapter implements IDBAdapter
   @Override
   public void createSchema(Connection connection, String schemaName)
   {
-    DBUtil.execute(connection, "CREATE SCHEMA " + DBUtil.quoted(schemaName));
+    DBUtil.execute(connection, "CREATE SCHEMA " + quoteIdentifier(schemaName));
   }
 
   /**
@@ -284,7 +285,8 @@ public abstract class DBAdapter implements IDBAdapter
     {
       statement = connection.createStatement();
       statement.setMaxRows(1);
-      resultSet = statement.executeQuery("SELECT * FROM " + table);
+
+      resultSet = statement.executeQuery("SELECT * FROM " + quoteTableName(table));
       ResultSetMetaData metaData = resultSet.getMetaData();
 
       for (int i = 0; i < metaData.getColumnCount(); i++)
@@ -489,7 +491,7 @@ public abstract class DBAdapter implements IDBAdapter
 
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE TABLE "); //$NON-NLS-1$
-    builder.append(table);
+    builder.append(quoteTableName(table));
     builder.append(" ("); //$NON-NLS-1$
     appendFieldDefs(builder, table, createFieldDefinitions(table));
     builder.append(")"); //$NON-NLS-1$
@@ -543,7 +545,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void createField(Connection connection, IDBField field)
   {
-    DBUtil.execute(connection, "ALTER TABLE " + field.getTable() + " ADD COLUMN " + field + " " + createFieldDefinition(field));
+    DBUtil.execute(connection,
+        "ALTER TABLE " + quoteTableName(field.getTable()) + " ADD COLUMN " + quoteIdentifier(field.getName()) + " " + createFieldDefinition(field));
   }
 
   /**
@@ -551,7 +554,7 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void dropField(Connection connection, IDBField field)
   {
-    DBUtil.execute(connection, "ALTER TABLE " + field.getTable() + " DROP COLUMN " + field);
+    DBUtil.execute(connection, "ALTER TABLE " + quoteTableName(field.getTable()) + " DROP COLUMN " + quoteIdentifier(field.getName()));
   }
 
   /**
@@ -579,9 +582,9 @@ public abstract class DBAdapter implements IDBAdapter
   protected void createPrimaryKey(IDBIndex index, StringBuilder builder)
   {
     builder.append("ALTER TABLE "); //$NON-NLS-1$
-    builder.append(index.getTable());
+    builder.append(quoteTableName(index.getTable()));
     builder.append(" ADD CONSTRAINT "); //$NON-NLS-1$
-    builder.append(index);
+    builder.append(quoteIdentifier(index.getName()));
     builder.append(" PRIMARY KEY"); //$NON-NLS-1$
   }
 
@@ -597,9 +600,9 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     builder.append("INDEX "); //$NON-NLS-1$
-    builder.append(index);
+    builder.append(quoteIdentifier(index.getName()));
     builder.append(" ON "); //$NON-NLS-1$
-    builder.append(index.getTable());
+    builder.append(quoteTableName(index.getTable()));
   }
 
   /**
@@ -647,9 +650,9 @@ public abstract class DBAdapter implements IDBAdapter
   protected void dropPrimaryKey(IDBIndex index, StringBuilder builder)
   {
     builder.append("ALTER TABLE "); //$NON-NLS-1$
-    builder.append(index.getTable());
+    builder.append(quoteTableName(index.getTable()));
     builder.append(" DROP CONSTRAINT "); //$NON-NLS-1$
-    builder.append(index);
+    builder.append(quoteIdentifier(index.getName()));
   }
 
   /**
@@ -768,7 +771,7 @@ public abstract class DBAdapter implements IDBAdapter
 
   protected String getDropTableSQL(IDBTable table)
   {
-    return "DROP TABLE " + table; //$NON-NLS-1$
+    return "DROP TABLE " + quoteTableName(table); //$NON-NLS-1$
   }
 
   /**
@@ -858,9 +861,10 @@ public abstract class DBAdapter implements IDBAdapter
   {
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE TABLE "); //$NON-NLS-1$
-    builder.append(table);
+    builder.append(quoteTableName(table));
     builder.append(" ("); //$NON-NLS-1$
     appendFieldDefs(builder, table, createFieldDefinitions(table));
+
     String constraints = createConstraints(table);
     if (constraints != null)
     {
@@ -917,11 +921,13 @@ public abstract class DBAdapter implements IDBAdapter
     }
 
     builder.append("INDEX "); //$NON-NLS-1$
-    builder.append(index);
+    builder.append(quoteIdentifier(index.getName()));
     builder.append(" ON "); //$NON-NLS-1$
-    builder.append(table);
+    builder.append(quoteTableName(table));
+
     createIndexFields(index, builder);
     String sql = builder.toString();
+
     if (TRACER.isEnabled())
     {
       TRACER.trace(sql);
@@ -932,7 +938,7 @@ public abstract class DBAdapter implements IDBAdapter
 
   protected void addIndexField(StringBuilder builder, IDBField field)
   {
-    builder.append(field);
+    builder.append(quoteIdentifier(field.getName()));
   }
 
   /**
@@ -1050,7 +1056,7 @@ public abstract class DBAdapter implements IDBAdapter
         builder.append("SELECT "); //$NON-NLS-1$
         appendFieldNames(builder, table);
         builder.append(" FROM "); //$NON-NLS-1$
-        builder.append(table);
+        builder.append(quoteTableName(table));
         sql = builder.toString();
 
         if (TRACER.isEnabled())
@@ -1117,6 +1123,7 @@ public abstract class DBAdapter implements IDBAdapter
     try
     {
       IDBField[] fields = table.getFields();
+
       for (int i = 0; i < fields.length; i++)
       {
         IDBField field = fields[i];
@@ -1125,8 +1132,7 @@ public abstract class DBAdapter implements IDBAdapter
           appendable.append(", "); //$NON-NLS-1$
         }
 
-        String fieldName = field.getName();
-        appendable.append(fieldName);
+        appendable.append(quoteIdentifier(field.getName()));
       }
     }
     catch (IOException canNotHappen)
@@ -1142,6 +1148,7 @@ public abstract class DBAdapter implements IDBAdapter
     try
     {
       IDBField[] fields = table.getFields();
+
       for (int i = 0; i < fields.length; i++)
       {
         IDBField field = fields[i];
@@ -1150,7 +1157,7 @@ public abstract class DBAdapter implements IDBAdapter
           appendable.append(", "); //$NON-NLS-1$
         }
 
-        appendable.append(field.toString());
+        appendable.append(quoteIdentifier(field.getName()));
         appendable.append(" "); //$NON-NLS-1$
         appendable.append(defs[i]);
       }
@@ -1223,13 +1230,58 @@ public abstract class DBAdapter implements IDBAdapter
     return "42S22".equals(sqlState);
   }
 
+  @Override
+  public final String quoteIdentifier(String identifier)
+  {
+    Objects.requireNonNull(identifier, "identifier");
+
+    if (!DBUtil.DISABLE_QUOTED_NAMES)
+    {
+      String quote = getIdentifierQuote();
+      if (!StringUtil.isEmpty(quote))
+      {
+        return quote + escapeQuote(identifier, quote) + quote;
+      }
+    }
+
+    return identifier;
+  }
+
+  /**
+   * Returns the identifier delimiter used by {@link #quoteIdentifier(String)}.
+   * Subclasses override this method to provide a dialect-specific delimiter. The returned value
+   * is used only when quoted names have not been globally disabled.
+   *
+   * @return the identifier delimiter, or an empty string when the dialect does not quote identifiers
+   * @since 4.15
+   */
+  protected String getIdentifierQuote()
+  {
+    return DBUtil.QUOTE;
+  }
+
+  /**
+   * Escapes occurrences of the identifier delimiter inside an identifier.
+   * Subclasses may override this method when their dialect uses an escaping rule other than
+   * doubling the delimiter.
+   *
+   * @param identifier the unquoted identifier
+   * @param quote the delimiter returned by {@link #getIdentifierQuote()}
+   * @return the identifier with delimiter occurrences escaped
+   * @since 4.15
+   */
+  protected String escapeQuote(String identifier, String quote)
+  {
+    return identifier.replace(quote, quote + quote);
+  }
+
   /**
    * @since 4.2
    */
   @Override
   public String sqlRenameField(IDBField field, String oldName)
   {
-    return "ALTER TABLE " + field.getTable() + " RENAME COLUMN " + oldName + " TO " + field;
+    return "ALTER TABLE " + quoteTableName(field.getTable()) + " RENAME COLUMN " + quoteIdentifier(oldName) + " TO " + quoteIdentifier(field.getName());
   }
 
   /**
@@ -1238,8 +1290,8 @@ public abstract class DBAdapter implements IDBAdapter
   @Override
   public String sqlModifyField(IDBField field)
   {
-    String tableName = field.getTable().getName();
-    String fieldName = field.getName();
+    String tableName = quoteTableName(field.getTable());
+    String fieldName = quoteIdentifier(field.getName());
 
     String definition = createFieldDefinition(field);
     return sqlModifyField(tableName, fieldName, definition);

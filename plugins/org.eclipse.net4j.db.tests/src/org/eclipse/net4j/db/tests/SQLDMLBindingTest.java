@@ -64,7 +64,10 @@ public class SQLDMLBindingTest extends TestCase
       return defaultValue(method.getReturnType());
     });
 
-    SQLStatement statement = SQL.select(SQL.literal(1)).from(schema.table).build().compile(new H2Adapter());
+    SQLStatement statement = SQL.select(SQL.ONE) //
+        .from(schema.table) //
+        .build() //
+        .compile(new H2Adapter());
     IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.HIGH);
     assertSame(expected, prepared);
     assertEquals(sql, arguments[0]);
@@ -75,7 +78,11 @@ public class SQLDMLBindingTest extends TestCase
   {
     Schema schema = schema();
     SQLParameter repeated = SQL.param();
-    SQLStatement statement = SQL.selectAll().from(schema.table).where(schema.id).eq(repeated).or(schema.name).eq(repeated).build().compile(new H2Adapter());
+    SQLStatement statement = SQL.selectAll() //
+        .from(schema.table) //
+        .where(schema.id).eq(repeated).or(schema.name).eq(repeated) //
+        .build() //
+        .compile(new H2Adapter());
     Recorder recorder = new Recorder();
     PreparedStatement jdbc = recorder.statement();
 
@@ -108,7 +115,10 @@ public class SQLDMLBindingTest extends TestCase
   public void testZeroParametersInvalidIndicesAndAbsentIdentity() throws Exception
   {
     Schema schema = schema();
-    SQLStatement statement = SQL.selectAll().from(schema.table).build().compile(new H2Adapter());
+    SQLStatement statement = SQL.selectAll() //
+        .from(schema.table) //
+        .build() //
+        .compile(new H2Adapter());
     Recorder recorder = new Recorder();
     PreparedStatement jdbc = recorder.statement();
     statement.bind(jdbc);
@@ -143,22 +153,37 @@ public class SQLDMLBindingTest extends TestCase
     Schema schema = schema();
     Recorder recorder = new Recorder();
     PreparedStatement jdbc = recorder.statement();
-    SQL.selectAll().from(schema.table).where(schema.id).eq(SQL.param()).build().compile(new H2Adapter()).bind(jdbc, new Object[] { null });
+    SQL.selectAll() //
+        .from(schema.table) //
+        .where(schema.id).eq(SQL.param()) //
+        .build() //
+        .compile(new H2Adapter()).bind(jdbc, new Object[] { null });
     assertTrue(recorder.calls.get(0).startsWith("setNull(1,"));
 
     recorder.calls.clear();
-    SQL.selectAll().from(schema.table).where(SQL.eq(SQL.param(Types.VARCHAR), SQL.literal(1))).build().compile(new H2Adapter()).bind(jdbc,
-        new Object[] { null });
+    SQL.selectAll() //
+        .from(schema.table) //
+        .where(SQL.eq(SQL.param(Types.VARCHAR), SQL.ONE)) //
+        .build() //
+        .compile(new H2Adapter()).bind(jdbc, new Object[] { null });
     assertEquals("setNull(1,12)", recorder.calls.get(0));
 
     recorder.calls.clear();
-    SQL.selectAll().from(schema.table).where(SQL.eq(SQL.param(Types.INTEGER), SQL.literal(1))).build().compile(new H2Adapter()).bind(jdbc, 9);
+    SQL.selectAll() //
+        .from(schema.table) //
+        .where(SQL.eq(SQL.param(Types.INTEGER), SQL.ONE)) //
+        .build() //
+        .compile(new H2Adapter()).bind(jdbc, 9);
     assertEquals("setObject(1,9,4)", recorder.calls.get(0));
 
     recorder.calls.clear();
     try
     {
-      SQL.selectAll().from(schema.table).where(SQL.eq(SQL.param(), SQL.literal(1))).build().compile(new H2Adapter()).bind(jdbc, new Object[] { null });
+      SQL.selectAll() //
+          .from(schema.table) //
+          .where(SQL.eq(SQL.param(), SQL.ONE)) //
+          .build() //
+          .compile(new H2Adapter()).bind(jdbc, new Object[] { null });
       fail("Expected unresolved NULL type failure");
     }
     catch (IllegalArgumentException expected)
@@ -180,15 +205,27 @@ public class SQLDMLBindingTest extends TestCase
 
     SQLCondition fieldOnLeft = SQL.eq(schema.id, rightParameter);
     SQLCondition fieldOnRight = SQL.eq(leftParameter, schema.id);
-    SQL.selectAll().from(schema.table).where(fieldOnLeft).build().compile(adapter).bind(rightRecorder.statement(), new Object[] { null });
-    SQL.selectAll().from(schema.table).where(fieldOnRight).build().compile(adapter).bind(leftRecorder.statement(), new Object[] { null });
+    SQL.selectAll() //
+        .from(schema.table) //
+        .where(fieldOnLeft) //
+        .build() //
+        .compile(adapter).bind(rightRecorder.statement(), new Object[] { null });
+    SQL.selectAll() //
+        .from(schema.table) //
+        .where(fieldOnRight) //
+        .build() //
+        .compile(adapter).bind(leftRecorder.statement(), new Object[] { null });
 
     assertEquals("setNull(1," + expectedType + ")", rightRecorder.calls.get(0));
     assertEquals("setNull(1," + expectedType + ")", leftRecorder.calls.get(0));
 
     Recorder explicitRecorder = new Recorder();
     SQLCondition explicitType = SQL.eq(SQL.param(Types.VARCHAR), schema.id);
-    SQL.selectAll().from(schema.table).where(explicitType).build().compile(adapter).bind(explicitRecorder.statement(), new Object[] { null });
+    SQL.selectAll() //
+        .from(schema.table) //
+        .where(explicitType) //
+        .build() //
+        .compile(adapter).bind(explicitRecorder.statement(), new Object[] { null });
     assertEquals("setNull(1," + Types.VARCHAR + ")", explicitRecorder.calls.get(0));
   }
 
@@ -199,7 +236,11 @@ public class SQLDMLBindingTest extends TestCase
     SQLParameter shared = SQL.param();
     SQLCondition condition = SQL.eq(schema.name, shared) //
         .and(SQL.eq(shared, schema.id));
-    SQLStatement statement = SQL.selectAll().from(schema.table).where(condition).build().compile(adapter);
+    SQLStatement statement = SQL.selectAll() //
+        .from(schema.table) //
+        .where(condition) //
+        .build() //
+        .compile(adapter);
     Recorder recorder = new Recorder();
 
     statement.bindParameter(recorder.statement(), shared, null);
@@ -215,7 +256,11 @@ public class SQLDMLBindingTest extends TestCase
     SQLParameter shared = SQL.param((String value) -> value + "-" + ++conversionCount[0]);
     SQLCondition condition = SQL.eq(schema.name, shared) //
         .or(SQL.eq(schema.name, shared));
-    SQLStatement statement = SQL.selectAll().from(schema.table).where(condition).build().compile(new H2Adapter());
+    SQLStatement statement = SQL.selectAll() //
+        .from(schema.table) //
+        .where(condition) //
+        .build() //
+        .compile(new H2Adapter());
     Recorder recorder = new Recorder();
 
     statement.bindParameter(recorder.statement(), shared, "first");
@@ -234,17 +279,27 @@ public class SQLDMLBindingTest extends TestCase
     PreparedStatement jdbc = recorder.statement();
     Schema schema = schema();
     SQLParameter converted = SQL.param((String value) -> value.toUpperCase());
-    SQL.selectAll().from(schema.table).where(schema.name).eq(converted).build().compile(new H2Adapter()).bind(jdbc, "hello");
+    SQL.selectAll() //
+        .from(schema.table) //
+        .where(schema.name).eq(converted) //
+        .build() //
+        .compile(new H2Adapter()).bind(jdbc, "hello");
     assertEquals("setObject(1,HELLO)", recorder.calls.get(0));
 
     recorder.calls.clear();
-    SQLStatement nullConverter = SQL.selectAll().from(schema.table).where(schema.id).eq(SQL.param(Types.INTEGER, value -> null)).build()
-        .compile(new H2Adapter());
+    SQLStatement nullConverter = SQL.selectAll() //
+        .from(schema.table) //
+        .where(schema.id).eq(SQL.param(Types.INTEGER, value -> null)) //
+        .build().compile(new H2Adapter());
     nullConverter.bind(jdbc, 3);
     assertEquals("setNull(1,4)", recorder.calls.get(0));
 
     recorder.calls.clear();
-    SQLStatement statement = SQL.selectAll().from(schema.table).where(schema.name).eq(converted).build().compile(new H2Adapter());
+    SQLStatement statement = SQL.selectAll() //
+        .from(schema.table) //
+        .where(schema.name).eq(converted) //
+        .build() //
+        .compile(new H2Adapter());
     statement.bindParameter(jdbc, 1, (String)null, (s, index, value) -> recorder.calls.add("custom(" + index + "," + value + ")"));
     assertEquals("custom(1,null)", recorder.calls.get(0));
 
@@ -265,7 +320,11 @@ public class SQLDMLBindingTest extends TestCase
   public void testCompiledStatementCanBindDifferentStatementsAndValues() throws Exception
   {
     Schema schema = schema();
-    SQLStatement statement = SQL.selectAll().from(schema.table).where(schema.name).eq(SQL.param()).build().compile(new H2Adapter());
+    SQLStatement statement = SQL.selectAll() //
+        .from(schema.table) //
+        .where(schema.name).eq(SQL.param()) //
+        .build() //
+        .compile(new H2Adapter());
     Recorder first = new Recorder();
     Recorder second = new Recorder();
     statement.bind(first.statement(), "first");
@@ -284,15 +343,23 @@ public class SQLDMLBindingTest extends TestCase
     IDBTable table = DBUtil.createSchema("PUBLIC", false, false).addTable("DML_PHASE3");
     IDBField id = table.addField("ID", DBType.INTEGER);
     IDBField name = table.addField("NAME", DBType.VARCHAR);
+    IDBTable copy = DBUtil.createSchema("PUBLIC", false, false).addTable("DML_PHASE3_COPY");
+    IDBField copyID = copy.addField("ID", DBType.INTEGER);
+    IDBField copyName = copy.addField("NAME", DBType.VARCHAR);
 
     try
     {
       try (Statement createTable = connection.createStatement())
       {
         createTable.executeUpdate("CREATE TABLE DML_PHASE3 (ID INTEGER PRIMARY KEY, NAME VARCHAR(40))");
+        createTable.executeUpdate("CREATE TABLE DML_PHASE3_COPY (ID INTEGER PRIMARY KEY, NAME VARCHAR(40))");
       }
 
-      SQLStatement insert = SQL.insertInto(table).columns(id, name).values(SQL.param(), SQL.param()).build().compile(adapter);
+      SQLStatement insert = SQL.insertInto(table) //
+          .columns(id, name) //
+          .values(SQL.param(), SQL.param()) //
+          .build() //
+          .compile(adapter);
       IDBPreparedStatement insertStatement = insert.prepare(connection, ReuseProbability.LOW);
       try
       {
@@ -304,7 +371,29 @@ public class SQLDMLBindingTest extends TestCase
         insertStatement.close();
       }
 
-      SQLStatement select = SQL.select(name).from(table).where(id).eq(SQL.param()).build().compile(adapter);
+      SQLStatement insertSelect = SQL.insertInto(copy) //
+          .columns(copyID, copyName) //
+          .select(SQL.select(id, name) //
+              .from(table) //
+              .where(id).eq(SQL.param()) //
+              .subSelect())
+          .build().compile(adapter);
+      IDBPreparedStatement insertSelectStatement = insertSelect.prepare(connection, ReuseProbability.LOW);
+      try
+      {
+        insertSelect.bind(insertSelectStatement, 17);
+        assertEquals(1, insertSelectStatement.executeUpdate());
+      }
+      finally
+      {
+        insertSelectStatement.close();
+      }
+
+      SQLStatement select = SQL.select(copyName) //
+          .from(copy) //
+          .where(copyID).eq(SQL.param()) //
+          .build() //
+          .compile(adapter);
       IDBPreparedStatement selectStatement = select.prepare(connection, ReuseProbability.LOW);
       try
       {

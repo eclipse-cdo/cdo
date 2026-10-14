@@ -138,7 +138,7 @@ public class H2Adapter extends DBAdapter
   @Override
   public String sqlRenameField(IDBField field, String oldName)
   {
-    return "ALTER TABLE " + field.getTable() + " ALTER COLUMN " + oldName + " RENAME TO " + field;
+    return "ALTER TABLE " + quoteTableName(field.getTable()) + " ALTER COLUMN " + quoteIdentifier(oldName) + " RENAME TO " + quoteIdentifier(field.getName());
   }
 
   @Override
@@ -152,17 +152,19 @@ public class H2Adapter extends DBAdapter
    */
   public static void createSchema(DataSource dataSource, String name, boolean dropIfExists)
   {
-    DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
+    H2Adapter adapter = new H2Adapter();
+
+    DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<>()
     {
       @Override
       public Object run(Connection connection) throws SQLException
       {
         if (dropIfExists)
         {
-          DBUtil.execute(connection, "DROP SCHEMA IF EXISTS " + DBUtil.quoted(name) + " CASCADE");
+          DBUtil.execute(connection, "DROP SCHEMA IF EXISTS " + adapter.quoteIdentifier(name) + " CASCADE");
         }
 
-        DBUtil.execute(connection, "CREATE SCHEMA IF NOT EXISTS " + DBUtil.quoted(name));
+        DBUtil.execute(connection, "CREATE SCHEMA IF NOT EXISTS " + adapter.quoteIdentifier(name));
         return null;
       }
     });
@@ -173,7 +175,7 @@ public class H2Adapter extends DBAdapter
    */
   public static void shutdown(DataSource dataSource)
   {
-    DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
+    DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<>()
     {
       @Override
       public Object run(Connection connection) throws SQLException

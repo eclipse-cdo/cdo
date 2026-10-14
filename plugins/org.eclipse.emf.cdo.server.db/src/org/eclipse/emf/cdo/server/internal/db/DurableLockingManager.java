@@ -33,12 +33,15 @@ import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -336,37 +339,72 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     lockAreas.activate();
     locks.activate();
 
+    IDBAdapter dbAdapter = store.getDBAdapter();
+
     // Lock areas
 
-    sqlInsertLockArea = "INSERT INTO " + lockAreas + "(" + lockAreas.id + "," + lockAreas.userID + "," + lockAreas.viewBranch + "," + lockAreas.viewTime + ","
-        + lockAreas.readOnly + ") VALUES (?, ?, ?, ?, ?)";
+    sqlInsertLockArea = SQL.insertInto(lockAreas.id.getTable()) //
+        .columns(lockAreas.id, lockAreas.userID, lockAreas.viewBranch, lockAreas.viewTime, lockAreas.readOnly) //
+        .values(SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlSelectLockArea = "SELECT " + lockAreas.userID + "," + lockAreas.viewBranch + "," + lockAreas.viewTime + "," + lockAreas.readOnly + " FROM " + lockAreas
-        + " WHERE " + lockAreas.id + "=?";
+    sqlSelectLockArea = SQL.select(lockAreas.userID, lockAreas.viewBranch, lockAreas.viewTime, lockAreas.readOnly) //
+        .from(lockAreas.id.getTable()) //
+        .where(lockAreas.id).eq(SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlSelectAllLockAreas = "SELECT " + lockAreas.id + "," + lockAreas.userID + "," + lockAreas.viewBranch + "," + lockAreas.viewTime + "," + lockAreas.readOnly
-        + " FROM " + lockAreas;
+    sqlSelectAllLockAreas = SQL.select(lockAreas.id, lockAreas.userID, lockAreas.viewBranch, lockAreas.viewTime, lockAreas.readOnly) //
+        .from(lockAreas.id.getTable()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlSelectLockAreas = sqlSelectAllLockAreas + " WHERE " + lockAreas.userID + " LIKE ?";
+    sqlSelectLockAreas = SQL.select(lockAreas.id, lockAreas.userID, lockAreas.viewBranch, lockAreas.viewTime, lockAreas.readOnly) //
+        .from(lockAreas.id.getTable()) //
+        .where(lockAreas.userID).like(SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlDeleteLockArea = "DELETE FROM " + lockAreas + " WHERE " + lockAreas.id + "=?";
+    sqlDeleteLockArea = SQL.deleteFrom(lockAreas.id.getTable()) //
+        .where(lockAreas.id).eq(SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlDeleteLockAreas = "DELETE FROM " + lockAreas + " WHERE EXISTS (SELECT * FROM " + locks + " WHERE " + locks + "." + locks.areaID + "=" + lockAreas + "."
-        + lockAreas.id + ")";
+    SQLTableRef lockAreasRef = SQL.table(lockAreas.id.getTable());
+    SQLTableRef locksRef = SQL.as(locks.areaID.getTable(), "locks");
+    sqlDeleteLockAreas = SQL.deleteFrom(lockAreas.id.getTable()) //
+        .where(SQL.exists(SQL.selectAll() //
+            .from(locksRef) //
+            .where(SQL.eq(locksRef.column(locks.areaID), lockAreasRef.column(lockAreas.id))) //
+            .subSelect())) //
+        .compile(dbAdapter).getSQL();
 
     // Locks
 
-    sqlSelectLocks = "SELECT " + locks.objectID + "," + locks.lockGrade + " FROM " + locks + " WHERE " + locks.areaID + "=?";
+    sqlSelectLocks = SQL.select(locks.objectID, locks.lockGrade) //
+        .from(locks.areaID.getTable()) //
+        .where(locks.areaID).eq(SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlSelectLock = "SELECT " + locks.lockGrade + " FROM " + locks + " WHERE " + locks.areaID + "=? AND " + locks.objectID + "=?";
+    sqlSelectLock = SQL.select(locks.lockGrade) //
+        .from(locks.areaID.getTable()) //
+        .where(locks.areaID).eq(SQL.param()).and(locks.objectID).eq(SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlInsertLock = "INSERT INTO " + locks + "(" + locks.areaID + "," + locks.objectID + "," + locks.lockGrade + ") VALUES (?, ?, ?)";
+    sqlInsertLock = SQL.insertInto(locks.areaID.getTable()) //
+        .columns(locks.areaID, locks.objectID, locks.lockGrade) //
+        .values(SQL.param(), SQL.param(), SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlUpdateLock = "UPDATE " + locks + " SET " + locks.lockGrade + "=? " + " WHERE " + locks.areaID + "=? AND " + locks.objectID + "=?";
+    sqlUpdateLock = SQL.update(locks.areaID.getTable()) //
+        .set(locks.lockGrade).to(SQL.param()) //
+        .where(locks.areaID).eq(SQL.param()).and(locks.objectID) //
+        .eq(SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlDeleteLock = "DELETE FROM " + locks + " WHERE " + locks.areaID + "=? AND " + locks.objectID + "=?";
+    sqlDeleteLock = SQL.deleteFrom(locks.areaID.getTable()) //
+        .where(locks.areaID).eq(SQL.param()).and(locks.objectID).eq(SQL.param()) //
+        .compile(dbAdapter).getSQL();
 
-    sqlDeleteLocks = "DELETE FROM " + locks + " WHERE " + locks.areaID + "=?";
+    sqlDeleteLocks = SQL.deleteFrom(locks.areaID.getTable()) //
+        .where(locks.areaID).eq(SQL.param()) //
+        .compile(dbAdapter).getSQL();
   }
 
   @Override
@@ -512,12 +550,19 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   @Override
   public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
   {
+    IDBAdapter dbAdapter = store.getDBAdapter();
+
     // Delete the lock areas.
-    batch.add("DELETE FROM " + lockAreas + " WHERE " + lockAreas.viewBranch + " IN (" + idList + ")");
+    batch.add("DELETE FROM " + dbAdapter.quoteTableName(lockAreas.table()) + " WHERE " + dbAdapter.quoteIdentifier(lockAreas.viewBranch.getName()) + " IN ("
+        + idList + ")");
 
     // Delete the locks.
-    batch.add("DELETE FROM " + locks + " WHERE " + locks.areaID + " NOT IN (SELECT " + lockAreas.id + " FROM " + lockAreas + " WHERE " + lockAreas.id + "="
-        + locks.areaID + ")");
+    String lockAreasTableName = dbAdapter.quoteTableName(lockAreas.table());
+    String locksTableName = dbAdapter.quoteTableName(locks.table());
+    String lockAreaID = dbAdapter.quoteIdentifier(lockAreas.id.getName());
+    String areaID = dbAdapter.quoteIdentifier(locks.areaID.getName());
+    batch.add("DELETE FROM " + locksTableName + " WHERE " + areaID + " NOT IN (SELECT " + lockAreaID + " FROM " + lockAreasTableName + " WHERE " + lockAreaID
+        + "=" + areaID + ")");
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException

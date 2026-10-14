@@ -41,6 +41,9 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLExpression;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -52,6 +55,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -82,9 +86,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   private ITypeMapping typeMapping;
 
   // --------- SQL strings - see initSQLStrings() -----------------
-  private String sqlSelectChunksPrefix;
-
-  private String sqlOrderByIndex;
+  private String sqlSelectChunks;
 
   private String sqlInsertEntry;
 
@@ -188,55 +190,51 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     FieldInfo[] fields = getKeyFields();
 
     // ---------------- SELECT to read chunks ----------------------------
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(valueField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-
-    for (int i = 0; i < fields.length; i++)
-    {
-      builder.append(DBUtil.quoted(fields[i].getName()));
-
-      if (i + 1 < fields.length)
-      {
-        // more to come
-        builder.append("=? AND "); //$NON-NLS-1$
-      }
-      else
-      {
-        // last one
-        builder.append("=? "); //$NON-NLS-1$
-      }
-    }
-
-    sqlSelectChunksPrefix = builder.toString();
-
-    sqlOrderByIndex = " ORDER BY " + indexField; //$NON-NLS-1$
+    sqlSelectChunks = createSelectChunksSQL(null);
 
     // ----------------- INSERT - reference entry -----------------
-    builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append("("); //$NON-NLS-1$
-
+    IDBField[] insertFields = new IDBField[fields.length + 2];
+    SQLExpression[] insertValues = new SQLExpression[fields.length + 2];
     for (int i = 0; i < fields.length; i++)
     {
-      builder.append(DBUtil.quoted(fields[i].getName()));
-      builder.append(", "); //$NON-NLS-1$
+      insertFields[i] = table.getField(fields[i].getName());
+      insertValues[i] = SQL.param();
     }
 
-    builder.append(indexField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(valueField);
-    builder.append(") VALUES ("); //$NON-NLS-1$
-    for (int i = 0; i < fields.length; i++)
+    insertFields[fields.length] = indexField;
+    insertFields[fields.length + 1] = valueField;
+    insertValues[fields.length] = SQL.param();
+    insertValues[fields.length + 1] = SQL.param();
+
+    sqlInsertEntry = SQL.insertInto(table) //
+        .columns(insertFields[0], Arrays.copyOfRange(insertFields, 1, insertFields.length)) //
+        .values(insertValues[0], Arrays.copyOfRange(insertValues, 1, insertValues.length)) //
+        .compile(getDBAdapter()).getSQL();
+  }
+
+  private String createSelectChunksSQL(String additionalWhere)
+  {
+    FieldInfo[] fields = getKeyFields();
+    SQLCondition condition = SQL.eq(table.getField(fields[0].getName()), SQL.param());
+    for (int i = 1; i < fields.length; i++)
     {
-      builder.append("?, "); //$NON-NLS-1$
+      condition = condition.and(SQL.eq(table.getField(fields[i].getName()), SQL.param()));
     }
 
-    builder.append(" ?, ?)"); //$NON-NLS-1$
-    sqlInsertEntry = builder.toString();
+    if (additionalWhere != null)
+    {
+      // IDBStoreChunkReader supplies this legacy literal predicate through IListMapping2; it contains no bound
+      // parameters.
+      condition = condition.and(SQL.fragment() //
+          .sql(additionalWhere) //
+          .build().condition());
+    }
+
+    return SQL.select(valueField) //
+        .from(table) //
+        .where(condition) //
+        .orderBy(SQL.asc(indexField)) //
+        .compile(getDBAdapter()).getSQL();
   }
 
   @Override
@@ -251,7 +249,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     {
       List<FieldInfo> list = new ArrayList<>(3);
 
-      IDBStore store = getMappingStrategy().getStore();
+      IDBStore store = getStore();
       DBType type = store.getIDHandler().getDBType();
       int precision = store.getIDColumnLength();
       list.add(new FieldInfo(MappingNames.LIST_REVISION_ID, type, precision));
@@ -300,13 +298,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   @Override
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
-    if (table == null)
-    {
-      // Nothing to read. Take shortcut.
-      return;
-    }
-
-    if (listChunk == 0)
+    if ((table == null) || (listChunk == 0))
     {
       // Nothing to read. Take shortcut.
       return;
@@ -325,7 +317,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
           getFeature().getName(), revision.getID(), revision.getVersion());
     }
 
-    String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
+    String sql = sqlSelectChunks;
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
@@ -393,15 +385,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
           getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
-    StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
-    if (where != null)
-    {
-      builder.append(" AND "); //$NON-NLS-1$
-      builder.append(where);
-    }
-
-    builder.append(sqlOrderByIndex);
-    String sql = builder.toString();
+    String sql = where == null ? sqlSelectChunks : createSelectChunksSQL(where);
 
     IDBPreparedStatement stmt = chunkReader.getAccessor().getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
@@ -528,20 +512,20 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(sourceField);
+    appendField(builder, sourceField);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(valueField);
+    appendField(builder, valueField);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(indexField);
+    appendField(builder, indexField);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
+    builder.append(getDBAdapter().quoteTableName(table));
     builder.append(" l_t, ");//$NON-NLS-1$
     builder.append(mainTableName);
     builder.append(" a_t WHERE ");//$NON-NLS-1$
     builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
     builder.append(listJoin);
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(valueField);
+    appendField(builder, valueField);
     builder.append(" IN "); //$NON-NLS-1$
     builder.append(idString);
     String sql = builder.toString();
@@ -551,7 +535,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
       TRACER.format("Query XRefs (list): {0}", sql);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 

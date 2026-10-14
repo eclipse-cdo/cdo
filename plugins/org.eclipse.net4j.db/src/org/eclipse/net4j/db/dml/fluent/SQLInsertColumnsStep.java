@@ -12,6 +12,7 @@
 package org.eclipse.net4j.db.dml.fluent;
 
 import org.eclipse.net4j.db.dml.SQLExpression;
+import org.eclipse.net4j.db.dml.SQLSubSelect;
 
 /**
  * An INSERT with explicit columns that requires its positional values before completion. This form cannot be combined with implicit values or named assignments; the compiler checks the column/value counts.
@@ -33,4 +34,13 @@ public interface SQLInsertColumnsStep
    * @since 4.15
    */
   public SQLInsertValuesStep values(SQLExpression first, SQLExpression... others);
+
+  /**
+   * Supplies a SELECT definition as the source of the INSERT. The SELECT projection count must match the explicit target-column count.
+   *
+   * @param source the SELECT definition supplying inserted rows
+   * @return the completed INSERT definition
+   * @since 4.15
+   */
+  public SQLBuildStep select(SQLSubSelect source);
 }

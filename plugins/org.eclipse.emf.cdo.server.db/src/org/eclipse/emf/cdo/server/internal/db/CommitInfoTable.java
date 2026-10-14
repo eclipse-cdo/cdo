@@ -31,6 +31,7 @@ import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
@@ -38,6 +39,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
@@ -116,39 +118,40 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
   public void loadCommitInfos(IDBStoreAccessor accessor, CDOBranch branch, long startTime, long endTime, CDOCommitInfoHandler handler)
   {
     int count = CDOCommitInfoUtil.decodeCount(endTime);
+    IDBAdapter dbAdapter = store().getDBAdapter();
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(timeStamp);
+    builder.append(dbAdapter.quoteIdentifier(timeStamp.getName()));
     builder.append(", "); //$NON-NLS-1$
-    builder.append(previousTimeStamp);
+    builder.append(dbAdapter.quoteIdentifier(previousTimeStamp.getName()));
     builder.append(", "); //$NON-NLS-1$
-    builder.append(user);
+    builder.append(dbAdapter.quoteIdentifier(user.getName()));
     builder.append(", "); //$NON-NLS-1$
-    builder.append(comment);
+    builder.append(dbAdapter.quoteIdentifier(comment.getName()));
 
     if (branch == null)
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(this.branch);
+      builder.append(dbAdapter.quoteIdentifier(this.branch.getName()));
     }
 
     if (withMergeSource)
     {
       builder.append(", "); //$NON-NLS-1$
-      builder.append(mergedBranch);
+      builder.append(dbAdapter.quoteIdentifier(mergedBranch.getName()));
       builder.append(", "); //$NON-NLS-1$
-      builder.append(mergedTimeStamp);
+      builder.append(dbAdapter.quoteIdentifier(mergedTimeStamp.getName()));
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table());
+    builder.append(dbAdapter.quoteTableName(table()));
     boolean where = false;
 
     if (branch != null)
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-      builder.append(this.branch);
+      builder.append(dbAdapter.quoteIdentifier(this.branch.getName()));
       builder.append("="); //$NON-NLS-1$
       builder.append(branch.getID());
       where = true;
@@ -157,7 +160,7 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
     if (startTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-      builder.append(timeStamp);
+      builder.append(dbAdapter.quoteIdentifier(timeStamp.getName()));
       builder.append(count < 0 ? "<=" : ">="); //$NON-NLS-1$
       builder.append(startTime);
       where = true;
@@ -166,14 +169,14 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
     if (endTime > CDOBranchPoint.UNSPECIFIED_DATE)
     {
       builder.append(where ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-      builder.append(timeStamp);
+      builder.append(dbAdapter.quoteIdentifier(timeStamp.getName()));
       builder.append("<="); //$NON-NLS-1$
       builder.append(endTime);
       where = true;
     }
 
     builder.append(" ORDER BY "); //$NON-NLS-1$
-    builder.append(timeStamp);
+    builder.append(dbAdapter.quoteIdentifier(timeStamp.getName()));
     builder.append(count < 0 || CDOBranchPoint.UNSPECIFIED_DATE <= endTime && endTime <= startTime ? " DESC" : " ASC"); //$NON-NLS-1$
     String sql = builder.toString();
 
@@ -235,20 +238,26 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
   @Override
   public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
   {
+    IDBAdapter dbAdapter = store().getDBAdapter();
+    String tableName = dbAdapter.quoteTableName(table());
+    String branchName = dbAdapter.quoteIdentifier(branch.getName());
+    String timeStampName = dbAdapter.quoteIdentifier(timeStamp.getName());
+    String previousTimeStampName = dbAdapter.quoteIdentifier(previousTimeStamp.getName());
+
     // Delete the commit infos.
-    batch.add("DELETE FROM " + table() + " WHERE " + branch + " IN (" + idList + ")");
+    batch.add("DELETE FROM " + tableName + " WHERE " + branchName + " IN (" + idList + ")");
 
     // Adjust the previous times.
-    batch.add("UPDATE " + table() + " upd SET " + previousTimeStamp + "=(" + "SELECT MAX(" + timeStamp + ") FROM " + table() + " WHERE " + timeStamp + "<upd."
-        + timeStamp + "" + ") WHERE " + timeStamp + " IN (" + "SELECT " + timeStamp + " FROM " + table() + " WHERE " + previousTimeStamp + " NOT IN (SELECT "
-        + timeStamp + " FROM " + table() + ")" + ")");
+    batch.add("UPDATE " + tableName + " upd SET " + previousTimeStampName + "=(SELECT MAX(" + timeStampName + ") FROM " + tableName + " WHERE " + timeStampName
+        + "<upd." + timeStampName + ") WHERE " + timeStampName + " IN (SELECT " + timeStampName + " FROM " + tableName + " WHERE " + previousTimeStampName
+        + " NOT IN (SELECT " + timeStampName + " FROM " + tableName + "))");
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     out.writeBoolean(withMergeSource);
 
-    String where = " WHERE " + timeStamp + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    String where = " WHERE " + store().getDBAdapter().quoteIdentifier(timeStamp.getName()) + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table(), null, where);
   }
 
@@ -267,7 +276,8 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
   public void repairAfterCrash(Connection connection)
   {
     long lastCommitTime = DBUtil.selectMaximumLong(connection, timeStamp);
-    long lastNonLocalCommitTime = DBUtil.selectMaximumLong(connection, timeStamp, CDOBranch.MAIN_BRANCH_ID + "<=" + branch);
+    String branchName = store().getDBAdapter().quoteIdentifier(branch.getName());
+    long lastNonLocalCommitTime = DBUtil.selectMaximumLong(connection, timeStamp, CDOBranch.MAIN_BRANCH_ID + "<=" + branchName);
 
     if (lastNonLocalCommitTime == CDOBranchPoint.UNSPECIFIED_DATE)
     {
@@ -329,36 +339,20 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
 
     super.doActivate();
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(table());
-    builder.append("("); //$NON-NLS-1$
-    builder.append(timeStamp);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(previousTimeStamp);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(branch);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(user);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(comment);
-
     if (withMergeSource)
     {
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(mergedBranch);
-      builder.append(", "); //$NON-NLS-1$
-      builder.append(mergedTimeStamp);
+      sqlInsert = SQL.insertInto(timeStamp.getTable()) //
+          .columns(timeStamp, previousTimeStamp, branch, user, comment, mergedBranch, mergedTimeStamp) //
+          .values(SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
+          .compile(adapter()).getSQL();
     }
-
-    builder.append(") VALUES (?, ?, ?, ?, ?"); //$NON-NLS-1$
-    if (withMergeSource)
+    else
     {
-      builder.append(", ?, ?"); //$NON-NLS-1$
+      sqlInsert = SQL.insertInto(timeStamp.getTable()) //
+          .columns(timeStamp, previousTimeStamp, branch, user, comment) //
+          .values(SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
+          .compile(adapter()).getSQL();
     }
-
-    builder.append(")"); //$NON-NLS-1$
-    sqlInsert = builder.toString();
   }
 
   @Override

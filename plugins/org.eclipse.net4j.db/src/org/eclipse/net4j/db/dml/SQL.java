@@ -56,6 +56,27 @@ import java.util.function.Function;
  */
 public final class SQL
 {
+  /**
+   * The SQL NULL literal.
+   *
+   * @since 4.15
+   */
+  public static final SQLExpression NULL = literal(null);
+
+  /**
+   * The numeric SQL literal 0.
+   *
+   * @since 4.15
+   */
+  public static final SQLExpression ZERO = literal(0);
+
+  /**
+   * The numeric SQL literal 1.
+   *
+   * @since 4.15
+   */
+  public static final SQLExpression ONE = literal(1);
+
   private SQL()
   {
   }

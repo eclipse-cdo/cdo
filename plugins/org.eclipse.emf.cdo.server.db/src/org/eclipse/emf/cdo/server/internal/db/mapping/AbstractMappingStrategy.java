@@ -205,6 +205,11 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     store = dbStore;
   }
 
+  protected final IDBAdapter getDBAdapter()
+  {
+    return getStore().getDBAdapter();
+  }
+
   protected final IMetaDataManager getMetaDataManager()
   {
     return getStore().getMetaDataManager();

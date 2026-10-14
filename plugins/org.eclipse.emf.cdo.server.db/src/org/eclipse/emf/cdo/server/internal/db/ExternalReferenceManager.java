@@ -24,16 +24,19 @@ import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -67,6 +70,9 @@ public class ExternalReferenceManager extends DBStoreTable
 
   @ExcludeFromDump
   private transient String sqlInsert;
+
+  @ExcludeFromDump
+  private transient String sqlDeleteByURI;
 
   public ExternalReferenceManager(IDBStore store)
   {
@@ -155,19 +161,37 @@ public class ExternalReferenceManager extends DBStoreTable
 
   public boolean deleteByURI(Statement statement, String uriValue)
   {
+    PreparedStatement deleteStatement = null;
+
     try
     {
-      return statement.execute("DELETE from " + table() + " WHERE " + uri + "='" + uriValue + "'");
+      Connection connection = statement.getConnection();
+      if (connection instanceof IDBConnection)
+      {
+        deleteStatement = ((IDBConnection)connection).prepareStatement(sqlDeleteByURI, ReuseProbability.LOW);
+      }
+      else
+      {
+        deleteStatement = connection.prepareStatement(sqlDeleteByURI);
+      }
+
+      deleteStatement.setString(1, uriValue);
+      return deleteStatement.execute();
     }
     catch (SQLException ex)
     {
       throw new DBException(ex);
     }
+    finally
+    {
+      DBUtil.close(deleteStatement);
+    }
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
-    String where = " WHERE " + committime + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    String committimeName = adapter().quoteIdentifier(committime.getName());
+    String where = " WHERE " + committimeName + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table(), null, where);
   }
 
@@ -201,7 +225,9 @@ public class ExternalReferenceManager extends DBStoreTable
     uri = table.getField(NAMES.URI);
     committime = table.getField(NAMES.COMMITTIME);
 
-    String sql = "SELECT MIN(" + id + ") FROM " + table;
+    String sql = SQL.select(SQL.min(id)) //
+        .from(id.getTable()) //
+        .compile(adapter()).getSQL();
 
     IDBStoreAccessor writer = store().getWriter(null);
     IDBPreparedStatement stmt = writer.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
@@ -234,9 +260,24 @@ public class ExternalReferenceManager extends DBStoreTable
   @Override
   protected void initSQL(IDBTable table)
   {
-    sqlInsert = "INSERT INTO " + table + "(" + id + "," + uri + "," + committime + ") VALUES (?, ?, ?)";
-    sqlSelectByURI = "SELECT " + id + " FROM " + table + " WHERE " + uri + "=?";
-    sqlSelectByLongID = "SELECT " + uri + " FROM " + table + " WHERE " + id + "=?";
+    sqlInsert = SQL.insertInto(table) //
+        .columns(id, uri, committime) //
+        .values(SQL.param(), SQL.param(), SQL.param()) //
+        .compile(adapter()).getSQL();
+
+    sqlSelectByURI = SQL.select(id) //
+        .from(table) //
+        .where(uri).eq(SQL.param()) //
+        .compile(adapter()).getSQL();
+
+    sqlSelectByLongID = SQL.select(uri) //
+        .from(table) //
+        .where(id).eq(SQL.param()) //
+        .compile(adapter()).getSQL();
+
+    sqlDeleteByURI = SQL.deleteFrom(table) //
+        .where(uri).eq(SQL.param()) //
+        .compile(adapter()).getSQL();
   }
 
   private long insertNew(IDBStoreAccessor accessor, String uri, long commitTime)

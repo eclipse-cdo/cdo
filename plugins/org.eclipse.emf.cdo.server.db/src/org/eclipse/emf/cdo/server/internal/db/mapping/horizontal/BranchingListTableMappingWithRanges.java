@@ -59,6 +59,7 @@ import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
@@ -67,6 +68,8 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLCondition;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -132,9 +135,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   private ITypeMapping typeMapping;
 
   // --------- SQL strings - see initSQLStrings() -----------------
-  private String sqlSelectChunksPrefix;
-
-  private String sqlOrderByIndex;
+  private String sqlSelectChunks;
 
   private String sqlInsertEntry;
 
@@ -168,11 +169,11 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     String tableName = getMappingStrategy().getTableName(getContainingClass(), getFeature());
     typeMapping = getMappingStrategy().createValueMapping(getFeature());
 
-    IDBStore store = getMappingStrategy().getStore();
+    IDBStore store = getStore();
     DBType idType = store.getIDHandler().getDBType();
     int idLength = store.getIDColumnLength();
 
-    IDBDatabase database = getMappingStrategy().getStore().getDatabase();
+    IDBDatabase database = getStore().getDatabase();
     table = database.getSchema().getTable(tableName);
     if (table == null)
     {
@@ -236,130 +237,85 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   private void initSQLStrings()
   {
     // ---------------- read chunks ----------------------------
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(valueField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(versionAddedField);
-    builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(versionRemovedField);
-    builder.append(" IS NULL OR "); //$NON-NLS-1$
-    builder.append(versionRemovedField);
-    builder.append(">?)"); //$NON-NLS-1$
-    sqlSelectChunksPrefix = builder.toString();
-
-    sqlOrderByIndex = " ORDER BY " + indexField; //$NON-NLS-1$
+    sqlSelectChunks = createSelectChunksSQL(null);
 
     // ----------------- insert entry -----------------
-    builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append("("); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(versionAddedField);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(versionRemovedField);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append(","); //$NON-NLS-1$
-    builder.append(valueField);
-    builder.append(") VALUES (?, ?, ?, ?, ?, ?)"); //$NON-NLS-1$
-    sqlInsertEntry = builder.toString();
+    sqlInsertEntry = SQL.insertInto(table) //
+        .columns(sourceField, branchField, versionAddedField, versionRemovedField, indexField, valueField) //
+        .values(SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
+        .compile(getDBAdapter()).getSQL();
 
     // ----------------- remove current entry -----------------
-    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" SET "); //$NON-NLS-1$
-    builder.append(versionRemovedField);
-    builder.append("=? "); //$NON-NLS-1$
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(versionRemovedField);
-    builder.append(" IS NULL"); //$NON-NLS-1$
-    sqlRemoveEntry = builder.toString();
+    sqlRemoveEntry = SQL.update(getTable()) //
+        .set(versionRemovedField).to(SQL.param()) //
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.eq(indexField, SQL.param())) //
+            .and(SQL.isNull(versionRemovedField))) //
+        .compile(getDBAdapter()).getSQL();
 
     // ----------------- delete temporary entry -----------------
-    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(versionAddedField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlDeleteEntry = builder.toString();
+    sqlDeleteEntry = SQL.deleteFrom(getTable()) //
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.eq(indexField, SQL.param())) //
+            .and(SQL.eq(versionAddedField, SQL.param()))) //
+        .compile(getDBAdapter()).getSQL();
 
     // ----------------- update index -----------------
-    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" SET "); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(versionAddedField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlUpdateIndex = builder.toString();
+    sqlUpdateIndex = SQL.update(getTable()) //
+        .set(indexField).to(SQL.param()) //
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.eq(versionAddedField, SQL.param())) //
+            .and(SQL.eq(indexField, SQL.param()))) //
+        .compile(getDBAdapter()).getSQL();
 
     // ----------------- get current value -----------------
-    builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(valueField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(versionRemovedField);
-    builder.append(" IS NULL"); //$NON-NLS-1$
-    sqlGetValue = builder.toString();
+    sqlGetValue = SQL.select(valueField) //
+        .from(getTable()) //
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.eq(indexField, SQL.param())) //
+            .and(SQL.isNull(versionRemovedField))) //
+        .compile(getDBAdapter()).getSQL();
 
     // ----------- clear list items -------------------------
-    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" SET "); //$NON-NLS-1$
-    builder.append(versionRemovedField);
-    builder.append("=? "); //$NON-NLS-1$
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(versionRemovedField);
-    builder.append(" IS NULL"); //$NON-NLS-1$
-    sqlClearList = builder.toString();
+    sqlClearList = SQL.update(getTable()) //
+        .set(versionRemovedField).to(SQL.param()) //
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.isNull(versionRemovedField))) //
+        .compile(getDBAdapter()).getSQL();
 
     // ----------- clear local suffix items -----------------
-    builder = new StringBuilder(sqlClearList);
-    builder.append(" AND "); //$NON-NLS-1$
-    builder.append(indexField);
-    builder.append(">=?"); //$NON-NLS-1$
-    sqlClearSuffix = builder.toString();
+    sqlClearSuffix = SQL.update(getTable()) //
+        .set(versionRemovedField).to(SQL.param()) //
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.isNull(versionRemovedField)) //
+            .and(SQL.ge(indexField, SQL.param()))) //
+        .compile(getDBAdapter()).getSQL();
+  }
+
+  private String createSelectChunksSQL(String additionalWhere)
+  {
+    SQLCondition condition = SQL.eq(sourceField, SQL.param()).and(SQL.eq(branchField, SQL.param())).and(SQL.le(versionAddedField, SQL.param()))
+        .and(SQL.isNull(versionRemovedField).or(SQL.gt(versionRemovedField, SQL.param())));
+    if (additionalWhere != null)
+    {
+      // IListMapping2 supplies this legacy literal predicate through its StringBuilder SPI; it contains no bound
+      // parameters.
+      condition = condition.and(SQL.fragment() //
+          .sql(additionalWhere) //
+          .build().condition());
+    }
+
+    return SQL.select(indexField, valueField) //
+        .from(getTable()) //
+        .where(condition) //
+        .orderBy(SQL.asc(indexField)) //
+        .compile(getDBAdapter()).getSQL();
   }
 
   @Override
@@ -422,9 +378,9 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           getFeature().getName(), revision);
     }
 
-    String sql = sqlSelectChunksPrefix + sqlOrderByIndex;
+    String sql = sqlSelectChunks;
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
     ResultSet resultSet = null;
     ArrayList<Pair<Integer, Integer>> toReadFromBase = null; // list of chunks to be read from base revision
@@ -543,17 +499,9 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     CDOID id = revision.getID();
     int branchID = revision.getBranch().getID();
 
-    StringBuilder builder = new StringBuilder(sqlSelectChunksPrefix);
-    if (where != null)
-    {
-      builder.append(" AND "); //$NON-NLS-1$
-      builder.append(where);
-    }
+    String sql = where == null ? sqlSelectChunks : createSelectChunksSQL(where);
 
-    builder.append(sqlOrderByIndex);
-    String sql = builder.toString();
-
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = chunkReader.getAccessor().getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
     IStoreChunkReader baseReader = null;
@@ -722,7 +670,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
     else
     {
-      InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)getMappingStrategy().getStore().getRepository().getRevisionManager();
+      InternalCDORevisionManager revisionManager = (InternalCDORevisionManager)getStore().getRepository().getRevisionManager();
       InternalCDORevision baseRevision = revisionManager.getBaseRevision(revision, UNCHUNKED_LOADING_CONFIG);
 
       EStructuralFeature feature = getFeature();
@@ -807,7 +755,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
     try
     {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IIDHandler idHandler = getStore().getIDHandler();
       for (InternalCDORevision revision : revisions)
       {
         CDOList values = revision.getListOrNull(getFeature());
@@ -1105,7 +1053,16 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       return;
     }
 
-    batch.add("DELETE FROM " + table + " WHERE " + branchField + " IN (" + idList + ")");
+    IDBAdapter dbAdapter = getDBAdapter();
+    String sql = SQL.deleteFrom(table) //
+        .where(SQL.fragment() //
+            .column(branchField) //
+            .sql(" IN (") //
+            .sql(idList) //
+            .sql(")") //
+            .build().condition()) //
+        .compile(dbAdapter).getSQL();
+    batch.add(sql);
   }
 
   /**
@@ -1135,7 +1092,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     {
       // clear rest of the list
       stmt.setInt(1, newVersion);
-      getMappingStrategy().getStore().getIDHandler().setCDOID(stmt, 2, id);
+      getStore().getIDHandler().setCDOID(stmt, 2, id);
       stmt.setInt(3, branchID);
 
       int result = DBUtil.update(stmt, false);
@@ -1255,7 +1212,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           getContainingClass().getName(), getFeature().getName(), index, id, branchID, version, value);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
 
     try
@@ -1327,7 +1284,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           getContainingClass().getName(), getFeature().getName(), index, id, branchID, versionAdded, versionRemoved, value);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
 
     try
@@ -1364,7 +1321,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           getContainingClass().getName(), getFeature().getName(), index, id, branchID, newVersion);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteEntry, ReuseProbability.HIGH);
 
     try
@@ -1461,7 +1418,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
    */
   private Object getValue(IDBStoreAccessor accessor, CDOID id, int branchID, int index, boolean getFromBase)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
     Object result = null;
 
@@ -1556,20 +1513,20 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(sourceField);
+    appendField(builder, sourceField);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(valueField);
+    appendField(builder, valueField);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(indexField);
+    appendField(builder, indexField);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
+    builder.append(getDBAdapter().quoteTableName(table));
     builder.append(" l_t, ");//$NON-NLS-1$
     builder.append(mainTableName);
     builder.append(" a_t WHERE ");//$NON-NLS-1$
     builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
     builder.append(listJoin);
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(valueField);
+    appendField(builder, valueField);
     builder.append(" IN "); //$NON-NLS-1$
     builder.append(idString);
     String sql = builder.toString();
@@ -1579,7 +1536,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       TRACER.format("Query XRefs (list): {0}", sql);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
@@ -1768,8 +1725,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       boolean[] found = new boolean[size];
       List<Pair<Integer, Integer>> missingRanges = new ArrayList<>();
 
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectChunksPrefix + sqlOrderByIndex, ReuseProbability.HIGH);
+      IIDHandler idHandler = getStore().getIDHandler();
+      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectChunks, ReuseProbability.HIGH);
       ResultSet resultSet = null;
 
       try
@@ -2132,7 +2089,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
         int column = 1;
         clearStmt.setInt(column++, plan.getNewVersion());
-        getMappingStrategy().getStore().getIDHandler().setCDOID(clearStmt, column++, plan.getID());
+        getStore().getIDHandler().setCDOID(clearStmt, column++, plan.getID());
         clearStmt.setInt(column, plan.getBranchID());
         clearStmt.executeUpdate();
       }
@@ -2151,7 +2108,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           insertStmt = accessor.getBatchingContext().createStatement(sqlInsertEntry, ReuseProbability.HIGH, "BranchingList.deltaInsert"); //$NON-NLS-1$
         }
 
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        IIDHandler idHandler = getStore().getIDHandler();
 
         for (int index = 0; index < plan.size(); index++)
         {
@@ -2177,7 +2134,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
         int column = 1;
         clearSuffixStmt.setInt(column++, plan.getNewVersion());
-        getMappingStrategy().getStore().getIDHandler().setCDOID(clearSuffixStmt, column++, plan.getID());
+        getStore().getIDHandler().setCDOID(clearSuffixStmt, column++, plan.getID());
         clearSuffixStmt.setInt(column++, plan.getBranchID());
         clearSuffixStmt.setInt(column, plan.getStartIndex());
         clearSuffixStmt.executeUpdate();
@@ -2197,7 +2154,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           clearSparseSetStmt = accessor.getBatchingContext().createStatement(sqlRemoveEntry, ReuseProbability.HIGH, "BranchingList.clearSparseSet"); //$NON-NLS-1$
         }
 
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        IIDHandler idHandler = getStore().getIDHandler();
         for (Integer index : plan.getValues().keySet())
         {
           int column = 1;
@@ -2223,7 +2180,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
           insertStmt = accessor.getBatchingContext().createStatement(sqlInsertEntry, ReuseProbability.HIGH, "BranchingList.deltaInsert"); //$NON-NLS-1$
         }
 
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        IIDHandler idHandler = getStore().getIDHandler();
         int index = plan.getStartIndex();
         for (Object value : plan.getValues())
         {
@@ -2242,7 +2199,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     {
       try
       {
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        IIDHandler idHandler = getStore().getIDHandler();
         int index = plan.getStartIndex();
         for (Object value : plan.getValues())
         {
@@ -2260,7 +2217,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     {
       try
       {
-        IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+        IIDHandler idHandler = getStore().getIDHandler();
         for (Map.Entry<Integer, Object> entry : plan.getValues().entrySet())
         {
           addEntry(idHandler, plan.getID(), plan.getBranchID(), plan.getNewVersion(), entry.getKey(), entry.getValue());
@@ -2409,7 +2366,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
     private void moveOneUp(int oldVersion, int newVersion, int startIndex, int endIndex)
     {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IIDHandler idHandler = getStore().getIDHandler();
       IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
       try
@@ -2494,7 +2451,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
 
     private void moveOneDown(int oldVersion, int newVersion, int startIndex, int endIndex)
     {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IIDHandler idHandler = getStore().getIDHandler();
       IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
 
       try

@@ -559,6 +559,35 @@ public final class DBUtil
     return name;
   }
 
+  private static IDBAdapter getDBAdapter(Connection connection)
+  {
+    if (connection instanceof IDBConnection)
+    {
+      IDBDatabase database = ((IDBConnection)connection).getDatabase();
+      return database == null ? null : database.getAdapter();
+    }
+
+    return null;
+  }
+
+  private static String quoteIdentifier(Connection connection, String identifier)
+  {
+    IDBAdapter dbAdapter = getDBAdapter(connection);
+    return dbAdapter == null ? quoted(identifier) : dbAdapter.quoteIdentifier(identifier);
+  }
+
+  private static String renderField(Connection connection, IDBField field)
+  {
+    IDBAdapter dbAdapter = getDBAdapter(connection);
+    return dbAdapter == null ? field.toString() : dbAdapter.quoteIdentifier(field.getName());
+  }
+
+  private static String renderTable(Connection connection, IDBTable table)
+  {
+    IDBAdapter dbAdapter = getDBAdapter(connection);
+    return dbAdapter == null ? table.toString() : dbAdapter.quoteTableName(table);
+  }
+
   /**
    * @since 4.12
    */
@@ -771,7 +800,7 @@ public final class DBUtil
 
       for (String tableName : getAllTableNames(connection, schemaName, caseSensitive))
       {
-        String sql = trace("DROP TABLE " + quoted(tableName)); //$NON-NLS-1$
+        String sql = trace("DROP TABLE " + quoteIdentifier(connection, tableName)); //$NON-NLS-1$
 
         try
         {
@@ -863,9 +892,9 @@ public final class DBUtil
     builder.append("SELECT "); //$NON-NLS-1$
     builder.append(function);
     builder.append("("); //$NON-NLS-1$
-    builder.append(field);
+    builder.append(renderField(connection, field));
     builder.append(") FROM "); //$NON-NLS-1$
-    builder.append(field.getTable());
+    builder.append(renderTable(connection, field.getTable()));
 
     for (int i = 0; i < where.length; i++)
     {
@@ -1087,7 +1116,9 @@ public final class DBUtil
    */
   public static int clearTable(Connection connection, IDBTable table)
   {
-    return clearTable(connection, table.getName());
+    IDBAdapter dbAdapter = getDBAdapter(connection);
+    String tableName = dbAdapter == null ? quoted(table.getName()) : dbAdapter.quoteTableName(table);
+    return update(connection, "DELETE FROM " + tableName);
   }
 
   /**
@@ -1102,6 +1133,7 @@ public final class DBUtil
   public static int select(Connection connection, IDBRowHandler rowHandler, String where, IDBField... fields) throws DBException
   {
     IDBTable table = fields[0].getTable();
+
     for (int i = 1; i < fields.length; i++)
     {
       if (fields[i].getTable() != table)
@@ -1112,6 +1144,7 @@ public final class DBUtil
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
+
     for (int i = 0; i < fields.length; i++)
     {
       if (i > 0)
@@ -1119,11 +1152,12 @@ public final class DBUtil
         builder.append(", "); //$NON-NLS-1$
       }
 
-      builder.append(fields[i]);
+      builder.append(renderField(connection, fields[i]));
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
+    builder.append(renderTable(connection, table));
+
     if (!StringUtil.isEmpty(where))
     {
       builder.append(" WHERE "); //$NON-NLS-1$
@@ -1144,6 +1178,7 @@ public final class DBUtil
         boolean proceed = true;
         Object[] values = new Object[fields.length];
         resultSet = statement.executeQuery(sql);
+
         while (proceed && resultSet.next())
         {
           for (int i = 0; i < fields.length; i++)
@@ -1152,6 +1187,7 @@ public final class DBUtil
             if (values[i] instanceof Blob)
             {
               Blob blob = (Blob)values[i];
+
               long length = blob.length();
               if (length > Integer.MAX_VALUE)
               {
@@ -1163,6 +1199,7 @@ public final class DBUtil
             else if (values[i] instanceof Clob)
             {
               Clob clob = (Clob)values[i];
+
               long length = clob.length();
               if (length > Integer.MAX_VALUE)
               {
@@ -1318,9 +1355,9 @@ public final class DBUtil
       SerializeRowHandler handler) throws DBException, IOException
   {
     IDBField[] fields = table.getFields();
-
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
+
     for (int i = 0; i < fields.length; i++)
     {
       if (i > 0)
@@ -1334,11 +1371,12 @@ public final class DBUtil
         builder.append("."); //$NON-NLS-1$
       }
 
-      builder.append(fields[i]);
+      builder.append(renderField(connection, fields[i]));
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table);
+    builder.append(renderTable(connection, table));
+
     if (tableAlias != null)
     {
       builder.append(" "); //$NON-NLS-1$
@@ -1366,6 +1404,7 @@ public final class DBUtil
         // Write resultSet size for progress monitoring
         int size = getRowCount(resultSet);
         out.writeInt(size);
+
         if (size == 0)
         {
           return;
@@ -1455,7 +1494,7 @@ public final class DBUtil
     StringBuilder params = new StringBuilder();
 
     builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(table);
+    builder.append(renderTable(connection, table));
     builder.append("("); //$NON-NLS-1$
 
     for (int i = 0; i < fields.length; i++)
@@ -1466,7 +1505,7 @@ public final class DBUtil
         params.append(", "); //$NON-NLS-1$
       }
 
-      builder.append(fields[i]);
+      builder.append(renderField(connection, fields[i]));
       params.append("?"); //$NON-NLS-1$
     }
 

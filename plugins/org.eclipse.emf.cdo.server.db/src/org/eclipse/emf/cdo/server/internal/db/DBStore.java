@@ -71,6 +71,7 @@ import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor.Geometric;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -511,11 +512,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
 
     for (String name : DBUtil.getAllTableNames(connection, schemaName, caseSensitive))
     {
-      name = DBUtil.quoted(name);
+      name = dbAdapter.quoteIdentifier(name);
 
       if (schemaName != null && qualifiedTableNames)
       {
-        name = DBUtil.quoted(schemaName) + '.' + name;
+        name = dbAdapter.quoteIdentifier(schemaName) + '.' + name;
       }
 
       try
@@ -1147,8 +1148,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
                 continue;
               }
 
-              lastNonLocalCommitTime = Math.max(lastNonLocalCommitTime,
-                  DBUtil.selectMaximumLong(connection, branchField, CDOBranch.MAIN_BRANCH_ID + "<=" + MappingNames.ATTRIBUTES_BRANCH));
+              lastNonLocalCommitTime = Math.max(lastNonLocalCommitTime, //
+                  DBUtil.selectMaximumLong(connection, branchField, CDOBranch.MAIN_BRANCH_ID + "<=" + dbAdapter.quoteIdentifier(branchField.getName())));
             }
 
             lastCommitTime = Math.max(lastCommitTime, DBUtil.selectMaximumLong(connection, createdField));
@@ -1302,8 +1303,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
 
     try
     {
-      statement = connection.createStatement();
-      resultSet = statement.executeQuery(PropertiesTable.sqlSelectProperty(PROP_SCHEMA_VERSION, schemaName));
+      PreparedStatement preparedStatement = connection.prepareStatement(PropertiesTable.sqlSelectProperty(dbAdapter, schemaName));
+      statement = preparedStatement;
+      preparedStatement.setString(1, PROP_SCHEMA_VERSION);
+      resultSet = preparedStatement.executeQuery();
 
       if (resultSet.next())
       {
@@ -1601,14 +1604,15 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       InternalRepository repository = getRepository();
       if (!repository.isSupportingAudits())
       {
+        String objectsTableName = dbAdapter.quoteTableName(getDBSchema().getTable(MappingNames.CDO_OBJECTS));
         visitAllTables(connection, new IDBStore.TableVisitor()
         {
           @Override
           public void visitTable(Connection connection, String name) throws SQLException
           {
-            String from = " FROM " + name + " WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "<" + CDOBranchVersion.FIRST_VERSION;
-            DBUtil.execute(connection, "DELETE FROM " + DBUtil.quoted(MappingNames.CDO_OBJECTS) + " WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID)
-                + " IN (SELECT " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + from + ")");
+            String from = " FROM " + name + " WHERE " + dbAdapter.quoteIdentifier(MappingNames.ATTRIBUTES_VERSION) + "<" + CDOBranchVersion.FIRST_VERSION;
+            DBUtil.execute(connection, "DELETE FROM " + objectsTableName + " WHERE " + dbAdapter.quoteIdentifier(MappingNames.ATTRIBUTES_ID) + " IN (SELECT "
+                + dbAdapter.quoteIdentifier(MappingNames.ATTRIBUTES_ID) + from + ")");
             DBUtil.execute(connection, "DELETE" + from);
           }
         });
@@ -1625,7 +1629,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       DBTable table = new DBTable(createFakeSchema(connection), LobsTable.tableName());
       IDBField field = new DBField(table, LobsTable.sizeName(), DBType.INTEGER, 0, 0, false, 0);
 
-      String sql = dbAdapter.sqlRenameField(field, DBUtil.quoted("size"));
+      String sql = dbAdapter.sqlRenameField(field, "size");
       DBUtil.execute(connection, sql);
     }
   };
@@ -1639,7 +1643,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     {
       // Create a fake DBTable.
       DBTable table = new DBTable(createFakeSchema(connection), LobsTable.tableName());
-      String sql = "ALTER TABLE " + table + " ADD " + DBUtil.quoted(LobsTable.refsName()) + " INTEGER";
+      String sql = "ALTER TABLE " + dbAdapter.quoteTableName(table) + " ADD " + dbAdapter.quoteIdentifier(LobsTable.refsName()) + " INTEGER";
       DBUtil.execute(connection, sql);
     }
   };

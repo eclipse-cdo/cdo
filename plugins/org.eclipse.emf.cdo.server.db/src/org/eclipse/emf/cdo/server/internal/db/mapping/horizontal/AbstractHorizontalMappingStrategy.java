@@ -416,7 +416,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     StringBuilder builder = new StringBuilder();
     builder.append(" WHERE a_t."); //$NON-NLS-1$
-    builder.append(DBUtil.quoted(MappingNames.ATTRIBUTES_CREATED));
+    builder.append(getDBAdapter().quoteIdentifier(MappingNames.ATTRIBUTES_CREATED));
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromCommitTime);
     builder.append(" AND "); //$NON-NLS-1$
@@ -438,7 +438,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
       for (IListMapping listMapping : classMapping.getListMappings())
       {
-        rawExportList(out, connection, listMapping, table, attrSuffix);
+        rawExportList(out, connection, listMapping, table, attrSuffix, fromCommitTime, toCommitTime);
       }
     }
 
@@ -449,7 +449,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     for (IDBTable table : listMapping.getDBTables())
     {
-      String listSuffix = ", " + attrTable + " a_t" + attrSuffix;
+      String listSuffix = ", " + getDBAdapter().quoteTableName(attrTable) + " a_t" + attrSuffix;
       String listJoin = getListJoinForRawExport("a_t", "l_t");
       if (listJoin != null)
       {
@@ -458,6 +458,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
       DBUtil.serializeTable(out, connection, table, "l_t", listSuffix);
     }
+  }
+
+  protected void rawExportList(CDODataOutput out, IDBConnection connection, IListMapping listMapping, IDBTable attrTable, String attrSuffix,
+      long fromCommitTime, long toCommitTime) throws IOException
+  {
+    rawExportList(out, connection, listMapping, attrTable, attrSuffix);
   }
 
   protected String getListJoinForRawExport(String attrTable, String listTable)
@@ -592,7 +598,8 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   @Override
   public String getListJoin(String attrTable, String listTable)
   {
-    return " AND " + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + "=" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_ID);
+    return " AND " + attrTable + "." + getDBAdapter().quoteIdentifier(MappingNames.ATTRIBUTES_ID) + "=" + listTable + "."
+        + getDBAdapter().quoteIdentifier(MappingNames.LIST_REVISION_ID);
   }
 
   @Override
@@ -745,11 +752,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     final IIDHandler idHandler = getStore().getIDHandler();
     final CDOID[] min = { idHandler.getMaxCDOID() };
 
-    String id = DBUtil.quoted(MappingNames.ATTRIBUTES_ID);
-    String branch = DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH);
-    String created = DBUtil.quoted(MappingNames.ATTRIBUTES_CREATED);
+    IDBAdapter dbAdapter = getDBAdapter();
+    String id = dbAdapter.quoteIdentifier(MappingNames.ATTRIBUTES_ID);
+    String branch = dbAdapter.quoteIdentifier(MappingNames.ATTRIBUTES_BRANCH);
+    String created = dbAdapter.quoteIdentifier(MappingNames.ATTRIBUTES_CREATED);
 
-    String prefix = "SELECT MIN(t." + id + ") FROM " + objects + " o, ";
+    String prefix = "SELECT MIN(t." + id + ") FROM " + dbAdapter.quoteTableName(objects.table()) + " o, ";
     String suffix = " t WHERE t." + branch + "<0 AND t." + id + "=o." + id + " AND t." + created + "=o." + created;
 
     getStore().visitAllTables(connection, (c, name) -> {
@@ -1048,10 +1056,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       @Override
       protected String sql(Object newValue, String condition)
       {
+        IDBAdapter dbAdapter = getDBAdapter();
         return super.sql(newValue, condition) //
-            + " AND (SELECT " + objects.clazz() //
-            + " FROM " + objects //
-            + " WHERE " + objects.id() + "=" + containerField + ")=" + rawContainerTypeID;
+            + " AND (SELECT " + dbAdapter.quoteIdentifier(objects.clazz().getName()) //
+            + " FROM " + dbAdapter.quoteTableName(objects.table()) //
+            + " WHERE " + dbAdapter.quoteIdentifier(objects.id().getName()) + "=" + dbAdapter.quoteIdentifier(containerField.getName()) + ")="
+            + rawContainerTypeID;
       }
     }
   }

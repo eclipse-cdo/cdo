@@ -37,6 +37,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.util.ConsumerWithException;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -55,6 +56,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -318,10 +320,23 @@ public class DBStoreTables extends Lifecycle
     @Override
     protected void initSQL(IDBTable table)
     {
-      sqlDeleteProperties = "DELETE FROM " + table + " WHERE " + name + "=?";
-      sqlInsertProperties = "INSERT INTO " + table + " (" + name + ", " + value + ") VALUES (?, ?)";
-      sqlSelectProperties = "SELECT " + value + " FROM " + table + " WHERE " + name + "=?";
-      sqlSelectAllProperties = "SELECT " + name + ", " + value + " FROM " + table;
+      sqlDeleteProperties = SQL.deleteFrom(table) //
+          .where(name).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlInsertProperties = SQL.insertInto(table) //
+          .columns(name, value) //
+          .values(SQL.param(), SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlSelectProperties = SQL.select(value) //
+          .from(table) //
+          .where(name).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlSelectAllProperties = SQL.select(name, value) //
+          .from(table) //
+          .compile(adapter()).getSQL();
     }
 
     public static String tableName()
@@ -329,15 +344,15 @@ public class DBStoreTables extends Lifecycle
       return NAMES.PROPERTIES;
     }
 
-    public static String sqlSelectProperty(String name, String schemaName)
+    public static String sqlSelectProperty(IDBAdapter dbAdapter, String schemaName)
     {
-      String tableName = DBUtil.quoted(NAMES.PROPERTIES);
+      String tableName = dbAdapter.quoteIdentifier(NAMES.PROPERTIES);
       if (schemaName != null)
       {
-        tableName = DBUtil.quoted(schemaName) + '.' + tableName;
+        tableName = dbAdapter.quoteIdentifier(schemaName) + '.' + tableName;
       }
 
-      return "SELECT " + DBUtil.quoted(NAMES.VALUE) + " FROM " + tableName + " WHERE " + DBUtil.quoted(NAMES.NAME) + "='" + name + "'";
+      return "SELECT " + dbAdapter.quoteIdentifier(NAMES.VALUE) + " FROM " + tableName + " WHERE " + dbAdapter.quoteIdentifier(NAMES.NAME) + "=?";
     }
 
     /**
@@ -371,6 +386,8 @@ public class DBStoreTables extends Lifecycle
 
     private IDBField packageData;
 
+    private String sqlSelectPackageData;
+
     public PackageUnitsTable(IDBStore store)
     {
       super(store, NAMES.PACKAGE_UNITS);
@@ -398,9 +415,25 @@ public class DBStoreTables extends Lifecycle
 
     public byte[] loadPackageUnitBytes(Connection connection, InternalCDOPackageUnit packageUnit)
     {
-      String where = id + "='" + packageUnit.getID() + "'";
-      Object[] values = DBUtil.select(connection, where, packageData);
-      return (byte[])values[0];
+      PreparedStatement stmt = null;
+      ResultSet resultSet = null;
+
+      try
+      {
+        stmt = connection.prepareStatement(sqlSelectPackageData);
+        stmt.setString(1, packageUnit.getID());
+        resultSet = stmt.executeQuery();
+        return resultSet.next() ? resultSet.getBytes(1) : null;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+        DBUtil.close(stmt);
+      }
     }
 
     @Override
@@ -421,6 +454,15 @@ public class DBStoreTables extends Lifecycle
       originalType = table.getField(NAMES.ORIGINAL_TYPE);
       timeStamp = table.getField(NAMES.TIME_STAMP);
       packageData = table.getField(NAMES.PACKAGE_DATA);
+    }
+
+    @Override
+    protected void initSQL(IDBTable table)
+    {
+      sqlSelectPackageData = SQL.select(packageData) //
+          .from(table) //
+          .where(id).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
     }
 
     /**
@@ -695,12 +737,18 @@ public class DBStoreTables extends Lifecycle
 
       try (Batch batch = new Batch(connection))
       {
+        IDBAdapter dbAdapter = store.getDBAdapter();
+
         // Delete the branches.
-        batch.add("DELETE FROM " + table() + " WHERE " + id + " IN (" + idList + ")");
+        batch.add("DELETE FROM " + dbAdapter.quoteTableName(table()) //
+            + " WHERE " + dbAdapter.quoteIdentifier(id.getName()) //
+            + " IN (" + idList + ")");
 
         // Delete the tags.
         TagsTable tags = store.tables().tags();
-        batch.add("DELETE FROM " + tags + " WHERE " + tags.branch() + " IN (" + idList + ")");
+        batch.add("DELETE FROM " + dbAdapter.quoteTableName(tags.table()) //
+            + " WHERE " + dbAdapter.quoteIdentifier(tags.branch().getName()) //
+            + " IN (" + idList + ")");
 
         // Delete the revisions, type mappings, and list elements.
         IMappingStrategy mappingStrategy = store.getMappingStrategy();
@@ -786,11 +834,31 @@ public class DBStoreTables extends Lifecycle
     @Override
     protected void initSQL(IDBTable table)
     {
-      sqlCreateBranch = "INSERT INTO " + table + " (" + id + ", " + name + ", " + baseID + ", " + baseTime + ") VALUES (?, ?, ?, ?)";
-      sqlLoadBranch = "SELECT " + name + ", " + baseID + ", " + baseTime + " FROM " + table + " WHERE " + id + "=?";
-      sqlRenameBranch = "UPDATE " + table + " SET " + name + "=?" + " WHERE " + id + "=?";
-      sqlLoadSubBranches = "SELECT " + id + ", " + name + ", " + baseTime + " FROM " + table + " WHERE " + baseID + "=?";
-      sqlLoadBranches = "SELECT " + id + ", " + name + ", " + baseID + ", " + baseTime + " FROM " + table + " WHERE " + id + " BETWEEN ? AND ? ORDER BY " + id;
+      sqlCreateBranch = SQL.insertInto(table) //
+          .columns(id, name, baseID, baseTime) //
+          .values(SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlLoadBranch = SQL.select(name, baseID, baseTime) //
+          .from(table) //
+          .where(id).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlRenameBranch = SQL.update(table) //
+          .set(name).to(SQL.param()) //
+          .where(id).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlLoadSubBranches = SQL.select(id, name, baseTime) //
+          .from(table) //
+          .where(baseID).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlLoadBranches = SQL.select(id, name, baseID, baseTime) //
+          .from(table) //
+          .where(id).between(SQL.param(), SQL.param()) //
+          .orderBy(id) //
+          .compile(adapter()).getSQL();
     }
 
     private static String buildIDList(Set<CDOBranch> branches)
@@ -976,12 +1044,34 @@ public class DBStoreTables extends Lifecycle
     @Override
     protected void initSQL(IDBTable table)
     {
-      sqlCreateTag = "INSERT INTO " + table + " (" + name + ", " + branch + ", " + timestamp + ") VALUES (?, ?, ?)";
-      sqlRenameTag = "UPDATE " + table + " SET " + name + "=?" + " WHERE " + name + "=?";
-      sqlMoveTag = "UPDATE " + table + " SET " + branch + "=?, " + timestamp + "=? WHERE " + name + "=?";
-      sqlDeleteTag = "DELETE FROM " + table + " WHERE " + name + "=?";
-      sqlLoadTags = "SELECT " + name + ", " + branch + ", " + timestamp + " FROM " + table;
-      sqlLoadTag = "SELECT " + branch + ", " + timestamp + " FROM " + table + " WHERE " + name + "=?";
+      sqlCreateTag = SQL.insertInto(table) //
+          .columns(name, branch, timestamp) //
+          .values(SQL.param(), SQL.param(), SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlRenameTag = SQL.update(table) //
+          .set(name).to(SQL.param()) //
+          .where(name).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlMoveTag = SQL.update(table) //
+          .set(branch).to(SQL.param()) //
+          .set(timestamp).to(SQL.param()) //
+          .where(name).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlDeleteTag = SQL.deleteFrom(table) //
+          .where(name).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlLoadTags = SQL.select(name, branch, timestamp) //
+          .from(table) //
+          .compile(adapter()).getSQL();
+
+      sqlLoadTag = SQL.select(branch, timestamp) //
+          .from(table) //
+          .where(name).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
     }
 
     private static void execSQL(IDBConnection connection, String sql, ConsumerWithException<IDBPreparedStatement, SQLException> preparer)
@@ -1247,9 +1337,14 @@ public class DBStoreTables extends Lifecycle
       IDBTable lobsTable = table();
 
       IDBAdapter dbAdapter = store().getDBAdapter();
-      String sql = "UPDATE " + lobsTable + " SET " + refs + "=" + refs + //
-          "+(SELECT COUNT(*) FROM " + dataTable + " WHERE " //
-          + dataField + " LIKE " + lobsTable + "." + dbAdapter.sqlConcat(id, "'-%'") + ")";
+      String lobsTableName = dbAdapter.quoteTableName(lobsTable);
+      String refsName = dbAdapter.quoteIdentifier(refs.getName());
+      String idName = dbAdapter.quoteIdentifier(id.getName());
+      String dataTableName = dbAdapter.quoteTableName(dataTable);
+      String dataFieldName = dbAdapter.quoteIdentifier(dataField.getName());
+      String sql = "UPDATE " + lobsTableName + " SET " + refsName + "=" + refsName + //
+          "+(SELECT COUNT(*) FROM " + dataTableName + " WHERE " //
+          + dataFieldName + " LIKE " + lobsTableName + "." + dbAdapter.sqlConcat(idName, "'-%'") + ")";
 
       return DBUtil.update(connection, sql);
     }
@@ -1258,7 +1353,8 @@ public class DBStoreTables extends Lifecycle
     {
       if (dryRun)
       {
-        return DBUtil.getRowCount(connection, table() + " WHERE " + refs + "=0");
+        IDBAdapter dbAdapter = store().getDBAdapter();
+        return DBUtil.getRowCount(connection, dbAdapter.quoteTableName(table()) + " WHERE " + dbAdapter.quoteIdentifier(refs.getName()) + "=0");
       }
 
       return DBUtil.update(connection, sqlDeleteOrphans);
@@ -1289,13 +1385,37 @@ public class DBStoreTables extends Lifecycle
     @Override
     protected void initSQL(IDBTable table)
     {
-      sqlQueryLobs = "SELECT 1 FROM " + table + " WHERE " + id + "=?";
-      sqlHandleLobs = "SELECT " + id + ", " + size + ", " + bdata + ", " + cdata + " FROM " + table;
-      sqlLoadLob = "SELECT " + size + ", " + bdata + ", " + cdata + " FROM " + table + " WHERE " + id + "=?";
-      sqlWriteBlob = "INSERT INTO " + table + "(" + id + ", " + size + ", " + bdata + ") VALUES(?, ?, ?)";
-      sqlWriteClob = "INSERT INTO " + table + "(" + id + ", " + size + ", " + cdata + ") VALUES(?, ?, ?)";
-      sqlResetRefs = "UPDATE " + table + " SET " + refs + "=0";
-      sqlDeleteOrphans = "DELETE FROM " + table + " WHERE " + refs + "=0";
+      sqlQueryLobs = SQL.select(SQL.ONE) //
+          .from(table) //
+          .where(id).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlHandleLobs = SQL.select(id, size, bdata, cdata) //
+          .from(table) //
+          .compile(adapter()).getSQL();
+
+      sqlLoadLob = SQL.select(size, bdata, cdata) //
+          .from(table) //
+          .where(id).eq(SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlWriteBlob = SQL.insertInto(table) //
+          .columns(id, size, bdata) //
+          .values(SQL.param(), SQL.param(), SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlWriteClob = SQL.insertInto(table) //
+          .columns(id, size, cdata) //
+          .values(SQL.param(), SQL.param(), SQL.param()) //
+          .compile(adapter()).getSQL();
+
+      sqlResetRefs = SQL.update(table) //
+          .set(refs).to(SQL.ZERO) //
+          .compile(adapter()).getSQL();
+
+      sqlDeleteOrphans = SQL.deleteFrom(table) //
+          .where(refs).eq(SQL.ZERO) //
+          .compile(adapter()).getSQL();
     }
 
     public static String tableName()

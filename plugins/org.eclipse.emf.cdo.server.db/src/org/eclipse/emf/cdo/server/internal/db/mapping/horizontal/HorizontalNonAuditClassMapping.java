@@ -47,6 +47,11 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLExpression;
+import org.eclipse.net4j.db.dml.SQLSelectItem;
+import org.eclipse.net4j.db.dml.fluent.SQLUpdateSetStep;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -80,12 +85,6 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
   private String sqlInsertAttributes;
 
-  private String sqlUpdateAffix;
-
-  private String sqlUpdatePrefix;
-
-  private String sqlUpdateContainerPart;
-
   private String sqlDelete;
 
   private boolean hasLists;
@@ -103,111 +102,85 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     super.initSQLStrings();
 
     // ----------- Select Revision ---------------------------
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(createdField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(resourceField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(containerField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(featureField);
-    appendTypeMappingNames(builder, getValueMappings());
-    appendFieldNames(builder, getUnsettableFields());
-    appendFieldNames(builder, getListSizeFields());
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlSelectCurrentAttributes = builder.toString();
+    List<SQLSelectItem> attributes = new ArrayList<>();
+    attributes.add(versionField);
+    attributes.add(createdField);
+    attributes.add(revisedField);
+    attributes.add(resourceField);
+    attributes.add(containerField);
+    attributes.add(featureField);
 
-    // ----------- Select Version ---------------------------
-    builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlSelectCurrentVersion = builder.toString();
+    for (ITypeMapping typeMapping : getValueMappings())
+    {
+      attributes.add(typeMapping.getField());
+    }
 
-    // ----------- Insert Attributes -------------------------
-    builder = new StringBuilder();
-    builder.append("INSERT INTO "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append("("); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(createdField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(revisedField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(resourceField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(containerField);
-    builder.append(", "); //$NON-NLS-1$
-    builder.append(featureField);
-    appendTypeMappingNames(builder, getValueMappings());
-    appendFieldNames(builder, getUnsettableFields());
-    appendFieldNames(builder, getListSizeFields());
-    builder.append(") VALUES (?, ?, ?, ?, ?, ?, ?"); //$NON-NLS-1$
-    appendTypeMappingParameters(builder, getValueMappings());
-    appendFieldParameters(builder, getUnsettableFields());
-    appendFieldParameters(builder, getListSizeFields());
-    builder.append(")"); //$NON-NLS-1$
-    sqlInsertAttributes = builder.toString();
+    if (getUnsettableFields() != null)
+    {
+      attributes.addAll(getUnsettableFields().values());
+    }
 
-    // ----------- Select all unrevised Object IDs ------
-    builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    sqlSelectAllObjectIDs = builder.toString();
+    if (getListSizeFields() != null)
+    {
+      attributes.addAll(getListSizeFields().values());
+    }
+    sqlSelectCurrentAttributes = SQL.select(attributes.get(0), attributes.subList(1, attributes.size()).toArray(new SQLSelectItem[attributes.size() - 1])) //
+        .from(table) //
+        .where(idField).eq(SQL.param()) //
+        .compile(getDBAdapter()).getSQL();
 
-    // ----------- Update attributes --------------------
-    builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" SET "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append("=?, "); //$NON-NLS-1$
-    builder.append(createdField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlUpdatePrefix = builder.toString();
+    sqlSelectCurrentVersion = SQL.select(versionField) //
+        .from(table) //
+        .where(idField).eq(SQL.param()) //
+        .compile(getDBAdapter()).getSQL();
 
-    builder = new StringBuilder(", "); //$NON-NLS-1$
-    builder.append(resourceField);
-    builder.append("=?, "); //$NON-NLS-1$
-    builder.append(containerField);
-    builder.append("=?, "); //$NON-NLS-1$
-    builder.append(featureField);
-    builder.append("=? "); //$NON-NLS-1$
-    sqlUpdateContainerPart = builder.toString();
+    List<IDBField> insertFields = new ArrayList<>();
+    insertFields.add(idField);
+    insertFields.add(versionField);
+    insertFields.add(createdField);
+    insertFields.add(revisedField);
+    insertFields.add(resourceField);
+    insertFields.add(containerField);
+    insertFields.add(featureField);
 
-    builder = new StringBuilder(" WHERE "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append("=? "); //$NON-NLS-1$
-    sqlUpdateAffix = builder.toString();
+    for (ITypeMapping typeMapping : getValueMappings())
+    {
+      insertFields.add(typeMapping.getField());
+    }
 
-    builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append("=? "); //$NON-NLS-1$
-    sqlDelete = builder.toString();
+    if (getUnsettableFields() != null)
+    {
+      insertFields.addAll(getUnsettableFields().values());
+    }
+
+    if (getListSizeFields() != null)
+    {
+      insertFields.addAll(getListSizeFields().values());
+    }
+    List<SQLExpression> insertValues = new ArrayList<>();
+    for (int i = 0; i < insertFields.size(); i++)
+    {
+      insertValues.add(SQL.param());
+    }
+
+    sqlInsertAttributes = SQL.insertInto(table) //
+        .columns(insertFields.get(0), insertFields.subList(1, insertFields.size()).toArray(new IDBField[insertFields.size() - 1])) //
+        .values(insertValues.get(0), insertValues.subList(1, insertValues.size()).toArray(new SQLExpression[insertValues.size() - 1])) //
+        .compile(getDBAdapter()).getSQL();
+
+    sqlSelectAllObjectIDs = SQL.select(idField) //
+        .from(table) //
+        .compile(getDBAdapter()).getSQL();
+
+    sqlDelete = SQL.deleteFrom(table) //
+        .where(idField).eq(SQL.param()) //
+        .compile(getDBAdapter()).getSQL();
   }
 
   @Override
   protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
 
     try
@@ -241,7 +214,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     try
     {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IIDHandler idHandler = getStore().getIDHandler();
       for (InternalCDORevision revision : revisions)
       {
         setInsertValues(idHandler, stmt, revision);
@@ -333,7 +306,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   public IDBPreparedStatement createResourceQueryStatement(IDBStoreAccessor accessor, CDOID folderId, String name, boolean exactMatch,
       CDOBranchPoint branchPoint)
   {
-    if (getTable() == null)
+    if (table == null)
     {
       return null;
     }
@@ -352,28 +325,22 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       throw new ImplementationError(nameFeature + " not found in ClassMapping " + this); //$NON-NLS-1$
     }
 
-    StringBuilder builder = new StringBuilder();
-    builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(idField);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(getTable());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append(">0 AND "); //$NON-NLS-1$
-    builder.append(containerField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(nameValueMapping.getField());
+    SQLCondition condition = SQL.gt(versionField, SQL.ZERO).and(SQL.eq(containerField, SQL.param()));
     if (name == null)
     {
-      builder.append(" IS NULL"); //$NON-NLS-1$
+      condition = condition.and(SQL.isNull(nameValueMapping.getField()));
     }
     else
     {
-      builder.append(exactMatch ? "=? " : " LIKE ? "); //$NON-NLS-1$ //$NON-NLS-2$
+      condition = condition.and(exactMatch ? SQL.eq(nameValueMapping.getField(), SQL.param()) : SQL.like(nameValueMapping.getField(), SQL.param()));
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.MEDIUM);
+    IIDHandler idHandler = getStore().getIDHandler();
+    String sql = SQL.select(idField) //
+        .from(table) //
+        .where(condition) //
+        .compile(getDBAdapter()).getSQL();
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
 
     try
     {
@@ -411,7 +378,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     CDOID id = revision.getID();
 
-    DBStore store = (DBStore)getMappingStrategy().getStore();
+    DBStore store = (DBStore)getStore();
     IIDHandler idHandler = store.getIDHandler();
     IDBPreparedStatement stmtVersion = null;
     IDBPreparedStatement stmtAttributes = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
@@ -526,7 +493,23 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       throw new IllegalArgumentException("Non-audit mode does not support branch specification");
     }
 
-    return revisedField + "=0";
+    return getDBAdapter().quoteIdentifier(revisedField.getName()) + "=0";
+  }
+
+  @Override
+  protected SQLCondition getScalarXRefsCondition(QueryXRefsContext context)
+  {
+    if (CDORevision.UNSPECIFIED_DATE != context.getTimeStamp())
+    {
+      throw new IllegalArgumentException("Non-audit mode does not support timestamp specification");
+    }
+
+    if (!context.getBranch().isMainBranch())
+    {
+      throw new IllegalArgumentException("Non-audit mode does not support branch specification");
+    }
+
+    return SQL.eq(revisedField, SQL.ZERO);
   }
 
   @Override
@@ -539,7 +522,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   @Override
   protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor monitor)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.HIGH);
 
     try
@@ -916,7 +899,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private void setUpdateValues(PreparedStatement stmt) throws SQLException
     {
-      IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+      IIDHandler idHandler = getStore().getIDHandler();
       int column = 1;
       stmt.setInt(column++, newVersion);
       stmt.setLong(column++, created);
@@ -934,37 +917,37 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private String buildUpdateSQL()
     {
-      StringBuilder builder = new StringBuilder(sqlUpdatePrefix);
+      SQLUpdateSetStep update = SQL.update(table) //
+          .set(versionField).to(SQL.param()) //
+          .set(createdField).to(SQL.param());
+
       if (updateContainer)
       {
-        builder.append(sqlUpdateContainerPart);
+        update = update.set(resourceField).to(SQL.param()) //
+            .set(containerField).to(SQL.param()) //
+            .set(featureField).to(SQL.param());
       }
 
       for (Pair<ITypeMapping, Object> change : attributeChanges)
       {
-        builder.append(", "); //$NON-NLS-1$
         ITypeMapping typeMapping = change.getElement1();
-        builder.append(typeMapping.getField());
-        builder.append("=?"); //$NON-NLS-1$
+        update = update.set(typeMapping.getField()).to(SQL.param());
 
         if (typeMapping.getFeature().isUnsettable())
         {
-          builder.append(", "); //$NON-NLS-1$
-          builder.append(getUnsettableFields().get(typeMapping.getFeature()));
-          builder.append("=?"); //$NON-NLS-1$
+          update = update.set(getUnsettableFields().get(typeMapping.getFeature())).to(SQL.param());
         }
       }
 
       for (Pair<EStructuralFeature, Integer> change : listSizeChanges)
       {
-        builder.append(", "); //$NON-NLS-1$
         EStructuralFeature feature = change.getElement1();
-        builder.append(getListSizeFields().get(feature));
-        builder.append("=?"); //$NON-NLS-1$
+        update = update.set(getListSizeFields().get(feature)).to(SQL.param());
       }
 
-      builder.append(sqlUpdateAffix);
-      return builder.toString();
+      return update //
+          .where(idField).eq(SQL.param()) //
+          .compile(getDBAdapter()).getSQL();
     }
 
     private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, PreparedStatement stmt, int col) throws SQLException

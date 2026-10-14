@@ -71,6 +71,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
   {
   }
 
+  @Override
   public final IMappingStrategy getMappingStrategy()
   {
     return mappingStrategy;
@@ -313,7 +314,7 @@ public abstract class AbstractTypeMapping implements ITypeMapping
       }
     }
 
-    IDBAdapter adapter = mappingStrategy.getStore().getDBAdapter();
+    IDBAdapter adapter = getDBAdapter();
     return adapter.getFieldLength(type);
   }
 

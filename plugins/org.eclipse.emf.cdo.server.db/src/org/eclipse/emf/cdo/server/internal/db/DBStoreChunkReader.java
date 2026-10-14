@@ -22,7 +22,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.MappingNames;
 import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
-import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -64,7 +63,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     }
     else
     {
-      builder.append(DBUtil.quoted(MappingNames.LIST_IDX));
+      builder.append(getAccessor().getStore().getDBAdapter().quoteIdentifier(MappingNames.LIST_IDX));
       builder.append('=');
       builder.append(index);
     }
@@ -82,7 +81,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     }
     else
     {
-      builder.append(DBUtil.quoted(MappingNames.LIST_IDX));
+      builder.append(getAccessor().getStore().getDBAdapter().quoteIdentifier(MappingNames.LIST_IDX));
       builder.append(" BETWEEN "); //$NON-NLS-1$
       builder.append(fromIndex);
       builder.append(" AND "); //$NON-NLS-1$

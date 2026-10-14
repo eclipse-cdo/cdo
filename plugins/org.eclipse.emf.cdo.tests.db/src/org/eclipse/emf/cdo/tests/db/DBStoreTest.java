@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PropertiesTable;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
@@ -27,6 +28,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.jdbc.DelegatingConnection;
+import org.eclipse.net4j.db.mysql.MYSQLAdapter;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.security.IUserAware;
@@ -54,6 +56,18 @@ import oracle.jdbc.pool.OracleDataSource;
  */
 public class DBStoreTest extends AbstractCDOTest
 {
+  public void testIssue81MySQLPropertySQL()
+  {
+    String schemaName = "schema`name";
+    String sql = PropertiesTable.sqlSelectProperty(new MYSQLAdapter(), schemaName);
+    String expectedSchema = DBUtil.DISABLE_QUOTED_NAMES ? schemaName : "`schema``name`";
+    String expectedTable = DBUtil.DISABLE_QUOTED_NAMES ? "cdo_properties" : "`cdo_properties`";
+    String expectedValue = DBUtil.DISABLE_QUOTED_NAMES ? "value" : "`value`";
+    String expectedName = DBUtil.DISABLE_QUOTED_NAMES ? "name" : "`name`";
+
+    assertEquals("SELECT " + expectedValue + " FROM " + expectedSchema + "." + expectedTable + " WHERE " + expectedName + "=?", sql);
+  }
+
   public static void main(String[] args) throws Exception
   {
     Connection connection = null;

@@ -317,6 +317,7 @@ public class Doc03_DataManipulation
    * <p>
    * The examples expect the relevant table and fields from the shared SALES model.
    * {@link #insertCustomer(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) InsertCustomer.java}
+   * {@link #copyOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, IDBTable, IDBField, IDBField) InsertSelect.java}
    * {@link #updateOrderStatus(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) UpdateOrderStatus.java}
    * {@link #deleteOrder(IDBAdapter, IDBConnection, IDBTable, IDBField) DeleteOrder.java}
    *
@@ -348,6 +349,26 @@ public class Doc03_DataManipulation
       {
         connection.rollback();
         throw ex;
+      }
+    }
+
+    /**
+     * @snip
+     */
+    public void copyOrders(IDBAdapter adapter, IDBConnection connection, IDBTable sourceOrders, IDBField sourceID, IDBField sourceCustomerID,
+        IDBTable targetOrders, IDBField targetID, IDBField targetCustomerID) throws SQLException
+    {
+      // Inputs: adapter, connection, source ORDERS.ID/CUSTOMER_ID and matching target fields.
+      SQLParameter customerID = SQL.param();
+      SQLStatement statement = SQL.insertInto(targetOrders) //
+          .columns(targetID, targetCustomerID) //
+          .select(SQL.select(sourceID, sourceCustomerID).from(sourceOrders).where(sourceCustomerID).eq(customerID).subSelect()) //
+          .build().compile(adapter);
+
+      try (IDBPreparedStatement prepared = statement.prepare(connection, ReuseProbability.LOW))
+      {
+        statement.bind(prepared, 501);
+        prepared.executeUpdate();
       }
     }
 

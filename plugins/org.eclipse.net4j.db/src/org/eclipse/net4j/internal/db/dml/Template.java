@@ -454,6 +454,7 @@ public final class Template implements SQLTemplate
       IS_NOT_NULL("IS NOT NULL"), //
       COLUMNS("columns"), //
       VALUES("values"), //
+      INSERT_SELECT("insertSelect"), //
       SET("set");
 
       private final String description;

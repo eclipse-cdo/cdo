@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
@@ -43,6 +44,11 @@ public abstract class DBStoreTable extends Lifecycle
   public final IDBStore store()
   {
     return store;
+  }
+
+  public final IDBAdapter adapter()
+  {
+    return store.getDBAdapter();
   }
 
   public final IDBTable table()

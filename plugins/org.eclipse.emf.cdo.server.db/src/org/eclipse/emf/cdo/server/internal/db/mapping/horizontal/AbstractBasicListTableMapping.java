@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.StringUtil;
@@ -76,9 +77,16 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
     this.feature = feature;
   }
 
+  @Override
   public final IMappingStrategy getMappingStrategy()
   {
     return mappingStrategy;
+  }
+
+  protected final void appendField(StringBuilder builder, IDBField field)
+  {
+    IDBAdapter dbAdapter = getDBAdapter();
+    builder.append(dbAdapter.quoteIdentifier(field.getName()));
   }
 
   public final EClass getContainingClass()

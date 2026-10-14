@@ -900,6 +900,13 @@ public final class Builder
       addAll(state, this, Template.Operation.Kind.VALUES, first, others);
       return state.advance(this, new InsertValues(state));
     }
+
+    @Override
+    public SQLBuildStep select(SQLSubSelect source)
+    {
+      state.add(this, Template.Operation.Kind.INSERT_SELECT, Objects.requireNonNull(source, "source"));
+      return state.advance(this, new BuildStage(state));
+    }
   }
 
   /**

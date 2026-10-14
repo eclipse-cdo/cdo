@@ -25,10 +25,12 @@ import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -67,17 +69,11 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
     versionField = table.getField(MappingNames.LIST_REVISION_VERSION);
 
     // ----------- clear list -------------------------
-    StringBuilder builder = new StringBuilder();
-    builder.append("DELETE FROM "); //$NON-NLS-1$
-    builder.append(table);
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(sourceField);
-    builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(branchField);
-    builder.append("=?  AND "); //$NON-NLS-1$
-    builder.append(versionField);
-    builder.append("=?"); //$NON-NLS-1$
-    sqlClear = builder.toString();
+    sqlClear = SQL.deleteFrom(table) //
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.eq(branchField, SQL.param())) //
+            .and(SQL.eq(versionField, SQL.param()))) //
+        .compile(getDBAdapter()).getSQL();
   }
 
   @Override
@@ -90,7 +86,7 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
   @Override
   protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     idHandler.setCDOID(stmt, 1, revision.getID());
     stmt.setInt(2, revision.getBranch().getID());
     stmt.setInt(3, revision.getVersion());
@@ -110,7 +106,7 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
       initTable(accessor);
     }
 
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
 
     try
@@ -139,6 +135,15 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
       return;
     }
 
-    batch.add("DELETE FROM " + table + " WHERE " + branchField + " IN (" + idList + ")");
+    IDBAdapter dbAdapter = getDBAdapter();
+    String sql = SQL.deleteFrom(table) //
+        .where(SQL.fragment() //
+            .column(branchField) //
+            .sql(" IN (") //
+            .sql(idList) //
+            .sql(")") //
+            .build().condition()) //
+        .compile(dbAdapter).getSQL();
+    batch.add(sql);
   }
 }

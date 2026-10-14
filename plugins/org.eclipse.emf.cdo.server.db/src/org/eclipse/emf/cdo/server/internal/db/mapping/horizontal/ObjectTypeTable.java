@@ -36,6 +36,9 @@ import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLFragment;
+import org.eclipse.net4j.db.dml.fluent.SQLFragmentStep;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -74,6 +77,10 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   private String sqlInsert;
 
   private String sqlSelect;
+
+  private String sqlSelectDistinctClasses;
+
+  private String sqlSelectMaxID;
 
   private boolean supportsSavepoints;
 
@@ -366,28 +373,28 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
      * collapses repeated matches, while the caller continues to process every revision in input order. The list is
      * non-empty by construction because the caller invokes this method only after checking unknown.isEmpty().
      */
-    StringBuilder builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(id);
-    builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(table());
-    builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(id);
-    builder.append(" IN ("); //$NON-NLS-1$
+    SQLFragmentStep values = SQL.fragment() //
+        .column(id) //
+        .sql(" IN ("); //$NON-NLS-1$
 
     for (int i = 0; i < revisions.size(); i++)
     {
       if (i != 0)
       {
-        builder.append(", "); //$NON-NLS-1$
+        values.sql(", "); //$NON-NLS-1$
       }
 
-      builder.append('?');
+      values.param(SQL.param());
     }
 
-    builder.append(')');
+    SQLFragment predicate = values.sql(")").build(); //$NON-NLS-1$
+    String sql = SQL.select(id) //
+        .from(table()) //
+        .where(predicate.condition()) //
+        .compile(adapter()).getSQL();
 
     IIDHandler idHandler = store().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
@@ -559,7 +566,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   public final void handleObjectTypes(IDBStoreAccessor accessor, ObjectTypeHandler handler) throws SQLException
   {
     try (Statement stmt = accessor.getConnection().createStatement(); //
-        ResultSet rs = stmt.executeQuery("SELECT DISTINCT(" + clazz + ") FROM " + table()))
+        ResultSet rs = stmt.executeQuery(sqlSelectDistinctClasses))
     {
       while (rs.next())
       {
@@ -584,7 +591,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     try
     {
       stmt = connection.createStatement();
-      resultSet = stmt.executeQuery("SELECT MAX(" + id + ") FROM " + table());
+      resultSet = stmt.executeQuery(sqlSelectMaxID);
 
       if (resultSet.next())
       {
@@ -607,7 +614,8 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   @Override
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
-    String where = " WHERE " + created + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    String createdName = adapter().quoteIdentifier(created.getName());
+    String where = " WHERE " + createdName + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     DBUtil.serializeTable(out, connection, table(), null, where);
   }
 
@@ -678,9 +686,27 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   @Override
   protected void initSQL(IDBTable table)
   {
-    sqlSelect = "SELECT " + clazz + " FROM " + table + " WHERE " + id + "=?";
-    sqlInsert = "INSERT INTO " + table + "(" + id + "," + clazz + "," + created + ") VALUES (?, ?, ?)";
-    sqlDelete = "DELETE FROM " + table + " WHERE " + id + "=?";
+    sqlSelectDistinctClasses = SQL.selectDistinct(clazz) //
+        .from(table) //
+        .compile(adapter()).getSQL();
+
+    sqlSelectMaxID = SQL.select(SQL.max(id)) //
+        .from(table) //
+        .compile(adapter()).getSQL();
+
+    sqlSelect = SQL.select(clazz) //
+        .from(table) //
+        .where(id).eq(SQL.param()) //
+        .compile(adapter()).getSQL();
+
+    sqlInsert = SQL.insertInto(table) //
+        .columns(id, clazz, created) //
+        .values(SQL.param(), SQL.param(), SQL.param()) //
+        .compile(adapter()).getSQL();
+
+    sqlDelete = SQL.deleteFrom(table) //
+        .where(id).eq(SQL.param()) //
+        .compile(adapter()).getSQL();
   }
 
   private static void discardBatch(BatchedStatement stmt)

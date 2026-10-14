@@ -71,7 +71,7 @@ public class SQLDMLApiTest extends TestCase
     assertFalse(Template.class.isInstance(subSelect));
     assertFalse(subSelect instanceof SQLExpression);
 
-    Expression addition = (Expression)SQL.add(schema.id, SQL.literal(1));
+    Expression addition = (Expression)SQL.add(schema.id, SQL.ONE);
     assertEquals(Expression.Kind.ADD, addition.getKind());
     assertSame(schema.id, addition.getOperands().get(0));
 
@@ -96,8 +96,12 @@ public class SQLDMLApiTest extends TestCase
   public void testIndependentBuildersAndImmutableSnapshots()
   {
     Schema schema = createSchema("dmlSnapshotTest");
-    SQLTemplate firstBuilder = SQL.select(schema.id).from(schema.table).build();
-    SQLTemplate secondBuilder = SQL.select(schema.name).from(schema.table).build();
+    SQLTemplate firstBuilder = SQL.select(schema.id) //
+        .from(schema.table) //
+        .build();
+    SQLTemplate secondBuilder = SQL.select(schema.name) //
+        .from(schema.table) //
+        .build();
     Template firstTemplate = definition(firstBuilder);
     Template secondTemplate = definition(secondBuilder);
 
@@ -105,10 +109,11 @@ public class SQLDMLApiTest extends TestCase
     assertSame(schema.name, operations(secondTemplate).get(0).getOperands()[0]);
 
     SQLUpdateStartStep update = SQL.update(schema.table);
-    SQLUpdateSetStep assignments = update.set(schema.id).to(SQL.literal(1));
+    SQLUpdateSetStep assignments = update.set(schema.id).to(SQL.ONE);
     Template before = definition(assignments.build());
     SQLUpdateAssignmentStep pending = assignments.set(schema.name);
-    SQLTemplate afterTemplate = pending.to(SQL.literal("changed")).build();
+    SQLTemplate afterTemplate = pending.to(SQL.literal("changed")) //
+        .build();
     Template after = definition(afterTemplate);
 
     assertEquals(Arrays.asList("set"), names(operations(before)));
@@ -129,7 +134,8 @@ public class SQLDMLApiTest extends TestCase
   public void testTemplateKindInvariantsAndSelectSubquerySnapshot()
   {
     Schema schema = createSchema("dmlSubquerySnapshotTest");
-    SQLSelectFromStep select = SQL.select(schema.id).from(schema.table);
+    SQLSelectFromStep select = SQL.select(schema.id) //
+        .from(schema.table);
     SQLSubSelect subSelect = select.subSelect();
     Template subqueryTemplate = ((Template.SelectSubquery)subSelect).getTemplate();
 
@@ -138,11 +144,14 @@ public class SQLDMLApiTest extends TestCase
     assertNull(subqueryTemplate.getTable());
     assertNull(subqueryTemplate.getFragment());
 
-    Template laterSnapshot = definition(select.where(schema.id).eq(SQL.param()).build());
+    Template laterSnapshot = definition(select.where(schema.id).eq(SQL.param()) //
+        .build());
     assertEquals(2, subqueryTemplate.getOperations().size());
     assertEquals(4, laterSnapshot.getOperations().size());
 
-    Template insert = definition(SQL.insertInto(schema.table).values(SQL.param(), SQL.param()).build());
+    Template insert = definition(SQL.insertInto(schema.table) //
+        .values(SQL.param(), SQL.param()) //
+        .build());
     assertFalse(SQLSubSelect.class.isAssignableFrom(insert.getClass()));
     assertIllegalState(() -> insert.asSubSelect(), "Only SELECT templates");
     assertIllegalArgument(() -> new Template(Template.Kind.SELECT, schema.table), "must not have a table");
@@ -157,11 +166,22 @@ public class SQLDMLApiTest extends TestCase
     SQLParameter parameter = SQL.param(value -> value);
     SQLParameter otherParameter = SQL.param();
 
-    Template select = definition(SQL.select(schema.id).from(alias).build());
-    Template insert = definition(SQL.insertInto(schema.table).values(SQL.param(), SQL.param()).build());
-    Template update = definition(SQL.update(schema.table).set(schema.name).to(SQL.param()).build());
-    Template delete = definition(SQL.deleteFrom(schema.table).build());
-    Template fragment = definition(SQL.build(SQL.fragment().sql("COALESCE(").param(parameter).sql(", 0)").build()));
+    Template select = definition(SQL.select(schema.id) //
+        .from(alias) //
+        .build());
+    Template insert = definition(SQL.insertInto(schema.table) //
+        .values(SQL.param(), SQL.param()) //
+        .build());
+    Template update = definition(SQL.update(schema.table) //
+        .set(schema.name).to(SQL.param()) //
+        .build());
+    Template delete = definition(SQL.deleteFrom(schema.table) //
+        .build());
+    Template fragment = definition(SQL.build(SQL.fragment() //
+        .sql("COALESCE(") //
+        .param(parameter) //
+        .sql(", 0)") //
+        .build()));
 
     assertEquals("SELECT [operations=2]", select.toString());
     assertEquals("INSERT objects [operations=2]", insert.toString());
@@ -191,7 +211,7 @@ public class SQLDMLApiTest extends TestCase
     assertFalse(diagnostic.contains("value ->"));
     assertFalse(parameter.toString().equals(otherParameter.toString()));
 
-    SQLExpression deep = SQL.literal(0);
+    SQLExpression deep = SQL.ZERO;
     for (int i = 0; i < 40; i++)
     {
       deep = SQL.add(deep, SQL.literal(i));
@@ -266,14 +286,16 @@ public class SQLDMLApiTest extends TestCase
 
     SQLDeleteStep delete = SQL.deleteFrom(schema.table);
     assertEquals(0, operations(definition(delete.build())).size());
-    assertEquals(Arrays.asList("where", "="), names(operations(definition(delete.where(schema.id).eq(SQL.param()).build()))));
+    assertEquals(Arrays.asList("where", "="), names(operations(definition(delete.where(schema.id).eq(SQL.param()) //
+        .build()))));
   }
 
   public void testFragmentsKeepTypedPartsSeparateFromTrustedText()
   {
     Schema schema = createSchema("dmlFragmentTest");
     SQLParameter parameter = SQL.param();
-    SQLFragment fragment = SQL.fragment().sql("SELECT ") //
+    SQLFragment fragment = SQL.fragment() //
+        .sql("SELECT ") //
         .column(schema.id) //
         .sql(" FROM ") //
         .table(schema.table) //
@@ -333,14 +355,17 @@ public class SQLDMLApiTest extends TestCase
     IDBTable otherTable = schema.schema.addTable("other_objects");
     IDBField otherID = otherTable.addField("id", DBType.INTEGER);
 
-    SQLSelectFromStep from = SQL.selectAll().from(schema.table);
+    SQLSelectFromStep from = SQL.selectAll() //
+        .from(schema.table);
     SQLSelectJoinStep join = from.leftJoin(otherTable);
     SQLSelectJoinedStep joined = join.on(schema.id).eq(otherID);
     assertIllegalState(() -> from.from(otherTable));
     assertIllegalState(() -> join.on(SQL.eq(schema.id, otherID)));
     assertEquals(Arrays.asList("projection", "from", "LEFT_JOIN", "on", "="), names(operations(definition(joined.build()))));
 
-    SQLSelectWhereStep where = SQL.selectAll().from(schema.table).where(schema.id).eq(SQL.param());
+    SQLSelectWhereStep where = SQL.selectAll() //
+        .from(schema.table) //
+        .where(schema.id).eq(SQL.param());
     SQLSelectOrderByStep orderBy = where.orderBy(SQL.asc(schema.id));
     assertIllegalState(() -> where.and(SQL.isNull(schema.name)));
     Template firstOrder = definition(orderBy.build());
@@ -354,20 +379,24 @@ public class SQLDMLApiTest extends TestCase
     SQLUpdateStartStep update = SQL.update(schema.table);
     SQLUpdateAssignmentStep assignment = update.set(schema.id);
     assertIllegalState(() -> update.set(schema.name));
-    SQLUpdateSetStep updated = assignment.to(SQL.literal(1));
+    SQLUpdateSetStep updated = assignment.to(SQL.ONE);
     SQLUpdateAssignmentStep nextAssignment = updated.set(schema.name);
     assertIllegalState(() -> updated.set(schema.id));
-    nextAssignment.to(SQL.literal("value")).build();
+    nextAssignment.to(SQL.literal("value")) //
+        .build();
 
     SQLInsertStartStep insert = SQL.insertInto(schema.table);
     SQLInsertAssignmentStep insertAssignment = insert.set(schema.id);
     assertIllegalState(() -> insert.values(SQL.param()));
-    insertAssignment.to(SQL.param()).set(schema.name).to(SQL.param()).build();
+    insertAssignment.to(SQL.param()) //
+        .set(schema.name).to(SQL.param()) //
+        .build();
 
     SQLDeleteStep delete = SQL.deleteFrom(schema.table);
     SQLDeleteWhereStep deleteWhere = delete.where(SQL.eq(schema.id, SQL.param()));
     assertIllegalState(() -> delete.where(SQL.isNull(schema.name)));
-    deleteWhere.and(SQL.isNull(schema.name)).or(SQL.ne(schema.id, SQL.literal(0))).build();
+    deleteWhere.and(SQL.isNull(schema.name)).or(SQL.ne(schema.id, SQL.ZERO)) //
+        .build();
   }
 
   public void testRequiredOperandsRejectNullAndLiteralNullRemainsSupported()
@@ -378,14 +407,21 @@ public class SQLDMLApiTest extends TestCase
     assertNullPointer(() -> SQL.as((SQLExpression)null, "result"));
     assertNullPointer(() -> SQL.add(schema.id, null));
     assertNullPointer(() -> SQL.eq(schema.id, null));
-    assertNullPointer(() -> SQL.between(schema.id, SQL.literal(1), null));
+    assertNullPointer(() -> SQL.between(schema.id, SQL.ONE, null));
     assertNullPointer(() -> SQL.exists(null));
-    assertNullPointer(() -> SQL.fragment().column((IDBField)null));
-    assertNullPointer(() -> SQL.selectAll().from(schema.table).where((SQLExpression)null));
-    assertNullPointer(() -> SQL.update(schema.table).set(schema.id).to(null));
-    assertNullPointer(() -> SQL.deleteFrom(schema.table).where((SQLCondition)null));
-    assertNullPointer(() -> SQL.selectAll().from(schema.table).groupBy(schema.id).orderByDesc(null));
-    assertNotNull(SQL.literal(null));
+    assertNullPointer(() -> SQL.fragment() //
+        .column((IDBField)null));
+    assertNullPointer(() -> SQL.selectAll() //
+        .from(schema.table) //
+        .where((SQLExpression)null));
+    assertNullPointer(() -> SQL.update(schema.table) //
+        .set(schema.id).to(null));
+    assertNullPointer(() -> SQL.deleteFrom(schema.table) //
+        .where((SQLCondition)null));
+    assertNullPointer(() -> SQL.selectAll() //
+        .from(schema.table) //
+        .groupBy(schema.id).orderByDesc(null));
+    assertNotNull(SQL.NULL);
   }
 
   public void compileRepresentativeCallChains(IDBTable table, IDBTable otherTable, IDBField id, IDBField name, SQLSubSelect subSelect)
@@ -408,21 +444,30 @@ public class SQLDMLApiTest extends TestCase
     SQL.selectAll() //
         .from(table) //
         .where(SQL.eq(id, SQL.param()).or(SQL.isNull(name))) //
-        .and(id).between(SQL.literal(1), SQL.literal(4)) //
+        .and(id).between(SQL.ONE, SQL.literal(4)) //
         .build();
 
     SQLUpdateStartStep update = SQL.update(table);
-    SQLUpdateSetStep updated = update.set(id).to(SQL.add(id, SQL.literal(1))) //
+    SQLUpdateSetStep updated = update.set(id).to(SQL.add(id, SQL.ONE)) //
         .set(name).to(SQL.param());
-    updated.where(id).eq(SQL.param()).build();
+    updated.where(id).eq(SQL.param()) //
+        .build();
 
     SQLInsertStartStep insert = SQL.insertInto(table);
-    insert.values(SQL.param(), SQL.param()).build();
-    insert.columns(id, name).values(SQL.param(), SQL.param()).build();
-    insert.set(id).to(SQL.param()).set(name).to(SQL.param()).build();
+    insert.values(SQL.param(), SQL.param()) //
+        .build();
+    insert.columns(id, name) //
+        .values(SQL.param(), SQL.param()) //
+        .build();
+    insert.set(id).to(SQL.param()) //
+        .set(name).to(SQL.param()) //
+        .build();
 
-    SQL.deleteFrom(table).where(id).eq(SQL.param()).build();
-    SQL.deleteFrom(table).build();
+    SQL.deleteFrom(table) //
+        .where(id).eq(SQL.param()) //
+        .build();
+    SQL.deleteFrom(table) //
+        .build();
   }
 
   private static void assertMethodAbsent(Class<?> type, String name, Class<?>... parameterTypes) throws Exception

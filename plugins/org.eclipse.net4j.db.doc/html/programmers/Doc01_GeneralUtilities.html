@@ -140,6 +140,31 @@ function maximize(id)
  their adapter available. Adapter identity includes a name and version. The registry lookup by name selects the
  highest registered version; select an exact identity when reproducible adapter behavior is important.
  <p>
+ To resolve an adapter from an existing JDBC connection, call
+ IDBAdapter.Registry.INSTANCE.getAdapter(connection). If the connection is an <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a> whose
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#getDatabase()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>database</code></a> has an adapter, that association is authoritative and is returned
+ directly. An ordinary <a href="https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html" target="_blank" title="Interface in java.sql"><code>Connection</code></a> is resolved from <a href="https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getDatabaseProductName()" target="_blank" title="Method in java.sql.DatabaseMetaData"><code>DatabaseMetaData.getDatabaseProductName()</code></a>
+ and any optional driver-name or URL constraints declared for matching adapters. A metadata access failure is
+ reported as <a href="../../javadoc/org/eclipse/net4j/db/DBException.html" title="Class in org.eclipse.net4j.db"><code>DBException</code></a>; an unknown or ambiguous product returns null. The lookup does not take
+ ownership of or close the supplied connection.
+ <p>
+ The dbAdapters extension point lets a contribution describe recognition without constructing its adapter.
+ Its optional productNames attribute lists comma-separated exact JDBC product names; when omitted, the
+ adapter name is used. Product names are trimmed and compared case-insensitively. A product name containing a comma
+ must be matched with productNamePattern. The optional
+ productNamePattern is a case-insensitive Java regular expression matched against the complete trimmed
+ product name, in addition to the exact names. Optional driverNamePattern and urlPattern regular
+ expressions constrain the JDBC driver name and URL respectively; when present, each value must be available and
+ match the complete trimmed value. Programmatic adapters provide the equivalent metadata by overriding
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseProductNames()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseProductNames()</code></a>, <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseProductNamePattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseProductNamePattern()</code></a>,
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseDriverNamePattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseDriverNamePattern()</code></a>, and <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseURLPattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseURLPattern()</code></a>.
+ <p>
+ After metadata constraints are applied, a direct match between the product name and an adapter name takes priority
+ over aliases. If multiple versions of the selected adapter name are registered, the highest adapter version is
+ selected. If matches remain for different adapter names, the result is ambiguous and the lookup returns
+ null. Only the selected lazy descriptor is materialized. Adapter versions describe adapter
+ implementations; they are independent of the database product version and JDBC driver version.
+ <p>
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -170,6 +195,40 @@ function maximize(id)
             &nbsp;&nbsp;IDBSchema&nbsp;schema&nbsp;=&nbsp;database.getSchema();<br/>
             &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Connected&nbsp;to&nbsp;schema&nbsp;&#34;&nbsp;</font>+&nbsp;schema.getName()&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;with&nbsp;&#34;&nbsp;</font>+&nbsp;schema.getTables().length&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;tables&#34;</font>);<br/>
             }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+ and 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_AdaptersAndDatabases_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ResolveAdapter.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('AdaptersAndDatabases_2')" id="max_AdaptersAndDatabases_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_AdaptersAndDatabases_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_AdaptersAndDatabases_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Input:&nbsp;an&nbsp;open&nbsp;ordinary&nbsp;JDBC&nbsp;connection;&nbsp;this&nbsp;method&nbsp;leaves&nbsp;it&nbsp;open.</font><br/>
+            IDBAdapter&nbsp;adapter&nbsp;=&nbsp;IDBAdapter.Registry.INSTANCE.getAdapter(connection);<br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(adapter&nbsp;==&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>DBException(<font color="#2a00ff">&#34;No&nbsp;unambiguous&nbsp;database&nbsp;adapter&nbsp;for&nbsp;JDBC&nbsp;connection&#34;</font>);<br/>
+            }<br/>
+            <br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>adapter;            </code>
 
           </div>
         </div>

@@ -51,7 +51,7 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1>Index</h1>
 </div>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a>
 <h2 class="title" id="I:A">A</h2>
 <dl class="index">
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingConnection.html#abort(java.util.concurrent.Executor)" class="member-name-link">abort(Executor)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingConnection.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingConnection</a></dt>
@@ -925,6 +925,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#escapeQuote(java.lang.String,java.lang.String)" class="member-name-link">escapeQuote(String, String)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Escapes occurrences of the identifier delimiter inside an identifier.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/Batch.html#execute()" class="member-name-link">execute()</a> - Method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/Batch.html" title="class in org.eclipse.net4j.db">Batch</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#execute()" class="member-name-link">execute()</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
@@ -1145,6 +1149,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the adapter for an exact logical name/version pair.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/IDBAdapter.Registry.html#getAdapter(java.sql.Connection)" class="member-name-link">getAdapter(Connection)</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.Registry.html" title="interface in org.eclipse.net4j.db">IDBAdapter.Registry</a></dt>
+<dd>
+<div class="block">Resolves the registered adapter for a JDBC connection.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/IDBAdapter.Registry.html#getAdapter(org.eclipse.net4j.db.IDBAdapterID)" class="member-name-link">getAdapter(IDBAdapterID)</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.Registry.html" title="interface in org.eclipse.net4j.db">IDBAdapter.Registry</a></dt>
 <dd>
 <div class="block">Returns the adapter for an exact logical identity.</div>
@@ -1301,6 +1309,40 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/IDBSchemaTransaction.html#getDatabase()" class="member-name-link">getDatabase()</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/IDBAdapter.html#getDatabaseDriverNamePattern()" class="member-name-link">getDatabaseDriverNamePattern()</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dt>
+<dd>
+<div class="block">Returns an optional regular expression that constrains JDBC driver-name
+ matching.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#getDatabaseDriverNamePattern()" class="member-name-link">getDatabaseDriverNamePattern()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/IDBAdapter.html#getDatabaseProductNamePattern()" class="member-name-link">getDatabaseProductNamePattern()</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dt>
+<dd>
+<div class="block">Returns an optional regular expression for additional JDBC product-name
+ matching.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#getDatabaseProductNamePattern()" class="member-name-link">getDatabaseProductNamePattern()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html#getDatabaseProductNames()" class="member-name-link">getDatabaseProductNames()</a> - Method in class org.eclipse.net4j.db.derby.<a href="org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">EmbeddedDerbyAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html#getDatabaseProductNames()" class="member-name-link">getDatabaseProductNames()</a> - Method in class org.eclipse.net4j.db.hsqldb.<a href="org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html" title="class in org.eclipse.net4j.db.hsqldb">HSQLDBAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/IDBAdapter.html#getDatabaseProductNames()" class="member-name-link">getDatabaseProductNames()</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dt>
+<dd>
+<div class="block">Returns the JDBC database product names recognized by this adapter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html#getDatabaseProductNames()" class="member-name-link">getDatabaseProductNames()</a> - Method in class org.eclipse.net4j.db.mysql.<a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#getDatabaseProductNames()" class="member-name-link">getDatabaseProductNames()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html#getDatabaseURLPattern()" class="member-name-link">getDatabaseURLPattern()</a> - Method in class org.eclipse.net4j.db.derby.<a href="org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">EmbeddedDerbyAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/IDBAdapter.html#getDatabaseURLPattern()" class="member-name-link">getDatabaseURLPattern()</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dt>
+<dd>
+<div class="block">Returns an optional regular expression that constrains JDBC URL matching.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#getDatabaseURLPattern()" class="member-name-link">getDatabaseURLPattern()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getDate(int)" class="member-name-link">getDate(int)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getDate(int,java.util.Calendar)" class="member-name-link">getDate(int, Calendar)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
@@ -1312,6 +1354,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#getDBAdapter(java.lang.String)" class="member-name-link">getDBAdapter(String)</a> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>
 <div class="block">Retrieves an <a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>adapter</code></a> from the <a href="org/eclipse/net4j/db/IDBAdapter.html#REGISTRY"><code>adapter registry</code></a>.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/DBUtil.html#getDBAdapter(java.sql.Connection)" class="member-name-link">getDBAdapter(Connection)</a> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
+<dd>
+<div class="block">Resolves the registered database adapter for a JDBC connection.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#getDBAdapterIDs()" class="member-name-link">getDBAdapterIDs()</a> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>
@@ -1436,6 +1482,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getHoldability()" class="member-name-link">getHoldability()</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>
 <div class="block">Since JDK 1.6.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html#getIdentifierQuote()" class="member-name-link">getIdentifierQuote()</a> - Method in class org.eclipse.net4j.db.mysql.<a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</a></dt>
+<dd>
+<div class="block">Returns MySQL's backtick identifier delimiter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#getIdentifierQuote()" class="member-name-link">getIdentifierQuote()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Returns the identifier delimiter used by <a href="org/eclipse/net4j/spi/db/DBAdapter.html#quoteIdentifier(java.lang.String)"><code>DBAdapter.quoteIdentifier(String)</code></a>.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBIndexField.html#getIndex()" class="member-name-link">getIndex()</a> - Method in interface org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBIndexField.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndexField</a></dt>
 <dd>&nbsp;</dd>
@@ -2607,6 +2661,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a NOT EXISTS condition over a complete SELECT definition.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#NULL" class="member-name-link">NULL</a> - Static variable in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">The SQL NULL literal.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/DBType.html#NUMERIC" class="member-name-link">NUMERIC</a> - Enum constant in enum class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -2619,6 +2677,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectJoinStep.html#on(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">on(SQLExpression)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectJoinStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectJoinStep</a></dt>
 <dd>
 <div class="block">Supplies a complete ON condition or begins a comparison whose completion returns to the joined SELECT stage.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#ONE" class="member-name-link">ONE</a> - Static variable in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">The numeric SQL literal 1.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" class="member-name-link">openDatabase(IDBAdapter, IDBConnectionProvider, String)</a> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>&nbsp;</dd>
@@ -2864,11 +2926,15 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Quotes one SQL identifier using the adapter's identifier delimiter.</div>
 </dd>
-<dt><a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html#quoteIdentifier(java.lang.String)" class="member-name-link">quoteIdentifier(String)</a> - Method in class org.eclipse.net4j.db.mysql.<a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</a></dt>
-<dd>
-<div class="block">Quotes one identifier with MySQL's backtick delimiter, escaping embedded backticks by doubling them.</div>
-</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#quoteIdentifier(java.lang.String)" class="member-name-link">quoteIdentifier(String)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#quoteIdentifier(java.lang.String)" class="member-name-link">quoteIdentifier(String)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/IDBAdapter.html#quoteTableName(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">quoteTableName(IDBTable)</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dt>
+<dd>
+<div class="block">Quotes the physical name of a table for use in SQL.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#quoteTableName(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">quoteTableName(IDBTable)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
@@ -3017,6 +3083,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/SQL.html#select(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)" class="member-name-link">select(SQLSelectItem, SQLSelectItem...)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
 <dd>
 <div class="block">Begins a SELECT definition whose projection contains the required first item and any additional items in the supplied order.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLInsertColumnsStep.html#select(org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">select(SQLSubSelect)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLInsertColumnsStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInsertColumnsStep</a></dt>
+<dd>
+<div class="block">Supplies a SELECT definition as the source of the INSERT.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQL.html#selectAll()" class="member-name-link">selectAll()</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
 <dd>
@@ -4077,7 +4147,14 @@ the order they are declared.</div>
 <div class="block">Writes a value that is taken out of the given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link"><code>result set</code></a> to the given <code>output</code>.</div>
 </dd>
 </dl>
-<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a></main>
+<h2 class="title" id="I:Z">Z</h2>
+<dl class="index">
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#ZERO" class="member-name-link">ZERO</a> - Static variable in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">The numeric SQL literal 0.</div>
+</dd>
+</dl>
+<a href="#I:A">A</a>&nbsp;<a href="#I:B">B</a>&nbsp;<a href="#I:C">C</a>&nbsp;<a href="#I:D">D</a>&nbsp;<a href="#I:E">E</a>&nbsp;<a href="#I:F">F</a>&nbsp;<a href="#I:G">G</a>&nbsp;<a href="#I:H">H</a>&nbsp;<a href="#I:I">I</a>&nbsp;<a href="#I:J">J</a>&nbsp;<a href="#I:L">L</a>&nbsp;<a href="#I:M">M</a>&nbsp;<a href="#I:N">N</a>&nbsp;<a href="#I:O">O</a>&nbsp;<a href="#I:P">P</a>&nbsp;<a href="#I:Q">Q</a>&nbsp;<a href="#I:R">R</a>&nbsp;<a href="#I:S">S</a>&nbsp;<a href="#I:T">T</a>&nbsp;<a href="#I:U">U</a>&nbsp;<a href="#I:V">V</a>&nbsp;<a href="#I:W">W</a>&nbsp;<a href="#I:Z">Z</a>&nbsp;<br><a href="allclasses-index.html">All&nbsp;Classes&nbsp;and&nbsp;Interfaces</a><span class="vertical-separator">|</span><a href="allpackages-index.html">All&nbsp;Packages</a><span class="vertical-separator">|</span><a href="constant-values.html">Constant&nbsp;Field&nbsp;Values</a><span class="vertical-separator">|</span><a href="serialized-form.html">Serialized&nbsp;Form</a></main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>

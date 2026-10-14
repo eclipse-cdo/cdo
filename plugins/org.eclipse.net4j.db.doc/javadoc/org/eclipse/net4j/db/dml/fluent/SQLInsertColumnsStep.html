@@ -114,10 +114,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="SQLInsertValuesStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInsertValuesStep</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#values(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">values</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;first,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>...&nbsp;others)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="SQLBuildStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLBuildStep</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#select(org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">select</a><wbr>(<a href="../SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;source)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Supplies a SELECT definition as the source of the INSERT.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="SQLInsertValuesStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInsertValuesStep</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#values(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">values</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;first,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>...&nbsp;others)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Supplies values positionally corresponding to the explicit target columns.</div>
 </div>
 </div>
@@ -146,6 +151,21 @@ loadScripts(document, 'script');</script>
 <dd><code>others</code> - additional values in matching column order</dd>
 <dt>Returns:</dt>
 <dd>the next valid fluent stage</dd>
+<dt>Since:</dt>
+<dd>4.15</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="select(org.eclipse.net4j.db.dml.SQLSubSelect)">
+<h3>select</h3>
+<div class="member-signature"><span class="return-type"><a href="SQLBuildStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLBuildStep</a></span>&nbsp;<span class="element-name">select</span><wbr><span class="parameters">(<a href="../SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;source)</span></div>
+<div class="block">Supplies a SELECT definition as the source of the INSERT. The SELECT projection count must match the explicit target-column count.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>source</code> - the SELECT definition supplying inserted rows</dd>
+<dt>Returns:</dt>
+<dd>the completed INSERT definition</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>

@@ -489,7 +489,7 @@ function maximize(id)
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">UpdateOrderStatus.java</font></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">InsertSelect.java</font></td>
       <td width="1px"><img src="../../images/editor-3.png"></td>
       <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
       <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('DataChanges_2')" id="max_DataChanges_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
@@ -499,6 +499,45 @@ function maximize(id)
       <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
         <div id="editor_content_1_DataChanges_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
           <div id="editor_content_2_DataChanges_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;source&nbsp;ORDERS.ID/CUSTOMER_ID&nbsp;and&nbsp;matching&nbsp;target&nbsp;fields.</font><br/>
+            SQLParameter&nbsp;customerID&nbsp;=&nbsp;SQL.param();<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.insertInto(targetOrders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.columns(targetID,&nbsp;targetCustomerID)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.select(SQL.select(sourceID,&nbsp;sourceCustomerID).from(sourceOrders).where(sourceCustomerID).eq(customerID).subSelect())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.build().compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#990000">501</font>);<br/>
+            &nbsp;&nbsp;prepared.executeUpdate();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_DataChanges_3"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">UpdateOrderStatus.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('DataChanges_3')" id="max_DataChanges_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_DataChanges_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_DataChanges_3" style="padding:8px;">
             <code>
             <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;ORDERS&nbsp;table&nbsp;and&nbsp;its&nbsp;ID/STATUS&nbsp;fields.</font><br/>
             SQLTemplate&nbsp;template&nbsp;=&nbsp;SQL.update(orders)&nbsp;<font color="#3f7f5f">//</font><br/>
@@ -530,20 +569,20 @@ function maximize(id)
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
-  <a name="snippet_DataChanges_3"></a>
+  <a name="snippet_DataChanges_4"></a>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
       <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">DeleteOrder.java</font></td>
       <td width="1px"><img src="../../images/editor-3.png"></td>
       <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
-      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('DataChanges_3')" id="max_DataChanges_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('DataChanges_4')" id="max_DataChanges_4" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
       <td width="6px"><img src="../../images/editor-5.png"></td>
     </tr>
     <tr>
       <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
-        <div id="editor_content_1_DataChanges_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
-          <div id="editor_content_2_DataChanges_3" style="padding:8px;">
+        <div id="editor_content_1_DataChanges_4" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_DataChanges_4" style="padding:8px;">
             <code>
             <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;ORDERS&nbsp;table,&nbsp;and&nbsp;ORDERS.ID.&nbsp;This&nbsp;delete&nbsp;is&nbsp;intentionally&nbsp;restricted&nbsp;to&nbsp;one&nbsp;key.</font><br/>
             SQLTemplate&nbsp;template&nbsp;=&nbsp;SQL.deleteFrom(orders)&nbsp;<font color="#3f7f5f">//</font><br/>

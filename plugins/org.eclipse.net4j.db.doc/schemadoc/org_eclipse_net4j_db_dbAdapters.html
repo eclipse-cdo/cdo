@@ -12,7 +12,7 @@
 <h6 class="CaptionFigColumn SchemaHeader">Since: </h6>[Enter the first release in which this extension point appears.]
 <p></p>
 
-<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>[Enter description of this extension point.]<p></p>
+<h6 class="CaptionFigColumn SchemaHeader">Description: </h6>Contributes database adapters to the Net4j DB registry. Recognition metadata is read from the contribution before its adapter class is instantiated, so JDBC connections can be matched lazily from database product names and optional driver-name and URL constraints. A product name must match an exact name or product-name pattern, and every configured driver-name and URL constraint must also match.<p></p>
 <h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
 <p></p>
 <p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.dbAdapter">dbAdapter</a>+)&gt;</p>
@@ -25,14 +25,22 @@
 </ul>
 <br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.dbAdapter">dbAdapter</a> EMPTY&gt;</p>
 <p class="code SchemaDtd">&lt;!ATTLIST dbAdapter</p>
-<p class="code SchemaDtdAttlist">name&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p>
-<p class="code SchemaDtdAttlist">version&nbsp;CDATA #REQUIRED</p>
-<p class="code SchemaDtdAttlist">class&nbsp;&nbsp;&nbsp;CDATA #REQUIRED&gt;</p>
+<p class="code SchemaDtdAttlist">name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p>
+<p class="code SchemaDtdAttlist">version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p>
+<p class="code SchemaDtdAttlist">class&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p>
+<p class="code SchemaDtdAttlist">productNames&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p>
+<p class="code SchemaDtdAttlist">productNamePattern&nbsp;CDATA #IMPLIED</p>
+<p class="code SchemaDtdAttlist">driverNamePattern&nbsp;&nbsp;CDATA #IMPLIED</p>
+<p class="code SchemaDtdAttlist">urlPattern&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED&gt;</p>
 <p></p>
 <ul class="ConfigMarkupAttlistDesc">
 <li><b>name</b> - </li>
 <li><b>version</b> - </li>
 <li><b>class</b> - </li>
+<li><b>productNames</b> - Comma-separated exact JDBC database product names. Names are trimmed and matched case-insensitively. If omitted, the adapter's declared name is used. Use productNamePattern for product names that contain commas.</li>
+<li><b>productNamePattern</b> - Optional Java regular expression matched case-insensitively against the complete trimmed JDBC product name. It supplements the exact productNames matches.</li>
+<li><b>driverNamePattern</b> - Optional Java regular expression matched case-insensitively against the complete trimmed JDBC driver name. When present, the driver name must be available and match.</li>
+<li><b>urlPattern</b> - Optional Java regular expression matched case-insensitively against the complete trimmed JDBC URL. When present, the URL must be available and match.</li>
 </ul>
 <br><h6 class="CaptionFigColumn SchemaHeader">Examples: </h6>[Enter extension point usage example here.]
 <p></p>

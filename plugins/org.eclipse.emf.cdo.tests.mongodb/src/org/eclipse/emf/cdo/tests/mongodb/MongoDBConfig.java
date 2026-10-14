@@ -17,14 +17,13 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.util.WrappedException;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
-import com.mongodb.MongoURI;
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("deprecation")
 public class MongoDBConfig extends RepositoryConfig
 {
   public static final String STORE_NAME = "MongoDB";
@@ -51,26 +50,25 @@ public class MongoDBConfig extends RepositoryConfig
   @Override
   public IStore createStore(String repoName)
   {
-    MongoURI mongoURI = new MongoURI("mongodb://localhost");
+    ConnectionString connectionString = new ConnectionString("mongodb://localhost");
     if (!isRestarting())
     {
-      dropDatabase(mongoURI, repoName);
+      dropDatabase(connectionString, repoName);
     }
 
-    return CDOMongoDBUtil.createStore(mongoURI.toString(), repoName);
+    return CDOMongoDBUtil.createStore(connectionString.getConnectionString(), repoName);
   }
 
-  protected void dropDatabase(MongoURI mongoURI, String repoName)
+  protected void dropDatabase(ConnectionString connectionString, String repoName)
   {
-    Mongo mongo = null;
+    MongoClient mongoClient = null;
 
     try
     {
-      mongo = new Mongo(mongoURI);
-      DB db = mongo.getDB(repoName);
-      if (!db.getCollectionNames().isEmpty())
+      mongoClient = MongoClients.create(connectionString);
+      if (mongoClient.getDatabase(repoName).listCollectionNames().first() != null)
       {
-        db.dropDatabase();
+        mongoClient.getDatabase(repoName).drop();
       }
     }
     catch (Exception ex)
@@ -79,9 +77,9 @@ public class MongoDBConfig extends RepositoryConfig
     }
     finally
     {
-      if (mongo != null)
+      if (mongoClient != null)
       {
-        mongo.close();
+        mongoClient.close();
       }
     }
   }

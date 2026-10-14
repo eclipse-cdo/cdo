@@ -41,9 +41,10 @@ import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
-import com.mongodb.MongoURI;
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -65,7 +66,6 @@ import java.util.Set;
  *
  * @author Eike Stepper
  */
-@SuppressWarnings("deprecation")
 public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, NoLargeObjects, NoHandleRevisions, NoRawAccess
 {
   public static final String TYPE = "mongodb"; //$NON-NLS-1$
@@ -75,11 +75,13 @@ public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, 
 
   private IDHandler idHandler = new IDHandler.LongValue(this);
 
-  private MongoURI mongoURI;
+  private ConnectionString connectionString;
 
   private String dbName;
 
-  private DB db;
+  private MongoClient mongoClient;
+
+  private MongoDatabase db;
 
   private Props props;
 
@@ -313,15 +315,15 @@ public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, 
     this.idHandler = idHandler;
   }
 
-  public MongoURI getMongoURI()
+  public ConnectionString getConnectionString()
   {
-    return mongoURI;
+    return connectionString;
   }
 
-  public void setMongoURI(MongoURI mongoURI)
+  public void setConnectionString(ConnectionString connectionString)
   {
     checkInactive();
-    this.mongoURI = mongoURI;
+    this.connectionString = connectionString;
   }
 
   public String getDBName()
@@ -336,7 +338,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, 
   }
 
   @Override
-  public DB getDB()
+  public MongoDatabase getDB()
   {
     return db;
   }
@@ -456,7 +458,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, 
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(mongoURI, "mongoURI"); //$NON-NLS-1$
+    checkState(connectionString, "connectionString"); //$NON-NLS-1$
     checkState(dbName, "dbName"); //$NON-NLS-1$
   }
 
@@ -474,10 +476,10 @@ public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, 
 
     super.doActivate();
 
-    Mongo mongo = new Mongo(mongoURI);
-    db = mongo.getDB(dbName);
+    mongoClient = MongoClients.create(connectionString);
+    db = mongoClient.getDatabase(dbName);
 
-    Set<String> collectionNames = db.getCollectionNames();
+    Set<String> collectionNames = db.listCollectionNames().into(new HashSet<>());
     firstStart = !collectionNames.contains(Props.NAME);
 
     props = new Props(this);
@@ -521,7 +523,8 @@ public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, 
 
     if (db != null)
     {
-      db.getMongo().close();
+      mongoClient.close();
+      mongoClient = null;
       db = null;
     }
 

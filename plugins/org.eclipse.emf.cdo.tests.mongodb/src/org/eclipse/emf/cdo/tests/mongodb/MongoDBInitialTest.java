@@ -25,8 +25,9 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
+import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.DBObject;
 
 import java.io.PrintStream;
@@ -119,8 +120,8 @@ public class MongoDBInitialTest extends AbstractCDOTest
     System.err.println("Results:");
 
     MongoDBStore store = (MongoDBStore)getRepository().getStore();
-    DBCollection collection = store.getCommits().getCollection();
-    DBCursor cursor = collection.find(query);
+    MongoCollection<DBObject> collection = store.getCommits().getCollection();
+    MongoCursor<DBObject> cursor = collection.find((BasicDBObject)query).cursor();
 
     int i = 0;
     while (cursor.hasNext())

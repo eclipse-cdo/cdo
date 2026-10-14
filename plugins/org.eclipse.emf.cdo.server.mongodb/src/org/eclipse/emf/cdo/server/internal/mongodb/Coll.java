@@ -12,9 +12,9 @@
 package org.eclipse.emf.cdo.server.internal.mongodb;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 
 /**
  * @author Eike Stepper
@@ -23,12 +23,12 @@ public class Coll
 {
   protected MongoDBStore store;
 
-  protected DBCollection collection;
+  protected MongoCollection<DBObject> collection;
 
   public Coll(MongoDBStore store, String name)
   {
     this.store = store;
-    collection = store.getDB().getCollection(name);
+    collection = store.getDB().getCollection(name, DBObject.class);
   }
 
   public MongoDBStore getStore()
@@ -36,14 +36,14 @@ public class Coll
     return store;
   }
 
-  public DBCollection getCollection()
+  public MongoCollection<DBObject> getCollection()
   {
     return collection;
   }
 
   public void ensureIndex(String element, String field, boolean asc)
   {
-    DBObject index = new BasicDBObject();
+    BasicDBObject index = new BasicDBObject();
     index.put(element + "." + field, asc ? 1 : -1);
 
     collection.createIndex(index);
@@ -51,7 +51,7 @@ public class Coll
 
   public void ensureIndex(String element, String... fields)
   {
-    DBObject index = new BasicDBObject();
+    BasicDBObject index = new BasicDBObject();
     for (String field : fields)
     {
       index.put(element + "." + field, 1);
@@ -66,29 +66,29 @@ public class Coll
    */
   public abstract class Query<RESULT>
   {
-    private DBObject ref;
+    private BasicDBObject ref;
 
-    public Query(DBObject ref)
+    public Query(BasicDBObject ref)
     {
       this.ref = ref;
     }
 
-    public DBObject getRef()
+    public BasicDBObject getRef()
     {
       return ref;
     }
 
     public RESULT execute()
     {
-      return execute(collection.find(ref));
+      return execute(collection.find(ref).cursor());
     }
 
-    public RESULT execute(DBObject keys)
+    public RESULT execute(BasicDBObject keys)
     {
-      return execute(collection.find(ref, keys));
+      return execute(collection.find(ref).projection(keys).cursor());
     }
 
-    protected RESULT execute(DBCursor cursor)
+    protected RESULT execute(MongoCursor<DBObject> cursor)
     {
       try
       {

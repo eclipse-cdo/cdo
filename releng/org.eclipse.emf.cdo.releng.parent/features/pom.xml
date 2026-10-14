@@ -103,7 +103,6 @@ Eike Stepper - initial API and implementation
                 <plugin id="org.eclipse.net4j.doc"/>
                 <plugin id="org.eclipse.net4j.examples.installer"/>
                 <plugin id="org.eclipse.net4j.util.doc"/>
-                <plugin id="org.eclipse.orbit.mongodb"/>
                 <plugin id="com.h2database"/>
               </excludes>
             </configuration>

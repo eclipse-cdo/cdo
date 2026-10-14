@@ -18,14 +18,13 @@ import org.eclipse.emf.cdo.server.internal.mongodb.bundle.OM;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
-import com.mongodb.MongoURI;
+import com.mongodb.ConnectionString;
 
 /**
  * Various static methods that may help in setting up and dealing with {@link IMongoDBStore MongoDB stores}.
  *
  * @author Eike Stepper
  */
-@SuppressWarnings("deprecation")
 public final class CDOMongoDBUtil
 {
   private CDOMongoDBUtil()
@@ -45,9 +44,9 @@ public final class CDOMongoDBUtil
 
   public static IMongoDBStore createStore(String uri, String dbName)
   {
-    MongoURI mongoURI = new MongoURI(uri);
+    ConnectionString connectionString = new ConnectionString(uri);
     MongoDBStore store = new MongoDBStore();
-    store.setMongoURI(mongoURI);
+    store.setConnectionString(connectionString);
     store.setDBName(dbName);
     return store;
   }

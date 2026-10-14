@@ -55,7 +55,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
-import com.mongodb.QueryOperators;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -134,7 +133,7 @@ public class Commits extends Coll
 
     if (store.isBranching())
     {
-      DBObject index = new BasicDBObject();
+      BasicDBObject index = new BasicDBObject();
       index.put(REVISIONS + "." + REVISIONS_ID, 1);
       index.put(COMMITS_BRANCH, 1);
       index.put(REVISIONS + "." + REVISIONS_VERSION, 1);
@@ -225,7 +224,7 @@ public class Commits extends Coll
   {
     final Collection<InternalCDOPackageUnit> packageUnits = new ArrayList<>();
 
-    DBObject query = new BasicDBObject();
+    BasicDBObject query = new BasicDBObject();
     query.put(UNITS, new BasicDBObject("$exists", true));
 
     new QueryEmbeddedUnits<>(query)
@@ -284,7 +283,7 @@ public class Commits extends Coll
 
   public EPackage[] loadPackageUnit(final InternalCDOPackageUnit packageUnit)
   {
-    DBObject query = new BasicDBObject();
+    BasicDBObject query = new BasicDBObject();
     query.put(UNITS + "." + UNITS_ID, packageUnit.getID());
 
     return new QueryEmbeddedUnits<EPackage[]>(query)
@@ -309,7 +308,7 @@ public class Commits extends Coll
   {
     final Classes classes = store.getClasses();
 
-    DBObject query = new BasicDBObject();
+    BasicDBObject query = new BasicDBObject();
     query.put(UNITS, new BasicDBObject("$exists", true));
 
     new QueryEmbeddedUnits<>(query)
@@ -409,7 +408,7 @@ public class Commits extends Coll
       synchronized (this)
       {
         checkResourceNamespace(accessor, context);
-        collection.insert(doc);
+        collection.insertOne(doc);
       }
 
       monitor.worked(100);
@@ -597,7 +596,7 @@ public class Commits extends Coll
     final boolean exactMatch = context.exactMatch();
     final long timeStamp = context.getTimeStamp();
 
-    DBObject query = new BasicDBObject();
+    BasicDBObject query = new BasicDBObject();
 
     query.put(REVISIONS + "." + REVISIONS_CLASS, new BasicDBObject("$in", new int[] { folderCID, resourceCID }));
 
@@ -680,7 +679,7 @@ public class Commits extends Coll
       return (Long)value;
     }
 
-    DBObject query = new BasicDBObject();
+    BasicDBObject query = new BasicDBObject();
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
     if (store.isBranching())
     {
@@ -724,7 +723,7 @@ public class Commits extends Coll
     final CDOBranch branch = branchPoint.getBranch();
     final long timeStamp = branchPoint.getTimeStamp();
 
-    DBObject query = new BasicDBObject();
+    BasicDBObject query = new BasicDBObject();
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
 
     addToQuery(query, branchPoint);
@@ -734,7 +733,7 @@ public class Commits extends Coll
       @Override
       public InternalCDORevision execute()
       {
-        return execute(collection.find(getRef()).sort(new BasicDBObject(COMMITS_ID, -1)).limit(1));
+        return execute(collection.find(getRef()).sort(new BasicDBObject(COMMITS_ID, -1)).limit(1).cursor());
       }
 
       @Override
@@ -762,7 +761,7 @@ public class Commits extends Coll
     }.execute();
   }
 
-  private void addToQuery(DBObject query, CDOBranchPoint branchPoint)
+  private void addToQuery(BasicDBObject query, CDOBranchPoint branchPoint)
   {
     // Exclude detached objects
     query.put(REVISIONS + "." + REVISIONS_VERSION, new BasicDBObject("$gte", CDOBranchVersion.FIRST_VERSION));
@@ -782,7 +781,7 @@ public class Commits extends Coll
 
   public InternalCDORevision readRevisionByVersion(final CDOID id, CDOBranchVersion branchVersion, int listChunk)
   {
-    DBObject query = new BasicDBObject();
+    BasicDBObject query = new BasicDBObject();
     idHandler.write(query, REVISIONS + "." + REVISIONS_ID, id);
 
     int version = branchVersion.getVersion();
@@ -903,7 +902,7 @@ public class Commits extends Coll
       throw new IllegalArgumentException("Counting not supported");
     }
 
-    DBObject query = new BasicDBObject();
+    BasicDBObject query = new BasicDBObject();
 
     if (branch != null && store.isBranching())
     {
@@ -913,12 +912,12 @@ public class Commits extends Coll
     BasicDBList list = new BasicDBList();
     if (startTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      list.add(new BasicDBObject(QueryOperators.GTE, startTime));
+      list.add(new BasicDBObject("$gte", startTime));
     }
 
     if (endTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      list.add(new BasicDBObject(QueryOperators.LTE, endTime));
+      list.add(new BasicDBObject("$lte", endTime));
     }
 
     int size = list.size();
@@ -940,7 +939,7 @@ public class Commits extends Coll
       @Override
       public Object execute()
       {
-        return execute(collection.find(getRef()).sort(new BasicDBObject(COMMITS_ID, 1)));
+        return execute(collection.find(getRef()).sort(new BasicDBObject(COMMITS_ID, 1)).cursor());
       }
 
       @Override
@@ -978,7 +977,7 @@ public class Commits extends Coll
   {
     private String field;
 
-    public QueryEmbedded(DBObject ref, String field)
+    public QueryEmbedded(BasicDBObject ref, String field)
     {
       super(ref);
       this.field = field;
@@ -1009,7 +1008,7 @@ public class Commits extends Coll
    */
   public abstract class QueryEmbeddedUnits<RESULT> extends QueryEmbedded<RESULT>
   {
-    public QueryEmbeddedUnits(DBObject ref)
+    public QueryEmbeddedUnits(BasicDBObject ref)
     {
       super(ref, UNITS);
     }
@@ -1020,7 +1019,7 @@ public class Commits extends Coll
    */
   public abstract class QueryEmbeddedRevisions<RESULT> extends QueryEmbedded<RESULT>
   {
-    public QueryEmbeddedRevisions(DBObject ref)
+    public QueryEmbeddedRevisions(BasicDBObject ref)
     {
       super(ref, REVISIONS);
     }

@@ -19,12 +19,14 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.MongoDatabase;
 
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -54,7 +56,7 @@ public class MongoDBBrowserPage extends AbstractPage
   public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
   {
     IMongoDBStore store = (IMongoDBStore)repository.getStore();
-    DB db = (DB)store.getDB();
+    MongoDatabase db = (MongoDatabase)store.getDB();
 
     out.print("<table border=\"0\">\r\n");
     out.print("<tr>\r\n");
@@ -75,11 +77,11 @@ public class MongoDBBrowserPage extends AbstractPage
     out.print("</table>\r\n");
   }
 
-  protected String showCollections(CDOServerBrowser browser, PrintStream pout, DB db, String repo)
+  protected String showCollections(CDOServerBrowser browser, PrintStream pout, MongoDatabase db, String repo)
   {
     String collection = browser.getParam("collection");
 
-    Set<String> allCollectionNames = db.getCollectionNames();
+    List<String> allCollectionNames = db.listCollectionNames().into(new ArrayList<>());
     for (String collectionName : allCollectionNames)
     {
       if (collection == null)
@@ -101,9 +103,9 @@ public class MongoDBBrowserPage extends AbstractPage
     return collection;
   }
 
-  protected void showCollection(CDOServerBrowser browser, PrintStream pout, DB db, String collection)
+  protected void showCollection(CDOServerBrowser browser, PrintStream pout, MongoDatabase db, String collection)
   {
-    DBCollection coll = db.getCollection(collection);
+    MongoCollection<DBObject> coll = db.getCollection(collection, DBObject.class);
     pout.print("<table class=\"data\" cellpadding=\"4\">\r\n");
     pout.print("<tr><td colspan=\"2\" align=\"center\"><h2>" + collection + "</h2></td></tr>\r\n");
 
@@ -118,12 +120,12 @@ public class MongoDBBrowserPage extends AbstractPage
     }
   }
 
-  protected void showIndexes(CDOServerBrowser browser, PrintStream pout, DBCollection coll)
+  protected void showIndexes(CDOServerBrowser browser, PrintStream pout, MongoCollection<DBObject> coll)
   {
     pout.print("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"EEEEEE\"><h4>Indexes</h4></td></tr>\r\n");
 
     int i = 0;
-    for (DBObject index : coll.getIndexInfo())
+    for (DBObject index : coll.listIndexes(DBObject.class))
     {
       ++i;
       String bg = (i & 1) == 1 ? "bgcolor=\"DDDDDD\"" : "bgcolor=\"EEEEEE\"";
@@ -133,25 +135,16 @@ public class MongoDBBrowserPage extends AbstractPage
     }
   }
 
-  protected void showDocuments(CDOServerBrowser browser, PrintStream pout, DBCollection coll)
+  protected void showDocuments(CDOServerBrowser browser, PrintStream pout, MongoCollection<DBObject> coll)
   {
-    DBCursor cursor = null;
+    MongoCursor<DBObject> cursor = null;
 
     try
     {
       pout.print("<tr><td colspan=\"2\" align=\"center\" bgcolor=\"EEEEEE\"><h4>Documents</h4></td></tr>\r\n");
 
       int i = 0;
-      cursor = coll.find();
-
-      try
-      {
-        cursor = cursor.sort(new BasicDBObject("_id", 1));
-      }
-      catch (Exception ex)
-      {
-        // Ignore
-      }
+      cursor = coll.find().sort(new BasicDBObject("_id", 1)).cursor();
 
       while (cursor.hasNext())
       {
@@ -247,9 +240,9 @@ public class MongoDBBrowserPage extends AbstractPage
     }
   }
 
-  protected boolean showFirstCommit(DBCollection coll)
+  protected boolean showFirstCommit(MongoCollection<DBObject> coll)
   {
-    return coll.getName().equals(Commits.COMMITS) && !SHOW_INITIAL_COMMIT;
+    return coll.getNamespace().getCollectionName().equals(Commits.COMMITS) && !SHOW_INITIAL_COMMIT;
   }
 
   /**

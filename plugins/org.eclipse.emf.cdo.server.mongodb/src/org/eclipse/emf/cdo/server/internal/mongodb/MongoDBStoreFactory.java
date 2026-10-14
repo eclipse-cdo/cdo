@@ -19,9 +19,9 @@ import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 
-import com.mongodb.DB;
-import com.mongodb.Mongo;
-import com.mongodb.MongoURI;
+import com.mongodb.ConnectionString;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
 
 import org.w3c.dom.Element;
 
@@ -30,7 +30,6 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("deprecation")
 public class MongoDBStoreFactory implements IStoreFactory
 {
   public MongoDBStoreFactory()
@@ -53,7 +52,7 @@ public class MongoDBStoreFactory implements IStoreFactory
       throw new IllegalArgumentException("Property 'uri' missing");
     }
 
-    MongoURI mongoURI = new MongoURI(uri);
+    ConnectionString connectionString = new ConnectionString(uri);
     String dbName = properties.get("db");
     if (StringUtil.isEmpty(dbName))
     {
@@ -63,21 +62,20 @@ public class MongoDBStoreFactory implements IStoreFactory
     String drop = properties.get("drop");
     if (Boolean.toString(true).equals(drop))
     {
-      dropDatabase(mongoURI, dbName);
+      dropDatabase(connectionString, dbName);
     }
 
     return CDOMongoDBUtil.createStore(uri, dbName);
   }
 
-  protected void dropDatabase(MongoURI mongoURI, String dbName)
+  protected void dropDatabase(ConnectionString connectionString, String dbName)
   {
-    Mongo mongo = null;
+    MongoClient mongoClient = null;
 
     try
     {
-      mongo = new Mongo(mongoURI);
-      DB db = mongo.getDB(dbName);
-      db.dropDatabase();
+      mongoClient = MongoClients.create(connectionString);
+      mongoClient.getDatabase(dbName).drop();
     }
     catch (Exception ex)
     {
@@ -85,9 +83,9 @@ public class MongoDBStoreFactory implements IStoreFactory
     }
     finally
     {
-      if (mongo != null)
+      if (mongoClient != null)
       {
-        mongo.close();
+        mongoClient.close();
       }
     }
   }

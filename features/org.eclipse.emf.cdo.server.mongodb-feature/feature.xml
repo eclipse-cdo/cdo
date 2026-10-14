@@ -13,7 +13,7 @@
 <feature
       id="org.eclipse.emf.cdo.server.mongodb"
       label="%featureName"
-      version="5.3.1.qualifier"
+      version="5.4.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.cdo.license"
       license-feature-version="0.0.0">
@@ -37,16 +37,18 @@
 
    <plugin
          id="org.eclipse.emf.cdo.server.mongodb"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
    <plugin
-         id="org.mongodb.mongo-java-driver"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         id="org.mongodb.bson"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.mongodb.driver-core"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.mongodb.driver-sync"
+         version="0.0.0"/>
 
 </feature>

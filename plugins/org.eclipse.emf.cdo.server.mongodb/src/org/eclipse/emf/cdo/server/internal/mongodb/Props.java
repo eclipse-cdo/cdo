@@ -13,8 +13,9 @@ package org.eclipse.emf.cdo.server.internal.mongodb;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.ReplaceOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,8 +62,8 @@ public class Props extends Coll
     Map<String, String> result = new HashMap<>();
     for (String name : names)
     {
-      DBObject query = new BasicDBObject(ID, name);
-      DBCursor cursor = collection.find(query);
+      BasicDBObject query = new BasicDBObject(ID, name);
+      MongoCursor<DBObject> cursor = collection.find(query).cursor();
 
       try
       {
@@ -89,7 +90,7 @@ public class Props extends Coll
       doc.put(ID, property.getKey());
       doc.put(VALUE, property.getValue());
 
-      collection.save(doc);
+      collection.replaceOne(new BasicDBObject(ID, property.getKey()), doc, new ReplaceOptions().upsert(true));
 
     }
   }
@@ -102,9 +103,9 @@ public class Props extends Coll
       list.add(name);
     }
 
-    DBObject ref = new BasicDBObject();
+    BasicDBObject ref = new BasicDBObject();
     ref.put(ID, new BasicDBObject("$in", list));
 
-    collection.remove(ref);
+    collection.deleteMany(ref);
   }
 }

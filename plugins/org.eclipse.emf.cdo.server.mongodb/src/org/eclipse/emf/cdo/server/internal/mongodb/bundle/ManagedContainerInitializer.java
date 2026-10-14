@@ -24,4 +24,3 @@ public final class ManagedContainerInitializer implements IManagedContainerIniti
     OM.BUNDLE.prepareContainer(container);
   }
 }
-

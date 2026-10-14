@@ -100,7 +100,9 @@
       <unit id="org.glassfish.hk2.osgi-resource-locator" version="0.0.0"/>
       <unit id="org.hsqldb" version="0.0.0"/>
       <unit id="org.jsoup" version="0.0.0"/>
-      <unit id="org.mongodb.mongo-java-driver" version="0.0.0"/>
+      <unit id="org.mongodb.bson" version="0.0.0"/>
+      <unit id="org.mongodb.driver-core" version="0.0.0"/>
+      <unit id="org.mongodb.driver-sync" version="0.0.0"/>
       <unit id="org.mortbay.jasper.mortbay-apache-el" version="0.0.0"/>
       <unit id="org.mortbay.jasper.mortbay-apache-jsp" version="0.0.0"/>
       <unit id="org.objectweb.asm" version="0.0.0"/>

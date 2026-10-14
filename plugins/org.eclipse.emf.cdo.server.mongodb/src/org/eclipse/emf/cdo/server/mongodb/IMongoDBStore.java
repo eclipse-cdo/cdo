@@ -15,6 +15,8 @@ package org.eclipse.emf.cdo.server.mongodb;
 
 import org.eclipse.emf.cdo.server.IStore;
 
+import com.mongodb.client.MongoDatabase;
+
 /**
  * The main entry point to the API of CDO's <a href="http://www.mongodb.org">MongoDB</a> back-end integration.
  *
@@ -25,7 +27,12 @@ import org.eclipse.emf.cdo.server.IStore;
 public interface IMongoDBStore extends IStore
 {
   /**
-   * The return value can be cast to {@link com.mongodb.DB}.
+   * Returns the MongoDB database used by this store.
+   *
+   * <p>The returned object is a {@link MongoDatabase}. The declared return type remains {@code Object} to preserve
+   * the binary signature of this public interface method.</p>
+   *
+   * @return the MongoDB database used by this store
    */
   public Object getDB();
 }

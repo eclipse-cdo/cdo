@@ -2619,6 +2619,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Waits until all reserved lock changes for this session have completed.</div>
 </dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#awaitLockStateQuery(java.util.concurrent.CompletableFuture)" class="member-name-link">awaitLockStateQuery(CompletableFuture&lt;Boolean&gt;)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></dt>
+<dd>
+<div class="block">Waits for an accepted lock-state query to run or be superseded.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/spi/server/InternalSession.LockChangeReservation.html#awaitResult()" class="member-name-link">awaitResult()</a> - Method in interface org.eclipse.emf.cdo.spi.server.<a href="org/eclipse/emf/cdo/spi/server/InternalSession.LockChangeReservation.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalSession.LockChangeReservation</a></dt>
 <dd>
 <div class="block">Waits until this position has been resolved and returns its session-specific result.</div>
@@ -14998,6 +15002,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#enqueueLockStateQuery(long,java.lang.Runnable)" class="member-name-link">enqueueLockStateQuery(long, Runnable)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></dt>
 <dd>
 <div class="block">Registers a lock-state query update at its captured session sequence boundary.</div>
+</dd>
+<dt><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#enqueueLockStateQuery(long,java.lang.Runnable,java.util.concurrent.CompletableFuture)" class="member-name-link">enqueueLockStateQuery(long, Runnable, CompletableFuture&lt;Boolean&gt;)</a> - Method in interface org.eclipse.emf.spi.cdo.<a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSession</a></dt>
+<dd>
+<div class="block">Registers a lock-state query update and reports whether it was applied or superseded by a snapshot.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/eresource/EresourcePackage.html#eNS_PREFIX" class="member-name-link">eNS_PREFIX</a> - Static variable in interface org.eclipse.emf.cdo.eresource.<a href="org/eclipse/emf/cdo/eresource/EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a></dt>
 <dd>

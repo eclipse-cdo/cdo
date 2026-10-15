@@ -181,37 +181,49 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Drains and waits until the given lock change has completed.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#cacheRevisions(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)" class="member-name-link">cacheRevisions</a><wbr>(<a href="../../cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;info)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">As of 4.2 not used anymore.</div>
-</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#clearCommittedSinceLastRefresh()" class="member-name-link">clearCommittedSinceLastRefresh</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="../../cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">createRevisionAvailabilityInfo</a><wbr>(<a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">As of 4.2 not used anymore.</div>
-</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#endLocalCommit(java.lang.Object)" class="member-name-link">endLocalCommit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;token)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#enqueueLockChange(long,java.lang.Runnable)" class="member-name-link">enqueueLockChange</a><wbr>(long&nbsp;lockModCount,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;action)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#awaitLockStateQuery(java.util.concurrent.CompletableFuture)" class="member-name-link">awaitLockStateQuery</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;completion)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Enqueues a lock change without starting the drainer.</div>
+<div class="block">Waits for an accepted lock-state query to run or be superseded.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#enqueueLockStateQuery(long,java.lang.Runnable)" class="member-name-link">enqueueLockStateQuery</a><wbr>(long&nbsp;lockModCount,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#cacheRevisions(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)" class="member-name-link">cacheRevisions</a><wbr>(<a href="../../cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a>&nbsp;info)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 not used anymore.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#clearCommittedSinceLastRefresh()" class="member-name-link">clearCommittedSinceLastRefresh</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="../../cdo/spi/common/commit/CDORevisionAvailabilityInfo.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDORevisionAvailabilityInfo</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">createRevisionAvailabilityInfo</a><wbr>(<a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 not used anymore.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#endLocalCommit(java.lang.Object)" class="member-name-link">endLocalCommit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;token)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#enqueueLockChange(long,java.lang.Runnable)" class="member-name-link">enqueueLockChange</a><wbr>(long&nbsp;lockModCount,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;action)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Enqueues a lock change without starting the drainer.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#enqueueLockStateQuery(long,java.lang.Runnable)" class="member-name-link">enqueueLockStateQuery</a><wbr>(long&nbsp;lockModCount,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;action)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Registers a lock-state query update at its captured session sequence boundary.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#enqueueLockStateQuery(long,java.lang.Runnable,java.util.concurrent.CompletableFuture)" class="member-name-link">enqueueLockStateQuery</a><wbr>(long&nbsp;lockModCount,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;action,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;completion)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Registers a lock-state query update and reports whether it was applied or superseded by a snapshot.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="../../cdo/common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getAuthenticator()" class="member-name-link">getAuthenticator</a>()</code></div>
@@ -946,6 +958,44 @@ extends <a href="../../cdo/session/CDOSession.html" title="interface in org.ecli
 <dd><code>action</code> - the cache update to apply at that sequence boundary</dd>
 <dt>Returns:</dt>
 <dd><code>true</code> if the query result was accepted, or <code>false</code> if a newer sequence was already applied</dd>
+<dt>Since:</dt>
+<dd>4.31</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="enqueueLockStateQuery(long,java.lang.Runnable,java.util.concurrent.CompletableFuture)">
+<h3>enqueueLockStateQuery</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">enqueueLockStateQuery</span><wbr><span class="parameters">(long&nbsp;lockModCount,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;action,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;completion)</span></div>
+<div class="block">Registers a lock-state query update and reports whether it was applied or superseded by a snapshot.
+ <p>
+ The completion is completed exceptionally if the action fails, recovery discards it, or the session closes.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>lockModCount</code> - the lock modification count captured by the query</dd>
+<dd><code>action</code> - the cache update to apply at that sequence boundary</dd>
+<dd><code>completion</code> - receives <code>true</code> if the action ran, or <code>false</code> if a snapshot superseded it</dd>
+<dt>Returns:</dt>
+<dd><code>true</code> if the query result was accepted, or <code>false</code> if a newer sequence was already applied</dd>
+<dt>Since:</dt>
+<dd>4.31</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="awaitLockStateQuery(java.util.concurrent.CompletableFuture)">
+<h3>awaitLockStateQuery</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">awaitLockStateQuery</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/CompletableFuture.html" title="class or interface in java.util.concurrent" class="external-link">CompletableFuture</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Boolean.html" title="class or interface in java.lang" class="external-link">Boolean</a>&gt;&nbsp;completion)</span></div>
+<div class="block">Waits for an accepted lock-state query to run or be superseded.
+ <p>
+ Throws <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link"><code>IllegalStateException</code></a> if the current thread holds access to any view of this session.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>completion</code> - the completion returned by an accepted query registration</dd>
+<dt>Returns:</dt>
+<dd><code>true</code> if the query action ran, or <code>false</code> if a snapshot superseded it</dd>
 <dt>Since:</dt>
 <dd>4.31</dd>
 </dl>

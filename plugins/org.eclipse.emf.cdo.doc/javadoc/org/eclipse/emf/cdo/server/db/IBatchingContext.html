@@ -124,6 +124,19 @@ extends org.eclipse.net4j.db.BatchedStatement.Context</span></div>
  org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability&nbsp;reuseProbability,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;diagnosticName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default org.eclipse.net4j.db.BatchedStatement</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#createStatement(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">createStatement</a><wbr>(org.eclipse.net4j.db.dml.SQLStatement&nbsp;sql,
+ org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability&nbsp;reuseProbability)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Creates a batched statement from a compiled SQL definition.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default org.eclipse.net4j.db.BatchedStatement</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#createStatement(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability,java.lang.String)" class="member-name-link">createStatement</a><wbr>(org.eclipse.net4j.db.dml.SQLStatement&nbsp;sql,
+ org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability&nbsp;reuseProbability,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;diagnosticName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Creates a batched statement from a compiled SQL definition through the existing connection and batching path.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#discardStatement(org.eclipse.net4j.db.BatchedStatement)" class="member-name-link">discardStatement</a><wbr>(org.eclipse.net4j.db.BatchedStatement&nbsp;statement)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -175,6 +188,43 @@ extends org.eclipse.net4j.db.BatchedStatement.Context</span></div>
 <div class="member-signature"><span class="return-type">org.eclipse.net4j.db.BatchedStatement</span>&nbsp;<span class="element-name">createStatement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
  org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability&nbsp;reuseProbability,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;diagnosticName)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createStatement(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">
+<h3>createStatement</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">org.eclipse.net4j.db.BatchedStatement</span>&nbsp;<span class="element-name">createStatement</span><wbr><span class="parameters">(org.eclipse.net4j.db.dml.SQLStatement&nbsp;sql,
+ org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability&nbsp;reuseProbability)</span></div>
+<div class="block">Creates a batched statement from a compiled SQL definition.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sql</code> - the compiled statement definition</dd>
+<dd><code>reuseProbability</code> - the existing statement-cache reuse hint</dd>
+<dt>Returns:</dt>
+<dd>the managed batched statement</dd>
+<dt>Since:</dt>
+<dd>4.16</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createStatement(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability,java.lang.String)">
+<h3>createStatement</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">org.eclipse.net4j.db.BatchedStatement</span>&nbsp;<span class="element-name">createStatement</span><wbr><span class="parameters">(org.eclipse.net4j.db.dml.SQLStatement&nbsp;sql,
+ org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability&nbsp;reuseProbability,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;diagnosticName)</span></div>
+<div class="block">Creates a batched statement from a compiled SQL definition through the existing connection and batching path.
+ The compiled SQL text remains the key used by the connection's prepared-statement cache.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>sql</code> - the compiled statement definition</dd>
+<dd><code>reuseProbability</code> - the existing statement-cache reuse hint</dd>
+<dd><code>diagnosticName</code> - the optional name used by batching diagnostics</dd>
+<dt>Returns:</dt>
+<dd>the managed batched statement</dd>
+<dt>Since:</dt>
+<dd>4.16</dd>
+</dl>
 </section>
 </li>
 <li>

@@ -12067,6 +12067,14 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/IBatchingContext.html#createStatement(java.lang.String,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability,java.lang.String)" class="member-name-link">createStatement(String, IDBPreparedStatement.ReuseProbability, String)</a> - Method in interface org.eclipse.emf.cdo.server.db.<a href="org/eclipse/emf/cdo/server/db/IBatchingContext.html" title="interface in org.eclipse.emf.cdo.server.db">IBatchingContext</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/emf/cdo/server/db/IBatchingContext.html#createStatement(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">createStatement(SQLStatement, IDBPreparedStatement.ReuseProbability)</a> - Method in interface org.eclipse.emf.cdo.server.db.<a href="org/eclipse/emf/cdo/server/db/IBatchingContext.html" title="interface in org.eclipse.emf.cdo.server.db">IBatchingContext</a></dt>
+<dd>
+<div class="block">Creates a batched statement from a compiled SQL definition.</div>
+</dd>
+<dt><a href="org/eclipse/emf/cdo/server/db/IBatchingContext.html#createStatement(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability,java.lang.String)" class="member-name-link">createStatement(SQLStatement, IDBPreparedStatement.ReuseProbability, String)</a> - Method in interface org.eclipse.emf.cdo.server.db.<a href="org/eclipse/emf/cdo/server/db/IBatchingContext.html" title="interface in org.eclipse.emf.cdo.server.db">IBatchingContext</a></dt>
+<dd>
+<div class="block">Creates a batched statement from a compiled SQL definition through the existing connection and batching path.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/evolution/phased/Context.html#createStatementBatcher(java.sql.Connection)" class="member-name-link">createStatementBatcher(Connection)</a> - Method in class org.eclipse.emf.cdo.server.db.evolution.phased.<a href="org/eclipse/emf/cdo/server/db/evolution/phased/Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></dt>
 <dd>
 <div class="block">Creates a statement batcher for the given connection that logs batch and result events to the evolution log
@@ -19520,7 +19528,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/mongodb/IMongoDBStore.html#getDB()" class="member-name-link">getDB()</a> - Method in interface org.eclipse.emf.cdo.server.mongodb.<a href="org/eclipse/emf/cdo/server/mongodb/IMongoDBStore.html" title="interface in org.eclipse.emf.cdo.server.mongodb">IMongoDBStore</a></dt>
 <dd>
-<div class="block">The return value can be cast to <code>DB</code>.</div>
+<div class="block">Returns the MongoDB database used by this store.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/IDBStore.html#getDBAdapter()" class="member-name-link">getDBAdapter()</a> - Method in interface org.eclipse.emf.cdo.server.db.<a href="org/eclipse/emf/cdo/server/db/IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></dt>
 <dd>&nbsp;</dd>
@@ -27072,7 +27080,13 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/emf/cdo/lm/server/AbstractLifecycleManager.html#getSystemRepository()" class="member-name-link">getSystemRepository()</a> - Method in class org.eclipse.emf.cdo.lm.server.<a href="org/eclipse/emf/cdo/lm/server/AbstractLifecycleManager.html" title="class in org.eclipse.emf.cdo.lm.server">AbstractLifecycleManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html#getTable()" class="member-name-link">getTable()</a> - Method in interface org.eclipse.emf.cdo.server.db.mapping.<a href="org/eclipse/emf/cdo/server/db/mapping/IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">Returns the primary DB table for this class mapping.</div>
+</dd>
+<dt><a href="org/eclipse/emf/cdo/server/db/mapping/IListMapping.html#getTable()" class="member-name-link">getTable()</a> - Method in interface org.eclipse.emf.cdo.server.db.mapping.<a href="org/eclipse/emf/cdo/server/db/mapping/IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></dt>
+<dd>
+<div class="block">Returns the primary table for this list mapping.</div>
+</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html#getTableName(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getTableName(EClass, EStructuralFeature)</a> - Method in interface org.eclipse.emf.cdo.server.db.mapping.<a href="org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></dt>
 <dd>
 <div class="block">Create a suitable table name which can be used to map the given element.</div>
@@ -42341,8 +42355,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setDefaultValue(java.sql.PreparedStatement,int)" class="member-name-link">setDefaultValue(PreparedStatement, int)</a> - Method in interface org.eclipse.emf.cdo.server.db.mapping.<a href="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></dt>
 <dd>
-<div class="block">Set the feature's default value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
- method.</div>
+<div class="block">Set the feature's implementation-defined default value to the JDBC <code>IDBPreparedStatement</code> using an
+ appropriate <code>setXxx</code> method.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled(boolean)" class="member-name-link">setDelegableViewLockEnabled(boolean)</a> - Method in interface org.eclipse.emf.cdo.session.<a href="org/eclipse/emf/cdo/session/CDOSession.Options.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options</a></dt>
 <dd>
@@ -44071,6 +44085,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html#setValue(java.sql.PreparedStatement,int,java.lang.Object)" class="member-name-link">setValue(PreparedStatement, int, Object)</a> - Method in interface org.eclipse.emf.cdo.server.db.mapping.<a href="org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></dt>
 <dd>
 <div class="block">Set the given value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code> method.</div>
+</dd>
+<dt><a href="org/eclipse/emf/cdo/server/db/IIDHandler.html#setValue(java.sql.PreparedStatement,int,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setValue(PreparedStatement, int, CDOID)</a> - Method in interface org.eclipse.emf.cdo.server.db.<a href="org/eclipse/emf/cdo/server/db/IIDHandler.html" title="interface in org.eclipse.emf.cdo.server.db">IIDHandler</a></dt>
+<dd>
+<div class="block">Binds a CDOID through the established ID conversion logic.</div>
 </dd>
 <dt><a href="org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html#setValue(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" class="member-name-link">setValue(EStructuralFeature, Object)</a> - Method in class org.eclipse.emf.cdo.spi.common.revision.<a href="org/eclipse/emf/cdo/spi/common/revision/BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></dt>
 <dd>&nbsp;</dd>

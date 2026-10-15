@@ -88,11 +88,16 @@ loadScripts(document, 'script');</script>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
+<dt>All Superinterfaces:</dt>
+<dd><code>org.eclipse.net4j.db.ddl.IDBTable.Provider</code></dd>
+</dl>
+<dl class="notes">
 <dt>All Known Subinterfaces:</dt>
 <dd><code><a href="IClassMappingUnitSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMappingUnitSupport</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IClassMapping</span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IClassMapping</span><span class="extends-implements">
+extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <div class="block">Basic interface for class mappings.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -159,7 +164,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default org.eclipse.net4j.db.ddl.IDBTable</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTable()" class="member-name-link">getTable</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Returns the primary DB table for this class mapping.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getValueMapping(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getValueMapping</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
@@ -251,7 +258,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getTable()">
 <h3>getTable</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">org.eclipse.net4j.db.ddl.IDBTable</span>&nbsp;<span class="element-name">getTable</span>()</div>
+<div class="block">Returns the primary DB table for this class mapping. This is the first table returned by
+ <a href="#getDBTables()"><code>getDBTables()</code></a>, and does not represent all tables used by the mapping.</div>
 <dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>getTable</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.db.ddl.IDBTable.Provider</code></dd>
+<dt>Returns:</dt>
+<dd>the primary table, or <code>null</code> when no tables are mapped</dd>
 <dt>Since:</dt>
 <dd>4.14</dd>
 </dl>

@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code></dd>
+<dd><code>org.eclipse.net4j.db.ddl.IDBTable.Provider</code>, <code><a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
@@ -97,7 +97,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IListMapping</span><span class="extends-implements">
-extends <a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></span></div>
+extends <a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a>, org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <div class="block">Interface for mapping features with <code>isMany() == true</code>.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -135,43 +135,48 @@ extends <a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.s
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default org.eclipse.net4j.db.ddl.IDBField</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getField()" class="member-name-link">getField</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTypeMapping()" class="member-name-link">getTypeMapping</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#objectDetached(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,long)" class="member-name-link">objectDetached</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default org.eclipse.net4j.db.ddl.IDBTable</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTable()" class="member-name-link">getTable</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Returns the primary table for this list mapping.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTypeMapping()" class="member-name-link">getTypeMapping</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#objectDetached(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,long)" class="member-name-link">objectDetached</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  long&nbsp;revised)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Hook with which a list mapping is notified that a containing object has been revised.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,java.lang.String,java.lang.String,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,java.lang.String,java.lang.String,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mainTableName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;mainTableWhere,
  <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;idString)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Retrieve cross-references from DB.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readChunks(org.eclipse.emf.cdo.server.db.IDBStoreChunkReader,java.util.List,java.lang.String)" class="member-name-link">readChunks</a><wbr>(<a href="../IDBStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreChunkReader</a>&nbsp;dbStoreChunkReader,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readChunks(org.eclipse.emf.cdo.server.db.IDBStoreChunkReader,java.util.List,java.lang.String)" class="member-name-link">readChunks</a><wbr>(<a href="../IDBStoreChunkReader.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreChunkReader</a>&nbsp;dbStoreChunkReader,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../IStoreChunkReader.Chunk.html" title="class in org.eclipse.emf.cdo.server">IStoreChunkReader.Chunk</a>&gt;&nbsp;chunks,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;where)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Used to load-on-demand chunks of a list.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" class="member-name-link">readValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" class="member-name-link">readValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  int&nbsp;listChunk)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Read the list size and the complete list or the first part of it.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">writeValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">writeValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Write a complete list of values to the database.</div>
 </div>
 </div>
@@ -248,6 +253,22 @@ extends <a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.s
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a collection of all tables of this feature.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTable()">
+<h3>getTable</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">org.eclipse.net4j.db.ddl.IDBTable</span>&nbsp;<span class="element-name">getTable</span>()</div>
+<div class="block">Returns the primary table for this list mapping. When multiple tables are returned by
+ <a href="#getDBTables()"><code>getDBTables()</code></a>, implementations must place the primary table first or override this method.</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>getTable</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.db.ddl.IDBTable.Provider</code></dd>
+<dt>Returns:</dt>
+<dd>the first table in iteration order, or <code>null</code> when the collection is empty</dd>
+<dt>Since:</dt>
+<dd>4.15</dd>
 </dl>
 </section>
 </li>

@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code>, <code><a href="ILobRefsUpdater.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ILobRefsUpdater</a></code>, <code><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
+<dd><code><a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code>, <code><a href="ILobRefsUpdater.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ILobRefsUpdater</a></code>, <code><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code>, <code>org.eclipse.net4j.db.dml.SQLDefaultSetter</code>, <code>org.eclipse.net4j.db.dml.SQLValueSetter&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">DelegatingTypeMapping</span>
@@ -198,8 +198,8 @@ implements <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.s
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDefaultValue(java.sql.PreparedStatement,int)" class="member-name-link">setDefaultValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Set the feature's default value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
- method.</div>
+<div class="block">Set the feature's implementation-defined default value to the JDBC <code>IDBPreparedStatement</code> using an
+ appropriate <code>setXxx</code> method.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFeature(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">setFeature</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
@@ -408,6 +408,8 @@ implements <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.s
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ITypeMapping.html#setValue(java.sql.PreparedStatement,int,java.lang.Object)">setValue</a></code>&nbsp;in interface&nbsp;<code><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code>setValue</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.db.dml.SQLValueSetter&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>stmt</code> - the prepared statement to set the value</dd>
 <dd><code>index</code> - the index to use for the <code>setXxx</code> method.</dd>
@@ -424,11 +426,14 @@ implements <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.s
  int&nbsp;index)</span>
                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="ITypeMapping.html#setDefaultValue(java.sql.PreparedStatement,int)">ITypeMapping</a></code></span></div>
-<div class="block">Set the feature's default value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
- method.</div>
+<div class="block">Set the feature's implementation-defined default value to the JDBC <code>IDBPreparedStatement</code> using an
+ appropriate <code>setXxx</code> method. This default need not be the SQL column's <code>DEFAULT</code> expression and
+ is distinct from passing <code>null</code> to <a href="ITypeMapping.html#setValue(java.sql.PreparedStatement,int,java.lang.Object)"><code>ITypeMapping.setValue(PreparedStatement, int, Object)</code></a>.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ITypeMapping.html#setDefaultValue(java.sql.PreparedStatement,int)">setDefaultValue</a></code>&nbsp;in interface&nbsp;<code><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
+<dt>Specified by:</dt>
+<dd><code>setDefaultValue</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.db.dml.SQLDefaultSetter</code></dd>
 <dt>Parameters:</dt>
 <dd><code>stmt</code> - the prepared statement to set the value</dd>
 <dd><code>index</code> - the index to use for the <code>setXxx</code> method.</dd>

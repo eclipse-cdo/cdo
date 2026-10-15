@@ -439,57 +439,62 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a new logical parameter whose setter performs complete JDBC binding for every occurrence.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#scalar(org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">scalar</a><wbr>(<a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;query)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLColumnRef.html" title="interface in org.eclipse.net4j.db.dml">SQLColumnRef</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#qualified(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">qualified</a><wbr>(<a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;column)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Uses a complete SELECT definition as a scalar expression.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)" class="member-name-link">select</a><wbr>(<a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>&nbsp;first,
- <a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>...&nbsp;others)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Begins a SELECT definition whose projection contains the required first item and any additional items in the supplied order.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectAll()" class="member-name-link">selectAll</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Begins a SELECT with an unqualified wildcard projection.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectDistinct(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)" class="member-name-link">selectDistinct</a><wbr>(<a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>&nbsp;first,
- <a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>...&nbsp;others)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Begins a SELECT DISTINCT definition; all supplied projection items participate in duplicate elimination.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#subtract(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">subtract</a><wbr>(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
-<div class="block">Creates a binary subtraction expression.</div>
+<div class="block">Creates a table-qualified column reference using the column's owning schema table.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sum(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">sum</a><wbr>(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#scalar(org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">scalar</a><wbr>(<a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;query)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Uses a complete SELECT definition as a scalar expression.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)" class="member-name-link">select</a><wbr>(<a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>&nbsp;first,
+ <a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>...&nbsp;others)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Begins a SELECT definition whose projection contains the required first item and any additional items in the supplied order.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectAll()" class="member-name-link">selectAll</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Begins a SELECT with an unqualified wildcard projection.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectDistinct(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)" class="member-name-link">selectDistinct</a><wbr>(<a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>&nbsp;first,
+ <a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>...&nbsp;others)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Begins a SELECT DISTINCT definition; all supplied projection items participate in duplicate elimination.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#subtract(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">subtract</a><wbr>(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a binary subtraction expression.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sum(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">sum</a><wbr>(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a SUM aggregate over the supplied expression.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#table(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">table</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#table(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">table</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates an unaliased occurrence of a schema table for use in a statement.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#table(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">table</a><wbr>(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#table(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">table</a><wbr>(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates an unaliased occurrence of the table supplied by the provider, resolving it immediately.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLUpdateStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLUpdateStartStep</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">update</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLUpdateStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLUpdateStartStep</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">update</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Begins an UPDATE definition for the supplied schema table.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLUpdateStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLUpdateStartStep</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">update</a><wbr>(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="fluent/SQLUpdateStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLUpdateStartStep</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">update</a><wbr>(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Begins an UPDATE definition for the table supplied by the provider.</div>
 </div>
 </div>
@@ -791,6 +796,21 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dd>the corresponding immutable SQL API value</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="qualified(org.eclipse.net4j.db.ddl.IDBField)">
+<h3>qualified</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLColumnRef.html" title="interface in org.eclipse.net4j.db.dml">SQLColumnRef</a></span>&nbsp;<span class="element-name">qualified</span><wbr><span class="parameters">(<a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;column)</span></div>
+<div class="block">Creates a table-qualified column reference using the column's owning schema table.
+ The table is referenced by its physical name, without an alias. For aliased tables,
+ use <a href="SQLTableRef.html#column(org.eclipse.net4j.db.ddl.IDBField)"><code>SQLTableRef.column(IDBField)</code></a> instead.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>column</code> - the column to qualify with its owning table</dd>
+<dt>Returns:</dt>
+<dd>the qualified column reference</dd>
 </dl>
 </section>
 </li>

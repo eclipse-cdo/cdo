@@ -282,11 +282,9 @@
       </fileset>
 
 			<package name="org.eclipse.net4j.db.doc" />
-			<package name="org.eclipse.net4j.db.doc.online" />
+			<package name="org.eclipse.net4j.db.doc.api" />
 			<package name="org.eclipse.net4j.db.doc.programmers" />
-			<package name="org.eclipse.net4j.db.doc.reference" />
-			<package name="org.eclipse.net4j.db.doc.reference.api" />
-			<package name="org.eclipse.net4j.db.doc.reference.schema" />
+			<package name="org.eclipse.net4j.db.doc.schema" />
 			<package name="org.eclipse.net4j.util.doc" />
 			<package name="org.eclipse.net4j.util.doc.online" />
 			<package name="org.eclipse.net4j.util.doc.reference" />

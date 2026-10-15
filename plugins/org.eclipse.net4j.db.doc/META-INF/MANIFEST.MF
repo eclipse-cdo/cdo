@@ -16,9 +16,7 @@ Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)",
  org.eclipse.net4j.db.mysql;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j.db.postgresql;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport
 Export-Package: org.eclipse.net4j.db.doc;version="4.3.10",
- org.eclipse.net4j.db.doc.online;version="4.3.10",
+ org.eclipse.net4j.db.doc.api;version="4.3.10",
  org.eclipse.net4j.db.doc.programmers;version="4.3.10",
- org.eclipse.net4j.db.doc.reference;version="4.3.10",
- org.eclipse.net4j.db.doc.reference.api;version="4.3.10",
- org.eclipse.net4j.db.doc.reference.schema;version="4.3.10"
+ org.eclipse.net4j.db.doc.schema;version="4.3.10"
 Automatic-Module-Name: org.eclipse.net4j.db.doc

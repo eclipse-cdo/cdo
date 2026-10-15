@@ -9,14 +9,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.db.doc.online;
 
 /**
- * Wiki
+ * Extension Point Reference
  *
- * @external https://wiki.eclipse.org/CDO
- * @number 2
+ * @number 30
  */
-public class Wiki
+package org.eclipse.net4j.db.doc.schema;
+
+class Schemadoc
 {
 }

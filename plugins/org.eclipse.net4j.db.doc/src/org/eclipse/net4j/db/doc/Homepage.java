@@ -9,14 +9,14 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
+package org.eclipse.net4j.db.doc;
 
 /**
- * API Reference
+ * Homepage
  *
- * @number 1
+ * @external https://eclipse.dev/cdo
+ * @number 555
  */
-package org.eclipse.net4j.db.doc.reference.api;
-
-class Javadoc
+public class Homepage
 {
 }

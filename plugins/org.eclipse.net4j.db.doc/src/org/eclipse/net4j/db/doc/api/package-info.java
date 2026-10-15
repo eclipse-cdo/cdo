@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011, 2012, 2015, 2023, 2025 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2011, 2012, 2015, 2025 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
@@ -11,8 +11,12 @@
  */
 
 /**
- * Online Docs
+ * API Reference
  *
- * @number 555
+ * @number 20
  */
-package org.eclipse.net4j.db.doc.online;
+package org.eclipse.net4j.db.doc.api;
+
+class Javadoc
+{
+}

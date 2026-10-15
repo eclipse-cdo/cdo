@@ -3,6 +3,74 @@
 
 <toc label="Net4j DB Framework Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" icon="article" />
+  <topic label="Programmer's Guide" href="html/programmers/index.html">
+    <topic label="Architecture and Core Concepts" href="html/programmers/Doc01_GeneralUtilities.html" icon="article">
+      <topic label="How the Pieces Fit Together" href="html/programmers/Doc01_GeneralUtilities.html#Architecture" icon="chapter" />
+      <topic label="Adapters, Providers, and Database Instances" href="html/programmers/Doc01_GeneralUtilities.html#AdaptersAndDatabases" icon="chapter" />
+      <topic label="Managed Schema and Connections" href="html/programmers/Doc01_GeneralUtilities.html#ManagedSchemasAndConnections" icon="chapter" />
+      <topic label="Coordinated Schema Access and Statement Caches" href="html/programmers/Doc01_GeneralUtilities.html#SchemaAccessAndCaching" icon="chapter" />
+      <topic label="Ownership, Transactions, and Failure Handling" href="html/programmers/Doc01_GeneralUtilities.html#LifecycleAndFailures" icon="chapter" />
+      <topic label="DBUtil and Supporting Facilities" href="html/programmers/Doc01_GeneralUtilities.html#Utilities" icon="chapter" />
+    </topic>
+    <topic label="Data Definition" href="html/programmers/Doc02_DataDefinition.html" icon="article">
+      <topic label="Standalone and Managed Schema Models" href="html/programmers/Doc02_DataDefinition.html#SchemaModel" icon="chapter" />
+      <topic label="Tables, Fields, Indexes, and Types" href="html/programmers/Doc02_DataDefinition.html#TablesFieldsAndIndexes" icon="chapter" />
+      <topic label="Creating, Reading, and Comparing Schemas" href="html/programmers/Doc02_DataDefinition.html#SchemaInspectionAndComparison" icon="chapter" />
+      <topic label="Schema Transactions and Working Copies" href="html/programmers/Doc02_DataDefinition.html#SchemaTransactions" icon="chapter" />
+      <topic label="Ensure Policies and Migration Review" href="html/programmers/Doc02_DataDefinition.html#EnsureAndMigrationPolicies" icon="chapter" />
+      <topic label="Limitations and Failure Boundaries" href="html/programmers/Doc02_DataDefinition.html#DDLBoundaries" icon="chapter" />
+    </topic>
+    <topic label="Data Manipulation" href="html/programmers/Doc03_DataManipulation.html" icon="article">
+      <topic label="Introduction" href="html/programmers/Doc03_DataManipulation.html#Introduction" icon="chapter">
+        <topic label="Concepts and Architecture" href="html/programmers/Doc03_DataManipulation.html#ConceptsAndArchitecture" icon="chapter" />
+        <topic label="The DML Lifecycle" href="html/programmers/Doc03_DataManipulation.html#DMLLifecycle" icon="chapter" />
+        <topic label="Definitions, Templates, and Compilation" href="html/programmers/Doc03_DataManipulation.html#DefinitionsTemplatesAndCompilation" icon="chapter" />
+      </topic>
+      <topic label="Basic Statements" href="html/programmers/Doc03_DataManipulation.html#BasicStatements" icon="chapter">
+        <topic label="SELECT" href="html/programmers/Doc03_DataManipulation.html#Select" icon="chapter" />
+        <topic label="INSERT and INSERT SELECT" href="html/programmers/Doc03_DataManipulation.html#InsertAndInsertSelect" icon="chapter" />
+        <topic label="UPDATE" href="html/programmers/Doc03_DataManipulation.html#Update" icon="chapter" />
+        <topic label="DELETE" href="html/programmers/Doc03_DataManipulation.html#Delete" icon="chapter" />
+        <topic label="Structured Expressions, IN Lists, and Table Providers" href="html/programmers/Doc03_DataManipulation.html#StructuredExpressionsAndProviders" icon="chapter" />
+      </topic>
+      <topic label="Queries and Composition" href="html/programmers/Doc03_DataManipulation.html#QueriesAndComposition" icon="chapter">
+        <topic label="Conditions and Optional Filters" href="html/programmers/Doc03_DataManipulation.html#ConditionsAndOptionalFilters" icon="chapter" />
+        <topic label="Aliases and Joins" href="html/programmers/Doc03_DataManipulation.html#AliasesAndJoins" icon="chapter" />
+        <topic label="Aggregates, Grouping, and HAVING" href="html/programmers/Doc03_DataManipulation.html#AggregatesGroupingAndHaving" icon="chapter" />
+        <topic label="Subqueries" href="html/programmers/Doc03_DataManipulation.html#Subqueries" icon="chapter" />
+        <topic label="SQL Fragments" href="html/programmers/Doc03_DataManipulation.html#SQLFragments" icon="chapter" />
+      </topic>
+      <topic label="Parameter Binding" href="html/programmers/Doc03_DataManipulation.html#ParameterBinding" icon="chapter">
+        <topic label="Fundamentals" href="html/programmers/Doc03_DataManipulation.html#Fundamentals" icon="chapter">
+          <topic label="Parameters and Occurrences" href="html/programmers/Doc03_DataManipulation.html#ParametersAndOccurrences" icon="chapter" />
+          <topic label="Positional and Identity-Based Binding" href="html/programmers/Doc03_DataManipulation.html#PositionalAndIdentityBinding" icon="chapter" />
+          <topic label="Sequential and Cursor-Based Binding" href="html/programmers/Doc03_DataManipulation.html#SequentialAndCursorBinding" icon="chapter" />
+        </topic>
+        <topic label="Types and Default Binding" href="html/programmers/Doc03_DataManipulation.html#TypesAndDefaultBinding" icon="chapter">
+          <topic label="DBType Inference" href="html/programmers/Doc03_DataManipulation.html#DBTypeInference" icon="chapter" />
+          <topic label="Default JDBC Setters" href="html/programmers/Doc03_DataManipulation.html#DefaultJDBCSetters" icon="chapter" />
+          <topic label="NULL and Explicit JDBC Types" href="html/programmers/Doc03_DataManipulation.html#NullAndExplicitJDBCTypes" icon="chapter" />
+        </topic>
+        <topic label="Custom Binding Strategies" href="html/programmers/Doc03_DataManipulation.html#CustomBindingStrategies" icon="chapter">
+          <topic label="Value Converters" href="html/programmers/Doc03_DataManipulation.html#ValueConverters" icon="chapter" />
+          <topic label="SQLValueSetter" href="html/programmers/Doc03_DataManipulation.html#SQLValueSetters" icon="chapter" />
+          <topic label="Overrides and Precedence" href="html/programmers/Doc03_DataManipulation.html#OverridesAndPrecedence" icon="chapter" />
+          <topic label="SQLDefaultSetter" href="html/programmers/Doc03_DataManipulation.html#SQLDefaultSetters" icon="chapter" />
+        </topic>
+      </topic>
+      <topic label="DBAdapter Customization" href="html/programmers/Doc03_DataManipulation.html#DBAdapterCustomization" icon="chapter">
+        <topic label="Default Binding Architecture" href="html/programmers/Doc03_DataManipulation.html#DefaultBindingArchitecture" icon="chapter" />
+        <topic label="Unknown Parameter Types" href="html/programmers/Doc03_DataManipulation.html#UnknownParameterTypes" icon="chapter" />
+        <topic label="Protected Binding Extension Points" href="html/programmers/Doc03_DataManipulation.html#ProtectedBindingExtensionPoints" icon="chapter" />
+      </topic>
+      <topic label="Statement Lifecycle and Reuse" href="html/programmers/Doc03_DataManipulation.html#StatementLifecycleAndReuse" icon="chapter">
+        <topic label="Templates and Compiled Statements" href="html/programmers/Doc03_DataManipulation.html#TemplatesAndCompiledStatements" icon="chapter" />
+        <topic label="Preparing, Executing, and Closing" href="html/programmers/Doc03_DataManipulation.html#PreparingExecutingAndClosing" icon="chapter" />
+        <topic label="Partial Binding and Statement Reuse" href="html/programmers/Doc03_DataManipulation.html#PartialBindingAndStatementReuse" icon="chapter" />
+      </topic>
+      <topic label="Portability and Limitations" href="html/programmers/Doc03_DataManipulation.html#PortabilityAndLimitations" icon="chapter" />
+    </topic>
+  </topic>
   <topic label="API Reference" href="javadoc/overview-summary.html">
     <topic label="Net4j DB Framework" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.db" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="package">
@@ -179,77 +247,6 @@
       <topic label="dbAdapters" href="schemadoc/org_eclipse_net4j_db_dbAdapters.html" icon="extpoint" />
     </topic>
   </topic>
-  <topic label="Programmer's Guide" href="html/programmers/index.html">
-    <topic label="Architecture and Core Concepts" href="html/programmers/Doc01_GeneralUtilities.html" icon="article">
-      <topic label="How the Pieces Fit Together" href="html/programmers/Doc01_GeneralUtilities.html#Architecture" icon="chapter" />
-      <topic label="Adapters, Providers, and Database Instances" href="html/programmers/Doc01_GeneralUtilities.html#AdaptersAndDatabases" icon="chapter" />
-      <topic label="Managed Schema and Connections" href="html/programmers/Doc01_GeneralUtilities.html#ManagedSchemasAndConnections" icon="chapter" />
-      <topic label="Coordinated Schema Access and Statement Caches" href="html/programmers/Doc01_GeneralUtilities.html#SchemaAccessAndCaching" icon="chapter" />
-      <topic label="Ownership, Transactions, and Failure Handling" href="html/programmers/Doc01_GeneralUtilities.html#LifecycleAndFailures" icon="chapter" />
-      <topic label="DBUtil and Supporting Facilities" href="html/programmers/Doc01_GeneralUtilities.html#Utilities" icon="chapter" />
-    </topic>
-    <topic label="Data Definition" href="html/programmers/Doc02_DataDefinition.html" icon="article">
-      <topic label="Standalone and Managed Schema Models" href="html/programmers/Doc02_DataDefinition.html#SchemaModel" icon="chapter" />
-      <topic label="Tables, Fields, Indexes, and Types" href="html/programmers/Doc02_DataDefinition.html#TablesFieldsAndIndexes" icon="chapter" />
-      <topic label="Creating, Reading, and Comparing Schemas" href="html/programmers/Doc02_DataDefinition.html#SchemaInspectionAndComparison" icon="chapter" />
-      <topic label="Schema Transactions and Working Copies" href="html/programmers/Doc02_DataDefinition.html#SchemaTransactions" icon="chapter" />
-      <topic label="Ensure Policies and Migration Review" href="html/programmers/Doc02_DataDefinition.html#EnsureAndMigrationPolicies" icon="chapter" />
-      <topic label="Limitations and Failure Boundaries" href="html/programmers/Doc02_DataDefinition.html#DDLBoundaries" icon="chapter" />
-    </topic>
-    <topic label="Data Manipulation" href="html/programmers/Doc03_DataManipulation.html" icon="article">
-      <topic label="Introduction" href="html/programmers/Doc03_DataManipulation.html#Introduction" icon="chapter">
-        <topic label="Concepts and Architecture" href="html/programmers/Doc03_DataManipulation.html#ConceptsAndArchitecture" icon="chapter" />
-        <topic label="The DML Lifecycle" href="html/programmers/Doc03_DataManipulation.html#DMLLifecycle" icon="chapter" />
-        <topic label="Definitions, Templates, and Compilation" href="html/programmers/Doc03_DataManipulation.html#DefinitionsTemplatesAndCompilation" icon="chapter" />
-      </topic>
-      <topic label="Basic Statements" href="html/programmers/Doc03_DataManipulation.html#BasicStatements" icon="chapter">
-        <topic label="SELECT" href="html/programmers/Doc03_DataManipulation.html#Select" icon="chapter" />
-        <topic label="INSERT and INSERT SELECT" href="html/programmers/Doc03_DataManipulation.html#InsertAndInsertSelect" icon="chapter" />
-        <topic label="UPDATE" href="html/programmers/Doc03_DataManipulation.html#Update" icon="chapter" />
-        <topic label="DELETE" href="html/programmers/Doc03_DataManipulation.html#Delete" icon="chapter" />
-        <topic label="Structured Expressions, IN Lists, and Table Providers" href="html/programmers/Doc03_DataManipulation.html#StructuredExpressionsAndProviders" icon="chapter" />
-      </topic>
-      <topic label="Queries and Composition" href="html/programmers/Doc03_DataManipulation.html#QueriesAndComposition" icon="chapter">
-        <topic label="Conditions and Optional Filters" href="html/programmers/Doc03_DataManipulation.html#ConditionsAndOptionalFilters" icon="chapter" />
-        <topic label="Aliases and Joins" href="html/programmers/Doc03_DataManipulation.html#AliasesAndJoins" icon="chapter" />
-        <topic label="Aggregates, Grouping, and HAVING" href="html/programmers/Doc03_DataManipulation.html#AggregatesGroupingAndHaving" icon="chapter" />
-        <topic label="Subqueries" href="html/programmers/Doc03_DataManipulation.html#Subqueries" icon="chapter" />
-        <topic label="SQL Fragments" href="html/programmers/Doc03_DataManipulation.html#SQLFragments" icon="chapter" />
-      </topic>
-      <topic label="Parameter Binding" href="html/programmers/Doc03_DataManipulation.html#ParameterBinding" icon="chapter">
-        <topic label="Fundamentals" href="html/programmers/Doc03_DataManipulation.html#Fundamentals" icon="chapter">
-          <topic label="Parameters and Occurrences" href="html/programmers/Doc03_DataManipulation.html#ParametersAndOccurrences" icon="chapter" />
-          <topic label="Positional and Identity-Based Binding" href="html/programmers/Doc03_DataManipulation.html#PositionalAndIdentityBinding" icon="chapter" />
-          <topic label="Sequential and Cursor-Based Binding" href="html/programmers/Doc03_DataManipulation.html#SequentialAndCursorBinding" icon="chapter" />
-        </topic>
-        <topic label="Types and Default Binding" href="html/programmers/Doc03_DataManipulation.html#TypesAndDefaultBinding" icon="chapter">
-          <topic label="DBType Inference" href="html/programmers/Doc03_DataManipulation.html#DBTypeInference" icon="chapter" />
-          <topic label="Default JDBC Setters" href="html/programmers/Doc03_DataManipulation.html#DefaultJDBCSetters" icon="chapter" />
-          <topic label="NULL and Explicit JDBC Types" href="html/programmers/Doc03_DataManipulation.html#NullAndExplicitJDBCTypes" icon="chapter" />
-        </topic>
-        <topic label="Custom Binding Strategies" href="html/programmers/Doc03_DataManipulation.html#CustomBindingStrategies" icon="chapter">
-          <topic label="Value Converters" href="html/programmers/Doc03_DataManipulation.html#ValueConverters" icon="chapter" />
-          <topic label="SQLValueSetter" href="html/programmers/Doc03_DataManipulation.html#SQLValueSetters" icon="chapter" />
-          <topic label="Overrides and Precedence" href="html/programmers/Doc03_DataManipulation.html#OverridesAndPrecedence" icon="chapter" />
-          <topic label="SQLDefaultSetter" href="html/programmers/Doc03_DataManipulation.html#SQLDefaultSetters" icon="chapter" />
-        </topic>
-      </topic>
-      <topic label="DBAdapter Customization" href="html/programmers/Doc03_DataManipulation.html#DBAdapterCustomization" icon="chapter">
-        <topic label="Default Binding Architecture" href="html/programmers/Doc03_DataManipulation.html#DefaultBindingArchitecture" icon="chapter" />
-        <topic label="Unknown Parameter Types" href="html/programmers/Doc03_DataManipulation.html#UnknownParameterTypes" icon="chapter" />
-        <topic label="Protected Binding Extension Points" href="html/programmers/Doc03_DataManipulation.html#ProtectedBindingExtensionPoints" icon="chapter" />
-      </topic>
-      <topic label="Statement Lifecycle and Reuse" href="html/programmers/Doc03_DataManipulation.html#StatementLifecycleAndReuse" icon="chapter">
-        <topic label="Templates and Compiled Statements" href="html/programmers/Doc03_DataManipulation.html#TemplatesAndCompiledStatements" icon="chapter" />
-        <topic label="Preparing, Executing, and Closing" href="html/programmers/Doc03_DataManipulation.html#PreparingExecutingAndClosing" icon="chapter" />
-        <topic label="Partial Binding and Statement Reuse" href="html/programmers/Doc03_DataManipulation.html#PartialBindingAndStatementReuse" icon="chapter" />
-      </topic>
-      <topic label="Portability and Limitations" href="html/programmers/Doc03_DataManipulation.html#PortabilityAndLimitations" icon="chapter" />
-    </topic>
-  </topic>
-  <topic label="Online Docs" href="html/online/index.html">
-    <topic label="Homepage" href="https://eclipse.dev/cdo" icon="external" />
-    <topic label="Wiki" href="https://wiki.eclipse.org/CDO" icon="external" />
-  </topic>
+  <topic label="Homepage" href="https://eclipse.dev/cdo" icon="external" />
   <topic label="Legal" href="about.html" />
 </toc>

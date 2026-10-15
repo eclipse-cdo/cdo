@@ -127,7 +127,7 @@ Within implementation code, a downcast to a concrete implementation class is acc
 
 When deciding, prefer the simplest architecture that reflects the actual ownership and coupling:
 
-- Fix or extend an existing abstraction when the required capability conceptually belongs to that abstraction, regardless of the number of callers.
+- Fix or extend an existing abstraction when the required capability conceptually belongs to the abstraction, regardless of the number of callers.
 - Use an existing abstraction consistently rather than introducing implementation-specific branches with different semantics.
 - Keep implementation-specific collaboration concrete when introducing an abstraction would only mirror implementation details or serve a tightly coupled implementation path.
 - Tests may freely use and downcast to concrete implementation classes. Do not add production API/SPI solely for tests.
@@ -174,6 +174,7 @@ When adding or generating tests, preserve this abstraction consistently. Never a
 - In tests, do not normally use complete model resource paths as hard-coded string literals. Fixed full paths can collide with resources created by other test cases.
 - Construct test resource paths with `getResourcePath(String path)` so that the test framework can provide the test-specific resource location.
 - Use a literal full resource path only when a test intentionally needs a specific globally fixed path and that requirement is explicit.
+
 
 ### CDO Test Placement and Base Classes
 
@@ -225,6 +226,15 @@ Never modify files under these repository-relative paths unless the user explici
 
 These trees are generated/mirrored from canonical example projects by project builders / Ant scripts. Do not edit them directly. Only flag changes there if they were edited independently, diverge from the canonical source, or contain unrelated changes.
 
-## CDO Documentation
+## CDO/Net4j Documentation
 
-For every task that reads or modifies files under `plugins/org.eclipse.emf.cdo.doc`, first read `plugins/org.eclipse.emf.cdo.doc/DOC-FRAMEWORK.md`. Treat that file as the repository-local reference for the documentation framework and established CDO documentation authoring conventions.
+The following four documentation plug-ins share the same documentation framework and authoring conventions:
+
+- `plugins/org.eclipse.emf.cdo.doc`
+- `plugins/org.eclipse.net4j.doc`
+- `plugins/org.eclipse.net4j.util.doc`
+- `plugins/org.eclipse.net4j.db.doc`
+
+For every task that reads or modifies files in any of these plug-ins, first read `releng/org.eclipse.emf.cdo.releng.help/DOC-FRAMEWORK.md`. Treat it as the authoritative repository-local reference for the shared documentation framework and established authoring conventions.
+
+In particular, every intended `@snip` example must be explicitly embedded in the appropriate article, chapter, or section Javadoc through a valid `{@link}` reference. Declaring a snippet alone does not cause it to appear in the generated documentation. Follow the snippet integration rules in `DOC-FRAMEWORK.md`.

@@ -1,8 +1,17 @@
-# CDO Documentation Framework Reference
+# CDO/Net4j Documentation Framework Reference
+
+This document describes the shared documentation framework and authoring conventions for the following four plug-ins:
+
+- `org.eclipse.emf.cdo.doc`
+- `org.eclipse.net4j.doc`
+- `org.eclipse.net4j.util.doc`
+- `org.eclipse.net4j.db.doc`
+
+All four plug-ins use the same framework. The established CDO documentation provides mature examples of its intended use.
 
 ## Documentation Pipeline
 
-The CDO documentation is authored as Java source and Javadoc comments, not as standalone Markdown or HTML:
+The CDO/Net4j documentation is authored as Java source and Javadoc comments, not as standalone Markdown or HTML:
 
 ```text
 Java documentation sources -> ArticleDoclet -> EMF article model -> generated documentation
@@ -105,6 +114,75 @@ Chapter and section targets use generated page anchors. Snippet links commonly u
 
 Plug-in, schema, extension-point, product, and Javadoc documentation are represented by framework model elements and generated resources, generally loaded from project metadata and generated documentation resources rather than from a dedicated inline tag. Relative resources are resolved from the source documentation file or the relevant documentation project.
 
+## Mandatory Snippet Integration
+
+**Declaring a method or class with `@snip` does not automatically include its source code in the generated article.**
+
+A snippet is an embeddable documentation element. To make it visible to readers, it must be referenced from the appropriate article, chapter, or section Javadoc using a `{@link}` targeting that snippet.
+
+Every snippet intended for publication must have such a reference. An unreferenced `@snip` method can remain completely invisible in the generated documentation without causing a Java compilation error.
+
+### Preferred Authoring Pattern
+
+The preferred pattern is demonstrated by:
+
+`org.eclipse.emf.cdo.doc.programmers.client.Doc03_WorkingWithSessions.ViewManagement.OpeningViewsAndTransactions`
+
+The enclosing chapter or section should:
+
+1. Explain the relevant concepts and APIs.
+2. Introduce the example with a natural sentence describing what it demonstrates.
+3. Embed the snippet using a `{@link}` reference with a meaningful Java filename.
+4. Continue the explanation with relevant observations or additional details when useful.
+
+For example:
+
+```java
+/**
+ * Opening Views and Transactions
+ * <p>
+ * Views and transactions are created from a session using the
+ * various openView() and openTransaction() methods.
+ * <p>
+ * Here is an example of how to open views and transactions
+ * with different configurations:
+ * {@link #openingViewsAndTransactions(CDOSession, ResourceSet) OpeningViewsAndTransactions.java}
+ * <p>
+ * Note that views and transactions are lightweight objects
+ * that should be closed when no longer needed.
+ */
+```
+
+The snippet method is defined separately and annotated with `@snip`:
+
+```java
+/**
+ * @snip
+ */
+public void openingViewsAndTransactions(CDOSession session, ResourceSet resourceSet)
+{
+  // Example implementation...
+}
+```
+
+The snippet reference belongs in the explanatory Javadoc, not merely in the snippet method's own Javadoc.
+
+### Integration Rules
+
+- Every intended `@snip` example must be referenced from an appropriate article, chapter, or section.
+- References must resolve to the actual snippet target, including the correct method name, parameter types, and enclosing class where applicable.
+- Use a meaningful `.java` filename as the link label for Java examples.
+- Prefer placing the reference on its own Javadoc line, immediately after the sentence introducing the example.
+- Integrate examples into the natural explanatory flow rather than collecting unrelated snippets at the end of a chapter.
+- Introduce examples with concise descriptions of what they demonstrate.
+- Continue the discussion after a snippet when additional explanation is useful.
+- Avoid repeating information already evident from the example.
+- Normally embed each example once, unless repeated use serves a specific documentation purpose.
+- Do not create `@snip` methods without considering where and how their content will appear in the generated article.
+- When adding or revising documentation, account for all intended snippets in the affected articles, including snippets in nested classes.
+
+The guiding principle is that **snippets support the explanatory text, not the other way around**. Their placement should follow the logical progression of the article.
+
 ## Images and Other Resources
 
 - Normal figures use direct relative `{@image file}` references.
@@ -114,20 +192,21 @@ Plug-in, schema, extension-point, product, and Javadoc documentation are represe
 - `@external` supports external URLs and relative plug-in resources.
 - `@diagram` exists in the model/parser but is effectively nonfunctional in the current implementation. Do not use it unless the framework is repaired and verified.
 
-## Established CDO Authoring Conventions
+## Established CDO/Net4j Authoring Conventions
 
-The Sessions and Views chapters are the primary mature examples.
+The CDO Sessions and Views chapters are the primary mature examples.
 
 - Nested classes define the documentation structure.
 - Prose belongs in Javadoc on the corresponding class, field, or method.
 - Use `{@toc}` for substantial articles.
 - Prefer semantic `{@link ...}` references over hard-coded generated HTML links.
 - Use real `@snip` methods for Java examples.
-- Embed snippets through links with reader-friendly display filenames.
+- Embed every intended snippet through a suitable `{@link}` reference with a reader-friendly display filename.
+- Introduce snippets naturally and place them where they best support the explanation.
 - Use `@callout` only when source markers and explanatory text are deliberately maintained together.
 - Keep source order aligned with documentation order.
 - Use direct relative `{@image ...}` references for normal figures.
-- Treat framework capabilities that are unused in CDO as available capabilities, not automatically as new CDO conventions.
+- Treat framework capabilities that are unused in CDO/Net4j as available capabilities, not automatically as new authoring conventions.
 
 ## Known Unsupported or Discouraged Constructs
 
@@ -135,7 +214,7 @@ The Sessions and Views chapters are the primary mature examples.
 - `@diagram` is currently nonfunctional.
 - Arbitrary Java snippet regions, line ranges, and unrelated-method selection are unsupported.
 - Specialized formatter features should not be introduced without a concrete need.
-- Framework capabilities that are unused or rarely used in CDO should not automatically become new conventions.
+- Framework capabilities that are unused or rarely used in CDO/Net4j should not automatically become new conventions.
 
 ## Failure Modes
 
@@ -145,13 +224,12 @@ Future documentation changes must account for:
 - missing relative files or images;
 - mismatched callout markers and `@callout` descriptions;
 - invalid or missing snippet targets;
+- unreferenced `@snip` methods that do not appear in the generated articles;
 - source-sensitive Java snippet extraction;
 - malformed numeric values for tags such as `@number` or `@toc` levels;
 - unsupported nested embeddings;
 - generated-document failures that are invisible to Java compilation;
 - hard-coded absolute paths, which are not portable and do not follow the resource-resolution model.
-
-Generated HTML and unresolved-link diagnostics must be validated in addition to compiling the Java sources.
 
 ## Authoring Rules
 
@@ -159,10 +237,10 @@ Generated HTML and unresolved-link diagnostics must be validated in addition to 
 2. Remember that fields become sections automatically; add `@section` to methods that should become sections.
 3. Keep documentation prose in Javadoc and preserve source order.
 4. Use `@snip` on real, parseable Java methods or classes.
-5. Embed snippets with semantic `{@link}` references and reader-friendly labels.
-6. Use only the verified formatter names: `java`, `xml`, `tree`, `image`, and `html`.
-7. Keep callout declarations and source markers exactly matched.
-8. Use relative resource paths; never add machine-specific absolute paths.
-9. Prefer semantic API/documentation links and direct relative image references.
-10. Do not introduce `@category`, `@diagram`, arbitrary Java regions, or specialized formatter options without verified support and a concrete documentation need.
-11. Validate generated documentation and unresolved-target diagnostics, not only Java compilation.
+5. Every intended snippet must be embedded through a valid `{@link}` reference in the appropriate explanatory Javadoc.
+6. Introduce snippets naturally, use reader-friendly filenames, and position examples where they best support the text.
+7. Use only the verified formatter names: `java`, `xml`, `tree`, `image`, and `html`.
+8. Keep callout declarations and source markers exactly matched.
+9. Use relative resource paths; never add machine-specific absolute paths.
+10. Prefer semantic API/documentation links and direct relative image references.
+11. Do not introduce `@category`, `@diagram`, arbitrary Java regions, or specialized formatter options without verified support and a concrete documentation need.

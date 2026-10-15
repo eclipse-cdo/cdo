@@ -41,7 +41,9 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.SQLTableRef;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -68,29 +70,41 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
 
   private IDBTable locksTable;
 
-  private String sqlInsertLockArea;
+  @ExcludeFromDump
+  private transient SQLStatement sqlInsertLockArea;
 
-  private String sqlSelectLockArea;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectLockArea;
 
-  private String sqlSelectAllLockAreas;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectAllLockAreas;
 
-  private String sqlSelectLockAreas;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectLockAreas;
 
-  private String sqlDeleteLockArea;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDeleteLockArea;
 
-  private String sqlDeleteLockAreas;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDeleteLockAreas;
 
-  private String sqlSelectLocks;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectLocks;
 
-  private String sqlSelectLock;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectLock;
 
-  private String sqlInsertLock;
+  @ExcludeFromDump
+  private transient SQLStatement sqlInsertLock;
 
-  private String sqlUpdateLock;
+  @ExcludeFromDump
+  private transient SQLStatement sqlUpdateLock;
 
-  private String sqlDeleteLock;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDeleteLock;
 
-  private String sqlDeleteLocks;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDeleteLocks;
 
   public DurableLockingManager(DBStore store)
   {
@@ -121,16 +135,11 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     }
 
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(sqlInsertLockArea, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlInsertLockArea, connection, ReuseProbability.LOW);
 
     try
     {
-      stmt.setString(1, durableLockingID);
-      stmt.setString(2, userID);
-      stmt.setInt(3, branchPoint.getBranch().getID());
-      stmt.setLong(4, branchPoint.getTimeStamp());
-      stmt.setBoolean(5, readOnly);
-
+      sqlInsertLockArea.bindAll(stmt, durableLockingID, userID, branchPoint.getBranch().getID(), branchPoint.getTimeStamp(), readOnly);
       DBUtil.update(stmt, true);
     }
     catch (SQLException e)
@@ -156,19 +165,19 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   {
     IIDHandler idHandler = store.getIDHandler();
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(sqlInsertLock, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlInsertLock, connection, ReuseProbability.MEDIUM);
 
     try
     {
-      stmt.setString(1, durableLockingID);
+      sqlInsertLock.bindParameter(stmt, 1, durableLockingID);
 
       for (Map.Entry<CDOID, LockGrade> entry : locks.entrySet())
       {
         CDOID id = entry.getKey();
         int grade = entry.getValue().getValue();
 
-        idHandler.setCDOID(stmt, 2, id);
-        stmt.setInt(3, grade);
+        sqlInsertLock.bindParameter(stmt, 2, id, idHandler);
+        sqlInsertLock.bindParameter(stmt, 3, grade);
 
         DBUtil.update(stmt, true);
       }
@@ -186,12 +195,12 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   public LockArea getLockArea(DBStoreAccessor accessor, String durableLockingID) throws LockAreaNotFoundException
   {
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(sqlSelectLockArea, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelectLockArea, connection, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmt.setString(1, durableLockingID);
+      sqlSelectLockArea.bindAll(stmt, durableLockingID);
 
       resultSet = stmt.executeQuery();
       if (!resultSet.next())
@@ -227,12 +236,12 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     {
       if (userIDPrefix.length() == 0)
       {
-        stmt = connection.prepareStatement(sqlSelectAllLockAreas, ReuseProbability.MEDIUM);
+        stmt = DBUtil.prepare(sqlSelectAllLockAreas, connection, ReuseProbability.MEDIUM);
       }
       else
       {
-        stmt = connection.prepareStatement(sqlSelectLockAreas, ReuseProbability.MEDIUM);
-        stmt.setString(1, userIDPrefix + "%");
+        stmt = DBUtil.prepare(sqlSelectLockAreas, connection, ReuseProbability.MEDIUM);
+        sqlSelectLockAreas.bindAll(stmt, userIDPrefix + "%");
       }
 
       resultSet = stmt.executeQuery();
@@ -267,11 +276,11 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     unlockWithoutCommit(accessor, durableLockingID);
 
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(sqlDeleteLockArea, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlDeleteLockArea, connection, ReuseProbability.LOW);
 
     try
     {
-      stmt.setString(1, durableLockingID);
+      sqlDeleteLockArea.bindAll(stmt, durableLockingID);
       DBUtil.update(stmt, true);
     }
     catch (SQLException e)
@@ -315,11 +324,11 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   private void unlockWithoutCommit(DBStoreAccessor accessor, String durableLockingID)
   {
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(sqlDeleteLocks, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlDeleteLocks, connection, ReuseProbability.MEDIUM);
 
     try
     {
-      stmt.setString(1, durableLockingID);
+      sqlDeleteLocks.bindAll(stmt, durableLockingID);
       DBUtil.update(stmt, false);
     }
     catch (SQLException e)
@@ -340,71 +349,71 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     locks.activate();
 
     IDBAdapter dbAdapter = store.getDBAdapter();
+    IIDHandler idHandler = store.getIDHandler();
 
     // Lock areas
 
-    sqlInsertLockArea = SQL.insertInto(lockAreas.id.getTable()) //
+    sqlInsertLockArea = SQL.insertInto(lockAreas) //
         .columns(lockAreas.id, lockAreas.userID, lockAreas.viewBranch, lockAreas.viewTime, lockAreas.readOnly) //
         .values(SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .compile(dbAdapter);
 
     sqlSelectLockArea = SQL.select(lockAreas.userID, lockAreas.viewBranch, lockAreas.viewTime, lockAreas.readOnly) //
-        .from(lockAreas.id.getTable()) //
+        .from(lockAreas) //
         .where(lockAreas.id).eq(SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .compile(dbAdapter);
 
     sqlSelectAllLockAreas = SQL.select(lockAreas.id, lockAreas.userID, lockAreas.viewBranch, lockAreas.viewTime, lockAreas.readOnly) //
-        .from(lockAreas.id.getTable()) //
-        .compile(dbAdapter).getSQL();
+        .from(lockAreas) //
+        .compile(dbAdapter);
 
     sqlSelectLockAreas = SQL.select(lockAreas.id, lockAreas.userID, lockAreas.viewBranch, lockAreas.viewTime, lockAreas.readOnly) //
-        .from(lockAreas.id.getTable()) //
+        .from(lockAreas) //
         .where(lockAreas.userID).like(SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .compile(dbAdapter);
 
-    sqlDeleteLockArea = SQL.deleteFrom(lockAreas.id.getTable()) //
+    sqlDeleteLockArea = SQL.deleteFrom(lockAreas) //
         .where(lockAreas.id).eq(SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .compile(dbAdapter);
 
-    SQLTableRef lockAreasRef = SQL.table(lockAreas.id.getTable());
-    SQLTableRef locksRef = SQL.as(locks.areaID.getTable(), "locks");
+    SQLTableRef locksRef = SQL.as(locks, "locks");
     sqlDeleteLockAreas = SQL.deleteFrom(lockAreas.id.getTable()) //
         .where(SQL.exists(SQL.selectAll() //
             .from(locksRef) //
-            .where(SQL.eq(locksRef.column(locks.areaID), lockAreasRef.column(lockAreas.id))) //
+            .where(SQL.eq(locksRef.column(locks.areaID), SQL.qualified(lockAreas.id))) //
             .subSelect())) //
-        .compile(dbAdapter).getSQL();
+        .compile(dbAdapter);
 
     // Locks
 
     sqlSelectLocks = SQL.select(locks.objectID, locks.lockGrade) //
-        .from(locks.areaID.getTable()) //
+        .from(locks) //
         .where(locks.areaID).eq(SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .compile(dbAdapter);
 
     sqlSelectLock = SQL.select(locks.lockGrade) //
-        .from(locks.areaID.getTable()) //
-        .where(locks.areaID).eq(SQL.param()).and(locks.objectID).eq(SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .from(locks) //
+        .where(locks.areaID).eq(SQL.param()).and(locks.objectID).eq(SQL.param(idHandler)) //
+        .compile(dbAdapter);
 
-    sqlInsertLock = SQL.insertInto(locks.areaID.getTable()) //
+    sqlInsertLock = SQL.insertInto(locks) //
         .columns(locks.areaID, locks.objectID, locks.lockGrade) //
-        .values(SQL.param(), SQL.param(), SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .values(SQL.param(), SQL.param(idHandler), SQL.param()) //
+        .compile(dbAdapter);
 
-    sqlUpdateLock = SQL.update(locks.areaID.getTable()) //
+    sqlUpdateLock = SQL.update(locks) //
         .set(locks.lockGrade).to(SQL.param()) //
         .where(locks.areaID).eq(SQL.param()).and(locks.objectID) //
-        .eq(SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .eq(SQL.param(idHandler)) //
+        .compile(dbAdapter);
 
-    sqlDeleteLock = SQL.deleteFrom(locks.areaID.getTable()) //
-        .where(locks.areaID).eq(SQL.param()).and(locks.objectID).eq(SQL.param()) //
-        .compile(dbAdapter).getSQL();
+    sqlDeleteLock = SQL.deleteFrom(locks) //
+        .where(locks.areaID).eq(SQL.param()).and(locks.objectID).eq(SQL.param(idHandler)) //
+        .compile(dbAdapter);
 
-    sqlDeleteLocks = SQL.deleteFrom(locks.areaID.getTable()) //
+    sqlDeleteLocks = SQL.deleteFrom(locks) //
         .where(locks.areaID).eq(SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .compile(dbAdapter);
   }
 
   @Override
@@ -444,12 +453,12 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   private Map<CDOID, LockGrade> getLockMap(DBStoreAccessor accessor, String durableLockingID)
   {
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(sqlSelectLocks, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelectLocks, connection, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
-      stmt.setString(1, durableLockingID);
+      sqlSelectLocks.bindAll(stmt, durableLockingID);
       resultSet = stmt.executeQuery();
 
       IIDHandler idHandler = store.getIDHandler();
@@ -483,27 +492,22 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
       return;
     }
 
-    String sqlInsertOrDelete = on ? sqlInsertLock : sqlDeleteLock;
+    SQLStatement sqlInsertOrDelete = on ? sqlInsertLock : sqlDeleteLock;
 
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmtSelect = connection.prepareStatement(sqlSelectLock, ReuseProbability.MEDIUM);
-    IDBPreparedStatement stmtInsertOrDelete = connection.prepareStatement(sqlInsertOrDelete, ReuseProbability.MEDIUM);
-    IDBPreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
-    ResultSet resultSet = null;
+    IDBPreparedStatement stmtSelect = DBUtil.prepare(sqlSelectLock, connection, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtInsertOrDelete = DBUtil.prepare(sqlInsertOrDelete, connection, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtUpdate = DBUtil.prepare(sqlUpdateLock, connection, ReuseProbability.MEDIUM);
 
     InternalLockManager lockManager = store.getRepository().getLockingManager();
-    IIDHandler idHandler = store.getIDHandler();
+    ResultSet resultSet = null;
 
     try
     {
-      stmtSelect.setString(1, durableLockingID);
-      stmtInsertOrDelete.setString(1, durableLockingID);
-      stmtUpdate.setString(2, durableLockingID);
-
       for (Object key : keys)
       {
         CDOID id = lockManager.getLockKeyID(key);
-        idHandler.setCDOID(stmtSelect, 2, id);
+        sqlSelectLock.bindAll(stmtSelect, durableLockingID, id);
         resultSet = stmtSelect.executeQuery();
 
         LockGrade oldGrade = LockGrade.NONE;
@@ -515,19 +519,17 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
         LockGrade newGrade = oldGrade.getUpdated(type, on);
         if (on && oldGrade == LockGrade.NONE)
         {
-          idHandler.setCDOID(stmtInsertOrDelete, 2, id);
-          stmtInsertOrDelete.setInt(3, newGrade.getValue());
+          sqlInsertLock.bindAll(stmtInsertOrDelete, durableLockingID, id, newGrade.getValue());
           DBUtil.update(stmtInsertOrDelete, true);
         }
         else if (!on && newGrade == LockGrade.NONE)
         {
-          idHandler.setCDOID(stmtInsertOrDelete, 2, id);
+          sqlDeleteLock.bindAll(stmtInsertOrDelete, durableLockingID, id);
           DBUtil.update(stmtInsertOrDelete, true);
         }
         else
         {
-          stmtUpdate.setInt(1, newGrade.getValue());
-          idHandler.setCDOID(stmtUpdate, 3, id);
+          sqlUpdateLock.bindAll(stmtUpdate, newGrade.getValue(), durableLockingID, id);
           DBUtil.update(stmtUpdate, true);
         }
       }
@@ -553,16 +555,16 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     IDBAdapter dbAdapter = store.getDBAdapter();
 
     // Delete the lock areas.
-    batch.add("DELETE FROM " + dbAdapter.quoteTableName(lockAreas.table()) + " WHERE " + dbAdapter.quoteIdentifier(lockAreas.viewBranch.getName()) + " IN ("
-        + idList + ")");
+    batch.add("DELETE FROM " + dbAdapter.quoteTableName(lockAreas.getTable()) //
+        + " WHERE " + dbAdapter.quoteIdentifier(lockAreas.viewBranch.getName()) + " IN (" + idList + ")");
 
     // Delete the locks.
-    String lockAreasTableName = dbAdapter.quoteTableName(lockAreas.table());
-    String locksTableName = dbAdapter.quoteTableName(locks.table());
+    String lockAreasTableName = dbAdapter.quoteTableName(lockAreas.getTable());
+    String locksTableName = dbAdapter.quoteTableName(locks.getTable());
     String lockAreaID = dbAdapter.quoteIdentifier(lockAreas.id.getName());
     String areaID = dbAdapter.quoteIdentifier(locks.areaID.getName());
-    batch.add("DELETE FROM " + locksTableName + " WHERE " + areaID + " NOT IN (SELECT " + lockAreaID + " FROM " + lockAreasTableName + " WHERE " + lockAreaID
-        + "=" + areaID + ")");
+    batch.add("DELETE FROM " + locksTableName //
+        + " WHERE " + areaID + " NOT IN (SELECT " + lockAreaID + " FROM " + lockAreasTableName + " WHERE " + lockAreaID + "=" + areaID + ")");
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
@@ -578,7 +580,7 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     try
     {
       // Delete all non-empty lock areas
-      DBUtil.update(connection, sqlDeleteLockAreas);
+      DBUtil.update(connection, sqlDeleteLockAreas.getSQL());
       monitor.worked();
 
       DBUtil.deserializeTable(in, connection, lockAreasTable, monitor.fork());

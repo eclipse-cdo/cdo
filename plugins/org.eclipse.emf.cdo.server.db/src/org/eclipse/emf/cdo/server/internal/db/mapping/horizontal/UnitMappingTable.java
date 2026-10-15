@@ -39,6 +39,8 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLStatement;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -60,11 +62,14 @@ public class UnitMappingTable extends DBStoreTable
 {
   private static final int WRITE_UNIT_MAPPING_BATCH_SIZE = 100000;
 
-  private String sqlSelectRoots;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectRoots;
 
-  private String sqlInsertMappings;
+  @ExcludeFromDump
+  private transient SQLStatement sqlInsertMappings;
 
-  private String sqlSelectClasses;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectClasses;
 
   private IDBField elem;
 
@@ -100,7 +105,7 @@ public class UnitMappingTable extends DBStoreTable
         DBUtil.trace(stmt.toString());
       }
 
-      ResultSet resultSet = stmt.executeQuery(sqlSelectRoots);
+      ResultSet resultSet = stmt.executeQuery(sqlSelectRoots.getSQL());
       while (resultSet.next())
       {
         CDOID rootID = idHandler.getCDOID(resultSet, 1);
@@ -129,14 +134,14 @@ public class UnitMappingTable extends DBStoreTable
     CDOBranchPoint branchPoint = view.getBranch().getPoint(timeStamp);
 
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(sqlSelectClasses, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelectClasses, connection, ReuseProbability.HIGH);
 
     int jdbcFetchSize = store().getJDBCFetchSize();
     int oldFetchSize = -1;
 
     try
     {
-      idHandler.setCDOID(stmt, 1, rootID);
+      sqlSelectClasses.bindParameter(stmt, 1, rootID, idHandler);
 
       oldFetchSize = stmt.getFetchSize();
       stmt.setFetchSize(jdbcFetchSize);
@@ -178,7 +183,7 @@ public class UnitMappingTable extends DBStoreTable
   {
     IIDHandler idHandler = store().getIDHandler();
     IDBConnection connection = accessor.getDBConnection();
-    BatchedStatement stmt = DBUtil.batched(connection.prepareStatement(sqlInsertMappings, ReuseProbability.HIGH), WRITE_UNIT_MAPPING_BATCH_SIZE);
+    BatchedStatement stmt = DBUtil.batched(DBUtil.prepare(sqlInsertMappings, connection, ReuseProbability.HIGH), WRITE_UNIT_MAPPING_BATCH_SIZE);
 
     try
     {
@@ -252,7 +257,7 @@ public class UnitMappingTable extends DBStoreTable
   {
     IIDHandler idHandler = store().getIDHandler();
     IDBConnection connection = accessor.getDBConnection();
-    BatchedStatement stmt = DBUtil.batched(connection.prepareStatement(sqlInsertMappings, ReuseProbability.HIGH), WRITE_UNIT_MAPPING_BATCH_SIZE);
+    BatchedStatement stmt = DBUtil.batched(DBUtil.prepare(sqlInsertMappings, connection, ReuseProbability.HIGH), WRITE_UNIT_MAPPING_BATCH_SIZE);
 
     try
     {
@@ -275,8 +280,8 @@ public class UnitMappingTable extends DBStoreTable
 
   private void writeUnitMapping(BatchedStatement stmt, CDOID rootID, long timeStamp, IIDHandler idHandler, CDOID id) throws SQLException
   {
-    idHandler.setCDOID(stmt, 1, id);
-    idHandler.setCDOID(stmt, 2, rootID);
+    sqlInsertMappings.bindParameter(stmt, 1, id, idHandler);
+    sqlInsertMappings.bindParameter(stmt, 2, rootID, idHandler);
     stmt.executeUpdate();
   }
 
@@ -307,19 +312,20 @@ public class UnitMappingTable extends DBStoreTable
 
     sqlSelectRoots = SQL.selectDistinct(unit) //
         .from(table) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     sqlInsertMappings = SQL.insertInto(table) //
         .columns(elem, unit) //
         .values(SQL.param(), SQL.param()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     sqlSelectClasses = SQL.select(objects.clazz(), SQL.count(elem)) //
         .from(table) //
-        .from(objects.table()) //
-        .where(SQL.eq(elem, objects.id()).and(SQL.eq(unit, SQL.param()))) //
+        .from(objects.getTable()) //
+        .where(SQL.eq(elem, objects.id()) //
+            .and(SQL.eq(unit, SQL.param()))) //
         .groupBy(objects.clazz()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
   }
 
   /**

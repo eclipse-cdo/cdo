@@ -44,6 +44,8 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLCondition;
 import org.eclipse.net4j.db.dml.SQLExpression;
+import org.eclipse.net4j.db.dml.SQLStatement;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -86,9 +88,11 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   private ITypeMapping typeMapping;
 
   // --------- SQL strings - see initSQLStrings() -----------------
-  private String sqlSelectChunks;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectChunks;
 
-  private String sqlInsertEntry;
+  @ExcludeFromDump
+  protected transient SQLStatement sqlInsertEntry;
 
   public AbstractListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -209,10 +213,10 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     sqlInsertEntry = SQL.insertInto(table) //
         .columns(insertFields[0], Arrays.copyOfRange(insertFields, 1, insertFields.length)) //
         .values(insertValues[0], Arrays.copyOfRange(insertValues, 1, insertValues.length)) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
   }
 
-  private String createSelectChunksSQL(String additionalWhere)
+  private SQLStatement createSelectChunksSQL(String additionalWhere)
   {
     FieldInfo[] fields = getKeyFields();
     SQLCondition condition = SQL.eq(table.getField(fields[0].getName()), SQL.param());
@@ -234,7 +238,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
         .from(table) //
         .where(condition) //
         .orderBy(SQL.asc(indexField)) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
   }
 
   @Override
@@ -264,7 +268,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
   protected abstract void addKeyFields(List<FieldInfo> list);
 
-  protected abstract void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException;
+  protected abstract void bindKeyFields(SQLStatement sql, PreparedStatement stmt, CDORevision revision) throws SQLException;
 
   @Override
   public Collection<IDBTable> getDBTables()
@@ -272,7 +276,8 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     return Collections.singleton(table);
   }
 
-  protected final IDBTable getTable()
+  @Override
+  public final IDBTable getTable()
   {
     return table;
   }
@@ -298,7 +303,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   @Override
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
-    if ((table == null) || (listChunk == 0))
+    if (table == null || listChunk == 0)
     {
       // Nothing to read. Take shortcut.
       return;
@@ -317,13 +322,12 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
           getFeature().getName(), revision.getID(), revision.getVersion());
     }
 
-    String sql = sqlSelectChunks;
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelectChunks, accessor.getDBConnection(), ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      setKeyFields(stmt, revision);
+      bindKeyFields(sqlSelectChunks, stmt, revision);
 
       if (TRACER.isEnabled())
       {
@@ -385,14 +389,13 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
           getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
-    String sql = where == null ? sqlSelectChunks : createSelectChunksSQL(where);
-
-    IDBPreparedStatement stmt = chunkReader.getAccessor().getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
+    SQLStatement sql = where == null ? sqlSelectChunks : createSelectChunksSQL(where);
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, chunkReader.getAccessor().getDBConnection(), ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
-      setKeyFields(stmt, chunkReader.getRevision());
+      bindKeyFields(sql, stmt, chunkReader.getRevision());
 
       resultSet = stmt.executeQuery();
 
@@ -479,14 +482,14 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
           revision.getID(), revision.getVersion(), value);
     }
 
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlInsertEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
-      setKeyFields(stmt, revision);
-      int column = getKeyFields().length + 1;
-      stmt.setInt(column++, idx);
-      typeMapping.setValue(stmt, column++, value);
+      bindKeyFields(sqlInsertEntry, stmt, revision);
+      sqlInsertEntry.binderFrom(stmt, getKeyFields().length + 1) //
+          .bind(idx) //
+          .bindParameter(value, typeMapping);
       DBUtil.update(stmt, true);
     }
     catch (SQLException e)

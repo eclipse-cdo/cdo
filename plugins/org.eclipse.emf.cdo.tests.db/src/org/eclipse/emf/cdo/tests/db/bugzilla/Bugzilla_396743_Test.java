@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
-import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.dml.SQLStatement;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -53,7 +53,7 @@ public class Bugzilla_396743_Test extends AbstractCDOTest
 
   private void awaitReadValues()
   {
-    if ((readValueLatch == null) || (StoreThreadLocal.getCommitContext() != null))
+    if (readValueLatch == null || StoreThreadLocal.getCommitContext() != null)
     {
       // Don't block reads that are triggered from commit processing
       return;
@@ -75,15 +75,15 @@ public class Bugzilla_396743_Test extends AbstractCDOTest
           return new NonAuditListTableMapping(this, containingClass, feature)
           {
             @Override
-            protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
+            protected void bindKeyFields(SQLStatement sql, PreparedStatement stmt, CDORevision revision) throws SQLException
             {
-              if (((IDBPreparedStatement)stmt).getSQL().toUpperCase().startsWith("SELECT") && revision.getEClass() == getModel1Package().getCompany())
+              if (sql.getSQL().toUpperCase().startsWith("SELECT") && revision.getEClass() == getModel1Package().getCompany())
               {
                 commitLatch.countDown(); // Let main thread execute a commit
                 awaitReadValues(); // Wait for commit to finish
               }
 
-              super.setKeyFields(stmt, revision);
+              super.bindKeyFields(sql, stmt, revision);
             }
           };
         }

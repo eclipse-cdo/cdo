@@ -32,7 +32,9 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.SQLTableRef;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -114,11 +116,17 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
         .and(SQL.eq(listRef.column(listBranch), attrRef.column(attrBranch)))
         .and(SQL.between(attrRef.column(attrCreated), SQL.literal(fromCommitTime), SQL.literal(toCommitTime)))
         .and(SQL.isNotNull(listRef.column(listVersionRemoved)));
-    String sql = DBUtil.trace(SQL.select(listRef.column(listID), listRef.column(listBranch), listRef.column(listVersionAdded),
-        listRef.column(listVersionRemoved), listRef.column(listIndex)).from(listRef).from(attrRef).where(condition).compile(getDBAdapter()).getSQL());
+    SQLStatement sql = SQL.select(listRef.column(listID) //
+        , listRef.column(listBranch), listRef.column(listVersionAdded), listRef.column(listVersionRemoved), listRef.column(listIndex)) //
+        .from(listRef) //
+        .from(attrRef) //
+        .where(condition) //
+        .compile(getDBAdapter());
+    DBUtil.trace(sql.getSQL());
+
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, connection, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
 
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
@@ -200,14 +208,15 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     IDBField versionAddedColumn = table.getField(MappingNames.LIST_REVISION_VERSION_ADDED);
     IDBField indexColumn = table.getField(MappingNames.LIST_IDX);
 
-    String sql = DBUtil.trace(SQL.update(table) //
+    SQLStatement sql = SQL.update(table) //
         .set(versionRemovedColumn).to(SQL.param()) //
         .where(SQL.eq(sourceColumn, SQL.param()).and(SQL.eq(branchColumn, SQL.param())).and(SQL.eq(versionAddedColumn, SQL.param()))
             .and(SQL.eq(indexColumn, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL());
+        .compile(getDBAdapter());
+    DBUtil.trace(sql.getSQL());
 
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, connection, ReuseProbability.MEDIUM);
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
 
     monitor.begin(1 + 2 * size);
 
@@ -223,11 +232,11 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
         int versionRemoved = in.readXInt();
         int idx = in.readXInt();
 
-        stmt.setInt(1, versionRemoved);
-        idHandler.setCDOID(stmt, 2, source);
-        stmt.setInt(3, branch);
-        stmt.setInt(4, versionAdded);
-        stmt.setInt(5, idx);
+        sql.bindParameter(stmt, 1, versionRemoved);
+        sql.bindParameter(stmt, 2, source, idHandler);
+        sql.bindParameter(stmt, 3, branch);
+        sql.bindParameter(stmt, 4, versionAdded);
+        sql.bindParameter(stmt, 5, idx);
 
         stmt.addBatch();
         monitor.worked();
@@ -329,6 +338,9 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   {
     private final IIDHandler idHandler = getStore().getIDHandler();
 
+    @ExcludeFromDump
+    private transient SQLStatement sql;
+
     private IDBPreparedStatement stmt;
 
     @Override
@@ -344,26 +356,28 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
       {
         IDBTable table = fields[0].getTable();
         IDBField versionRemoved = table.getField(MappingNames.LIST_REVISION_VERSION_REMOVED);
-        String sql = SQL.update(table) //
+
+        sql = SQL.update(table) //
             .set(versionRemoved).to(SQL.param()) //
             .where(SQL.eq(table.getField(MappingNames.LIST_REVISION_ID), SQL.param()) //
                 .and(SQL.eq(table.getField(MappingNames.LIST_REVISION_BRANCH), SQL.param())) //
                 .and(SQL.eq(table.getField(MappingNames.LIST_IDX), SQL.param())) //
                 .and(SQL.lt(table.getField(MappingNames.LIST_REVISION_VERSION_ADDED), SQL.param())) //
                 .and(SQL.isNull(versionRemoved))) //
-            .compile(getDBAdapter()).getSQL();
-        stmt = ((IDBConnection)connection).prepareStatement(sql, ReuseProbability.MEDIUM);
+            .compile(getDBAdapter());
+
+        stmt = DBUtil.prepare(sql, (IDBConnection)connection, ReuseProbability.MEDIUM);
       }
 
       Object sourceID = values[0];
       int branch = DBUtil.asInt(values[1]);
       int index = DBUtil.asInt(values[4]);
 
-      stmt.setInt(1, versionAdded);
-      idHandler.setCDOIDRaw(stmt, 2, sourceID);
-      stmt.setInt(3, branch);
-      stmt.setInt(4, index);
-      stmt.setInt(5, versionAdded);
+      sql.bindParameter(stmt, 1, versionAdded);
+      sql.bindParameter(stmt, 2, sourceID, idHandler::setCDOIDRaw);
+      sql.bindParameter(stmt, 3, branch);
+      sql.bindParameter(stmt, 4, index);
+      sql.bindParameter(stmt, 5, versionAdded);
 
       stmt.addBatch();
     }

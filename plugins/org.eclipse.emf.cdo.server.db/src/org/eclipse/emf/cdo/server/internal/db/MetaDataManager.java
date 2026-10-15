@@ -42,6 +42,8 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLParameter;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
@@ -58,6 +60,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -190,23 +193,22 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   public void writePackageUnit(IDBConnection connection, String unitID, int originalType, long timeStamp, byte[] packageBytes, OMMonitor monitor)
   {
     PackageUnitsTable packageUnits = store.tables().packageUnits();
-    IDBAdapter dbAdapter = store.getDBAdapter();
 
-    String sql = SQL.insertInto(packageUnits.id().getTable()) //
+    // Preserve setBytes() for BLOB compatibility across JDBC drivers.
+    SQLParameter packageBytesParam = SQL.param(PreparedStatement::setBytes);
+
+    SQLStatement sql = SQL.insertInto(packageUnits.id().getTable()) //
         .columns(packageUnits.id(), packageUnits.originalType(), packageUnits.timeStamp(), packageUnits.packageData()) //
-        .values(SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .values(SQL.param(), SQL.param(), SQL.param(), packageBytesParam) //
+        .compile(store.getDBAdapter());
     DBUtil.trace(sql);
 
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, connection, ReuseProbability.MEDIUM);
     Async async = monitor == null ? null : monitor.forkAsync();
 
     try
     {
-      stmt.setString(1, unitID);
-      stmt.setInt(2, originalType);
-      stmt.setLong(3, timeStamp);
-      stmt.setBytes(4, packageBytes);
+      sql.bindAll(stmt, unitID, originalType, timeStamp, packageBytes);
 
       if (stmt.execute())
       {
@@ -215,7 +217,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
       if (stmt.getUpdateCount() == 0)
       {
-        throw new DBException("No row inserted into table " + packageUnits.table().getName()); //$NON-NLS-1$
+        throw new DBException("No row inserted into table " + packageUnits.getTable().getName()); //$NON-NLS-1$
       }
     }
     catch (SQLException ex)
@@ -235,21 +237,19 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   public void writePackageInfo(IDBConnection connection, String packageURI, String parentURI, String unitID, OMMonitor monitor)
   {
     PackageInfosTable packageInfos = store.tables().packageInfos();
-    IDBAdapter dbAdapter = store.getDBAdapter();
-    String sql = SQL.insertInto(packageInfos.uri().getTable()) //
+
+    SQLStatement sql = SQL.insertInto(packageInfos.uri().getTable()) //
         .columns(packageInfos.uri(), packageInfos.parent(), packageInfos.unit()) //
         .values(SQL.param(), SQL.param(), SQL.param()) //
-        .compile(dbAdapter).getSQL();
+        .compile(store.getDBAdapter());
     DBUtil.trace(sql);
 
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, connection, ReuseProbability.MEDIUM);
     Async async = monitor == null ? null : monitor.forkAsync();
 
     try
     {
-      stmt.setString(1, packageURI);
-      stmt.setString(2, parentURI);
-      stmt.setString(3, unitID);
+      sql.bind(stmt, packageURI, parentURI, unitID);
 
       if (stmt.execute())
       {
@@ -258,7 +258,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
       if (stmt.getUpdateCount() == 0)
       {
-        throw new DBException("No row inserted into table " + packageInfos.table().getName()); //$NON-NLS-1$
+        throw new DBException("No row inserted into table " + packageInfos.getTable().getName()); //$NON-NLS-1$
       }
     }
     catch (SQLException ex)
@@ -286,13 +286,13 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
         "' AND p_u." + dbAdapter.quoteIdentifier(packageUnits.id().getName()) + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + //
         "' AND p_u." + dbAdapter.quoteIdentifier(packageUnits.id().getName()) + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + //
         "' AND p_u." + dbAdapter.quoteIdentifier(packageUnits.timeStamp().getName()) + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, packageUnits.table(), "p_u", where);
+    DBUtil.serializeTable(out, connection, packageUnits.getTable(), "p_u", where);
 
     // Export package infos
     PackageInfosTable packageInfos = store.tables().packageInfos();
-    String join = ", " + dbAdapter.quoteTableName(packageUnits.table()) + " p_u" + where + " AND p_i."
+    String join = ", " + dbAdapter.quoteTableName(packageUnits.getTable()) + " p_u" + where + " AND p_i."
         + dbAdapter.quoteIdentifier(packageInfos.unit().getName()) + "=p_u." + dbAdapter.quoteIdentifier(packageUnits.id().getName());
-    DBUtil.serializeTable(out, connection, packageInfos.table(), "p_i", join);
+    DBUtil.serializeTable(out, connection, packageInfos.getTable(), "p_i", join);
   }
 
   @Override
@@ -304,10 +304,10 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     try
     {
       PackageUnitsTable packageUnits = store.tables().packageUnits();
-      DBUtil.deserializeTable(in, connection, packageUnits.table(), monitor.fork());
+      DBUtil.deserializeTable(in, connection, packageUnits.getTable(), monitor.fork());
 
       PackageInfosTable packageInfos = store.tables().packageInfos();
-      DBUtil.deserializeTable(in, connection, packageInfos.table(), monitor.fork());
+      DBUtil.deserializeTable(in, connection, packageInfos.getTable(), monitor.fork());
 
       return readPackageUnits(connection, fromCommitTime, toCommitTime, monitor.fork());
     }

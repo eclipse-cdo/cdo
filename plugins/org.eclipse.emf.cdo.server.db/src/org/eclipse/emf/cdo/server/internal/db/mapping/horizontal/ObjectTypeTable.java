@@ -38,7 +38,9 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLFragment;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.fluent.SQLFragmentStep;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -72,15 +74,20 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
 
   private IDBField created;
 
-  private String sqlDelete;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDelete;
 
-  private String sqlInsert;
+  @ExcludeFromDump
+  private transient SQLStatement sqlInsert;
 
-  private String sqlSelect;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelect;
 
-  private String sqlSelectDistinctClasses;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectDistinctClasses;
 
-  private String sqlSelectMaxID;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectMaxID;
 
   private boolean supportsSavepoints;
 
@@ -107,11 +114,11 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   public final EClass getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = store().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelect, ReuseProbability.MAX);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelect, accessor.getDBConnection(), ReuseProbability.MAX);
 
     try
     {
-      idHandler.setCDOID(stmt, 1, id);
+      sqlSelect.bindAll(stmt, id);
 
       if (DBUtil.isTracerEnabled())
       {
@@ -150,16 +157,16 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     IIDHandler idHandler = store.getIDHandler();
     IDBAdapter dbAdapter = store.getDBAdapter();
 
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MAX);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlInsert, accessor.getDBConnection(), ReuseProbability.MAX);
     Savepoint savepoint = null;
 
     try
     {
       CDOID metaID = store.getMetaDataManager().getMetaID(type, timeStamp);
 
-      idHandler.setCDOID(stmt, 1, id);
-      idHandler.setCDOID(stmt, 2, metaID);
-      stmt.setLong(3, timeStamp);
+      sqlInsert.bindParameter(stmt, 1, id, idHandler);
+      sqlInsert.bindParameter(stmt, 2, metaID, idHandler);
+      sqlInsert.bindParameter(stmt, 3, timeStamp);
 
       if (DBUtil.isTracerEnabled())
       {
@@ -388,24 +395,22 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     }
 
     SQLFragment predicate = values.sql(")").build(); //$NON-NLS-1$
-    String sql = SQL.select(id) //
-        .from(table()) //
+    SQLStatement sql = SQL.select(id) //
+        .from(getTable()) //
         .where(predicate.condition()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     IIDHandler idHandler = store().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, accessor.getDBConnection(), ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      int column = 1;
-
       // Use the configured IIDHandler so Long, UUID, String, and external ID
       // encodings are bound exactly as they are for ObjectType inserts.
       for (int i = 0; i < revisions.size(); i++)
       {
-        idHandler.setCDOID(stmt, column++, revisions.get(i).getID());
+        sql.bindParameter(stmt, i + 1, revisions.get(i).getID(), idHandler);
       }
 
       resultSet = stmt.executeQuery();
@@ -464,7 +469,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
       }
     }
 
-    IDBPreparedStatement preparedStatement = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MAX);
+    IDBPreparedStatement preparedStatement = DBUtil.prepare(sqlInsert, accessor.getDBConnection(), ReuseProbability.MAX);
     BatchedStatement stmt = DBUtil.batched(preparedStatement, batchSize);
 
     try
@@ -478,10 +483,10 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
         // historical/evolving metadata keeps the same semantics as the
         // synchronous putObjectType() path.
         int column = 1;
-        idHandler.setCDOID(stmt, column++, revision.getID());
+        sqlInsert.bindParameter(stmt, column++, revision.getID(), idHandler);
         CDOID metaID = store().getMetaDataManager().getMetaID(type, revision.getTimeStamp());
-        idHandler.setCDOID(stmt, column++, metaID);
-        stmt.setLong(column, revision.getTimeStamp());
+        sqlInsert.bindParameter(stmt, column++, metaID, idHandler);
+        sqlInsert.bindParameter(stmt, column, revision.getTimeStamp());
         stmt.executeUpdate();
       }
 
@@ -538,12 +543,11 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   @Override
   public final boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    IIDHandler idHandler = store().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.MAX);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlDelete, accessor.getDBConnection(), ReuseProbability.MAX);
 
     try
     {
-      idHandler.setCDOID(stmt, 1, id);
+      sqlDelete.bindParameter(stmt, 1, id, store().getIDHandler());
 
       if (DBUtil.isTracerEnabled())
       {
@@ -566,7 +570,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   public final void handleObjectTypes(IDBStoreAccessor accessor, ObjectTypeHandler handler) throws SQLException
   {
     try (Statement stmt = accessor.getConnection().createStatement(); //
-        ResultSet rs = stmt.executeQuery(sqlSelectDistinctClasses))
+        ResultSet rs = stmt.executeQuery(sqlSelectDistinctClasses.getSQL()))
     {
       while (rs.next())
       {
@@ -591,7 +595,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     try
     {
       stmt = connection.createStatement();
-      resultSet = stmt.executeQuery(sqlSelectMaxID);
+      resultSet = stmt.executeQuery(sqlSelectMaxID.getSQL());
 
       if (resultSet.next())
       {
@@ -616,13 +620,13 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   {
     String createdName = adapter().quoteIdentifier(created.getName());
     String where = " WHERE " + createdName + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, table(), null, where);
+    DBUtil.serializeTable(out, connection, getTable(), null, where);
   }
 
   @Override
   public void rawImport(Connection connection, CDODataInput in, OMMonitor monitor) throws IOException
   {
-    DBUtil.deserializeTable(in, connection, table(), monitor);
+    DBUtil.deserializeTable(in, connection, getTable(), monitor);
   }
 
   @Override
@@ -688,25 +692,25 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   {
     sqlSelectDistinctClasses = SQL.selectDistinct(clazz) //
         .from(table) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     sqlSelectMaxID = SQL.select(SQL.max(id)) //
         .from(table) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     sqlSelect = SQL.select(clazz) //
         .from(table) //
-        .where(id).eq(SQL.param()) //
-        .compile(adapter()).getSQL();
+        .where(id).eq(SQL.param(store().getIDHandler())) //
+        .compile(adapter());
 
     sqlInsert = SQL.insertInto(table) //
         .columns(id, clazz, created) //
         .values(SQL.param(), SQL.param(), SQL.param()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     sqlDelete = SQL.deleteFrom(table) //
         .where(id).eq(SQL.param()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
   }
 
   private static void discardBatch(BatchedStatement stmt)

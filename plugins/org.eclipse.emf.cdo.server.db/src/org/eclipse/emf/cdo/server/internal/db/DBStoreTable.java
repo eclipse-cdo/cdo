@@ -27,7 +27,7 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 /**
  * @author Eike Stepper
  */
-public abstract class DBStoreTable extends Lifecycle
+public abstract class DBStoreTable extends Lifecycle implements IDBTable.Provider
 {
   private final IDBStore store;
 
@@ -51,9 +51,16 @@ public abstract class DBStoreTable extends Lifecycle
     return store.getDBAdapter();
   }
 
-  public final IDBTable table()
+  /**
+   * Returns the currently activated schema table provided to DML APIs.
+   *
+   * @return the schema table, or {@code null} while this store table is inactive
+   */
+  @Override
+  public final IDBTable getTable()
   {
-    return table;
+    // Protect against DelegatingDBTable by re-dereferencing.
+    return table == null ? null : table.getSchema().getTable(tableName);
   }
 
   @Override

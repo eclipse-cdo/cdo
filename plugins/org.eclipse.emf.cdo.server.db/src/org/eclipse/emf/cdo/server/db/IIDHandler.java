@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.dml.SQLValueSetter;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
@@ -38,7 +39,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IIDHandler extends Comparator<CDOID>
+public interface IIDHandler extends Comparator<CDOID>, SQLValueSetter<CDOID>
 {
   /**
    * @since 4.14
@@ -99,6 +100,21 @@ public interface IIDHandler extends Comparator<CDOID>
   public CDOID getMinCDOID();
 
   public CDOID getMaxCDOID();
+
+  /**
+   * Binds a CDOID through the established ID conversion logic.
+   *
+   * @param stmt the prepared statement receiving the ID
+   * @param index the one-based JDBC parameter position
+   * @param id the CDOID to bind
+   * @throws SQLException if the JDBC driver reports a binding failure
+   * @since 4.16
+   */
+  @Override
+  public default void setValue(PreparedStatement stmt, int index, CDOID id) throws SQLException
+  {
+    setCDOID(stmt, index, id);
+  }
 
   public CDOID mapURI(IDBStoreAccessor accessor, String uri, long commitTime);
 

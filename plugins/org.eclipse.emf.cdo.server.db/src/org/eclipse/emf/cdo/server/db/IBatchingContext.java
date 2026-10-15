@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.dml.SQLStatement;
 
 /**
  * Supplies the database context used while executing a batch of statements.
@@ -28,6 +29,34 @@ public interface IBatchingContext extends BatchedStatement.Context
   }
 
   public BatchedStatement createStatement(String sql, ReuseProbability reuseProbability, String diagnosticName);
+
+  /**
+   * Creates a batched statement from a compiled SQL definition.
+   *
+   * @param sql the compiled statement definition
+   * @param reuseProbability the existing statement-cache reuse hint
+   * @return the managed batched statement
+   * @since 4.16
+   */
+  public default BatchedStatement createStatement(SQLStatement sql, ReuseProbability reuseProbability)
+  {
+    return createStatement(sql, reuseProbability, null);
+  }
+
+  /**
+   * Creates a batched statement from a compiled SQL definition through the existing connection and batching path.
+   * The compiled SQL text remains the key used by the connection's prepared-statement cache.
+   *
+   * @param sql the compiled statement definition
+   * @param reuseProbability the existing statement-cache reuse hint
+   * @param diagnosticName the optional name used by batching diagnostics
+   * @return the managed batched statement
+   * @since 4.16
+   */
+  public default BatchedStatement createStatement(SQLStatement sql, ReuseProbability reuseProbability, String diagnosticName)
+  {
+    return createStatement(sql.getSQL(), reuseProbability, diagnosticName);
+  }
 
   public void releaseStatement(BatchedStatement statement);
 

@@ -757,7 +757,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     String branch = dbAdapter.quoteIdentifier(MappingNames.ATTRIBUTES_BRANCH);
     String created = dbAdapter.quoteIdentifier(MappingNames.ATTRIBUTES_CREATED);
 
-    String prefix = "SELECT MIN(t." + id + ") FROM " + dbAdapter.quoteTableName(objects.table()) + " o, ";
+    String prefix = "SELECT MIN(t." + id + ") FROM " + dbAdapter.quoteTableName(objects.getTable()) + " o, ";
     String suffix = " t WHERE t." + branch + "<0 AND t." + id + "=o." + id + " AND t." + created + "=o." + created;
 
     getStore().visitAllTables(connection, (c, name) -> {
@@ -1059,7 +1059,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
         IDBAdapter dbAdapter = getDBAdapter();
         return super.sql(newValue, condition) //
             + " AND (SELECT " + dbAdapter.quoteIdentifier(objects.clazz().getName()) //
-            + " FROM " + dbAdapter.quoteTableName(objects.table()) //
+            + " FROM " + dbAdapter.quoteTableName(objects.getTable()) //
             + " WHERE " + dbAdapter.quoteIdentifier(objects.id().getName()) + "=" + dbAdapter.quoteIdentifier(containerField.getName()) + ")="
             + rawContainerTypeID;
       }

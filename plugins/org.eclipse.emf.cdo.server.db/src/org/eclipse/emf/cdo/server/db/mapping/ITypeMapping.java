@@ -20,6 +20,8 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQLDefaultSetter;
+import org.eclipse.net4j.db.dml.SQLValueSetter;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
@@ -32,13 +34,16 @@ import java.sql.SQLException;
 import java.util.Collection;
 
 /**
- * Mapping of single values to and from the database.
+ * Mapping of single values to and from the database. An implementation binds supplied values through
+ * {@link SQLValueSetter#setValue(PreparedStatement, int, Object)} and binds its implementation-defined default through
+ * {@link SQLDefaultSetter#setDefaultValue(PreparedStatement, int)}. The default operation is distinct from binding a
+ * supplied {@code null} value and need not represent a SQL column's {@code DEFAULT} expression.
  *
  * @author Eike Stepper
  * @author Stefan Winkler
  * @since 2.0
  */
-public interface ITypeMapping extends IFeatureMapping
+public interface ITypeMapping extends IFeatureMapping, SQLValueSetter<Object>, SQLDefaultSetter
 {
   /**
    * @return The feature which is associated with this mapping.
@@ -120,11 +125,13 @@ public interface ITypeMapping extends IFeatureMapping
    * @throws SQLException
    *           if the <code>setXxx</code> throws it.
    */
+  @Override
   public void setValue(PreparedStatement stmt, int index, Object value) throws SQLException;
 
   /**
-   * Set the feature's default value to the JDBC {@link IDBPreparedStatement} using an appropriate <code>setXxx</code>
-   * method.
+   * Set the feature's implementation-defined default value to the JDBC {@link IDBPreparedStatement} using an
+   * appropriate <code>setXxx</code> method. This default need not be the SQL column's {@code DEFAULT} expression and
+   * is distinct from passing {@code null} to {@link #setValue(PreparedStatement, int, Object)}.
    *
    * @param stmt
    *          the prepared statement to set the value
@@ -134,6 +141,7 @@ public interface ITypeMapping extends IFeatureMapping
    *           if the <code>setXxx</code> throws it.
    * @since 3.0
    */
+  @Override
   public void setDefaultValue(PreparedStatement stmt, int index) throws SQLException;
 
   /**

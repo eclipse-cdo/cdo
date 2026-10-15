@@ -41,7 +41,7 @@ import java.util.Set;
  * @author Stefan Winkler
  * @since 2.0
  */
-public interface IClassMapping
+public interface IClassMapping extends IDBTable.Provider
 {
   /**
    * @since 3.0
@@ -57,8 +57,13 @@ public interface IClassMapping
   public List<IDBTable> getDBTables();
 
   /**
+   * Returns the primary DB table for this class mapping. This is the first table returned by
+   * {@link #getDBTables()}, and does not represent all tables used by the mapping.
+   *
+   * @return the primary table, or {@code null} when no tables are mapped
    * @since 4.14
    */
+  @Override
   public default IDBTable getTable()
   {
     List<IDBTable> tables = getDBTables();

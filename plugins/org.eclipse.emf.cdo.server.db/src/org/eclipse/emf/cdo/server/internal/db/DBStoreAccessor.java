@@ -1173,7 +1173,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     BranchesTable branches = store.tables().branches();
     String where = " WHERE " + store.getDBAdapter().quoteIdentifier(branches.id().getName()) + " BETWEEN " + fromBranchID + " AND " + toBranchID;
-    DBUtil.serializeTable(out, connection, branches.table(), null, where);
+    DBUtil.serializeTable(out, connection, branches.getTable(), null, where);
 
     CommitInfoTable commitInfoTable = store.getCommitInfoTable();
     if (commitInfoTable != null)
@@ -1219,7 +1219,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     try
     {
       BranchesTable branches = store.tables().branches();
-      DBUtil.deserializeTable(in, connection, branches.table(), monitor.fork());
+      DBUtil.deserializeTable(in, connection, branches.getTable(), monitor.fork());
 
       CommitInfoTable commitInfoTable = store.getCommitInfoTable();
       if (in.readBoolean())
@@ -1553,7 +1553,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
     public ConnectionKeepAliveTask(DBStoreAccessor accessor)
     {
       this.accessor = accessor;
-      sql = "SELECT 1 FROM " + accessor.getStore().getDBAdapter().quoteTableName(accessor.getStore().tables().properties().table());
+      sql = "SELECT 1 FROM " + accessor.getStore().getDBAdapter().quoteTableName(accessor.getStore().tables().properties().getTable());
     }
 
     @Override

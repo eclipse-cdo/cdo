@@ -141,8 +141,9 @@ public class UUIDHandler extends Lifecycle implements IIDHandler
   @Override
   public void appendCDOID(StringBuilder builder, CDOID id)
   {
+    String value = value(id);
     builder.append("'");
-    builder.append(value(id));
+    builder.append(value == null ? null : value.replace("'", "''"));
     builder.append("'");
   }
 

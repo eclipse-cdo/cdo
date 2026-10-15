@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
-import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
@@ -27,6 +26,8 @@ import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLStatement;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -45,7 +46,8 @@ public class AuditListTableMapping extends AbstractListTableMapping
 {
   private IDBField versionField;
 
-  private String sqlClear;
+  @ExcludeFromDump
+  private transient SQLStatement sqlClear;
 
   public AuditListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -62,8 +64,9 @@ public class AuditListTableMapping extends AbstractListTableMapping
 
     // ----------- clear list -------------------------
     sqlClear = SQL.deleteFrom(table) //
-        .where(SQL.eq(sourceField, SQL.param()).and(SQL.eq(versionField, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.eq(versionField, SQL.param()))) //
+        .compile(getDBAdapter());
   }
 
   @Override
@@ -73,11 +76,9 @@ public class AuditListTableMapping extends AbstractListTableMapping
   }
 
   @Override
-  protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
+  protected void bindKeyFields(SQLStatement sql, PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    IIDHandler idHandler = getStore().getIDHandler();
-    idHandler.setCDOID(stmt, 1, revision.getID());
-    stmt.setInt(2, revision.getVersion());
+    sql.binder(stmt).bindParameter(revision.getID(), getStore().getIDHandler()).bind(revision.getVersion());
   }
 
   @Override
@@ -94,13 +95,12 @@ public class AuditListTableMapping extends AbstractListTableMapping
       initTable(accessor);
     }
 
-    IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlClear, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
-      idHandler.setCDOID(stmt, 1, id);
-      stmt.setInt(2, version);
+      sqlClear.bindParameter(stmt, 1, id, getStore().getIDHandler());
+      sqlClear.bindParameter(stmt, 2, version);
       DBUtil.update(stmt, false);
     }
     catch (SQLException e)

@@ -74,6 +74,7 @@ import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLCondition;
 import org.eclipse.net4j.db.dml.SQLFragment;
 import org.eclipse.net4j.db.dml.SQLSelectItem;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.fluent.SQLSelectFromStep;
 import org.eclipse.net4j.db.dml.fluent.SQLSelectOrderByStep;
 import org.eclipse.net4j.db.dml.fluent.SQLSelectProjectionStep;
@@ -992,17 +993,17 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     SQLSelectOrderByStep ordered = condition == null //
         ? select.orderBy(SQL.asc(idField), SQL.asc(versionField)) //
         : select.where(condition).orderBy(SQL.asc(idField), SQL.asc(versionField));
-    String sql = ordered.compile(getDBAdapter()).getSQL();
+    SQLStatement sql = ordered.compile(getDBAdapter());
 
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, accessor.getDBConnection(), ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
       for (int i = 0; i < timeParameters; i++)
       {
-        stmt.setLong(i + 1, timeStamp);
+        sql.bindParameter(stmt, i + 1, timeStamp);
       }
 
       resultSet = stmt.executeQuery();
@@ -1068,19 +1069,20 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       return result;
     }
 
-    String sql = selectForChangeSet().where(condition).compile(getDBAdapter()).getSQL();
+    SQLStatement sql = selectForChangeSet().where(condition).compile(getDBAdapter());
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, accessor.getDBConnection(), ReuseProbability.LOW);
 
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
       int column = 1;
+
       for (CDOChangeSetSegment segment : segments)
       {
-        stmt.setLong(column++, segment.getTimeStamp());
-        stmt.setLong(column++, segment.getEndTime());
+        sql.bindParameter(stmt, column++, segment.getTimeStamp());
+        sql.bindParameter(stmt, column++, segment.getEndTime());
       }
 
       resultSet = stmt.executeQuery();
@@ -1249,19 +1251,21 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
           .sql(" IN ") //
           .sql(idString) //
           .build();
-      SQLCondition condition = SQL.gt(versionField, SQL.ZERO).and(getScalarXRefsCondition(context)).and(targetIDs.condition());
-      String sql = SQL.select(idField, valueField) //
+      SQLCondition condition = SQL.gt(versionField, SQL.ZERO) //
+          .and(getScalarXRefsCondition(context)) //
+          .and(targetIDs.condition());
+      SQLStatement sql = SQL.select(idField, valueField) //
           .from(table) //
           .where(condition) //
-          .compile(getDBAdapter()).getSQL();
+          .compile(getDBAdapter());
 
       if (TRACER.isEnabled())
       {
-        TRACER.format("Query XRefs (attributes): {0}", sql);
+        TRACER.format("Query XRefs (attributes): {0}", sql.getSQL());
       }
 
       IIDHandler idHandler = getStore().getIDHandler();
-      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
+      IDBPreparedStatement stmt = DBUtil.prepare(sql, accessor.getDBConnection(), ReuseProbability.MEDIUM);
       ResultSet resultSet = null;
 
       try

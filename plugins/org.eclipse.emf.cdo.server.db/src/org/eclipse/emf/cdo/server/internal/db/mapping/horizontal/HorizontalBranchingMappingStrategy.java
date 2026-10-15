@@ -30,6 +30,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -128,28 +129,30 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
         .and(versionCondition) //
         .and(SQL.eq(first.column(revisedField), SQL.ZERO));
 
-    String sqlUpdate = SQL.update(table) //
+    SQLStatement sqlUpdate = SQL.update(table) //
         .set(revisedField).to(SQL.param()) //
         .where(SQL.eq(idField, SQL.param()) //
             .and(SQL.eq(branchField, SQL.param())) //
             .and(SQL.eq(versionField, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
-    String sqlQuery = SQL.select(first.column(idField), first.column(branchField), first.column(versionField), second.column(createdField)) //
+    SQLStatement sqlQuery = SQL.select(first.column(idField), first.column(branchField), first.column(versionField), second.column(createdField)) //
         .from(first) //
         .from(second) //
         .where(queryCondition) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
+
+    IDBPreparedStatement stmtUpdate = DBUtil.prepare(sqlUpdate, connection, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmtQuery = DBUtil.prepare(sqlQuery, connection, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
+        ReuseProbability.MEDIUM);
 
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdate, ReuseProbability.MEDIUM);
-    IDBPreparedStatement stmtQuery = connection.prepareStatement(sqlQuery, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY,
-        ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
     try
     {
       resultSet = stmtQuery.executeQuery();
+
       int size = DBUtil.getRowCount(resultSet);
       if (size == 0)
       {
@@ -164,10 +167,10 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
         int version = resultSet.getInt(3);
         long revised = resultSet.getLong(4) - 1L;
 
-        stmtUpdate.setLong(1, revised);
-        idHandler.setCDOID(stmtUpdate, 2, id);
-        stmtUpdate.setInt(3, branch);
-        stmtUpdate.setInt(4, version);
+        sqlUpdate.bindParameter(stmtUpdate, 1, revised);
+        sqlUpdate.bindParameter(stmtUpdate, 2, id, idHandler);
+        sqlUpdate.bindParameter(stmtUpdate, 3, branch);
+        sqlUpdate.bindParameter(stmtUpdate, 4, version);
         stmtUpdate.addBatch();
         monitor.worked();
       }
@@ -204,15 +207,15 @@ public class HorizontalBranchingMappingStrategy extends AbstractHorizontalMappin
     IDBField revisedField = table.getField(MappingNames.ATTRIBUTES_REVISED);
     IDBField versionField = table.getField(MappingNames.ATTRIBUTES_VERSION);
 
-    String sql = SQL.update(table) //
+    SQLStatement sql = SQL.update(table) //
         .set(revisedField).to(SQL.ZERO) //
         .where(SQL.ge(branchField, SQL.ZERO) //
             .and(SQL.le(createdField, SQL.literal(toCommitTime))) //
             .and(SQL.gt(revisedField, SQL.literal(toCommitTime))) //
             .and(SQL.gt(versionField, SQL.ZERO))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, connection, ReuseProbability.MEDIUM);
 
     try
     {

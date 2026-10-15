@@ -40,6 +40,8 @@ import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLStatement;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import java.io.IOException;
@@ -69,7 +71,8 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
 
   private IDBField mergedTimeStamp;
 
-  private String sqlInsert;
+  @ExcludeFromDump
+  private transient SQLStatement sqlInsert;
 
   public CommitInfoTable(IDBStore store)
   {
@@ -79,28 +82,24 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
   public void writeCommitInfo(IDBStoreAccessor accessor, CDOBranch branch, long timeStamp, long previousTimeStamp, String userID, String comment,
       CDOBranchPoint mergeSource, OMMonitor monitor)
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlInsert, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
-      stmt.setLong(1, timeStamp);
-      stmt.setLong(2, previousTimeStamp);
-      stmt.setInt(3, branch.getID());
-      stmt.setString(4, userID);
-      stmt.setString(5, comment);
-
       if (withMergeSource)
       {
         if (mergeSource != null)
         {
-          stmt.setInt(6, mergeSource.getBranch().getID());
-          stmt.setLong(7, mergeSource.getTimeStamp());
+          sqlInsert.bind(stmt, timeStamp, previousTimeStamp, branch.getID(), userID, comment, mergeSource.getBranch().getID(), mergeSource.getTimeStamp());
         }
         else
         {
-          stmt.setNull(6, DBType.INTEGER.getCode());
-          stmt.setNull(7, DBType.BIGINT.getCode());
+          sqlInsert.bind(stmt, timeStamp, previousTimeStamp, branch.getID(), userID, comment, (Object)null, (Object)null);
         }
+      }
+      else
+      {
+        sqlInsert.bind(stmt, timeStamp, previousTimeStamp, branch.getID(), userID, comment);
       }
 
       DBUtil.update(stmt, true);
@@ -145,7 +144,7 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
     }
 
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(dbAdapter.quoteTableName(table()));
+    builder.append(dbAdapter.quoteTableName(getTable()));
     boolean where = false;
 
     if (branch != null)
@@ -239,7 +238,7 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
   public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
   {
     IDBAdapter dbAdapter = store().getDBAdapter();
-    String tableName = dbAdapter.quoteTableName(table());
+    String tableName = dbAdapter.quoteTableName(getTable());
     String branchName = dbAdapter.quoteIdentifier(branch.getName());
     String timeStampName = dbAdapter.quoteIdentifier(timeStamp.getName());
     String previousTimeStampName = dbAdapter.quoteIdentifier(previousTimeStamp.getName());
@@ -258,7 +257,7 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
     out.writeBoolean(withMergeSource);
 
     String where = " WHERE " + store().getDBAdapter().quoteIdentifier(timeStamp.getName()) + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, table(), null, where);
+    DBUtil.serializeTable(out, connection, getTable(), null, where);
   }
 
   public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
@@ -270,7 +269,7 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
           + (actualWithMergeSource ? "with" : "without") + " merge source.");
     }
 
-    DBUtil.deserializeTable(in, connection, table(), monitor.fork());
+    DBUtil.deserializeTable(in, connection, getTable(), monitor.fork());
   }
 
   public void repairAfterCrash(Connection connection)
@@ -344,14 +343,14 @@ public class CommitInfoTable extends DBStoreTable implements IBranchDeletionSupp
       sqlInsert = SQL.insertInto(timeStamp.getTable()) //
           .columns(timeStamp, previousTimeStamp, branch, user, comment, mergedBranch, mergedTimeStamp) //
           .values(SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
     }
     else
     {
       sqlInsert = SQL.insertInto(timeStamp.getTable()) //
           .columns(timeStamp, previousTimeStamp, branch, user, comment) //
           .values(SQL.param(), SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
     }
   }
 

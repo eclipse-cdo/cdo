@@ -38,9 +38,11 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.util.ConsumerWithException;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -156,13 +158,17 @@ public class DBStoreTables extends Lifecycle
 
     private IDBField value;
 
-    private String sqlDeleteProperties;
+    @ExcludeFromDump
+    private transient SQLStatement sqlDeleteProperties;
 
-    private String sqlInsertProperties;
+    @ExcludeFromDump
+    private transient SQLStatement sqlInsertProperties;
 
-    private String sqlSelectProperties;
+    @ExcludeFromDump
+    private transient SQLStatement sqlSelectProperties;
 
-    private String sqlSelectAllProperties;
+    @ExcludeFromDump
+    private transient SQLStatement sqlSelectAllProperties;
 
     public PropertiesTable(IDBStore store)
     {
@@ -181,12 +187,13 @@ public class DBStoreTables extends Lifecycle
         boolean allProperties = ObjectUtil.isEmpty(names);
         if (allProperties)
         {
-          stmt = connection.prepareStatement(sqlSelectAllProperties, ReuseProbability.MEDIUM);
+          stmt = DBUtil.prepare(sqlSelectAllProperties, connection, ReuseProbability.MEDIUM);
           ResultSet resultSet = null;
 
           try
           {
             resultSet = stmt.executeQuery();
+
             while (resultSet.next())
             {
               String key = resultSet.getString(1);
@@ -201,10 +208,11 @@ public class DBStoreTables extends Lifecycle
         }
         else
         {
-          stmt = connection.prepareStatement(sqlSelectProperties, ReuseProbability.MEDIUM);
+          stmt = DBUtil.prepare(sqlSelectProperties, connection, ReuseProbability.MEDIUM);
+
           for (String name : names)
           {
-            stmt.setString(1, name);
+            sqlSelectProperties.bindAll(stmt, name);
             ResultSet resultSet = null;
 
             try
@@ -239,8 +247,8 @@ public class DBStoreTables extends Lifecycle
     public void setPersistentProperties(Map<String, String> properties)
     {
       IDBConnection connection = getConnection();
-      IDBPreparedStatement deleteStmt = connection.prepareStatement(sqlDeleteProperties, ReuseProbability.MEDIUM);
-      IDBPreparedStatement insertStmt = connection.prepareStatement(sqlInsertProperties, ReuseProbability.MEDIUM);
+      IDBPreparedStatement deleteStmt = DBUtil.prepare(sqlDeleteProperties, connection, ReuseProbability.MEDIUM);
+      IDBPreparedStatement insertStmt = DBUtil.prepare(sqlInsertProperties, connection, ReuseProbability.MEDIUM);
       String msg = null;
 
       try
@@ -250,13 +258,12 @@ public class DBStoreTables extends Lifecycle
           String name = entry.getKey();
           String value = entry.getValue();
 
-          msg = sqlDeleteProperties;
-          deleteStmt.setString(1, name);
+          msg = sqlDeleteProperties.getSQL();
+          sqlDeleteProperties.bindAll(deleteStmt, name);
           deleteStmt.executeUpdate();
 
-          msg = sqlInsertProperties;
-          insertStmt.setString(1, name);
-          insertStmt.setString(2, value);
+          msg = sqlInsertProperties.getSQL();
+          sqlInsertProperties.bindAll(insertStmt, name, value);
           insertStmt.executeUpdate();
         }
 
@@ -278,13 +285,13 @@ public class DBStoreTables extends Lifecycle
     public void removePersistentProperties(Set<String> names)
     {
       IDBConnection connection = getConnection();
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlDeleteProperties, ReuseProbability.MEDIUM);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlDeleteProperties, connection, ReuseProbability.MEDIUM);
 
       try
       {
         for (String name : names)
         {
-          stmt.setString(1, name);
+          sqlDeleteProperties.bindAll(stmt, name);
           stmt.executeUpdate();
         }
 
@@ -292,7 +299,7 @@ public class DBStoreTables extends Lifecycle
       }
       catch (SQLException ex)
       {
-        throw new DBException(ex, sqlDeleteProperties);
+        throw new DBException(ex, sqlDeleteProperties.getSQL());
       }
       finally
       {
@@ -322,21 +329,21 @@ public class DBStoreTables extends Lifecycle
     {
       sqlDeleteProperties = SQL.deleteFrom(table) //
           .where(name).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlInsertProperties = SQL.insertInto(table) //
           .columns(name, value) //
           .values(SQL.param(), SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlSelectProperties = SQL.select(value) //
           .from(table) //
           .where(name).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlSelectAllProperties = SQL.select(name, value) //
           .from(table) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
     }
 
     public static String tableName()
@@ -386,7 +393,8 @@ public class DBStoreTables extends Lifecycle
 
     private IDBField packageData;
 
-    private String sqlSelectPackageData;
+    @ExcludeFromDump
+    private transient SQLStatement sqlSelectPackageData;
 
     public PackageUnitsTable(IDBStore store)
     {
@@ -420,8 +428,8 @@ public class DBStoreTables extends Lifecycle
 
       try
       {
-        stmt = connection.prepareStatement(sqlSelectPackageData);
-        stmt.setString(1, packageUnit.getID());
+        stmt = connection.prepareStatement(sqlSelectPackageData.getSQL());
+        sqlSelectPackageData.bind(stmt, packageUnit.getID());
         resultSet = stmt.executeQuery();
         return resultSet.next() ? resultSet.getBytes(1) : null;
       }
@@ -462,7 +470,7 @@ public class DBStoreTables extends Lifecycle
       sqlSelectPackageData = SQL.select(packageData) //
           .from(table) //
           .where(id).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
     }
 
     /**
@@ -571,15 +579,20 @@ public class DBStoreTables extends Lifecycle
 
     private IDBField baseTime;
 
-    private String sqlCreateBranch;
+    @ExcludeFromDump
+    private transient SQLStatement sqlCreateBranch;
 
-    private String sqlLoadBranch;
+    @ExcludeFromDump
+    private transient SQLStatement sqlLoadBranch;
 
-    private String sqlRenameBranch;
+    @ExcludeFromDump
+    private transient SQLStatement sqlRenameBranch;
 
-    private String sqlLoadSubBranches;
+    @ExcludeFromDump
+    private transient SQLStatement sqlLoadSubBranches;
 
-    private String sqlLoadBranches;
+    @ExcludeFromDump
+    private transient SQLStatement sqlLoadBranches;
 
     public BranchesTable(IDBStore store)
     {
@@ -602,16 +615,13 @@ public class DBStoreTables extends Lifecycle
         branchID = ((DBStore)store()).getNextLocalBranchID();
       }
 
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlCreateBranch, ReuseProbability.LOW);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlCreateBranch, connection, ReuseProbability.LOW);
 
       try
       {
-        stmt.setInt(1, branchID);
-        stmt.setString(2, branchInfo.getName());
-        stmt.setInt(3, branchInfo.getBaseBranchID());
-        stmt.setLong(4, branchInfo.getBaseTimeStamp());
-
+        sqlCreateBranch.bindAll(stmt, branchID, branchInfo.getName(), branchInfo.getBaseBranchID(), branchInfo.getBaseTimeStamp());
         DBUtil.update(stmt, true);
+
         connection.commit();
         return Pair.create(branchID, branchInfo.getBaseTimeStamp());
       }
@@ -627,14 +637,14 @@ public class DBStoreTables extends Lifecycle
 
     public BranchInfo loadBranch(IDBConnection connection, int branchID)
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlLoadBranch, ReuseProbability.HIGH);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlLoadBranch, connection, ReuseProbability.HIGH);
       ResultSet resultSet = null;
 
       try
       {
-        stmt.setInt(1, branchID);
-
+        sqlLoadBranch.bind(stmt, branchID);
         resultSet = stmt.executeQuery();
+
         if (!resultSet.next())
         {
           throw new DBException("Branch with ID " + branchID + " does not exist");
@@ -658,15 +668,16 @@ public class DBStoreTables extends Lifecycle
 
     public SubBranchInfo[] loadSubBranches(IDBConnection connection, int baseID)
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlLoadSubBranches, ReuseProbability.HIGH);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlLoadSubBranches, connection, ReuseProbability.HIGH);
       ResultSet resultSet = null;
 
       try
       {
-        stmt.setInt(1, baseID);
-
+        sqlLoadSubBranches.bind(stmt, baseID);
         resultSet = stmt.executeQuery();
+
         List<SubBranchInfo> result = new ArrayList<>();
+
         while (resultSet.next())
         {
           int id = resultSet.getInt(1);
@@ -691,17 +702,16 @@ public class DBStoreTables extends Lifecycle
     public int loadBranches(IDBConnection connection, int startID, int endID, CDOBranchHandler handler)
     {
       int count = 0;
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlLoadBranches, ReuseProbability.HIGH);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlLoadBranches, connection, ReuseProbability.HIGH);
       ResultSet resultSet = null;
 
       InternalCDOBranchManager branchManager = (InternalCDOBranchManager)store().getRepository().getBranchManager();
 
       try
       {
-        stmt.setInt(1, startID);
-        stmt.setInt(2, endID > 0 ? endID : Integer.MAX_VALUE);
-
+        sqlLoadBranches.bindAll(stmt, startID, endID > 0 ? endID : Integer.MAX_VALUE);
         resultSet = stmt.executeQuery();
+
         while (resultSet.next())
         {
           int branchID = resultSet.getInt(1);
@@ -740,13 +750,13 @@ public class DBStoreTables extends Lifecycle
         IDBAdapter dbAdapter = store.getDBAdapter();
 
         // Delete the branches.
-        batch.add("DELETE FROM " + dbAdapter.quoteTableName(table()) //
+        batch.add("DELETE FROM " + dbAdapter.quoteTableName(getTable()) //
             + " WHERE " + dbAdapter.quoteIdentifier(id.getName()) //
             + " IN (" + idList + ")");
 
         // Delete the tags.
         TagsTable tags = store.tables().tags();
-        batch.add("DELETE FROM " + dbAdapter.quoteTableName(tags.table()) //
+        batch.add("DELETE FROM " + dbAdapter.quoteTableName(tags.getTable()) //
             + " WHERE " + dbAdapter.quoteIdentifier(tags.branch().getName()) //
             + " IN (" + idList + ")");
 
@@ -791,14 +801,13 @@ public class DBStoreTables extends Lifecycle
 
     public void renameBranch(IDBConnection connection, int branchID, String oldName, String newName)
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlRenameBranch, ReuseProbability.LOW);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlRenameBranch, connection, ReuseProbability.LOW);
 
       try
       {
-        stmt.setString(1, newName);
-        stmt.setInt(2, branchID);
-
+        sqlRenameBranch.bind(stmt, newName, branchID);
         DBUtil.update(stmt, true);
+
         connection.commit();
       }
       catch (SQLException ex)
@@ -837,28 +846,28 @@ public class DBStoreTables extends Lifecycle
       sqlCreateBranch = SQL.insertInto(table) //
           .columns(id, name, baseID, baseTime) //
           .values(SQL.param(), SQL.param(), SQL.param(), SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlLoadBranch = SQL.select(name, baseID, baseTime) //
           .from(table) //
           .where(id).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlRenameBranch = SQL.update(table) //
           .set(name).to(SQL.param()) //
           .where(id).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlLoadSubBranches = SQL.select(id, name, baseTime) //
           .from(table) //
           .where(baseID).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlLoadBranches = SQL.select(id, name, baseID, baseTime) //
           .from(table) //
           .where(id).between(SQL.param(), SQL.param()) //
           .orderBy(id) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
     }
 
     private static String buildIDList(Set<CDOBranch> branches)
@@ -907,17 +916,23 @@ public class DBStoreTables extends Lifecycle
 
     private IDBField timestamp;
 
-    private String sqlCreateTag;
+    @ExcludeFromDump
+    private transient SQLStatement sqlCreateTag;
 
-    private String sqlRenameTag;
+    @ExcludeFromDump
+    private transient SQLStatement sqlRenameTag;
 
-    private String sqlMoveTag;
+    @ExcludeFromDump
+    private transient SQLStatement sqlMoveTag;
 
-    private String sqlDeleteTag;
+    @ExcludeFromDump
+    private transient SQLStatement sqlDeleteTag;
 
-    private String sqlLoadTags;
+    @ExcludeFromDump
+    private transient SQLStatement sqlLoadTags;
 
-    private String sqlLoadTag;
+    @ExcludeFromDump
+    private transient SQLStatement sqlLoadTag;
 
     public TagsTable(IDBStore store)
     {
@@ -934,49 +949,21 @@ public class DBStoreTables extends Lifecycle
       switch (InternalCDOBranchManager.getTagChangeKind(oldName, newName, branchPoint))
       {
       case CREATED:
-      {
-        // CREATE
-        execSQL(connection, sqlCreateTag, stmt -> {
-          stmt.setString(1, newName);
-          stmt.setInt(2, branchPoint.getBranch().getID());
-          stmt.setLong(3, branchPoint.getTimeStamp());
-        });
-
+        execSQL(connection, sqlCreateTag, //
+            stmt -> sqlCreateTag.bindAll(stmt, newName, branchPoint.getBranch().getID(), branchPoint.getTimeStamp()));
         break;
-      }
 
       case RENAMED:
-      {
-        // RENAME
-        execSQL(connection, sqlRenameTag, stmt -> {
-          stmt.setString(1, newName);
-          stmt.setString(2, oldName);
-        });
-
+        execSQL(connection, sqlRenameTag, stmt -> sqlRenameTag.bindAll(stmt, newName, oldName));
         break;
-      }
 
       case MOVED:
-      {
-        // MOVE
-        execSQL(connection, sqlMoveTag, stmt -> {
-          stmt.setInt(1, branchPoint.getBranch().getID());
-          stmt.setLong(2, branchPoint.getTimeStamp());
-          stmt.setString(3, oldName);
-        });
-
+        execSQL(connection, sqlMoveTag, stmt -> sqlMoveTag.bindAll(stmt, branchPoint.getBranch().getID(), branchPoint.getTimeStamp(), oldName));
         break;
-      }
 
       case DELETED:
-      {
-        // DELETE
-        execSQL(connection, sqlDeleteTag, stmt -> {
-          stmt.setString(1, oldName);
-        });
-
+        execSQL(connection, sqlDeleteTag, stmt -> sqlDeleteTag.bindAll(stmt, oldName));
         break;
-      }
       }
 
       // Repository.changeTag() takes care of the proper result value;
@@ -986,18 +973,19 @@ public class DBStoreTables extends Lifecycle
     public void loadTags(IDBConnection connection, String name, Consumer<BranchInfo> handler)
     {
       boolean single = name != null;
-      String sql = single ? sqlLoadTag : sqlLoadTags;
-      IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.LOW);
+      SQLStatement sql = single ? sqlLoadTag : sqlLoadTags;
+      IDBPreparedStatement stmt = DBUtil.prepare(sql, connection, ReuseProbability.LOW);
       ResultSet resultSet = null;
 
       try
       {
         if (single)
         {
-          stmt.setString(1, name);
+          sql.bind(stmt, name);
         }
 
         resultSet = stmt.executeQuery();
+
         while (resultSet.next())
         {
           int c = 0;
@@ -1047,36 +1035,36 @@ public class DBStoreTables extends Lifecycle
       sqlCreateTag = SQL.insertInto(table) //
           .columns(name, branch, timestamp) //
           .values(SQL.param(), SQL.param(), SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlRenameTag = SQL.update(table) //
           .set(name).to(SQL.param()) //
           .where(name).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlMoveTag = SQL.update(table) //
           .set(branch).to(SQL.param()) //
           .set(timestamp).to(SQL.param()) //
           .where(name).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlDeleteTag = SQL.deleteFrom(table) //
           .where(name).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlLoadTags = SQL.select(name, branch, timestamp) //
           .from(table) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlLoadTag = SQL.select(branch, timestamp) //
           .from(table) //
           .where(name).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
     }
 
-    private static void execSQL(IDBConnection connection, String sql, ConsumerWithException<IDBPreparedStatement, SQLException> preparer)
+    private static void execSQL(IDBConnection connection, SQLStatement sql, ConsumerWithException<IDBPreparedStatement, SQLException> preparer)
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.LOW);
+      IDBPreparedStatement stmt = DBUtil.prepare(sql, connection, ReuseProbability.LOW);
 
       try
       {
@@ -1136,19 +1124,26 @@ public class DBStoreTables extends Lifecycle
 
     private IDBField refs;
 
-    private String sqlQueryLobs;
+    @ExcludeFromDump
+    private transient SQLStatement sqlQueryLobs;
 
-    private String sqlHandleLobs;
+    @ExcludeFromDump
+    private transient SQLStatement sqlHandleLobs;
 
-    private String sqlLoadLob;
+    @ExcludeFromDump
+    private transient SQLStatement sqlLoadLob;
 
-    private String sqlWriteBlob;
+    @ExcludeFromDump
+    private transient SQLStatement sqlWriteBlob;
 
-    private String sqlWriteClob;
+    @ExcludeFromDump
+    private transient SQLStatement sqlWriteClob;
 
-    private String sqlResetRefs;
+    @ExcludeFromDump
+    private transient SQLStatement sqlResetRefs;
 
-    private String sqlDeleteOrphans;
+    @ExcludeFromDump
+    private transient SQLStatement sqlDeleteOrphans;
 
     public LobsTable(IDBStore store)
     {
@@ -1157,7 +1152,7 @@ public class DBStoreTables extends Lifecycle
 
     public void queryLobs(IDBConnection connection, List<byte[]> ids)
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlQueryLobs, ReuseProbability.MEDIUM);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlQueryLobs, connection, ReuseProbability.MEDIUM);
       ResultSet resultSet = null;
 
       try
@@ -1165,7 +1160,7 @@ public class DBStoreTables extends Lifecycle
         for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)
         {
           byte[] id = it.next();
-          stmt.setString(1, HexUtil.bytesToHex(id));
+          sqlQueryLobs.bind(stmt, HexUtil.bytesToHex(id));
 
           try
           {
@@ -1193,17 +1188,18 @@ public class DBStoreTables extends Lifecycle
 
     public void loadLob(IDBConnection connection, byte[] id, OutputStream out) throws IOException
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlLoadLob, ReuseProbability.MEDIUM);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlLoadLob, connection, ReuseProbability.MEDIUM);
       ResultSet resultSet = null;
 
       try
       {
-        stmt.setString(1, HexUtil.bytesToHex(id));
+        sqlLoadLob.bind(stmt, HexUtil.bytesToHex(id));
         resultSet = stmt.executeQuery();
         resultSet.next();
 
         long size = resultSet.getLong(1);
         InputStream inputStream = resultSet.getBinaryStream(2);
+
         if (resultSet.wasNull())
         {
           Reader reader = resultSet.getCharacterStream(3);
@@ -1227,17 +1223,19 @@ public class DBStoreTables extends Lifecycle
 
     public void handleLobs(IDBConnection connection, long fromTime, long toTime, CDOLobHandler handler) throws IOException
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlHandleLobs, ReuseProbability.LOW);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlHandleLobs, connection, ReuseProbability.LOW);
       ResultSet resultSet = null;
 
       try
       {
         resultSet = stmt.executeQuery();
+
         while (resultSet.next())
         {
           byte[] id = HexUtil.hexToBytes(resultSet.getString(1));
           long size = resultSet.getLong(2);
           InputStream inputStream = resultSet.getBinaryStream(3);
+
           if (resultSet.wasNull())
           {
             Reader reader = resultSet.getCharacterStream(4);
@@ -1284,13 +1282,13 @@ public class DBStoreTables extends Lifecycle
 
     public void writeBlob(IDBConnection connection, byte[] id, long size, InputStream inputStream) throws IOException
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlWriteBlob, ReuseProbability.MEDIUM);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlWriteBlob, connection, ReuseProbability.MEDIUM);
 
       try
       {
-        stmt.setString(1, HexUtil.bytesToHex(id));
-        stmt.setLong(2, size);
-        stmt.setBinaryStream(3, inputStream, (int)size);
+        sqlWriteBlob.binder(stmt) //
+            .bind(HexUtil.bytesToHex(id), size) //
+            .bindParameter(inputStream, (statement, index, stream) -> statement.setBinaryStream(index, stream, (int)size));
 
         DBUtil.update(stmt, true);
       }
@@ -1306,13 +1304,13 @@ public class DBStoreTables extends Lifecycle
 
     public void writeClob(IDBConnection connection, byte[] id, long size, Reader reader) throws IOException
     {
-      IDBPreparedStatement stmt = connection.prepareStatement(sqlWriteClob, ReuseProbability.MEDIUM);
+      IDBPreparedStatement stmt = DBUtil.prepare(sqlWriteClob, connection, ReuseProbability.MEDIUM);
 
       try
       {
-        stmt.setString(1, HexUtil.bytesToHex(id));
-        stmt.setLong(2, size);
-        stmt.setCharacterStream(3, reader, (int)size);
+        sqlWriteClob.binder(stmt) //
+            .bind(HexUtil.bytesToHex(id), size) //
+            .bindParameter(reader, (statement, index, input) -> statement.setCharacterStream(index, input, (int)size));
 
         DBUtil.update(stmt, true);
       }
@@ -1328,13 +1326,13 @@ public class DBStoreTables extends Lifecycle
 
     public void resetRefs(Connection connection)
     {
-      DBUtil.execute(connection, sqlResetRefs);
+      DBUtil.execute(connection, sqlResetRefs.getSQL());
     }
 
     public int updateRefs(Connection connection, IDBField dataField)
     {
       IDBTable dataTable = dataField.getTable();
-      IDBTable lobsTable = table();
+      IDBTable lobsTable = getTable();
 
       IDBAdapter dbAdapter = store().getDBAdapter();
       String lobsTableName = dbAdapter.quoteTableName(lobsTable);
@@ -1342,9 +1340,11 @@ public class DBStoreTables extends Lifecycle
       String idName = dbAdapter.quoteIdentifier(id.getName());
       String dataTableName = dbAdapter.quoteTableName(dataTable);
       String dataFieldName = dbAdapter.quoteIdentifier(dataField.getName());
-      String sql = "UPDATE " + lobsTableName + " SET " + refsName + "=" + refsName + //
-          "+(SELECT COUNT(*) FROM " + dataTableName + " WHERE " //
-          + dataFieldName + " LIKE " + lobsTableName + "." + dbAdapter.sqlConcat(idName, "'-%'") + ")";
+      String sql = "UPDATE " + lobsTableName //
+          + " SET " + refsName + "=" + refsName + //
+          "+(SELECT COUNT(*) FROM " + dataTableName //
+          + " WHERE " + dataFieldName //
+          + " LIKE " + lobsTableName + "." + dbAdapter.sqlConcat(idName, "'-%'") + ")";
 
       return DBUtil.update(connection, sql);
     }
@@ -1354,10 +1354,10 @@ public class DBStoreTables extends Lifecycle
       if (dryRun)
       {
         IDBAdapter dbAdapter = store().getDBAdapter();
-        return DBUtil.getRowCount(connection, dbAdapter.quoteTableName(table()) + " WHERE " + dbAdapter.quoteIdentifier(refs.getName()) + "=0");
+        return DBUtil.getRowCount(connection, dbAdapter.quoteTableName(getTable()) + " WHERE " + dbAdapter.quoteIdentifier(refs.getName()) + "=0");
       }
 
-      return DBUtil.update(connection, sqlDeleteOrphans);
+      return DBUtil.update(connection, sqlDeleteOrphans.getSQL());
     }
 
     @Override
@@ -1388,34 +1388,34 @@ public class DBStoreTables extends Lifecycle
       sqlQueryLobs = SQL.select(SQL.ONE) //
           .from(table) //
           .where(id).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlHandleLobs = SQL.select(id, size, bdata, cdata) //
           .from(table) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlLoadLob = SQL.select(size, bdata, cdata) //
           .from(table) //
           .where(id).eq(SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlWriteBlob = SQL.insertInto(table) //
           .columns(id, size, bdata) //
           .values(SQL.param(), SQL.param(), SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlWriteClob = SQL.insertInto(table) //
           .columns(id, size, cdata) //
           .values(SQL.param(), SQL.param(), SQL.param()) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlResetRefs = SQL.update(table) //
           .set(refs).to(SQL.ZERO) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
 
       sqlDeleteOrphans = SQL.deleteFrom(table) //
           .where(refs).eq(SQL.ZERO) //
-          .compile(adapter()).getSQL();
+          .compile(adapter());
     }
 
     public static String tableName()

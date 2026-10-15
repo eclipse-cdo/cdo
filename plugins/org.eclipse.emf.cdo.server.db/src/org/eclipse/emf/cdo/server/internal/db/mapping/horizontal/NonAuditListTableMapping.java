@@ -39,6 +39,8 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLStatement;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -64,25 +66,35 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, NonAuditListTableMapping.class);
 
-  private String sqlClear;
+  @ExcludeFromDump
+  private transient SQLStatement sqlClear;
 
-  private String sqlUpdateValue;
+  @ExcludeFromDump
+  private transient SQLStatement sqlUpdateValue;
 
-  private String sqlUpdateIndex;
+  @ExcludeFromDump
+  private transient SQLStatement sqlUpdateIndex;
 
-  private String sqlInsertValue;
+  @ExcludeFromDump
+  private transient SQLStatement sqlInsertValue;
 
-  private String sqlDeleteItem;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDeleteItem;
 
-  private String sqlShiftDownIndex;
+  @ExcludeFromDump
+  private transient SQLStatement sqlShiftDownIndex;
 
-  private String sqlShiftDownFinalIndex;
+  @ExcludeFromDump
+  private transient SQLStatement sqlShiftDownFinalIndex;
 
-  private String sqlReadCurrentIndexOffset;
+  @ExcludeFromDump
+  private transient SQLStatement sqlReadCurrentIndexOffset;
 
-  private String sqlShiftUpIndex;
+  @ExcludeFromDump
+  private transient SQLStatement sqlShiftUpIndex;
 
-  private String sqlShiftUpFinalIndex;
+  @ExcludeFromDump
+  private transient SQLStatement sqlShiftUpFinalIndex;
 
   public NonAuditListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -99,45 +111,50 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     // ----------- clear list -------------------------
     sqlClear = SQL.deleteFrom(table) //
         .where(sourceField).eq(SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     sqlDeleteItem = SQL.deleteFrom(table) //
-        .where(sourceField).eq(SQL.param()).and(indexField).eq(SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .where(sourceField).eq(SQL.param()) //
+        .and(indexField).eq(SQL.param()) //
+        .compile(getDBAdapter());
 
     sqlUpdateValue = SQL.update(table) //
         .set(valueField).to(SQL.param()) //
-        .where(sourceField).eq(SQL.param()).and(indexField).eq(SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .where(sourceField).eq(SQL.param()) //
+        .and(indexField).eq(SQL.param()) //
+        .compile(getDBAdapter());
 
     sqlInsertValue = SQL.insertInto(table) //
         .columns(sourceField, indexField, valueField) //
         .values(SQL.param(), SQL.param(), SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     sqlUpdateIndex = SQL.update(table) //
         .set(indexField).to(SQL.param()) //
-        .where(sourceField).eq(SQL.param()).and(indexField).eq(SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .where(sourceField).eq(SQL.param()) //
+        .and(indexField).eq(SQL.param()) //
+        .compile(getDBAdapter());
 
     // Move the affected indexes to a disjoint temporary range first. This avoids transient unique-key
     // violations on databases that don't support ordered UPDATEs (for example PostgreSQL).
     sqlShiftDownIndex = SQL.update(table) //
         .set(indexField).to(SQL.add(indexField, SQL.param())) //
-        .where(SQL.eq(sourceField, SQL.param()).and(SQL.between(indexField, SQL.param(), SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.between(indexField, SQL.param(), SQL.param()))) //
+        .compile(getDBAdapter());
     sqlShiftUpIndex = sqlShiftDownIndex;
 
     sqlShiftDownFinalIndex = SQL.update(table) //
         .set(indexField).to(SQL.add(SQL.subtract(indexField, SQL.param()), SQL.param())) //
-        .where(SQL.eq(sourceField, SQL.param()).and(SQL.between(indexField, SQL.param(), SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .where(SQL.eq(sourceField, SQL.param()) //
+            .and(SQL.between(indexField, SQL.param(), SQL.param()))) //
+        .compile(getDBAdapter());
     sqlShiftUpFinalIndex = sqlShiftDownFinalIndex;
 
     sqlReadCurrentIndexOffset = SQL.select(SQL.min(indexField)) //
         .from(table) //
         .where(sourceField).eq(SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
   }
 
   @Override
@@ -161,10 +178,9 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
   }
 
   @Override
-  protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
+  protected void bindKeyFields(SQLStatement sql, PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    IIDHandler idHandler = getStore().getIDHandler();
-    idHandler.setCDOID(stmt, 1, revision.getID());
+    sql.bindParameter(stmt, 1, revision.getID(), getStore().getIDHandler());
   }
 
   @Override
@@ -237,12 +253,13 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
         if (values != null)
         {
           int index = 0;
+
           for (Object value : values)
           {
             int column = 1;
-            getStore().getIDHandler().setCDOID(stmt, column++, revision.getID());
-            stmt.setInt(column++, index++);
-            getTypeMapping().setValue(stmt, column, value);
+            sqlInsertValue.bindParameter(stmt, column++, revision.getID(), getStore().getIDHandler());
+            sqlInsertValue.bindParameter(stmt, column++, index++);
+            sqlInsertValue.bindParameter(stmt, column, value, getTypeMapping());
             stmt.executeUpdate();
             ++entryCount;
           }
@@ -457,12 +474,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       return;
     }
 
-    IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlClear, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
-      idHandler.setCDOID(stmt, 1, id);
+      sqlClear.bindParameter(stmt, 1, id, getStore().getIDHandler());
       DBUtil.update(stmt, false);
     }
     catch (SQLException e)
@@ -483,13 +499,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       return 0;
     }
 
-    IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlReadCurrentIndexOffset, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlReadCurrentIndexOffset, accessor.getDBConnection(), ReuseProbability.HIGH);
     ResultSet rset = null;
 
     try
     {
-      idHandler.setCDOID(stmt, 1, id);
+      sqlReadCurrentIndexOffset.bindParameter(stmt, 1, id, getStore().getIDHandler());
       rset = stmt.executeQuery();
       if (!rset.next())
       {
@@ -553,8 +568,8 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         BatchedStatement stmt = getDeleteStmt();
         int column = 1;
-        getStore().getIDHandler().setCDOID(stmt, column++, id);
-        stmt.setInt(column, index);
+        sqlDeleteItem.bindParameter(stmt, column++, id, getStore().getIDHandler());
+        sqlDeleteItem.bindParameter(stmt, column, index);
         add(stmt);
         ++deleteCount;
       }
@@ -570,9 +585,9 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         BatchedStatement stmt = getMoveStmt();
         int column = 1;
-        stmt.setInt(column++, targetIndex);
-        getStore().getIDHandler().setCDOID(stmt, column++, id);
-        stmt.setInt(column, sourceIndex);
+        sqlUpdateIndex.bindParameter(stmt, column++, targetIndex);
+        sqlUpdateIndex.bindParameter(stmt, column++, id, getStore().getIDHandler());
+        sqlUpdateIndex.bindParameter(stmt, column, sourceIndex);
         add(stmt);
         ++moveCount;
       }
@@ -588,9 +603,9 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         BatchedStatement stmt = getSetStmt();
         int column = 1;
-        getTypeMapping().setValue(stmt, column++, value);
-        getStore().getIDHandler().setCDOID(stmt, column++, id);
-        stmt.setInt(column, index);
+        sqlUpdateValue.bindParameter(stmt, column++, value, getTypeMapping());
+        sqlUpdateValue.bindParameter(stmt, column++, id, getStore().getIDHandler());
+        sqlUpdateValue.bindParameter(stmt, column, index);
         add(stmt);
         ++setCount;
       }
@@ -606,9 +621,9 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         BatchedStatement stmt = getInsertStmt();
         int column = 1;
-        getStore().getIDHandler().setCDOID(stmt, column++, id);
-        stmt.setInt(column++, index);
-        getTypeMapping().setValue(stmt, column, value);
+        sqlInsertValue.bindParameter(stmt, column++, id, getStore().getIDHandler());
+        sqlInsertValue.bindParameter(stmt, column++, index);
+        sqlInsertValue.bindParameter(stmt, column, value, getTypeMapping());
         add(stmt);
         ++insertCount;
       }
@@ -623,7 +638,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       try
       {
         BatchedStatement stmt = getClearStmt();
-        getStore().getIDHandler().setCDOID(stmt, 1, id);
+        sqlClear.bindParameter(stmt, 1, id, getStore().getIDHandler());
         add(stmt);
       }
       catch (SQLException ex)
@@ -651,10 +666,10 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         BatchedStatement stmt = getShiftTemporaryStmt();
         int column = 1;
-        stmt.setInt(column++, temporaryIndexOffset);
-        getStore().getIDHandler().setCDOID(stmt, column++, id);
-        stmt.setInt(column++, startIndex);
-        stmt.setInt(column, endIndex);
+        sqlShiftDownIndex.bindParameter(stmt, column++, temporaryIndexOffset);
+        sqlShiftDownIndex.bindParameter(stmt, column++, id, getStore().getIDHandler());
+        sqlShiftDownIndex.bindParameter(stmt, column++, startIndex);
+        sqlShiftDownIndex.bindParameter(stmt, column, endIndex);
         add(stmt);
       }
       catch (SQLException ex)
@@ -669,11 +684,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       {
         BatchedStatement stmt = getShiftFinalStmt();
         int column = 1;
-        stmt.setInt(column++, temporaryIndexOffset);
-        stmt.setInt(column++, shiftOffset);
-        getStore().getIDHandler().setCDOID(stmt, column++, id);
-        stmt.setInt(column++, temporaryStartIndex);
-        stmt.setInt(column, temporaryEndIndex);
+        sqlShiftDownFinalIndex.bindParameter(stmt, column++, temporaryIndexOffset);
+        sqlShiftDownFinalIndex.bindParameter(stmt, column++, shiftOffset);
+        sqlShiftDownFinalIndex.bindParameter(stmt, column++, id, getStore().getIDHandler());
+        sqlShiftDownFinalIndex.bindParameter(stmt, column++, temporaryStartIndex);
+        sqlShiftDownFinalIndex.bindParameter(stmt, column, temporaryEndIndex);
         add(stmt);
       }
       catch (SQLException ex)
@@ -854,7 +869,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
       return shiftFinalStmt;
     }
 
-    private BatchedStatement createStatement(String sql, String diagnosticName)
+    private BatchedStatement createStatement(SQLStatement sql, String diagnosticName)
     {
       IBatchingContext batchingContext = accessor.getBatchingContext();
       return batchingContext.createStatement(sql, ReuseProbability.HIGH, diagnosticName);
@@ -1067,11 +1082,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       if (stmtDelete == null)
       {
-        stmtDelete = accessor.getDBConnection().prepareStatement(sqlDeleteItem, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmtDelete, 1, id);
+        stmtDelete = DBUtil.prepare(sqlDeleteItem, accessor.getDBConnection(), ReuseProbability.HIGH);
+        sqlDeleteItem.bindParameter(stmtDelete, 1, id, idHandler);
       }
 
-      stmtDelete.setInt(2, index);
+      sqlDeleteItem.bindParameter(stmtDelete, 2, index);
       stmtDelete.addBatch();
       ++deleteCount;
     }
@@ -1087,12 +1102,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       if (stmtMove == null)
       {
-        stmtMove = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmtMove, 2, id);
+        stmtMove = DBUtil.prepare(sqlUpdateIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
+        sqlUpdateIndex.bindParameter(stmtMove, 2, id, idHandler);
       }
 
-      stmtMove.setInt(3, sourcePhysicalIndex);
-      stmtMove.setInt(1, targetPhysicalIndex);
+      sqlUpdateIndex.bindParameter(stmtMove, 3, sourcePhysicalIndex);
+      sqlUpdateIndex.bindParameter(stmtMove, 1, targetPhysicalIndex);
       stmtMove.addBatch();
       ++moveCount;
     }
@@ -1108,12 +1123,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       if (stmtSet == null)
       {
-        stmtSet = accessor.getDBConnection().prepareStatement(sqlUpdateValue, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmtSet, 2, id);
+        stmtSet = DBUtil.prepare(sqlUpdateValue, accessor.getDBConnection(), ReuseProbability.HIGH);
+        sqlUpdateValue.bindParameter(stmtSet, 2, id, idHandler);
       }
 
-      stmtSet.setInt(3, targetPhysicalIndex);
-      typeMapping.setValue(stmtSet, 1, value);
+      sqlUpdateValue.bindParameter(stmtSet, 3, targetPhysicalIndex);
+      sqlUpdateValue.bindParameter(stmtSet, 1, value, typeMapping);
       stmtSet.addBatch();
       ++setCount;
     }
@@ -1129,12 +1144,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
 
       if (stmtInsert == null)
       {
-        stmtInsert = accessor.getDBConnection().prepareStatement(sqlInsertValue, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmtInsert, 1, id);
+        stmtInsert = DBUtil.prepare(sqlInsertValue, accessor.getDBConnection(), ReuseProbability.HIGH);
+        sqlInsertValue.bindParameter(stmtInsert, 1, id, idHandler);
       }
 
-      stmtInsert.setInt(2, index);
-      typeMapping.setValue(stmtInsert, 3, value);
+      sqlInsertValue.bindParameter(stmtInsert, 2, index);
+      sqlInsertValue.bindParameter(stmtInsert, 3, value, typeMapping);
       stmtInsert.addBatch();
       ++insertCount;
     }
@@ -1168,22 +1183,22 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (stmtShiftDown == null)
       {
-        stmtShiftDown = accessor.getDBConnection().prepareStatement(sqlShiftDownIndex, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmtShiftDown, 2, id);
+        stmtShiftDown = DBUtil.prepare(sqlShiftDownIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
+        sqlShiftDownIndex.bindParameter(stmtShiftDown, 2, id, idHandler);
 
-        stmtShiftDownFinal = accessor.getDBConnection().prepareStatement(sqlShiftDownFinalIndex, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmtShiftDownFinal, 3, id);
+        stmtShiftDownFinal = DBUtil.prepare(sqlShiftDownFinalIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
+        sqlShiftDownFinalIndex.bindParameter(stmtShiftDownFinal, 3, id, idHandler);
       }
 
       int temporaryIndexOffset = getTemporaryOffset(shiftStartPhysicalIndex, shiftEndPhysicalIndex);
-      stmtShiftDown.setInt(1, temporaryIndexOffset);
-      stmtShiftDown.setInt(3, shiftStartPhysicalIndex);
-      stmtShiftDown.setInt(4, shiftEndPhysicalIndex);
+      sqlShiftDownIndex.bindParameter(stmtShiftDown, 1, temporaryIndexOffset);
+      sqlShiftDownIndex.bindParameter(stmtShiftDown, 3, shiftStartPhysicalIndex);
+      sqlShiftDownIndex.bindParameter(stmtShiftDown, 4, shiftEndPhysicalIndex);
 
-      stmtShiftDownFinal.setInt(1, temporaryIndexOffset);
-      stmtShiftDownFinal.setInt(2, shiftOffset);
-      stmtShiftDownFinal.setInt(4, (int)((long)shiftStartPhysicalIndex + temporaryIndexOffset));
-      stmtShiftDownFinal.setInt(5, (int)((long)shiftEndPhysicalIndex + temporaryIndexOffset));
+      sqlShiftDownFinalIndex.bindParameter(stmtShiftDownFinal, 1, temporaryIndexOffset);
+      sqlShiftDownFinalIndex.bindParameter(stmtShiftDownFinal, 2, shiftOffset);
+      sqlShiftDownFinalIndex.bindParameter(stmtShiftDownFinal, 4, (int)((long)shiftStartPhysicalIndex + temporaryIndexOffset));
+      sqlShiftDownFinalIndex.bindParameter(stmtShiftDownFinal, 5, (int)((long)shiftEndPhysicalIndex + temporaryIndexOffset));
       stmtShiftDown.executeUpdate();
       stmtShiftDownFinal.executeUpdate();
     }
@@ -1193,22 +1208,22 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     {
       if (stmtShiftUp == null)
       {
-        stmtShiftUp = accessor.getDBConnection().prepareStatement(sqlShiftUpIndex, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmtShiftUp, 2, id);
+        stmtShiftUp = DBUtil.prepare(sqlShiftUpIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
+        sqlShiftUpIndex.bindParameter(stmtShiftUp, 2, id, idHandler);
 
-        stmtShiftUpFinal = accessor.getDBConnection().prepareStatement(sqlShiftUpFinalIndex, ReuseProbability.HIGH);
-        idHandler.setCDOID(stmtShiftUpFinal, 3, id);
+        stmtShiftUpFinal = DBUtil.prepare(sqlShiftUpFinalIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
+        sqlShiftUpFinalIndex.bindParameter(stmtShiftUpFinal, 3, id, idHandler);
       }
 
       int temporaryIndexOffset = getTemporaryOffset(shiftStartPhysicalIndex, shiftEndPhysicalIndex);
-      stmtShiftUp.setInt(1, temporaryIndexOffset);
-      stmtShiftUp.setInt(3, shiftStartPhysicalIndex);
-      stmtShiftUp.setInt(4, shiftEndPhysicalIndex);
+      sqlShiftUpIndex.bindParameter(stmtShiftUp, 1, temporaryIndexOffset);
+      sqlShiftUpIndex.bindParameter(stmtShiftUp, 3, shiftStartPhysicalIndex);
+      sqlShiftUpIndex.bindParameter(stmtShiftUp, 4, shiftEndPhysicalIndex);
 
-      stmtShiftUpFinal.setInt(1, temporaryIndexOffset);
-      stmtShiftUpFinal.setInt(2, shiftOffset);
-      stmtShiftUpFinal.setInt(4, (int)((long)shiftStartPhysicalIndex + temporaryIndexOffset));
-      stmtShiftUpFinal.setInt(5, (int)((long)shiftEndPhysicalIndex + temporaryIndexOffset));
+      sqlShiftUpFinalIndex.bindParameter(stmtShiftUpFinal, 1, temporaryIndexOffset);
+      sqlShiftUpFinalIndex.bindParameter(stmtShiftUpFinal, 2, shiftOffset);
+      sqlShiftUpFinalIndex.bindParameter(stmtShiftUpFinal, 4, (int)((long)shiftStartPhysicalIndex + temporaryIndexOffset));
+      sqlShiftUpFinalIndex.bindParameter(stmtShiftUpFinal, 5, (int)((long)shiftEndPhysicalIndex + temporaryIndexOffset));
       stmtShiftUp.executeUpdate();
       stmtShiftUpFinal.executeUpdate();
     }

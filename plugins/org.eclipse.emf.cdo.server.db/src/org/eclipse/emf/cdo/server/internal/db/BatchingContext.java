@@ -17,6 +17,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.sql.SQLException;
@@ -204,6 +205,13 @@ public final class BatchingContext implements IBatchingContext
   public BatchedStatement createStatement(String sql, ReuseProbability reuseProbability, String diagnosticName)
   {
     IDBPreparedStatement statement = connection.prepareStatement(sql, reuseProbability);
+    return DBUtil.batched(statement, statementBatchSize, this, diagnosticName);
+  }
+
+  @Override
+  public BatchedStatement createStatement(SQLStatement sql, ReuseProbability reuseProbability, String diagnosticName)
+  {
+    IDBPreparedStatement statement = DBUtil.prepare(sql, connection, reuseProbability);
     return DBUtil.batched(statement, statementBatchSize, this, diagnosticName);
   }
 

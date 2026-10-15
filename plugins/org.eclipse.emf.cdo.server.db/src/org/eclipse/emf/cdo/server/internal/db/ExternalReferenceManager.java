@@ -31,6 +31,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -63,16 +64,16 @@ public class ExternalReferenceManager extends DBStoreTable
   private AtomicLong lastMappedID = new AtomicLong(NULL);
 
   @ExcludeFromDump
-  private transient String sqlSelectByLongID;
+  private transient SQLStatement sqlSelectByLongID;
 
   @ExcludeFromDump
-  private transient String sqlSelectByURI;
+  private transient SQLStatement sqlSelectByURI;
 
   @ExcludeFromDump
-  private transient String sqlInsert;
+  private transient SQLStatement sqlInsert;
 
   @ExcludeFromDump
-  private transient String sqlDeleteByURI;
+  private transient SQLStatement sqlDeleteByURI;
 
   public ExternalReferenceManager(IDBStore store)
   {
@@ -103,12 +104,12 @@ public class ExternalReferenceManager extends DBStoreTable
 
   public String unmapURI(IDBStoreAccessor accessor, long mappedId)
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectByLongID, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelectByLongID, accessor.getDBConnection(), ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      stmt.setLong(1, mappedId);
+      sqlSelectByLongID.bindAll(stmt, mappedId);
 
       resultSet = stmt.executeQuery();
       if (!resultSet.next())
@@ -132,12 +133,12 @@ public class ExternalReferenceManager extends DBStoreTable
 
   public long lookupByURI(IDBStoreAccessor accessor, String uri)
   {
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectByURI, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelectByURI, accessor.getDBConnection(), ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      stmt.setString(1, uri);
+      sqlSelectByURI.bindAll(stmt, uri);
 
       resultSet = stmt.executeQuery();
       if (resultSet.next())
@@ -168,14 +169,14 @@ public class ExternalReferenceManager extends DBStoreTable
       Connection connection = statement.getConnection();
       if (connection instanceof IDBConnection)
       {
-        deleteStatement = ((IDBConnection)connection).prepareStatement(sqlDeleteByURI, ReuseProbability.LOW);
+        deleteStatement = DBUtil.prepare(sqlDeleteByURI, (IDBConnection)connection, ReuseProbability.LOW);
       }
       else
       {
-        deleteStatement = connection.prepareStatement(sqlDeleteByURI);
+        deleteStatement = connection.prepareStatement(sqlDeleteByURI.getSQL());
       }
 
-      deleteStatement.setString(1, uriValue);
+      sqlDeleteByURI.bindAll(deleteStatement, uriValue);
       return deleteStatement.execute();
     }
     catch (SQLException ex)
@@ -192,12 +193,12 @@ public class ExternalReferenceManager extends DBStoreTable
   {
     String committimeName = adapter().quoteIdentifier(committime.getName());
     String where = " WHERE " + committimeName + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, table(), null, where);
+    DBUtil.serializeTable(out, connection, getTable(), null, where);
   }
 
   public void rawImport(Connection connection, CDODataInput in, long fromCommitTime, long toCommitTime, OMMonitor monitor) throws IOException
   {
-    DBUtil.deserializeTable(in, connection, table(), monitor);
+    DBUtil.deserializeTable(in, connection, getTable(), monitor);
   }
 
   @Override
@@ -225,12 +226,12 @@ public class ExternalReferenceManager extends DBStoreTable
     uri = table.getField(NAMES.URI);
     committime = table.getField(NAMES.COMMITTIME);
 
-    String sql = SQL.select(SQL.min(id)) //
+    SQLStatement sql = SQL.select(SQL.min(id)) //
         .from(id.getTable()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     IDBStoreAccessor writer = store().getWriter(null);
-    IDBPreparedStatement stmt = writer.getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, writer.getDBConnection(), ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
@@ -263,33 +264,31 @@ public class ExternalReferenceManager extends DBStoreTable
     sqlInsert = SQL.insertInto(table) //
         .columns(id, uri, committime) //
         .values(SQL.param(), SQL.param(), SQL.param()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     sqlSelectByURI = SQL.select(id) //
         .from(table) //
         .where(uri).eq(SQL.param()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     sqlSelectByLongID = SQL.select(uri) //
         .from(table) //
         .where(id).eq(SQL.param()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
 
     sqlDeleteByURI = SQL.deleteFrom(table) //
         .where(uri).eq(SQL.param()) //
-        .compile(adapter()).getSQL();
+        .compile(adapter());
   }
 
   private long insertNew(IDBStoreAccessor accessor, String uri, long commitTime)
   {
     long newMappedID = lastMappedID.decrementAndGet();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MEDIUM);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlInsert, accessor.getDBConnection(), ReuseProbability.MEDIUM);
 
     try
     {
-      stmt.setLong(1, newMappedID);
-      stmt.setString(2, uri);
-      stmt.setLong(3, commitTime);
+      sqlInsert.bindAll(stmt, newMappedID, uri, commitTime);
 
       DBUtil.update(stmt, true);
       return newMappedID;

@@ -38,7 +38,7 @@ import java.util.List;
  * @author Stefan Winkler
  * @since 2.0
  */
-public interface IListMapping extends IFeatureMapping
+public interface IListMapping extends IFeatureMapping, IDBTable.Provider
 {
   /**
    * Return the mapped feature.
@@ -72,6 +72,20 @@ public interface IListMapping extends IFeatureMapping
    * @return a collection of all tables of this feature.
    */
   public Collection<IDBTable> getDBTables();
+
+  /**
+   * Returns the primary table for this list mapping. When multiple tables are returned by
+   * {@link #getDBTables()}, implementations must place the primary table first or override this method.
+   *
+   * @return the first table in iteration order, or {@code null} when the collection is empty
+   * @since 4.15
+   */
+  @Override
+  public default IDBTable getTable()
+  {
+    Collection<IDBTable> tables = getDBTables();
+    return tables.isEmpty() ? null : tables.iterator().next();
+  }
 
   /**
    * Write a complete list of values to the database.

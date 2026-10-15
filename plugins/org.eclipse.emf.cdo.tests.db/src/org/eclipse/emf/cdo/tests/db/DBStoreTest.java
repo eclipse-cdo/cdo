@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PropertiesTable;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -27,6 +29,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.jdbc.DelegatingConnection;
 import org.eclipse.net4j.db.mysql.MYSQLAdapter;
 import org.eclipse.net4j.util.WrappedException;
@@ -44,7 +47,11 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Proxy;
 import java.sql.Connection;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +63,42 @@ import oracle.jdbc.pool.OracleDataSource;
  */
 public class DBStoreTest extends AbstractCDOTest
 {
+  public void testListMappingTableProviderUsesFirstTableInIterationOrder()
+  {
+    IDBTable first = DBUtil.createSchema("list_mapping_provider", false, false).addTable("first_table");
+    IDBTable second = DBUtil.createSchema("list_mapping_provider_secondary", false, false).addTable("second_table");
+
+    IListMapping empty = mappingProvider(IListMapping.class, Collections.emptyList());
+    IListMapping single = mappingProvider(IListMapping.class, Collections.singletonList(first));
+    IListMapping multiple = mappingProvider(IListMapping.class, Arrays.asList(first, second));
+    IClassMapping classMapping = mappingProvider(IClassMapping.class, Arrays.asList(first, second));
+
+    assertNull(empty.getTable());
+    assertSame(first, single.getTable());
+    assertSame(first, multiple.getTable());
+    assertSame(first, classMapping.getTable());
+  }
+
+  private static <T> T mappingProvider(Class<T> mappingType, List<IDBTable> tables)
+  {
+    InvocationHandler handler = (proxy, method, arguments) -> {
+      if (method.getName().equals("getDBTables"))
+      {
+        return tables;
+      }
+
+      if (method.isDefault())
+      {
+        return InvocationHandler.invokeDefault(proxy, method, arguments == null ? new Object[0] : arguments);
+      }
+
+      throw new UnsupportedOperationException(method.toString());
+    };
+
+    Object proxy = Proxy.newProxyInstance(DBStoreTest.class.getClassLoader(), new Class<?>[] { mappingType }, handler);
+    return mappingType.cast(proxy);
+  }
+
   public void testIssue81MySQLPropertySQL()
   {
     String schemaName = "schema`name";

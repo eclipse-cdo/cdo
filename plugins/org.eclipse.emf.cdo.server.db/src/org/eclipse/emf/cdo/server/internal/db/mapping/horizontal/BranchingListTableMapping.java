@@ -31,6 +31,8 @@ import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLStatement;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -52,7 +54,8 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
 
   private IDBField versionField;
 
-  private String sqlClear;
+  @ExcludeFromDump
+  private transient SQLStatement sqlClear;
 
   public BranchingListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -73,7 +76,7 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
         .where(SQL.eq(sourceField, SQL.param()) //
             .and(SQL.eq(branchField, SQL.param())) //
             .and(SQL.eq(versionField, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
   }
 
   @Override
@@ -84,12 +87,11 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
   }
 
   @Override
-  protected void setKeyFields(PreparedStatement stmt, CDORevision revision) throws SQLException
+  protected void bindKeyFields(SQLStatement sql, PreparedStatement stmt, CDORevision revision) throws SQLException
   {
-    IIDHandler idHandler = getStore().getIDHandler();
-    idHandler.setCDOID(stmt, 1, revision.getID());
-    stmt.setInt(2, revision.getBranch().getID());
-    stmt.setInt(3, revision.getVersion());
+    sql.binder(stmt) //
+        .bindParameter(revision.getID(), getStore().getIDHandler()) //
+        .bind(revision.getBranch().getID(), revision.getVersion());
   }
 
   @Override
@@ -107,13 +109,14 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
     }
 
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlClear, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlClear, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
-      idHandler.setCDOID(stmt, 1, id);
-      stmt.setInt(2, branch.getID());
-      stmt.setInt(3, version);
+      sqlClear.binder(stmt) //
+          .bindParameter(id, idHandler) //
+          .bind(branch.getID(), version);
+
       DBUtil.update(stmt, false);
     }
     catch (SQLException e)

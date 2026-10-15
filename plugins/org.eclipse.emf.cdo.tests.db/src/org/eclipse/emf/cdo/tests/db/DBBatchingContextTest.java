@@ -8,14 +8,36 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.BatchingContext;
+import org.eclipse.emf.cdo.server.internal.db.StringIDHandler;
+import org.eclipse.emf.cdo.server.internal.db.UUIDHandler;
 
 import org.eclipse.net4j.db.BatchedStatement;
+import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBPreparedStatement;
+import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQL;
+import org.eclipse.net4j.db.dml.SQLDefaultSetter;
+import org.eclipse.net4j.db.dml.SQLParameterBinder;
+import org.eclipse.net4j.db.dml.SQLStatement;
+import org.eclipse.net4j.db.dml.SQLValueSetter;
+import org.eclipse.net4j.db.h2.H2Adapter;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -26,6 +48,102 @@ import junit.framework.TestCase;
  */
 public class DBBatchingContextTest extends TestCase
 {
+  public void testIDAndTypeMappingsAreValueSetters()
+  {
+    SQLValueSetter<CDOID> idSetter = new StringIDHandler(null);
+    SQLValueSetter<Object> typeSetter = asValueSetter(null);
+
+    assertNotNull(idSetter);
+    assertNull(typeSetter);
+    assertTrue(SQLValueSetter.class.isAssignableFrom(IIDHandler.class));
+    assertTrue(SQLValueSetter.class.isAssignableFrom(ITypeMapping.class));
+    assertTrue(SQLDefaultSetter.class.isAssignableFrom(ITypeMapping.class));
+  }
+
+  public void testTypeMappingBindsItsDefaultAndSuppliedValueThroughDistinctMethods() throws SQLException
+  {
+    List<String> calls = new ArrayList<>();
+    ITypeMapping mapping = (ITypeMapping)Proxy.newProxyInstance(DBBatchingContextTest.class.getClassLoader(), new Class<?>[] { ITypeMapping.class },
+        (proxy, method, args) -> {
+          if ("setDefaultValue".equals(method.getName())) //$NON-NLS-1$
+          {
+            calls.add("default(" + args[1] + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+          }
+          else if ("setValue".equals(method.getName())) //$NON-NLS-1$
+          {
+            calls.add("value(" + args[1] + "," + args[2] + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+          }
+
+          return method.getReturnType() == Void.TYPE ? null : State.defaultValue(method.getReturnType());
+        });
+    IDBTable table = DBUtil.createSchema("typeMappingBinding", false, false).addTable("item"); //$NON-NLS-1$
+    SQLStatement sql = SQL.selectAll() //
+        .from(table) //
+        .where(table.addField("id", DBType.INTEGER)).eq(SQL.param()) //
+        .and(table.addField("name", DBType.VARCHAR)).eq(SQL.param()) //
+        .build().compile(new H2Adapter());
+    PreparedStatement stmt = (PreparedStatement)Proxy.newProxyInstance(DBBatchingContextTest.class.getClassLoader(), new Class<?>[] { PreparedStatement.class },
+        (proxy, method, args) -> method.getReturnType() == Void.TYPE ? null : State.defaultValue(method.getReturnType()));
+    SQLParameterBinder binder = sql.binder(stmt);
+
+    assertSame(binder, binder.bindParameter(mapping).bindParameter("supplied", mapping));
+    assertEquals(List.of("default(1)", "value(2,supplied)"), calls);
+    assertEquals(3, binder.getNextIndex());
+  }
+
+  private static SQLValueSetter<Object> asValueSetter(ITypeMapping mapping)
+  {
+    return mapping;
+  }
+
+  public void testStringIDSQLLiteralEscapesApostrophes()
+  {
+    StringBuilder sqlLiteral = new StringBuilder();
+    new StringIDHandler(null).appendCDOID(sqlLiteral, CDOIDUtil.createString("meta'id"));
+
+    assertEquals("'meta''id'", sqlLiteral.toString());
+
+    sqlLiteral.setLength(0);
+    new StringIDHandler(null).appendCDOID(sqlLiteral, CDOID.NULL);
+
+    assertEquals("'null'", sqlLiteral.toString());
+  }
+
+  public void testUUIDExternalIDSQLLiteralEscapesApostrophes()
+  {
+    StringBuilder sqlLiteral = new StringBuilder();
+    new UUIDHandler(null).appendCDOID(sqlLiteral, CDOIDUtil.createExternal("urn:cdo:test/o'hara"));
+
+    assertEquals("'urn:cdo:test/o''hara'", sqlLiteral.toString());
+
+    sqlLiteral.setLength(0);
+    new UUIDHandler(null).appendCDOID(sqlLiteral, CDOID.NULL);
+
+    assertEquals("'0'", sqlLiteral.toString());
+  }
+
+  public void testCompiledStatementUsesExistingConnectionPreparationAndBatchManagement()
+  {
+    IDBTable table = DBUtil.createSchema("batching", false, false).addTable("item");
+    IDBStatementCapture capture = new IDBStatementCapture();
+    IDBConnection connection = (IDBConnection)Proxy.newProxyInstance(DBBatchingContextTest.class.getClassLoader(), new Class<?>[] { IDBConnection.class },
+        capture);
+    BatchingContext context = new BatchingContext(connection, 10, 100);
+    SQLStatement sql = SQL.insertInto(table) //
+        .columns(table.addField("id", DBType.INTEGER)) //
+        .values(SQL.param()) //
+        .build() //
+        .compile(new H2Adapter());
+
+    BatchedStatement statement = context.createStatement(sql, ReuseProbability.HIGH, "test"); //$NON-NLS-1$
+
+    assertEquals(sql.getSQL(), capture.sql);
+    assertSame(ReuseProbability.HIGH, capture.reuseProbability);
+    assertEquals(0, context.getPendingCount());
+
+    context.discardStatement(statement);
+  }
+
   public void testPhaseFlushClearsPendingWork()
   {
     BatchingContext context = new BatchingContext(null, 3, 100);
@@ -247,6 +365,39 @@ public class DBBatchingContextTest extends TestCase
       }
 
       throw new AssertionError(type);
+    }
+  }
+
+  private static final class IDBStatementCapture implements InvocationHandler
+  {
+    private final Connection jdbcConnection = (Connection)Proxy.newProxyInstance(DBBatchingContextTest.class.getClassLoader(),
+        new Class<?>[] { Connection.class }, (proxy, method, args) -> method.getReturnType() == void.class ? null : State.defaultValue(method.getReturnType()));
+
+    private final IDBPreparedStatement preparedStatement = (IDBPreparedStatement)Proxy.newProxyInstance(DBBatchingContextTest.class.getClassLoader(),
+        new Class<?>[] { IDBPreparedStatement.class }, (proxy, method, args) -> {
+          if ("getConnection".equals(method.getName())) //$NON-NLS-1$
+          {
+            return jdbcConnection;
+          }
+
+          return method.getReturnType() == void.class ? null : State.defaultValue(method.getReturnType());
+        });
+
+    private String sql;
+
+    private ReuseProbability reuseProbability;
+
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args)
+    {
+      if ("prepareStatement".equals(method.getName())) //$NON-NLS-1$
+      {
+        sql = (String)args[0];
+        reuseProbability = (ReuseProbability)args[1];
+        return preparedStatement;
+      }
+
+      return method.getReturnType() == void.class ? null : State.defaultValue(method.getReturnType());
     }
   }
 

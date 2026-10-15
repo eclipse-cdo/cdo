@@ -50,9 +50,12 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLCondition;
 import org.eclipse.net4j.db.dml.SQLExpression;
+import org.eclipse.net4j.db.dml.SQLParameterBinder;
 import org.eclipse.net4j.db.dml.SQLSelectItem;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.fluent.SQLUpdateSetStep;
 import org.eclipse.net4j.util.ImplementationError;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -77,15 +80,20 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalNonAuditClassMapping.class);
 
-  private String sqlSelectAllObjectIDs;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectAllObjectIDs;
 
-  private String sqlSelectCurrentAttributes;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectCurrentAttributes;
 
-  private String sqlSelectCurrentVersion;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectCurrentVersion;
 
-  private String sqlInsertAttributes;
+  @ExcludeFromDump
+  private transient SQLStatement sqlInsertAttributes;
 
-  private String sqlDelete;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDelete;
 
   private boolean hasLists;
 
@@ -127,12 +135,12 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     sqlSelectCurrentAttributes = SQL.select(attributes.get(0), attributes.subList(1, attributes.size()).toArray(new SQLSelectItem[attributes.size() - 1])) //
         .from(table) //
         .where(idField).eq(SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     sqlSelectCurrentVersion = SQL.select(versionField) //
         .from(table) //
         .where(idField).eq(SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     List<IDBField> insertFields = new ArrayList<>();
     insertFields.add(idField);
@@ -157,7 +165,9 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     {
       insertFields.addAll(getListSizeFields().values());
     }
+
     List<SQLExpression> insertValues = new ArrayList<>();
+
     for (int i = 0; i < insertFields.size(); i++)
     {
       insertValues.add(SQL.param());
@@ -166,27 +176,26 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     sqlInsertAttributes = SQL.insertInto(table) //
         .columns(insertFields.get(0), insertFields.subList(1, insertFields.size()).toArray(new IDBField[insertFields.size() - 1])) //
         .values(insertValues.get(0), insertValues.subList(1, insertValues.size()).toArray(new SQLExpression[insertValues.size() - 1])) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     sqlSelectAllObjectIDs = SQL.select(idField) //
         .from(table) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     sqlDelete = SQL.deleteFrom(table) //
         .where(idField).eq(SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
   }
 
   @Override
   protected void writeValues(IDBStoreAccessor accessor, InternalCDORevision revision)
   {
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertAttributes, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlInsertAttributes, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
       setInsertValues(idHandler, stmt, revision);
-
       DBUtil.update(stmt, true);
     }
     catch (SQLException e)
@@ -215,6 +224,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     try
     {
       IIDHandler idHandler = getStore().getIDHandler();
+
       for (InternalCDORevision revision : revisions)
       {
         setInsertValues(idHandler, stmt, revision);
@@ -242,15 +252,16 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   private void setInsertValues(IIDHandler idHandler, PreparedStatement stmt, InternalCDORevision revision) throws SQLException
   {
     int column = 1;
-    idHandler.setCDOID(stmt, column++, revision.getID());
-    stmt.setInt(column++, revision.getVersion());
-    stmt.setLong(column++, revision.getTimeStamp());
-    stmt.setLong(column++, revision.getRevised());
-    idHandler.setCDOID(stmt, column++, revision.getResourceID());
-    idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
-    stmt.setInt(column++, revision.getContainerFeatureID());
+    sqlInsertAttributes.bindParameter(stmt, column++, revision.getID(), idHandler);
+    sqlInsertAttributes.bindParameter(stmt, column++, revision.getVersion());
+    sqlInsertAttributes.bindParameter(stmt, column++, revision.getTimeStamp());
+    sqlInsertAttributes.bindParameter(stmt, column++, revision.getRevised());
+    sqlInsertAttributes.bindParameter(stmt, column++, revision.getResourceID(), idHandler);
+    sqlInsertAttributes.bindParameter(stmt, column++, (CDOID)revision.getContainerID(), idHandler);
+    sqlInsertAttributes.bindParameter(stmt, column++, revision.getContainerFeatureID());
 
     int isSetCol = column + getValueMappings().size();
+
     for (ITypeMapping mapping : getValueMappings())
     {
       EStructuralFeature feature = mapping.getFeature();
@@ -258,15 +269,15 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       {
         if (revision.getValue(feature) == null)
         {
-          stmt.setBoolean(isSetCol++, false);
-          mapping.setDefaultValue(stmt, column++);
+          sqlInsertAttributes.bindParameter(stmt, isSetCol++, false);
+          sqlInsertAttributes.bindParameter(stmt, column++, null, mapping);
           continue;
         }
 
-        stmt.setBoolean(isSetCol++, true);
+        sqlInsertAttributes.bindParameter(stmt, isSetCol++, true);
       }
 
-      mapping.setValueFromRevision(stmt, column++, revision);
+      sqlInsertAttributes.bindParameter(stmt, column++, revision, mapping::setValueFromRevision);
     }
 
     Map<EStructuralFeature, IDBField> listSizeFields = getListSizeFields();
@@ -276,7 +287,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       for (EStructuralFeature feature : listSizeFields.keySet())
       {
         CDOList list = revision.getListOrNull(feature);
-        stmt.setInt(column++, list == null ? UNSET_LIST : list.size());
+        sqlInsertAttributes.bindParameter(stmt, column++, list == null ? UNSET_LIST : list.size());
       }
     }
   }
@@ -299,7 +310,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       TRACER.format("Created ObjectID Statement : {0}", sqlSelectAllObjectIDs); //$NON-NLS-1$
     }
 
-    return accessor.getDBConnection().prepareStatement(sqlSelectAllObjectIDs, ReuseProbability.HIGH);
+    return DBUtil.prepare(sqlSelectAllObjectIDs, accessor.getDBConnection(), ReuseProbability.HIGH);
   }
 
   @Override
@@ -335,22 +346,23 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       condition = condition.and(exactMatch ? SQL.eq(nameValueMapping.getField(), SQL.param()) : SQL.like(nameValueMapping.getField(), SQL.param()));
     }
 
-    IIDHandler idHandler = getStore().getIDHandler();
-    String sql = SQL.select(idField) //
+    SQLStatement sql = SQL.select(idField) //
         .from(table) //
         .where(condition) //
-        .compile(getDBAdapter()).getSQL();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
+        .compile(getDBAdapter());
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, accessor.getDBConnection(), ReuseProbability.MEDIUM);
+
+    IIDHandler idHandler = getStore().getIDHandler();
 
     try
     {
       int column = 1;
-      idHandler.setCDOID(stmt, column++, folderId);
+      sql.bindParameter(stmt, column++, folderId, idHandler);
 
       if (name != null)
       {
         String queryName = exactMatch ? name : name + "%"; //$NON-NLS-1$
-        nameValueMapping.setValue(stmt, column++, queryName);
+        sql.bindParameter(stmt, column++, queryName, nameValueMapping);
       }
 
       if (TRACER.isEnabled())
@@ -381,7 +393,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     DBStore store = (DBStore)getStore();
     IIDHandler idHandler = store.getIDHandler();
     IDBPreparedStatement stmtVersion = null;
-    IDBPreparedStatement stmtAttributes = accessor.getDBConnection().prepareStatement(sqlSelectCurrentAttributes, ReuseProbability.HIGH);
+    IDBPreparedStatement stmtAttributes = DBUtil.prepare(sqlSelectCurrentAttributes, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
@@ -389,12 +401,12 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       {
         // Reading all list rows of an object is not atomic.
         // After all row reads are done, check the revision version again (see below).
-        stmtVersion = accessor.getDBConnection().prepareStatement(sqlSelectCurrentVersion, ReuseProbability.HIGH);
+        stmtVersion = DBUtil.prepare(sqlSelectCurrentVersion, accessor.getDBConnection(), ReuseProbability.HIGH);
         stmtVersion.setMaxRows(1); // Optimization: only 1 row
-        idHandler.setCDOID(stmtVersion, 1, id);
+        sqlSelectCurrentVersion.bindParameter(stmtVersion, 1, id, idHandler);
       }
 
-      idHandler.setCDOID(stmtAttributes, 1, id);
+      sqlSelectCurrentAttributes.bindParameter(stmtAttributes, 1, id, idHandler);
 
       for (;;)
       {
@@ -522,12 +534,11 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
   @Override
   protected void rawDeleteAttributes(IDBStoreAccessor accessor, CDOID id, CDOBranch branch, int version, OMMonitor monitor)
   {
-    IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlDelete, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
-      idHandler.setCDOID(stmt, 1, id);
+      sqlDelete.bindParameter(stmt, 1, id, getStore().getIDHandler());
       DBUtil.update(stmt, true);
     }
     catch (SQLException e)
@@ -683,19 +694,21 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       this.accessor = accessor;
     }
 
-    public void update(String sql, FeatureDeltaWriter writer)
+    public void update(SQLStatement sql, FeatureDeltaWriter writer)
     {
       try
       {
-        BatchedStatement stmt = statements.get(sql);
+        String sqlText = sql.getSQL();
+
+        BatchedStatement stmt = statements.get(sqlText);
         if (stmt == null)
         {
           stmt = accessor.getBatchingContext().createStatement(sql, ReuseProbability.MEDIUM, "NonAuditClass.attributeDelta"); //$NON-NLS-1$
-          statements.put(sql, stmt);
+          statements.put(sqlText, stmt);
           counts.put(stmt, 0);
         }
 
-        writer.setUpdateValues(stmt);
+        writer.setUpdateValues(sql, stmt);
         stmt.executeUpdate();
         counts.put(stmt, counts.get(stmt) + 1);
       }
@@ -872,19 +885,19 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     private void updateAttributes()
     {
-      String sql = buildUpdateSQL();
+      SQLStatement sql = buildUpdateSQL();
+
       if (attributeBatch != null)
       {
         attributeBatch.update(sql, this);
         return;
       }
 
-      IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.MEDIUM);
+      IDBPreparedStatement stmt = DBUtil.prepare(sql, accessor.getDBConnection(), ReuseProbability.MEDIUM);
 
       try
       {
-        setUpdateValues(stmt);
-
+        setUpdateValues(sql, stmt);
         DBUtil.update(stmt, true);
       }
       catch (SQLException e)
@@ -897,25 +910,35 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       }
     }
 
-    private void setUpdateValues(PreparedStatement stmt) throws SQLException
+    private void setUpdateValues(SQLStatement sql, PreparedStatement stmt) throws SQLException
     {
-      IIDHandler idHandler = getStore().getIDHandler();
-      int column = 1;
-      stmt.setInt(column++, newVersion);
-      stmt.setLong(column++, created);
+      SQLParameterBinder binder = sql.binder(stmt);
+      binder.bind(newVersion, created);
+
       if (updateContainer)
       {
-        idHandler.setCDOID(stmt, column++, newResourceID, created);
-        idHandler.setCDOID(stmt, column++, newContainerID, created);
-        stmt.setInt(column++, newContainingFeatureID);
+        binder.bindParameter(newResourceID, this::setUpdateValueID);
+        binder.bindParameter(newContainerID, this::setUpdateValueID);
+        binder.bind(newContainingFeatureID);
       }
 
-      column = setUpdateAttributeValues(attributeChanges, stmt, column);
-      column = setUpdateListSizeChanges(listSizeChanges, stmt, column);
-      idHandler.setCDOID(stmt, column, id);
+      setUpdateAttributeValues(binder, attributeChanges);
+      setUpdateListSizeChanges(binder, listSizeChanges);
+      binder.bindParameter(id, getStore().getIDHandler());
+
+      if (binder.getNextIndex() != sql.getParameterCount() + 1)
+      {
+        throw new ImplementationError("Unused SQL parameters in dynamic attribute update"); //$NON-NLS-1$
+      }
     }
 
-    private String buildUpdateSQL()
+    private void setUpdateValueID(PreparedStatement stmt, int index, CDOID value) throws SQLException
+    {
+      IIDHandler idHandler = getStore().getIDHandler();
+      idHandler.setCDOID(stmt, index, value, created);
+    }
+
+    private SQLStatement buildUpdateSQL()
     {
       SQLUpdateSetStep update = SQL.update(table) //
           .set(versionField).to(SQL.param()) //
@@ -947,48 +970,48 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
       return update //
           .where(idField).eq(SQL.param()) //
-          .compile(getDBAdapter()).getSQL();
+          .compile(getDBAdapter());
     }
 
-    private int setUpdateAttributeValues(List<Pair<ITypeMapping, Object>> attributeChanges, PreparedStatement stmt, int col) throws SQLException
+    private void setUpdateAttributeValues(SQLParameterBinder binder, List<Pair<ITypeMapping, Object>> attributeChanges) throws SQLException
     {
       for (Pair<ITypeMapping, Object> change : attributeChanges)
       {
         ITypeMapping typeMapping = change.getElement1();
         Object value = change.getElement2();
+
         if (typeMapping.getFeature().isUnsettable())
         {
           // feature is unsettable
           if (value == null)
           {
             // feature is unset
-            typeMapping.setDefaultValue(stmt, col++);
-            stmt.setBoolean(col++, false);
+            binder //
+                .bindParameter(typeMapping) //
+                .bind(false);
           }
           else
           {
             // feature is set
-            typeMapping.setValue(stmt, col++, value);
-            stmt.setBoolean(col++, true);
+            binder //
+                .bindParameter(value, typeMapping) //
+                .bind(true);
           }
         }
         else
         {
-          typeMapping.setValue(stmt, col++, change.getElement2());
+          binder //
+              .bindParameter(value, typeMapping);
         }
       }
-
-      return col;
     }
 
-    private int setUpdateListSizeChanges(List<Pair<EStructuralFeature, Integer>> attributeChanges, PreparedStatement stmt, int col) throws SQLException
+    private void setUpdateListSizeChanges(SQLParameterBinder binder, List<Pair<EStructuralFeature, Integer>> listSizeChanges) throws SQLException
     {
       for (Pair<EStructuralFeature, Integer> change : listSizeChanges)
       {
-        stmt.setInt(col++, change.getElement2());
+        binder.bind(change.getElement2());
       }
-
-      return col;
     }
   }
 }

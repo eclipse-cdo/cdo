@@ -70,9 +70,11 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.db.dml.fluent.SQLSelectFromStep;
 import org.eclipse.net4j.db.dml.fluent.SQLSelectProjectionStep;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -139,33 +141,45 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   private ITypeMapping typeMapping;
 
   // --------- SQL strings - see initSQLStrings() -----------------
-  private String sqlSelectChunkValues;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectChunkValues;
 
   /**
    * This field is initialized on demand in {@link #queryUnitEntries(IDBStoreAccessor, IIDHandler, long, CDOID)}
    * and not in {@link #initSQLStrings()} because the initialization requires the {@link #classMapping} field value.
    */
-  private String sqlSelectUnitEntries;
+  @ExcludeFromDump
+  private transient SQLStatement sqlSelectUnitEntries;
 
-  private String sqlInsertEntry;
+  @ExcludeFromDump
+  private transient SQLStatement sqlInsertEntry;
 
-  private String sqlCopyOriginalEntry;
+  @ExcludeFromDump
+  private transient SQLStatement sqlCopyOriginalEntry;
 
-  private String sqlDeleteEntry;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDeleteEntry;
 
-  private String sqlRemoveEntry;
+  @ExcludeFromDump
+  private transient SQLStatement sqlRemoveEntry;
 
-  private String sqlUpdateIndex;
+  @ExcludeFromDump
+  private transient SQLStatement sqlUpdateIndex;
 
-  private String sqlCopyShiftedEntry;
+  @ExcludeFromDump
+  private transient SQLStatement sqlCopyShiftedEntry;
 
-  private String sqlCloseShiftedEntry;
+  @ExcludeFromDump
+  private transient SQLStatement sqlCloseShiftedEntry;
 
-  private String sqlGetValue;
+  @ExcludeFromDump
+  private transient SQLStatement sqlGetValue;
 
-  private String sqlClearList;
+  @ExcludeFromDump
+  private transient SQLStatement sqlClearList;
 
-  private String sqlDeleteList;
+  @ExcludeFromDump
+  private transient SQLStatement sqlDeleteList;
 
   public AuditListTableMappingWithRanges(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
   {
@@ -265,7 +279,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     sqlInsertEntry = SQL.insertInto(getTable()) //
         .columns(sourceField, versionAddedField, versionRemovedField, indexField, valueField) //
         .values(SQL.param(), SQL.param(), SQL.NULL, SQL.param(), SQL.param()) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------------- copy original entry for move -----------------
     sqlCopyOriginalEntry = SQL.insertInto(getTable()) //
@@ -277,7 +291,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
             .and(versionAddedField).ne(SQL.param()) //
             .and(versionRemovedField).eq(SQL.param()) //
             .subSelect())
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------------- remove current entry -----------------
     sqlRemoveEntry = SQL.update(getTable()) //
@@ -286,14 +300,14 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
             .and(SQL.eq(indexField, SQL.param())) //
             .and(SQL.isNull(versionRemovedField)) //
             .and(SQL.ne(versionAddedField, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------------- delete temporary entry -----------------
     sqlDeleteEntry = SQL.deleteFrom(getTable()) //
         .where(SQL.eq(sourceField, SQL.param()) //
             .and(SQL.eq(indexField, SQL.param())) //
             .and(SQL.eq(versionAddedField, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------------- update index -----------------
     sqlUpdateIndex = SQL.update(getTable()) //
@@ -301,7 +315,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
         .where(SQL.eq(sourceField, SQL.param()) //
             .and(SQL.eq(versionAddedField, SQL.param())) //
             .and(SQL.eq(indexField, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------------- copy older entry for index shift -----------------
     sqlCopyShiftedEntry = SQL.insertInto(getTable()) //
@@ -313,7 +327,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
             .and(SQL.isNull(versionRemovedField)) //
             .and(versionAddedField).ne(SQL.param()) //
             .subSelect()) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------------- close older entry for index shift -----------------
     sqlCloseShiftedEntry = SQL.update(getTable()) //
@@ -322,7 +336,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
             .and(SQL.eq(indexField, SQL.param())) //
             .and(SQL.isNull(versionRemovedField)) //
             .and(SQL.ne(versionAddedField, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------------- get current value -----------------
     sqlGetValue = SQL.select(valueField) //
@@ -330,7 +344,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
         .where(SQL.eq(sourceField, SQL.param()) //
             .and(SQL.eq(indexField, SQL.param())) //
             .and(SQL.isNull(versionRemovedField))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------- clear list items -------------------------
     sqlClearList = SQL.update(getTable()) //
@@ -338,17 +352,17 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
         .where(SQL.eq(sourceField, SQL.param()) //
             .and(SQL.isNull(versionRemovedField)) //
             .and(SQL.ne(versionAddedField, SQL.param()))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
 
     // ----------- delete temporary list items -------------------------
     sqlDeleteList = SQL.deleteFrom(getTable()) //
         .where(SQL.eq(sourceField, SQL.param()) //
             .and(SQL.eq(versionAddedField, SQL.param())) //
             .and(SQL.isNull(versionRemovedField))) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
   }
 
-  private String createSelectChunksSQL(String additionalWhere)
+  private SQLStatement createSelectChunksSQL(String additionalWhere)
   {
     SQLCondition condition = SQL.eq(sourceField, SQL.param()) //
         .and(SQL.le(versionAddedField, SQL.param())) //
@@ -367,7 +381,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
         .from(getTable()) //
         .where(condition) //
         .orderBy(SQL.asc(indexField)) //
-        .compile(getDBAdapter()).getSQL();
+        .compile(getDBAdapter());
   }
 
   @Override
@@ -388,7 +402,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     return indexField;
   }
 
-  protected final IDBTable getTable()
+  @Override
+  public final IDBTable getTable()
   {
     return table;
   }
@@ -409,7 +424,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
 
     MoveableList<Object> list = revision.getListOrNull(getFeature());
-    if ((list == null) || listChunk == 0 || list.size() == 0)
+    if (list == null || listChunk == 0 || list.size() == 0)
     {
       // Nothing to read take shortcut.
       return;
@@ -421,17 +436,15 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
           getFeature().getName(), revision.getID(), revision.getVersion());
     }
 
-    String sql = sqlSelectChunkValues;
-
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sql, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelectChunkValues, accessor.getDBConnection(), ReuseProbability.HIGH);
     ResultSet resultSet = null;
 
     try
     {
-      idHandler.setCDOID(stmt, 1, revision.getID());
-      stmt.setInt(2, revision.getVersion());
-      stmt.setInt(3, revision.getVersion());
+      sqlSelectChunkValues.binder(stmt) //
+          .bindParameter(revision.getID(), idHandler) //
+          .bind(revision.getVersion(), revision.getVersion());
 
       if (listChunk != CDORevision.UNCHUNKED)
       {
@@ -478,17 +491,16 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
           getFeature().getName(), chunkReader.getRevision().getID(), chunkReader.getRevision().getVersion());
     }
 
-    String sql = where == null ? sqlSelectChunkValues : createSelectChunksSQL(where);
+    SQLStatement sql = where == null ? sqlSelectChunkValues : createSelectChunksSQL(where);
 
-    IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = chunkReader.getAccessor().getDBConnection().prepareStatement(sql, ReuseProbability.LOW);
+    IDBPreparedStatement stmt = DBUtil.prepare(sql, chunkReader.getAccessor().getDBConnection(), ReuseProbability.LOW);
     ResultSet resultSet = null;
 
     try
     {
-      idHandler.setCDOID(stmt, 1, chunkReader.getRevision().getID());
-      stmt.setInt(2, chunkReader.getRevision().getVersion());
-      stmt.setInt(3, chunkReader.getRevision().getVersion());
+      sql.binder(stmt) //
+          .bindParameter(chunkReader.getRevision().getID(), getStore().getIDHandler()) //
+          .bind(chunkReader.getRevision().getVersion(), chunkReader.getRevision().getVersion());
 
       resultSet = stmt.executeQuery();
 
@@ -617,13 +629,11 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
           for (Object value : values)
           {
-            int column = 1;
-
             IIDHandler idHandler = getStore().getIDHandler();
-            idHandler.setCDOID(stmt, column++, revision.getID());
-            stmt.setInt(column++, revision.getVersion());
-            stmt.setInt(column++, index++);
-            getTypeMapping().setValue(stmt, column, value);
+            sqlInsertEntry.bindParameter(stmt, 1, revision.getID(), idHandler);
+            sqlInsertEntry.bindParameter(stmt, 2, revision.getVersion());
+            sqlInsertEntry.bindParameter(stmt, 3, index++);
+            sqlInsertEntry.bindParameter(stmt, 4, value, getTypeMapping());
             stmt.executeUpdate();
           }
         }
@@ -703,14 +713,14 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   public void clearList(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion)
   {
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmtDeleteTemp = accessor.getDBConnection().prepareStatement(sqlDeleteList, ReuseProbability.HIGH);
-    IDBPreparedStatement stmtClear = accessor.getDBConnection().prepareStatement(sqlClearList, ReuseProbability.HIGH);
+    IDBPreparedStatement stmtDeleteTemp = DBUtil.prepare(sqlDeleteList, accessor.getDBConnection(), ReuseProbability.HIGH);
+    IDBPreparedStatement stmtClear = DBUtil.prepare(sqlClearList, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
       // delete temporary entries
-      idHandler.setCDOID(stmtDeleteTemp, 1, id);
-      stmtDeleteTemp.setInt(2, newVersion);
+      sqlDeleteList.bindParameter(stmtDeleteTemp, 1, id, idHandler);
+      sqlDeleteList.bindParameter(stmtDeleteTemp, 2, newVersion);
 
       int deleteResult = DBUtil.update(stmtDeleteTemp, false);
       if (TRACER.isEnabled())
@@ -719,9 +729,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       }
 
       // clear rest of the list
-      stmtClear.setInt(1, newVersion);
-      idHandler.setCDOID(stmtClear, 2, id);
-      stmtClear.setInt(3, newVersion);
+      sqlClearList.bindParameter(stmtClear, 1, newVersion);
+      sqlClearList.bindParameter(stmtClear, 2, id, idHandler);
+      sqlClearList.bindParameter(stmtClear, 3, newVersion);
 
       int clearResult = DBUtil.update(stmtClear, false);
       if (TRACER.isEnabled())
@@ -783,7 +793,10 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       SQLTableRef classRef = SQL.as(classMapping.table, "cdo_class"); //$NON-NLS-1$
       SQLSelectProjectionStep projection = CHECK_UNIT_ENTRIES ? SQL.select(classRef.column(classMapping.idField), listRef.column(valueField))
           : SQL.select(listRef.column(valueField));
-      SQLSelectFromStep query = projection.from(listRef).from(classRef).from(units.table());
+      SQLSelectFromStep query = projection //
+          .from(listRef) //
+          .from(classRef) //
+          .from(units);
       SQLCondition condition = SQL.eq(units.elem(), classRef.column(classMapping.idField))
           .and(SQL.eq(classRef.column(classMapping.idField), listRef.column(sourceField))).and(SQL.eq(units.unit(), SQL.param()))
           .and(SQL.le(classRef.column(classMapping.createdField), SQL.param()))
@@ -792,13 +805,13 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
           .and(SQL.isNull(listRef.column(versionRemovedField)).or(SQL.gt(listRef.column(versionRemovedField), classRef.column(classMapping.versionField))));
       sqlSelectUnitEntries = query.where(condition) //
           .orderBy(SQL.asc(classRef.column(classMapping.idField)), SQL.asc(listRef.column(indexField))) //
-          .compile(getDBAdapter()).getSQL();
+          .compile(getDBAdapter());
     }
 
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitEntries, ReuseProbability.MEDIUM);
-    idHandler.setCDOID(stmt, 1, rootID);
-    stmt.setLong(2, timeStamp);
-    stmt.setLong(3, timeStamp);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlSelectUnitEntries, accessor.getDBConnection(), ReuseProbability.MEDIUM);
+    sqlSelectUnitEntries.bindParameter(stmt, 1, rootID, idHandler);
+    sqlSelectUnitEntries.bindParameter(stmt, 2, timeStamp);
+    sqlSelectUnitEntries.bindParameter(stmt, 3, timeStamp);
     return stmt.executeQuery();
   }
 
@@ -832,16 +845,15 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
           getContainingClass().getName(), getFeature().getName(), index, id, version, value);
     }
 
-    IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsertEntry, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlInsertEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
       int column = 1;
-      idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, version);
-      stmt.setInt(column++, index);
-      typeMapping.setValue(stmt, column++, value);
+      sqlInsertEntry.bindParameter(stmt, column++, id, getStore().getIDHandler());
+      sqlInsertEntry.bindParameter(stmt, column++, version);
+      sqlInsertEntry.bindParameter(stmt, column++, index);
+      sqlInsertEntry.bindParameter(stmt, column++, value, typeMapping);
 
       DBUtil.update(stmt, true);
     }
@@ -862,17 +874,17 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   private void addEntryFromOriginal(IDBStoreAccessor accessor, CDOID id, int newVersion, int originalIndex, int targetIndex)
   {
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlCopyOriginalEntry, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlCopyOriginalEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
       int column = 1;
-      stmt.setInt(column++, newVersion);
-      stmt.setInt(column++, targetIndex);
-      idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, originalIndex);
-      stmt.setInt(column++, newVersion);
-      stmt.setInt(column++, newVersion);
+      sqlCopyOriginalEntry.bindParameter(stmt, column++, newVersion);
+      sqlCopyOriginalEntry.bindParameter(stmt, column++, targetIndex);
+      sqlCopyOriginalEntry.bindParameter(stmt, column++, id, idHandler);
+      sqlCopyOriginalEntry.bindParameter(stmt, column++, originalIndex);
+      sqlCopyOriginalEntry.bindParameter(stmt, column++, newVersion);
+      sqlCopyOriginalEntry.bindParameter(stmt, column++, newVersion);
 
       DBUtil.update(stmt, true);
     }
@@ -895,26 +907,26 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     }
 
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDeleteEntry, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlDeleteEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
 
     try
     {
       // try to delete a temporary entry first
       int column = 1;
-      idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, index);
-      stmt.setInt(column++, newVersion);
+      sqlDeleteEntry.bindParameter(stmt, column++, id, idHandler);
+      sqlDeleteEntry.bindParameter(stmt, column++, index);
+      sqlDeleteEntry.bindParameter(stmt, column++, newVersion);
 
       int deleteResult = DBUtil.update(stmt, false);
 
-      IDBPreparedStatement removeStmt = accessor.getDBConnection().prepareStatement(sqlRemoveEntry, ReuseProbability.HIGH);
+      IDBPreparedStatement removeStmt = DBUtil.prepare(sqlRemoveEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
       try
       {
         column = 1;
-        removeStmt.setInt(column++, newVersion);
-        idHandler.setCDOID(removeStmt, column++, id);
-        removeStmt.setInt(column++, index);
-        removeStmt.setInt(column++, newVersion);
+        sqlRemoveEntry.bindParameter(removeStmt, column++, newVersion);
+        sqlRemoveEntry.bindParameter(removeStmt, column++, id, idHandler);
+        sqlRemoveEntry.bindParameter(removeStmt, column++, index);
+        sqlRemoveEntry.bindParameter(removeStmt, column++, newVersion);
 
         int removeResult = DBUtil.update(removeStmt, false);
         if (deleteResult > 1)
@@ -966,14 +978,14 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   private Object getValue(IDBStoreAccessor accessor, CDOID id, int index)
   {
     IIDHandler idHandler = getStore().getIDHandler();
-    IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlGetValue, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = DBUtil.prepare(sqlGetValue, accessor.getDBConnection(), ReuseProbability.HIGH);
     Object result = null;
 
     try
     {
-      int column = 1;
-      idHandler.setCDOID(stmt, column++, id);
-      stmt.setInt(column++, index);
+      sqlGetValue.binder(stmt) //
+          .bindParameter(id, idHandler) //
+          .bind(index);
 
       ResultSet resultSet = stmt.executeQuery();
       if (!resultSet.next())
@@ -1619,11 +1631,10 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       try
       {
         BatchedStatement stmt = getInsertEntryStmt();
-        int column = 1;
-        getStore().getIDHandler().setCDOID(stmt, column++, id);
-        stmt.setInt(column++, version);
-        stmt.setInt(column++, index);
-        typeMapping.setValue(stmt, column, value);
+        sqlInsertEntry.bindParameter(stmt, 1, id, getStore().getIDHandler());
+        sqlInsertEntry.bindParameter(stmt, 2, version);
+        sqlInsertEntry.bindParameter(stmt, 3, index);
+        sqlInsertEntry.bindParameter(stmt, 4, value, typeMapping);
         add(stmt);
         ++explicitEntryCount;
       }
@@ -1640,13 +1651,12 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       try
       {
         BatchedStatement stmt = getCopyOriginalEntryStmt();
-        int column = 1;
-        stmt.setInt(column++, newVersion);
-        stmt.setInt(column++, targetIndex);
-        getStore().getIDHandler().setCDOID(stmt, column++, id);
-        stmt.setInt(column++, originalIndex);
-        stmt.setInt(column++, newVersion);
-        stmt.setInt(column++, newVersion);
+        sqlCopyOriginalEntry.bindParameter(stmt, 1, newVersion);
+        sqlCopyOriginalEntry.bindParameter(stmt, 2, targetIndex);
+        sqlCopyOriginalEntry.bindParameter(stmt, 3, id, getStore().getIDHandler());
+        sqlCopyOriginalEntry.bindParameter(stmt, 4, originalIndex);
+        sqlCopyOriginalEntry.bindParameter(stmt, 5, newVersion);
+        sqlCopyOriginalEntry.bindParameter(stmt, 6, newVersion);
         add(stmt);
         ++originalEntryCount;
       }
@@ -1660,19 +1670,17 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       try
       {
-        int column = 1;
         BatchedStatement deleteStmt = getDeleteEntryStmt();
-        getStore().getIDHandler().setCDOID(deleteStmt, column++, id);
-        deleteStmt.setInt(column++, index);
-        deleteStmt.setInt(column++, newVersion);
+        sqlDeleteEntry.bindParameter(deleteStmt, 1, id, getStore().getIDHandler());
+        sqlDeleteEntry.bindParameter(deleteStmt, 2, index);
+        sqlDeleteEntry.bindParameter(deleteStmt, 3, newVersion);
         add(deleteStmt);
 
-        column = 1;
         BatchedStatement removeStmt = getRemoveEntryStmt();
-        removeStmt.setInt(column++, newVersion);
-        getStore().getIDHandler().setCDOID(removeStmt, column++, id);
-        removeStmt.setInt(column++, index);
-        removeStmt.setInt(column++, newVersion);
+        sqlRemoveEntry.bindParameter(removeStmt, 1, newVersion);
+        sqlRemoveEntry.bindParameter(removeStmt, 2, id, getStore().getIDHandler());
+        sqlRemoveEntry.bindParameter(removeStmt, 3, index);
+        sqlRemoveEntry.bindParameter(removeStmt, 4, newVersion);
         add(removeStmt);
         ++removalCount;
       }
@@ -1686,17 +1694,15 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     {
       try
       {
-        int column = 1;
         BatchedStatement deleteStmt = getDeleteListStmt();
-        getStore().getIDHandler().setCDOID(deleteStmt, column++, id);
-        deleteStmt.setInt(column++, newVersion);
+        sqlDeleteList.bindParameter(deleteStmt, 1, id, getStore().getIDHandler());
+        sqlDeleteList.bindParameter(deleteStmt, 2, newVersion);
         add(deleteStmt);
 
-        column = 1;
         BatchedStatement clearStmt = getClearListStmt();
-        clearStmt.setInt(column++, newVersion);
-        getStore().getIDHandler().setCDOID(clearStmt, column++, id);
-        clearStmt.setInt(column++, newVersion);
+        sqlClearList.bindParameter(clearStmt, 1, newVersion);
+        sqlClearList.bindParameter(clearStmt, 2, id, getStore().getIDHandler());
+        sqlClearList.bindParameter(clearStmt, 3, newVersion);
         add(clearStmt);
       }
       catch (SQLException ex)
@@ -1884,7 +1890,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       return deleteListStmt;
     }
 
-    private BatchedStatement createStatement(String sql, String diagnosticName)
+    private BatchedStatement createStatement(SQLStatement sql, String diagnosticName)
     {
       return accessor.getBatchingContext().createStatement(sql, ReuseProbability.HIGH, diagnosticName);
     }
@@ -2053,9 +2059,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
     {
       IIDHandler idHandler = getStore().getIDHandler();
-      IDBPreparedStatement moveStmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-      IDBPreparedStatement copyStmt = accessor.getDBConnection().prepareStatement(sqlCopyShiftedEntry, ReuseProbability.HIGH);
-      IDBPreparedStatement closeStmt = accessor.getDBConnection().prepareStatement(sqlCloseShiftedEntry, ReuseProbability.HIGH);
+      IDBPreparedStatement moveStmt = DBUtil.prepare(sqlUpdateIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
+      IDBPreparedStatement copyStmt = DBUtil.prepare(sqlCopyShiftedEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
+      IDBPreparedStatement closeStmt = DBUtil.prepare(sqlCloseShiftedEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
 
       try
       {
@@ -2084,9 +2090,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
     {
       IIDHandler idHandler = getStore().getIDHandler();
-      IDBPreparedStatement moveStmt = accessor.getDBConnection().prepareStatement(sqlUpdateIndex, ReuseProbability.HIGH);
-      IDBPreparedStatement copyStmt = accessor.getDBConnection().prepareStatement(sqlCopyShiftedEntry, ReuseProbability.HIGH);
-      IDBPreparedStatement closeStmt = accessor.getDBConnection().prepareStatement(sqlCloseShiftedEntry, ReuseProbability.HIGH);
+      IDBPreparedStatement moveStmt = DBUtil.prepare(sqlUpdateIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
+      IDBPreparedStatement copyStmt = DBUtil.prepare(sqlCopyShiftedEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
+      IDBPreparedStatement closeStmt = DBUtil.prepare(sqlCloseShiftedEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
 
       try
       {
@@ -2115,29 +2121,30 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     private void shiftIndex(IIDHandler idHandler, IDBPreparedStatement moveStmt, IDBPreparedStatement copyStmt, IDBPreparedStatement closeStmt, int sourceIndex,
         int targetIndex) throws SQLException
     {
-      int column = 1;
-      copyStmt.setInt(column++, newVersion);
-      copyStmt.setInt(column++, targetIndex);
-      idHandler.setCDOID(copyStmt, column++, id);
-      copyStmt.setInt(column++, sourceIndex);
-      copyStmt.setInt(column++, newVersion);
+      sqlCopyShiftedEntry.bindParameter(copyStmt, 1, newVersion);
+      sqlCopyShiftedEntry.bindParameter(copyStmt, 2, targetIndex);
+      sqlCopyShiftedEntry.bindParameter(copyStmt, 3, id, idHandler);
+      sqlCopyShiftedEntry.bindParameter(copyStmt, 4, sourceIndex);
+      sqlCopyShiftedEntry.bindParameter(copyStmt, 5, newVersion);
       int copyResult = DBUtil.update(copyStmt, false);
 
-      column = 1;
-      closeStmt.setInt(column++, newVersion);
-      idHandler.setCDOID(closeStmt, column++, id);
-      closeStmt.setInt(column++, sourceIndex);
-      closeStmt.setInt(column++, newVersion);
+      sqlCloseShiftedEntry.bindParameter(closeStmt, 1, newVersion);
+      sqlCloseShiftedEntry.bindParameter(closeStmt, 2, id, idHandler);
+      sqlCloseShiftedEntry.bindParameter(closeStmt, 3, sourceIndex);
+      sqlCloseShiftedEntry.bindParameter(closeStmt, 4, newVersion);
       int closeResult = DBUtil.update(closeStmt, false);
 
-      column = 1;
-      moveStmt.setInt(column++, targetIndex);
-      idHandler.setCDOID(moveStmt, column++, id);
-      moveStmt.setInt(column++, newVersion);
-      moveStmt.setInt(column++, sourceIndex);
+      sqlUpdateIndex.bindParameter(moveStmt, 1, targetIndex);
+      sqlUpdateIndex.bindParameter(moveStmt, 2, id, idHandler);
+      sqlUpdateIndex.bindParameter(moveStmt, 3, newVersion);
+      sqlUpdateIndex.bindParameter(moveStmt, 4, sourceIndex);
       int moveResult = DBUtil.update(moveStmt, false);
 
-      if (copyResult > 1 || closeResult > 1 || moveResult > 1 || copyResult != closeResult || copyResult + moveResult != 1)
+      if (copyResult > 1 //
+          || closeResult > 1 //
+          || moveResult > 1 //
+          || copyResult != closeResult //
+          || copyResult + moveResult != 1)
       {
         throw new DBException("Unexpected index shift result"); //$NON-NLS-1$
       }

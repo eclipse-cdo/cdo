@@ -240,6 +240,18 @@ public class DelegatingDBAdapter implements IDBAdapter
   }
 
   @Override
+  public boolean useJavaTypeForUnknownParameterType()
+  {
+    return delegate.useJavaTypeForUnknownParameterType();
+  }
+
+  @Override
+  public void bindParameter(PreparedStatement stmt, int index, DBType type, Object value) throws SQLException
+  {
+    delegate.bindParameter(stmt, index, type, value);
+  }
+
+  @Override
   public boolean isValidFirstChar(char ch)
   {
     return delegate.isValidFirstChar(ch);

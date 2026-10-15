@@ -16,10 +16,13 @@ package org.eclipse.net4j.db.dml;
  * JDBC placeholder occurrences that can be bound together by identity. {@link SQL#param(int)} supplies
  * an explicit JDBC type for typed NULL values and typed {@code setObject}; otherwise NULL uses the
  * field type inferred for each occurrence and translated by the adapter used during compilation.
- * A converter runs once per occurrence for each non-null input value. Null input bypasses the converter
- * and follows typed SQL NULL binding. A specialized binder supplied to {@link SQLStatement} takes
- * precedence over conversion and default setters and receives the original input. Converter exceptions propagate to the
- * binding caller, and converted values are never stored on the parameter or compiled statement.
+ * A parameter may have no strategy, a converter, or a {@link SQLValueSetter}; converters and setters
+ * are mutually exclusive configurations. Converters run once per occurrence for each non-null input
+ * and their results use standard JDBC binding. Null input bypasses converters and follows typed SQL
+ * NULL binding. A setter owns the complete JDBC operation and receives the original input, including
+ * null. Call-specific setter and converter overrides replace the configured strategy for that binding
+ * operation only. Converter exceptions propagate, and converted values are never stored on the parameter
+ * or compiled statement.
  *
  * @author Eike Stepper
  * @since 4.15

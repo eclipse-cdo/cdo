@@ -1,11 +1,69 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="650" viewBox="0 0 1180 650" role="img" aria-labelledby="title desc">
-  <title id="title">Net4j DB public architecture</title>
-  <desc id="desc">Adapters and connection providers configure a database that owns a managed schema and creates managed connections. Schema transactions work on schema copies. SQL templates compile with adapters into statements, then prepare on a connection as caller-managed prepared statements.</desc>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#52677c"/></marker>
-    <marker id="blueArrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#2878a8"/></marker>
-    <style>
-      text { font-family: "Segoe UI", Arial, sans-serif; fill: #203243; }
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="1180"
+   height="650"
+   viewBox="0 0 1180 650"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg33"
+   sodipodi:docname="net4j-db-architecture.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview33"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.3338983"
+     inkscape:cx="590"
+     inkscape:cy="324.98729"
+     inkscape:window-width="2270"
+     inkscape:window-height="1339"
+     inkscape:window-x="3816"
+     inkscape:window-y="1"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg33" />
+  <title
+     id="title">Net4j DB public architecture</title>
+  <desc
+     id="desc">Adapters and connection providers configure a database that owns a managed schema and creates managed connections. Schema transactions work on schema copies. SQL templates compile with adapters into statements, then prepare on a connection as caller-managed prepared statements.</desc>
+  <defs
+     id="defs2">
+    <marker
+       id="arrow"
+       markerWidth="10"
+       markerHeight="8"
+       refX="9"
+       refY="4"
+       orient="auto">
+      <path
+         d="M0,0 L10,4 L0,8 z"
+         fill="#52677c"
+         id="path1" />
+    </marker>
+    <marker
+       id="blueArrow"
+       markerWidth="10"
+       markerHeight="8"
+       refX="9"
+       refY="4"
+       orient="auto">
+      <path
+         d="M0,0 L10,4 L0,8 z"
+         fill="#2878a8"
+         id="path2" />
+    </marker>
+    <style
+       id="style2">
+      text { font-family: &quot;Segoe UI&quot;, Arial, sans-serif; fill: #203243; }
       .title { font-size: 25px; font-weight: 700; }
       .label { font-size: 17px; font-weight: 700; }
       .small { font-size: 13px; }
@@ -18,66 +76,299 @@
       .dash { stroke-dasharray: 7 5; }
     </style>
   </defs>
-  <rect width="1180" height="650" fill="#ffffff"/>
-  <text x="34" y="42" class="title">Net4j DB: public abstractions and lifecycle</text>
-
-  <rect x="55" y="92" width="230" height="92" class="box blue"/>
-  <text x="170" y="124" text-anchor="middle" class="label">IDBAdapter</text>
-  <text x="170" y="150" text-anchor="middle" class="small">dialect, schema DDL, SQL compilation</text>
-
-  <rect x="55" y="220" width="230" height="92" class="box blue"/>
-  <text x="170" y="253" text-anchor="middle" class="label">IDBConnectionProvider</text>
-  <text x="170" y="279" text-anchor="middle" class="small">supplies JDBC connections</text>
-
-  <rect x="390" y="148" width="290" height="132" class="box gold"/>
-  <text x="535" y="184" text-anchor="middle" class="label">IDBDatabase</text>
-  <text x="535" y="211" text-anchor="middle" class="small">ownership and coordination boundary</text>
-  <text x="535" y="235" text-anchor="middle" class="small">tracks connections · schema queue · change event</text>
-  <text x="535" y="258" text-anchor="middle" class="small">cache capacity setting; caches live per connection</text>
-
-  <path d="M285 137 C330 137 340 170 390 180" class="line"/>
-  <text x="326" y="116" class="small">configures</text>
-  <path d="M285 265 C332 265 341 244 390 237" class="line"/>
-  <text x="323" y="278" class="small">provides</text>
-
-  <rect x="780" y="85" width="320" height="92" class="box green"/>
-  <text x="940" y="119" text-anchor="middle" class="label">IDBSchema</text>
-  <text x="940" y="145" text-anchor="middle" class="small">managed metadata snapshot; tables, fields, indexes</text>
-  <path d="M680 172 C720 172 730 132 780 132" class="line"/>
-  <text x="704" y="196" class="small">owns/locks</text>
-
-  <rect x="780" y="218" width="320" height="92" class="box gold"/>
-  <text x="940" y="252" text-anchor="middle" class="label">IDBSchemaTransaction</text>
-  <text x="940" y="278" text-anchor="middle" class="small">working copy · delta · adapter-backed update</text>
-  <path d="M680 238 C718 238 738 264 780 264" class="line"/>
-  <text x="713" y="222" class="small">opens</text>
-  <path d="M940 218 L940 179" class="line dash"/>
-  <text x="950" y="204" class="small">edits by delta</text>
-
-  <rect x="390" y="360" width="290" height="92" class="box blue"/>
-  <text x="535" y="394" text-anchor="middle" class="label">IDBConnection</text>
-  <text x="535" y="420" text-anchor="middle" class="small">wraps JDBC; coordinates schema access</text>
-  <path d="M535 280 L535 360" class="line"/>
-  <text x="558" y="340" class="small">creates/tracks</text>
-
-  <rect x="55" y="510" width="230" height="92" class="box green"/>
-  <text x="170" y="544" text-anchor="middle" class="label">SQLTemplate</text>
-  <text x="170" y="570" text-anchor="middle" class="small">built from schema metadata</text>
-  <text x="170" y="588" text-anchor="middle" class="small">adapter-neutral definition</text>
-
-  <rect x="390" y="510" width="290" height="92" class="box blue"/>
-  <text x="535" y="544" text-anchor="middle" class="label">SQLStatement</text>
-  <text x="535" y="570" text-anchor="middle" class="small">compiled SQL and parameter metadata</text>
-  <path d="M285 556 L390 556" class="compile"/>
-  <text x="337" y="523" text-anchor="middle" class="small">compile(adapter)</text>
-
-  <rect x="780" y="510" width="320" height="92" class="box gold"/>
-  <text x="940" y="544" text-anchor="middle" class="label">IDBPreparedStatement</text>
-  <text x="940" y="570" text-anchor="middle" class="small">checked out for use; close returns or releases it</text>
-  <path d="M680 556 L780 556" class="compile"/>
-  <text x="730" y="523" text-anchor="middle" class="small">prepare(connection)</text>
-  <path d="M620 452 C705 475 746 490 830 510" class="line"/>
-  <text x="694" y="475" class="small">per-connection cache</text>
-
-  <text x="55" y="630" class="small">Schema coordination covers managed statement checkouts; it does not serialize all physical DDL or raw JDBC activity.</text>
+  <rect
+     width="1180"
+     height="650"
+     fill="#ffffff"
+     id="rect2" />
+  <text
+     x="34"
+     y="42"
+     class="title"
+     id="text2">Net4j DB: public abstractions and lifecycle</text>
+  <rect
+     x="55"
+     y="92"
+     width="230"
+     height="92"
+     class="box blue"
+     id="rect3" />
+  <text
+     x="170"
+     y="124"
+     text-anchor="middle"
+     class="label"
+     id="text3">IDBAdapter</text>
+  <text
+     x="170"
+     y="150"
+     text-anchor="middle"
+     class="small"
+     id="text4">dialect, schema DDL, SQL compilation</text>
+  <rect
+     x="55"
+     y="220"
+     width="230"
+     height="92"
+     class="box blue"
+     id="rect4" />
+  <text
+     x="170"
+     y="253"
+     text-anchor="middle"
+     class="label"
+     id="text5">IDBConnectionProvider</text>
+  <text
+     x="170"
+     y="279"
+     text-anchor="middle"
+     class="small"
+     id="text6">supplies JDBC connections</text>
+  <rect
+     x="390"
+     y="148"
+     width="290"
+     height="132"
+     class="box gold"
+     id="rect6" />
+  <text
+     x="535"
+     y="184"
+     text-anchor="middle"
+     class="label"
+     id="text7">IDBDatabase</text>
+  <text
+     x="535"
+     y="211"
+     text-anchor="middle"
+     class="small"
+     id="text8">ownership and coordination boundary</text>
+  <text
+     x="535"
+     y="235"
+     text-anchor="middle"
+     class="small"
+     id="text9">tracks connections · schema queue · change event</text>
+  <text
+     x="535"
+     y="258"
+     text-anchor="middle"
+     class="small"
+     id="text10">cache capacity setting; caches live per connection</text>
+  <path
+     d="M285 137 C330 137 340 170 390 180"
+     class="line"
+     id="path10" />
+  <text
+     x="307.25793"
+     y="132.84042"
+     class="small"
+     id="text11">configures</text>
+  <path
+     d="M285 265 C332 265 341 244 390 237"
+     class="line"
+     id="path11" />
+  <text
+     x="319.25159"
+     y="275.72305"
+     class="small"
+     id="text12">provides</text>
+  <rect
+     x="780"
+     y="85"
+     width="320"
+     height="92"
+     class="box green"
+     id="rect12" />
+  <text
+     x="940"
+     y="119"
+     text-anchor="middle"
+     class="label"
+     id="text13">IDBSchema</text>
+  <text
+     x="940"
+     y="145"
+     text-anchor="middle"
+     class="small"
+     id="text14">managed metadata snapshot; tables, fields, indexes</text>
+  <path
+     d="M680 172 C720 172 730 132 780 132"
+     class="line"
+     id="path14" />
+  <text
+     x="679.39062"
+     y="132.82304"
+     class="small"
+     id="text15">owns/locks</text>
+  <rect
+     x="780"
+     y="218"
+     width="320"
+     height="92"
+     class="box gold"
+     id="rect15" />
+  <text
+     x="940"
+     y="252"
+     text-anchor="middle"
+     class="label"
+     id="text16">IDBSchemaTransaction</text>
+  <text
+     x="940"
+     y="278"
+     text-anchor="middle"
+     class="small"
+     id="text17">working copy · delta · adapter-backed update</text>
+  <path
+     d="M680 238 C718 238 738 264 780 264"
+     class="line"
+     id="path17" />
+  <text
+     x="698.75604"
+     y="269.81024"
+     class="small"
+     id="text18">opens</text>
+  <path
+     d="M940 218 L940 179"
+     class="line dash"
+     id="path18" />
+  <text
+     x="952.24902"
+     y="204.74968"
+     class="small"
+     id="text19">edits by delta</text>
+  <rect
+     x="390"
+     y="360"
+     width="290"
+     height="92"
+     class="box blue"
+     id="rect19" />
+  <text
+     x="535"
+     y="394"
+     text-anchor="middle"
+     class="label"
+     id="text20">IDBConnection</text>
+  <text
+     x="535"
+     y="420"
+     text-anchor="middle"
+     class="small"
+     id="text21">wraps JDBC; coordinates schema access</text>
+  <path
+     d="M535 280 L535 360"
+     class="line"
+     id="path21" />
+  <text
+     x="543.79999"
+     y="334.00253"
+     class="small"
+     id="text22">creates/tracks</text>
+  <rect
+     x="55"
+     y="510"
+     width="230"
+     height="92"
+     class="box green"
+     id="rect22" />
+  <text
+     x="170"
+     y="544"
+     text-anchor="middle"
+     class="label"
+     id="text23">SQLTemplate</text>
+  <text
+     x="170"
+     y="570"
+     text-anchor="middle"
+     class="small"
+     id="text24">built from schema metadata</text>
+  <text
+     x="170"
+     y="588"
+     text-anchor="middle"
+     class="small"
+     id="text25">adapter-neutral definition</text>
+  <rect
+     x="390"
+     y="510"
+     width="290"
+     height="92"
+     class="box blue"
+     id="rect25" />
+  <text
+     x="535"
+     y="544"
+     text-anchor="middle"
+     class="label"
+     id="text26">SQLStatement</text>
+  <text
+     x="535"
+     y="570"
+     text-anchor="middle"
+     class="small"
+     id="text27">compiled SQL and parameter metadata</text>
+  <path
+     d="M285 556 L390 556"
+     class="compile"
+     id="path27" />
+  <text
+     x="337"
+     y="538.74335"
+     text-anchor="middle"
+     class="small"
+     id="text28">compile(adapter)</text>
+  <rect
+     x="780"
+     y="510"
+     width="320"
+     height="92"
+     class="box gold"
+     id="rect28" />
+  <text
+     x="940"
+     y="544"
+     text-anchor="middle"
+     class="label"
+     id="text29">IDBPreparedStatement</text>
+  <text
+     x="940"
+     y="570"
+     text-anchor="middle"
+     class="small"
+     id="text30">checked out for use; close returns or releases it</text>
+  <path
+     d="M680 556 L780 556"
+     class="compile"
+     id="path30" />
+  <text
+     x="727.00128"
+     y="524.49939"
+     text-anchor="middle"
+     class="small"
+     id="text31"><tspan
+       sodipodi:role="line"
+       id="tspan33"
+       x="727.00128"
+       y="524.49939">prepare</tspan><tspan
+       sodipodi:role="line"
+       id="tspan34"
+       x="727.00128"
+       y="540.74939">(connection)</tspan></text>
+  <path
+     d="M620 452 C705 475 746 490 830 510"
+     class="line"
+     id="path31" />
+  <text
+     x="720.98859"
+     y="472.75095"
+     class="small"
+     id="text32">per-connection cache</text>
+  <text
+     x="55"
+     y="630"
+     class="small"
+     id="text33">Schema coordination covers managed statement checkouts; it does not serialize all physical DDL or raw JDBC activity.</text>
 </svg>

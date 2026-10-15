@@ -44,6 +44,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import javax.sql.DataSource;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.Driver;
@@ -1183,6 +1184,356 @@ public abstract class DBAdapter implements IDBAdapter
   public int getJDBCTypeForNull(DBType type)
   {
     return type.getCode();
+  }
+
+  /**
+   * @since 4.15
+   */
+  @Override
+  public boolean useJavaTypeForUnknownParameterType()
+  {
+    return false;
+  }
+
+  /**
+   * @since 4.15
+   */
+  @Override
+  public void bindParameter(PreparedStatement stmt, int index, DBType type, Object value) throws SQLException
+  {
+    if (value == null)
+    {
+      if (type == null)
+      {
+        bindParameterObject(stmt, index, null);
+      }
+      else
+      {
+        bindParameterNull(stmt, index, type);
+      }
+
+      return;
+    }
+
+    if (type == null)
+    {
+      if (useJavaTypeForUnknownParameterType())
+      {
+        if (value instanceof Boolean)
+        {
+          bindParameterBoolean(stmt, index, ((Boolean)value).booleanValue());
+        }
+        else if (value instanceof Byte)
+        {
+          bindParameterByte(stmt, index, ((Byte)value).byteValue());
+        }
+        else if (value instanceof Short)
+        {
+          bindParameterShort(stmt, index, ((Short)value).shortValue());
+        }
+        else if (value instanceof Integer)
+        {
+          bindParameterInt(stmt, index, ((Integer)value).intValue());
+        }
+        else if (value instanceof Long)
+        {
+          bindParameterLong(stmt, index, ((Long)value).longValue());
+        }
+        else if (value instanceof Float)
+        {
+          bindParameterFloat(stmt, index, ((Float)value).floatValue());
+        }
+        else if (value instanceof Double)
+        {
+          bindParameterDouble(stmt, index, ((Double)value).doubleValue());
+        }
+        else if (value instanceof BigDecimal)
+        {
+          bindParameterBigDecimal(stmt, index, (BigDecimal)value);
+        }
+        else if (value instanceof String)
+        {
+          bindParameterString(stmt, index, (String)value);
+        }
+        else if (value instanceof byte[])
+        {
+          bindParameterBytes(stmt, index, (byte[])value);
+        }
+        else
+        {
+          bindParameterObject(stmt, index, value);
+        }
+      }
+      else
+      {
+        bindParameterObject(stmt, index, value);
+      }
+
+      return;
+    }
+
+    switch (type)
+    {
+    case BOOLEAN:
+    case BIT:
+      if (value instanceof Boolean)
+      {
+        bindParameterBoolean(stmt, index, ((Boolean)value).booleanValue());
+        return;
+      }
+      break;
+
+    case TINYINT:
+      if (value instanceof Byte)
+      {
+        bindParameterByte(stmt, index, ((Byte)value).byteValue());
+        return;
+      }
+      break;
+
+    case SMALLINT:
+      if (value instanceof Short)
+      {
+        bindParameterShort(stmt, index, ((Short)value).shortValue());
+        return;
+      }
+      break;
+
+    case INTEGER:
+      if (value instanceof Integer)
+      {
+        bindParameterInt(stmt, index, ((Integer)value).intValue());
+        return;
+      }
+      break;
+
+    case BIGINT:
+      if (value instanceof Long)
+      {
+        bindParameterLong(stmt, index, ((Long)value).longValue());
+        return;
+      }
+      break;
+
+    case FLOAT:
+    case REAL:
+      if (value instanceof Float)
+      {
+        bindParameterFloat(stmt, index, ((Float)value).floatValue());
+        return;
+      }
+      break;
+
+    case DOUBLE:
+      if (value instanceof Double)
+      {
+        bindParameterDouble(stmt, index, ((Double)value).doubleValue());
+        return;
+      }
+      break;
+
+    case NUMERIC:
+    case DECIMAL:
+      if (value instanceof BigDecimal)
+      {
+        bindParameterBigDecimal(stmt, index, (BigDecimal)value);
+        return;
+      }
+      break;
+
+    case CHAR:
+    case VARCHAR:
+    case LONGVARCHAR:
+      if (value instanceof String)
+      {
+        bindParameterString(stmt, index, (String)value);
+        return;
+      }
+      break;
+
+    case BINARY:
+    case VARBINARY:
+    case LONGVARBINARY:
+      if (value instanceof byte[])
+      {
+        bindParameterBytes(stmt, index, (byte[])value);
+        return;
+      }
+      break;
+
+    default:
+      break;
+    }
+
+    bindParameterObject(stmt, index, value);
+  }
+
+  /**
+   * Binds a boolean parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the boolean value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterBoolean(PreparedStatement stmt, int index, boolean value) throws SQLException
+  {
+    stmt.setBoolean(index, value);
+  }
+
+  /**
+   * Binds a byte parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the byte value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterByte(PreparedStatement stmt, int index, byte value) throws SQLException
+  {
+    stmt.setByte(index, value);
+  }
+
+  /**
+   * Binds a short parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the short value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterShort(PreparedStatement stmt, int index, short value) throws SQLException
+  {
+    stmt.setShort(index, value);
+  }
+
+  /**
+   * Binds an integer parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the integer value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterInt(PreparedStatement stmt, int index, int value) throws SQLException
+  {
+    stmt.setInt(index, value);
+  }
+
+  /**
+   * Binds a long parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the long value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterLong(PreparedStatement stmt, int index, long value) throws SQLException
+  {
+    stmt.setLong(index, value);
+  }
+
+  /**
+   * Binds a float parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the float value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterFloat(PreparedStatement stmt, int index, float value) throws SQLException
+  {
+    stmt.setFloat(index, value);
+  }
+
+  /**
+   * Binds a double parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the double value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterDouble(PreparedStatement stmt, int index, double value) throws SQLException
+  {
+    stmt.setDouble(index, value);
+  }
+
+  /**
+   * Binds a decimal parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the decimal value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterBigDecimal(PreparedStatement stmt, int index, BigDecimal value) throws SQLException
+  {
+    stmt.setBigDecimal(index, value);
+  }
+
+  /**
+   * Binds a string parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the string value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterString(PreparedStatement stmt, int index, String value) throws SQLException
+  {
+    stmt.setString(index, value);
+  }
+
+  /**
+   * Binds a byte array parameter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the byte array value
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterBytes(PreparedStatement stmt, int index, byte[] value) throws SQLException
+  {
+    stmt.setBytes(index, value);
+  }
+
+  /**
+   * Binds a parameter using JDBC's generic object setter.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param value the value, which may be {@code null}
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterObject(PreparedStatement stmt, int index, Object value) throws SQLException
+  {
+    stmt.setObject(index, value);
+  }
+
+  /**
+   * Binds a null parameter using the JDBC type associated with a database type.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based JDBC parameter index
+   * @param type the non-null database type
+   * @throws SQLException if the JDBC operation fails
+   * @since 4.15
+   */
+  protected void bindParameterNull(PreparedStatement stmt, int index, DBType type) throws SQLException
+  {
+    stmt.setNull(index, getJDBCTypeForNull(type));
   }
 
   /**

@@ -11,18 +11,20 @@
  */
 package org.eclipse.net4j.db.dml;
 
-import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * An immutable adapter-compiled statement definition. Each call to {@link #prepare(IDBConnection, ReuseProbability)}
  * obtains a statement from the connection's existing cache; the returned statement remains caller-owned and must
  * be released using the normal Net4j DB lifecycle. This definition retains neither connection nor statement.
+ * Configured parameter setters are retained through their parameter identities for the lifetime of this definition.
  *
  * @author Eike Stepper
  * @since 4.15
@@ -46,36 +48,128 @@ public interface SQLStatement
   public int getParameterCount();
 
   /**
+   * Returns the logical parameter identity at a one-based JDBC placeholder position.
+   * Repeated uses of one identity return the same {@link SQLParameter} instance at each position.
+   *
+   * @param index the one-based JDBC parameter position
+   * @return the logical parameter identity for that occurrence
+   * @throws IllegalArgumentException if the index is outside the statement's parameter range
+   * @since 4.16
+   */
+  public SQLParameter getParameter(int index);
+
+  /**
+   * Returns the logical parameter identities in JDBC placeholder order. The returned list is immutable,
+   * contains one entry per placeholder occurrence, and preserves the identity of repeated parameters.
+   * Statements without placeholders return an empty list.
+   *
+   * @return immutable parameter occurrences in JDBC order
+   * @since 4.16
+   */
+  public List<SQLParameter> getParameters();
+
+  /**
    * Prepares this statement through the existing Net4j DB statement cache and supplied reuse policy.
    * The caller owns the returned statement and must release it according to the connection's normal lifecycle.
    *
    * @param connection the connection to prepare on
    * @param reuseProbability the existing statement-cache reuse hint
    * @return a prepared statement from the connection
-   * @throws SQLException if the connection reports a preparation failure as a checked exception
-   * @throws DBException if Net4j wraps an underlying JDBC preparation failure
+   * @throws SQLException if JDBC reports a preparation failure
    */
   public IDBPreparedStatement prepare(IDBConnection connection, ReuseProbability reuseProbability) throws SQLException;
 
   /**
-   * Binds positional values in placeholder order. Positions are JDBC's one-based positions, and the
-   * argument count must exactly match the placeholder count. Repeated logical parameter identities
-   * occupy a position for every occurrence. Each value uses its parameter's converter, if any, followed
-   * by default JDBC binding; NULL uses an explicit JDBC type or inferred field type. An unresolved NULL
-   * requires an explicit type or specialized binder. If a later conversion or JDBC setter fails, earlier
-   * positions may already have been changed; binding is not atomic.
+   * Prepares this statement with the requested JDBC result-set shape through the existing Net4j DB statement cache.
+   * The caller owns the returned statement and must release it according to the connection's normal lifecycle.
+   *
+   * @param connection the connection to prepare on
+   * @param resultSetType the JDBC result-set type
+   * @param resultSetConcurrency the JDBC result-set concurrency
+   * @param reuseProbability the existing statement-cache reuse hint
+   * @return a prepared statement from the connection
+   * @throws SQLException if JDBC reports a preparation failure
+   * @since 4.16
+   */
+  public IDBPreparedStatement prepare(IDBConnection connection, int resultSetType, int resultSetConcurrency, ReuseProbability reuseProbability)
+      throws SQLException;
+
+  /**
+   * Creates an independent sequential binding cursor starting at JDBC position 1.
+   * Cursor state belongs to the returned object and is not retained by this compiled definition.
+   *
+   * @param stmt the JDBC statement to bind
+   * @return a new cursor
+   * @throws NullPointerException if {@code stmt} is {@code null}
+   * @since 4.16
+   */
+  public SQLParameterBinder binder(PreparedStatement stmt);
+
+  /**
+   * Creates an independent sequential binding cursor at the specified JDBC position.
+   * Positions from 1 through parameter count plus one are valid; the final position supports
+   * empty sequences only.
+   *
+   * @param stmt the JDBC statement to bind
+   * @param startIndex the one-based next position
+   * @return a new cursor
+   * @throws IllegalArgumentException if {@code startIndex} is outside the valid range
+   * @throws NullPointerException if {@code stmt} is {@code null}
+   * @since 4.16
+   */
+  public SQLParameterBinder binderFrom(PreparedStatement stmt, int startIndex);
+
+  /**
+   * Binds a sequence of values starting at JDBC position 1. Partial prefixes are allowed and the
+   * returned count is the number of bound positions. A single null value must be passed as
+   * {@code (Object)null}; a null varargs array is invalid. Existing bindings at other positions are
+   * unaffected, and callers must account for stale values when reusing statements.
    *
    * @param stmt the JDBC statement
    * @param values values in placeholder order
+   * @return the number of values bound
    * @throws SQLException if JDBC binding fails
-   * @throws IllegalArgumentException if the value count differs from the placeholder count
+   * @throws IllegalArgumentException if the sequence exceeds the remaining parameter range
    * @throws NullPointerException if {@code stmt} or {@code values} is {@code null}
+   * @since 4.16
    */
-  public void bind(PreparedStatement stmt, Object... values) throws SQLException;
+  public int bind(PreparedStatement stmt, Object... values) throws SQLException;
 
   /**
-   * Binds one value at a one-based placeholder index. Default binding applies parameter conversion to
-   * non-null values and uses explicit JDBC type before inferred field type for NULL. A failed operation
+   * Binds a partial sequence from the specified one-based position and returns its value count.
+   * The valid starting positions are 1 through the parameter count plus one; the final position
+   * is useful only for an empty sequence. Structural range checks happen before JDBC is changed.
+   *
+   * @param stmt the JDBC statement
+   * @param startIndex the one-based first position
+   * @param values the values to bind in occurrence order
+   * @return the number of values bound
+   * @throws SQLException if JDBC binding fails
+   * @throws IllegalArgumentException if the position or range is invalid
+   * @throws NullPointerException if the statement or values array is {@code null}
+   * @since 4.16
+   */
+  public int bindFrom(PreparedStatement stmt, int startIndex, Object... values) throws SQLException;
+
+  /**
+   * Binds the complete statement and requires exactly {@link #getParameterCount()} values.
+   * Structural count validation happens before JDBC is changed. A successful empty statement
+   * binding returns zero.
+   *
+   * @param stmt the JDBC statement
+   * @param values one value for each placeholder occurrence
+   * @return the number of values bound
+   * @throws SQLException if JDBC binding fails
+   * @throws IllegalArgumentException if the number of values differs from the parameter count
+   * @throws NullPointerException if the statement or values array is {@code null}
+   * @since 4.16
+   */
+  public int bindAll(PreparedStatement stmt, Object... values) throws SQLException;
+
+  /**
+   * Binds one value at a one-based placeholder index. A configured setter receives the original value;
+   * otherwise default binding applies a configured converter to non-null values and uses explicit JDBC
+   * type before inferred field type for NULL. A failed operation
    * leaves existing bindings untouched except for effects already made by JDBC.
    *
    * @param stmt the JDBC statement
@@ -84,23 +178,9 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if {@code index} is outside the compiled parameter range
    * @throws NullPointerException if {@code stmt} is {@code null}
+   * @since 4.16
    */
   public void bindParameter(PreparedStatement stmt, int index, Object value) throws SQLException;
-
-  /**
-   * Binds one value with a caller-supplied JDBC binding strategy. The binder takes precedence over
-   * conversion and all default setters and receives the original value, including {@code null}.
-   *
-   * @param <JAVA> the application value type
-   * @param stmt the JDBC statement
-   * @param index the one-based placeholder index
-   * @param value the application value
-   * @param binder the specialized binding strategy
-   * @throws SQLException if JDBC binding fails
-   * @throws IllegalArgumentException if {@code index} is outside the compiled parameter range
-   * @throws NullPointerException if a required argument is {@code null}
-   */
-  public <JAVA> void bindParameter(PreparedStatement stmt, int index, JAVA value, SQLParameterBinder<? super JAVA> binder) throws SQLException;
 
   /**
    * Binds a logical parameter identity at every occurrence in generated SQL order. Matching uses object
@@ -113,21 +193,113 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if the parameter identity is absent from this statement
    * @throws NullPointerException if a required argument is {@code null}
+   * @since 4.16
    */
   public void bindParameter(PreparedStatement stmt, SQLParameter parameter, Object value) throws SQLException;
 
   /**
+   * Binds the implementation-defined default for one parameter occurrence at a one-based JDBC index. The setter
+   * performs the complete JDBC operation; configured parameter setters and converters are not consulted. This is
+   * distinct from binding a supplied value through {@code bindParameter(stmt, index, value)}, including a supplied
+   * {@code null}. The default need not be SQL {@code DEFAULT} or SQL NULL. If the setter fails, any JDBC side effect it
+   * already performed is not rolled back.
+   *
+   * @param stmt the JDBC statement
+   * @param index the one-based placeholder index
+   * @param setter the complete default-value binding operation
+   * @throws SQLException if the setter reports a binding failure
+   * @throws IllegalArgumentException if {@code index} is outside the compiled parameter range
+   * @throws NullPointerException if {@code stmt} or {@code setter} is {@code null}
+   * @since 4.16
+   */
+  public void bindDefault(PreparedStatement stmt, int index, SQLDefaultSetter setter) throws SQLException;
+
+  /**
+   * Binds the implementation-defined default at every occurrence of a logical parameter identity, in generated SQL
+   * order. Matching uses object identity, and each call to the setter receives that occurrence's actual one-based JDBC
+   * index. The setter performs the complete JDBC operation; configured parameter setters and converters are not
+   * consulted. This is distinct from binding a supplied value through {@code bindParameter(stmt, parameter, value)}.
+   * The default need not be SQL {@code DEFAULT} or SQL NULL. If a later setter call fails, earlier JDBC effects are not
+   * rolled back.
+   *
+   * @param stmt the JDBC statement
+   * @param parameter the logical parameter identity
+   * @param setter the complete default-value binding operation
+   * @throws SQLException if the setter reports a binding failure
+   * @throws IllegalArgumentException if the identity is absent from this statement
+   * @throws NullPointerException if a required argument is {@code null}
+   * @since 4.16
+   */
+  public void bindDefault(PreparedStatement stmt, SQLParameter parameter, SQLDefaultSetter setter) throws SQLException;
+
+  /**
+   * Binds one value with a caller-supplied JDBC binding strategy. The setter replaces any strategy
+   * configured on the parameter, receives the original value including {@code null}, and owns the
+   * complete JDBC operation. This override does not modify the parameter or compiled statement.
+   *
+   * @param <JAVA> the application value type
+   * @param stmt the JDBC statement
+   * @param index the one-based placeholder index
+   * @param value the application value
+   * @param setter the complete JDBC binding strategy
+   * @throws SQLException if JDBC binding fails
+   * @throws IllegalArgumentException if {@code index} is outside the compiled parameter range
+   * @throws NullPointerException if a required argument is {@code null}
+   * @since 4.16
+   */
+  public <JAVA> void bindParameter(PreparedStatement stmt, int index, JAVA value, SQLValueSetter<? super JAVA> setter) throws SQLException;
+
+  /**
    * Binds a logical parameter identity at every occurrence in generated SQL order using a specialized
-   * binder. The binder receives the original value once per occurrence and completely controls JDBC binding.
+   * setter. The setter receives the original value once per occurrence, including null, and completely
+   * controls JDBC binding.
    *
    * @param <JAVA> the application value type
    * @param stmt the JDBC statement
    * @param parameter the identity returned by a particular {@code SQL.param()} call
    * @param value the application value to bind at each occurrence
-   * @param binder the specialized binding strategy
+   * @param setter the complete JDBC binding strategy
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if the parameter identity is absent from this statement
    * @throws NullPointerException if a required argument is {@code null}
+   * @since 4.16
    */
-  public <JAVA> void bindParameter(PreparedStatement stmt, SQLParameter parameter, JAVA value, SQLParameterBinder<? super JAVA> binder) throws SQLException;
+  public <JAVA> void bindParameter(PreparedStatement stmt, SQLParameter parameter, JAVA value, SQLValueSetter<? super JAVA> setter) throws SQLException;
+
+  /**
+   * Binds one value after applying a call-specific converter, bypassing all parameter-configured
+   * strategies. A non-null input is converted before the usual JDBC binding. Null input bypasses
+   * conversion and uses the parameter's explicit or inferred JDBC NULL type.
+   *
+   * @param <JAVA> the application value type
+   * @param <JDBC> the converted value type
+   * @param stmt the JDBC statement
+   * @param index the one-based placeholder index
+   * @param value the original application value
+   * @param converter the call-specific converter
+   * @throws SQLException if JDBC binding fails
+   * @throws IllegalArgumentException if {@code index} is outside the parameter range
+   * @throws NullPointerException if a required argument is {@code null}
+   * @since 4.16
+   */
+  public <JAVA, JDBC> void bindParameter(PreparedStatement stmt, int index, JAVA value, Function<JAVA, JDBC> converter) throws SQLException;
+
+  /**
+   * Binds every occurrence of an identity after applying a call-specific converter. The converter
+   * receives the original non-null application value once per occurrence; null bypasses conversion
+   * and follows the usual explicit or inferred JDBC NULL handling. The override does not change the
+   * parameter or compiled statement.
+   *
+   * @param <JAVA> the application value type
+   * @param <JDBC> the converted value type
+   * @param stmt the JDBC statement
+   * @param parameter the logical parameter identity
+   * @param value the original application value
+   * @param converter the call-specific converter
+   * @throws SQLException if JDBC binding fails
+   * @throws IllegalArgumentException if the identity is absent from this statement
+   * @throws NullPointerException if a required argument is {@code null}
+   * @since 4.16
+   */
+  public <JAVA, JDBC> void bindParameter(PreparedStatement stmt, SQLParameter parameter, JAVA value, Function<JAVA, JDBC> converter) throws SQLException;
 }

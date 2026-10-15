@@ -12,6 +12,7 @@
 package org.eclipse.net4j.internal.db.dml;
 
 import org.eclipse.net4j.db.dml.SQLParameter;
+import org.eclipse.net4j.db.dml.SQLValueSetter;
 
 import java.util.function.Function;
 
@@ -27,11 +28,24 @@ public final class Parameter extends Expression implements SQLParameter
 
   private final Function<?, ?> converter;
 
+  private final SQLValueSetter<?> setter;
+
   public Parameter(Integer sqlType, Function<?, ?> converter)
+  {
+    this(sqlType, converter, null);
+  }
+
+  public Parameter(Integer sqlType, SQLValueSetter<?> setter)
+  {
+    this(sqlType, null, setter);
+  }
+
+  private Parameter(Integer sqlType, Function<?, ?> converter, SQLValueSetter<?> setter)
   {
     super(Kind.PARAMETER);
     this.sqlType = sqlType;
     this.converter = converter;
+    this.setter = setter;
   }
 
   public Integer getSQLType()
@@ -42,6 +56,11 @@ public final class Parameter extends Expression implements SQLParameter
   public Function<?, ?> getConverter()
   {
     return converter;
+  }
+
+  public SQLValueSetter<?> getSetter()
+  {
+    return setter;
   }
 
   @Override

@@ -261,6 +261,46 @@ public interface IDBAdapter extends IDBAdapterID
   public int getJDBCTypeForNull(DBType type);
 
   /**
+   * Returns whether a Java value's type may select a specialized JDBC setter when its logical database type is
+   * unknown. If this method returns {@code false}, unknown non-null values use {@link PreparedStatement#setObject(int, Object)}.
+   * If it returns {@code true}, supported scalar Java types may use their corresponding typed setter; unsupported
+   * values still use {@code setObject}. This policy does not affect parameters with an inferred database type.
+   *
+   * @return {@code true} to use supported Java scalar types for unknown parameters; otherwise {@code false}
+   * @since 4.15
+   */
+  public default boolean useJavaTypeForUnknownParameterType()
+  {
+    return false;
+  }
+
+  /**
+   * Binds a converted value using the JDBC operation selected by this adapter for its logical database type and Java
+   * value type. The value may be {@code null}. Implementations may specialize compatible scalar types; values without
+   * a supported specialization use {@link PreparedStatement#setObject(int, Object)}. A null value with a known type
+   * uses this adapter's {@link #getJDBCTypeForNull(DBType)} mapping. A null value with an unknown type may use generic
+   * object binding. The default preserves generic binding for adapters that do not override this operation.
+   *
+   * @param stmt the prepared statement
+   * @param index the one-based JDBC parameter index
+   * @param type the inferred logical database type, or {@code null} if it cannot be inferred
+   * @param value the converted Java value, possibly {@code null}
+   * @throws SQLException if JDBC reports a binding failure
+   * @since 4.15
+   */
+  public default void bindParameter(PreparedStatement stmt, int index, DBType type, Object value) throws SQLException
+  {
+    if (value == null && type != null)
+    {
+      stmt.setNull(index, getJDBCTypeForNull(type));
+    }
+    else
+    {
+      stmt.setObject(index, value);
+    }
+  }
+
+  /**
    * Check if a character is valid as first character. (e.g., underscores are forbidden as first character in Derby
    * elements.
    *

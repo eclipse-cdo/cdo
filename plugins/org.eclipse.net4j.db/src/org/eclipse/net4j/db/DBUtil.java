@@ -16,6 +16,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBNamedElement;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.internal.db.BatchedStatementImpl;
 import org.eclipse.net4j.internal.db.DBConnection;
 import org.eclipse.net4j.internal.db.DBDatabase;
@@ -1351,6 +1352,56 @@ public final class DBUtil
   }
 
   /**
+   * Prepares a compiled SQL statement and translates the checked JDBC exception into Net4j's database exception.
+   * This preserves the checked-exception contract of {@link SQLStatement#prepare(IDBConnection, IDBPreparedStatement.ReuseProbability)}
+   * for callers that use DBUtil's established unchecked exception boundary.
+   *
+   * @param statement the compiled SQL statement
+   * @param connection the connection to prepare on
+   * @param reuseProbability the statement-cache reuse hint
+   * @return the prepared statement
+   * @throws NullPointerException if an argument is {@code null}
+   * @since 4.15
+   */
+  public static IDBPreparedStatement prepare(SQLStatement statement, IDBConnection connection, IDBPreparedStatement.ReuseProbability reuseProbability)
+  {
+    try
+    {
+      return statement.prepare(connection, reuseProbability);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  /**
+   * Prepares a compiled SQL statement with a requested JDBC result-set shape and translates checked JDBC failures
+   * into Net4j's database exception.
+   *
+   * @param statement the compiled SQL statement
+   * @param connection the connection to prepare on
+   * @param resultSetType the JDBC result-set type
+   * @param resultSetConcurrency the JDBC result-set concurrency
+   * @param reuseProbability the statement-cache reuse hint
+   * @return the prepared statement
+   * @throws NullPointerException if an argument is {@code null}
+   * @since 4.15
+   */
+  public static IDBPreparedStatement prepare(SQLStatement statement, IDBConnection connection, int resultSetType, int resultSetConcurrency,
+      IDBPreparedStatement.ReuseProbability reuseProbability)
+  {
+    try
+    {
+      return statement.prepare(connection, resultSetType, resultSetConcurrency, reuseProbability);
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  /**
    * @since 3.0
    */
   public static void serializeTable(ExtendedDataOutput out, Connection connection, IDBTable table, String tableAlias, String sqlSuffix)
@@ -1613,6 +1664,19 @@ public final class DBUtil
     {
       async.stop();
     }
+  }
+
+  /**
+   * @since 4.15
+   */
+  public static SQLStatement trace(SQLStatement sql)
+  {
+    if (isTracerEnabled())
+    {
+      TRACER.trace(sql.getSQL());
+    }
+
+    return sql;
   }
 
   /**

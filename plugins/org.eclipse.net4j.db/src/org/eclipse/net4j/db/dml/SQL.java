@@ -261,7 +261,7 @@ public final class SQL
    */
   public static SQLParameter param()
   {
-    return new Parameter(null, null);
+    return new Parameter(null, (Function<?, ?>)null);
   }
 
   /**
@@ -273,7 +273,7 @@ public final class SQL
    */
   public static SQLParameter param(int sqlType)
   {
-    return new Parameter(Integer.valueOf(sqlType), null);
+    return new Parameter(Integer.valueOf(sqlType), (Function<?, ?>)null);
   }
 
   /**
@@ -281,7 +281,7 @@ public final class SQL
    *
    * @param <JAVA> the input value type accepted by the converter
    * @param <JDBC> the converted value type passed to JDBC
-   * @param converter converts each non-null application value before default JDBC binding; it is bypassed for null input and by a specialized binder
+   * @param converter converts each non-null application value before default JDBC binding; it is bypassed for null input and by an explicit setter override
    * @return the corresponding immutable SQL API value
    * @since 4.15
    */
@@ -296,13 +296,49 @@ public final class SQL
    * @param sqlType the {@link Types} code used by typed {@code setObject} calls and for NULL binding
    * @param <JAVA> the input value type accepted by the converter
    * @param <JDBC> the converted value type passed to JDBC
-   * @param converter converts each non-null application value before default JDBC binding; it is bypassed for null input and by a specialized binder
+   * @param converter converts each non-null application value before default JDBC binding; it is bypassed for null input and by an explicit setter override
    * @return the corresponding immutable SQL API value
    * @since 4.15
    */
   public static <JAVA, JDBC> SQLParameter param(int sqlType, Function<JAVA, JDBC> converter)
   {
     return new Parameter(Integer.valueOf(sqlType), Objects.requireNonNull(converter, "converter"));
+  }
+
+  /**
+   * Creates a new logical parameter whose setter performs complete JDBC binding for every occurrence.
+   * The setter receives the original application value, including null, and is responsible for JDBC
+   * NULL handling. The parameter retains the setter, and compiled statements retain the parameter;
+   * captured objects may therefore remain reachable for their lifetime. Choose reuse, mutable state,
+   * thread safety, and connection-specific or execution-specific dependencies to suit your use case.
+   *
+   * @param <JAVA> the application value type
+   * @param setter the complete JDBC binding strategy
+   * @return a new logical parameter identity
+   * @throws NullPointerException if {@code setter} is {@code null}
+   * @since 4.16
+   */
+  public static <JAVA> SQLParameter param(SQLValueSetter<JAVA> setter)
+  {
+    return new Parameter(null, Objects.requireNonNull(setter, "setter"));
+  }
+
+  /**
+   * Creates a new logical parameter with JDBC type metadata and a complete JDBC value setter.
+   * The type remains parameter metadata, but the setter owns the entire JDBC operation. Captured
+   * objects may remain reachable through the parameter and compiled statement; callers choose
+   * suitable reuse, mutable state, thread safety, and connection-specific dependencies.
+   *
+   * @param <JAVA> the application value type
+   * @param sqlType the JDBC type metadata
+   * @param setter the complete JDBC binding strategy
+   * @return a new logical parameter identity
+   * @throws NullPointerException if {@code setter} is {@code null}
+   * @since 4.16
+   */
+  public static <JAVA> SQLParameter param(int sqlType, SQLValueSetter<JAVA> setter)
+  {
+    return new Parameter(Integer.valueOf(sqlType), Objects.requireNonNull(setter, "setter"));
   }
 
   /**

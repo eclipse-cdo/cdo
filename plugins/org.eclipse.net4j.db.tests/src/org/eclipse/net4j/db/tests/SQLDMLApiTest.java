@@ -18,13 +18,14 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQL;
 import org.eclipse.net4j.db.dml.SQLCondition;
+import org.eclipse.net4j.db.dml.SQLDefaultSetter;
 import org.eclipse.net4j.db.dml.SQLExpression;
 import org.eclipse.net4j.db.dml.SQLFragment;
 import org.eclipse.net4j.db.dml.SQLParameter;
-import org.eclipse.net4j.db.dml.SQLParameterBinder;
 import org.eclipse.net4j.db.dml.SQLSubSelect;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.db.dml.SQLTemplate;
+import org.eclipse.net4j.db.dml.SQLValueSetter;
 import org.eclipse.net4j.db.dml.fluent.SQLDeleteStep;
 import org.eclipse.net4j.db.dml.fluent.SQLDeleteWhereStep;
 import org.eclipse.net4j.db.dml.fluent.SQLInsertAssignmentStep;
@@ -336,12 +337,25 @@ public class SQLDMLApiTest extends TestCase
     assertMethodAbsent(SQLSelectJoinedStep.class, "from", IDBTable.class, IDBTable[].class);
   }
 
-  public void testBinderRemainsClientImplementable()
+  public void testValueSetterRemainsClientImplementable()
   {
-    SQLParameterBinder<String> binder = (statement, index, value) -> assertEquals("bound", value);
+    SQLValueSetter<String> setter = (statement, index, value) -> assertEquals("bound", value);
     try
     {
-      binder.bind(null, 1, "bound");
+      setter.setValue(null, 1, "bound");
+    }
+    catch (SQLException ex)
+    {
+      throw new AssertionError(ex);
+    }
+  }
+
+  public void testDefaultSetterRemainsClientImplementable()
+  {
+    SQLDefaultSetter setter = (statement, index) -> assertEquals(1, index);
+    try
+    {
+      setter.setDefaultValue(null, 1);
     }
     catch (SQLException ex)
     {

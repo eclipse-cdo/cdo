@@ -17,7 +17,9 @@
   }
 
   // Set the content frame src if topic param is present
+  // Example: https://download.eclipse.org/modeling/emf/cdo/updates/integration/help/?topic=org.eclipse.net4j.db.doc/html/programmers/Doc03_DataManipulation.html
   var topicParam = getQueryParam('topic');
+  
   var topicPage = resolveTopicPage(topicParam);
   if (topicPage) {
     // Wait for DOMContentLoaded to ensure frames exist

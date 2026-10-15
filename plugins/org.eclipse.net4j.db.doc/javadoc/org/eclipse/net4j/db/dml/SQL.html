@@ -389,11 +389,22 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a new immutable logical parameter identity with an explicit JDBC type and converter.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;JAVA,<wbr>
-JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#param(java.util.function.Function)" class="member-name-link">param</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;JAVA&gt;&nbsp;<a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#param(int,org.eclipse.net4j.db.dml.SQLValueSetter)" class="member-name-link">param</a><wbr>(int&nbsp;sqlType,
+ <a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a>&lt;JAVA&gt;&nbsp;setter)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a new logical parameter with JDBC type metadata and a complete JDBC value setter.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;JAVA,<wbr>
+JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#param(java.util.function.Function)" class="member-name-link">param</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a new immutable logical parameter identity with a converter.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;JAVA&gt;&nbsp;<a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#param(org.eclipse.net4j.db.dml.SQLValueSetter)" class="member-name-link">param</a><wbr>(<a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a>&lt;JAVA&gt;&nbsp;setter)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Creates a new logical parameter whose setter performs complete JDBC binding for every occurrence.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#scalar(org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">scalar</a><wbr>(<a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;query)</code></div>
@@ -751,7 +762,7 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dd><code>JAVA</code> - the input value type accepted by the converter</dd>
 <dd><code>JDBC</code> - the converted value type passed to JDBC</dd>
 <dt>Parameters:</dt>
-<dd><code>converter</code> - converts each non-null application value before default JDBC binding; it is bypassed for null input and by a specialized binder</dd>
+<dd><code>converter</code> - converts each non-null application value before default JDBC binding; it is bypassed for null input and by an explicit setter override</dd>
 <dt>Returns:</dt>
 <dd>the corresponding immutable SQL API value</dd>
 <dt>Since:</dt>
@@ -772,11 +783,58 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dd><code>JDBC</code> - the converted value type passed to JDBC</dd>
 <dt>Parameters:</dt>
 <dd><code>sqlType</code> - the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Types.html" title="class or interface in java.sql" class="external-link"><code>Types</code></a> code used by typed <code>setObject</code> calls and for NULL binding</dd>
-<dd><code>converter</code> - converts each non-null application value before default JDBC binding; it is bypassed for null input and by a specialized binder</dd>
+<dd><code>converter</code> - converts each non-null application value before default JDBC binding; it is bypassed for null input and by an explicit setter override</dd>
 <dt>Returns:</dt>
 <dd>the corresponding immutable SQL API value</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="param(org.eclipse.net4j.db.dml.SQLValueSetter)">
+<h3>param</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;JAVA&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(<a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a>&lt;JAVA&gt;&nbsp;setter)</span></div>
+<div class="block">Creates a new logical parameter whose setter performs complete JDBC binding for every occurrence.
+ The setter receives the original application value, including null, and is responsible for JDBC
+ NULL handling. The parameter retains the setter, and compiled statements retain the parameter;
+ captured objects may therefore remain reachable for their lifetime. Choose reuse, mutable state,
+ thread safety, and connection-specific or execution-specific dependencies to suit your use case.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>JAVA</code> - the application value type</dd>
+<dt>Parameters:</dt>
+<dd><code>setter</code> - the complete JDBC binding strategy</dd>
+<dt>Returns:</dt>
+<dd>a new logical parameter identity</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>setter</code> is <code>null</code></dd>
+<dt>Since:</dt>
+<dd>4.16</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="param(int,org.eclipse.net4j.db.dml.SQLValueSetter)">
+<h3>param</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;JAVA&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(int&nbsp;sqlType,
+ <a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a>&lt;JAVA&gt;&nbsp;setter)</span></div>
+<div class="block">Creates a new logical parameter with JDBC type metadata and a complete JDBC value setter.
+ The type remains parameter metadata, but the setter owns the entire JDBC operation. Captured
+ objects may remain reachable through the parameter and compiled statement; callers choose
+ suitable reuse, mutable state, thread safety, and connection-specific dependencies.</div>
+<dl class="notes">
+<dt>Type Parameters:</dt>
+<dd><code>JAVA</code> - the application value type</dd>
+<dt>Parameters:</dt>
+<dd><code>sqlType</code> - the JDBC type metadata</dd>
+<dd><code>setter</code> - the complete JDBC binding strategy</dd>
+<dt>Returns:</dt>
+<dd>a new logical parameter identity</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>setter</code> is <code>null</code></dd>
+<dt>Since:</dt>
+<dd>4.16</dd>
 </dl>
 </section>
 </li>

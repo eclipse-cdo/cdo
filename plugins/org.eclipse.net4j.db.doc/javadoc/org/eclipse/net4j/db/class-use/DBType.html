@@ -120,19 +120,28 @@ the order they are declared.</div>
 <div class="col-last even-row-color">
 <div class="block">Provide a way for the DBAdapter to override unsupported DB types with replacements.</div>
 </div>
-<div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)" class="member-name-link">getFieldLength</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-first odd-row-color"><code>default void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#bindParameter(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType,java.lang.Object)" class="member-name-link">bindParameter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;index,
+ <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Returns the column length for the given database type.</div>
+<div class="block">Binds a converted value using the JDBC operation selected by this adapter for its logical database type and Java
+ value type.</div>
 </div>
 <div class="col-first even-row-color"><code>int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#getJDBCTypeForNull(org.eclipse.net4j.db.DBType)" class="member-name-link">getJDBCTypeForNull</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)" class="member-name-link">getFieldLength</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Returns the column length for the given database type.</div>
+</div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#getJDBCTypeForNull(org.eclipse.net4j.db.DBType)" class="member-name-link">getJDBCTypeForNull</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Returns the JDBC type to use when binding a null value for the given database type.</div>
 </div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)" class="member-name-link">isTypeIndexable</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../IDBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)" class="member-name-link">isTypeIndexable</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -253,27 +262,46 @@ the order they are declared.</div>
 <div class="col-first odd-row-color"><code><a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#adaptType(org.eclipse.net4j.db.DBType)" class="member-name-link">adaptType</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#getDefaultDBLength(org.eclipse.net4j.db.DBType)" class="member-name-link">getDefaultDBLength</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#bindParameter(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType,java.lang.Object)" class="member-name-link">bindParameter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;index,
+ <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)" class="member-name-link">getFieldLength</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#bindParameter(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType,java.lang.Object)" class="member-name-link">bindParameter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;index,
+ <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>protected void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#bindParameterNull(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType)" class="member-name-link">bindParameterNull</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;index,
+ <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Binds a null parameter using the JDBC type associated with a database type.</div>
+</div>
+<div class="col-first odd-row-color"><code>static int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#getDefaultDBLength(org.eclipse.net4j.db.DBType)" class="member-name-link">getDefaultDBLength</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)" class="member-name-link">getFieldLength</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)" class="member-name-link">getFieldLength</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>int</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#getJDBCTypeForNull(org.eclipse.net4j.db.DBType)" class="member-name-link">getJDBCTypeForNull</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#getFieldLength(org.eclipse.net4j.db.DBType)" class="member-name-link">getFieldLength</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#getJDBCTypeForNull(org.eclipse.net4j.db.DBType)" class="member-name-link">getJDBCTypeForNull</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#getJDBCTypeForNull(org.eclipse.net4j.db.DBType)" class="member-name-link">getJDBCTypeForNull</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)" class="member-name-link">isTypeIndexable</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-first odd-row-color"><code>int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#getJDBCTypeForNull(org.eclipse.net4j.db.DBType)" class="member-name-link">getJDBCTypeForNull</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)" class="member-name-link">isTypeIndexable</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../spi/db/DBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)" class="member-name-link">isTypeIndexable</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingDBAdapter.</span><code><a href="../../spi/db/DelegatingDBAdapter.html#isTypeIndexable(org.eclipse.net4j.db.DBType)" class="member-name-link">isTypeIndexable</a><wbr>(<a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

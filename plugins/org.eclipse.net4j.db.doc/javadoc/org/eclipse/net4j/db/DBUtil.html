@@ -411,6 +411,23 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;fixNullableIndexColumns,
  boolean&nbsp;qualifiedTableNames)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#prepare(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBConnection,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepare</a><wbr>(<a href="dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;statement,
+ <a href="IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection,
+ int&nbsp;resultSetType,
+ int&nbsp;resultSetConcurrency,
+ <a href="IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Prepares a compiled SQL statement with a requested JDBC result-set shape and translates checked JDBC failures
+ into Net4j's database exception.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#prepare(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBConnection,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepare</a><wbr>(<a href="dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;statement,
+ <a href="IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection,
+ <a href="IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Prepares a compiled SQL statement and translates the checked JDBC exception into Net4j's database exception.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#quoted(java.lang.String)" class="member-name-link">quoted</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
@@ -518,14 +535,17 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#trace(java.lang.String)" class="member-name-link">trace</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(java.sql.Connection,java.lang.String)" class="member-name-link">update</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#trace(org.eclipse.net4j.db.dml.SQLStatement)" class="member-name-link">trace</a><wbr>(<a href="dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;sql)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(java.sql.PreparedStatement,boolean)" class="member-name-link">update</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(java.sql.Connection,java.lang.String)" class="member-name-link">update</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(java.sql.PreparedStatement,boolean)" class="member-name-link">update</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  boolean&nbsp;exactlyOne)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Execute update on the given prepared statement and handle common cases of return values.</div>
 </div>
 </div>
@@ -1370,6 +1390,55 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="prepare(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBConnection,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">
+<h3>prepare</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></span>&nbsp;<span class="element-name">prepare</span><wbr><span class="parameters">(<a href="dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;statement,
+ <a href="IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection,
+ <a href="IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</span></div>
+<div class="block">Prepares a compiled SQL statement and translates the checked JDBC exception into Net4j's database exception.
+ This preserves the checked-exception contract of <a href="dml/SQLStatement.html#prepare(org.eclipse.net4j.db.IDBConnection,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)"><code>SQLStatement.prepare(IDBConnection, IDBPreparedStatement.ReuseProbability)</code></a>
+ for callers that use DBUtil's established unchecked exception boundary.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>statement</code> - the compiled SQL statement</dd>
+<dd><code>connection</code> - the connection to prepare on</dd>
+<dd><code>reuseProbability</code> - the statement-cache reuse hint</dd>
+<dt>Returns:</dt>
+<dd>the prepared statement</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if an argument is <code>null</code></dd>
+<dt>Since:</dt>
+<dd>4.15</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="prepare(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBConnection,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">
+<h3>prepare</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></span>&nbsp;<span class="element-name">prepare</span><wbr><span class="parameters">(<a href="dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;statement,
+ <a href="IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection,
+ int&nbsp;resultSetType,
+ int&nbsp;resultSetConcurrency,
+ <a href="IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</span></div>
+<div class="block">Prepares a compiled SQL statement with a requested JDBC result-set shape and translates checked JDBC failures
+ into Net4j's database exception.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>statement</code> - the compiled SQL statement</dd>
+<dd><code>connection</code> - the connection to prepare on</dd>
+<dd><code>resultSetType</code> - the JDBC result-set type</dd>
+<dd><code>resultSetConcurrency</code> - the JDBC result-set concurrency</dd>
+<dd><code>reuseProbability</code> - the statement-cache reuse hint</dd>
+<dt>Returns:</dt>
+<dd>the prepared statement</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if an argument is <code>null</code></dd>
+<dt>Since:</dt>
+<dd>4.15</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String)">
 <h3>serializeTable</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">serializeTable</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
@@ -1438,6 +1507,16 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 <dt>Since:</dt>
 <dd>4.1</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="trace(org.eclipse.net4j.db.dml.SQLStatement)">
+<h3>trace</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></span>&nbsp;<span class="element-name">trace</span><wbr><span class="parameters">(<a href="dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;sql)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.15</dd>
 </dl>
 </section>
 </li>

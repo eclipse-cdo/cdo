@@ -291,30 +291,133 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBType.html#BINARY" class="member-name-link">BINARY</a> - Enum constant in enum class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#bind(java.sql.PreparedStatement,int,JAVA)" class="member-name-link">bind(PreparedStatement, int, JAVA)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#bind(java.lang.Object...)" class="member-name-link">bind(Object...)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
 <dd>
-<div class="block">Binds one application value at the supplied one-based JDBC parameter index.</div>
+<div class="block">Binds a sequence at the current position and advances after the whole sequence succeeds.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bind(java.sql.PreparedStatement,java.lang.Object...)" class="member-name-link">bind(PreparedStatement, Object...)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
 <dd>
-<div class="block">Binds positional values in placeholder order.</div>
+<div class="block">Binds a sequence of values starting at JDBC position 1.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindAll(java.sql.PreparedStatement,java.lang.Object...)" class="member-name-link">bindAll(PreparedStatement, Object...)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Binds the complete statement and requires exactly <a href="org/eclipse/net4j/db/dml/SQLStatement.html#getParameterCount()"><code>SQLStatement.getParameterCount()</code></a> values.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindDefault(java.sql.PreparedStatement,int,org.eclipse.net4j.db.dml.SQLDefaultSetter)" class="member-name-link">bindDefault(PreparedStatement, int, SQLDefaultSetter)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Binds the implementation-defined default for one parameter occurrence at a one-based JDBC index.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindDefault(java.sql.PreparedStatement,org.eclipse.net4j.db.dml.SQLParameter,org.eclipse.net4j.db.dml.SQLDefaultSetter)" class="member-name-link">bindDefault(PreparedStatement, SQLParameter, SQLDefaultSetter)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Binds the implementation-defined default at every occurrence of a logical parameter identity, in generated SQL
+ order.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#binder(java.sql.PreparedStatement)" class="member-name-link">binder(PreparedStatement)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Creates an independent sequential binding cursor starting at JDBC position 1.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#binderFrom(java.sql.PreparedStatement,int)" class="member-name-link">binderFrom(PreparedStatement, int)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Creates an independent sequential binding cursor at the specified JDBC position.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindFrom(java.sql.PreparedStatement,int,java.lang.Object...)" class="member-name-link">bindFrom(PreparedStatement, int, Object...)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Binds a partial sequence from the specified one-based position and returns its value count.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,int,java.lang.Object)" class="member-name-link">bindParameter(PreparedStatement, int, Object)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
 <dd>
 <div class="block">Binds one value at a one-based placeholder index.</div>
 </dd>
-<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,int,JAVA,org.eclipse.net4j.db.dml.SQLParameterBinder)" class="member-name-link">bindParameter(PreparedStatement, int, JAVA, SQLParameterBinder&lt;? super JAVA&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,int,JAVA,java.util.function.Function)" class="member-name-link">bindParameter(PreparedStatement, int, JAVA, Function&lt;JAVA, JDBC&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Binds one value after applying a call-specific converter, bypassing all parameter-configured
+ strategies.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,int,JAVA,org.eclipse.net4j.db.dml.SQLValueSetter)" class="member-name-link">bindParameter(PreparedStatement, int, JAVA, SQLValueSetter&lt;? super JAVA&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
 <dd>
 <div class="block">Binds one value with a caller-supplied JDBC binding strategy.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/IDBAdapter.html#bindParameter(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType,java.lang.Object)" class="member-name-link">bindParameter(PreparedStatement, int, DBType, Object)</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dt>
+<dd>
+<div class="block">Binds a converted value using the JDBC operation selected by this adapter for its logical database type and Java
+ value type.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameter(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType,java.lang.Object)" class="member-name-link">bindParameter(PreparedStatement, int, DBType, Object)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#bindParameter(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType,java.lang.Object)" class="member-name-link">bindParameter(PreparedStatement, int, DBType, Object)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,org.eclipse.net4j.db.dml.SQLParameter,java.lang.Object)" class="member-name-link">bindParameter(PreparedStatement, SQLParameter, Object)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
 <dd>
 <div class="block">Binds a logical parameter identity at every occurrence in generated SQL order.</div>
 </dd>
-<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,org.eclipse.net4j.db.dml.SQLParameter,JAVA,org.eclipse.net4j.db.dml.SQLParameterBinder)" class="member-name-link">bindParameter(PreparedStatement, SQLParameter, JAVA, SQLParameterBinder&lt;? super JAVA&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,org.eclipse.net4j.db.dml.SQLParameter,JAVA,java.util.function.Function)" class="member-name-link">bindParameter(PreparedStatement, SQLParameter, JAVA, Function&lt;JAVA, JDBC&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Binds every occurrence of an identity after applying a call-specific converter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,org.eclipse.net4j.db.dml.SQLParameter,JAVA,org.eclipse.net4j.db.dml.SQLValueSetter)" class="member-name-link">bindParameter(PreparedStatement, SQLParameter, JAVA, SQLValueSetter&lt;? super JAVA&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
 <dd>
 <div class="block">Binds a logical parameter identity at every occurrence in generated SQL order using a specialized
- binder.</div>
+ setter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#bindParameter(JAVA,java.util.function.Function)" class="member-name-link">bindParameter(JAVA, Function&lt;JAVA, JDBC&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
+<dd>
+<div class="block">Converts one value and applies standard JDBC binding, then advances after success.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#bindParameter(JAVA,org.eclipse.net4j.db.dml.SQLValueSetter)" class="member-name-link">bindParameter(JAVA, SQLValueSetter&lt;? super JAVA&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
+<dd>
+<div class="block">Binds one value with a complete JDBC setter and advances after success.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#bindParameter(org.eclipse.net4j.db.dml.SQLDefaultSetter)" class="member-name-link">bindParameter(SQLDefaultSetter)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
+<dd>
+<div class="block">Sets the current parameter to its implementation-defined default and advances after success.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterBigDecimal(java.sql.PreparedStatement,int,java.math.BigDecimal)" class="member-name-link">bindParameterBigDecimal(PreparedStatement, int, BigDecimal)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a decimal parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterBoolean(java.sql.PreparedStatement,int,boolean)" class="member-name-link">bindParameterBoolean(PreparedStatement, int, boolean)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a boolean parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterByte(java.sql.PreparedStatement,int,byte)" class="member-name-link">bindParameterByte(PreparedStatement, int, byte)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a byte parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterBytes(java.sql.PreparedStatement,int,byte%5B%5D)" class="member-name-link">bindParameterBytes(PreparedStatement, int, byte[])</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a byte array parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterDouble(java.sql.PreparedStatement,int,double)" class="member-name-link">bindParameterDouble(PreparedStatement, int, double)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a double parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterFloat(java.sql.PreparedStatement,int,float)" class="member-name-link">bindParameterFloat(PreparedStatement, int, float)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a float parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterInt(java.sql.PreparedStatement,int,int)" class="member-name-link">bindParameterInt(PreparedStatement, int, int)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds an integer parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterLong(java.sql.PreparedStatement,int,long)" class="member-name-link">bindParameterLong(PreparedStatement, int, long)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a long parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterNull(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType)" class="member-name-link">bindParameterNull(PreparedStatement, int, DBType)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a null parameter using the JDBC type associated with a database type.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterObject(java.sql.PreparedStatement,int,java.lang.Object)" class="member-name-link">bindParameterObject(PreparedStatement, int, Object)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a parameter using JDBC's generic object setter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterShort(java.sql.PreparedStatement,int,short)" class="member-name-link">bindParameterShort(PreparedStatement, int, short)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a short parameter.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#bindParameterString(java.sql.PreparedStatement,int,java.lang.String)" class="member-name-link">bindParameterString(PreparedStatement, int, String)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="block">Binds a string parameter.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/DBType.html#BIT" class="member-name-link">BIT</a> - Enum constant in enum class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a></dt>
 <dd>&nbsp;</dd>
@@ -1110,6 +1213,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#freeze()" class="member-name-link">freeze()</a> - Method in class org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#from(int)" class="member-name-link">from(int)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
+<dd>
+<div class="block">Repositions this cursor to a valid one-based parameter position.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectFromStep.html#from(org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.IDBTable...)" class="member-name-link">from(IDBTable, IDBTable...)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectFromStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectFromStep</a></dt>
 <dd>
 <div class="block">Adds one or more comma-separated table occurrences.</div>
@@ -1649,6 +1756,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Since JDK 1.7.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#getNextIndex()" class="member-name-link">getNextIndex()</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
+<dd>
+<div class="block">Returns the one-based position of the next parameter to bind.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBSchema.html#getNotificationService()" class="member-name-link">getNotificationService()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBSchema.html" title="class in org.eclipse.net4j.spi.db">DBSchema</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
@@ -1683,12 +1794,20 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.html#getOldValue()" class="member-name-link">getOldValue()</a> - Method in interface org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBPropertyDelta</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#getParameter(int)" class="member-name-link">getParameter(int)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Returns the logical parameter identity at a one-based JDBC placeholder position.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#getParameterCount()" class="member-name-link">getParameterCount()</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
 <dd>
 <div class="block">Returns the number of JDBC placeholder occurrences in the statement.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#getParameterMetaData()" class="member-name-link">getParameterMetaData()</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#getParameters()" class="member-name-link">getParameters()</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Returns the logical parameter identities in JDBC placeholder order.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDelta.html#getParent()" class="member-name-link">getParent()</a> - Method in interface org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBDelta</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html#getParent()" class="member-name-link">getParent()</a> - Method in interface org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBFieldDelta</a></dt>
@@ -2819,6 +2938,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates a new immutable logical parameter identity with an explicit JDBC type and converter.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#param(int,org.eclipse.net4j.db.dml.SQLValueSetter)" class="member-name-link">param(int, SQLValueSetter&lt;JAVA&gt;)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Creates a new logical parameter with JDBC type metadata and a complete JDBC value setter.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQL.html#param(java.util.function.Function)" class="member-name-link">param(Function&lt;JAVA, JDBC&gt;)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
 <dd>
 <div class="block">Creates a new immutable logical parameter identity with a converter.</div>
@@ -2826,6 +2949,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLFragmentStep.html#param(org.eclipse.net4j.db.dml.SQLParameter)" class="member-name-link">param(SQLParameter)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLFragmentStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLFragmentStep</a></dt>
 <dd>
 <div class="block">Appends the supplied logical parameter identity as a placeholder part.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#param(org.eclipse.net4j.db.dml.SQLValueSetter)" class="member-name-link">param(SQLValueSetter&lt;JAVA&gt;)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Creates a new logical parameter whose setter performs complete JDBC binding for every occurrence.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#%3Cinit%3E()" class="member-name-link">Policy()</a> - Constructor for class org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</a></dt>
 <dd>&nbsp;</dd>
@@ -2843,6 +2970,19 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html#PRECISION_PROPERTY" class="member-name-link">PRECISION_PROPERTY</a> - Static variable in interface org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html" title="interface in org.eclipse.net4j.db.ddl.delta">IDBFieldDelta</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/DBUtil.html#prepare(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBConnection,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepare(SQLStatement, IDBConnection, int, int, IDBPreparedStatement.ReuseProbability)</a> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
+<dd>
+<div class="block">Prepares a compiled SQL statement with a requested JDBC result-set shape and translates checked JDBC failures
+ into Net4j's database exception.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/DBUtil.html#prepare(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBConnection,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepare(SQLStatement, IDBConnection, IDBPreparedStatement.ReuseProbability)</a> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
+<dd>
+<div class="block">Prepares a compiled SQL statement and translates the checked JDBC exception into Net4j's database exception.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#prepare(org.eclipse.net4j.db.IDBConnection,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepare(IDBConnection, int, int, IDBPreparedStatement.ReuseProbability)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
+<dd>
+<div class="block">Prepares this statement with the requested JDBC result-set shape through the existing Net4j DB statement cache.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQLStatement.html#prepare(org.eclipse.net4j.db.IDBConnection,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepare(IDBConnection, IDBPreparedStatement.ReuseProbability)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></dt>
 <dd>
 <div class="block">Prepares this statement through the existing Net4j DB statement cache and supplied reuse policy.</div>
@@ -3204,6 +3344,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#setDate(int,java.sql.Date,java.util.Calendar)" class="member-name-link">setDate(int, Date, Calendar)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLDefaultSetter.html#setDefaultValue(java.sql.PreparedStatement,int)" class="member-name-link">setDefaultValue(PreparedStatement, int)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLDefaultSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLDefaultSetter</a></dt>
+<dd>
+<div class="block">Sets one parameter occurrence to its implementation-defined default at the supplied one-based JDBC position.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#setDouble(int,double)" class="member-name-link">setDouble(int, double)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#setEscapeProcessing(boolean)" class="member-name-link">setEscapeProcessing(boolean)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
@@ -3340,12 +3484,24 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#setURL(int,java.net.URL)" class="member-name-link">setURL(int, URL)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLValueSetter.html#setValue(java.sql.PreparedStatement,int,JAVA)" class="member-name-link">setValue(PreparedStatement, int, JAVA)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a></dt>
+<dd>
+<div class="block">Sets one application value at the supplied one-based JDBC parameter position.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/spi/db/ddl/InternalDBSchemaElement.html#setWrapper(org.eclipse.net4j.db.ddl.IDBSchemaElement)" class="member-name-link">setWrapper(IDBSchemaElement)</a> - Method in interface org.eclipse.net4j.spi.db.ddl.<a href="org/eclipse/net4j/spi/db/ddl/InternalDBSchemaElement.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBSchemaElement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#shiftStr(int)" class="member-name-link">shiftStr(int)</a> - Method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="class in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/h2/H2Adapter.html#shutdown(javax.sql.DataSource)" class="member-name-link">shutdown(DataSource)</a> - Static method in class org.eclipse.net4j.db.h2.<a href="org/eclipse/net4j/db/h2/H2Adapter.html" title="class in org.eclipse.net4j.db.h2">H2Adapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#skip()" class="member-name-link">skip()</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
+<dd>
+<div class="block">Advances this cursor by one parameter position without binding that position.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#skip(int)" class="member-name-link">skip(int)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
+<dd>
+<div class="block">Advances this cursor by a nonnegative number of parameter positions without binding or clearing those positions.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/DBType.html#SMALLINT" class="member-name-link">SMALLINT</a> - Enum constant in enum class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#sql(java.lang.Object,java.lang.String)" class="member-name-link">sql(Object, String)</a> - Method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="class in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
@@ -3401,6 +3557,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLConditionStep.html" class="type-name-link" title="interface in org.eclipse.net4j.db.dml.fluent">SQLConditionStep&lt;NEXT&gt;</a> - Interface in <a href="org/eclipse/net4j/db/dml/fluent/package-summary.html">org.eclipse.net4j.db.dml.fluent</a></dt>
 <dd>
 <div class="block">A condition clause that accepts additional comparisons or complete reusable conditions.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLDefaultSetter.html" class="type-name-link" title="interface in org.eclipse.net4j.db.dml">SQLDefaultSetter</a> - Interface in <a href="org/eclipse/net4j/db/dml/package-summary.html">org.eclipse.net4j.db.dml</a></dt>
+<dd>
+<div class="block">Performs the complete JDBC operation for setting the default value of one parameter occurrence without receiving an
+ application value.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLDeleteStep.html" class="type-name-link" title="interface in org.eclipse.net4j.db.dml.fluent">SQLDeleteStep</a> - Interface in <a href="org/eclipse/net4j/db/dml/fluent/package-summary.html">org.eclipse.net4j.db.dml.fluent</a></dt>
 <dd>
@@ -3479,9 +3640,9 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">An immutable logical parameter identity.</div>
 </dd>
-<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" class="type-name-link" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder&lt;JAVA&gt;</a> - Interface in <a href="org/eclipse/net4j/db/dml/package-summary.html">org.eclipse.net4j.db.dml</a></dt>
+<dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" class="type-name-link" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a> - Interface in <a href="org/eclipse/net4j/db/dml/package-summary.html">org.eclipse.net4j.db.dml</a></dt>
 <dd>
-<div class="block">Performs specialized JDBC binding for a parameter value.</div>
+<div class="block">A mutable cursor that binds successive values to one prepared statement using one compiled statement.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/h2/H2Adapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField,java.lang.String)" class="member-name-link">sqlRenameField(IDBField, String)</a> - Method in class org.eclipse.net4j.db.h2.<a href="org/eclipse/net4j/db/h2/H2Adapter.html" title="class in org.eclipse.net4j.db.h2">H2Adapter</a></dt>
 <dd>&nbsp;</dd>
@@ -3583,6 +3744,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">An UPDATE with at least one assignment and a completed WHERE clause.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQLValueSetter.html" class="type-name-link" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter&lt;JAVA&gt;</a> - Interface in <a href="org/eclipse/net4j/db/dml/package-summary.html">org.eclipse.net4j.db.dml</a></dt>
+<dd>
+<div class="block">Performs the complete JDBC binding operation for one application value at one parameter position.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/StatementBatcher.html" class="type-name-link" title="class in org.eclipse.net4j.db">StatementBatcher</a> - Class in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
 <dd>
 <div class="block">A helper for batching SQL statements.</div>
@@ -3683,6 +3848,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#toString()" class="member-name-link">toString()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#trace(java.lang.String)" class="member-name-link">trace(String)</a> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/DBUtil.html#trace(org.eclipse.net4j.db.dml.SQLStatement)" class="member-name-link">trace(SQLStatement)</a> - Static method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="class in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html#type" class="member-name-link">type</a> - Variable in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" title="class in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a></dt>
 <dd>&nbsp;</dd>
@@ -3964,6 +4131,15 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#updateTimestamp(int,java.sql.Timestamp)" class="member-name-link">updateTimestamp(int, Timestamp)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#updateTimestamp(java.lang.String,java.sql.Timestamp)" class="member-name-link">updateTimestamp(String, Timestamp)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/IDBAdapter.html#useJavaTypeForUnknownParameterType()" class="member-name-link">useJavaTypeForUnknownParameterType()</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></dt>
+<dd>
+<div class="block">Returns whether a Java value's type may select a specialized JDBC setter when its logical database type is
+ unknown.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#useJavaTypeForUnknownParameterType()" class="member-name-link">useJavaTypeForUnknownParameterType()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html#useJavaTypeForUnknownParameterType()" class="member-name-link">useJavaTypeForUnknownParameterType()</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DelegatingDBAdapter.html" title="class in org.eclipse.net4j.spi.db">DelegatingDBAdapter</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:V">V</h2>

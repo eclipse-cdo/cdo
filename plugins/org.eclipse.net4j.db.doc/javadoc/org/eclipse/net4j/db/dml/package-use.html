@@ -56,25 +56,42 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db.ddl">org.eclipse.net4j.db.ddl</a></div>
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db">org.eclipse.net4j.db</a></div>
 <div class="col-last even-row-color">
+<div class="block">The Net4j DB framework.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.ddl">org.eclipse.net4j.db.ddl</a></div>
+<div class="col-last odd-row-color">
 <div class="block">The Net4j DB framework concepts for the abstraction of the SQL data definition language.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.dml">org.eclipse.net4j.db.dml</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db.dml">org.eclipse.net4j.db.dml</a></div>
+<div class="col-last even-row-color">
 <div class="block">Structured SQL data manipulation for the Net4j DB framework.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db.dml.fluent">org.eclipse.net4j.db.dml.fluent</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.dml.fluent">org.eclipse.net4j.db.dml.fluent</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Staged fluent builders for SQL data manipulation.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.net4j.spi.db.ddl">org.eclipse.net4j.spi.db.ddl</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.spi.db.ddl">org.eclipse.net4j.spi.db.ddl</a></div>
+<div class="col-last even-row-color">
 <div class="block">Server service provider interfaces for the Net4j DB framework.</div>
 </div>
 </div>
 <section class="package-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="org.eclipse.net4j.db">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.eclipse.net4j.db.dml</a> used by <a href="../package-summary.html">org.eclipse.net4j.db</a></span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><a href="class-use/SQLStatement.html#org.eclipse.net4j.db">SQLStatement</a></div>
+<div class="col-last even-row-color">
+<div class="block">An immutable adapter-compiled statement definition.</div>
+</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="org.eclipse.net4j.db.ddl">
 <div class="caption"><span>Classes in <a href="package-summary.html">org.eclipse.net4j.db.dml</a> used by <a href="../ddl/package-summary.html">org.eclipse.net4j.db.ddl</a></span></div>
@@ -114,45 +131,54 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">A boolean SQL expression that can also be projected or ordered when supported by a dialect.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/SQLExpression.html#org.eclipse.net4j.db.dml">SQLExpression</a></div>
+<div class="col-first even-row-color"><a href="class-use/SQLDefaultSetter.html#org.eclipse.net4j.db.dml">SQLDefaultSetter</a></div>
 <div class="col-last even-row-color">
+<div class="block">Performs the complete JDBC operation for setting the default value of one parameter occurrence without receiving an
+ application value.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/SQLExpression.html#org.eclipse.net4j.db.dml">SQLExpression</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A SQL value that can be projected, ordered, compared, or used in another expression.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/SQLFragment.html#org.eclipse.net4j.db.dml">SQLFragment</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/SQLFragment.html#org.eclipse.net4j.db.dml">SQLFragment</a></div>
+<div class="col-last even-row-color">
 <div class="block">An immutable sequence of trusted SQL text and structured SQL parts.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/SQLOrderItem.html#org.eclipse.net4j.db.dml">SQLOrderItem</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/SQLOrderItem.html#org.eclipse.net4j.db.dml">SQLOrderItem</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A value that can appear in an ORDER BY clause.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/SQLParameter.html#org.eclipse.net4j.db.dml">SQLParameter</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/SQLParameter.html#org.eclipse.net4j.db.dml">SQLParameter</a></div>
+<div class="col-last even-row-color">
 <div class="block">An immutable logical parameter identity.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/SQLParameterBinder.html#org.eclipse.net4j.db.dml">SQLParameterBinder</a></div>
-<div class="col-last even-row-color">
-<div class="block">Performs specialized JDBC binding for a parameter value.</div>
-</div>
-<div class="col-first odd-row-color"><a href="class-use/SQLSelectItem.html#org.eclipse.net4j.db.dml">SQLSelectItem</a></div>
+<div class="col-first odd-row-color"><a href="class-use/SQLParameterBinder.html#org.eclipse.net4j.db.dml">SQLParameterBinder</a></div>
 <div class="col-last odd-row-color">
+<div class="block">A mutable cursor that binds successive values to one prepared statement using one compiled statement.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/SQLSelectItem.html#org.eclipse.net4j.db.dml">SQLSelectItem</a></div>
+<div class="col-last even-row-color">
 <div class="block">A value that can appear in a SELECT projection.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/SQLStatement.html#org.eclipse.net4j.db.dml">SQLStatement</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/SQLStatement.html#org.eclipse.net4j.db.dml">SQLStatement</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An immutable adapter-compiled statement definition.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/SQLSubSelect.html#org.eclipse.net4j.db.dml">SQLSubSelect</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/SQLSubSelect.html#org.eclipse.net4j.db.dml">SQLSubSelect</a></div>
+<div class="col-last even-row-color">
 <div class="block">A complete SELECT definition usable in scalar, EXISTS, or IN contexts.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/SQLTableRef.html#org.eclipse.net4j.db.dml">SQLTableRef</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/SQLTableRef.html#org.eclipse.net4j.db.dml">SQLTableRef</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A table occurrence in a statement, optionally carrying a SQL table alias.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/SQLTemplate.html#org.eclipse.net4j.db.dml">SQLTemplate</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/SQLTemplate.html#org.eclipse.net4j.db.dml">SQLTemplate</a></div>
+<div class="col-last even-row-color">
 <div class="block">An immutable SQL definition independent of a database adapter.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/SQLValueSetter.html#org.eclipse.net4j.db.dml">SQLValueSetter</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Performs the complete JDBC binding operation for one application value at one parameter position.</div>
 </div>
 </div>
 </section>

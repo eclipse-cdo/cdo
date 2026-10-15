@@ -98,10 +98,13 @@ extends <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dm
  JDBC placeholder occurrences that can be bound together by identity. <a href="SQL.html#param(int)"><code>SQL.param(int)</code></a> supplies
  an explicit JDBC type for typed NULL values and typed <code>setObject</code>; otherwise NULL uses the
  field type inferred for each occurrence and translated by the adapter used during compilation.
- A converter runs once per occurrence for each non-null input value. Null input bypasses the converter
- and follows typed SQL NULL binding. A specialized binder supplied to <a href="SQLStatement.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLStatement</code></a> takes
- precedence over conversion and default setters and receives the original input. Converter exceptions propagate to the
- binding caller, and converted values are never stored on the parameter or compiled statement.</div>
+ A parameter may have no strategy, a converter, or a <a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLValueSetter</code></a>; converters and setters
+ are mutually exclusive configurations. Converters run once per occurrence for each non-null input
+ and their results use standard JDBC binding. Null input bypasses converters and follows typed SQL
+ NULL binding. A setter owns the complete JDBC operation and receives the original input, including
+ null. Call-specific setter and converter overrides replace the configured strategy for that binding
+ operation only. Converter exceptions propagate, and converted values are never stored on the parameter
+ or compiled statement.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>

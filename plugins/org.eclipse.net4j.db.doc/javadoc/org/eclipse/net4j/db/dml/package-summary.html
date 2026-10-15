@@ -78,17 +78,37 @@ loadScripts(document, 'script');</script>
  The compiled <a href="SQLStatement.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLStatement</code></a> is prepared through an existing
  <a href="../IDBConnection.html" title="interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>, then bound and executed using Net4j and JDBC APIs.
  <p>
+ <a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLParameter</code></a> is an immutable logical identity with at most one
+ default strategy. A <a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLValueSetter</code></a> performs the complete JDBC operation at one
+ position using a supplied Java value. <a href="SQLDefaultSetter.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLDefaultSetter</code></a> performs the complete
+ operation for an implementation-defined default without receiving an application value; that default need not be a
+ SQL column's <code>DEFAULT</code> expression and is distinct from binding a supplied null. A <code>Function</code> converter
+ transforms a Java value before standard JDBC binding. <a href="SQLStatement.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLStatement</code></a> is an immutable
+ compiled definition and binding coordinator; <a href="SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLParameterBinder</code></a> is a separate
+ mutable cursor that manages sequential binding positions and dispatches to the appropriate setter. The compiled
+ statement can also bind defaults directly by position or by parameter identity with
+ <code>definition.bindDefault(statement, index, defaultSetter)</code> or
+ <code>definition.bindDefault(statement, parameter, defaultSetter)</code>. Cursor <code>skip()</code> and <code>skip(count)</code>
+ move forward without binding or clearing skipped positions; those positions must be handled separately when they
+ need current values, especially when a prepared statement is reused.
+ <p>
  For example, given schema fields <code>id</code>, <code>name</code>, an <code>IDBTable table</code>, an
  <code>IDBAdapter adapter</code>, and an <code>IDBConnection connection</code>:
  </p>
  <pre>
  SQLParameter idParameter = SQL.param();
+ SQLParameter nameParameter = SQL.param();
  SQLStatement definition = SQL.select(id, name) //
      .from(table) //
-     .where(id).eq(idParameter) //
+     .where(id).eq(idParameter).and(name).eq(nameParameter) //
      .compile(adapter);
  IDBPreparedStatement statement = definition.prepare(connection, ReuseProbability.HIGH);
- definition.bindParameter(statement, idParameter, 42);
+ definition.bind(statement, 42); // Partial prefixes are allowed; returns the number bound.
+ definition.bindFrom(statement, 2, "Ada"); // Binds one value at position 2; returns 1.
+ definition.bindAll(statement, 42, "Ada"); // Requires both placeholder values; returns 2.
+ definition.bindParameter(statement, idParameter, 42); // Binds every matching identity occurrence.
+ definition.binder(statement).bind(42, "Ada"); // Independent stateful cursor.
+ definition.binderFrom(statement, 2).bind("Ada"); // Independent cursor starting at position 2.
  try
  {
    ResultSet results = statement.executeQuery();
@@ -99,10 +119,17 @@ loadScripts(document, 'script');</script>
    statement.close();
  }
  </pre>
- A parameter object is a logical identity; each use creates a JDBC occurrence. Positional binding supplies one
- value per occurrence, while identity binding supplies one value to every occurrence of that exact object.
- Explicit JDBC types and direct field metadata can type NULL values. A custom converter transforms non-NULL values;
- an explicitly supplied <a href="SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml"><code>SQLParameterBinder</code></a> instead owns the JDBC setter operation.
+ Each use of a parameter creates a JDBC occurrence. Identity binding matches the exact parameter object and binds
+ every occurrence; positional binding affects only the requested occurrence. Explicit setters override converters
+ and default JDBC binding; explicit converters override configured parameter strategies; otherwise a configured
+ setter precedes a configured converter and then default binding. Setters receive null and own its JDBC handling.
+ Converters bypass null input, run once for each occurrence, and use the explicit or field-inferred type if they
+ produce null. Reusing a statement after partial binding can leave older JDBC values at untouched positions.
+ Binding is not atomic: a later converter or JDBC failure can follow earlier successful JDBC setters.
+ <p>
+ A configured setter may retain captured objects through the parameter and compiled statement. The API permits
+ stateful setters; callers choose whether reuse, mutable state, thread safety, and connection-specific or
+ execution-specific dependencies fit the setter's use.
  <p>
  Simple fluent condition chains follow SQL precedence: AND binds more tightly than OR, so
  <code>where(a).eq(p1).or(b).eq(p2).and(c).eq(p3)</code> means <code>A OR (B AND C)</code>. To request
@@ -177,45 +204,54 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A boolean SQL expression that can also be projected or ordered when supported by a dialect.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLDefaultSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLDefaultSetter</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Performs the complete JDBC operation for setting the default value of one parameter occurrence without receiving an
+ application value.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A SQL value that can be projected, ordered, compared, or used in another expression.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLFragment.html" title="interface in org.eclipse.net4j.db.dml">SQLFragment</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLFragment.html" title="interface in org.eclipse.net4j.db.dml">SQLFragment</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">An immutable sequence of trusted SQL text and structured SQL parts.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLOrderItem.html" title="interface in org.eclipse.net4j.db.dml">SQLOrderItem</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLOrderItem.html" title="interface in org.eclipse.net4j.db.dml">SQLOrderItem</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A value that can appear in an ORDER BY clause.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">An immutable logical parameter identity.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a>&lt;JAVA&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">Performs specialized JDBC binding for a parameter value.</div>
-</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">A mutable cursor that binds successive values to one prepared statement using one compiled statement.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">A value that can appear in a SELECT projection.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">An immutable adapter-compiled statement definition.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">A complete SELECT definition usable in scalar, EXISTS, or IN contexts.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A table occurrence in a statement, optionally carrying a SQL table alias.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLTemplate.html" title="interface in org.eclipse.net4j.db.dml">SQLTemplate</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="SQLTemplate.html" title="interface in org.eclipse.net4j.db.dml">SQLTemplate</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">An immutable SQL definition independent of a database adapter.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a>&lt;JAVA&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Performs the complete JDBC binding operation for one application value at one parameter position.</div>
 </div>
 </div>
 </div>

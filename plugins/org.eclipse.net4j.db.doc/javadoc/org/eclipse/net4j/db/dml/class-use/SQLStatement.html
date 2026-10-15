@@ -56,17 +56,61 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db.dml">org.eclipse.net4j.db.dml</a></div>
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db">org.eclipse.net4j.db</a></div>
 <div class="col-last even-row-color">
+<div class="block">The Net4j DB framework.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.dml">org.eclipse.net4j.db.dml</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Structured SQL data manipulation for the Net4j DB framework.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.net4j.db.dml.fluent">org.eclipse.net4j.db.dml.fluent</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.db.dml.fluent">org.eclipse.net4j.db.dml.fluent</a></div>
+<div class="col-last even-row-color">
 <div class="block">Staged fluent builders for SQL data manipulation.</div>
 </div>
 </div>
 <section class="class-uses">
 <ul class="block-list">
+<li>
+<section class="detail" id="org.eclipse.net4j.db">
+<h2>Uses of <a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a> in <a href="../../package-summary.html">org.eclipse.net4j.db</a></h2>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">org.eclipse.net4j.db</a> that return <a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#trace(org.eclipse.net4j.db.dml.SQLStatement)" class="member-name-link">trace</a><wbr>(<a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;sql)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">org.eclipse.net4j.db</a> with parameters of type <a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../../IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#prepare(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBConnection,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepare</a><wbr>(<a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;statement,
+ <a href="../../IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection,
+ int&nbsp;resultSetType,
+ int&nbsp;resultSetConcurrency,
+ <a href="../../IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Prepares a compiled SQL statement with a requested JDBC result-set shape and translates checked JDBC failures
+ into Net4j's database exception.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../../IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#prepare(org.eclipse.net4j.db.dml.SQLStatement,org.eclipse.net4j.db.IDBConnection,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepare</a><wbr>(<a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;statement,
+ <a href="../../IDBConnection.html" title="interface in org.eclipse.net4j.db">IDBConnection</a>&nbsp;connection,
+ <a href="../../IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Prepares a compiled SQL statement and translates the checked JDBC exception into Net4j's database exception.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#trace(org.eclipse.net4j.db.dml.SQLStatement)" class="member-name-link">trace</a><wbr>(<a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a>&nbsp;sql)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <li>
 <section class="detail" id="org.eclipse.net4j.db.dml">
 <h2>Uses of <a href="../SQLStatement.html" title="interface in org.eclipse.net4j.db.dml">SQLStatement</a> in <a href="../package-summary.html">org.eclipse.net4j.db.dml</a></h2>

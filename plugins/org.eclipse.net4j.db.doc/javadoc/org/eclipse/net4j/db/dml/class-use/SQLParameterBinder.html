@@ -66,27 +66,59 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.eclipse.net4j.db.dml">
 <h2>Uses of <a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a> in <a href="../package-summary.html">org.eclipse.net4j.db.dml</a></h2>
-<div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.db.dml</a> with parameters of type <a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></span></div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.db.dml</a> that return <a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>&lt;JAVA&gt;&nbsp;void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQLStatement.</span><code><a href="../SQLStatement.html#bindParameter(java.sql.PreparedStatement,int,JAVA,org.eclipse.net4j.db.dml.SQLParameterBinder)" class="member-name-link">bindParameter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
- int&nbsp;index,
- JAVA&nbsp;value,
- <a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a>&lt;? super JAVA&gt;&nbsp;binder)</code></div>
+<div class="col-first even-row-color"><code><a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLParameterBinder.</span><code><a href="../SQLParameterBinder.html#bind(java.lang.Object...)" class="member-name-link">bind</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>...&nbsp;values)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Binds one value with a caller-supplied JDBC binding strategy.</div>
+<div class="block">Binds a sequence at the current position and advances after the whole sequence succeeds.</div>
 </div>
-<div class="col-first odd-row-color"><code>&lt;JAVA&gt;&nbsp;void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQLStatement.</span><code><a href="../SQLStatement.html#bindParameter(java.sql.PreparedStatement,org.eclipse.net4j.db.dml.SQLParameter,JAVA,org.eclipse.net4j.db.dml.SQLParameterBinder)" class="member-name-link">bindParameter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
- <a href="../SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a>&nbsp;parameter,
- JAVA&nbsp;value,
- <a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a>&lt;? super JAVA&gt;&nbsp;binder)</code></div>
+<div class="col-first odd-row-color"><code><a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLStatement.</span><code><a href="../SQLStatement.html#binder(java.sql.PreparedStatement)" class="member-name-link">binder</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Binds a logical parameter identity at every occurrence in generated SQL order using a specialized
- binder.</div>
+<div class="block">Creates an independent sequential binding cursor starting at JDBC position 1.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLStatement.</span><code><a href="../SQLStatement.html#binderFrom(java.sql.PreparedStatement,int)" class="member-name-link">binderFrom</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;startIndex)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an independent sequential binding cursor at the specified JDBC position.</div>
+</div>
+<div class="col-first odd-row-color"><code>&lt;JAVA,<wbr>
+JDBC&gt;<br><a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLParameterBinder.</span><code><a href="../SQLParameterBinder.html#bindParameter(JAVA,java.util.function.Function)" class="member-name-link">bindParameter</a><wbr>(JAVA&nbsp;value,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Converts one value and applies standard JDBC binding, then advances after success.</div>
+</div>
+<div class="col-first even-row-color"><code>&lt;JAVA&gt;&nbsp;<a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLParameterBinder.</span><code><a href="../SQLParameterBinder.html#bindParameter(JAVA,org.eclipse.net4j.db.dml.SQLValueSetter)" class="member-name-link">bindParameter</a><wbr>(JAVA&nbsp;value,
+ <a href="../SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a>&lt;? super JAVA&gt;&nbsp;setter)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Binds one value with a complete JDBC setter and advances after success.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLParameterBinder.</span><code><a href="../SQLParameterBinder.html#bindParameter(org.eclipse.net4j.db.dml.SQLDefaultSetter)" class="member-name-link">bindParameter</a><wbr>(<a href="../SQLDefaultSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLDefaultSetter</a>&nbsp;setter)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets the current parameter to its implementation-defined default and advances after success.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLParameterBinder.</span><code><a href="../SQLParameterBinder.html#from(int)" class="member-name-link">from</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Repositions this cursor to a valid one-based parameter position.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLParameterBinder.</span><code><a href="../SQLParameterBinder.html#skip()" class="member-name-link">skip</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Advances this cursor by one parameter position without binding that position.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLParameterBinder.</span><code><a href="../SQLParameterBinder.html#skip(int)" class="member-name-link">skip</a><wbr>(int&nbsp;count)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Advances this cursor by a nonnegative number of parameter positions without binding or clearing those positions.</div>
 </div>
 </div>
 </section>

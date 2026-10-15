@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="960"
+   height="1170"
+   viewBox="0 0 960 1170"
+   preserveAspectRatio="xMidYMin meet"
+   role="img"
+   aria-labelledby="title description"
+   version="1.1"
+   id="svg43"
+   sodipodi:docname="binding-strategy-resolution.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview43"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.96837607"
+     inkscape:cx="481.218"
+     inkscape:cy="585"
+     inkscape:window-width="5120"
+     inkscape:window-height="1351"
+     inkscape:window-x="2391"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg43" />
+  <title
+     id="title">Binding Strategy Resolution</title>
+  <desc
+     id="description">CompiledStatement checks explicit setters, explicit converters, configured setters, and configured converters in that order. Explicit converters bypass configured strategies. The resulting value then follows explicit JDBC typing, untyped NULL validation, or adapter binding.</desc>
+  <defs
+     id="defs1">
+    <marker
+       id="arrow"
+       viewBox="0 0 10 10"
+       refX="8.5"
+       refY="5"
+       markerWidth="7"
+       markerHeight="7"
+       orient="auto">
+      <path
+         d="M0 0L10 5L0 10Z"
+         fill="#526477"
+         id="path1" />
+    </marker>
+    <style
+       id="style1">
+      text { font-family: Arial, Helvetica, sans-serif; fill: #203247; }
+      .start, .action { fill: #edf3f8; stroke: #53728e; stroke-width: 2; }
+      .decision { fill: #fff4d6; stroke: #a97812; stroke-width: 2; }
+      .terminal { fill: #e8f3eb; stroke: #39804d; stroke-width: 2; }
+      .failure { fill: #fae9e7; stroke: #a83e36; stroke-width: 2; }
+      .line { fill: none; stroke: #526477; stroke-width: 2; marker-end: url(#arrow); }
+      .plain-line { fill: none; stroke: #526477; stroke-width: 2; }
+      .main { font-size: 18px; font-weight: 700; text-anchor: middle; }
+      .sub { font-size: 15px; text-anchor: middle; }
+      .sub-start { font-size: 15px; text-anchor: start; }
+      .branch { font-size: 15px; font-weight: 700; }
+      .end { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-anchor: middle; fill: #39734a; }
+      .marker { fill: #ffffff; stroke: #53728e; stroke-width: 2; }
+      .marker-text { font-size: 14px; font-weight: 700; text-anchor: middle; }
+    </style>
+  </defs>
+  <rect
+     x="170"
+     y="22"
+     width="260"
+     height="58"
+     rx="12"
+     class="start"
+     id="rect1" />
+  <text
+     x="300"
+     y="58"
+     class="main"
+     id="text1">Parameter + supplied value</text>
+  <path
+     d="m 300,80 v 26"
+     class="line"
+     id="path2" />
+  <polygon
+     points="400,196 270,151 400,106 530,151 "
+     class="decision"
+     id="polygon2"
+     transform="translate(-100)" />
+  <text
+     x="300"
+     y="157"
+     class="main"
+     id="text2">Explicit setter?</text>
+  <text
+     x="448"
+     y="145"
+     class="branch"
+     id="text3">Yes</text>
+  <path
+     d="m 430,151 h 60"
+     class="line"
+     id="path3" />
+  <rect
+     x="492"
+     y="112"
+     width="320"
+     height="82"
+     rx="10"
+     class="terminal"
+     id="rect3" />
+  <text
+     x="652"
+     y="141"
+     class="main"
+     id="text4">Run explicit setter</text>
+  <text
+     x="652"
+     y="165"
+     class="sub"
+     id="text5">original value; owns JDBC binding</text>
+  <text
+     x="652"
+     y="185"
+     class="end"
+     id="text6">END</text>
+  <text
+     x="310"
+     y="218"
+     class="branch"
+     id="text7">No</text>
+  <path
+     d="m 300,196 v 45"
+     class="line"
+     id="path7" />
+  <polygon
+     points="400,331 270,286 400,241 530,286 "
+     class="decision"
+     id="polygon7"
+     transform="translate(-100)" />
+  <text
+     x="300"
+     y="292"
+     class="main"
+     id="text8">Explicit converter?</text>
+  <text
+     x="448"
+     y="280"
+     class="branch"
+     id="text9">Yes</text>
+  <path
+     d="m 430,286 h 60"
+     class="line"
+     id="path9" />
+  <rect
+     x="492"
+     y="242"
+     width="320"
+     height="94"
+     rx="10"
+     class="action"
+     id="rect9" />
+  <text
+     x="652"
+     y="270"
+     class="main"
+     id="text10">Convert non-NULL value</text>
+  <text
+     x="652"
+     y="293"
+     class="sub"
+     id="text11">NULL stays unchanged</text>
+  <text
+     x="652"
+     y="316"
+     class="sub"
+     id="text12">configured strategy is bypassed</text>
+  <path
+     d="m 652,336 v 13"
+     class="plain-line"
+     id="path12" />
+  <circle
+     cx="652"
+     cy="362"
+     r="11"
+     class="marker"
+     id="circle12" />
+  <text
+     x="652"
+     y="367"
+     class="marker-text"
+     id="text13">A</text>
+  <text
+     x="670"
+     y="367"
+     class="sub-start"
+     id="text14">continue at A</text>
+  <text
+     x="310"
+     y="353"
+     class="branch"
+     id="text15">No</text>
+  <path
+     d="m 300,331 v 45"
+     class="line"
+     id="path15" />
+  <polygon
+     points="400,466 270,421 400,376 530,421 "
+     class="decision"
+     id="polygon15"
+     transform="translate(-100)" />
+  <text
+     x="300"
+     y="427"
+     class="main"
+     id="text16">Configured setter?</text>
+  <text
+     x="448"
+     y="415"
+     class="branch"
+     id="text17">Yes</text>
+  <path
+     d="m 430,421 h 60"
+     class="line"
+     id="path17" />
+  <rect
+     x="492"
+     y="382"
+     width="320"
+     height="82"
+     rx="10"
+     class="terminal"
+     id="rect17" />
+  <text
+     x="652"
+     y="411"
+     class="main"
+     id="text18">Run configured setter</text>
+  <text
+     x="652"
+     y="435"
+     class="sub"
+     id="text19">original value; owns JDBC binding</text>
+  <text
+     x="652"
+     y="455"
+     class="end"
+     id="text20">END</text>
+  <text
+     x="310"
+     y="488"
+     class="branch"
+     id="text21">No</text>
+  <path
+     d="m 300,466 v 45"
+     class="line"
+     id="path21" />
+  <polygon
+     points="400,601 270,556 400,511 530,556 "
+     class="decision"
+     id="polygon21"
+     transform="translate(-100)" />
+  <text
+     x="300"
+     y="562"
+     class="main"
+     id="text22">Configured converter?</text>
+  <text
+     x="448"
+     y="550"
+     class="branch"
+     id="text23">Yes</text>
+  <path
+     d="m 430,556 h 60"
+     class="line"
+     id="path23" />
+  <rect
+     x="492"
+     y="517"
+     width="320"
+     height="82"
+     rx="10"
+     class="action"
+     id="rect23" />
+  <text
+     x="652"
+     y="547"
+     class="main"
+     id="text24">Convert non-NULL value</text>
+  <text
+     x="652"
+     y="572"
+     class="sub"
+     id="text25">NULL keeps the original value</text>
+  <path
+     d="m 300,601 v 45"
+     class="plain-line"
+     id="path25" />
+  <path
+     d="m 652,599 v 33 H 300 v 14"
+     class="plain-line"
+     id="path26" />
+  <text
+     x="290"
+     y="622"
+     class="branch"
+     text-anchor="end"
+     id="text26">No · keep original</text>
+  <circle
+     cx="300"
+     cy="660"
+     r="14"
+     class="marker"
+     id="circle26" />
+  <text
+     x="300"
+     y="665"
+     class="marker-text"
+     id="text27">A</text>
+  <path
+     d="m 300,674 v 38"
+     class="line"
+     id="path27" />
+  <polygon
+     points="400,802 270,757 400,712 530,757 "
+     class="decision"
+     id="polygon27"
+     transform="translate(-100)" />
+  <text
+     x="300"
+     y="763"
+     class="main"
+     id="text28">Explicit JDBC type?</text>
+  <text
+     x="448"
+     y="751"
+     class="branch"
+     id="text29">Yes</text>
+  <path
+     d="m 430,757 h 60"
+     class="line"
+     id="path29" />
+  <rect
+     x="492"
+     y="706"
+     width="320"
+     height="104"
+     rx="10"
+     class="terminal"
+     id="rect29" />
+  <text
+     x="652"
+     y="735"
+     class="main"
+     id="text30">Typed JDBC binding</text>
+  <text
+     x="652"
+     y="759"
+     class="sub"
+     id="text31">NULL → setNull(sqlType)</text>
+  <text
+     x="652"
+     y="781"
+     class="sub"
+     id="text32">value → setObject(value, sqlType)</text>
+  <text
+     x="652"
+     y="800"
+     class="end"
+     id="text33">END</text>
+  <text
+     x="310"
+     y="824"
+     class="branch"
+     id="text34">No</text>
+  <path
+     d="m 300,802 v 45"
+     class="line"
+     id="path34" />
+  <polygon
+     points="400,937 270,892 400,847 530,892 "
+     class="decision"
+     id="polygon34"
+     transform="translate(-100)" />
+  <text
+     x="300"
+     y="898"
+     class="main"
+     id="text35">Untyped NULL?</text>
+  <text
+     x="448"
+     y="886"
+     class="branch"
+     id="text36">Yes</text>
+  <path
+     d="m 430,892 h 60"
+     class="line"
+     id="path36" />
+  <rect
+     x="492"
+     y="853"
+     width="320"
+     height="82"
+     rx="10"
+     class="failure"
+     id="rect36" />
+  <text
+     x="652"
+     y="882"
+     class="main"
+     id="text37">Reject binding</text>
+  <text
+     x="652"
+     y="906"
+     class="sub"
+     id="text38">explicit type or setter required</text>
+  <text
+     x="652"
+     y="927"
+     class="end"
+     fill="#9b3b34"
+     id="text39"
+     style="fill:#a83e36">END</text>
+  <text
+     x="310"
+     y="959"
+     class="branch"
+     id="text40">No</text>
+  <path
+     d="m 300,937 v 45"
+     class="line"
+     id="path40" />
+  <rect
+     x="130.07257"
+     y="982.07257"
+     width="339.85486"
+     height="101.2794"
+     rx="9.9957314"
+     class="terminal"
+     id="rect40" />
+  <text
+     x="300"
+     y="1012"
+     class="main"
+     id="text41">Adapter binding</text>
+  <text
+     x="300"
+     y="1036"
+     class="sub"
+     id="text42">IDBAdapter.bindParameter(type, value)</text>
+  <text
+     x="300"
+     y="1058"
+     class="end"
+     id="text43"><tspan
+       sodipodi:role="line"
+       id="tspan1"
+       x="300"
+       y="1058">HANDOFF TO DIAGRAM</tspan><tspan
+       sodipodi:role="line"
+       id="tspan2"
+       x="300.5"
+       y="1073">DBAdapter.bindParameter()</tspan></text>
+</svg>

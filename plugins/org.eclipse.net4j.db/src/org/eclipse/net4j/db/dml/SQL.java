@@ -271,6 +271,20 @@ public final class SQL
   }
 
   /**
+   * Creates a table-qualified column reference using the column's owning schema table.
+   * The table is referenced by its physical name, without an alias. For aliased tables,
+   * use {@link SQLTableRef#column(IDBField)} instead.
+   *
+   * @param column the column to qualify with its owning table
+   * @return the qualified column reference
+   */
+  public static SQLColumnRef qualified(IDBField column)
+  {
+    Objects.requireNonNull(column, "column");
+    return table(column.getTable()).column(column);
+  }
+
+  /**
    * Creates a wildcard projection; the overload with a table reference qualifies the wildcard to that table occurrence.
    *
    * @return the corresponding immutable SQL API value

@@ -15,6 +15,56 @@ function windowTitle()
     }
 }
 </script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
 </head>
 
 <body bgcolor="white" onload="windowTitle();">
@@ -139,24 +189,249 @@ function windowTitle()
 <p>
  A SELECT projects fields or expressions. The example compiles a key lookup, binds the key, executes it, and
  closes both managed resources. The returned statement can be prepared again for another lookup.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Select_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">FindCustomers.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Select_1')" id="max_Select_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Select_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Select_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;registered&nbsp;adapter,&nbsp;open&nbsp;managed&nbsp;connection,&nbsp;CUSTOMER&nbsp;table,&nbsp;and&nbsp;CUSTOMER.ID&nbsp;field.</font><br/>
+            SQLParameter&nbsp;requestedID&nbsp;=&nbsp;SQL.param();<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).eq(requestedID)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.HIGH))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#990000">42</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;prepared.executeQuery())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Customer&nbsp;ID:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getInt(<font color="#2a00ff">&#34;ID&#34;</font>));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="InsertAndInsertSelect"></a>2.2&nbsp;&nbsp;INSERT and INSERT SELECT</h3>
 <p class="author">Author: Eike Stepper</p>
 <p>
  An explicit column list pairs each value with its named destination column. INSERT SELECT instead copies a
  query result into the target table; parameters in the SELECT remain ordinary compiled occurrences.
+ <p>
+ The examples insert a customer row and copy selected orders for one customer:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_InsertAndInsertSelect_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">InsertCustomer.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('InsertAndInsertSelect_1')" id="max_InsertAndInsertSelect_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_InsertAndInsertSelect_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_InsertAndInsertSelect_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table&nbsp;and&nbsp;its&nbsp;ID/NAME&nbsp;fields.</font><br/>
+            SQLTemplate&nbsp;template&nbsp;=&nbsp;SQL.insertInto(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.columns(customerID,&nbsp;name)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.values(SQL.param(),&nbsp;SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.build();<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;template.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindAll(prepared,&nbsp;<font color="#990000">501</font>,&nbsp;<font color="#2a00ff">&#34;Ada&nbsp;Lovelace&#34;</font>);<br/>
+            &nbsp;&nbsp;prepared.executeUpdate();<br/>
+            &nbsp;&nbsp;connection.commit();<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(SQLException&nbsp;|&nbsp;RuntimeException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;connection.rollback();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_InsertAndInsertSelect_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CopyOrders.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('InsertAndInsertSelect_2')" id="max_InsertAndInsertSelect_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_InsertAndInsertSelect_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_InsertAndInsertSelect_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;source&nbsp;ORDERS.ID/CUSTOMER_ID,&nbsp;and&nbsp;matching&nbsp;target&nbsp;fields.</font><br/>
+            SQLParameter&nbsp;customerID&nbsp;=&nbsp;SQL.param();<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.insertInto(targetOrders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.columns(targetID,&nbsp;targetCustomerID)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.select(SQL.select(sourceID,&nbsp;sourceCustomerID)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.from(sourceOrders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.where(sourceCustomerID).eq(customerID)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.subSelect())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#990000">501</font>);<br/>
+            &nbsp;&nbsp;prepared.executeUpdate();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="Update"></a>2.3&nbsp;&nbsp;UPDATE</h3>
 <p class="author">Author: Eike Stepper</p>
 <p>
  An UPDATE names assigned fields in set() and limits affected rows with where(). The values are
  bound in rendered occurrence order: the new status first, then the order key.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Update_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">UpdateOrderStatus.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Update_1')" id="max_Update_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Update_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Update_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;ORDERS&nbsp;table&nbsp;and&nbsp;its&nbsp;ID/STATUS&nbsp;fields.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.update(orders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.set(status).to(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(orderID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.HIGH))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#2a00ff">&#34;SHIPPED&#34;</font>,&nbsp;<font color="#990000">9001L</font>);<br/>
+            &nbsp;&nbsp;prepared.executeUpdate();<br/>
+            &nbsp;&nbsp;connection.commit();<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(SQLException&nbsp;|&nbsp;RuntimeException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;connection.rollback();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="Delete"></a>2.4&nbsp;&nbsp;DELETE</h3>
 <p class="author">Author: Eike Stepper</p>
 <p>
  A DELETE may omit its WHERE clause and affect every row. Prefer an explicit restrictive condition when removing
  a single record, as this key-based example does.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Delete_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">DeleteOrder.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Delete_1')" id="max_Delete_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Delete_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Delete_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;ORDERS&nbsp;table,&nbsp;and&nbsp;ORDERS.ID.&nbsp;This&nbsp;delete&nbsp;is&nbsp;restricted&nbsp;to&nbsp;one&nbsp;key.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.deleteFrom(orders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(orderID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#990000">9001L</font>);<br/>
+            &nbsp;&nbsp;prepared.executeUpdate();<br/>
+            &nbsp;&nbsp;connection.commit();<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(SQLException&nbsp;|&nbsp;RuntimeException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;connection.rollback();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;</b></font>ex;<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="StructuredExpressionsAndProviders"></a>2.5&nbsp;&nbsp;Structured Expressions, IN Lists, and Table Providers</h3>
 <p class="author">Author: Eike Stepper</p>
@@ -164,6 +439,169 @@ function windowTitle()
  Use <a href="../../javadoc/org/eclipse/net4j/db/dml/SQL.html#abs(org.eclipse.net4j.db.dml.SQLExpression)" title="Method in org.eclipse.net4j.db.dml.SQL"><code>SQL.abs(SQLExpression)</code></a> for a structured absolute-value expression, and use the IN factories or
  fluent value-list stage for ordered membership values. An IDBTable.Provider lets a domain wrapper
  supply its primary schema table directly to DML construction; the table is resolved when the API call is made.
+ <p>
+ These examples cover a structured function, fixed and iterable IN lists, incremental list construction, and a
+ table provider:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_StructuredExpressionsAndProviders_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SelectByAbsoluteVersion.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('StructuredExpressionsAndProviders_1')" id="max_StructuredExpressionsAndProviders_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_StructuredExpressionsAndProviders_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_StructuredExpressionsAndProviders_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(table)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(SQL.abs(version)).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_StructuredExpressionsAndProviders_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SelectForFixedRevisions.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('StructuredExpressionsAndProviders_2')" id="max_StructuredExpressionsAndProviders_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_StructuredExpressionsAndProviders_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_StructuredExpressionsAndProviders_2" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(table)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(revision).in(SQL.literal(<font color="#990000">1</font>),&nbsp;SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_StructuredExpressionsAndProviders_3"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SelectForRevisions.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('StructuredExpressionsAndProviders_3')" id="max_StructuredExpressionsAndProviders_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_StructuredExpressionsAndProviders_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_StructuredExpressionsAndProviders_3" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(table)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(revision).in(values)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_StructuredExpressionsAndProviders_4"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SelectForRevisionsIncrementally.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('StructuredExpressionsAndProviders_4')" id="max_StructuredExpressionsAndProviders_4" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_StructuredExpressionsAndProviders_4" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_StructuredExpressionsAndProviders_4" style="padding:8px;">
+            <code>
+            SQLInStep&lt;SQLSelectWhereStep&gt;&nbsp;pending&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(table)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(revision).in();<br/>
+            <br/>
+            pending.addAll(values);<br/>
+            <br/>
+            <font color="#7f0055"><b>return&nbsp;</b></font>pending&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.end()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_StructuredExpressionsAndProviders_5"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SelectFromProvider.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('StructuredExpressionsAndProviders_5')" id="max_StructuredExpressionsAndProviders_5" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_StructuredExpressionsAndProviders_5" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_StructuredExpressionsAndProviders_5" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>return&nbsp;</b></font>SQL.select(id)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(lockAreas)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(id).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="QueriesAndComposition"></a>3&nbsp;&nbsp;Queries and Composition</h2>
 <p class="author">Author: Eike Stepper</p>
@@ -177,12 +615,121 @@ function windowTitle()
  Conditions are immutable values that can be named and combined before attaching them to a WHERE stage. The
  final condition tree determines SQL order and therefore positional binding order. Build only complete
  conditions, and add optional predicates only when their values are part of the request.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ConditionsAndOptionalFilters_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">FindOrders.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ConditionsAndOptionalFilters_1')" id="max_ConditionsAndOptionalFilters_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ConditionsAndOptionalFilters_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ConditionsAndOptionalFilters_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;ORDERS&nbsp;table,&nbsp;STATUS/TOTAL&nbsp;fields,&nbsp;and&nbsp;the&nbsp;filter&nbsp;choice.</font><br/>
+            SQLParameter&nbsp;statusValue&nbsp;=&nbsp;SQL.param();<br/>
+            SQLCondition&nbsp;filter&nbsp;=&nbsp;SQL.eq(status,&nbsp;statusValue);<br/>
+            SQLParameter&nbsp;minimumValue&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(filterByMinimum)<br/>
+            {<br/>
+            &nbsp;&nbsp;minimumValue&nbsp;=&nbsp;SQL.param();<br/>
+            &nbsp;&nbsp;filter&nbsp;=&nbsp;filter.and(SQL.ge(total,&nbsp;minimumValue));<br/>
+            }<br/>
+            <br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(orders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(filter)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.HIGH))<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(filterByMinimum)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#2a00ff">&#34;OPEN&#34;</font>,&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>BigDecimal(<font color="#2a00ff">&#34;100.00&#34;</font>));<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>else</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#2a00ff">&#34;OPEN&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;prepared.executeQuery())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Order&nbsp;total:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getBigDecimal(<font color="#2a00ff">&#34;TOTAL&#34;</font>));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="AliasesAndJoins"></a>3.2&nbsp;&nbsp;Aliases and Joins</h3>
 <p class="author">Author: Eike Stepper</p>
 <p>
  A <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLTableRef.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLTableRef</code></a> represents one occurrence of a table and can qualify its columns. Table aliases distinguish
  source columns in joins; aliases on projected expressions label output values instead.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_AliasesAndJoins_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CustomerOrderJoin.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('AliasesAndJoins_1')" id="max_AliasesAndJoins_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_AliasesAndJoins_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_AliasesAndJoins_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER.ID,&nbsp;and&nbsp;ORDERS.CUSTOMER_ID.</font><br/>
+            SQLTableRef&nbsp;c&nbsp;=&nbsp;customer.as(<font color="#2a00ff">&#34;c&#34;</font>);<br/>
+            SQLTableRef&nbsp;o&nbsp;=&nbsp;orders.as(<font color="#2a00ff">&#34;o&#34;</font>);<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.select(c.column(customerID),&nbsp;o.column(orderCustomerID))&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(c)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.join(o)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.on(c.column(customerID)).eq(o.column(orderCustomerID))&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.orderBy(SQL.asc(c.column(customerID)))&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW);&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;IDBResultSet&nbsp;rows&nbsp;=&nbsp;prepared.executeQuery())<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Customer/order&nbsp;key:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getInt(<font color="#990000">1</font>)&nbsp;+&nbsp;<font color="#2a00ff">&#34;/&#34;&nbsp;</font>+&nbsp;rows.getInt(<font color="#990000">2</font>));<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="AggregatesGroupingAndHaving"></a>3.3&nbsp;&nbsp;Aggregates, Grouping, and HAVING</h3>
 <p class="author">Author: Eike Stepper</p>
@@ -190,6 +737,55 @@ function windowTitle()
  Aggregate expressions can be projected and used in HAVING. This query groups orders by status and applies a
  parameterized minimum count after grouping. Aggregate and grouping support still depends on the target SQL
  dialect and adapter.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_AggregatesGroupingAndHaving_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SummarizeOrders.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('AggregatesGroupingAndHaving_1')" id="max_AggregatesGroupingAndHaving_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_AggregatesGroupingAndHaving_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_AggregatesGroupingAndHaving_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;ORDERS&nbsp;table,&nbsp;STATUS&nbsp;and&nbsp;TOTAL&nbsp;fields.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.select(status,&nbsp;SQL.count().as(<font color="#2a00ff">&#34;ORDER_COUNT&#34;</font>),&nbsp;SQL.sum(total).as(<font color="#2a00ff">&#34;GROSS_TOTAL&#34;</font>))&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(orders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(status).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.groupBy(status)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.having(SQL.count()).gt(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.orderBy(SQL.asc(status))&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#2a00ff">&#34;CLOSED&#34;</font>,&nbsp;<font color="#990000">0</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;prepared.executeQuery())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(rows.getString(<font color="#2a00ff">&#34;STATUS&#34;</font>)&nbsp;+&nbsp;<font color="#2a00ff">&#34;:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getLong(<font color="#2a00ff">&#34;ORDER_COUNT&#34;</font>));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="Subqueries"></a>3.4&nbsp;&nbsp;Subqueries</h3>
 <p class="author">Author: Eike Stepper</p>
@@ -197,6 +793,57 @@ function windowTitle()
  A complete SELECT can be converted to <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLSubSelect.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLSubSelect</code></a> and used in supported IN, EXISTS, or scalar contexts.
  Its parameters join the outer statement's rendered occurrence order. A subquery is preferable to raw SQL when
  the structured API can express the required shape.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Subqueries_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CustomersWithOpenOrders.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Subqueries_1')" id="max_Subqueries_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Subqueries_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Subqueries_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER.ID,&nbsp;ORDERS.CUSTOMER_ID,&nbsp;and&nbsp;ORDERS.STATUS.</font><br/>
+            SQLSubSelect&nbsp;openCustomers&nbsp;=&nbsp;SQL.select(orderCustomerID)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(orders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(status).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.subSelect();<br/>
+            <br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.select(customerID)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).in(openCustomers)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#2a00ff">&#34;OPEN&#34;</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;prepared.executeQuery())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Customer&nbsp;with&nbsp;open&nbsp;order:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getInt(<font color="#990000">1</font>));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="SQLFragments"></a>3.5&nbsp;&nbsp;SQL Fragments</h3>
 <p class="author">Author: Eike Stepper</p>
@@ -205,6 +852,56 @@ function windowTitle()
  and parameter tokens structured inside a fragment. Raw text is neither parsed nor escaped, and must not contain
  question marks; represent every placeholder with a parameter token so occurrence metadata remains aligned with
  JDBC indexes.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SQLFragments_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SearchByNameFragment.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SQLFragments_1')" id="max_SQLFragments_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SQLFragments_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SQLFragments_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table&nbsp;and&nbsp;NAME&nbsp;field.</font><br/>
+            <font color="#3f7f5f">//&nbsp;The&nbsp;raw&nbsp;SQL&nbsp;tokens&nbsp;are&nbsp;trusted&nbsp;syntax.</font><br/>
+            SQLParameter&nbsp;nameValue&nbsp;=&nbsp;SQL.param();<br/>
+            SQLFragment&nbsp;fragment&nbsp;=&nbsp;SQL.fragment()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.sql(<font color="#2a00ff">&#34;SELECT&nbsp;&#34;</font>).column(name)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.sql(<font color="#2a00ff">&#34;&nbsp;FROM&nbsp;&#34;</font>).table(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.sql(<font color="#2a00ff">&#34;&nbsp;WHERE&nbsp;&#34;</font>).column(name).sql(<font color="#2a00ff">&#34;&nbsp;=&nbsp;&#34;</font>).param(nameValue)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.build();<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.build(fragment).compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindParameter(prepared,&nbsp;nameValue,&nbsp;<font color="#2a00ff">&#34;Ada&nbsp;Lovelace&#34;</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;prepared.executeQuery())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Customer&nbsp;name:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getString(<font color="#990000">1</font>));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="ParameterBinding"></a>4&nbsp;&nbsp;Parameter Binding</h2>
 <p class="author">Author: Eike Stepper</p>
@@ -234,6 +931,85 @@ function windowTitle()
  Positional values are assigned in rendered JDBC order. Binding by JDBC index changes one occurrence, while
  binding by parameter identity changes every occurrence of that exact object in rendered order. The examples
  preserve the earlier customer lookup and repeated-identity patterns.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_PositionalAndIdentityBinding_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindPositionalParameters.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('PositionalAndIdentityBinding_1')" id="max_PositionalAndIdentityBinding_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_PositionalAndIdentityBinding_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_PositionalAndIdentityBinding_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER.ID&nbsp;and&nbsp;CUSTOMER.NAME.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(name).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>bound&nbsp;=&nbsp;statement.bind(prepared,&nbsp;<font color="#990000">501</font>,&nbsp;<font color="#2a00ff">&#34;Ada&nbsp;Lovelace&#34;</font>);<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Bound&nbsp;occurrences:&nbsp;&#34;&nbsp;</font>+&nbsp;bound);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_PositionalAndIdentityBinding_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindRepeatedParameter.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('PositionalAndIdentityBinding_2')" id="max_PositionalAndIdentityBinding_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_PositionalAndIdentityBinding_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_PositionalAndIdentityBinding_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table,&nbsp;and&nbsp;its&nbsp;NAME/EMAIL&nbsp;fields.</font><br/>
+            SQLParameter&nbsp;sharedValue&nbsp;=&nbsp;SQL.param();<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(name).eq(sharedValue)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.or(email).eq(sharedValue)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindParameter(prepared,&nbsp;sharedValue,&nbsp;<font color="#2a00ff">&#34;ada@example.test&#34;</font>);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h4><a name="SequentialAndCursorBinding"></a>4.1.3&nbsp;&nbsp;Sequential and Cursor-Based Binding</h4>
 <p class="author">Author: Eike Stepper</p>
@@ -244,6 +1020,183 @@ function windowTitle()
  getNextIndex() reports the next JDBC position, skip() moves without binding, and
  from(index) repositions absolutely. The final legal position is parameter count plus one and accepts
  only an empty sequence.
+ <p>
+ The examples bind complete and partial sequences, start a partial sequence at a chosen position, and navigate
+ the independent binder cursor:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SequentialAndCursorBinding_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindCompleteAndPartialSequences.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SequentialAndCursorBinding_1')" id="max_SequentialAndCursorBinding_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SequentialAndCursorBinding_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SequentialAndCursorBinding_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table&nbsp;and&nbsp;ID/NAME&nbsp;fields.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(name).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>partialCount&nbsp;=&nbsp;statement.bind(prepared,&nbsp;<font color="#990000">501</font>);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>completeCount&nbsp;=&nbsp;statement.bindAll(prepared,&nbsp;<font color="#990000">502</font>,&nbsp;<font color="#2a00ff">&#34;Ada&#34;</font>);<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Partial&nbsp;count:&nbsp;&#34;&nbsp;</font>+&nbsp;partialCount&nbsp;+&nbsp;<font color="#2a00ff">&#34;;&nbsp;complete&nbsp;count:&nbsp;&#34;&nbsp;</font>+&nbsp;completeCount);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SequentialAndCursorBinding_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindFromPosition.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SequentialAndCursorBinding_2')" id="max_SequentialAndCursorBinding_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SequentialAndCursorBinding_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SequentialAndCursorBinding_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table,&nbsp;and&nbsp;ID/NAME/EMAIL&nbsp;fields.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(name).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(email).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#990000">501</font>);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>boundFromSecond&nbsp;=&nbsp;statement.bindFrom(prepared,&nbsp;<font color="#990000">2</font>,&nbsp;<font color="#2a00ff">&#34;Ada&#34;</font>,&nbsp;<font color="#2a00ff">&#34;ada@example.test&#34;</font>);<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Bound&nbsp;from&nbsp;position&nbsp;2:&nbsp;&#34;&nbsp;</font>+&nbsp;boundFromSecond);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SequentialAndCursorBinding_3"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindWithCursor.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SequentialAndCursorBinding_3')" id="max_SequentialAndCursorBinding_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SequentialAndCursorBinding_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SequentialAndCursorBinding_3" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table&nbsp;and&nbsp;ID/NAME&nbsp;fields.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(name).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;SQLParameterBinder&nbsp;binder&nbsp;=&nbsp;statement.binder(prepared);<br/>
+            &nbsp;&nbsp;binder.bind(<font color="#990000">501</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Next&nbsp;position:&nbsp;&#34;&nbsp;</font>+&nbsp;binder.getNextIndex());<br/>
+            &nbsp;&nbsp;binder.bind(<font color="#2a00ff">&#34;Ada&#34;</font>);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SequentialAndCursorBinding_4"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">NavigateBindingCursor.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SequentialAndCursorBinding_4')" id="max_SequentialAndCursorBinding_4" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SequentialAndCursorBinding_4" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SequentialAndCursorBinding_4" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;ORDERS&nbsp;table&nbsp;and&nbsp;its&nbsp;ID,&nbsp;CUSTOMER_ID,&nbsp;TOTAL,&nbsp;and&nbsp;STATUS&nbsp;fields.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(orders)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(orderID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(customerID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(total).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(status).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;SQLParameterBinder&nbsp;binder&nbsp;=&nbsp;statement.binder(prepared);<br/>
+            &nbsp;&nbsp;binder&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.bind(<font color="#990000">9001L</font>)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.skip()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.skip(<font color="#990000">1</font>)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.bind(<font color="#2a00ff">&#34;OPEN&#34;</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Next&nbsp;position:&nbsp;&#34;&nbsp;</font>+&nbsp;binder.getNextIndex());<br/>
+            &nbsp;&nbsp;binder&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.from(<font color="#990000">2</font>)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.bind(<font color="#990000">501</font>)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.bind(<font color="#7f0055"><b>new&nbsp;</b></font>BigDecimal(<font color="#2a00ff">&#34;100.00&#34;</font>));<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="TypesAndDefaultBinding"></a>4.2&nbsp;&nbsp;Types and Default Binding</h3>
 <p class="author">Author: Eike Stepper</p>
@@ -287,6 +1240,46 @@ function windowTitle()
  </table>
  BLOB, CLOB, and temporal DBTypes have no automatic specialized mapping in this dispatch. In particular,
  BLOB does not select setBytes() merely because a byte array is supplied.
+ <p>
+ The example binds NULL using the field-derived type:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_DefaultJDBCSetters_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindInferredNull.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('DefaultJDBCSetters_1')" id="max_DefaultJDBCSetters_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_DefaultJDBCSetters_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_DefaultJDBCSetters_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table,&nbsp;and&nbsp;its&nbsp;EMAIL&nbsp;and&nbsp;ID&nbsp;fields.&nbsp;EMAIL&nbsp;supplies&nbsp;the&nbsp;NULL's</font><br/>
+            <font color="#3f7f5f">//&nbsp;inferred&nbsp;DBType.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.update(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.set(email).to(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindAll(prepared,&nbsp;(Object)null,&nbsp;<font color="#990000">501</font>);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h4><a name="NullAndExplicitJDBCTypes"></a>4.2.3&nbsp;&nbsp;NULL and Explicit JDBC Types</h4>
 <p class="author">Author: Eike Stepper</p>
@@ -296,6 +1289,45 @@ function windowTitle()
  different from a custom <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLValueSetter.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLValueSetter</code></a>: SQL.param(Types.BLOB) does not request
  PreparedStatement.setBytes(). Use a configured setter such as SQL.param(PreparedStatement::setBytes)
  when the complete binding operation must use that JDBC method.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_NullAndExplicitJDBCTypes_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindExplicitlyTypedNull.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('NullAndExplicitJDBCTypes_1')" id="max_NullAndExplicitJDBCTypes_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_NullAndExplicitJDBCTypes_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_NullAndExplicitJDBCTypes_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;and&nbsp;CUSTOMER.</font><br/>
+            <font color="#3f7f5f">//&nbsp;A&nbsp;projection&nbsp;parameter&nbsp;has&nbsp;no&nbsp;field&nbsp;from&nbsp;which&nbsp;to&nbsp;infer&nbsp;DBType.</font><br/>
+            SQLExpression&nbsp;projectedValue&nbsp;=&nbsp;SQL.param(Types.VARCHAR);<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.select(projectedValue)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindAll(prepared,&nbsp;(Object)<font color="#7f0055"><b>null</b></font>);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="CustomBindingStrategies"></a>4.3&nbsp;&nbsp;Custom Binding Strategies</h3>
 <p class="author">Author: Eike Stepper</p>
@@ -313,6 +1345,84 @@ function windowTitle()
  A converter maps a non-NULL application value to the value supplied to default binding. NULL input bypasses
  conversion and follows the occurrence's explicit or inferred JDBC NULL typing. Converter exceptions propagate
  to the caller.
+ <p>
+ The first example configures a converter; the second overrides it for one binding call:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ValueConverters_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindConvertedValue.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ValueConverters_1')" id="max_ValueConverters_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ValueConverters_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ValueConverters_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table&nbsp;and&nbsp;NAME&nbsp;field.</font><br/>
+            SQLParameter&nbsp;trimmedName&nbsp;=&nbsp;SQL.param((String&nbsp;value)&nbsp;-&gt;&nbsp;value.trim());<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(name).eq(trimmedName)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;<font color="#2a00ff">&#34;&nbsp;Ada&nbsp;Lovelace&nbsp;&#34;</font>);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ValueConverters_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">OverrideValueConverter.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ValueConverters_2')" id="max_ValueConverters_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ValueConverters_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ValueConverters_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table&nbsp;and&nbsp;NAME&nbsp;field.</font><br/>
+            SQLParameter&nbsp;configuredTrim&nbsp;=&nbsp;SQL.param((String&nbsp;value)&nbsp;-&gt;&nbsp;value.trim());<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(name).eq(configuredTrim)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindParameter(prepared,&nbsp;<font color="#990000">1</font>,&nbsp;<font color="#2a00ff">&#34;&nbsp;ada&nbsp;&#34;</font>,&nbsp;String::toUpperCase);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h4><a name="SQLValueSetters"></a>4.3.2&nbsp;&nbsp;SQLValueSetter</h4>
 <p class="author">Author: Eike Stepper</p>
@@ -324,6 +1434,85 @@ function windowTitle()
  not select setBytes(). An explicitly configured <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLValueSetter.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLValueSetter</code></a> guarantees the chosen JDBC
  operation and can be useful for driver-specific BLOB compatibility, although drivers do not universally
  require setBytes() for BLOB.
+ <p>
+ One example configures setBytes() for a BLOB field; the other supplies a setter for a single call:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SQLValueSetters_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindWithConfiguredSetter.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SQLValueSetters_1')" id="max_SQLValueSetters_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SQLValueSetters_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SQLValueSetters_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;ATTACHMENT&nbsp;table&nbsp;whose&nbsp;PAYLOAD&nbsp;is&nbsp;modeled&nbsp;as&nbsp;DBType.BLOB,&nbsp;and&nbsp;bytes&nbsp;to&nbsp;store.</font><br/>
+            SQLParameter&nbsp;payloadValue&nbsp;=&nbsp;SQL.param(PreparedStatement::setBytes);<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.insertInto(attachment)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.set(payload).to(payloadValue)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindParameter(prepared,&nbsp;payloadValue,&nbsp;bytes);<br/>
+            &nbsp;&nbsp;prepared.executeUpdate();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SQLValueSetters_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">OverrideValueSetter.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SQLValueSetters_2')" id="max_SQLValueSetters_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SQLValueSetters_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SQLValueSetters_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table&nbsp;and&nbsp;NAME&nbsp;field.</font><br/>
+            SQLParameter&nbsp;parameter&nbsp;=&nbsp;SQL.param((String&nbsp;value)&nbsp;-&gt;&nbsp;value.trim());<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(name).eq(parameter)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindParameter(prepared,&nbsp;parameter,&nbsp;<font color="#2a00ff">&#34;Ada&#34;</font>,&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(stmt,&nbsp;index,&nbsp;value)&nbsp;-&gt;&nbsp;stmt.setString(index,&nbsp;<font color="#2a00ff">&#34;[&#34;&nbsp;</font>+&nbsp;value&nbsp;+&nbsp;<font color="#2a00ff">&#34;]&#34;</font>));<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h4><a name="OverridesAndPrecedence"></a>4.3.3&nbsp;&nbsp;Overrides and Precedence</h4>
 <p class="author">Author: Eike Stepper</p>
@@ -357,6 +1546,91 @@ function windowTitle()
  complete binding operation for an implementation-defined default. That default is not necessarily NULL or the
  SQL column's DEFAULT expression. It may be a domain value such as an empty byte array. This strategy
  is separate from binding a supplied value through <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLValueSetter.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLValueSetter</code></a> or the default adapter path.
+ <p>
+ The examples use a binder cursor and parameter identity to apply implementation-defined defaults:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SQLDefaultSetters_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindImplementationDefault.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SQLDefaultSetters_1')" id="max_SQLDefaultSetters_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SQLDefaultSetters_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SQLDefaultSetters_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table,&nbsp;and&nbsp;NAME/EMAIL&nbsp;fields.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(name).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(email).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;SQLValueSetter&lt;String&gt;&nbsp;valueSetter&nbsp;=&nbsp;PreparedStatement::setString;<br/>
+            &nbsp;&nbsp;SQLDefaultSetter&nbsp;defaultSetter&nbsp;=&nbsp;(stmt,&nbsp;index)&nbsp;-&gt;&nbsp;stmt.setString(index,&nbsp;<font color="#2a00ff">&#34;unassigned&#34;</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;SQLParameterBinder&nbsp;binder&nbsp;=&nbsp;statement.binder(prepared);<br/>
+            &nbsp;&nbsp;binder&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.bindParameter(<font color="#2a00ff">&#34;Ada&#34;</font>,&nbsp;valueSetter)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.bindParameter(defaultSetter);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_SQLDefaultSetters_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindDefaultByIdentity.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('SQLDefaultSetters_2')" id="max_SQLDefaultSetters_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_SQLDefaultSetters_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_SQLDefaultSetters_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table,&nbsp;and&nbsp;NAME/EMAIL&nbsp;fields.</font><br/>
+            SQLParameter&nbsp;shared&nbsp;=&nbsp;SQL.param();<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(name).eq(shared)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.or(email).eq(shared)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bindDefault(prepared,&nbsp;shared,&nbsp;(stmt,&nbsp;index)&nbsp;-&gt;&nbsp;stmt.setString(index,&nbsp;<font color="#2a00ff">&#34;unassigned&#34;</font>));<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="DBAdapterCustomization"></a>5&nbsp;&nbsp;DBAdapter Customization</h2>
 <p class="author">Author: Eike Stepper</p>
@@ -376,6 +1650,46 @@ function windowTitle()
  getJDBCTypeForNull(). DBAdapter dispatches supported compatible pairs to typed setters. This
  keeps occurrence logic in the compiler and JDBC customization in the adapter.
  <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_DefaultBindingArchitecture_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindDefaultScalarParameters.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('DefaultBindingArchitecture_1')" id="max_DefaultBindingArchitecture_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_DefaultBindingArchitecture_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_DefaultBindingArchitecture_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table,&nbsp;and&nbsp;ID/NAME&nbsp;fields.</font><br/>
+            <font color="#3f7f5f">//&nbsp;DBAdapter&nbsp;selects&nbsp;typed&nbsp;setters&nbsp;for&nbsp;these&nbsp;pairs.</font><br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.and(name).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;Integer.valueOf(<font color="#990000">501</font>),&nbsp;<font color="#2a00ff">&#34;Ada&#34;</font>);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
  The diagram shows the adapter's independent default-binding decisions, including its direct-call handling for
  unknown-type NULL and the opt-in Java-type fallback for unknown non-NULL values.
  <p>
@@ -390,6 +1704,66 @@ function windowTitle()
  same typed hooks used for known compatible DBType/value pairs; unsupported classes still use setObject.
  The policy does not change known-type dispatch, and unknown NULL remains generic object binding at the adapter
  level. Structured DML separately rejects unknown untyped NULL before delegation.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_UnknownParameterTypes_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">BindUnknownParameterType.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UnknownParameterTypes_1')" id="max_UnknownParameterTypes_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_UnknownParameterTypes_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_UnknownParameterTypes_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;connection&nbsp;and&nbsp;CUSTOMER&nbsp;table.</font><br/>
+            <font color="#3f7f5f">//&nbsp;This&nbsp;projection&nbsp;comparison&nbsp;has&nbsp;no&nbsp;field-derived&nbsp;parameter&nbsp;DBType.</font><br/>
+            SQLTemplate&nbsp;template&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(SQL.eq(SQL.param(),&nbsp;SQL.ONE))&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.build();<br/>
+            <br/>
+            IDBAdapter&nbsp;conservative&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>H2Adapter();<br/>
+            IDBAdapter&nbsp;javaTypeFallback&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>H2Adapter()<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>boolean&nbsp;</b></font>useJavaTypeForUnknownParameterType()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;true</b></font>;<br/>
+            &nbsp;&nbsp;}<br/>
+            };<br/>
+            <br/>
+            SQLStatement&nbsp;conservativeStatement&nbsp;=&nbsp;template.compile(conservative);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;conservativeStatement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;DBAdapter&nbsp;uses&nbsp;setObject.</font><br/>
+            &nbsp;&nbsp;conservativeStatement.bind(prepared,&nbsp;Integer.valueOf(<font color="#990000">42</font>));<br/>
+            }<br/>
+            <br/>
+            SQLStatement&nbsp;fallbackStatement&nbsp;=&nbsp;template.compile(javaTypeFallback);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;fallbackStatement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;DBAdapter&nbsp;uses&nbsp;setInt&nbsp;for&nbsp;this&nbsp;supported&nbsp;Java&nbsp;type.</font><br/>
+            &nbsp;&nbsp;fallbackStatement.bind(prepared,&nbsp;Integer.valueOf(<font color="#990000">42</font>));<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h3><a name="ProtectedBindingExtensionPoints"></a>5.3&nbsp;&nbsp;Protected Binding Extension Points</h3>
 <p class="author">Author: Eike Stepper</p>
@@ -401,6 +1775,54 @@ function windowTitle()
  compilable illustration of the extension mechanism; it does not imply that H2 generally requires integer
  Boolean binding. Adapters should normally retain setBoolean() unless their backend or driver gives a
  concrete reason to change it.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ProtectedBindingExtensionPoints_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CustomizeBooleanBinding.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ProtectedBindingExtensionPoints_1')" id="max_ProtectedBindingExtensionPoints_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ProtectedBindingExtensionPoints_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ProtectedBindingExtensionPoints_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;connection,&nbsp;CUSTOMER&nbsp;table,&nbsp;and&nbsp;a&nbsp;BOOLEAN&nbsp;ACTIVE&nbsp;field.</font><br/>
+            <font color="#3f7f5f">//&nbsp;This&nbsp;hypothetical&nbsp;backend&nbsp;expects&nbsp;integer&nbsp;Boolean&nbsp;values.</font><br/>
+            IDBAdapter&nbsp;adapter&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>H2Adapter()<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>bindParameterBoolean(PreparedStatement&nbsp;stmt,&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>index,&nbsp;<font color="#7f0055"><b>boolean&nbsp;</b></font>value)&nbsp;<font color="#7f0055"><b>throws&nbsp;</b></font>SQLException<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;stmt.setInt(index,&nbsp;value&nbsp;?&nbsp;<font color="#990000">1&nbsp;</font>:&nbsp;<font color="#990000">0</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            };<br/>
+            <br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(active).eq(SQL.param())&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.LOW))<br/>
+            {<br/>
+            &nbsp;&nbsp;statement.bind(prepared,&nbsp;Boolean.TRUE);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
  <table>
  <caption>DBAdapter binding extension points</caption>
  <tr><th>Method</th><th>Default JDBC call</th></tr>
@@ -446,6 +1868,57 @@ function windowTitle()
  values from an earlier use of a reused JDBC statement. Rebind every position required by the next execution.
  Range and value-count checks happen before a sequence starts, but a later setter failure does not roll back
  earlier JDBC side effects.
+ <p>
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_PartialBindingAndStatementReuse_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">RepeatCustomerLookup.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('PartialBindingAndStatementReuse_1')" id="max_PartialBindingAndStatementReuse_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_PartialBindingAndStatementReuse_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_PartialBindingAndStatementReuse_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Inputs:&nbsp;adapter,&nbsp;connection,&nbsp;CUSTOMER&nbsp;table&nbsp;and&nbsp;ID&nbsp;field.</font><br/>
+            SQLParameter&nbsp;idValue&nbsp;=&nbsp;SQL.param();<br/>
+            SQLTemplate&nbsp;template&nbsp;=&nbsp;SQL.selectAll()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.from(customer)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.where(customerID).eq(idValue)&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;.build();<br/>
+            SQLStatement&nbsp;statement&nbsp;=&nbsp;template.compile(adapter);<br/>
+            <br/>
+            <font color="#7f0055"><b>for&nbsp;</b></font>(<font color="#7f0055"><b>int&nbsp;</b></font>id&nbsp;:&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font><font color="#7f0055"><b>int</b></font>[]&nbsp;{&nbsp;<font color="#990000">501</font>,&nbsp;<font color="#990000">502</font>,&nbsp;<font color="#990000">503&nbsp;</font>})<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;prepared&nbsp;=&nbsp;statement.prepare(connection,&nbsp;ReuseProbability.HIGH))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;statement.bindAll(prepared,&nbsp;id);<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;prepared.executeQuery())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Customer&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getInt(<font color="#2a00ff">&#34;ID&#34;</font>)&nbsp;+&nbsp;<font color="#2a00ff">&#34;:&nbsp;&#34;&nbsp;</font>+&nbsp;rows.getString(<font color="#2a00ff">&#34;NAME&#34;</font>));<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="PortabilityAndLimitations"></a>7&nbsp;&nbsp;Portability and Limitations</h2>
 <p class="author">Author: Eike Stepper</p>

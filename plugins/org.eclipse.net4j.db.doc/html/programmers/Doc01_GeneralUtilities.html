@@ -165,6 +165,7 @@ function maximize(id)
  null. Only the selected lazy descriptor is materialized. Adapter versions describe adapter
  implementations; they are independent of the database product version and JDBC driver version.
  <p>
+ The following example retrieves the adapter for a given connection:
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -203,7 +204,10 @@ function maximize(id)
   </table>
 </div>
 <p>
- and 
+
+ <p>
+ The following example retrieves the adapter for a given adapter name:
+ 
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_AdaptersAndDatabases_2"></a>
@@ -356,6 +360,7 @@ function maximize(id)
  held by the caller itself until the queue timeout. After completion, prepare through the managed connection
  again; the old cached statement objects have been discarded.
  <p>
+ The following example illustrates how a query statement execution is coordinated with a schema change:
  
 
 <div class="snippet" style="margin-left:24px;" align="left">

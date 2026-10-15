@@ -142,6 +142,8 @@ public class Doc03_DataManipulation
      * <p>
      * A SELECT projects fields or expressions. The example compiles a key lookup, binds the key, executes it, and
      * closes both managed resources. The returned statement can be prepared again for another lookup.
+     * <p>
+     * {@link #findCustomers(IDBAdapter, IDBConnection, IDBTable, IDBField) FindCustomers.java}
      *
      * @author Eike Stepper
      */
@@ -179,6 +181,10 @@ public class Doc03_DataManipulation
      * <p>
      * An explicit column list pairs each value with its named destination column. INSERT SELECT instead copies a
      * query result into the target table; parameters in the SELECT remain ordinary compiled occurrences.
+     * <p>
+     * The examples insert a customer row and copy selected orders for one customer:
+     * {@link #insertCustomer(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) InsertCustomer.java}
+     * {@link #copyOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, IDBTable, IDBField, IDBField) CopyOrders.java}
      *
      * @author Eike Stepper
      */
@@ -238,6 +244,8 @@ public class Doc03_DataManipulation
      * <p>
      * An UPDATE names assigned fields in {@code set()} and limits affected rows with {@code where()}. The values are
      * bound in rendered occurrence order: the new status first, then the order key.
+     * <p>
+     * {@link #updateOrderStatus(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) UpdateOrderStatus.java}
      *
      * @author Eike Stepper
      */
@@ -273,6 +281,8 @@ public class Doc03_DataManipulation
      * <p>
      * A DELETE may omit its WHERE clause and affect every row. Prefer an explicit restrictive condition when removing
      * a single record, as this key-based example does.
+     * <p>
+     * {@link #deleteOrder(IDBAdapter, IDBConnection, IDBTable, IDBField) DeleteOrder.java}
      *
      * @author Eike Stepper
      */
@@ -308,6 +318,14 @@ public class Doc03_DataManipulation
      * Use {@link SQL#abs(SQLExpression)} for a structured absolute-value expression, and use the IN factories or
      * fluent value-list stage for ordered membership values. An {@code IDBTable.Provider} lets a domain wrapper
      * supply its primary schema table directly to DML construction; the table is resolved when the API call is made.
+     * <p>
+     * These examples cover a structured function, fixed and iterable IN lists, incremental list construction, and a
+     * table provider:
+     * {@link #selectByAbsoluteVersion(IDBAdapter, IDBTable, IDBField) SelectByAbsoluteVersion.java}
+     * {@link #selectForFixedRevisions(IDBAdapter, IDBTable, IDBField) SelectForFixedRevisions.java}
+     * {@link #selectForRevisions(IDBAdapter, IDBTable, IDBField, Iterable) SelectForRevisions.java}
+     * {@link #selectForRevisionsIncrementally(IDBAdapter, IDBTable, IDBField, Iterable) SelectForRevisionsIncrementally.java}
+     * {@link #selectFromProvider(IDBAdapter, IDBTable.Provider, IDBField) SelectFromProvider.java}
      *
      * @author Eike Stepper
      */
@@ -402,6 +420,8 @@ public class Doc03_DataManipulation
      * Conditions are immutable values that can be named and combined before attaching them to a WHERE stage. The
      * final condition tree determines SQL order and therefore positional binding order. Build only complete
      * conditions, and add optional predicates only when their values are part of the request.
+     * <p>
+     * {@link #findOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, boolean) FindOrders.java}
      *
      * @author Eike Stepper
      */
@@ -456,6 +476,8 @@ public class Doc03_DataManipulation
      * <p>
      * A {@link SQLTableRef} represents one occurrence of a table and can qualify its columns. Table aliases distinguish
      * source columns in joins; aliases on projected expressions label output values instead.
+     * <p>
+     * {@link #customerOrderJoin(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBTable, IDBField) CustomerOrderJoin.java}
      *
      * @author Eike Stepper
      */
@@ -494,6 +516,8 @@ public class Doc03_DataManipulation
      * Aggregate expressions can be projected and used in HAVING. This query groups orders by status and applies a
      * parameterized minimum count after grouping. Aggregate and grouping support still depends on the target SQL
      * dialect and adapter.
+     * <p>
+     * {@link #summarizeOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) SummarizeOrders.java}
      *
      * @author Eike Stepper
      */
@@ -534,6 +558,8 @@ public class Doc03_DataManipulation
      * A complete SELECT can be converted to {@link SQLSubSelect} and used in supported IN, EXISTS, or scalar contexts.
      * Its parameters join the outer statement's rendered occurrence order. A subquery is preferable to raw SQL when
      * the structured API can express the required shape.
+     * <p>
+     * {@link #customersWithOpenOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBTable, IDBField, IDBField) CustomersWithOpenOrders.java}
      *
      * @author Eike Stepper
      */
@@ -578,6 +604,8 @@ public class Doc03_DataManipulation
      * and parameter tokens structured inside a fragment. Raw text is neither parsed nor escaped, and must not contain
      * question marks; represent every placeholder with a parameter token so occurrence metadata remains aligned with
      * JDBC indexes.
+     * <p>
+     * {@link #searchByNameFragment(IDBAdapter, IDBConnection, IDBTable, IDBField) SearchByNameFragment.java}
      *
      * @author Eike Stepper
      */
@@ -656,6 +684,9 @@ public class Doc03_DataManipulation
        * Positional values are assigned in rendered JDBC order. Binding by JDBC index changes one occurrence, while
        * binding by parameter identity changes every occurrence of that exact object in rendered order. The examples
        * preserve the earlier customer lookup and repeated-identity patterns.
+       * <p>
+       * {@link #bindPositionalParameters(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindPositionalParameters.java}
+       * {@link #bindRepeatedParameter(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindRepeatedParameter.java}
        *
        * @author Eike Stepper
        */
@@ -710,6 +741,13 @@ public class Doc03_DataManipulation
        * {@code getNextIndex()} reports the next JDBC position, {@code skip()} moves without binding, and
        * {@code from(index)} repositions absolutely. The final legal position is parameter count plus one and accepts
        * only an empty sequence.
+       * <p>
+       * The examples bind complete and partial sequences, start a partial sequence at a chosen position, and navigate
+       * the independent binder cursor:
+       * {@link #bindCompleteAndPartialSequences(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindCompleteAndPartialSequences.java}
+       * {@link #bindFromPosition(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, IDBField) BindFromPosition.java}
+       * {@link #bindWithCursor(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindWithCursor.java}
+       * {@link #navigateBindingCursor(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, IDBField, IDBField) NavigateBindingCursor.java}
        *
        * @author Eike Stepper
        */
@@ -866,6 +904,9 @@ public class Doc03_DataManipulation
         * </table>
         * BLOB, CLOB, and temporal DBTypes have no automatic specialized mapping in this dispatch. In particular,
         * {@code BLOB} does not select {@code setBytes()} merely because a byte array is supplied.
+        * <p>
+        * The example binds NULL using the field-derived type:
+        * {@link #bindInferredNull(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindInferredNull.java}
        *
        * @author Eike Stepper
        */
@@ -898,6 +939,8 @@ public class Doc03_DataManipulation
        * different from a custom {@link SQLValueSetter}: {@code SQL.param(Types.BLOB)} does not request
        * {@code PreparedStatement.setBytes()}. Use a configured setter such as {@code SQL.param(PreparedStatement::setBytes)}
        * when the complete binding operation must use that JDBC method.
+       * <p>
+       * {@link #bindExplicitlyTypedNull(IDBAdapter, IDBConnection, IDBTable) BindExplicitlyTypedNull.java}
        *
        * @author Eike Stepper
        */
@@ -942,6 +985,10 @@ public class Doc03_DataManipulation
        * A converter maps a non-NULL application value to the value supplied to default binding. NULL input bypasses
        * conversion and follows the occurrence's explicit or inferred JDBC NULL typing. Converter exceptions propagate
        * to the caller.
+       * <p>
+       * The first example configures a converter; the second overrides it for one binding call:
+       * {@link #bindConvertedValue(IDBAdapter, IDBConnection, IDBTable, IDBField) BindConvertedValue.java}
+       * {@link #overrideValueConverter(IDBAdapter, IDBConnection, IDBTable, IDBField) OverrideValueConverter.java}
        *
        * @author Eike Stepper
        */
@@ -994,6 +1041,10 @@ public class Doc03_DataManipulation
        * not select {@code setBytes()}. An explicitly configured {@link SQLValueSetter} guarantees the chosen JDBC
        * operation and can be useful for driver-specific BLOB compatibility, although drivers do not universally
        * require {@code setBytes()} for BLOB.
+       * <p>
+       * One example configures {@code setBytes()} for a BLOB field; the other supplies a setter for a single call:
+       * {@link #bindWithConfiguredSetter(IDBAdapter, IDBConnection, IDBTable, IDBField, byte[]) BindWithConfiguredSetter.java}
+       * {@link #overrideValueSetter(IDBAdapter, IDBConnection, IDBTable, IDBField) OverrideValueSetter.java}
        *
        * @author Eike Stepper
        */
@@ -1076,6 +1127,10 @@ public class Doc03_DataManipulation
        * complete binding operation for an implementation-defined default. That default is not necessarily NULL or the
        * SQL column's {@code DEFAULT} expression. It may be a domain value such as an empty byte array. This strategy
        * is separate from binding a supplied value through {@link SQLValueSetter} or the default adapter path.
+       * <p>
+       * The examples use a binder cursor and parameter identity to apply implementation-defined defaults:
+       * {@link #bindImplementationDefault(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindImplementationDefault.java}
+       * {@link #bindDefaultByIdentity(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindDefaultByIdentity.java}
        *
        * @author Eike Stepper
        */
@@ -1150,6 +1205,8 @@ public class Doc03_DataManipulation
      * {@code getJDBCTypeForNull()}. {@code DBAdapter} dispatches supported compatible pairs to typed setters. This
      * keeps occurrence logic in the compiler and JDBC customization in the adapter.
      * <p>
+     * {@link #bindDefaultScalarParameters(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindDefaultScalarParameters.java}
+     * <p>
      * The diagram shows the adapter's independent default-binding decisions, including its direct-call handling for
      * unknown-type NULL and the opt-in Java-type fallback for unknown non-NULL values.
      * <p>
@@ -1188,6 +1245,8 @@ public class Doc03_DataManipulation
      * same typed hooks used for known compatible DBType/value pairs; unsupported classes still use {@code setObject}.
      * The policy does not change known-type dispatch, and unknown NULL remains generic object binding at the adapter
      * level. Structured DML separately rejects unknown untyped NULL before delegation.
+     * <p>
+     * {@link #bindUnknownParameterType(IDBConnection, IDBTable) BindUnknownParameterType.java}
      *
      * @author Eike Stepper
      */
@@ -1241,8 +1300,10 @@ public class Doc03_DataManipulation
       * retaining the common mapping and fallback behavior. The Boolean example is hypothetical: it models a backend
       * whose Boolean values are represented as integer 0/1 parameters. The H2Adapter subclass is a concrete,
       * compilable illustration of the extension mechanism; it does not imply that H2 generally requires integer
-      * Boolean binding. Adapters should normally retain {@code setBoolean()} unless their backend or driver gives a
-      * concrete reason to change it.
+     * Boolean binding. Adapters should normally retain {@code setBoolean()} unless their backend or driver gives a
+     * concrete reason to change it.
+     * <p>
+     * {@link #customizeBooleanBinding(IDBConnection, IDBTable, IDBField) CustomizeBooleanBinding.java}
      * <table>
      * <caption>DBAdapter binding extension points</caption>
      * <tr><th>Method</th><th>Default JDBC call</th></tr>
@@ -1337,6 +1398,8 @@ public class Doc03_DataManipulation
      * values from an earlier use of a reused JDBC statement. Rebind every position required by the next execution.
      * Range and value-count checks happen before a sequence starts, but a later setter failure does not roll back
      * earlier JDBC side effects.
+     * <p>
+     * {@link #repeatCustomerLookup(IDBAdapter, IDBConnection, IDBTable, IDBField) RepeatCustomerLookup.java}
      *
      * @author Eike Stepper
      */

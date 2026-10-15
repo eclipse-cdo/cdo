@@ -120,7 +120,11 @@ public class Doc01_GeneralUtilities
    * {@code null}. Only the selected lazy descriptor is materialized. Adapter versions describe adapter
    * implementations; they are independent of the database product version and JDBC driver version.
    * <p>
-   * {@link #openManagedDatabase OpenManagedDatabase.java} and {@link #resolveAdapter(Connection) ResolveAdapter.java}
+   * The following example retrieves the adapter for a given connection:
+   * {@link #openManagedDatabase(String, IDBConnectionProvider) OpenManagedDatabase.java}
+   * <p>
+   * The following example retrieves the adapter for a given adapter name:
+   * {@link #resolveAdapter(Connection) ResolveAdapter.java}
    *
    * @author Eike Stepper
    */
@@ -263,6 +267,7 @@ public class Doc01_GeneralUtilities
    * held by the caller itself until the queue timeout. After completion, prepare through the managed connection
    * again; the old cached statement objects have been discarded.
    * <p>
+   * The following example illustrates how a query statement execution is coordinated with a schema change:
    * {@link #coordinateStatementAndSchemaChange(IDBDatabase, IDBAdapter) CoordinateStatementAndSchemaChange.java}
    *
    * @author Eike Stepper

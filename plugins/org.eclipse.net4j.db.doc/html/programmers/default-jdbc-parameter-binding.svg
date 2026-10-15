@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="1000"
-   height="860"
-   viewBox="0 0 1000 860"
+   width="769.65222"
+   height="642.83856"
+   viewBox="0 0 769.65222 642.83856"
    role="img"
    aria-labelledby="title description"
    version="1.1"
@@ -12,7 +12,10 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <sodipodi:namedview
      id="namedview34"
      pagecolor="#ffffff"
@@ -23,13 +26,13 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="1.3174419"
-     inkscape:cx="499.8323"
-     inkscape:cy="430"
-     inkscape:window-width="5120"
-     inkscape:window-height="1351"
-     inkscape:window-x="2391"
-     inkscape:window-y="-9"
-     inkscape:window-maximized="1"
+     inkscape:cx="384.83671"
+     inkscape:cy="330.56486"
+     inkscape:window-width="2270"
+     inkscape:window-height="1339"
+     inkscape:window-x="3816"
+     inkscape:window-y="1"
+     inkscape:window-maximized="0"
      inkscape:current-layer="svg34" />
   <title
      id="title">Default JDBC Parameter Binding</title>
@@ -46,7 +49,7 @@
        markerHeight="7"
        orient="auto">
       <path
-         d="M0 0L10 5L0 10Z"
+         d="M 0,0 10,5 0,10 Z"
          fill="#526477"
          id="path1" />
     </marker>
@@ -63,314 +66,327 @@
       .end { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-anchor: middle; fill: #39734a; }
     </style>
   </defs>
-  <rect
-     x="20"
-     y="20"
-     width="320"
-     height="56"
-     rx="11"
-     class="start"
-     id="rect1" />
-  <text
-     x="180"
-     y="56"
-     class="main"
-     id="text1">DBAdapter.bindParameter()</text>
-  <path
-     d="M180 76V100"
-     class="line"
-     id="path2" />
-  <polygon
-     points="180,100 285,130 180,160 75,130"
-     class="decision"
-     id="polygon2" />
-  <text
-     x="180"
-     y="136"
-     class="main"
-     id="text2">Value is NULL?</text>
-  <text
-     x="326"
-     y="124"
-     class="branch"
-     id="text3">Yes</text>
-  <path
-     d="M285 130H390"
-     class="line"
-     id="path3" />
-  <polygon
-     points="500,88 610,130 500,172 390,130"
-     class="decision"
-     id="polygon3" />
-  <text
-     x="500"
-     y="136"
-     class="main"
-     id="text4">DBType known?</text>
-  <text
-     x="194"
-     y="244"
-     class="branch"
-     id="text5">No</text>
-  <path
-     d="M180 160V338"
-     class="line"
-     id="path5" />
-  <polygon
-     points="180,338 285,380 180,422 75,380"
-     class="decision"
-     id="polygon5" />
-  <text
-     x="180"
-     y="386"
-     class="main"
-     id="text6">DBType known?</text>
-  <text
-     x="326"
-     y="374"
-     class="branch"
-     id="text7">Yes</text>
-  <path
-     d="M285 380H390"
-     class="line"
-     id="path7" />
-  <polygon
-     points="500,338 610,380 500,422 390,380"
-     class="decision"
-     id="polygon7" />
-  <text
-     x="500"
-     y="386"
-     class="main"
-     id="text8">Compatible types?</text>
-  <text
-     x="194"
-     y="519"
-     class="branch"
-     id="text9">No</text>
-  <path
-     d="M180 422V603"
-     class="line"
-     id="path9" />
-  <polygon
-     points="180,603 290,645 180,687 70,645"
-     class="decision"
-     id="polygon9" />
-  <text
-     x="180"
-     y="648"
-     class="main"
-     id="text10">Java-type fallback?</text>
-  <text
-     x="180"
-     y="669"
-     class="sub"
-     id="text11">default false</text>
-  <text
-     x="326"
-     y="639"
-     class="branch"
-     id="text12">Yes</text>
-  <path
-     d="M290 645H390"
-     class="line"
-     id="path12" />
-  <polygon
-     points="500,603 610,645 500,687 390,645"
-     class="decision"
-     id="polygon12" />
-  <text
-     x="500"
-     y="651"
-     class="main"
-     id="text13">Supported scalar?</text>
-  <text
-     x="194"
-     y="720"
-     class="branch"
-     id="text14">No</text>
-  <path
-     d="M180 687V750"
-     class="line"
-     id="path14" />
-  <rect
-     x="49.934757"
-     y="749.93475"
-     width="260.13049"
-     height="71.61348"
-     rx="10.005018"
-     class="terminal"
-     id="rect14" />
-  <text
-     x="180"
-     y="781"
-     class="main"
-     id="text15">bindParameterObject()</text>
-  <text
-     x="180"
-     y="811"
-     class="end"
-     id="text16">END</text>
-  <text
-     x="515"
-     y="197"
-     class="branch"
-     id="text17">No</text>
-  <path
-     d="M500 172V210"
-     class="line"
-     id="path17" />
-  <rect
-     x="369.93048"
-     y="209.93048"
-     width="260.13733"
-     height="71.511909"
-     rx="10.005282"
-     class="terminal"
-     id="rect17" />
-  <text
-     x="500"
-     y="241"
-     class="main"
-     id="text18">bindParameterObject(null)</text>
-  <text
-     x="500"
-     y="271"
-     class="end"
-     id="text19">END</text>
-  <text
-     x="650"
-     y="124"
-     class="branch"
-     id="text20">Yes</text>
-  <path
-     d="M610 130H720"
-     class="line"
-     id="path20" />
-  <rect
-     x="719.93896"
-     y="91.938995"
-     width="260.12201"
-     height="71.715958"
-     rx="10.004693"
-     class="terminal"
-     id="rect20" />
-  <text
-     x="850"
-     y="123"
-     class="main"
-     id="text21">bindParameterNull()</text>
-  <text
-     x="850"
-     y="153"
-     class="end"
-     id="text22">END</text>
-  <text
-     x="515"
-     y="457"
-     class="branch"
-     id="text23">No</text>
-  <path
-     d="M500 422V475"
-     class="line"
-     id="path23" />
-  <rect
-     x="369.93475"
-     y="474.93475"
-     width="260.13049"
-     height="71.61348"
-     rx="10.005018"
-     class="terminal"
-     id="rect23" />
-  <text
-     x="500"
-     y="506"
-     class="main"
-     id="text24">bindParameterObject()</text>
-  <text
-     x="500"
-     y="536"
-     class="end"
-     id="text25">END</text>
-  <text
-     x="650"
-     y="374"
-     class="branch"
-     id="text26">Yes</text>
-  <path
-     d="M610 380H720"
-     class="line"
-     id="path26" />
-  <rect
-     x="719.93475"
-     y="341.93475"
-     width="260.13049"
-     height="71.61348"
-     rx="10.005018"
-     class="terminal"
-     id="rect26" />
-  <text
-     x="850"
-     y="373"
-     class="main"
-     id="text27">Typed bindParameterXxx()</text>
-  <text
-     x="850"
-     y="403"
-     class="end"
-     id="text28">END</text>
-  <text
-     x="515"
-     y="722"
-     class="branch"
-     id="text29">No</text>
-  <path
-     d="M500 687V750"
-     class="line"
-     id="path29" />
-  <rect
-     x="369.93475"
-     y="749.93475"
-     width="260.13049"
-     height="71.61348"
-     rx="10.005018"
-     class="terminal"
-     id="rect29" />
-  <text
-     x="500"
-     y="781"
-     class="main"
-     id="text30">bindParameterObject()</text>
-  <text
-     x="500"
-     y="811"
-     class="end"
-     id="text31">END</text>
-  <text
-     x="650"
-     y="639"
-     class="branch"
-     id="text32">Yes</text>
-  <path
-     d="M610 645H720"
-     class="line"
-     id="path32" />
-  <rect
-     x="719.93475"
-     y="606.93475"
-     width="260.13049"
-     height="71.61348"
-     rx="10.005018"
-     class="terminal"
-     id="rect32" />
-  <text
-     x="850"
-     y="638"
-     class="main"
-     id="text33">Typed bindParameterXxx()</text>
-  <text
-     x="850"
-     y="668"
-     class="end"
-     id="text34">END</text>
+  <g
+     id="g1"
+     transform="matrix(0.8,0,0,0.8,-15.2,-15.2)">
+    <rect
+       x="20"
+       y="20"
+       width="320"
+       height="56"
+       rx="11"
+       class="start"
+       id="rect1" />
+    <text
+       x="180"
+       y="56"
+       class="main"
+       id="text1">DBAdapter.bindParameter()</text>
+    <path
+       d="m 180,76 v 24"
+       class="line"
+       id="path2" />
+    <polygon
+       points="75,130 180,100 285,130 180,160 "
+       class="decision"
+       id="polygon2" />
+    <text
+       x="180"
+       y="136"
+       class="main"
+       id="text2">Value is NULL?</text>
+    <text
+       x="326"
+       y="124"
+       class="branch"
+       id="text3">Yes</text>
+    <path
+       d="M 285,130 H 390"
+       class="line"
+       id="path3" />
+    <polygon
+       points="390,130 500,88 610,130 500,172 "
+       class="decision"
+       id="polygon3" />
+    <text
+       x="500"
+       y="136"
+       class="main"
+       id="text4">DBType known?</text>
+    <text
+       x="194"
+       y="244"
+       class="branch"
+       id="text5">No</text>
+    <path
+       d="M 180,160 V 338"
+       class="line"
+       id="path5" />
+    <polygon
+       points="75,380 180,338 285,380 180,422 "
+       class="decision"
+       id="polygon5" />
+    <text
+       x="180"
+       y="386"
+       class="main"
+       id="text6">DBType known?</text>
+    <text
+       x="326"
+       y="374"
+       class="branch"
+       id="text7">Yes</text>
+    <path
+       d="M 285,380 H 390"
+       class="line"
+       id="path7" />
+    <polygon
+       points="390,380 500,338 610,380 500,422 "
+       class="decision"
+       id="polygon7" />
+    <text
+       x="500"
+       y="386"
+       class="main"
+       id="text8">Compatible types?</text>
+    <text
+       x="194"
+       y="519"
+       class="branch"
+       id="text9">No</text>
+    <path
+       d="M 180,422 V 603"
+       class="line"
+       id="path9" />
+    <polygon
+       points="70,645 180,603 290,645 180,687 "
+       class="decision"
+       id="polygon9" />
+    <text
+       x="180"
+       y="648"
+       class="main"
+       id="text10">Java-type fallback?</text>
+    <text
+       x="180"
+       y="669"
+       class="sub"
+       id="text11">default false</text>
+    <text
+       x="326"
+       y="639"
+       class="branch"
+       id="text12">Yes</text>
+    <path
+       d="M 290,645 H 390"
+       class="line"
+       id="path12" />
+    <polygon
+       points="390,645 500,603 610,645 500,687 "
+       class="decision"
+       id="polygon12" />
+    <text
+       x="500"
+       y="651"
+       class="main"
+       id="text13">Supported scalar?</text>
+    <text
+       x="194"
+       y="720"
+       class="branch"
+       id="text14">No</text>
+    <path
+       d="m 180,687 v 63"
+       class="line"
+       id="path14" />
+    <rect
+       x="49.934757"
+       y="749.93475"
+       width="260.13049"
+       height="71.61348"
+       rx="10.005018"
+       class="terminal"
+       id="rect14" />
+    <text
+       x="180"
+       y="781"
+       class="main"
+       id="text15">bindParameterObject()</text>
+    <text
+       x="180"
+       y="811"
+       class="end"
+       id="text16">END</text>
+    <text
+       x="515"
+       y="197"
+       class="branch"
+       id="text17">No</text>
+    <path
+       d="m 500,172 v 38"
+       class="line"
+       id="path17" />
+    <rect
+       x="369.93048"
+       y="209.93048"
+       width="260.13733"
+       height="71.511909"
+       rx="10.005282"
+       class="terminal"
+       id="rect17" />
+    <text
+       x="500"
+       y="241"
+       class="main"
+       id="text18">bindParameterObject(null)</text>
+    <text
+       x="500"
+       y="271"
+       class="end"
+       id="text19">END</text>
+    <text
+       x="650"
+       y="124"
+       class="branch"
+       id="text20">Yes</text>
+    <path
+       d="M 610,130 H 720"
+       class="line"
+       id="path20" />
+    <rect
+       x="719.93896"
+       y="91.938995"
+       width="260.12201"
+       height="71.715958"
+       rx="10.004693"
+       class="terminal"
+       id="rect20" />
+    <text
+       x="850"
+       y="123"
+       class="main"
+       id="text21">bindParameterNull()</text>
+    <text
+       x="850"
+       y="153"
+       class="end"
+       id="text22">END</text>
+    <text
+       x="515"
+       y="457"
+       class="branch"
+       id="text23">No</text>
+    <path
+       d="m 500,422 v 53"
+       class="line"
+       id="path23" />
+    <rect
+       x="369.93475"
+       y="474.93475"
+       width="260.13049"
+       height="71.61348"
+       rx="10.005018"
+       class="terminal"
+       id="rect23" />
+    <text
+       x="500"
+       y="506"
+       class="main"
+       id="text24">bindParameterObject()</text>
+    <text
+       x="500"
+       y="536"
+       class="end"
+       id="text25">END</text>
+    <text
+       x="650"
+       y="374"
+       class="branch"
+       id="text26">Yes</text>
+    <path
+       d="M 610,380 H 720"
+       class="line"
+       id="path26" />
+    <rect
+       x="719.93475"
+       y="341.93475"
+       width="260.13049"
+       height="71.61348"
+       rx="10.005018"
+       class="terminal"
+       id="rect26" />
+    <text
+       x="850"
+       y="373"
+       class="main"
+       id="text27">Typed bindParameterXxx()</text>
+    <text
+       x="850"
+       y="403"
+       class="end"
+       id="text28">END</text>
+    <text
+       x="515"
+       y="722"
+       class="branch"
+       id="text29">No</text>
+    <path
+       d="m 500,687 v 63"
+       class="line"
+       id="path29" />
+    <rect
+       x="369.93475"
+       y="749.93475"
+       width="260.13049"
+       height="71.61348"
+       rx="10.005018"
+       class="terminal"
+       id="rect29" />
+    <text
+       x="500"
+       y="781"
+       class="main"
+       id="text30">bindParameterObject()</text>
+    <text
+       x="500"
+       y="811"
+       class="end"
+       id="text31">END</text>
+    <text
+       x="650"
+       y="639"
+       class="branch"
+       id="text32">Yes</text>
+    <path
+       d="M 610,645 H 720"
+       class="line"
+       id="path32" />
+    <rect
+       x="719.93475"
+       y="606.93475"
+       width="260.13049"
+       height="71.61348"
+       rx="10.005018"
+       class="terminal"
+       id="rect32" />
+    <text
+       x="850"
+       y="638"
+       class="main"
+       id="text33">Typed bindParameterXxx()</text>
+    <text
+       x="850"
+       y="668"
+       class="end"
+       id="text34">END</text>
+  </g>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Default JDBC Parameter Binding</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
 </svg>

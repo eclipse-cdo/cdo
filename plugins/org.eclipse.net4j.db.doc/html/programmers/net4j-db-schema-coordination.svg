@@ -1,11 +1,72 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="690" viewBox="0 0 1120 690" role="img" aria-labelledby="title desc">
-  <title id="title">Managed statement and schema-change coordination</title>
-  <desc id="desc">A managed prepare takes a schema read token held through statement checkout until close. Schema transaction completion first runs adapter DDL, then requests exclusive schema access, waits for active managed statements, invalidates each managed connection cache, emits a schema-change event, and releases the writer. Later prepares use cleared caches.</desc>
-  <defs>
-    <marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#4f6578"/></marker>
-    <marker id="redArrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#a34a45"/></marker>
-    <style>
-      text { font-family: "Segoe UI", Arial, sans-serif; fill: #243747; }
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="826.15997"
+   height="366.95999"
+   viewBox="0 0 826.15997 366.95999"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg32"
+   sodipodi:docname="net4j-db-schema-coordination.svg"
+   inkscape:version="1.4.4 (dcaf3e7, 2026-05-05)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview32"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.642029"
+     inkscape:cx="414.1218"
+     inkscape:cy="187.87732"
+     inkscape:window-width="5120"
+     inkscape:window-height="1351"
+     inkscape:window-x="2391"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg32" />
+  <title
+     id="title">Managed statement and schema-change coordination</title>
+  <desc
+     id="desc">A managed prepare takes a schema read token held through statement checkout until close. Schema transaction completion first runs adapter DDL, then requests exclusive schema access, waits for active managed statements, invalidates each managed connection cache, emits a schema-change event, and releases the writer. Later prepares use cleared caches.</desc>
+  <defs
+     id="defs2">
+    <marker
+       id="arrow"
+       markerWidth="10"
+       markerHeight="8"
+       refX="9"
+       refY="4"
+       orient="auto">
+      <path
+         d="M 0,0 10,4 0,8 Z"
+         fill="#4f6578"
+         id="path1" />
+    </marker>
+    <marker
+       id="redArrow"
+       markerWidth="10"
+       markerHeight="8"
+       refX="9"
+       refY="4"
+       orient="auto">
+      <path
+         d="M 0,0 10,4 0,8 Z"
+         fill="#a34a45"
+         id="path2" />
+    </marker>
+    <style
+       id="style2">
+      text { font-family: &quot;Segoe UI&quot;, Arial, sans-serif; fill: #243747; }
       .title { font-size: 24px; font-weight: 700; }
       .head { font-size: 15px; font-weight: 700; }
       .body { font-size: 14px; }
@@ -19,63 +80,259 @@
       .dash { stroke-dasharray: 6 5; }
     </style>
   </defs>
-  <rect width="1120" height="690" fill="#ffffff"/>
-  <text x="34" y="42" class="title">Managed statement lifetime and schema completion</text>
-  <text x="34" y="69" class="note">The queue coordinates managed checkouts and cache invalidation; physical DDL occurs before the exclusive invalidation phase.</text>
-
-  <rect x="44" y="112" width="315" height="108" class="step read"/>
-  <text x="201" y="143" text-anchor="middle" class="head">1 · Managed preparation</text>
-  <text x="201" y="169" text-anchor="middle" class="body">DBConnection requests READ access</text>
-  <text x="201" y="193" text-anchor="middle" class="body">and checks out or creates a statement</text>
-
-  <rect x="402" y="112" width="315" height="108" class="step read"/>
-  <text x="559" y="143" text-anchor="middle" class="head">2 · Statement checked out</text>
-  <text x="559" y="169" text-anchor="middle" class="body">Token remains held while binding,</text>
-  <text x="559" y="193" text-anchor="middle" class="body">executing, and consuming results</text>
-
-  <rect x="760" y="112" width="315" height="108" class="step read"/>
-  <text x="917" y="143" text-anchor="middle" class="head">3 · Statement closed</text>
-  <text x="917" y="169" text-anchor="middle" class="body">Returned to its connection cache;</text>
-  <text x="917" y="193" text-anchor="middle" class="body">READ token is released</text>
-
-  <path d="M359 166 L402 166" class="line"/>
-  <path d="M717 166 L760 166" class="line"/>
-
-  <rect x="44" y="283" width="315" height="116" class="step write"/>
-  <text x="201" y="313" text-anchor="middle" class="head">Physical schema update</text>
-  <text x="201" y="339" text-anchor="middle" class="body">Schema transaction calls adapter</text>
-  <text x="201" y="363" text-anchor="middle" class="body">updateSchema(connection, schema, delta)</text>
-  <text x="201" y="384" text-anchor="middle" class="note">This step is outside the queue's writer access.</text>
-
-  <rect x="402" y="283" width="315" height="116" class="step write"/>
-  <text x="559" y="313" text-anchor="middle" class="head">Request exclusive WRITE access</text>
-  <text x="559" y="339" text-anchor="middle" class="body">Writer queues behind active readers</text>
-  <text x="559" y="363" text-anchor="middle" class="body">and waits for their tokens to end</text>
-  <text x="559" y="384" text-anchor="middle" class="note">A forgotten checked-out statement can delay it.</text>
-
-  <rect x="760" y="283" width="315" height="116" class="step write"/>
-  <text x="917" y="313" text-anchor="middle" class="head">Invalidate managed caches</text>
-  <text x="917" y="339" text-anchor="middle" class="body">Close cached JDBC statements and clear</text>
-  <text x="917" y="363" text-anchor="middle" class="body">each currently managed connection cache</text>
-  <text x="917" y="384" text-anchor="middle" class="note">There is no database-wide statement cache.</text>
-
-  <path d="M359 341 L402 341" class="red"/>
-  <path d="M717 341 L760 341" class="red"/>
-
-  <rect x="222" y="464" width="315" height="105" class="step event"/>
-  <text x="379" y="494" text-anchor="middle" class="head">Notify schema change</text>
-  <text x="379" y="520" text-anchor="middle" class="body">Emit event carrying the schema delta</text>
-  <text x="379" y="544" text-anchor="middle" class="body">then release exclusive queue access</text>
-
-  <rect x="584" y="464" width="362" height="105" class="step read"/>
-  <text x="765" y="494" text-anchor="middle" class="head">Later managed preparation</text>
-  <text x="765" y="520" text-anchor="middle" class="body">Obtains READ access after the writer;</text>
-  <text x="765" y="544" text-anchor="middle" class="body">cache lookup cannot return invalidated SQL</text>
-
-  <path d="M917 399 L917 438 L379 438 L379 464" class="line"/>
-  <path d="M537 517 L584 517" class="line"/>
-
-  <rect x="44" y="606" width="1031" height="52" class="step"/>
-  <text x="559" y="628" text-anchor="middle" class="body">Commit ordering: adapter update and schema completion/invalidation occur before the connection-backed commit() call.</text>
-  <text x="559" y="648" text-anchor="middle" class="note">This is not a claim of portable DDL atomicity, server isolation, or coordination for unmanaged JDBC statements.</text>
+  <g
+     id="g32"
+     transform="matrix(0.8,0,0,0.8,-34.52,-88.92)">
+    <rect
+       x="44"
+       y="112"
+       width="315"
+       height="108"
+       class="step read"
+       id="rect3" />
+    <text
+       x="201"
+       y="143"
+       text-anchor="middle"
+       class="head"
+       id="text4">1 · Managed preparation</text>
+    <text
+       x="201"
+       y="169"
+       text-anchor="middle"
+       class="body"
+       id="text5">DBConnection requests READ access</text>
+    <text
+       x="201"
+       y="193"
+       text-anchor="middle"
+       class="body"
+       id="text6">and checks out or creates a statement</text>
+    <rect
+       x="402"
+       y="112"
+       width="315"
+       height="108"
+       class="step read"
+       id="rect6" />
+    <text
+       x="559"
+       y="143"
+       text-anchor="middle"
+       class="head"
+       id="text7">2 · Statement checked out</text>
+    <text
+       x="559"
+       y="169"
+       text-anchor="middle"
+       class="body"
+       id="text8">Token remains held while binding,</text>
+    <text
+       x="559"
+       y="193"
+       text-anchor="middle"
+       class="body"
+       id="text9">executing, and consuming results</text>
+    <rect
+       x="760"
+       y="112"
+       width="315"
+       height="108"
+       class="step read"
+       id="rect9" />
+    <text
+       x="917"
+       y="143"
+       text-anchor="middle"
+       class="head"
+       id="text10">3 · Statement closed</text>
+    <text
+       x="917"
+       y="169"
+       text-anchor="middle"
+       class="body"
+       id="text11">Returned to its connection cache;</text>
+    <text
+       x="917"
+       y="193"
+       text-anchor="middle"
+       class="body"
+       id="text12">READ token is released</text>
+    <path
+       d="m 359,166 h 43"
+       class="line"
+       id="path12" />
+    <path
+       d="m 717,166 h 43"
+       class="line"
+       id="path13" />
+    <rect
+       x="44"
+       y="283"
+       width="315"
+       height="116"
+       class="step write"
+       id="rect13" />
+    <text
+       x="201"
+       y="313"
+       text-anchor="middle"
+       class="head"
+       id="text13">Physical schema update</text>
+    <text
+       x="201"
+       y="339"
+       text-anchor="middle"
+       class="body"
+       id="text14">Schema transaction calls adapter</text>
+    <text
+       x="201"
+       y="363"
+       text-anchor="middle"
+       class="body"
+       id="text15">updateSchema(connection, schema, delta)</text>
+    <text
+       x="201"
+       y="384"
+       text-anchor="middle"
+       class="note"
+       id="text16">This step is outside the queue's writer access.</text>
+    <rect
+       x="402"
+       y="283"
+       width="315"
+       height="116"
+       class="step write"
+       id="rect16" />
+    <text
+       x="559"
+       y="313"
+       text-anchor="middle"
+       class="head"
+       id="text17">Request exclusive WRITE access</text>
+    <text
+       x="559"
+       y="339"
+       text-anchor="middle"
+       class="body"
+       id="text18">Writer queues behind active readers</text>
+    <text
+       x="559"
+       y="363"
+       text-anchor="middle"
+       class="body"
+       id="text19">and waits for their tokens to end</text>
+    <text
+       x="559"
+       y="384"
+       text-anchor="middle"
+       class="note"
+       id="text20">A forgotten checked-out statement can delay it.</text>
+    <rect
+       x="760"
+       y="283"
+       width="315"
+       height="116"
+       class="step write"
+       id="rect20" />
+    <text
+       x="917"
+       y="313"
+       text-anchor="middle"
+       class="head"
+       id="text21">Invalidate managed caches</text>
+    <text
+       x="917"
+       y="339"
+       text-anchor="middle"
+       class="body"
+       id="text22">Close cached JDBC statements and clear</text>
+    <text
+       x="917"
+       y="363"
+       text-anchor="middle"
+       class="body"
+       id="text23">each currently managed connection cache</text>
+    <text
+       x="917"
+       y="384"
+       text-anchor="middle"
+       class="note"
+       id="text24">There is no database-wide statement cache.</text>
+    <path
+       d="m 359,341 h 43"
+       class="red"
+       id="path24" />
+    <path
+       d="m 717,341 h 43"
+       class="red"
+       id="path25" />
+    <rect
+       x="222"
+       y="464"
+       width="315"
+       height="105"
+       class="step event"
+       id="rect25" />
+    <text
+       x="379"
+       y="494"
+       text-anchor="middle"
+       class="head"
+       id="text25">Notify schema change</text>
+    <text
+       x="379"
+       y="520"
+       text-anchor="middle"
+       class="body"
+       id="text26">Emit event carrying the schema delta</text>
+    <text
+       x="379"
+       y="544"
+       text-anchor="middle"
+       class="body"
+       id="text27">then release exclusive queue access</text>
+    <rect
+       x="584"
+       y="464"
+       width="362"
+       height="105"
+       class="step read"
+       id="rect27" />
+    <text
+       x="765"
+       y="494"
+       text-anchor="middle"
+       class="head"
+       id="text28">Later managed preparation</text>
+    <text
+       x="765"
+       y="520"
+       text-anchor="middle"
+       class="body"
+       id="text29">Obtains READ access after the writer;</text>
+    <text
+       x="765"
+       y="544"
+       text-anchor="middle"
+       class="body"
+       id="text30">cache lookup cannot return invalidated SQL</text>
+    <path
+       d="m 917,399 v 39 H 379 v 26"
+       class="line"
+       id="path30" />
+    <path
+       d="m 537,517 h 47"
+       class="line"
+       id="path31" />
+  </g>
+  <metadata
+     id="metadata32">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>Managed statement and schema-change coordination</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
 </svg>

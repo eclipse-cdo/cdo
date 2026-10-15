@@ -58,6 +58,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Since JDK 1.7.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#abs(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">abs(SQLExpression)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Creates a structured absolute-value expression.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#absolute(int)" class="member-name-link">absolute(int)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/StatementBatcher.html#accept(java.lang.String)" class="member-name-link">accept(String)</a> - Method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="class in org.eclipse.net4j.db">StatementBatcher</a></dt>
@@ -76,12 +80,20 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/Batch.html#add(java.lang.String)" class="member-name-link">add(String)</a> - Method in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/Batch.html" title="class in org.eclipse.net4j.db">Batch</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLInStep.html#add(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">add(SQLExpression)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLInStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInStep</a></dt>
+<dd>
+<div class="block">Appends one expression to the IN value list.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQL.html#add(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">add(SQLExpression, SQLExpression)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
 <dd>
 <div class="block">Creates a binary addition expression.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html#ADD" class="member-name-link">ADD</a> - Enum constant in enum class org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" title="enum class in org.eclipse.net4j.db.ddl.delta">IDBDelta.ChangeKind</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLInStep.html#addAll(java.lang.Iterable)" class="member-name-link">addAll(Iterable&lt;? extends SQLExpression&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLInStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInStep</a></dt>
+<dd>
+<div class="block">Appends expressions from one traversal of the iterable, preserving its iteration order.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#addBatch()" class="member-name-link">addBatch()</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#addBatch(java.lang.String)" class="member-name-link">addBatch(String)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
@@ -217,6 +229,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/SQLExpression.html#as(java.lang.String)" class="member-name-link">as(String)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></dt>
 <dd>
 <div class="block">Gives this expression a result-column alias for a SELECT projection.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#as(org.eclipse.net4j.db.ddl.IDBTable.Provider,java.lang.String)" class="member-name-link">as(IDBTable.Provider, String)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Creates an aliased occurrence of the table supplied by the provider, resolving it immediately.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQL.html#as(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">as(IDBTable, String)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
 <dd>
@@ -867,6 +883,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Begins a DELETE definition.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#deleteFrom(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">deleteFrom(IDBTable.Provider)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Begins a DELETE definition for the table supplied by the provider, resolving it immediately.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#deleteRow()" class="member-name-link">deleteRow()</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/derby/DerbyAdapter.html" class="type-name-link" title="class in org.eclipse.net4j.db.derby">DerbyAdapter</a> - Class in <a href="org/eclipse/net4j/db/derby/package-summary.html">org.eclipse.net4j.db.derby</a></dt>
@@ -1004,6 +1024,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">EmbeddedDerbyAdapter(String, String)</a> - Constructor for class org.eclipse.net4j.db.derby.<a href="org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html" title="class in org.eclipse.net4j.db.derby">EmbeddedDerbyAdapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLInStep.html#end()" class="member-name-link">end()</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLInStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInStep</a></dt>
+<dd>
+<div class="block">Completes the IN comparison and returns the enclosing fluent stage.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBTable.html#ensureField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)" class="member-name-link">ensureField(String, DBType, int, int, boolean)</a> - Method in interface org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)" class="member-name-link">ensureSchema(IDBSchema)</a> - Method in interface org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></dt>
@@ -1216,6 +1240,14 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html#from(int)" class="member-name-link">from(int)</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLParameterBinder.html" title="interface in org.eclipse.net4j.db.dml">SQLParameterBinder</a></dt>
 <dd>
 <div class="block">Repositions this cursor to a valid one-based parameter position.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectFromStep.html#from(org.eclipse.net4j.db.ddl.IDBTable.Provider,org.eclipse.net4j.db.ddl.IDBTable.Provider...)" class="member-name-link">from(IDBTable.Provider, IDBTable.Provider...)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectFromStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectFromStep</a></dt>
+<dd>
+<div class="block">Appends provider-supplied tables in order, resolving each provider immediately.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectProjectionStep.html#from(org.eclipse.net4j.db.ddl.IDBTable.Provider,org.eclipse.net4j.db.ddl.IDBTable.Provider...)" class="member-name-link">from(IDBTable.Provider, IDBTable.Provider...)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></dt>
+<dd>
+<div class="block">Adds provider-supplied tables in order, resolving each provider immediately.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectFromStep.html#from(org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.IDBTable...)" class="member-name-link">from(IDBTable, IDBTable...)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectFromStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectFromStep</a></dt>
 <dd>
@@ -1998,6 +2030,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBIndex.html#getTable()" class="member-name-link">getTable()</a> - Method in interface org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/ddl/IDBTable.Provider.html#getTable()" class="member-name-link">getTable()</a> - Method in interface org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a></dt>
+<dd>
+<div class="block">Returns the primary schema table.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQLTableRef.html#getTable()" class="member-name-link">getTable()</a> - Method in interface org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></dt>
 <dd>
 <div class="block">Returns the schema table represented by this occurrence.</div>
@@ -2343,6 +2379,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">A table specification in a <a href="org/eclipse/net4j/db/ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><code>DB schema</code></a>.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/ddl/IDBTable.Provider.html" class="type-name-link" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a> - Interface in <a href="org/eclipse/net4j/db/ddl/package-summary.html">org.eclipse.net4j.db.ddl</a></dt>
+<dd>
+<div class="block">Supplies one primary schema table to DML factory and fluent APIs.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" class="type-name-link" title="interface in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a> - Interface in <a href="org/eclipse/net4j/db/ddl/delta/package-summary.html">org.eclipse.net4j.db.ddl.delta</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#idField" class="member-name-link">idField</a> - Variable in class org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="class in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
@@ -2359,6 +2399,26 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#illegalChangeKind(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)" class="member-name-link">illegalChangeKind(IDBDelta.ChangeKind)</a> - Static method in class org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html" title="class in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Default</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLComparisonStep.html#in()" class="member-name-link">in()</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLComparisonStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLComparisonStep</a></dt>
+<dd>
+<div class="block">Starts an incomplete IN value list in this statement builder.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLComparisonStep.html#in(java.lang.Iterable)" class="member-name-link">in(Iterable&lt;? extends SQLExpression&gt;)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLComparisonStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLComparisonStep</a></dt>
+<dd>
+<div class="block">Adds an IN comparison by consuming the iterable once in iteration order.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#in(org.eclipse.net4j.db.dml.SQLExpression,java.lang.Iterable)" class="member-name-link">in(SQLExpression, Iterable&lt;? extends SQLExpression&gt;)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Creates an IN condition from a single traversal of the supplied iterable.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLComparisonStep.html#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">in(SQLExpression, SQLExpression...)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLComparisonStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLComparisonStep</a></dt>
+<dd>
+<div class="block">Adds an IN comparison using the supplied ordered expressions.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">in(SQLExpression, SQLExpression...)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Creates an IN condition over a snapshotted, non-empty ordered list of expressions.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/SQL.html#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">in(SQLExpression, SQLSubSelect)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
 <dd>
 <div class="block">Creates an IN condition whose values come from a complete SELECT definition.</div>
@@ -2382,6 +2442,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/SQL.html#insertInto(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">insertInto(IDBTable)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
 <dd>
 <div class="block">Begins an INSERT definition.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#insertInto(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">insertInto(IDBTable.Provider)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Begins an INSERT definition for the table supplied by the provider, resolving it immediately.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#insertRow()" class="member-name-link">insertRow()</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
@@ -2619,6 +2683,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Starts an INNER JOIN that must receive a complete condition or comparison through ON before it can be completed.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html#join(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">join(IDBTable.Provider)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectSourceStep</a></dt>
+<dd>
+<div class="block">Starts an INNER JOIN with the provider's table, resolved immediately.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html#join(org.eclipse.net4j.db.dml.SQLTableRef)" class="member-name-link">join(SQLTableRef)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectSourceStep</a></dt>
 <dd>
 <div class="block">Starts an INNER JOIN that must receive a complete condition or comparison through ON before it can be completed.</div>
@@ -2643,6 +2711,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html#leftJoin(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">leftJoin(IDBTable)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectSourceStep</a></dt>
 <dd>
 <div class="block">Starts a LEFT JOIN that must receive a complete condition or comparison through ON before it can be completed.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html#leftJoin(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">leftJoin(IDBTable.Provider)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectSourceStep</a></dt>
+<dd>
+<div class="block">Starts a LEFT JOIN with the provider's table, resolved immediately.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html#leftJoin(org.eclipse.net4j.db.dml.SQLTableRef)" class="member-name-link">leftJoin(SQLTableRef)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLSelectSourceStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectSourceStep</a></dt>
 <dd>
@@ -3622,6 +3694,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">An INSERT whose value list is complete.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/fluent/SQLInStep.html" class="type-name-link" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInStep&lt;NEXT&gt;</a> - Interface in <a href="org/eclipse/net4j/db/dml/fluent/package-summary.html">org.eclipse.net4j.db.dml.fluent</a></dt>
+<dd>
+<div class="block">An incomplete value list embedded in a fluent comparison stage.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html#sqlModifyField(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">sqlModifyField(String, String, String)</a> - Method in class org.eclipse.net4j.db.mysql.<a href="org/eclipse/net4j/db/mysql/MYSQLAdapter.html" title="class in org.eclipse.net4j.db.mysql">MYSQLAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#sqlModifyField(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">sqlModifyField(String, String, String)</a> - Method in class org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="class in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
@@ -3797,6 +3873,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Creates an unaliased occurrence of a schema table for use in a statement.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#table(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">table(IDBTable.Provider)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Creates an unaliased occurrence of the table supplied by the provider, resolving it immediately.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/dml/fluent/SQLFragmentStep.html#table(org.eclipse.net4j.db.dml.SQLTableRef)" class="member-name-link">table(SQLTableRef)</a> - Method in interface org.eclipse.net4j.db.dml.fluent.<a href="org/eclipse/net4j/db/dml/fluent/SQLFragmentStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLFragmentStep</a></dt>
 <dd>
 <div class="block">Appends a schema table identifier or table reference as a structured fragment part.</div>
@@ -3885,6 +3965,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/dml/SQL.html#update(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">update(IDBTable)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
 <dd>
 <div class="block">Begins an UPDATE definition for the supplied schema table.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/dml/SQL.html#update(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">update(IDBTable.Provider)</a> - Static method in class org.eclipse.net4j.db.dml.<a href="org/eclipse/net4j/db/dml/SQL.html" title="class in org.eclipse.net4j.db.dml">SQL</a></dt>
+<dd>
+<div class="block">Begins an UPDATE definition for the table supplied by the provider.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#updateArray(int,java.sql.Array)" class="member-name-link">updateArray(int, Array)</a> - Method in class org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="class in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>

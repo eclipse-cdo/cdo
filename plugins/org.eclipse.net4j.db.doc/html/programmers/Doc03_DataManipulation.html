@@ -52,6 +52,7 @@ function windowTitle()
 <tr><td></td><td>2.2&nbsp;</td><td class="te" colspan="4"><a href="Doc03_DataManipulation.html#InsertAndInsertSelect" title="Chapter in Net4j DB Framework Documentation">INSERT and INSERT SELECT</a></td></tr>
 <tr><td></td><td>2.3&nbsp;</td><td class="te" colspan="4"><a href="Doc03_DataManipulation.html#Update" title="Chapter in Net4j DB Framework Documentation">UPDATE</a></td></tr>
 <tr><td></td><td>2.4&nbsp;</td><td class="te" colspan="4"><a href="Doc03_DataManipulation.html#Delete" title="Chapter in Net4j DB Framework Documentation">DELETE</a></td></tr>
+<tr><td></td><td>2.5&nbsp;</td><td class="te" colspan="4"><a href="Doc03_DataManipulation.html#StructuredExpressionsAndProviders" title="Chapter in Net4j DB Framework Documentation">Structured Expressions, IN Lists, and Table Providers</a></td></tr>
 <tr><td>3&nbsp;</td><td class="te" colspan="5"><a href="Doc03_DataManipulation.html#QueriesAndComposition" title="Chapter in Net4j DB Framework Documentation">Queries and Composition</a></td></tr>
 <tr><td></td><td>3.1&nbsp;</td><td class="te" colspan="4"><a href="Doc03_DataManipulation.html#ConditionsAndOptionalFilters" title="Chapter in Net4j DB Framework Documentation">Conditions and Optional Filters</a></td></tr>
 <tr><td></td><td>3.2&nbsp;</td><td class="te" colspan="4"><a href="Doc03_DataManipulation.html#AliasesAndJoins" title="Chapter in Net4j DB Framework Documentation">Aliases and Joins</a></td></tr>
@@ -156,6 +157,13 @@ function windowTitle()
 <p>
  A DELETE may omit its WHERE clause and affect every row. Prefer an explicit restrictive condition when removing
  a single record, as this key-based example does.
+
+<h3><a name="StructuredExpressionsAndProviders"></a>2.5&nbsp;&nbsp;Structured Expressions, IN Lists, and Table Providers</h3>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ Use <a href="../../javadoc/org/eclipse/net4j/db/dml/SQL.html#abs(org.eclipse.net4j.db.dml.SQLExpression)" title="Method in org.eclipse.net4j.db.dml.SQL"><code>SQL.abs(SQLExpression)</code></a> for a structured absolute-value expression, and use the IN factories or
+ fluent value-list stage for ordered membership values. An IDBTable.Provider lets a domain wrapper
+ supply its primary schema table directly to DML construction; the table is resolved when the API call is made.
 
 <h2><a name="QueriesAndComposition"></a>3&nbsp;&nbsp;Queries and Composition</h2>
 <p class="author">Author: Eike Stepper</p>

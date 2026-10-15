@@ -50,6 +50,7 @@
         <topic label="IDBSchemaVisitor.Default" href="javadoc/org/eclipse/net4j/db/ddl/IDBSchemaVisitor.Default.html" icon="class" />
         <topic label="IDBSchemaVisitor.StopRecursion" href="javadoc/org/eclipse/net4j/db/ddl/IDBSchemaVisitor.StopRecursion.html" icon="class" />
         <topic label="IDBTable" href="javadoc/org/eclipse/net4j/db/ddl/IDBTable.html" icon="interface" />
+        <topic label="IDBTable.Provider" href="javadoc/org/eclipse/net4j/db/ddl/IDBTable.Provider.html" icon="interface" />
         <topic label="SchemaElementNotFoundException" href="javadoc/org/eclipse/net4j/db/ddl/SchemaElementNotFoundException.html" icon="class" />
       </topic>
       <topic label="org.eclipse.net4j.db.ddl.delta" href="javadoc/org/eclipse/net4j/db/ddl/delta/package-summary.html" icon="package">
@@ -102,6 +103,7 @@
         <topic label="SQLInsertSetStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInsertSetStep.html" icon="interface" />
         <topic label="SQLInsertStartStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInsertStartStep.html" icon="interface" />
         <topic label="SQLInsertValuesStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInsertValuesStep.html" icon="interface" />
+        <topic label="SQLInStep&lt;NEXT&gt;" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLInStep.html" icon="interface" />
         <topic label="SQLSelectBuildStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectBuildStep.html" icon="interface" />
         <topic label="SQLSelectFromStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectFromStep.html" icon="interface" />
         <topic label="SQLSelectGroupByStep" href="javadoc/org/eclipse/net4j/db/dml/fluent/SQLSelectGroupByStep.html" icon="interface" />
@@ -205,6 +207,7 @@
         <topic label="INSERT and INSERT SELECT" href="html/programmers/Doc03_DataManipulation.html#InsertAndInsertSelect" icon="chapter" />
         <topic label="UPDATE" href="html/programmers/Doc03_DataManipulation.html#Update" icon="chapter" />
         <topic label="DELETE" href="html/programmers/Doc03_DataManipulation.html#Delete" icon="chapter" />
+        <topic label="Structured Expressions, IN Lists, and Table Providers" href="html/programmers/Doc03_DataManipulation.html#StructuredExpressionsAndProviders" icon="chapter" />
       </topic>
       <topic label="Queries and Composition" href="html/programmers/Doc03_DataManipulation.html#QueriesAndComposition" icon="chapter">
         <topic label="Conditions and Optional Filters" href="html/programmers/Doc03_DataManipulation.html#ConditionsAndOptionalFilters" icon="chapter" />

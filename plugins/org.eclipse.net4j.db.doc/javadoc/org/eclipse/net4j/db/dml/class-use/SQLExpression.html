@@ -142,133 +142,35 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#add(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">add</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#abs(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">abs</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a binary addition expression.</div>
+<div class="block">Creates a structured absolute-value expression.</div>
 </div>
 <div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#avg(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">avg</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#add(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">add</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates an AVG aggregate over the supplied expression.</div>
+<div class="block">Creates a binary addition expression.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#count()" class="member-name-link">count</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#avg(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">avg</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Creates an AVG aggregate over the supplied expression.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#count()" class="member-name-link">count</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates the COUNT(*) aggregate.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#count(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">count</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#count(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">count</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Creates COUNT over the non-NULL values produced by the supplied expression.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#countDistinct(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">countDistinct</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#countDistinct(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">countDistinct</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates COUNT(DISTINCT expression).</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#divide(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">divide</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates a binary division expression.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#expression(org.eclipse.net4j.db.dml.SQLFragment)" class="member-name-link">expression</a><wbr>(<a href="../SQLFragment.html" title="interface in org.eclipse.net4j.db.dml">SQLFragment</a>&nbsp;fragment)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Wraps a structured fragment as an expression using the canonical factory.</div>
-</div>
-<div class="col-first odd-row-color"><code>default <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQLFragment.</span><code><a href="../SQLFragment.html#expression()" class="member-name-link">expression</a>()</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Wraps this fragment as an expression through the canonical SQL factory.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#literal(java.lang.Object)" class="member-name-link">literal</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates an expression from an explicit literal value.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#max(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">max</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates a MAX aggregate over the supplied expression.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#min(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">min</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a MIN aggregate over the supplied expression.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#multiply(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">multiply</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates a binary multiplication expression.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#scalar(org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">scalar</a><wbr>(<a href="../SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;query)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Uses a complete SELECT definition as a scalar expression.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#subtract(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">subtract</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates a binary subtraction expression.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#sum(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">sum</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a SUM aggregate over the supplied expression.</div>
-</div>
-</div>
-<div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.db.dml</a> with parameters of type <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#add(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">add</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a binary addition expression.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#as(org.eclipse.net4j.db.dml.SQLExpression,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Associates a result-column label with an expression in a projection.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLOrderItem.html" title="interface in org.eclipse.net4j.db.dml">SQLOrderItem</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#asc(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">asc</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Wraps an expression as an ascending ORDER BY item.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#avg(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">avg</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates an AVG aggregate over the supplied expression.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#between(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">between</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;lower,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;upper)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a BETWEEN condition with inclusive lower and upper bounds according to SQL semantics.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#count(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">count</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates COUNT over the non-NULL values produced by the supplied expression.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#countDistinct(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">countDistinct</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates COUNT(DISTINCT expression).</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLOrderItem.html" title="interface in org.eclipse.net4j.db.dml">SQLOrderItem</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#desc(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">desc</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Wraps an expression as a descending ORDER BY item.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#divide(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">divide</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
@@ -276,57 +178,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Creates a binary division expression.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#eq(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">eq</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#expression(org.eclipse.net4j.db.dml.SQLFragment)" class="member-name-link">expression</a><wbr>(<a href="../SQLFragment.html" title="interface in org.eclipse.net4j.db.dml">SQLFragment</a>&nbsp;fragment)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates an equality condition using ordinary SQL comparison semantics.</div>
+<div class="block">Wraps a structured fragment as an expression using the canonical factory.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#ge(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">ge</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-first even-row-color"><code>default <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLFragment.</span><code><a href="../SQLFragment.html#expression()" class="member-name-link">expression</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a greater-than-or-equal condition.</div>
+<div class="block">Wraps this fragment as an expression through the canonical SQL factory.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#gt(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">gt</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#literal(java.lang.Object)" class="member-name-link">literal</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates a greater-than condition.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">in</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
- <a href="../SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;subSelect)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates an IN condition whose values come from a complete SELECT definition.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#isNotNull(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">isNotNull</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates an IS NOT NULL condition.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#isNull(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">isNull</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates an IS NULL condition.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#le(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">le</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates a less-than-or-equal condition.</div>
-</div>
-<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#like(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">like</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Creates a LIKE condition.</div>
-</div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#lt(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">lt</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Creates a less-than condition.</div>
+<div class="block">Creates an expression from an explicit literal value.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#max(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">max</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
@@ -344,11 +209,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Creates a binary multiplication expression.</div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#ne(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">ne</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#scalar(org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">scalar</a><wbr>(<a href="../SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;query)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Creates an inequality condition.</div>
+<div class="block">Uses a complete SELECT definition as a scalar expression.</div>
 </div>
 <div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#subtract(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">subtract</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
@@ -362,6 +226,176 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a SUM aggregate over the supplied expression.</div>
 </div>
 </div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.db.dml</a> with parameters of type <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#abs(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">abs</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a structured absolute-value expression.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#add(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">add</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a binary addition expression.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#as(org.eclipse.net4j.db.dml.SQLExpression,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Associates a result-column label with an expression in a projection.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLOrderItem.html" title="interface in org.eclipse.net4j.db.dml">SQLOrderItem</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#asc(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">asc</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Wraps an expression as an ascending ORDER BY item.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#avg(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">avg</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an AVG aggregate over the supplied expression.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#between(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">between</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;lower,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;upper)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a BETWEEN condition with inclusive lower and upper bounds according to SQL semantics.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#count(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">count</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates COUNT over the non-NULL values produced by the supplied expression.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#countDistinct(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">countDistinct</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates COUNT(DISTINCT expression).</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLOrderItem.html" title="interface in org.eclipse.net4j.db.dml">SQLOrderItem</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#desc(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">desc</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Wraps an expression as a descending ORDER BY item.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#divide(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">divide</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a binary division expression.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#eq(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">eq</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an equality condition using ordinary SQL comparison semantics.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#ge(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">ge</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a greater-than-or-equal condition.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#gt(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">gt</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a greater-than condition.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#in(org.eclipse.net4j.db.dml.SQLExpression,java.lang.Iterable)" class="member-name-link">in</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&gt;&nbsp;values)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates an IN condition from a single traversal of the supplied iterable.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">in</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>...&nbsp;values)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an IN condition over a snapshotted, non-empty ordered list of expressions.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLSubSelect)" class="member-name-link">in</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
+ <a href="../SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;subSelect)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates an IN condition whose values come from a complete SELECT definition.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#isNotNull(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">isNotNull</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an IS NOT NULL condition.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#isNull(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">isNull</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates an IS NULL condition.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#le(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">le</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a less-than-or-equal condition.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#like(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">like</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a LIKE condition.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#lt(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">lt</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a less-than condition.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#max(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">max</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a MAX aggregate over the supplied expression.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#min(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">min</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a MIN aggregate over the supplied expression.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#multiply(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">multiply</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a binary multiplication expression.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#ne(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">ne</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an inequality condition.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#subtract(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">subtract</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a binary subtraction expression.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#sum(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">sum</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates a SUM aggregate over the supplied expression.</div>
+</div>
+</div>
+<div class="caption"><span>Method parameters in <a href="../package-summary.html">org.eclipse.net4j.db.dml</a> with type arguments of type <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#in(org.eclipse.net4j.db.dml.SQLExpression,java.lang.Iterable)" class="member-name-link">in</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&gt;&nbsp;values)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an IN condition from a single traversal of the supplied iterable.</div>
+</div>
+</div>
 </section>
 </li>
 <li>
@@ -372,53 +406,64 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLComparisonStep</a><wbr>&lt;<a href="../fluent/SQLConditionStep.html" title="type parameter in SQLConditionStep">NEXT</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQLConditionStep.</span><code><a href="../fluent/SQLConditionStep.html#and(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">and</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left)</code></div>
+<div class="col-first even-row-color"><code><a href="../fluent/SQLInStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInStep</a><wbr>&lt;<a href="../fluent/SQLInStep.html" title="type parameter in SQLInStep">NEXT</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLInStep.</span><code><a href="../fluent/SQLInStep.html#add(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">add</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Appends one expression to the IN value list.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLComparisonStep</a><wbr>&lt;<a href="../fluent/SQLConditionStep.html" title="type parameter in SQLConditionStep">NEXT</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLConditionStep.</span><code><a href="../fluent/SQLConditionStep.html#and(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">and</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Begins a comparison in this clause joined with AND.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#between(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">between</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;lower,
+<div class="col-first even-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#between(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">between</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;lower,
  <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;upper)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Adds a BETWEEN comparison with the supplied lower and upper expressions.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#eq(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">eq</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#eq(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">eq</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Adds an equality comparison between the left expression supplied to this stage and the right expression.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../fluent/SQLFragmentStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLFragmentStep</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQLFragmentStep.</span><code><a href="../fluent/SQLFragmentStep.html#expression(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">expression</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="../fluent/SQLFragmentStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLFragmentStep</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLFragmentStep.</span><code><a href="../fluent/SQLFragmentStep.html#expression(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">expression</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Appends a typed SQL expression as a fragment part.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#ge(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">ge</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#ge(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">ge</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Adds a greater-than-or-equal comparison between the left expression supplied to this stage and the right expression.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../fluent/SQLSelectGroupByStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectGroupByStep</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQLSelectSourceStep.</span><code><a href="../fluent/SQLSelectSourceStep.html#groupBy(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">groupBy</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;first,
- <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>...&nbsp;others)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Adds the ordered expressions used to group the SELECT result.</div>
-</div>
 <div class="col-first even-row-color"><code><a href="../fluent/SQLSelectGroupByStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectGroupByStep</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQLSelectWhereStep.</span><code><a href="../fluent/SQLSelectWhereStep.html#groupBy(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">groupBy</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;first,
+<div class="col-second even-row-color"><span class="type-name-label">SQLSelectSourceStep.</span><code><a href="../fluent/SQLSelectSourceStep.html#groupBy(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">groupBy</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;first,
  <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>...&nbsp;others)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Adds the ordered expressions used to group the SELECT result.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#gt(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">gt</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-first odd-row-color"><code><a href="../fluent/SQLSelectGroupByStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectGroupByStep</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLSelectWhereStep.</span><code><a href="../fluent/SQLSelectWhereStep.html#groupBy(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">groupBy</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;first,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>...&nbsp;others)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Adds the ordered expressions used to group the SELECT result.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#gt(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">gt</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Adds a greater-than comparison between the left expression supplied to this stage and the right expression.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLComparisonStep</a><wbr>&lt;<a href="../fluent/SQLSelectHavingStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectHavingStep</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQLSelectGroupByStep.</span><code><a href="../fluent/SQLSelectGroupByStep.html#having(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">having</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLComparisonStep</a><wbr>&lt;<a href="../fluent/SQLSelectHavingStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectHavingStep</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLSelectGroupByStep.</span><code><a href="../fluent/SQLSelectGroupByStep.html#having(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">having</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Supplies a complete reusable HAVING condition or begins a comparison.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" class="member-name-link">in</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;first,
+ <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>...&nbsp;others)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Adds an IN comparison using the supplied ordered expressions.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#le(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">le</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</code></div>
@@ -511,6 +556,22 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">SQLUpdateSetStep.</span><code><a href="../fluent/SQLUpdateSetStep.html#where(org.eclipse.net4j.db.dml.SQLExpression)" class="member-name-link">where</a><wbr>(<a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Supplies a complete WHERE condition or begins a comparison that must be completed before the clause stage is available.</div>
+</div>
+</div>
+<div class="caption"><span>Method parameters in <a href="../fluent/package-summary.html">org.eclipse.net4j.db.dml.fluent</a> with type arguments of type <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../fluent/SQLInStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInStep</a><wbr>&lt;<a href="../fluent/SQLInStep.html" title="type parameter in SQLInStep">NEXT</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLInStep.</span><code><a href="../fluent/SQLInStep.html#addAll(java.lang.Iterable)" class="member-name-link">addAll</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&gt;&nbsp;values)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Appends expressions from one traversal of the iterable, preserving its iteration order.</div>
+</div>
+<div class="col-first odd-row-color"><code><a href="../fluent/SQLComparisonStep.html" title="type parameter in SQLComparisonStep">NEXT</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQLComparisonStep.</span><code><a href="../fluent/SQLComparisonStep.html#in(java.lang.Iterable)" class="member-name-link">in</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&gt;&nbsp;values)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Adds an IN comparison by consuming the iterable once in iteration order.</div>
 </div>
 </div>
 </section>

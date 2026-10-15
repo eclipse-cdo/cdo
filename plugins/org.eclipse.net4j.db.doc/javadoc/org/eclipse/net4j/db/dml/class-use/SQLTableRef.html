@@ -96,20 +96,31 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static <a href="../SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#as(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="../../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#as(org.eclipse.net4j.db.ddl.IDBTable.Provider,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="../../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Creates an aliased occurrence of the table supplied by the provider, resolving it immediately.</div>
+</div>
+<div class="col-first odd-row-color"><code>static <a href="../SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#as(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="../../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates a table occurrence with a SQL alias.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">SQLColumnRef.</span><code><a href="../SQLColumnRef.html#getTableRef()" class="member-name-link">getTableRef</a>()</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code><a href="../SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQLColumnRef.</span><code><a href="../SQLColumnRef.html#getTableRef()" class="member-name-link">getTableRef</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns the qualifying table occurrence, or <code>null</code> for an unqualified column.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#table(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">table</a><wbr>(<a href="../../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static <a href="../SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#table(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">table</a><wbr>(<a href="../../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates an unaliased occurrence of a schema table for use in a statement.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">SQL.</span><code><a href="../SQL.html#table(org.eclipse.net4j.db.ddl.IDBTable.Provider)" class="member-name-link">table</a><wbr>(<a href="../../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an unaliased occurrence of the table supplied by the provider, resolving it immediately.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.db.dml</a> with parameters of type <a href="../SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></span></div>

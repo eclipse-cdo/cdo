@@ -270,7 +270,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
         if (revision.getValue(feature) == null)
         {
           sqlInsertAttributes.bindParameter(stmt, isSetCol++, false);
-          sqlInsertAttributes.bindParameter(stmt, column++, null, mapping);
+          sqlInsertAttributes.bindDefault(stmt, column++, mapping);
           continue;
         }
 

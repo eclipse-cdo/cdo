@@ -102,7 +102,6 @@ function maximize(id)
 
 
 <h2><a name="SchemaModel"></a>1&nbsp;&nbsp;Standalone and Managed Schema Models</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> creates an independent, mutable metadata model. It is appropriate for
  defining an application's desired tables before opening a database. <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.readSchema(IDBAdapter,
@@ -160,7 +159,6 @@ function maximize(id)
 
 
 <h2><a name="TablesFieldsAndIndexes"></a>2&nbsp;&nbsp;Tables, Fields, Indexes, and Types</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A table owns ordered fields and indexes. A field records a logical <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>, precision, scale, and
  nullability. An index records its kind (primary key, unique, or non-unique) and ordered fields. The model checks
@@ -176,7 +174,6 @@ function maximize(id)
  A model-level index does not itself create or verify a physical index.
 
 <h2><a name="SchemaInspectionAndComparison"></a>3&nbsp;&nbsp;Creating, Reading, and Comparing Schemas</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,javax.sql.DataSource)" title="Method in org.eclipse.net4j.db.ddl.IDBSchema"><code>IDBSchema.create(IDBAdapter, DataSource)</code></a> delegates creation to the adapter. The overloads accepting a
  JDBC connection or IDBConnectionProvider let the caller choose resource ownership. Creation returns the
@@ -233,7 +230,6 @@ function maximize(id)
 
 
 <h2><a name="SchemaTransactions"></a>4&nbsp;&nbsp;Schema Transactions and Working Copies</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.openSchemaTransaction()</code></a> snapshots the current managed schema into a working copy. Edit the
  copy, inspect <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#getSchemaDelta()" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.getSchemaDelta()</code></a>, and commit the transaction to invoke the adapter's
@@ -325,7 +321,6 @@ function maximize(id)
 
 
 <h2><a name="EnsureAndMigrationPolicies"></a>5&nbsp;&nbsp;Ensure Policies and Migration Review</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.ensureSchema(IDBSchema)</code></a> compares a desired model with the transaction's working
  copy, filters the delta under a policy, copies allowed changes, applies them to the working copy, and returns the
@@ -342,7 +337,6 @@ function maximize(id)
  <a href="Doc01_GeneralUtilities.html#SchemaAccessAndCaching" title="Chapter in Net4j DB Framework Documentation">Coordinated Schema Access and Statement Caches</a>.
 
 <h2><a name="DDLBoundaries"></a>6&nbsp;&nbsp;Limitations and Failure Boundaries</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Adapter support determines how table creation, field alterations, indexes, and drops are rendered. The physical
  database determines accepted syntax, DDL transaction behavior, locking, and preservation of data. Net4j DB's

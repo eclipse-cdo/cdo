@@ -67,8 +67,6 @@ public class Doc03_DataManipulation
    * <p>
    * Structured DML separates statement shape from values and connection state. This makes definitions composable and
    * reusable while leaving connection ownership and transaction boundaries with the application.
-   *
-   * @author Eike Stepper
    */
   public class Introduction
   {
@@ -85,8 +83,6 @@ public class Doc03_DataManipulation
      * interfaces in {@code org.eclipse.net4j.db.dml.fluent} expose the next legal operation. Builders are mutable
      * while assembled, but an earlier stage becomes stale after advancing. Each call to {@code build()} captures its
      * own snapshot, so later valid changes do not rewrite an earlier template.
-     *
-     * @author Eike Stepper
      */
     public class ConceptsAndArchitecture
     {
@@ -103,8 +99,6 @@ public class Doc03_DataManipulation
      * Binding calls can change some JDBC positions before a later converter or setter fails. Net4j DB validates
      * structural ranges before starting a sequence, but it cannot undo JDBC side effects already performed by an
      * earlier binding operation. Transaction rollback remains the application's responsibility.
-     *
-     * @author Eike Stepper
      */
     public class DMLLifecycle
     {
@@ -119,8 +113,6 @@ public class Doc03_DataManipulation
      * honored during binding. Default NULL binding is a later phase: when an inferred type is known, the adapter
      * selects the JDBC NULL code through {@code getJDBCTypeForNull()}. Compilation cannot translate vendor-specific
      * raw fragment text into another dialect. The same template can be compiled for another adapter.
-     *
-     * @author Eike Stepper
      */
     public class DefinitionsTemplatesAndCompilation
     {
@@ -132,8 +124,6 @@ public class Doc03_DataManipulation
    * <p>
    * The statement builders cover common SELECT and data-change forms. Keep values as parameters and represent tables
    * and columns with schema metadata so the compiler can render identifiers for the selected adapter.
-   *
-   * @author Eike Stepper
    */
   public class BasicStatements
   {
@@ -144,8 +134,6 @@ public class Doc03_DataManipulation
      * closes both managed resources. The returned statement can be prepared again for another lookup.
      * <p>
      * {@link #findCustomers(IDBAdapter, IDBConnection, IDBTable, IDBField) FindCustomers.java}
-     *
-     * @author Eike Stepper
      */
     public class Select
     {
@@ -185,8 +173,6 @@ public class Doc03_DataManipulation
      * The examples insert a customer row and copy selected orders for one customer:
      * {@link #insertCustomer(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) InsertCustomer.java}
      * {@link #copyOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, IDBTable, IDBField, IDBField) CopyOrders.java}
-     *
-     * @author Eike Stepper
      */
     public class InsertAndInsertSelect
     {
@@ -246,8 +232,6 @@ public class Doc03_DataManipulation
      * bound in rendered occurrence order: the new status first, then the order key.
      * <p>
      * {@link #updateOrderStatus(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) UpdateOrderStatus.java}
-     *
-     * @author Eike Stepper
      */
     public class Update
     {
@@ -283,8 +267,6 @@ public class Doc03_DataManipulation
      * a single record, as this key-based example does.
      * <p>
      * {@link #deleteOrder(IDBAdapter, IDBConnection, IDBTable, IDBField) DeleteOrder.java}
-     *
-     * @author Eike Stepper
      */
     public class Delete
     {
@@ -326,8 +308,6 @@ public class Doc03_DataManipulation
      * {@link #selectForRevisions(IDBAdapter, IDBTable, IDBField, Iterable) SelectForRevisions.java}
      * {@link #selectForRevisionsIncrementally(IDBAdapter, IDBTable, IDBField, Iterable) SelectForRevisionsIncrementally.java}
      * {@link #selectFromProvider(IDBAdapter, IDBTable.Provider, IDBField) SelectFromProvider.java}
-     *
-     * @author Eike Stepper
      */
     public class StructuredExpressionsAndProviders
     {
@@ -409,8 +389,6 @@ public class Doc03_DataManipulation
    * <p>
    * Conditions, table references, subqueries, and fragments allow a query to be assembled from reusable parts.
    * Structured elements retain metadata for rendering and binding; raw fragment text remains opaque to the compiler.
-   *
-   * @author Eike Stepper
    */
   public class QueriesAndComposition
   {
@@ -422,8 +400,6 @@ public class Doc03_DataManipulation
      * conditions, and add optional predicates only when their values are part of the request.
      * <p>
      * {@link #findOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, boolean) FindOrders.java}
-     *
-     * @author Eike Stepper
      */
     public class ConditionsAndOptionalFilters
     {
@@ -478,8 +454,6 @@ public class Doc03_DataManipulation
      * source columns in joins; aliases on projected expressions label output values instead.
      * <p>
      * {@link #customerOrderJoin(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBTable, IDBField) CustomerOrderJoin.java}
-     *
-     * @author Eike Stepper
      */
     public class AliasesAndJoins
     {
@@ -518,8 +492,6 @@ public class Doc03_DataManipulation
      * dialect and adapter.
      * <p>
      * {@link #summarizeOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) SummarizeOrders.java}
-     *
-     * @author Eike Stepper
      */
     public class AggregatesGroupingAndHaving
     {
@@ -560,8 +532,6 @@ public class Doc03_DataManipulation
      * the structured API can express the required shape.
      * <p>
      * {@link #customersWithOpenOrders(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBTable, IDBField, IDBField) CustomersWithOpenOrders.java}
-     *
-     * @author Eike Stepper
      */
     public class Subqueries
     {
@@ -606,8 +576,6 @@ public class Doc03_DataManipulation
      * JDBC indexes.
      * <p>
      * {@link #searchByNameFragment(IDBAdapter, IDBConnection, IDBTable, IDBField) SearchByNameFragment.java}
-     *
-     * @author Eike Stepper
      */
     public class SQLFragments
     {
@@ -648,8 +616,6 @@ public class Doc03_DataManipulation
    * A logical parameter is a reusable identity in a definition; compilation creates one occurrence record for each
    * place it appears in rendered SQL. The occurrence supplies the physical JDBC index and any type inferred from its
    * local context. Binding APIs address values by JDBC order, JDBC index, or logical identity.
-   *
-   * @author Eike Stepper
    */
   public class ParameterBinding
   {
@@ -659,8 +625,6 @@ public class Doc03_DataManipulation
      * Sequential calls bind occurrence order. Indexed calls address one physical placeholder. Identity calls find all
      * occurrences of the same {@link SQLParameter} object. These choices matter when a logical parameter is reused in
      * different field contexts, because each physical occurrence can infer a different {@link DBType}.
-     *
-     * @author Eike Stepper
      */
     public class Fundamentals
     {
@@ -671,8 +635,6 @@ public class Doc03_DataManipulation
        * creates two occurrences with separate JDBC indexes. A field comparison or field assignment may let the
        * compiler infer a type for an occurrence. That type belongs to the occurrence, not to the logical parameter;
        * the same identity can therefore have a VARCHAR occurrence and an INTEGER occurrence.
-       *
-       * @author Eike Stepper
        */
       public class ParametersAndOccurrences
       {
@@ -687,8 +649,6 @@ public class Doc03_DataManipulation
        * <p>
        * {@link #bindPositionalParameters(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindPositionalParameters.java}
        * {@link #bindRepeatedParameter(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindRepeatedParameter.java}
-       *
-       * @author Eike Stepper
        */
       public class PositionalAndIdentityBinding
       {
@@ -748,8 +708,6 @@ public class Doc03_DataManipulation
        * {@link #bindFromPosition(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, IDBField) BindFromPosition.java}
        * {@link #bindWithCursor(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindWithCursor.java}
        * {@link #navigateBindingCursor(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField, IDBField, IDBField) NavigateBindingCursor.java}
-       *
-       * @author Eike Stepper
        */
       public class SequentialAndCursorBinding
       {
@@ -859,8 +817,6 @@ public class Doc03_DataManipulation
      * such as a direct field comparison, BETWEEN bound, or INSERT/UPDATE assignment. Arbitrary expressions,
      * projections, and raw fragment tokens may not provide enough context. Explicit JDBC types can handle NULL where
      * inference is unavailable.
-     *
-     * @author Eike Stepper
      */
     public class TypesAndDefaultBinding
     {
@@ -871,8 +827,6 @@ public class Doc03_DataManipulation
        * with a field inherits that field's {@link DBType}. BETWEEN uses the known field for both bounds. A parameter
        * in an arbitrary projection or a fragment does not necessarily have an inferable type. For an untyped NULL,
        * structured binding rejects the value if no occurrence type is available.
-       *
-       * @author Eike Stepper
        */
       public class DBTypeInference
       {
@@ -907,8 +861,6 @@ public class Doc03_DataManipulation
         * <p>
         * The example binds NULL using the field-derived type:
         * {@link #bindInferredNull(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindInferredNull.java}
-       *
-       * @author Eike Stepper
        */
       public class DefaultJDBCSetters
       {
@@ -941,8 +893,6 @@ public class Doc03_DataManipulation
        * when the complete binding operation must use that JDBC method.
        * <p>
        * {@link #bindExplicitlyTypedNull(IDBAdapter, IDBConnection, IDBTable) BindExplicitlyTypedNull.java}
-       *
-       * @author Eike Stepper
        */
       public class NullAndExplicitJDBCTypes
       {
@@ -974,8 +924,6 @@ public class Doc03_DataManipulation
      * one operation. The diagram shows how {@code CompiledStatement} resolves those strategies before default binding.
      * <p>
      * {@image binding-strategy-resolution.svg}
-     *
-     * @author Eike Stepper
      */
     public class CustomBindingStrategies
     {
@@ -989,8 +937,6 @@ public class Doc03_DataManipulation
        * The first example configures a converter; the second overrides it for one binding call:
        * {@link #bindConvertedValue(IDBAdapter, IDBConnection, IDBTable, IDBField) BindConvertedValue.java}
        * {@link #overrideValueConverter(IDBAdapter, IDBConnection, IDBTable, IDBField) OverrideValueConverter.java}
-       *
-       * @author Eike Stepper
        */
       public class ValueConverters
       {
@@ -1045,8 +991,6 @@ public class Doc03_DataManipulation
        * One example configures {@code setBytes()} for a BLOB field; the other supplies a setter for a single call:
        * {@link #bindWithConfiguredSetter(IDBAdapter, IDBConnection, IDBTable, IDBField, byte[]) BindWithConfiguredSetter.java}
        * {@link #overrideValueSetter(IDBAdapter, IDBConnection, IDBTable, IDBField) OverrideValueSetter.java}
-       *
-       * @author Eike Stepper
        */
       public class SQLValueSetters
       {
@@ -1113,8 +1057,6 @@ public class Doc03_DataManipulation
        * </table>
        * An explicit converter therefore overrides a configured setter for that call, while a call-specific setter
        * overrides both. Explicit JDBC types apply only when a setter has not already handled the value.
-       *
-       * @author Eike Stepper
        */
       public class OverridesAndPrecedence
       {
@@ -1131,8 +1073,6 @@ public class Doc03_DataManipulation
        * The examples use a binder cursor and parameter identity to apply implementation-defined defaults:
        * {@link #bindImplementationDefault(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindImplementationDefault.java}
        * {@link #bindDefaultByIdentity(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindDefaultByIdentity.java}
-       *
-       * @author Eike Stepper
        */
       public class SQLDefaultSetters
       {
@@ -1190,8 +1130,6 @@ public class Doc03_DataManipulation
    * is deliberately generic for independent implementations. {@code DBAdapter} supplies a typed implementation and
    * protected per-setter extension points for adapters that need to change one JDBC operation without replacing the
    * type-dispatch algorithm.
-   *
-   * @author Eike Stepper
    */
   public class DBAdapterCustomization
   {
@@ -1211,8 +1149,6 @@ public class Doc03_DataManipulation
      * unknown-type NULL and the opt-in Java-type fallback for unknown non-NULL values.
      * <p>
      * {@image default-jdbc-parameter-binding.svg}
-     *
-     * @author Eike Stepper
      */
     public class DefaultBindingArchitecture
     {
@@ -1247,8 +1183,6 @@ public class Doc03_DataManipulation
      * level. Structured DML separately rejects unknown untyped NULL before delegation.
      * <p>
      * {@link #bindUnknownParameterType(IDBConnection, IDBTable) BindUnknownParameterType.java}
-     *
-     * @author Eike Stepper
      */
     public class UnknownParameterTypes
     {
@@ -1320,8 +1254,6 @@ public class Doc03_DataManipulation
      * <tr><td>{@code bindParameterObject}</td><td>{@code setObject(index, value)}</td></tr>
      * <tr><td>{@code bindParameterNull}</td><td>{@code setNull(index, getJDBCTypeForNull(type))}</td></tr>
      * </table>
-     *
-     * @author Eike Stepper
      */
     public class ProtectedBindingExtensionPoints
     {
@@ -1360,8 +1292,6 @@ public class Doc03_DataManipulation
    * Reuse the adapter-neutral template or compiled statement across operations. Prepare and close a managed JDBC
    * statement for each checkout so its connection can return the statement to its cache and release associated
    * resources.
-   *
-   * @author Eike Stepper
    */
   public class StatementLifecycleAndReuse
   {
@@ -1371,8 +1301,6 @@ public class Doc03_DataManipulation
      * A template captures the builder's immutable definition. The adapter-specific compiled statement retains its SQL
      * and occurrence metadata, but no connection or prepared statement. Reuse either definition for repeated
      * executions.
-     *
-     * @author Eike Stepper
      */
     public class TemplatesAndCompiledStatements
     {
@@ -1384,8 +1312,6 @@ public class Doc03_DataManipulation
      * Preparing checks out a connection-bound managed statement. Use try-with-resources for that statement and any
      * result set. The connection's cache may reuse the JDBC object after close; {@link ReuseProbability} is a cache
      * hint and does not guarantee object identity.
-     *
-     * @author Eike Stepper
      */
     public class PreparingExecutingAndClosing
     {
@@ -1400,8 +1326,6 @@ public class Doc03_DataManipulation
      * earlier JDBC side effects.
      * <p>
      * {@link #repeatCustomerLookup(IDBAdapter, IDBConnection, IDBTable, IDBField) RepeatCustomerLookup.java}
-     *
-     * @author Eike Stepper
      */
     public class PartialBindingAndStatementReuse
     {
@@ -1445,8 +1369,6 @@ public class Doc03_DataManipulation
    * rows to objects, infer every parameter type through arbitrary expression trees, or generate DDL. SQL syntax and
    * join support remain bounded by the adapter and target database. Keep portable portions structured and isolate
    * vendor-specific syntax where it is needed.
-   *
-   * @author Eike Stepper
    */
   public class PortabilityAndLimitations
   {

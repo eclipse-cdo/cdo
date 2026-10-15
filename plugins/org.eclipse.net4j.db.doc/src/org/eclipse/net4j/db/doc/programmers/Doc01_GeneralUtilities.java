@@ -73,8 +73,6 @@ public class Doc01_GeneralUtilities
    * Follow the lower path for query execution: schema-backed expressions are captured in a template, compiled by the
    * adapter, and prepared through a managed connection. The upper path shows that the same database instance owns
    * the managed schema snapshot and connection population, while each connection retains its own statement cache.
-   *
-   * @author Eike Stepper
    */
   public class Architecture
   {
@@ -125,8 +123,6 @@ public class Doc01_GeneralUtilities
    * <p>
    * The following example retrieves the adapter for a given adapter name:
    * {@link #resolveAdapter(Connection) ResolveAdapter.java}
-   *
-   * @author Eike Stepper
    */
   public class AdaptersAndDatabases
   {
@@ -186,8 +182,6 @@ public class Doc01_GeneralUtilities
    * <p>
    * The following example executes and commits a customer update before closing its statement and managed
    * connection: {@link #updateCustomer(IDBDatabase, String) UpdateCustomer.java}.
-   *
-   * @author Eike Stepper
    */
   public class ManagedSchemasAndConnections
   {
@@ -269,8 +263,6 @@ public class Doc01_GeneralUtilities
    * <p>
    * The following example illustrates how a query statement execution is coordinated with a schema change:
    * {@link #coordinateStatementAndSchemaChange(IDBDatabase, IDBAdapter) CoordinateStatementAndSchemaChange.java}
-   *
-   * @author Eike Stepper
    */
   public class SchemaAccessAndCaching
   {
@@ -338,8 +330,6 @@ public class Doc01_GeneralUtilities
    * connection acquisition, prepare/bind, SQL execution, DDL update, coordination timeout, or commit. If schema
    * completion fails, do not infer the physical database state solely from the in-memory model or event; inspect the
    * target database using its supported tooling and adapter behavior.
-   *
-   * @author Eike Stepper
    */
   public class LifecycleAndFailures
   {
@@ -355,8 +345,6 @@ public class Doc01_GeneralUtilities
    * use a managed database instance. {@link DBType} represents Net4j's logical SQL types; adapters decide how those
    * types map to a particular database. The current structured DML API is described in
    * {@link Doc03_DataManipulation}.
-   *
-   * @author Eike Stepper
    */
   public class Utilities
   {

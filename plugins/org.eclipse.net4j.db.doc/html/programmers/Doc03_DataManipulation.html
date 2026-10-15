@@ -137,13 +137,11 @@ function maximize(id)
 
 
 <h2><a name="Introduction"></a>1&nbsp;&nbsp;Introduction</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Structured DML separates statement shape from values and connection state. This makes definitions composable and
  reusable while leaving connection ownership and transaction boundaries with the application.
 
 <h3><a name="ConceptsAndArchitecture"></a>1.1&nbsp;&nbsp;Concepts and Architecture</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  <a href="../../javadoc/org/eclipse/net4j/db/dml/SQL.html" title="Class in org.eclipse.net4j.db.dml"><code>SQL</code></a> creates expressions, conditions, fragments, parameters, and statement builders. An
  <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLTemplate.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLTemplate</code></a> is the immutable adapter-neutral definition captured by build(). Compiling it with
@@ -157,7 +155,6 @@ function maximize(id)
  own snapshot, so later valid changes do not rewrite an earlier template.
 
 <h3><a name="DMLLifecycle"></a>1.2&nbsp;&nbsp;The DML Lifecycle</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A typical operation creates a template from schema objects, compiles it once for the selected adapter,
  prepares it on a managed connection, binds all required values, executes it, and closes the result set and
@@ -169,7 +166,6 @@ function maximize(id)
  earlier binding operation. Transaction rollback remains the application's responsibility.
 
 <h3><a name="DefinitionsTemplatesAndCompilation"></a>1.3&nbsp;&nbsp;Definitions, Templates, and Compilation</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Build a <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLTemplate.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLTemplate</code></a> without selecting a database connection. Compilation uses the adapter for SQL
  rendering and identifier quoting, and records an inferred <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a> for each parameter occurrence when its
@@ -179,13 +175,11 @@ function maximize(id)
  raw fragment text into another dialect. The same template can be compiled for another adapter.
 
 <h2><a name="BasicStatements"></a>2&nbsp;&nbsp;Basic Statements</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  The statement builders cover common SELECT and data-change forms. Keep values as parameters and represent tables
  and columns with schema metadata so the compiler can render identifiers for the selected adapter.
 
 <h3><a name="Select"></a>2.1&nbsp;&nbsp;SELECT</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A SELECT projects fields or expressions. The example compiles a key lookup, binds the key, executes it, and
  closes both managed resources. The returned statement can be prepared again for another lookup.
@@ -238,7 +232,6 @@ function maximize(id)
 
 
 <h3><a name="InsertAndInsertSelect"></a>2.2&nbsp;&nbsp;INSERT and INSERT SELECT</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  An explicit column list pairs each value with its named destination column. INSERT SELECT instead copies a
  query result into the target table; parameters in the SELECT remain ordinary compiled occurrences.
@@ -333,7 +326,6 @@ function maximize(id)
 
 
 <h3><a name="Update"></a>2.3&nbsp;&nbsp;UPDATE</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  An UPDATE names assigned fields in set() and limits affected rows with where(). The values are
  bound in rendered occurrence order: the new status first, then the order key.
@@ -384,7 +376,6 @@ function maximize(id)
 
 
 <h3><a name="Delete"></a>2.4&nbsp;&nbsp;DELETE</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A DELETE may omit its WHERE clause and affect every row. Prefer an explicit restrictive condition when removing
  a single record, as this key-based example does.
@@ -434,7 +425,6 @@ function maximize(id)
 
 
 <h3><a name="StructuredExpressionsAndProviders"></a>2.5&nbsp;&nbsp;Structured Expressions, IN Lists, and Table Providers</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Use <a href="../../javadoc/org/eclipse/net4j/db/dml/SQL.html#abs(org.eclipse.net4j.db.dml.SQLExpression)" title="Method in org.eclipse.net4j.db.dml.SQL"><code>SQL.abs(SQLExpression)</code></a> for a structured absolute-value expression, and use the IN factories or
  fluent value-list stage for ordered membership values. An IDBTable.Provider lets a domain wrapper
@@ -604,13 +594,11 @@ function maximize(id)
 
 
 <h2><a name="QueriesAndComposition"></a>3&nbsp;&nbsp;Queries and Composition</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Conditions, table references, subqueries, and fragments allow a query to be assembled from reusable parts.
  Structured elements retain metadata for rendering and binding; raw fragment text remains opaque to the compiler.
 
 <h3><a name="ConditionsAndOptionalFilters"></a>3.1&nbsp;&nbsp;Conditions and Optional Filters</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Conditions are immutable values that can be named and combined before attaching them to a WHERE stage. The
  final condition tree determines SQL order and therefore positional binding order. Build only complete
@@ -680,7 +668,6 @@ function maximize(id)
 
 
 <h3><a name="AliasesAndJoins"></a>3.2&nbsp;&nbsp;Aliases and Joins</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLTableRef.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLTableRef</code></a> represents one occurrence of a table and can qualify its columns. Table aliases distinguish
  source columns in joins; aliases on projected expressions label output values instead.
@@ -732,7 +719,6 @@ function maximize(id)
 
 
 <h3><a name="AggregatesGroupingAndHaving"></a>3.3&nbsp;&nbsp;Aggregates, Grouping, and HAVING</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Aggregate expressions can be projected and used in HAVING. This query groups orders by status and applies a
  parameterized minimum count after grouping. Aggregate and grouping support still depends on the target SQL
@@ -788,7 +774,6 @@ function maximize(id)
 
 
 <h3><a name="Subqueries"></a>3.4&nbsp;&nbsp;Subqueries</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A complete SELECT can be converted to <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLSubSelect.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLSubSelect</code></a> and used in supported IN, EXISTS, or scalar contexts.
  Its parameters join the outer statement's rendered occurrence order. A subquery is preferable to raw SQL when
@@ -846,7 +831,6 @@ function maximize(id)
 
 
 <h3><a name="SQLFragments"></a>3.5&nbsp;&nbsp;SQL Fragments</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Fragments fill a gap when a query shape is not represented by the structured builders. Keep tables, columns,
  and parameter tokens structured inside a fragment. Raw text is neither parsed nor escaped, and must not contain
@@ -904,21 +888,18 @@ function maximize(id)
 
 
 <h2><a name="ParameterBinding"></a>4&nbsp;&nbsp;Parameter Binding</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A logical parameter is a reusable identity in a definition; compilation creates one occurrence record for each
  place it appears in rendered SQL. The occurrence supplies the physical JDBC index and any type inferred from its
  local context. Binding APIs address values by JDBC order, JDBC index, or logical identity.
 
 <h3><a name="Fundamentals"></a>4.1&nbsp;&nbsp;Fundamentals</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Sequential calls bind occurrence order. Indexed calls address one physical placeholder. Identity calls find all
  occurrences of the same <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLParameter.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLParameter</code></a> object. These choices matter when a logical parameter is reused in
  different field contexts, because each physical occurrence can infer a different <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>.
 
 <h4><a name="ParametersAndOccurrences"></a>4.1.1&nbsp;&nbsp;Parameters and Occurrences</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Calling SQL.param() creates a logical parameter object. If that object is used twice, compilation
  creates two occurrences with separate JDBC indexes. A field comparison or field assignment may let the
@@ -926,7 +907,6 @@ function maximize(id)
  the same identity can therefore have a VARCHAR occurrence and an INTEGER occurrence.
 
 <h4><a name="PositionalAndIdentityBinding"></a>4.1.2&nbsp;&nbsp;Positional and Identity-Based Binding</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Positional values are assigned in rendered JDBC order. Binding by JDBC index changes one occurrence, while
  binding by parameter identity changes every occurrence of that exact object in rendered order. The examples
@@ -1012,7 +992,6 @@ function maximize(id)
 
 
 <h4><a name="SequentialAndCursorBinding"></a>4.1.3&nbsp;&nbsp;Sequential and Cursor-Based Binding</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  bind() accepts a partial prefix and returns the number of values it bound. bindAll() requires
  the complete placeholder count. bindFrom() starts a partial sequence at a specified one-based index.
@@ -1199,7 +1178,6 @@ function maximize(id)
 
 
 <h3><a name="TypesAndDefaultBinding"></a>4.2&nbsp;&nbsp;Types and Default Binding</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  The compiler infers a logical database type only when the occurrence is connected to a known field context,
  such as a direct field comparison, BETWEEN bound, or INSERT/UPDATE assignment. Arbitrary expressions,
@@ -1207,7 +1185,6 @@ function maximize(id)
  inference is unavailable.
 
 <h4><a name="DBTypeInference"></a>4.2.1&nbsp;&nbsp;DBType Inference</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Type inference is local to the compiled occurrence. A parameter assigned to a field or compared directly
  with a field inherits that field's <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>. BETWEEN uses the known field for both bounds. A parameter
@@ -1215,7 +1192,6 @@ function maximize(id)
  structured binding rejects the value if no occurrence type is available.
 
 <h4><a name="DefaultJDBCSetters"></a>4.2.2&nbsp;&nbsp;Default JDBC Setters</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Ordinary inferred values pass through CompiledStatement to IDBAdapter.bindParameter().
  DBAdapter chooses a typed setter only for a supported DBType and compatible Java value. A non-NULL
@@ -1282,7 +1258,6 @@ function maximize(id)
 
 
 <h4><a name="NullAndExplicitJDBCTypes"></a>4.2.3&nbsp;&nbsp;NULL and Explicit JDBC Types</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  SQL.param(sqlType) stores a JDBC Types code. For a non-NULL value, the compiled statement
  calls setObject(index, value, sqlType); for NULL it calls setNull(index, sqlType). This is
@@ -1330,7 +1305,6 @@ function maximize(id)
 
 
 <h3><a name="CustomBindingStrategies"></a>4.3&nbsp;&nbsp;Custom Binding Strategies</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A converter transforms an application value and leaves JDBC binding to the adapter. A setter receives the
  original value and performs the complete JDBC operation. Call-specific strategies override configured ones for
@@ -1340,7 +1314,6 @@ function maximize(id)
 
 
 <h4><a name="ValueConverters"></a>4.3.1&nbsp;&nbsp;Value Converters</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A converter maps a non-NULL application value to the value supplied to default binding. NULL input bypasses
  conversion and follows the occurrence's explicit or inferred JDBC NULL typing. Converter exceptions propagate
@@ -1425,7 +1398,6 @@ function maximize(id)
 
 
 <h4><a name="SQLValueSetters"></a>4.3.2&nbsp;&nbsp;SQLValueSetter</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A configured or explicit <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLValueSetter.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLValueSetter</code></a> owns the full JDBC operation and receives the original
  application value, including NULL. It bypasses converter and adapter binding for that occurrence. The default
@@ -1515,7 +1487,6 @@ function maximize(id)
 
 
 <h4><a name="OverridesAndPrecedence"></a>4.3.3&nbsp;&nbsp;Overrides and Precedence</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A call-specific setter runs first and receives the original value. Otherwise a call-specific converter, when
  supplied, transforms the value and takes precedence over a parameter-configured setter. Without a call-level
@@ -1540,7 +1511,6 @@ function maximize(id)
  overrides both. Explicit JDBC types apply only when a setter has not already handled the value.
 
 <h4><a name="SQLDefaultSetters"></a>4.3.4&nbsp;&nbsp;SQLDefaultSetter</h4>
-<p class="author">Author: Eike Stepper</p>
 <p>
  An <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLDefaultSetter.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLDefaultSetter</code></a> receives a statement and JDBC index, but no application value. It performs the
  complete binding operation for an implementation-defined default. That default is not necessarily NULL or the
@@ -1633,7 +1603,6 @@ function maximize(id)
 
 
 <h2><a name="DBAdapterCustomization"></a>5&nbsp;&nbsp;DBAdapter Customization</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  IDBAdapter.bindParameter() is the public binding hook used for ordinary bindings. Its interface default
  is deliberately generic for independent implementations. DBAdapter supplies a typed implementation and
@@ -1641,7 +1610,6 @@ function maximize(id)
  type-dispatch algorithm.
 
 <h3><a name="DefaultBindingArchitecture"></a>5.1&nbsp;&nbsp;Default Binding Architecture</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  The SQL definition assigns values to logical parameters. Compilation records each physical occurrence and its
  inferred DBType. CompiledStatement applies selected converters, handles explicit JDBC target types, and
@@ -1697,7 +1665,6 @@ function maximize(id)
 
 
 <h3><a name="UnknownParameterTypes"></a>5.2&nbsp;&nbsp;Unknown Parameter Types</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  DBAdapter.useJavaTypeForUnknownParameterType() defaults to false. Under that conservative
  policy, an unknown non-NULL value uses setObject. If enabled, supported Java scalar classes select the
@@ -1766,7 +1733,6 @@ function maximize(id)
 
 
 <h3><a name="ProtectedBindingExtensionPoints"></a>5.3&nbsp;&nbsp;Protected Binding Extension Points</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  DBAdapter exposes exactly twelve protected overridable methods. The default implementation makes the
  matching JDBC call. Most adapters need no override; a database-specific adapter can change one operation while
@@ -1841,28 +1807,24 @@ function maximize(id)
  </table>
 
 <h2><a name="StatementLifecycleAndReuse"></a>6&nbsp;&nbsp;Statement Lifecycle and Reuse</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Reuse the adapter-neutral template or compiled statement across operations. Prepare and close a managed JDBC
  statement for each checkout so its connection can return the statement to its cache and release associated
  resources.
 
 <h3><a name="TemplatesAndCompiledStatements"></a>6.1&nbsp;&nbsp;Templates and Compiled Statements</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A template captures the builder's immutable definition. The adapter-specific compiled statement retains its SQL
  and occurrence metadata, but no connection or prepared statement. Reuse either definition for repeated
  executions.
 
 <h3><a name="PreparingExecutingAndClosing"></a>6.2&nbsp;&nbsp;Preparing, Executing, and Closing</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Preparing checks out a connection-bound managed statement. Use try-with-resources for that statement and any
  result set. The connection's cache may reuse the JDBC object after close; <a href="../../javadoc/org/eclipse/net4j/db/IDBPreparedStatement.ReuseProbability.html" title="Enum in org.eclipse.net4j.db.IDBPreparedStatement"><code>ReuseProbability</code></a> is a cache
  hint and does not guarantee object identity.
 
 <h3><a name="PartialBindingAndStatementReuse"></a>6.3&nbsp;&nbsp;Partial Binding and Statement Reuse</h3>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Partial binding changes only the positions supplied in that operation. Untouched positions may still contain
  values from an earlier use of a reused JDBC statement. Rebind every position required by the next execution.
@@ -1921,7 +1883,6 @@ function maximize(id)
 
 
 <h2><a name="PortabilityAndLimitations"></a>7&nbsp;&nbsp;Portability and Limitations</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  The compiler renders operations represented by the structured API and delegates identifier quoting and typed
  binding behavior to the adapter. It does not rewrite arbitrary fragment text, validate business rules, map result

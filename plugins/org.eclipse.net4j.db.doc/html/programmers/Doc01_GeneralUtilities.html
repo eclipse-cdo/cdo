@@ -102,7 +102,6 @@ function maximize(id)
 
 
 <h2><a name="Architecture"></a>1&nbsp;&nbsp;How the Pieces Fit Together</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Start from <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>. It is created with an <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> and an
  <a href="../../javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnectionProvider</code></a>; it reads and locks a managed <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html" title="Interface in org.eclipse.net4j.db.ddl"><code>IDBSchema</code></a>, creates and tracks
@@ -126,7 +125,6 @@ function maximize(id)
  the managed schema snapshot and connection population, while each connection retains its own statement cache.
 
 <h2><a name="AdaptersAndDatabases"></a>2&nbsp;&nbsp;Adapters, Providers, and Database Instances</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  An <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> handles vendor-sensitive behavior: identifier quoting, logical type adaptation, schema
  inspection and updates, and selected SQL-generation or exception-classification rules. It is not a pool and does
@@ -244,7 +242,6 @@ function maximize(id)
 
 
 <h2><a name="ManagedSchemasAndConnections"></a>3&nbsp;&nbsp;Managed Schema and Connections</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A standalone schema made with <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> is an ordinary mutable metadata model. It does
  not represent a live catalog until an API reads from or writes to a database. When <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.openDatabase</code></a>
@@ -314,7 +311,6 @@ function maximize(id)
 .
 
 <h2><a name="SchemaAccessAndCaching"></a>4&nbsp;&nbsp;Coordinated Schema Access and Statement Caches</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  Net4j DB coordinates managed preparation with schema transaction completion so that a statement already in use
  is not silently reused across a schema-cache invalidation. When DBConnection.prepareStatement(...) is
@@ -425,7 +421,6 @@ function maximize(id)
 
 
 <h2><a name="LifecycleAndFailures"></a>5&nbsp;&nbsp;Ownership, Transactions, and Failure Handling</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  A managed connection belongs to the <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a> while open and should also be closed by the code that
  acquired it. A prepared statement belongs to that connection; close it after closing its result sets. For a
@@ -447,7 +442,6 @@ function maximize(id)
  target database using its supported tooling and adapter behavior.
 
 <h2><a name="Utilities"></a>6&nbsp;&nbsp;DBUtil and Supporting Facilities</h2>
-<p class="author">Author: Eike Stepper</p>
 <p>
  <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html" title="Class in org.eclipse.net4j.db"><code>DBUtil</code></a> provides focused helpers around the architecture: adapter lookup, connection-provider creation,
  opening a database, creating/copying/reading schema models, SQL-type lookup, naming and identifier utilities,

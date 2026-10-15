@@ -64,8 +64,6 @@ public class Doc02_DataDefinition
    * create a coordinated managed database merely because the schema model is passed to them.
    * <p>
    * {@link #defineSalesSchema() DefineSalesSchema.java}
-   *
-   * @author Eike Stepper
    */
   public class SchemaModel
   {
@@ -108,8 +106,6 @@ public class Doc02_DataDefinition
    * Use descriptive, stable names and model constraints explicitly. For example, {@code CUSTOMER.EMAIL} can have a
    * unique index, while {@code ORDERS.CUSTOMER_ID} can have a non-unique index for common customer order lookups.
    * A model-level index does not itself create or verify a physical index.
-   *
-   * @author Eike Stepper
    */
   public class TablesFieldsAndIndexes
   {
@@ -129,8 +125,6 @@ public class Doc02_DataDefinition
    * Review removals, type changes, and constraint changes before applying them to production data.
    * <p>
    * {@link #inspectCurrentSchema(IDBAdapter, Connection) InspectCurrentSchema.java}
-   *
-   * @author Eike Stepper
    */
   public class SchemaInspectionAndComparison
   {
@@ -179,8 +173,6 @@ public class Doc02_DataDefinition
    * <p>
    * {@link #addLoyaltyCodeColumn(IDBDatabase) AddLoyaltyCodeColumn.java}
    * {@link #addPromotionCodeColumn(IDBConnection) AddPromotionCodeColumn.java}
-   *
-   * @author Eike Stepper
    */
   public class SchemaTransactions
   {
@@ -233,8 +225,6 @@ public class Doc02_DataDefinition
    * In the base adapter, the delta is applied to managed in-memory metadata before adapter DDL is executed. The
    * transaction completion path then coordinates invalidation of managed connection caches as explained in
    * {@link Doc01_GeneralUtilities.SchemaAccessAndCaching}.
-   *
-   * @author Eike Stepper
    */
   public class EnsureAndMigrationPolicies
   {
@@ -249,8 +239,6 @@ public class Doc02_DataDefinition
    * operation fails after some DDL has run, the framework's JDBC rollback attempt cannot establish a portable claim
    * that all physical changes were undone. Confirm the resulting catalog and data state using the target database's
    * supported inspection tools before retrying a deployment.
-   *
-   * @author Eike Stepper
    */
   public class DDLBoundaries
   {

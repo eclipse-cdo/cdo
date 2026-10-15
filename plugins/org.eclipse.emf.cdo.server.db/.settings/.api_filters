@@ -69,6 +69,26 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/server/db/mapping/ITypeMapping.java" type="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping"/>
+                <message_argument value="org.eclipse.net4j.db.dml.SQLDefaultSetter"/>
+                <message_argument value="setDefaultValue(PreparedStatement, int)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping"/>
+                <message_argument value="org.eclipse.net4j.db.dml.SQLValueSetter"/>
+                <message_argument value="setValue(PreparedStatement, int, JAVA)"/>
+            </message_arguments>
+        </filter>
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="IFeatureMapping"/>
+                <message_argument value="ITypeMapping"/>
+            </message_arguments>
+        </filter>
         <filter id="576782386">
             <message_arguments>
                 <message_argument value="IFeatureMapping"/>

@@ -395,6 +395,7 @@ public class Expression implements SQLExpression
     MAX("MAX"), //
     SUM("SUM"), //
     AVG("AVG"), //
+    ABS("ABS"), //
     ADD("+", "+"), //
     SUBTRACT("-", "-"), //
     MULTIPLY("*", "*"), //
@@ -410,6 +411,7 @@ public class Expression implements SQLExpression
     IS_NULL("IS_NULL"), //
     IS_NOT_NULL("IS_NOT_NULL"), //
     IN_SUBQUERY("IN_SUB", "IN"), //
+    IN_VALUES("IN_VALUES", "IN"), //
     AND("AND", "AND"), //
     OR("OR", "OR"), //
     NOT("NOT"), //

@@ -26,20 +26,26 @@ import org.eclipse.net4j.db.dml.SQLStatement;
 import org.eclipse.net4j.db.dml.SQLSubSelect;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.db.dml.SQLTemplate;
+import org.eclipse.net4j.db.dml.fluent.SQLInStep;
 import org.eclipse.net4j.db.dml.fluent.SQLSelectFromStep;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectWhereStep;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.db.mysql.MYSQLAdapter;
 import org.eclipse.net4j.internal.db.dml.CompiledStatement;
 import org.eclipse.net4j.internal.db.dml.Expression;
 import org.eclipse.net4j.internal.db.dml.Fragment;
+import org.eclipse.net4j.internal.db.dml.ParameterOccurrence;
 import org.eclipse.net4j.internal.db.dml.Template;
 import org.eclipse.net4j.spi.db.DelegatingDBAdapter;
 
+import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -256,6 +262,89 @@ public class SQLDMLCompilerTest extends TestCase
         .where(nested) //
         .build() //
         .compile(ansiAdapter).getSQL());
+  }
+
+  public void testAbsAndInValueListsPreserveOrderingAndTypeInference()
+  {
+    Schema schema = schema("structured_in", "items", false);
+    SQLParameter repeated = SQL.param();
+    SQLParameter second = SQL.param();
+    SQLCondition condition = SQL.in(schema.id, repeated, SQL.literal(7), repeated, second);
+    SQLStatement statement = SQL.selectAll().from(schema.table).where(condition).build().compile(ansiAdapter);
+
+    assertEquals("SELECT * FROM \"items\" WHERE \"id\" IN (?, 7, ?, ?)", statement.getSQL());
+    assertEquals(Arrays.asList(repeated, repeated, second), occurrences(statement));
+    List<ParameterOccurrence> parameterOccurrences = parameterMetadata(statement);
+    assertEquals(DBType.INTEGER, parameterOccurrences.get(0).getInferredType());
+    assertEquals(DBType.INTEGER, parameterOccurrences.get(1).getInferredType());
+    assertEquals(DBType.INTEGER, parameterOccurrences.get(2).getInferredType());
+
+    Iterable<SQLExpression> oneShot = new Iterable<>()
+    {
+      private boolean consumed;
+
+      @Override
+      public Iterator<SQLExpression> iterator()
+      {
+        if (consumed)
+        {
+          throw new IllegalStateException("Iterable was traversed more than once");
+        }
+
+        consumed = true;
+        return Arrays.<SQLExpression> asList(SQL.literal(4), repeated).iterator();
+      }
+    };
+    SQLStatement oneShotStatement = SQL.selectAll().from(schema.table).where(SQL.in(schema.id, oneShot)).build().compile(ansiAdapter);
+    assertEquals("SELECT * FROM \"items\" WHERE \"id\" IN (4, ?)", oneShotStatement.getSQL());
+    assertSame(repeated, occurrences(oneShotStatement).get(0));
+    assertEquals("SELECT * FROM \"items\" WHERE NOT \"id\" IN (?, 7, ?, ?)",
+        SQL.selectAll().from(schema.table).where(SQL.in(schema.id, repeated, SQL.literal(7), repeated, second).not()).build().compile(ansiAdapter).getSQL());
+
+    SQLStatement abs = SQL.select(SQL.abs(SQL.add(schema.id, SQL.param()))).from(schema.table).where(SQL.eq(SQL.abs(schema.id), second)).build()
+        .compile(ansiAdapter);
+    assertEquals("SELECT ABS(\"id\" + ?) FROM \"items\" WHERE ABS(\"id\") = ?", abs.getSQL());
+    assertEquals(Arrays.asList(null, DBType.INTEGER),
+        Arrays.asList(parameterMetadata(abs).get(0).getInferredType(), parameterMetadata(abs).get(1).getInferredType()));
+  }
+
+  public void testIncrementalInListsAndProviderResolution()
+  {
+    Schema schema = schema("incremental_in", "items", false);
+    SQLParameter first = SQL.param();
+    SQLParameter second = SQL.param();
+    SQLInStep<?> in = SQL.selectAll().from(schema.table).where(schema.id).in();
+    in.add(first).addAll(Arrays.asList(second, first));
+    SQLStatement statement = ((SQLSelectWhereStep)in.end()).and(SQL.eq(schema.name, SQL.literal("Ada"))).build().compile(ansiAdapter);
+    assertIllegalState(() -> in.add(SQL.param()), "no longer active");
+    assertEquals("SELECT * FROM \"items\" WHERE \"id\" IN (?, ?, ?) AND \"name\" = 'Ada'", statement.getSQL());
+    assertEquals(Arrays.asList(first, second, first), occurrences(statement));
+
+    final int[] resolutions = { 0 };
+    IDBTable.Provider provider = () -> {
+      resolutions[0]++;
+      return schema.table;
+    };
+    SQLTemplate insert = SQL.insertInto(provider).values(SQL.literal(1), SQL.literal("x")).build();
+    assertEquals(1, resolutions[0]);
+    assertEquals("INSERT INTO \"items\" VALUES (1, 'x')", insert.compile(ansiAdapter).getSQL());
+    assertEquals(1, resolutions[0]);
+    assertEquals("UPDATE \"items\" SET \"name\" = 'x'", SQL.update(provider).set(schema.name).to(SQL.literal("x")).build().compile(ansiAdapter).getSQL());
+    assertEquals("DELETE FROM \"items\"", SQL.deleteFrom(provider).build().compile(ansiAdapter).getSQL());
+    assertSame(schema.table, SQL.table(provider).getTable());
+    assertEquals("SELECT * FROM \"items\"", SQL.selectAll().from(provider).build().compile(ansiAdapter).getSQL());
+    assertEquals("SELECT * FROM \"items\" \"it\"", SQL.selectAll().from(SQL.as(provider, "it")).build().compile(ansiAdapter).getSQL());
+
+    SQLStatement joined = SQL.selectAll().from(schema.table).leftJoin(provider).on(schema.id).eq(schema.id).build().compile(ansiAdapter);
+    assertTrue(joined.getSQL().contains("LEFT JOIN \"items\" ON"));
+
+    assertNullPointer(() -> SQL.table((IDBTable.Provider)null));
+    assertNullPointer(() -> SQL.table((IDBTable.Provider)() -> null));
+
+    assertIllegalArgument(() -> SQL.in(schema.id), "IN value list must not be empty");
+    assertIllegalArgument(() -> SQL.in(schema.id, Collections.<SQLExpression> emptyList()), "IN value list must not be empty");
+    SQLInStep<?> empty = SQL.selectAll().from(schema.table).where(schema.id).in();
+    assertIllegalState(empty::end, "must not be empty");
   }
 
   public void testFluentSQLPrecedenceAndExplicitGrouping()
@@ -989,6 +1078,21 @@ public class SQLDMLCompilerTest extends TestCase
     return ((CompiledStatement)statement).getParameterOccurrences();
   }
 
+  @SuppressWarnings("unchecked")
+  private static List<ParameterOccurrence> parameterMetadata(SQLStatement statement)
+  {
+    try
+    {
+      Field field = CompiledStatement.class.getDeclaredField("occurrences");
+      field.setAccessible(true);
+      return (List<ParameterOccurrence>)field.get(statement);
+    }
+    catch (ReflectiveOperationException ex)
+    {
+      throw new AssertionError(ex);
+    }
+  }
+
   private static void assertIllegalArgument(Runnable runnable, String expectedMessage)
   {
     try
@@ -999,6 +1103,32 @@ public class SQLDMLCompilerTest extends TestCase
     catch (IllegalArgumentException ex)
     {
       assertTrue(ex.getMessage(), ex.getMessage().contains(expectedMessage));
+    }
+  }
+
+  private static void assertNullPointer(Runnable runnable)
+  {
+    try
+    {
+      runnable.run();
+      fail("Expected NullPointerException");
+    }
+    catch (NullPointerException ex)
+    {
+      // Expected.
+    }
+  }
+
+  private static void assertIllegalState(Runnable runnable, String expectedMessage)
+  {
+    try
+    {
+      runnable.run();
+      fail("Expected IllegalStateException containing: " + expectedMessage);
+    }
+    catch (IllegalStateException ex)
+    {
+      assertTrue(ex.getMessage().contains(expectedMessage));
     }
   }
 

@@ -31,6 +31,8 @@ import org.eclipse.net4j.db.dml.SQLSubSelect;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 import org.eclipse.net4j.db.dml.SQLTemplate;
 import org.eclipse.net4j.db.dml.SQLValueSetter;
+import org.eclipse.net4j.db.dml.fluent.SQLInStep;
+import org.eclipse.net4j.db.dml.fluent.SQLSelectWhereStep;
 import org.eclipse.net4j.db.h2.H2Adapter;
 
 import java.math.BigDecimal;
@@ -297,6 +299,89 @@ public class Doc03_DataManipulation
           connection.rollback();
           throw ex;
         }
+      }
+    }
+
+    /**
+     * Structured Expressions, IN Lists, and Table Providers
+     * <p>
+     * Use {@link SQL#abs(SQLExpression)} for a structured absolute-value expression, and use the IN factories or
+     * fluent value-list stage for ordered membership values. An {@code IDBTable.Provider} lets a domain wrapper
+     * supply its primary schema table directly to DML construction; the table is resolved when the API call is made.
+     *
+     * @author Eike Stepper
+     */
+    public class StructuredExpressionsAndProviders
+    {
+      /**
+       * Replaces a raw ABS function fragment while retaining column metadata for parameter type inference.
+       *
+       * @snip
+       */
+      public SQLStatement selectByAbsoluteVersion(IDBAdapter adapter, IDBTable table, IDBField version)
+      {
+        return SQL.selectAll() //
+            .from(table) //
+            .where(SQL.abs(version)).eq(SQL.param()) //
+            .compile(adapter);
+      }
+
+      /**
+       * Uses fixed, iterable, and incrementally assembled IN value lists. The staged list remains part of the
+       * enclosing SELECT until it is completed with {@code end()}.
+       *
+       * @snip
+       */
+      public SQLStatement selectForFixedRevisions(IDBAdapter adapter, IDBTable table, IDBField revision)
+      {
+        return SQL.selectAll() //
+            .from(table) //
+            .where(revision).in(SQL.literal(1), SQL.param()) //
+            .compile(adapter);
+      }
+
+      /**
+       * Builds an IN list from an iterable, traversed once by the fluent operation.
+       *
+       * @snip
+       */
+      public SQLStatement selectForRevisions(IDBAdapter adapter, IDBTable table, IDBField revision, Iterable<? extends SQLExpression> values)
+      {
+        return SQL.selectAll() //
+            .from(table) //
+            .where(revision).in(values) //
+            .compile(adapter);
+      }
+
+      /**
+       * Adds values to a statement's incomplete IN list and resumes the normal SELECT stage after completion.
+       *
+       * @snip
+       */
+      public SQLStatement selectForRevisionsIncrementally(IDBAdapter adapter, IDBTable table, IDBField revision, Iterable<? extends SQLExpression> values)
+      {
+        SQLInStep<SQLSelectWhereStep> pending = SQL.selectAll() //
+            .from(table) //
+            .where(revision).in();
+
+        pending.addAll(values);
+
+        return pending //
+            .end() //
+            .compile(adapter);
+      }
+
+      /**
+       * Passes a domain table wrapper directly to a DML factory and SELECT source stage.
+       *
+       * @snip
+       */
+      public SQLStatement selectFromProvider(IDBAdapter adapter, IDBTable.Provider lockAreas, IDBField id)
+      {
+        return SQL.select(id) //
+            .from(lockAreas) //
+            .where(id).eq(SQL.param()) //
+            .compile(adapter);
       }
     }
   }

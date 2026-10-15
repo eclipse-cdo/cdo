@@ -138,4 +138,22 @@ public interface IDBTable extends IDBSchemaElement
    */
   @Deprecated
   public String sqlInsert();
+
+  /**
+   * Supplies one primary schema table to DML factory and fluent APIs. A provider describes the
+   * schema table itself; aliases and SQL occurrences remain represented by {@link SQLTableRef}.
+   *
+   * @author Eike Stepper
+   * @since 4.15
+   */
+  public interface Provider
+  {
+    /**
+     * Returns the primary schema table. DML APIs resolve this method when the provider is supplied.
+     *
+     * @return the primary schema table
+     * @since 4.15
+     */
+    public IDBTable getTable();
+  }
 }

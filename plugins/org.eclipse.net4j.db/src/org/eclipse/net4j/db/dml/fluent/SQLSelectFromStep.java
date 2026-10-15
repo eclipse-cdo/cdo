@@ -14,6 +14,8 @@ package org.eclipse.net4j.db.dml.fluent;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 
+import java.util.Objects;
+
 /**
  * A SELECT source stage that permits adding more comma-separated tables before any JOIN. If JOINs
  * follow multiple FROM sources, the compiler groups those sources as a CROSS JOIN expression before
@@ -33,9 +35,34 @@ public interface SQLSelectFromStep extends SQLSelectSourceStep
    * @param others additional table occurrences appended in comma-separated order
    *
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectFromStep from(IDBTable first, IDBTable... others);
+
+  /**
+   * Appends provider-supplied tables in order, resolving each provider immediately.
+   *
+   * @param first the first table provider
+   * @param others additional table providers
+   * @return this source stage
+   * @throws NullPointerException if any provider or supplied table is {@code null}
+   */
+  public default SQLSelectFromStep from(IDBTable.Provider first, IDBTable.Provider... others)
+  {
+    Objects.requireNonNull(first, "first");
+    Objects.requireNonNull(others, "others");
+
+    IDBTable[] tables = new IDBTable[others.length + 1];
+    tables[0] = Objects.requireNonNull(first.getTable(), "table");
+
+    for (int i = 0; i < others.length; i++)
+    {
+      tables[i + 1] = Objects.requireNonNull(Objects.requireNonNull(others[i], "provider").getTable(), "table");
+    }
+
+    IDBTable[] remaining = new IDBTable[tables.length - 1];
+    System.arraycopy(tables, 1, remaining, 0, remaining.length);
+    return from(tables[0], remaining);
+  }
 
   /**
    * Adds one or more comma-separated table occurrences. This stage permits repeated additions until a JOIN is started.
@@ -44,7 +71,6 @@ public interface SQLSelectFromStep extends SQLSelectSourceStep
    * @param others additional table occurrences appended in comma-separated order
    *
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectFromStep from(SQLTableRef first, SQLTableRef... others);
 }

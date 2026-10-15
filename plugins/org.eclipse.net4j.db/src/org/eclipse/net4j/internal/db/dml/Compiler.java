@@ -505,7 +505,14 @@ public final class Compiler
 
       case IN:
         target.append(" IN ");
-        renderSubqueryOperand(operands[firstRight], target);
+        if (operands[firstRight] instanceof SQLSubSelect)
+        {
+          renderSubqueryOperand(operands[firstRight], target);
+        }
+        else
+        {
+          renderInValues(operands[firstRight], operands[0], target);
+        }
         break;
 
       default:
@@ -539,6 +546,11 @@ public final class Compiler
         renderSubqueryOperand(operands[firstRight], target);
         break;
 
+      case IN_VALUES:
+        target.append(" IN ");
+        renderInValues(operands[firstRight], operands[0], target);
+        break;
+
       default:
         target.append(' ').append(kind.getSqlOperator()).append(' ');
         renderExpression(operands[firstRight], 4, false, target, fieldOf(operands[0]));
@@ -558,7 +570,35 @@ public final class Compiler
         return ((SQLColumnRef)value).getColumn();
       }
 
+      if (value instanceof Expression && ((Expression)value).getKind() == Expression.Kind.ABS)
+      {
+        List<Object> operands = ((Expression)value).getOperands();
+        return operands.isEmpty() ? null : fieldOf(operands.get(0));
+      }
+
       return null;
+    }
+
+    private void renderInValues(Object value, Object left, StringBuilder target)
+    {
+      if (!(value instanceof List<?>) || ((List<?>)value).isEmpty())
+      {
+        throw invalid("IN", "expected a non-empty value list");
+      }
+
+      target.append('(');
+      List<?> values = (List<?>)value;
+      for (int i = 0; i < values.size(); i++)
+      {
+        if (i > 0)
+        {
+          target.append(", ");
+        }
+
+        renderExpression(values.get(i), 0, false, target, fieldOf(left));
+      }
+
+      target.append(')');
     }
 
     private void renderSubqueryOperand(Object operand, StringBuilder target)
@@ -1141,6 +1181,13 @@ public final class Compiler
         target.append(')');
         break;
 
+      case ABS:
+        requireExpressionArity(operation, operands, 1);
+        target.append("ABS(");
+        renderExpression(operands.get(0), 0, false, target);
+        target.append(')');
+        break;
+
       case SCALAR_SUBQUERY:
         requireExpressionArity(operation, operands, 1);
         if (!(operands.get(0) instanceof SQLSubSelect))
@@ -1195,6 +1242,7 @@ public final class Compiler
       case LIKE:
       case BETWEEN:
       case IN_SUBQUERY:
+      case IN_VALUES:
       case IS_NULL:
       case IS_NOT_NULL:
         renderConditionExpression(operation, operands, target);
@@ -1612,6 +1660,7 @@ public final class Compiler
       case LIKE:
       case BETWEEN:
       case IN_SUBQUERY:
+      case IN_VALUES:
       case IS_NULL:
       case IS_NOT_NULL:
         return true;

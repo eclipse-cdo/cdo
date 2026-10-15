@@ -32,7 +32,6 @@ public interface SQLComparisonStep<NEXT>
    *
    * @param right the right expression of a comparison
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT eq(SQLExpression right);
 
@@ -41,7 +40,6 @@ public interface SQLComparisonStep<NEXT>
    *
    * @param right the right expression of a comparison
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT ne(SQLExpression right);
 
@@ -50,7 +48,6 @@ public interface SQLComparisonStep<NEXT>
    *
    * @param right the right expression of a comparison
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT lt(SQLExpression right);
 
@@ -59,7 +56,6 @@ public interface SQLComparisonStep<NEXT>
    *
    * @param right the right expression of a comparison
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT le(SQLExpression right);
 
@@ -68,7 +64,6 @@ public interface SQLComparisonStep<NEXT>
    *
    * @param right the right expression of a comparison
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT gt(SQLExpression right);
 
@@ -77,7 +72,6 @@ public interface SQLComparisonStep<NEXT>
    *
    * @param right the right expression of a comparison
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT ge(SQLExpression right);
 
@@ -86,7 +80,6 @@ public interface SQLComparisonStep<NEXT>
    *
    * @param right the right expression of a comparison
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT like(SQLExpression right);
 
@@ -97,7 +90,6 @@ public interface SQLComparisonStep<NEXT>
    * @param upper the upper bound expression
    *
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT between(SQLExpression lower, SQLExpression upper);
 
@@ -106,15 +98,37 @@ public interface SQLComparisonStep<NEXT>
    *
    * @param query the complete nested SELECT definition
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT in(SQLSubSelect query);
+
+  /**
+   * Adds an IN comparison using the supplied ordered expressions.
+   *
+   * @param first the required first value expression
+   * @param others additional value expressions
+   * @return the next valid fluent stage
+   */
+  public NEXT in(SQLExpression first, SQLExpression... others);
+
+  /**
+   * Adds an IN comparison by consuming the iterable once in iteration order.
+   *
+   * @param values the non-empty value expressions
+   * @return the next valid fluent stage
+   */
+  public NEXT in(Iterable<? extends SQLExpression> values);
+
+  /**
+   * Starts an incomplete IN value list in this statement builder.
+   *
+   * @return the staged value-list builder
+   */
+  public SQLInStep<NEXT> in();
 
   /**
    * Adds an IS NULL test for the left expression supplied to this stage.
    *
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT isNull();
 
@@ -122,7 +136,6 @@ public interface SQLComparisonStep<NEXT>
    * Adds an IS NOT NULL test for the left expression supplied to this stage.
    *
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public NEXT isNotNull();
 }

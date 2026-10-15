@@ -17,6 +17,8 @@ import org.eclipse.net4j.db.dml.SQLExpression;
 import org.eclipse.net4j.db.dml.SQLOrderItem;
 import org.eclipse.net4j.db.dml.SQLTableRef;
 
+import java.util.Objects;
+
 /**
  * A SELECT stage with a source clause and optional further clauses. Repeated FROM additions create
  * comma-separated sources when there are no joins. If joins follow multiple FROM sources, the
@@ -35,16 +37,26 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
    *
    * @param table the schema table or table occurrence
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectJoinStep join(IDBTable table);
+
+  /**
+   * Starts an INNER JOIN with the provider's table, resolved immediately.
+   *
+   * @param provider the table provider
+   * @return the next valid fluent stage
+   * @throws NullPointerException if the provider or its table is {@code null}
+   */
+  public default SQLSelectJoinStep join(IDBTable.Provider provider)
+  {
+    return join(Objects.requireNonNull(Objects.requireNonNull(provider, "provider").getTable(), "table"));
+  }
 
   /**
    * Starts an INNER JOIN that must receive a complete condition or comparison through ON before it can be completed. Joins following multiple FROM sources apply to their grouped CROSS JOIN expression.
    *
    * @param table the schema table or table occurrence
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectJoinStep join(SQLTableRef table);
 
@@ -53,16 +65,26 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
    *
    * @param table the schema table or table occurrence
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectJoinStep leftJoin(IDBTable table);
+
+  /**
+   * Starts a LEFT JOIN with the provider's table, resolved immediately.
+   *
+   * @param provider the table provider
+   * @return the next valid fluent stage
+   * @throws NullPointerException if the provider or its table is {@code null}
+   */
+  public default SQLSelectJoinStep leftJoin(IDBTable.Provider provider)
+  {
+    return leftJoin(Objects.requireNonNull(Objects.requireNonNull(provider, "provider").getTable(), "table"));
+  }
 
   /**
    * Starts a LEFT JOIN that must receive a complete condition or comparison through ON before it can be completed. Joins following multiple FROM sources apply to their grouped CROSS JOIN expression.
    *
    * @param table the schema table or table occurrence
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectJoinStep leftJoin(SQLTableRef table);
 
@@ -71,7 +93,6 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
    *
    * @param left the left expression of a comparison
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLComparisonStep<SQLSelectWhereStep> where(SQLExpression left);
 
@@ -80,7 +101,6 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
    *
    * @param condition the complete condition to add
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectWhereStep where(SQLCondition condition);
 
@@ -91,7 +111,6 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
    * @param others additional grouping expressions appended in SQL order
    *
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectGroupByStep groupBy(SQLExpression first, SQLExpression... others);
 
@@ -102,7 +121,6 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
    * @param others additional ordering items appended in SQL order
    *
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectOrderByStep orderBy(SQLOrderItem first, SQLOrderItem... others);
 
@@ -111,7 +129,6 @@ public interface SQLSelectSourceStep extends SQLSelectBuildStep
    *
    * @param expression the expression used by this clause
    * @return the next valid fluent stage
-   * @since 4.15
    */
   public SQLSelectOrderByStep orderByDesc(SQLExpression expression);
 }

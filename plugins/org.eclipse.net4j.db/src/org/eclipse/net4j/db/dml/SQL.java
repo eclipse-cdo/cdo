@@ -26,6 +26,9 @@ import org.eclipse.net4j.internal.db.dml.fluent.Builder;
 import org.eclipse.net4j.internal.db.dml.fluent.FragmentBuilder;
 
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -77,10 +80,6 @@ public final class SQL
    */
   public static final SQLExpression ONE = literal(1);
 
-  private SQL()
-  {
-  }
-
   /**
    * Begins a SELECT definition whose projection contains the required first item and any additional items in the supplied order.
    *
@@ -131,6 +130,20 @@ public final class SQL
   }
 
   /**
+   * Begins an UPDATE definition for the table supplied by the provider. The provider is resolved
+   * immediately, and the resulting statement retains the table rather than the provider.
+   *
+   * @param provider the provider of the existing schema table
+   * @return the corresponding staged builder
+   * @throws NullPointerException if the provider or its table is {@code null}
+   * @since 4.15
+   */
+  public static SQLUpdateStartStep update(IDBTable.Provider provider)
+  {
+    return update(resolveTable(provider));
+  }
+
+  /**
    * Begins an INSERT definition. Choose a values list, explicit columns and values, or dynamic column assignments.
    *
    * @param table the existing schema table
@@ -140,6 +153,19 @@ public final class SQL
   public static SQLInsertStartStep insertInto(IDBTable table)
   {
     return Builder.insert(table);
+  }
+
+  /**
+   * Begins an INSERT definition for the table supplied by the provider, resolving it immediately.
+   *
+   * @param provider the provider of the existing schema table
+   * @return the corresponding staged builder
+   * @throws NullPointerException if the provider or its table is {@code null}
+   * @since 4.15
+   */
+  public static SQLInsertStartStep insertInto(IDBTable.Provider provider)
+  {
+    return insertInto(resolveTable(provider));
   }
 
   /**
@@ -155,6 +181,19 @@ public final class SQL
   }
 
   /**
+   * Begins a DELETE definition for the table supplied by the provider, resolving it immediately.
+   *
+   * @param provider the provider of the existing schema table
+   * @return the corresponding staged builder
+   * @throws NullPointerException if the provider or its table is {@code null}
+   * @since 4.15
+   */
+  public static SQLDeleteStep deleteFrom(IDBTable.Provider provider)
+  {
+    return deleteFrom(resolveTable(provider));
+  }
+
+  /**
    * Creates an unaliased occurrence of a schema table for use in a statement.
    *
    * @param table the existing schema table
@@ -164,6 +203,19 @@ public final class SQL
   public static SQLTableRef table(IDBTable table)
   {
     return new TableRef(Objects.requireNonNull(table, "table"), null);
+  }
+
+  /**
+   * Creates an unaliased occurrence of the table supplied by the provider, resolving it immediately.
+   *
+   * @param provider the provider of the existing schema table
+   * @return the corresponding immutable SQL API value
+   * @throws NullPointerException if the provider or its table is {@code null}
+   * @since 4.15
+   */
+  public static SQLTableRef table(IDBTable.Provider provider)
+  {
+    return table(resolveTable(provider));
   }
 
   /**
@@ -177,6 +229,20 @@ public final class SQL
   public static SQLTableRef as(IDBTable table, String alias)
   {
     return new TableRef(Objects.requireNonNull(table, "table"), Objects.requireNonNull(alias, "alias"));
+  }
+
+  /**
+   * Creates an aliased occurrence of the table supplied by the provider, resolving it immediately.
+   *
+   * @param provider the provider of the existing schema table
+   * @param alias the SQL alias for this table occurrence
+   * @return the corresponding immutable SQL API value
+   * @throws NullPointerException if the provider, its table, or alias is {@code null}
+   * @since 4.15
+   */
+  public static SQLTableRef as(IDBTable.Provider provider, String alias)
+  {
+    return as(resolveTable(provider), alias);
   }
 
   /**
@@ -484,6 +550,20 @@ public final class SQL
   }
 
   /**
+   * Creates a structured absolute-value expression. The database determines numeric conversion,
+   * range, overflow, and result semantics; a referenced column remains available for parameter type inference.
+   *
+   * @param expression the expression whose absolute value is computed
+   * @return the corresponding immutable SQL expression
+   * @throws NullPointerException if the expression is {@code null}
+   * @since 4.15
+   */
+  public static SQLExpression abs(SQLExpression expression)
+  {
+    return Expression.of(Expression.Kind.ABS, Objects.requireNonNull(expression, "expression"));
+  }
+
+  /**
    * Creates a binary addition expression.
    *
    * @param left the left operand
@@ -720,6 +800,56 @@ public final class SQL
   }
 
   /**
+   * Creates an IN condition over a snapshotted, non-empty ordered list of expressions.
+   * Parameter identities and SQL NULL semantics are preserved.
+   *
+   * @param expression the expression tested for membership
+   * @param values the ordered values to compare against
+   * @return the corresponding immutable condition
+   * @throws NullPointerException if the expression, array, or any value is {@code null}
+   * @throws IllegalArgumentException if the list is empty
+   * @since 4.15
+   */
+  public static SQLCondition in(SQLExpression expression, SQLExpression... values)
+  {
+    Objects.requireNonNull(expression, "expression");
+    Objects.requireNonNull(values, "values");
+    List<SQLExpression> snapshot = new ArrayList<>(values.length);
+
+    for (SQLExpression value : values)
+    {
+      snapshot.add(Objects.requireNonNull(value, "value"));
+    }
+
+    return inValues(expression, snapshot);
+  }
+
+  /**
+   * Creates an IN condition from a single traversal of the supplied iterable. The expressions are
+   * snapshotted in iteration order, retaining parameter identity and ordinary SQL NULL semantics.
+   *
+   * @param expression the expression tested for membership
+   * @param values the ordered values to compare against
+   * @return the corresponding immutable condition
+   * @throws NullPointerException if the expression, iterable, or any value is {@code null}
+   * @throws IllegalArgumentException if the iterable is empty
+   * @since 4.15
+   */
+  public static SQLCondition in(SQLExpression expression, Iterable<? extends SQLExpression> values)
+  {
+    Objects.requireNonNull(expression, "expression");
+    Objects.requireNonNull(values, "values");
+    List<SQLExpression> snapshot = new ArrayList<>();
+
+    for (SQLExpression value : values)
+    {
+      snapshot.add(Objects.requireNonNull(value, "value"));
+    }
+
+    return inValues(expression, snapshot);
+  }
+
+  /**
    * Begins a structured fragment. Raw text is trusted SQL, is not parsed for operator precedence,
    * and must not contain {@code ?}, even in a quoted string. Add identifiers and parameters through
    * their typed methods. Prefer structured expressions for operators; explicitly group fragment
@@ -769,5 +899,24 @@ public final class SQL
   public static SQLTemplate build(SQLFragment fragment)
   {
     return new Template(Objects.requireNonNull(fragment, "fragment"));
+  }
+
+  private static IDBTable resolveTable(IDBTable.Provider provider)
+  {
+    return Objects.requireNonNull(Objects.requireNonNull(provider, "provider").getTable(), "table");
+  }
+
+  private static SQLCondition inValues(SQLExpression expression, List<SQLExpression> values)
+  {
+    if (values.isEmpty())
+    {
+      throw new IllegalArgumentException("IN value list must not be empty");
+    }
+
+    return Expression.condition(Expression.Kind.IN_VALUES, expression, Collections.unmodifiableList(new ArrayList<>(values)));
+  }
+
+  private SQL()
+  {
   }
 }

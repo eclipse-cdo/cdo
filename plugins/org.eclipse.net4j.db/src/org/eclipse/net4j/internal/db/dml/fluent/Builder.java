@@ -23,6 +23,7 @@ import org.eclipse.net4j.db.dml.fluent.SQLBuildStep;
 import org.eclipse.net4j.db.dml.fluent.SQLComparisonStep;
 import org.eclipse.net4j.db.dml.fluent.SQLDeleteStep;
 import org.eclipse.net4j.db.dml.fluent.SQLDeleteWhereStep;
+import org.eclipse.net4j.db.dml.fluent.SQLInStep;
 import org.eclipse.net4j.db.dml.fluent.SQLInsertAssignmentStep;
 import org.eclipse.net4j.db.dml.fluent.SQLInsertColumnsStep;
 import org.eclipse.net4j.db.dml.fluent.SQLInsertSetStep;
@@ -698,6 +699,48 @@ public final class Builder
     }
 
     @Override
+    public NEXT in(SQLExpression first, SQLExpression... others)
+    {
+      Objects.requireNonNull(first, "first");
+      Objects.requireNonNull(others, "others");
+
+      List<SQLExpression> values = new ArrayList<>(others.length + 1);
+      values.add(first);
+
+      for (SQLExpression value : others)
+      {
+        values.add(Objects.requireNonNull(value, "value"));
+      }
+
+      return compare(Template.Operation.Kind.IN, List.copyOf(values));
+    }
+
+    @Override
+    public NEXT in(Iterable<? extends SQLExpression> values)
+    {
+      Objects.requireNonNull(values, "values");
+      List<SQLExpression> snapshot = new ArrayList<>();
+
+      for (SQLExpression value : values)
+      {
+        snapshot.add(Objects.requireNonNull(value, "value"));
+      }
+
+      if (snapshot.isEmpty())
+      {
+        throw new IllegalArgumentException("IN value list must not be empty");
+      }
+
+      return compare(Template.Operation.Kind.IN, List.copyOf(snapshot));
+    }
+
+    @Override
+    public SQLInStep<NEXT> in()
+    {
+      return state.advance(this, new InStep<>(state, left, nextFactory));
+    }
+
+    @Override
     public NEXT isNull()
     {
       return compare(Template.Operation.Kind.IS_NULL);
@@ -1043,6 +1086,68 @@ public final class Builder
     {
       state.add(this, Template.Operation.Kind.OR, Objects.requireNonNull(condition, "condition"));
       return this;
+    }
+  }
+
+  /**
+   * Internal incomplete IN list stage.
+   *
+   * @author Eike Stepper
+   * @since 4.15
+   */
+  private static class InStep<NEXT> implements SQLInStep<NEXT>
+  {
+    private final State state;
+
+    private final SQLExpression left;
+
+    private final Supplier<NEXT> nextFactory;
+
+    private final List<SQLExpression> values = new ArrayList<>();
+
+    public InStep(State state, SQLExpression left, Supplier<NEXT> nextFactory)
+    {
+      this.state = state;
+      this.left = left;
+      this.nextFactory = nextFactory;
+    }
+
+    @Override
+    public SQLInStep<NEXT> add(SQLExpression value)
+    {
+      state.check(this);
+      values.add(Objects.requireNonNull(value, "value"));
+      return this;
+    }
+
+    @Override
+    public SQLInStep<NEXT> addAll(Iterable<? extends SQLExpression> additions)
+    {
+      state.check(this);
+      Objects.requireNonNull(additions, "values");
+      List<SQLExpression> snapshot = new ArrayList<>();
+
+      for (SQLExpression value : additions)
+      {
+        snapshot.add(Objects.requireNonNull(value, "value"));
+      }
+
+      values.addAll(snapshot);
+      return this;
+    }
+
+    @Override
+    public NEXT end()
+    {
+      state.check(this);
+
+      if (values.isEmpty())
+      {
+        throw new IllegalStateException("IN value list must not be empty");
+      }
+
+      state.add(this, Template.Operation.Kind.IN, left, List.copyOf(values));
+      return state.advance(this, nextFactory.get());
     }
   }
 }

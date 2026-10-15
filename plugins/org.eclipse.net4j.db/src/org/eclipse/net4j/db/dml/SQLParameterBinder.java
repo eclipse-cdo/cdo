@@ -53,7 +53,7 @@ public interface SQLParameterBinder
    * @throws SQLException if the setter reports a binding failure
    * @throws IllegalArgumentException if the cursor is at the end position
    * @throws NullPointerException if {@code setter} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public <JAVA> SQLParameterBinder bindParameter(JAVA value, SQLValueSetter<? super JAVA> setter) throws SQLException;
 
@@ -67,7 +67,7 @@ public interface SQLParameterBinder
    * @throws SQLException if the setter reports a binding failure
    * @throws IllegalArgumentException if the cursor is at the end position
    * @throws NullPointerException if {@code setter} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public SQLParameterBinder bindParameter(SQLDefaultSetter setter) throws SQLException;
 
@@ -84,7 +84,7 @@ public interface SQLParameterBinder
    * @throws SQLException if JDBC reports a binding failure
    * @throws IllegalArgumentException if the cursor is at the end position
    * @throws NullPointerException if {@code converter} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public <JAVA, JDBC> SQLParameterBinder bindParameter(JAVA value, Function<JAVA, JDBC> converter) throws SQLException;
 
@@ -102,7 +102,7 @@ public interface SQLParameterBinder
    * @param index the position from 1 through parameter count plus one
    * @return this cursor
    * @throws IllegalArgumentException if the position is outside the valid range
-   * @since 4.16
+   * @since 4.15
    */
   public SQLParameterBinder from(int index);
 
@@ -114,7 +114,7 @@ public interface SQLParameterBinder
    *
    * @return this cursor
    * @throws IllegalArgumentException if advancing would move past the final valid position
-   * @since 4.16
+   * @since 4.15
    */
   public SQLParameterBinder skip();
 
@@ -129,7 +129,7 @@ public interface SQLParameterBinder
    * @return this cursor
    * @throws IllegalArgumentException if {@code count} is negative, overflows the valid range, or moves past the final
    *           valid position
-   * @since 4.16
+   * @since 4.15
    */
   public SQLParameterBinder skip(int count);
 }

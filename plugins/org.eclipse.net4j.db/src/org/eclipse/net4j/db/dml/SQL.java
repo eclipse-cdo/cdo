@@ -316,7 +316,7 @@ public final class SQL
    * @param setter the complete JDBC binding strategy
    * @return a new logical parameter identity
    * @throws NullPointerException if {@code setter} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public static <JAVA> SQLParameter param(SQLValueSetter<JAVA> setter)
   {
@@ -334,7 +334,7 @@ public final class SQL
    * @param setter the complete JDBC binding strategy
    * @return a new logical parameter identity
    * @throws NullPointerException if {@code setter} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public static <JAVA> SQLParameter param(int sqlType, SQLValueSetter<JAVA> setter)
   {

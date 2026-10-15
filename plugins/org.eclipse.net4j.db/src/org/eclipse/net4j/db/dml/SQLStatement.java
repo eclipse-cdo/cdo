@@ -54,7 +54,7 @@ public interface SQLStatement
    * @param index the one-based JDBC parameter position
    * @return the logical parameter identity for that occurrence
    * @throws IllegalArgumentException if the index is outside the statement's parameter range
-   * @since 4.16
+   * @since 4.15
    */
   public SQLParameter getParameter(int index);
 
@@ -64,7 +64,7 @@ public interface SQLStatement
    * Statements without placeholders return an empty list.
    *
    * @return immutable parameter occurrences in JDBC order
-   * @since 4.16
+   * @since 4.15
    */
   public List<SQLParameter> getParameters();
 
@@ -89,7 +89,7 @@ public interface SQLStatement
    * @param reuseProbability the existing statement-cache reuse hint
    * @return a prepared statement from the connection
    * @throws SQLException if JDBC reports a preparation failure
-   * @since 4.16
+   * @since 4.15
    */
   public IDBPreparedStatement prepare(IDBConnection connection, int resultSetType, int resultSetConcurrency, ReuseProbability reuseProbability)
       throws SQLException;
@@ -101,7 +101,7 @@ public interface SQLStatement
    * @param stmt the JDBC statement to bind
    * @return a new cursor
    * @throws NullPointerException if {@code stmt} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public SQLParameterBinder binder(PreparedStatement stmt);
 
@@ -115,7 +115,7 @@ public interface SQLStatement
    * @return a new cursor
    * @throws IllegalArgumentException if {@code startIndex} is outside the valid range
    * @throws NullPointerException if {@code stmt} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public SQLParameterBinder binderFrom(PreparedStatement stmt, int startIndex);
 
@@ -131,7 +131,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if the sequence exceeds the remaining parameter range
    * @throws NullPointerException if {@code stmt} or {@code values} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public int bind(PreparedStatement stmt, Object... values) throws SQLException;
 
@@ -147,7 +147,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if the position or range is invalid
    * @throws NullPointerException if the statement or values array is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public int bindFrom(PreparedStatement stmt, int startIndex, Object... values) throws SQLException;
 
@@ -162,7 +162,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if the number of values differs from the parameter count
    * @throws NullPointerException if the statement or values array is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public int bindAll(PreparedStatement stmt, Object... values) throws SQLException;
 
@@ -178,7 +178,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if {@code index} is outside the compiled parameter range
    * @throws NullPointerException if {@code stmt} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public void bindParameter(PreparedStatement stmt, int index, Object value) throws SQLException;
 
@@ -193,7 +193,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if the parameter identity is absent from this statement
    * @throws NullPointerException if a required argument is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public void bindParameter(PreparedStatement stmt, SQLParameter parameter, Object value) throws SQLException;
 
@@ -210,7 +210,7 @@ public interface SQLStatement
    * @throws SQLException if the setter reports a binding failure
    * @throws IllegalArgumentException if {@code index} is outside the compiled parameter range
    * @throws NullPointerException if {@code stmt} or {@code setter} is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public void bindDefault(PreparedStatement stmt, int index, SQLDefaultSetter setter) throws SQLException;
 
@@ -228,7 +228,7 @@ public interface SQLStatement
    * @throws SQLException if the setter reports a binding failure
    * @throws IllegalArgumentException if the identity is absent from this statement
    * @throws NullPointerException if a required argument is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public void bindDefault(PreparedStatement stmt, SQLParameter parameter, SQLDefaultSetter setter) throws SQLException;
 
@@ -245,7 +245,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if {@code index} is outside the compiled parameter range
    * @throws NullPointerException if a required argument is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public <JAVA> void bindParameter(PreparedStatement stmt, int index, JAVA value, SQLValueSetter<? super JAVA> setter) throws SQLException;
 
@@ -262,7 +262,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if the parameter identity is absent from this statement
    * @throws NullPointerException if a required argument is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public <JAVA> void bindParameter(PreparedStatement stmt, SQLParameter parameter, JAVA value, SQLValueSetter<? super JAVA> setter) throws SQLException;
 
@@ -280,7 +280,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if {@code index} is outside the parameter range
    * @throws NullPointerException if a required argument is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public <JAVA, JDBC> void bindParameter(PreparedStatement stmt, int index, JAVA value, Function<JAVA, JDBC> converter) throws SQLException;
 
@@ -299,7 +299,7 @@ public interface SQLStatement
    * @throws SQLException if JDBC binding fails
    * @throws IllegalArgumentException if the identity is absent from this statement
    * @throws NullPointerException if a required argument is {@code null}
-   * @since 4.16
+   * @since 4.15
    */
   public <JAVA, JDBC> void bindParameter(PreparedStatement stmt, SQLParameter parameter, JAVA value, Function<JAVA, JDBC> converter) throws SQLException;
 }

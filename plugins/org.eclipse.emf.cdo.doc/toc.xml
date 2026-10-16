@@ -2482,7 +2482,6 @@
   </topic>
   <topic label="Online Docs" href="html/online/index.html">
     <topic label="CDO Homepage" href="https://eclipse.dev/cdo" icon="external" />
-    <topic label="CDO Wiki" href="https://wiki.eclipse.org/CDO" icon="external" />
     <topic label="CDO Scalability" href="http://thegordian.blogspot.de/2008/11/how-scalable-are-my-models.html" icon="external" />
     <topic label="EMF Developer Guide" href="http://help.eclipse.org/mars/nav/21" icon="external" />
     <topic label="EMF Compare Guide" href="http://www.eclipse.org/emf/compare/documentation/latest/user/user-guide.html" icon="external" />

@@ -105,7 +105,7 @@ implements org.eclipse.net4j.util.IDChanger.ChangeHandler</span></div>
  This class is expected to be used with <code>IDChanger.changeIDs(Map, ChangeHandler)</code> to perform ID changes in bulk.
  Here is an example of how to use it:
  <pre>
- Map<span class="invalid-tag">invalid input: '&lt;'</span>Integer, Integer&gt; idChanges = ...; // Map of old IDs to new IDs.
+ Map&lt;Integer, Integer&gt; idChanges = ...; // Map of old IDs to new IDs.
 
  // Create a StatementBatcher with a try-with-resources statement.
  // The final execution of the batch will occur when the batcher is closed.
@@ -116,7 +116,8 @@ implements org.eclipse.net4j.util.IDChanger.ChangeHandler</span></div>
 
    // Perform the ID changes using the handler.
    IDChanger.changeIDs(idChanges, handler);
- }</div>
+ }
+ </pre></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.13</dd>

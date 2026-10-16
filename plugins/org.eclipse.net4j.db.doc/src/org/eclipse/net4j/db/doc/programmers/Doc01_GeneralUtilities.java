@@ -297,6 +297,7 @@ public class Doc01_GeneralUtilities
         try (IDBPreparedStatement afterChange = connection.prepareStatement("SELECT ID FROM CUSTOMER WHERE ID = ?", ReuseProbability.HIGH))
         {
           afterChange.setInt(1, 42);
+
           try (IDBResultSet rows = afterChange.executeQuery())
           {
             while (rows.next())

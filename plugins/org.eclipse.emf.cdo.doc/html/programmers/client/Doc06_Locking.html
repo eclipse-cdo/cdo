@@ -69,7 +69,7 @@ function windowTitle()
  exclusive, prevents other views from obtaining a write lock, but still permits other views to obtain read locks;
  it is useful for reserving the right to write later without blocking readers immediately.
  <p>
- The same types are available through <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection<? extends org.eclipse.emf.cdo.CDOObject>,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.lockObjects(java.util.Collection, LockType, long)</code></a> and through
+ The same types are available through <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.lockObjects(java.util.Collection, LockType, long)</code></a> and through
  the object-specific <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoReadLock()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoReadLock()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoWriteLock()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoWriteLock()</code></a>, and
  <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoWriteOption()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoWriteOption()</code></a> handles.
 
@@ -90,10 +90,10 @@ function windowTitle()
 
 <h2><a name="AcquiringAndInspectingLocks"></a>2&nbsp;&nbsp;Acquiring, Releasing, and Inspecting Locks</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection<? extends org.eclipse.emf.cdo.CDOObject>,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.lockObjects(java.util.Collection, LockType, long)</code></a> acquires all requested locks through the
+ <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#lockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.lockObjects(java.util.Collection, LockType, long)</code></a> acquires all requested locks through the
  repository and waits up to the supplied timeout, in milliseconds. The call is interruptible and reports an
  interrupted acquisition through <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/InterruptedException.html" target="_blank" title="Class in java.lang"><code>InterruptedException</code></a>; a timed-out object-level acquisition through
- <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeoutException.html" target="_blank" title="Class in java.util.concurrent"><code>java.util.concurrent.TimeoutException</code></a>. The <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection<? extends org.eclipse.emf.cdo.CDOObject>,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.unlockObjects(java.util.Collection, LockType)</code></a>
+ <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/TimeoutException.html" target="_blank" title="Class in java.util.concurrent"><code>java.util.concurrent.TimeoutException</code></a>. The <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#unlockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.unlockObjects(java.util.Collection, LockType)</code></a>
  and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#unlockObjects()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.unlockObjects()</code></a> methods release selected or all locks owned by the view.
  <p>
  The object-specific <a href="../../../javadoc/org/eclipse/emf/cdo/CDOLock.html" title="Interface in org.eclipse.emf.cdo"><code>CDOLock</code></a> handles provide the same operations for one object, including
@@ -136,8 +136,8 @@ function windowTitle()
  the owner is currently a purely durable (not locally open) view.
  <p>
  <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoLockState()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoLockState()</code></a> is convenient for a loaded object. A view can inspect multiple states with
- <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getLockStatesOfObjects(java.util.Collection<? extends org.eclipse.emf.cdo.CDOObject>)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getLockStatesOfObjects(java.util.Collection)</code></a> or <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getLockStates(java.util.Collection<org.eclipse.emf.cdo.common.id.CDOID>)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getLockStates(java.util.Collection)</code></a>.
- These are client-side, currently known states; use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#refreshLockStates(java.util.function.Consumer<org.eclipse.emf.cdo.common.lock.CDOLockState>)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.refreshLockStates(java.util.function.Consumer)</code></a>
+ <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getLockStatesOfObjects(java.util.Collection)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getLockStatesOfObjects(java.util.Collection)</code></a> or <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getLockStates(java.util.Collection)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getLockStates(java.util.Collection)</code></a>.
+ These are client-side, currently known states; use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#refreshLockStates(java.util.function.Consumer)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.refreshLockStates(java.util.function.Consumer)</code></a>
  when an application needs the latest states from the repository before making a decision.
 
 <h2><a name="DurableLocking"></a>6&nbsp;&nbsp;Durable Locking</h2>

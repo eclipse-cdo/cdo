@@ -401,6 +401,7 @@ function maximize(id)
             &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBPreparedStatement&nbsp;afterChange&nbsp;=&nbsp;connection.prepareStatement(<font color="#2a00ff">&#34;SELECT&nbsp;ID&nbsp;FROM&nbsp;CUSTOMER&nbsp;WHERE&nbsp;ID&nbsp;=&nbsp;?&#34;</font>,&nbsp;ReuseProbability.HIGH))<br/>
             &nbsp;&nbsp;{<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;afterChange.setInt(<font color="#990000">1</font>,&nbsp;<font color="#990000">42</font>);<br/>
+            <br/>
             &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(IDBResultSet&nbsp;rows&nbsp;=&nbsp;afterChange.executeQuery())<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(rows.next())<br/>

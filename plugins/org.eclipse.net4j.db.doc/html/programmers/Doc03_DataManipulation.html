@@ -1194,13 +1194,13 @@ function maximize(id)
 <h4><a name="DefaultJDBCSetters"></a>4.2.2&nbsp;&nbsp;Default JDBC Setters</h4>
 <p>
  Ordinary inferred values pass through CompiledStatement to IDBAdapter.bindParameter().
- DBAdapter chooses a typed setter only for a supported DBType and compatible Java value. A non-NULL
+ DBAdapter chooses a typed setter only for a supported <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a> and compatible Java value. A non-NULL
  incompatible combination falls back to generic setObject(); it does not silently convert the Java
  value. Known-type NULL uses bindParameterNull() and getJDBCTypeForNull(). For unknown-type
  non-NULL values, Java-type dispatch is controlled by useJavaTypeForUnknownParameterType(), which
  defaults to false.
  <p>
- <table>
+ <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse;">
  <caption>Default DBType and Java-type mappings</caption>
  <tr><th>DBType</th><th>Required Java value type</th><th>Default JDBC setter</th></tr>
  <tr><td>BOOLEAN, BIT</td><td>Boolean</td><td>setBoolean()</td></tr>
@@ -1214,6 +1214,7 @@ function maximize(id)
  <tr><td>CHAR, VARCHAR, LONGVARCHAR</td><td>String</td><td>setString()</td></tr>
  <tr><td>BINARY, VARBINARY, LONGVARBINARY</td><td>byte[]</td><td>setBytes()</td></tr>
  </table>
+ <p>
  BLOB, CLOB, and temporal DBTypes have no automatic specialized mapping in this dispatch. In particular,
  BLOB does not select setBytes() merely because a byte array is supplied.
  <p>
@@ -1396,6 +1397,15 @@ function maximize(id)
 </div>
 <p>
 
+ <p><p><b>See Also:</b></p>
+<ul>
+	<li><a href="../../javadoc/org/eclipse/net4j/db/dml/SQL.html#param(java.util.function.Function)" title="Method in org.eclipse.net4j.db.dml.SQL"><code>SQL.param(Function)</code></a></li>
+	<li><a href="../../javadoc/org/eclipse/net4j/db/dml/SQL.html#param(int,java.util.function.Function)" title="Method in org.eclipse.net4j.db.dml.SQL"><code>SQL.param(int, Function)</code></a></li>
+	<li><a href="../../javadoc/org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,int,JAVA,java.util.function.Function)" title="Method in org.eclipse.net4j.db.dml.SQLStatement"><code>SQLStatement.bindParameter(PreparedStatement, int, Object, Function)</code></a></li>
+	<li><a href="../../javadoc/org/eclipse/net4j/db/dml/SQLStatement.html#bindParameter(java.sql.PreparedStatement,org.eclipse.net4j.db.dml.SQLParameter,JAVA,java.util.function.Function)" title="Method in org.eclipse.net4j.db.dml.SQLStatement"><code>SQLStatement.bindParameter(PreparedStatement, SQLParameter, Object, Function)</code></a></li>
+	<li><a href="../../javadoc/org/eclipse/net4j/db/dml/SQLParameterBinder.html#bindParameter(JAVA,java.util.function.Function)" title="Method in org.eclipse.net4j.db.dml.SQLParameterBinder"><code>SQLParameterBinder.bindParameter(Object, Function)</code></a></li>
+</ul>
+
 
 <h4><a name="SQLValueSetters"></a>4.3.2&nbsp;&nbsp;SQLValueSetter</h4>
 <p>
@@ -1497,7 +1507,8 @@ function maximize(id)
  <p>
  The order in this table is precedence for one binding operation. A selected setter performs the complete
  operation and exits the default path.
- <table>
+ <p>
+ <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse;">
  <caption>Binding strategy precedence</caption>
  <tr><th>Order</th><th>Strategy</th><th>Effect</th></tr>
  <tr><td>1</td><td>Explicit SQLValueSetter</td><td>Uses the supplied setter and original value; bypasses remaining strategies.</td></tr>
@@ -1505,8 +1516,9 @@ function maximize(id)
  <tr><td>3</td><td>Configured SQLValueSetter</td><td>Uses the parameter setter and original value; bypasses remaining strategies.</td></tr>
  <tr><td>4</td><td>Configured converter</td><td>Converts non-NULL value, then continues to JDBC binding.</td></tr>
  <tr><td>5</td><td>Explicit JDBC target type</td><td>Uses setObject(value, type) or setNull(type).</td></tr>
- <tr><td>6</td><td>Default adapter binding</td><td>Uses inferred DBType and adapter policy for NULL or non-NULL values.</td></tr>
+ <tr><td>6</td><td>Default adapter binding</td><td>Uses inferred <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a> and adapter policy for NULL or non-NULL values.</td></tr>
  </table>
+ <p>
  An explicit converter therefore overrides a configured setter for that call, while a call-specific setter
  overrides both. Explicit JDBC types apply only when a setter has not already handled the value.
 
@@ -1604,18 +1616,18 @@ function maximize(id)
 
 <h2><a name="DBAdapterCustomization"></a>5&nbsp;&nbsp;DBAdapter Customization</h2>
 <p>
- IDBAdapter.bindParameter() is the public binding hook used for ordinary bindings. Its interface default
- is deliberately generic for independent implementations. DBAdapter supplies a typed implementation and
+ <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#bindParameter(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType,java.lang.Object)" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.bindParameter()</code></a> is the public binding hook used for ordinary bindings. Its interface default
+ is deliberately generic for independent implementations. <a href="../../javadoc/org/eclipse/net4j/spi/db/DBAdapter.html" title="Class in org.eclipse.net4j.spi.db"><code>DBAdapter</code></a> supplies a typed implementation and
  protected per-setter extension points for adapters that need to change one JDBC operation without replacing the
  type-dispatch algorithm.
 
 <h3><a name="DefaultBindingArchitecture"></a>5.1&nbsp;&nbsp;Default Binding Architecture</h3>
 <p>
  The SQL definition assigns values to logical parameters. Compilation records each physical occurrence and its
- inferred DBType. CompiledStatement applies selected converters, handles explicit JDBC target types, and
- delegates every remaining value, including typed NULL, to IDBAdapter.bindParameter(). The generic
+ inferred <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>. CompiledStatement applies selected converters, handles explicit JDBC target types, and
+ delegates every remaining value, including typed NULL, to <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#bindParameter(java.sql.PreparedStatement,int,org.eclipse.net4j.db.DBType,java.lang.Object)" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.bindParameter()</code></a>. The generic
  interface default uses setObject except for known-type NULL, which uses
- getJDBCTypeForNull(). DBAdapter dispatches supported compatible pairs to typed setters. This
+ getJDBCTypeForNull(). <a href="../../javadoc/org/eclipse/net4j/spi/db/DBAdapter.html" title="Class in org.eclipse.net4j.spi.db"><code>DBAdapter</code></a> dispatches supported compatible pairs to typed setters. This
  keeps occurrence logic in the compiler and JDBC customization in the adapter.
  <p>
  
@@ -1668,7 +1680,7 @@ function maximize(id)
 <p>
  DBAdapter.useJavaTypeForUnknownParameterType() defaults to false. Under that conservative
  policy, an unknown non-NULL value uses setObject. If enabled, supported Java scalar classes select the
- same typed hooks used for known compatible DBType/value pairs; unsupported classes still use setObject.
+ same typed hooks used for known compatible <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>/value pairs; unsupported classes still use setObject.
  The policy does not change known-type dispatch, and unknown NULL remains generic object binding at the adapter
  level. Structured DML separately rejects unknown untyped NULL before delegation.
  <p>
@@ -1789,7 +1801,8 @@ function maximize(id)
 </div>
 <p>
 
- <table>
+ <p>
+ <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse;">
  <caption>DBAdapter binding extension points</caption>
  <tr><th>Method</th><th>Default JDBC call</th></tr>
  <tr><td>bindParameterBoolean</td><td>setBoolean(index, value)</td></tr>

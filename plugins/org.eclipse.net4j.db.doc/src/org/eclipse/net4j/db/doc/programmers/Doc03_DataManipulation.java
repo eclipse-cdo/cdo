@@ -34,11 +34,13 @@ import org.eclipse.net4j.db.dml.SQLValueSetter;
 import org.eclipse.net4j.db.dml.fluent.SQLInStep;
 import org.eclipse.net4j.db.dml.fluent.SQLSelectWhereStep;
 import org.eclipse.net4j.db.h2.H2Adapter;
+import org.eclipse.net4j.spi.db.DBAdapter;
 
 import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.function.Function;
 
 /**
  * Data Manipulation
@@ -836,13 +838,13 @@ public class Doc03_DataManipulation
        * Default JDBC Setters
        * <p>
         * Ordinary inferred values pass through {@code CompiledStatement} to {@code IDBAdapter.bindParameter()}.
-        * {@code DBAdapter} chooses a typed setter only for a supported DBType and compatible Java value. A non-NULL
+        * {@code DBAdapter} chooses a typed setter only for a supported {@link DBType} and compatible Java value. A non-NULL
         * incompatible combination falls back to generic {@code setObject()}; it does not silently convert the Java
         * value. Known-type NULL uses {@code bindParameterNull()} and {@code getJDBCTypeForNull()}. For unknown-type
         * non-NULL values, Java-type dispatch is controlled by {@code useJavaTypeForUnknownParameterType()}, which
         * defaults to {@code false}.
         * <p>
-        * <table>
+        * <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse;">
         * <caption>Default DBType and Java-type mappings</caption>
         * <tr><th>DBType</th><th>Required Java value type</th><th>Default JDBC setter</th></tr>
         * <tr><td>{@code BOOLEAN}, {@code BIT}</td><td>{@code Boolean}</td><td>{@code setBoolean()}</td></tr>
@@ -856,6 +858,7 @@ public class Doc03_DataManipulation
         * <tr><td>{@code CHAR}, {@code VARCHAR}, {@code LONGVARCHAR}</td><td>{@code String}</td><td>{@code setString()}</td></tr>
         * <tr><td>{@code BINARY}, {@code VARBINARY}, {@code LONGVARBINARY}</td><td>{@code byte[]}</td><td>{@code setBytes()}</td></tr>
         * </table>
+        * <p>
         * BLOB, CLOB, and temporal DBTypes have no automatic specialized mapping in this dispatch. In particular,
         * {@code BLOB} does not select {@code setBytes()} merely because a byte array is supplied.
         * <p>
@@ -937,6 +940,12 @@ public class Doc03_DataManipulation
        * The first example configures a converter; the second overrides it for one binding call:
        * {@link #bindConvertedValue(IDBAdapter, IDBConnection, IDBTable, IDBField) BindConvertedValue.java}
        * {@link #overrideValueConverter(IDBAdapter, IDBConnection, IDBTable, IDBField) OverrideValueConverter.java}
+       * <p>
+       * @see SQL#param(Function)
+       * @see SQL#param(int, Function)
+       * @see SQLStatement#bindParameter(PreparedStatement, int, Object, Function)
+       * @see SQLStatement#bindParameter(PreparedStatement, SQLParameter, Object, Function)
+       * @see SQLParameterBinder#bindParameter(Object, Function)
        */
       public class ValueConverters
       {
@@ -1045,7 +1054,8 @@ public class Doc03_DataManipulation
        * <p>
        * The order in this table is precedence for one binding operation. A selected setter performs the complete
        * operation and exits the default path.
-       * <table>
+       * <p>
+       * <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse;">
        * <caption>Binding strategy precedence</caption>
        * <tr><th>Order</th><th>Strategy</th><th>Effect</th></tr>
        * <tr><td>1</td><td>Explicit SQLValueSetter</td><td>Uses the supplied setter and original value; bypasses remaining strategies.</td></tr>
@@ -1053,8 +1063,9 @@ public class Doc03_DataManipulation
        * <tr><td>3</td><td>Configured SQLValueSetter</td><td>Uses the parameter setter and original value; bypasses remaining strategies.</td></tr>
        * <tr><td>4</td><td>Configured converter</td><td>Converts non-NULL value, then continues to JDBC binding.</td></tr>
        * <tr><td>5</td><td>Explicit JDBC target type</td><td>Uses setObject(value, type) or setNull(type).</td></tr>
-       * <tr><td>6</td><td>Default adapter binding</td><td>Uses inferred DBType and adapter policy for NULL or non-NULL values.</td></tr>
+       * <tr><td>6</td><td>Default adapter binding</td><td>Uses inferred {@link DBType} and adapter policy for NULL or non-NULL values.</td></tr>
        * </table>
+       * <p>
        * An explicit converter therefore overrides a configured setter for that call, while a call-specific setter
        * overrides both. Explicit JDBC types apply only when a setter has not already handled the value.
        */
@@ -1126,8 +1137,8 @@ public class Doc03_DataManipulation
   /**
    * DBAdapter Customization
    * <p>
-   * {@code IDBAdapter.bindParameter()} is the public binding hook used for ordinary bindings. Its interface default
-   * is deliberately generic for independent implementations. {@code DBAdapter} supplies a typed implementation and
+   * {@link IDBAdapter#bindParameter(PreparedStatement, int, DBType, Object) IDBAdapter.bindParameter()} is the public binding hook used for ordinary bindings. Its interface default
+   * is deliberately generic for independent implementations. {@link DBAdapter} supplies a typed implementation and
    * protected per-setter extension points for adapters that need to change one JDBC operation without replacing the
    * type-dispatch algorithm.
    */
@@ -1137,10 +1148,10 @@ public class Doc03_DataManipulation
      * Default Binding Architecture
      * <p>
      * The SQL definition assigns values to logical parameters. Compilation records each physical occurrence and its
-     * inferred DBType. {@code CompiledStatement} applies selected converters, handles explicit JDBC target types, and
-     * delegates every remaining value, including typed NULL, to {@code IDBAdapter.bindParameter()}. The generic
+     * inferred {@link DBType}. {@code CompiledStatement} applies selected converters, handles explicit JDBC target types, and
+     * delegates every remaining value, including typed NULL, to {@link IDBAdapter#bindParameter(PreparedStatement, int, DBType, Object) IDBAdapter.bindParameter()}. The generic
      * interface default uses {@code setObject} except for known-type NULL, which uses
-     * {@code getJDBCTypeForNull()}. {@code DBAdapter} dispatches supported compatible pairs to typed setters. This
+     * {@code getJDBCTypeForNull()}. {@link DBAdapter} dispatches supported compatible pairs to typed setters. This
      * keeps occurrence logic in the compiler and JDBC customization in the adapter.
      * <p>
      * {@link #bindDefaultScalarParameters(IDBAdapter, IDBConnection, IDBTable, IDBField, IDBField) BindDefaultScalarParameters.java}
@@ -1178,7 +1189,7 @@ public class Doc03_DataManipulation
      * <p>
      * {@code DBAdapter.useJavaTypeForUnknownParameterType()} defaults to {@code false}. Under that conservative
      * policy, an unknown non-NULL value uses {@code setObject}. If enabled, supported Java scalar classes select the
-     * same typed hooks used for known compatible DBType/value pairs; unsupported classes still use {@code setObject}.
+     * same typed hooks used for known compatible {@link DBType}/value pairs; unsupported classes still use {@code setObject}.
      * The policy does not change known-type dispatch, and unknown NULL remains generic object binding at the adapter
      * level. Structured DML separately rejects unknown untyped NULL before delegation.
      * <p>
@@ -1238,7 +1249,8 @@ public class Doc03_DataManipulation
      * concrete reason to change it.
      * <p>
      * {@link #customizeBooleanBinding(IDBConnection, IDBTable, IDBField) CustomizeBooleanBinding.java}
-     * <table>
+     * <p>
+     * <table border="1" cellspacing="0" cellpadding="5" style="border-collapse: collapse;">
      * <caption>DBAdapter binding extension points</caption>
      * <tr><th>Method</th><th>Default JDBC call</th></tr>
      * <tr><td>{@code bindParameterBoolean}</td><td>{@code setBoolean(index, value)}</td></tr>

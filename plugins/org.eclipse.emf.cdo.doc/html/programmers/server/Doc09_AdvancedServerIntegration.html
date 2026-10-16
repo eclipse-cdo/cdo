@@ -97,7 +97,7 @@ function maximize(id)
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepositorySynchronizer.html" title="Interface in org.eclipse.emf.cdo.server"><code>IRepositorySynchronizer</code></a>. Create the synchronizer from a remote <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionConfigurationFactory.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSessionConfigurationFactory</code></a>;
  that factory supplies the remote session configuration, including connector and repository name. Configure retry
  and recommit policy before activation, create the specialized repository with
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map<java.lang.String,java.lang.String>,org.eclipse.emf.cdo.server.IRepositorySynchronizer)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createOfflineClone(String, IStore, Map, IRepositorySynchronizer)</code></a> or a failover-participant
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createOfflineClone(String, IStore, Map, IRepositorySynchronizer)</code></a> or a failover-participant
  factory, then register it with the owning container. Repository activation starts synchronization; container
  deactivation stops the repository and synchronizer. The synchronizer owns the remote session it opens, while the
  application still owns the container, local store resources, and separately created connector infrastructure.
@@ -116,7 +116,7 @@ function maximize(id)
  not select a master, detect safe promotion, resolve split-brain, or guarantee automatic high availability. Those
  decisions and storage durability remain application and operations responsibilities. Progress and state events
  are useful inputs, but are not an operational failover protocol.
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map<java.lang.String,java.lang.String>,org.eclipse.emf.cdo.server.IRepositorySynchronizer)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createOfflineClone(String, IStore, Map, IRepositorySynchronizer)</code></a> and the
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/CDOServerUtil.html#createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)" title="Method in org.eclipse.emf.cdo.server.CDOServerUtil"><code>CDOServerUtil.createOfflineClone(String, IStore, Map, IRepositorySynchronizer)</code></a> and the
  failover-participant factories assemble specialized repository variants, but the
  application must still choose and coordinate the master, backup, storage, and transition policy. The API does not
  itself establish an operational failover topology or guarantee promotion safety. Treat source/target selection,

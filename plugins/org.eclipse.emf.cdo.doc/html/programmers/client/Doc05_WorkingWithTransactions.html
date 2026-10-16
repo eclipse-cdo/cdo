@@ -334,7 +334,7 @@ function maximize(id)
 <h2><a name="PartialCommits"></a>6&nbsp;&nbsp;Partial Commits</h2>
 <p>
  A transaction can restrict one commit to a set of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>committable objects</code></a> with
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set<? extends org.eclipse.emf.ecore.EObject>)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommittables(Set)</code></a>. CDO filters the transaction's new, dirty, and detached objects against
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommittables(Set)</code></a>. CDO filters the transaction's new, dirty, and detached objects against
  this set; it does not automatically compute a dependency closure. If a selected object refers to a new object that
  is not selected, the intended commit may be incomplete or violate model constraints. Include the full set needed
  for a valid repository change. Non-selected changes remain local and the transaction stays dirty. Use partial

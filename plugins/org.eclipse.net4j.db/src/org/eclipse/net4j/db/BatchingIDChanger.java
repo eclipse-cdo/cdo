@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * This class is expected to be used with {@link IDChanger#changeIDs(Map, ChangeHandler)} to perform ID changes in bulk.
  * Here is an example of how to use it:
  * <pre>
- * Map<Integer, Integer> idChanges = ...; // Map of old IDs to new IDs.
+ * Map&lt;Integer, Integer> idChanges = ...; // Map of old IDs to new IDs.
  *
  * // Create a StatementBatcher with a try-with-resources statement.
  * // The final execution of the batch will occur when the batcher is closed.
@@ -42,6 +42,7 @@ import java.util.stream.Collectors;
  *   // Perform the ID changes using the handler.
  *   IDChanger.changeIDs(idChanges, handler);
  * }
+ * </pre>
  *
  * @author Eike Stepper
  * @since 4.13

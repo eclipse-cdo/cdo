@@ -103,7 +103,6 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       configuration.setHeartBeatEnabled(true);
 
       reconnectingSession = (CDONet4jSession)openSession(configuration);
-
       dumpEvents(reconnectingSession);
 
       CountDownLatch recoveryStarted = new CountDownLatch(1);
@@ -381,73 +380,6 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     }
   }
 
-  private void sendMessageToAllSessions(String type, CDOSession session) throws InterruptedException
-  {
-    CDORemoteSession[] remoteSessions = session.getRemoteSessionManager().getRemoteSessions();
-    for (CDORemoteSession remoteSession : remoteSessions)
-    {
-      remoteSession.sendMessage(new CDORemoteSessionMessage(type));
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class RemoteMessageListener extends CDORemoteSessionManager.EventAdapter
-  {
-    private List<String> received = new ArrayList<>();
-
-    public RemoteMessageListener()
-    {
-    }
-
-    @Override
-    protected void onMessageReceived(CDORemoteSession remoteSession, CDORemoteSessionMessage message)
-    {
-      received.add(message.getType());
-    }
-
-    public void assertReceivedMessages(List<String> expected) throws InterruptedException
-    {
-      long timeout = System.currentTimeMillis() + 2000;
-      while (System.currentTimeMillis() < timeout)
-      {
-        if (expected.equals(received))
-        {
-          break;
-        }
-
-        Thread.sleep(20);
-      }
-
-      assertEquals(expected, received);
-    }
-  }
-
-  private void checkLockNotifications(CDOResource resource1, CDOResource resReconn) throws Exception
-  {
-    CDOView viewReconn = resReconn.cdoView();
-    assertEquals(true, viewReconn.options().isLockNotificationEnabled());
-    assertNull(resReconn.cdoLockState().getWriteLockOwner());
-
-    TestListener listener = new TestListener(viewReconn);
-
-    resource1.cdoWriteLock().lock(1000);
-
-    listener.assertEvent(CDOViewLocksChangedEvent.class, e -> {
-      assertNotNull(resReconn.cdoLockState().getWriteLockOwner());
-      assertEquals(((InternalCDOView)resource1.cdoView()).getLockOwner(), resReconn.cdoLockState().getWriteLockOwner());
-    });
-
-    listener.clearEvents();
-
-    resource1.cdoWriteLock().unlock();
-
-    listener.assertEvent(CDOViewLocksChangedEvent.class, e -> {
-      assertNull(resReconn.cdoLockState().getWriteLockOwner());
-    });
-  }
-
   public void testReconnectTwice() throws Exception
   {
     CDOSession session1 = openSession();
@@ -716,6 +648,85 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     {
       LifecycleUtil.deactivate(session);
       LifecycleUtil.deactivate(acceptor);
+    }
+  }
+
+  private void sendMessageToAllSessions(String type, CDOSession session) throws InterruptedException
+  {
+    CDORemoteSession[] remoteSessions = session.getRemoteSessionManager().getRemoteSessions();
+    for (CDORemoteSession remoteSession : remoteSessions)
+    {
+      remoteSession.sendMessage(new CDORemoteSessionMessage(type));
+    }
+  }
+
+  private void checkLockNotifications(CDOResource resource1, CDOResource resReconn) throws Exception
+  {
+    CDOView viewReconn = resReconn.cdoView();
+    assertEquals(true, viewReconn.options().isLockNotificationEnabled());
+    assertNull(resReconn.cdoLockState().getWriteLockOwner());
+
+    TestListener listener = new TestListener(viewReconn);
+
+    resource1.cdoWriteLock().lock(1000);
+
+    listener.assertEvent(CDOViewLocksChangedEvent.class, e -> {
+      assertNotNull(resReconn.cdoLockState().getWriteLockOwner());
+      assertEquals(((InternalCDOView)resource1.cdoView()).getLockOwner(), resReconn.cdoLockState().getWriteLockOwner());
+    });
+
+    listener.clearEvents();
+
+    resource1.cdoWriteLock().unlock();
+
+    listener.assertEvent(CDOViewLocksChangedEvent.class, e -> {
+      assertNull(resReconn.cdoLockState().getWriteLockOwner());
+    });
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RemoteMessageListener extends CDORemoteSessionManager.EventAdapter
+  {
+    private final List<String> received = new ArrayList<>();
+
+    public RemoteMessageListener()
+    {
+    }
+
+    @Override
+    protected void onMessageReceived(CDORemoteSession remoteSession, CDORemoteSessionMessage message)
+    {
+      String type = message.getType();
+
+      synchronized (received)
+      {
+        received.add(type);
+      }
+    }
+
+    public void assertReceivedMessages(List<String> expected) throws InterruptedException
+    {
+      long timeout = System.currentTimeMillis() + 2000;
+
+      while (System.currentTimeMillis() < timeout)
+      {
+        synchronized (received)
+        {
+          if (expected.equals(received))
+          {
+            break;
+          }
+        }
+
+        Thread.sleep(20);
+      }
+
+      synchronized (received)
+      {
+        assertEquals(expected, received);
+      }
     }
   }
 }

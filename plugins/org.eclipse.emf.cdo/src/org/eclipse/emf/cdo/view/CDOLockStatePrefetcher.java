@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
-import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -32,6 +31,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.ArrayList;
@@ -157,18 +157,6 @@ public class CDOLockStatePrefetcher
     return null;
   }
 
-  private void addMissingLockState(CDOObject object, List<CDOLockState> missingLockStates)
-  {
-    if (object != null && getLockState(object) == null)
-    {
-      Object lockedObject = getLockTarget(object); // CDOID or CDOIDAndBranch
-      if (lockedObject != null)
-      {
-        missingLockStates.add(CDOLockUtil.createLockState(lockedObject));
-      }
-    }
-  }
-
   private void updateLockStates(CDORevisionsLoadedEvent event)
   {
     view.sync().run(() -> {
@@ -206,19 +194,43 @@ public class CDOLockStatePrefetcher
           }
         }
 
+        // Include prefetch-loaded revisions in the same query so their lock states share one baseline.
+        for (CDORevision revision : event.getAdditionalLoadedRevisions())
+        {
+          CDOID id = revision.getID();
+          if (id != null && filter.test(id))
+          {
+            boolean normalObject = !revision.isResourceNode();
+
+            try
+            {
+              CDOObject object = view.getObject(id, normalObject);
+              if (object != null)
+              {
+                ids.add(id);
+              }
+            }
+            catch (ObjectNotFoundException ex)
+            {
+              //$FALL-THROUGH$
+            }
+          }
+        }
+
         if (!ids.isEmpty())
         {
           // Direct call the session protocol.
           CDOSessionProtocol sessionProtocol = view.getSession().getSessionProtocol();
+          CDOBranch branch = view.getBranch();
+          CDOLockStateCache lockStateCache = view.getSession().getLockStateCache();
           CDOSessionProtocol.LockStateQueryResult queryResult;
 
           for (;;)
           {
-            queryResult = sessionProtocol.getLockStates3(view.getBranch().getID(), ids, event.getPrefetchDepth());
+            queryResult = sessionProtocol.getLockStates3(branch.getID(), ids, event.getPrefetchDepth());
 
             List<CDOLockState> loadedLockStates = queryResult.getLockStates();
             List<CDOLockState> queryCacheStates = new ArrayList<>(loadedLockStates);
-            List<CDOLockState> additionalLockStates = new ArrayList<>();
             Set<CDOID> returnedIDs = new HashSet<>();
 
             for (CDOLockState lockState : loadedLockStates)
@@ -228,44 +240,11 @@ public class CDOLockStatePrefetcher
 
             for (CDOID id : ids)
             {
-              if (returnedIDs.contains(id))
+              if (!returnedIDs.contains(id))
               {
-                continue;
-              }
-
-              try
-              {
-                CDOObject object = view.getObject(id, false);
-                if (object != null)
-                {
-                  addMissingLockState(object, queryCacheStates);
-                }
-              }
-              catch (ObjectNotFoundException ex)
-              {
-                //$FALL-THROUGH$
-              }
-            }
-
-            for (CDORevision revision : event.getAdditionalLoadedRevisions())
-            {
-              CDOID id = revision.getID();
-              if (id != null && filter.test(id))
-              {
-                boolean normalObject = !revision.isResourceNode();
-
-                try
-                {
-                  CDOObject object = view.getObject(id, normalObject);
-                  if (object != null)
-                  {
-                    addMissingLockState(object, additionalLockStates);
-                  }
-                }
-                catch (ObjectNotFoundException ex)
-                {
-                  //$FALL-THROUGH$
-                }
+                // Omitted IDs are unlocked at this baseline and must be installed through the sequencer too.
+                queryCacheStates.add(CDOLockUtil.createLockState(lockStateCache.createKey(branch, id)));
+                returnedIDs.add(id);
               }
             }
 
@@ -273,9 +252,8 @@ public class CDOLockStatePrefetcher
             long lockModCount = queryResult.getLockModCount();
 
             InternalCDOSession session = view.getSession();
-            if (session.enqueueLockStateQuery(lockModCount, () -> session.applyLockStateQuery(lockModCount, view.getBranch(), capturedStates)))
+            if (session.enqueueLockStateQuery(lockModCount, () -> session.applyLockStateQuery(lockModCount, branch, capturedStates)))
             {
-              updateLockStates(additionalLockStates, false);
               break;
             }
           }
@@ -289,22 +267,5 @@ public class CDOLockStatePrefetcher
         }
       }
     });
-  }
-
-  private void updateLockStates(List<CDOLockState> lockStates, boolean loadOnDemand)
-  {
-    try
-    {
-      CDOBranch branch = view.getBranch();
-      CDOLockStateCache lockStateCache = view.getSession().getLockStateCache();
-      lockStateCache.addLockStates(branch, lockStates, null);
-    }
-    catch (Exception ex)
-    {
-      if (view.isActive())
-      {
-        OM.LOG.error(ex);
-      }
-    }
   }
 }

@@ -55,6 +55,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Internal contract for the client-side connection to a CDO repository. It owns the session's views and managers,
@@ -238,6 +239,30 @@ public interface InternalCDOSession
    * @since 4.31
    */
   public boolean enqueueLockStateQuery(long lockModCount, Runnable action);
+
+  /**
+   * Registers a lock-state query update and reports whether it was applied or superseded by a snapshot.
+   * <p>
+   * The completion is completed exceptionally if the action fails, recovery discards it, or the session closes.
+   *
+   * @param lockModCount the lock modification count captured by the query
+   * @param action the cache update to apply at that sequence boundary
+   * @param completion receives {@code true} if the action ran, or {@code false} if a snapshot superseded it
+   * @return {@code true} if the query result was accepted, or {@code false} if a newer sequence was already applied
+   * @since 4.31
+   */
+  public boolean enqueueLockStateQuery(long lockModCount, Runnable action, CompletableFuture<Boolean> completion);
+
+  /**
+   * Waits for an accepted lock-state query to run or be superseded.
+   * <p>
+   * Throws {@link IllegalStateException} if the current thread holds access to any view of this session.
+   *
+   * @param completion the completion returned by an accepted query registration
+   * @return {@code true} if the query action ran, or {@code false} if a snapshot superseded it
+   * @since 4.31
+   */
+  public boolean awaitLockStateQuery(CompletableFuture<Boolean> completion);
 
   /**
    * Applies lock states captured by a lock-state query.

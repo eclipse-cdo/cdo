@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
+import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LockStateRequest;
@@ -67,6 +68,10 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.tests.TestListener2;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.ChangeLockAreaResult;
@@ -78,12 +83,15 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -629,11 +637,420 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
   }
 
+  public void testRefreshLockStatesIncludesRemoteLocksAndWaitsForBaseline() throws Exception
+  {
+    CDOSession locker = openSession();
+    CDOTransaction lockerTransaction = locker.openTransaction();
+    CDOResource resource = lockerTransaction.createResource(getResourcePath("refreshRemoteLockState"));
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    lockerTransaction.commit();
+    CDOObject lockerObject = CDOUtil.getCDOObject(company);
+
+    CDOSession observer = openSession();
+    CDOTransaction observerTransaction = observer.openTransaction(lockerTransaction.getBranch());
+    observerTransaction.options().setLockNotificationEnabled(true);
+    CDOObject observedObject = observerTransaction.getObject(lockerObject.cdoID());
+    lockerTransaction.lockObjects(Collections.singleton(lockerObject), LockType.WRITE, DEFAULT_TIMEOUT, false);
+
+    InternalCDOSession internalObserver = (InternalCDOSession)observer;
+    CDOSessionImpl observerImpl = (CDOSessionImpl)observer;
+    CDOLockStateCache cache = internalObserver.getLockStateCache();
+    CDOBranch branch = observerTransaction.getBranch();
+    CDOID objectID = observedObject.cdoID();
+    observerImpl.awaitLockChange(1L);
+    assertEquals(lockerTransaction.getLockOwner(), getCachedLockState(cache, branch, objectID).getWriteLockOwner());
+
+    CountDownLatch notificationBlocked = new CountDownLatch(1);
+    CountDownLatch notificationRelease = new CountDownLatch(1);
+    lockNotificationBlocked = notificationBlocked;
+    lockNotificationRelease = notificationRelease;
+
+    CDOSessionProtocol originalProtocol = internalObserver.getSessionProtocol();
+    CountDownLatch queryCaptured = new CountDownLatch(1);
+    CountDownLatch releaseQuery = new CountDownLatch(1);
+    DelayingLockStateQueryProtocol delayedProtocol = new DelayingLockStateQueryProtocol(originalProtocol, queryCaptured, releaseQuery);
+    internalObserver.setSessionProtocol(delayedProtocol);
+
+    CountDownLatch refreshReturned = new CountDownLatch(1);
+    AtomicReference<CDOLockState> consumedLockState = new AtomicReference<>();
+    AtomicReference<Throwable> refreshFailure = new AtomicReference<>();
+    Thread refreshThread = new Thread(() -> {
+      try
+      {
+        observerTransaction.refreshLockStates(lockState -> {
+          if (objectID.equals(lockState.getID()))
+          {
+            consumedLockState.set(lockState);
+          }
+        });
+      }
+      catch (Throwable ex)
+      {
+        refreshFailure.set(ex);
+      }
+      finally
+      {
+        refreshReturned.countDown();
+      }
+    }, "refresh-remote-lock-state"); //$NON-NLS-1$
+
+    refreshThread.setDaemon(true);
+    SignalCounter signalCounter = new SignalCounter(((CDONet4jSession)observer).options().getNet4jProtocol());
+
+    try
+    {
+      lockerTransaction.unlockObjects(Collections.singleton(lockerObject), LockType.WRITE, false);
+      assertTrue("The remote unlock notification did not reach its gate", notificationBlocked.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+
+      refreshThread.start();
+      assertTrue("The refresh query did not capture its response", queryCaptured.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+      assertEquals(branch.getID(), delayedProtocol.getQueryBranchID());
+      assertTrue("The refresh query must include the remotely locked object", delayedProtocol.getQueryIDs().contains(objectID)); //$NON-NLS-1$
+      assertTrue("The server must omit the now-unlocked object",
+          delayedProtocol.getFirstResult().getLockStates().stream().noneMatch(state -> objectID.equals(state.getID())));
+
+      releaseQuery.countDown();
+      awaitPendingLockStateQuery(observerImpl, delayedProtocol.getFirstResult().getLockModCount());
+      assertEquals("The accepted baseline action must keep refresh pending", 1L, refreshReturned.getCount()); //$NON-NLS-1$
+      assertEquals(lockerTransaction.getLockOwner(), getCachedLockState(cache, branch, objectID).getWriteLockOwner());
+
+      notificationRelease.countDown();
+      assertTrue("The refresh did not finish after its baseline carrier", refreshReturned.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+      assertNull(refreshFailure.get());
+      assertEquals(2L, getCurrentLockModCount(internalObserver));
+      assertNotNull("The refresh consumer was not called", consumedLockState.get()); //$NON-NLS-1$
+      assertEquals(objectID, consumedLockState.get().getID());
+      assertNull(consumedLockState.get().getWriteLockOwner());
+      assertNull(getCachedLockState(cache, branch, objectID).getWriteLockOwner());
+      assertEquals(1, signalCounter.getCountFor(LockStateRequest.class));
+    }
+    finally
+    {
+      releaseQuery.countDown();
+      notificationRelease.countDown();
+      lockNotificationBlocked = null;
+      lockNotificationRelease = null;
+      internalObserver.setSessionProtocol(originalProtocol);
+      signalCounter.dispose();
+      refreshThread.join(TimeUnit.SECONDS.toMillis(5));
+      lockerTransaction.unlockObjects(Collections.singleton(lockerObject), LockType.WRITE, false);
+      observer.close();
+      locker.close();
+    }
+  }
+
+  public void testLockStatePrefetchQueriesAdditionalRevisionsAtOneBaseline() throws Exception
+  {
+    CDOSession locker = openSession();
+    CDOTransaction lockerTransaction = locker.openTransaction();
+    lockerTransaction.options().setLockNotificationEnabled(false);
+    CDOResource resource = lockerTransaction.createResource(getResourcePath("prefetchAdditionalLockStates"));
+    Company company = getModel1Factory().createCompany();
+    Category category = getModel1Factory().createCategory();
+    company.getCategories().add(category);
+    resource.getContents().add(company);
+    lockerTransaction.commit();
+
+    CDOID companyID = CDOUtil.getCDOObject(company).cdoID();
+    CDOID categoryID = CDOUtil.getCDOObject(category).cdoID();
+    CDOSession observer = openSession();
+    ResourceSet resourceSet = new ResourceSetImpl();
+    resourceSet.eAdapters().add(new AdapterImpl()
+    {
+      @Override
+      public void notifyChanged(Notification msg)
+      {
+        Object newValue = msg.getNewValue();
+        if (newValue instanceof CDOResource)
+        {
+          ((CDOResource)newValue).cdoPrefetch(CDORevision.DEPTH_INFINITE);
+        }
+      }
+    });
+
+    CDOTransaction observerTransaction = observer.openTransaction(resourceSet);
+    observerTransaction.options().setLockNotificationEnabled(true);
+    new CDOLockStatePrefetcher(observerTransaction, false);
+    InternalCDOSession internalObserver = (InternalCDOSession)observer;
+    CDOSessionImpl observerImpl = (CDOSessionImpl)observer;
+    CDOSessionProtocol originalProtocol = internalObserver.getSessionProtocol();
+    CapturingLockStateQueryProtocol capturingProtocol = new CapturingLockStateQueryProtocol(originalProtocol);
+    internalObserver.setSessionProtocol(capturingProtocol);
+    List<CDORevisionsLoadedEvent> revisionsLoaded = Collections.synchronizedList(new ArrayList<>());
+    IListener revisionsLoadedListener = event -> {
+      if (event instanceof CDORevisionsLoadedEvent)
+      {
+        revisionsLoaded.add((CDORevisionsLoadedEvent)event);
+      }
+    };
+    observer.getRevisionManager().addListener(revisionsLoadedListener);
+
+    CountDownLatch notificationBlocked = new CountDownLatch(1);
+    CountDownLatch notificationRelease = new CountDownLatch(1);
+    lockNotificationBlocked = notificationBlocked;
+    lockNotificationRelease = notificationRelease;
+
+    try
+    {
+      lockerTransaction.lockObjects(Collections.singleton(CDOUtil.getCDOObject(category)), LockType.WRITE, DEFAULT_TIMEOUT, false);
+      lockerTransaction.lockObjects(Collections.singleton(CDOUtil.getCDOObject(company)), LockType.WRITE, DEFAULT_TIMEOUT, false);
+      assertTrue("The first lock notification did not reach its gate", notificationBlocked.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+
+      CDOObject companyFromObserver = observerTransaction.getObject(companyID);
+      CDOObject categoryFromObserver = observerTransaction.getObject(categoryID);
+      List<CDOID> primaryIDsForAdditionalRevisions = Collections.emptyList();
+
+      synchronized (revisionsLoaded)
+      {
+        for (CDORevisionsLoadedEvent event : revisionsLoaded)
+        {
+          List<CDOID> additionalIDs = new ArrayList<>();
+
+          for (CDORevision revision : event.getAdditionalLoadedRevisions())
+          {
+            additionalIDs.add(revision.getID());
+          }
+
+          if (additionalIDs.contains(companyID) && additionalIDs.contains(categoryID))
+          {
+            primaryIDsForAdditionalRevisions = new ArrayList<>();
+
+            for (CDORevision revision : event.getPrimaryLoadedRevisions())
+            {
+              primaryIDsForAdditionalRevisions.add(revision.getID());
+            }
+
+            break;
+          }
+        }
+      }
+
+      assertFalse("The company and category must be additional revisions in one prefetch event", primaryIDsForAdditionalRevisions.isEmpty()); //$NON-NLS-1$
+
+      List<LockStateQueryCapture> queries = capturingProtocol.getQueries();
+      LockStateQueryCapture prefetchQuery = findQuery(queries, companyID, categoryID);
+      assertNotNull("The server query must include and return both additional revisions", prefetchQuery); //$NON-NLS-1$
+      assertTrue("The server query must include the event's primary revisions", //$NON-NLS-1$
+          primaryIDsForAdditionalRevisions.stream().anyMatch(prefetchQuery.ids::contains));
+      assertEquals(2L, prefetchQuery.result.getLockModCount());
+      awaitPendingLockStateQuery(observerImpl, prefetchQuery.result.getLockModCount());
+      assertEquals(0L, getCurrentLockModCount(internalObserver));
+
+      CDOLockOwner lockerOwner = lockerTransaction.getLockOwner();
+      assertEquals(lockerOwner, findWriteLockOwner(prefetchQuery, companyID));
+      assertEquals(lockerOwner, findWriteLockOwner(prefetchQuery, categoryID));
+      assertTrue(companyFromObserver.cdoWriteLock().isLockedByOthers());
+      assertTrue(categoryFromObserver.cdoWriteLock().isLockedByOthers());
+
+      notificationRelease.countDown();
+      observerImpl.awaitLockChange(2L);
+      CDOBranch branch = observerTransaction.getBranch();
+      assertEquals(lockerOwner, internalObserver.getLockStateCache().getLockState(branch, companyID).getWriteLockOwner());
+      assertEquals(lockerOwner, internalObserver.getLockStateCache().getLockState(branch, categoryID).getWriteLockOwner());
+    }
+    finally
+    {
+      notificationRelease.countDown();
+      lockNotificationBlocked = null;
+      lockNotificationRelease = null;
+      observer.getRevisionManager().removeListener(revisionsLoadedListener);
+      internalObserver.setSessionProtocol(originalProtocol);
+      observerTransaction.close();
+      observer.close();
+      lockerTransaction.unlockObjects(Arrays.asList(CDOUtil.getCDOObject(company), CDOUtil.getCDOObject(category)), LockType.WRITE, false);
+      locker.close();
+    }
+  }
+
+  private static LockStateQueryCapture findQuery(List<LockStateQueryCapture> queries, CDOID firstID, CDOID secondID)
+  {
+    for (LockStateQueryCapture query : queries)
+    {
+      boolean hasFirstID = false;
+      boolean hasSecondID = false;
+
+      for (CDOLockState lockState : query.result.getLockStates())
+      {
+        hasFirstID |= firstID.equals(lockState.getID());
+        hasSecondID |= secondID.equals(lockState.getID());
+      }
+
+      if (hasFirstID && hasSecondID && query.ids.contains(firstID) && query.ids.contains(secondID))
+      {
+        return query;
+      }
+    }
+
+    return null;
+  }
+
+  private static CDOLockOwner findWriteLockOwner(LockStateQueryCapture query, CDOID id)
+  {
+    for (CDOLockState lockState : query.result.getLockStates())
+    {
+      if (id.equals(lockState.getID()))
+      {
+        return lockState.getWriteLockOwner();
+      }
+    }
+
+    return null;
+  }
+
   private static CDOLockState getCachedLockState(CDOLockStateCache cache, CDOBranch branch, CDOID id)
   {
     AtomicReference<CDOLockState> result = new AtomicReference<>();
     cache.getLockStates(branch, Collections.singleton(id), false, result::set);
     return result.get();
+  }
+
+  private static void awaitPendingLockStateQuery(CDOSessionImpl session, long baseline) throws Exception
+  {
+    Field sequencerField = CDOSessionImpl.class.getDeclaredField("lockChangeSequencer"); //$NON-NLS-1$
+    sequencerField.setAccessible(true);
+    Object sequencer = sequencerField.get(session);
+    Field actionsField = sequencer.getClass().getDeclaredField("pendingBaselineActions"); //$NON-NLS-1$
+    actionsField.setAccessible(true);
+
+    synchronized (sequencer)
+    {
+      @SuppressWarnings("unchecked")
+      Map<Long, ?> actions = (Map<Long, ?>)actionsField.get(sequencer);
+      long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(DEFAULT_TIMEOUT);
+
+      while (!actions.containsKey(baseline))
+      {
+        long remaining = deadline - System.nanoTime();
+        if (remaining <= 0L)
+        {
+          throw new AssertionError("Timed out waiting for accepted lock-state query baseline " + baseline); //$NON-NLS-1$
+        }
+
+        TimeUnit.NANOSECONDS.timedWait(sequencer, remaining);
+      }
+    }
+  }
+
+  public void testAwaitLockStateQueryRejectsHeldViewAccess() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    InternalCDOSession internalSession = (InternalCDOSession)session;
+
+    try (Access access = ((AbstractCDOView)transaction).access())
+    {
+      try
+      {
+        internalSession.awaitLockStateQuery(new CompletableFuture<>());
+        fail("Waiting for a query while holding view access must be rejected"); //$NON-NLS-1$
+      }
+      catch (IllegalStateException ex)
+      {
+        assertTrue(ex.getMessage().contains("holding view Access")); //$NON-NLS-1$
+      }
+    }
+    finally
+    {
+      transaction.close();
+      session.close();
+    }
+  }
+
+  public void testRefreshQueryCompletesFromInstalledSnapshot() throws Exception
+  {
+    CDOSession session = openSession();
+    InternalCDOSession internalSession = (InternalCDOSession)session;
+    CDOSessionImpl implementation = (CDOSessionImpl)session;
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("refreshSnapshotSupersedesQuery"));
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+    CDOID objectID = CDOUtil.getCDOObject(company).cdoID();
+    CDOLockOwner snapshotOwner = CDOLockUtil.createLockOwner(session.getSessionID(), 1, "snapshot-owner"); //$NON-NLS-1$
+    CDOLockState snapshotState = CDOLockUtil.createLockState(objectID);
+    ((InternalCDOLockState)snapshotState).addOwner(snapshotOwner, LockType.WRITE);
+
+    implementation.suspendLockChanges(0L);
+    CDOSessionProtocol originalProtocol = internalSession.getSessionProtocol();
+    CountDownLatch queryCaptured = new CountDownLatch(1);
+    CountDownLatch releaseQuery = new CountDownLatch(1);
+    DelayingLockStateQueryProtocol delayedProtocol = new DelayingLockStateQueryProtocol(originalProtocol, queryCaptured, releaseQuery);
+    internalSession.setSessionProtocol(delayedProtocol);
+
+    CountDownLatch refreshReturned = new CountDownLatch(1);
+    AtomicReference<CDOLockState> consumedLockState = new AtomicReference<>();
+    AtomicReference<Throwable> refreshFailure = new AtomicReference<>();
+    Thread refreshThread = new Thread(() -> {
+      try
+      {
+        transaction.refreshLockStates(lockState -> {
+          if (objectID.equals(lockState.getID()))
+          {
+            consumedLockState.set(lockState);
+          }
+        });
+      }
+      catch (Throwable ex)
+      {
+        refreshFailure.set(ex);
+      }
+      finally
+      {
+        refreshReturned.countDown();
+      }
+    }, "refresh-snapshot-superseded-query"); //$NON-NLS-1$
+
+    refreshThread.setDaemon(true);
+
+    try
+    {
+      refreshThread.start();
+      assertTrue("The refresh query did not capture its response", queryCaptured.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+      releaseQuery.countDown();
+      awaitPendingLockStateQuery(implementation, 0L);
+      assertEquals("The accepted baseline action must keep refresh pending", 1L, refreshReturned.getCount()); //$NON-NLS-1$
+      implementation.installLockStateSnapshot(new LockStateSnapshotResult(0L, Collections.singletonList(snapshotState)));
+
+      assertTrue("Snapshot installation did not release the refresh", refreshReturned.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+      assertNull(refreshFailure.get());
+      assertNotNull("The refresh consumer was not called for the snapshot state", consumedLockState.get()); //$NON-NLS-1$
+      assertEquals(objectID, consumedLockState.get().getID());
+      assertEquals(snapshotOwner, consumedLockState.get().getWriteLockOwner());
+      assertEquals(snapshotOwner, internalSession.getLockStateCache().getLockState(transaction.getBranch(), objectID).getWriteLockOwner());
+    }
+    finally
+    {
+      releaseQuery.countDown();
+      internalSession.setSessionProtocol(originalProtocol);
+      refreshThread.join(TimeUnit.SECONDS.toMillis(5));
+      transaction.close();
+      session.close();
+    }
+  }
+
+  public void testSessionCloseCompletesPendingLockStateQuery() throws Exception
+  {
+    CDOSession session = openSession();
+    InternalCDOSession internalSession = (InternalCDOSession)session;
+    CDOSessionImpl implementation = (CDOSessionImpl)session;
+    CompletableFuture<Boolean> completion = new CompletableFuture<>();
+    boolean[] actionRan = { false };
+    implementation.suspendLockChanges(0L);
+
+    assertTrue(internalSession.enqueueLockStateQuery(0L, () -> actionRan[0] = true, completion));
+    session.close();
+
+    try
+    {
+      assertTrue(internalSession.awaitLockStateQuery(completion));
+      fail("Session closure must release a pending refresh query with failure"); //$NON-NLS-1$
+    }
+    catch (RuntimeException ex)
+    {
+      assertFalse(actionRan[0]);
+    }
   }
 
   public void testStaleLazyLockStateQueryIsRetriedBeforeReturning() throws Exception
@@ -1658,6 +2075,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
     private Collection<CDOID> queryIDs;
 
+    private int queryBranchID;
+
     private LockStateQueryResult firstResult;
 
     public DelayingLockStateQueryProtocol(CDOSessionProtocol delegate, CountDownLatch captured, CountDownLatch release)
@@ -1670,8 +2089,10 @@ public class LockingNotificationsTest extends AbstractLockingTest
     @Override
     public LockStateQueryResult getLockStates3(int branchID, Collection<CDOID> ids, int depth)
     {
+      queryBranchID = branchID;
       queryIDs = new ArrayList<>(ids);
       LockStateQueryResult result = super.getLockStates3(branchID, ids, depth);
+
       synchronized (queryResults)
       {
         queryResults.add(result);
@@ -1684,6 +2105,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
       if (firstResult == result)
       {
         captured.countDown();
+
         try
         {
           if (!release.await(1, TimeUnit.MINUTES))
@@ -1717,6 +2139,56 @@ public class LockingNotificationsTest extends AbstractLockingTest
     private Collection<CDOID> getQueryIDs()
     {
       return queryIDs;
+    }
+
+    private int getQueryBranchID()
+    {
+      return queryBranchID;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class CapturingLockStateQueryProtocol extends DelegatingSessionProtocol
+  {
+    private final List<LockStateQueryCapture> queries = Collections.synchronizedList(new ArrayList<>());
+
+    public CapturingLockStateQueryProtocol(CDOSessionProtocol delegate)
+    {
+      super(delegate, null);
+    }
+
+    @Override
+    public LockStateQueryResult getLockStates3(int branchID, Collection<CDOID> ids, int depth)
+    {
+      LockStateQueryResult result = super.getLockStates3(branchID, ids, depth);
+      queries.add(new LockStateQueryCapture(new ArrayList<>(ids), result));
+      return result;
+    }
+
+    private List<LockStateQueryCapture> getQueries()
+    {
+      synchronized (queries)
+      {
+        return new ArrayList<>(queries);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LockStateQueryCapture
+  {
+    private final Collection<CDOID> ids;
+
+    private final LockStateQueryResult result;
+
+    public LockStateQueryCapture(Collection<CDOID> ids, LockStateQueryResult result)
+    {
+      this.ids = ids;
+      this.result = result;
     }
   }
 }

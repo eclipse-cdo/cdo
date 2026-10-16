@@ -179,7 +179,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -571,9 +573,33 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public boolean enqueueLockStateQuery(long lockModCount, Runnable action)
   {
+    return enqueueLockStateQuery(lockModCount, action, null);
+  }
+
+  @Override
+  public boolean enqueueLockStateQuery(long lockModCount, Runnable action, CompletableFuture<Boolean> completion)
+  {
     if (lockModCount == CDOSessionProtocol.UNSPECIFIED_LOCK_MOD_COUNT)
     {
-      action.run();
+      try
+      {
+        action.run();
+
+        if (completion != null)
+        {
+          completion.complete(true);
+        }
+      }
+      catch (RuntimeException | Error ex)
+      {
+        if (completion != null)
+        {
+          completion.completeExceptionally(ex);
+        }
+
+        throw ex;
+      }
+
       return true;
     }
 
@@ -582,13 +608,56 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       throw new IllegalArgumentException("Invalid lock modification count: " + lockModCount); //$NON-NLS-1$
     }
 
-    if (!lockChangeSequencer.registerBaselineAction(lockModCount, action))
+    if (completion == null)
+    {
+      LockChangeSequencer.BaselineActionResult result = lockChangeSequencer.registerBaselineActionAndRunIfImmediatelyAdmissible(lockModCount, action);
+      if (result == LockChangeSequencer.BaselineActionResult.REJECTED)
+      {
+        return false;
+      }
+    }
+    else if (!lockChangeSequencer.registerBaselineAction(lockModCount, action, completion))
     {
       return false;
     }
 
-    getExecutorService().submit(lockChangeSequencer::drain);
+    if (lockChangeSequencer.needsDrain())
+    {
+      getExecutorService().submit(lockChangeSequencer::drain);
+    }
+
     return true;
+  }
+
+  @Override
+  public boolean awaitLockStateQuery(CompletableFuture<Boolean> completion)
+  {
+    assertNoViewAccessHeld();
+
+    try
+    {
+      return completion.get();
+    }
+    catch (InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
+    }
+    catch (ExecutionException ex)
+    {
+      Throwable cause = ex.getCause();
+      if (cause instanceof Error)
+      {
+        throw (Error)cause;
+      }
+
+      if (cause instanceof RuntimeException)
+      {
+        throw (RuntimeException)cause;
+      }
+
+      throw WrappedException.wrap(cause instanceof Exception ? (Exception)cause : new Exception(cause));
+    }
   }
 
   @Override

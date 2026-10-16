@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -31,6 +32,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol;
+
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.SignalCounter;
 
@@ -38,6 +41,19 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateQueryResult;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Bug 439337 about {@link CDOLockState lock state} prefetch following a {@link CDORevision revision} prefetch.
@@ -87,43 +103,119 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
     run(true);
   }
 
-  private void run(boolean lockStatePrefetchEnabled)
+  private void run(boolean lockStatePrefetchEnabled) throws Exception
   {
     CDONet4jSession session = (CDONet4jSession)openSession();
     CDOView view = session.openView();
-
-    if (lockStatePrefetchEnabled)
-    {
-      new CDOLockStatePrefetcher(view, false);
-      sleep(1000);
-    }
+    InternalCDOSession internalSession = (InternalCDOSession)session;
+    CDOSessionProtocol originalProtocol = internalSession.getSessionProtocol();
+    CapturingLockStateQueryProtocol capturingProtocol = new CapturingLockStateQueryProtocol(originalProtocol);
+    internalSession.setSessionProtocol(capturingProtocol);
 
     ISignalProtocol<?> protocol = session.options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
 
-    view.getResourceSet().eAdapters().add(new EContentAdapterQueryingCDOLockState());
-    view.getResource(getResourcePath(RESOURCE_NAME + "?" + CDOResource.PREFETCH_PARAMETER + "=" + Boolean.TRUE));
+    try
+    {
+      if (lockStatePrefetchEnabled)
+      {
+        new CDOLockStatePrefetcher(view, false);
+      }
 
-    // QueryRequest, QueryCancel are used to get the resourcePath
-    assertEquals("4 differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and LockStateRequest", 4,
-        signalCounter.getCountForSignalTypes());
+      CDOResource resource = view.getResource(getResourcePath(RESOURCE_NAME + "?" + CDOResource.PREFETCH_PARAMETER + "=" + Boolean.TRUE));
+      List<CDOID> objectIDs = getObjectIDs(resource);
+      assertEquals(NB_CATEGORIES + 1, objectIDs.size());
 
-    assertNotSame(0, signalCounter.getCountFor(QueryRequest.class));
-    assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
-    assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
-    assertNotSame(0, signalCounter.getCountFor(LockStateRequest.class));
+      if (lockStatePrefetchEnabled)
+      {
+        LockStateQueryCapture prefetchQuery = findPrefetchQuery(capturingProtocol.getQueries(), objectIDs);
+        assertNotNull("The prefetch query must include all loaded objects", prefetchQuery); //$NON-NLS-1$
+        awaitPrefetchInstallation(internalSession, prefetchQuery.result.getLockModCount());
+      }
 
-    assertEquals("1 single query request should have been sent to get the resourcePath", 1, signalCounter.getCountFor(QueryRequest.class));
-    assertEquals("1 single query cancel request should have been sent", 1, signalCounter.getCountFor(QueryCancelRequest.class));
-    assertEquals(
-        "3 load revision requests should have been sent, 2 for revisions of CDOResourceFolders to get resource path and another in prefetch to load all revisions of CDOResource",
-        3, signalCounter.getCountFor(LoadRevisionsRequest.class));
+      int lockStateRequestsBeforeAccess = signalCounter.getCountFor(LockStateRequest.class);
+      view.getResourceSet().eAdapters().add(new EContentAdapterQueryingCDOLockState(new HashSet<>(objectIDs)));
+      int additionalLockStateRequests = signalCounter.getCountFor(LockStateRequest.class) - lockStateRequestsBeforeAccess;
 
-    int expectedRequests = (lockStatePrefetchEnabled ? 0 : NB_CATEGORIES) + 2;
-    assertEquals("As lock state prefetch is " + (lockStatePrefetchEnabled ? "" : "not ") + "enabled " + expectedRequests
-        + " LockStateRequests should have been sent to the server", expectedRequests, signalCounter.getCountFor(LockStateRequest.class));
+      int expectedAdditionalRequests = lockStatePrefetchEnabled ? 0 : NB_CATEGORIES + 1;
+      assertEquals("Accessing already loaded objects must issue only the lock-state requests not covered by prefetch", //$NON-NLS-1$
+          expectedAdditionalRequests, additionalLockStateRequests);
 
-    protocol.removeListener(signalCounter);
+      // QueryRequest, QueryCancel are used to get the resourcePath
+      assertEquals("4 differents kinds of requests should have been sent, QueryRequest, QueryCancel, LoadRevisionsRequest and LockStateRequest", 4,
+          signalCounter.getCountForSignalTypes());
+
+      assertNotSame(0, signalCounter.getCountFor(QueryRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(QueryCancelRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
+      assertNotSame(0, signalCounter.getCountFor(LockStateRequest.class));
+
+      assertEquals("1 single query request should have been sent to get the resourcePath", 1, signalCounter.getCountFor(QueryRequest.class));
+      assertEquals("1 single query cancel request should have been sent", 1, signalCounter.getCountFor(QueryCancelRequest.class));
+      assertEquals(
+          "3 load revision requests should have been sent, 2 for revisions of CDOResourceFolders to get resource path and another in prefetch to load all revisions of CDOResource",
+          3, signalCounter.getCountFor(LoadRevisionsRequest.class));
+    }
+    finally
+    {
+      protocol.removeListener(signalCounter);
+      internalSession.setSessionProtocol(originalProtocol);
+      view.close();
+      session.close();
+    }
+  }
+
+  private static List<CDOID> getObjectIDs(CDOResource resource)
+  {
+    List<CDOID> ids = new ArrayList<>();
+
+    for (EObject object : resource.getContents())
+    {
+      CDOObject cdoObject = CDOUtil.getCDOObject(object);
+      if (cdoObject != null)
+      {
+        ids.add(cdoObject.cdoID());
+      }
+
+      for (Iterator<EObject> it = object.eAllContents(); it.hasNext();)
+      {
+        CDOObject child = CDOUtil.getCDOObject(it.next());
+        if (child != null)
+        {
+          ids.add(child.cdoID());
+        }
+      }
+    }
+
+    return ids;
+  }
+
+  private static LockStateQueryCapture findPrefetchQuery(List<LockStateQueryCapture> queries, List<CDOID> objectIDs)
+  {
+    for (int i = queries.size() - 1; i >= 0; i--)
+    {
+      LockStateQueryCapture query = queries.get(i);
+
+      if (query.ids.containsAll(objectIDs))
+      {
+        return query;
+      }
+    }
+
+    return null;
+  }
+
+  private void awaitPrefetchInstallation(InternalCDOSession session, long lockModCount) throws Exception
+  {
+    CompletableFuture<Boolean> completion = new CompletableFuture<>();
+    assertTrue("The prefetch installation barrier was rejected", //$NON-NLS-1$
+        session.enqueueLockStateQuery(lockModCount, () -> {
+        }, completion));
+
+    // view.getResource() has returned, so this wait is outside view Access. The marker follows the prefetch action at
+    // this baseline.
+    // A false result means an authoritative snapshot superseded the baseline and was installed instead.
+    completion.get(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
   }
 
   /**
@@ -133,8 +225,11 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
    */
   private static class EContentAdapterQueryingCDOLockState extends EContentAdapter
   {
-    public EContentAdapterQueryingCDOLockState()
+    private final Set<CDOID> objectIDs;
+
+    public EContentAdapterQueryingCDOLockState(Set<CDOID> objectIDs)
     {
+      this.objectIDs = objectIDs;
     }
 
     @Override
@@ -144,13 +239,62 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
       {
         EObject eObject = (EObject)notifier;
         CDOObject cdoObject = CDOUtil.getCDOObject(eObject);
-        if (cdoObject != null)
+        if (cdoObject != null && objectIDs.contains(cdoObject.cdoID()))
         {
           cdoObject.cdoLockState();
         }
       }
 
       super.addAdapter(notifier);
+    }
+  }
+
+  /**
+   * Captures lock-state query IDs and baselines without changing the protocol result or its sequencing.
+   *
+   * @author Eike Stepper
+   */
+  private static final class CapturingLockStateQueryProtocol extends DelegatingSessionProtocol
+  {
+    private final List<LockStateQueryCapture> queries = Collections.synchronizedList(new ArrayList<>());
+
+    public CapturingLockStateQueryProtocol(CDOSessionProtocol delegate)
+    {
+      super(delegate, null);
+    }
+
+    @Override
+    public LockStateQueryResult getLockStates3(int branchID, Collection<CDOID> ids, int depth)
+    {
+      LockStateQueryResult result = super.getLockStates3(branchID, ids, depth);
+      queries.add(new LockStateQueryCapture(ids == null ? Collections.emptyList() : new ArrayList<>(ids), result));
+      return result;
+    }
+
+    public List<LockStateQueryCapture> getQueries()
+    {
+      synchronized (queries)
+      {
+        return new ArrayList<>(queries);
+      }
+    }
+  }
+
+  /**
+   * Records the IDs and baseline returned by one lock-state query.
+   *
+   * @author Eike Stepper
+   */
+  private static final class LockStateQueryCapture
+  {
+    private final List<CDOID> ids;
+
+    private final LockStateQueryResult result;
+
+    public LockStateQueryCapture(List<CDOID> ids, LockStateQueryResult result)
+    {
+      this.ids = ids;
+      this.result = result;
     }
   }
 }

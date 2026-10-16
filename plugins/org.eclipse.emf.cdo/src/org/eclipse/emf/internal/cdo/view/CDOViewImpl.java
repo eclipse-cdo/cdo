@@ -151,6 +151,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -998,28 +999,80 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     checkActive();
     checkState(getTimeStamp() == UNSPECIFIED_DATE, "Locking not supported for historial views"); //$NON-NLS-1$
 
+    CDOBranch branch;
+    List<CDOID> ids = new ArrayList<>();
+    List<CDOLockState> refreshedLockStates;
+    CompletableFuture<Boolean> completion;
+
     try (Access access = access())
     {
-      List<CDOID> ids = new ArrayList<>();
+      branch = getBranch();
 
-      CDOBranch branch = getBranch();
-      forEachLockState(branch, (object, lockState) -> ids.add(lockState.getID()));
-
-      if (!ids.isEmpty())
+      // Lock states belong to the view's registered objects, regardless of which view owns the locks.
+      for (InternalCDOObject object : getModifiableObjects().values())
       {
-        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-
-        for (;;)
+        if (!FSMUtil.isTransientOrNew(object))
         {
-          CDOSessionProtocol.LockStateQueryResult result = sessionProtocol.getLockStates3(viewID, ids, CDOLockState.DEPTH_NONE);
-          List<CDOLockState> loadedLockStates = result.getLockStates();
-          long lockModCount = result.getLockModCount();
+          ids.add(object.cdoID());
+        }
+      }
 
-          if (session.enqueueLockStateQuery(lockModCount, () -> session.applyLockStateQuery(lockModCount, branch, loadedLockStates)))
+      if (ids.isEmpty())
+      {
+        return;
+      }
+
+      for (;;)
+      {
+        CDOSessionProtocol.LockStateQueryResult result = session.getSessionProtocol().getLockStates3(branch.getID(), ids, CDOLockState.DEPTH_NONE);
+
+        refreshedLockStates = new ArrayList<>(result.getLockStates());
+        Set<CDOID> returnedIDs = new HashSet<>();
+
+        for (CDOLockState lockState : refreshedLockStates)
+        {
+          returnedIDs.add(lockState.getID());
+        }
+
+        CDOLockStateCache lockStateCache = session.getLockStateCache();
+
+        for (CDOID id : ids)
+        {
+          if (!returnedIDs.contains(id))
           {
-            break;
+            refreshedLockStates.add(CDOLockUtil.createLockState(lockStateCache.createKey(branch, id)));
           }
         }
+
+        long lockModCount = result.getLockModCount();
+        List<CDOLockState> capturedStates = refreshedLockStates;
+        CompletableFuture<Boolean> currentCompletion = new CompletableFuture<>();
+        Runnable action = () -> session.applyLockStateQuery(lockModCount, branch, capturedStates);
+
+        if (session.enqueueLockStateQuery(lockModCount, action, currentCompletion))
+        {
+          completion = currentCompletion;
+          break;
+        }
+      }
+    }
+
+    if (!session.awaitLockStateQuery(completion))
+    {
+      refreshedLockStates = new ArrayList<>();
+      CDOLockStateCache lockStateCache = session.getLockStateCache();
+
+      for (CDOID id : ids)
+      {
+        refreshedLockStates.add(lockStateCache.getLockState(branch, id));
+      }
+    }
+
+    if (consumer != null)
+    {
+      for (CDOLockState lockState : refreshedLockStates)
+      {
+        consumer.accept(lockState);
       }
     }
   }

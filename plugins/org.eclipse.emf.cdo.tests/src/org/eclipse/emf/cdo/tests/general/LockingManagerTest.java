@@ -1774,7 +1774,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     CDOLock readLockAfterClose = resource2.cdoReadLock();
     boolean isLockedByOthersAfterClose = readLockAfterClose.isLockedByOthers();
-    assertTrue(isLockedByOthersAfterClose);
+    assertFalse(isLockedByOthersAfterClose);
   }
 
   public void testViewGetLockStates() throws Exception

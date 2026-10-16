@@ -110,6 +110,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 
@@ -1633,6 +1634,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public boolean enqueueLockStateQuery(long lockModCount, Runnable action)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean enqueueLockStateQuery(long lockModCount, Runnable action, CompletableFuture<Boolean> completion)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean awaitLockStateQuery(CompletableFuture<Boolean> completion)
     {
       throw new UnsupportedOperationException();
     }

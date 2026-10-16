@@ -89,22 +89,23 @@ public class LockStateIndication extends CDOServerReadIndication
     else
     {
       targetIDs = new LinkedHashMap<>();
-      int depth = prefetchDepth >= CDOLockState.DEPTH_NONE ? prefetchDepth : Integer.MAX_VALUE;
+      boolean infiniteDepth = prefetchDepth < CDOLockState.DEPTH_NONE;
+      int depth = infiniteDepth ? Integer.MAX_VALUE : prefetchDepth;
 
       for (int i = 0; i < idsLength; i++)
       {
         CDOID id = in.readCDOID();
-        prefetchLockStates(depth, id);
+        prefetchLockStates(depth, id, infiniteDepth);
       }
 
       query = lockManager.snapshotLockStates(getSession(), branch, targetIDs.keySet());
     }
   }
 
-  private void prefetchLockStates(int depth, CDOID id)
+  private void prefetchLockStates(int depth, CDOID id, boolean infiniteDepth)
   {
     Integer previousDepth = targetIDs.get(id);
-    if (previousDepth != null && previousDepth >= depth)
+    if (previousDepth != null && (infiniteDepth || previousDepth >= depth))
     {
       return;
     }
@@ -113,7 +114,10 @@ public class LockStateIndication extends CDOServerReadIndication
 
     if (depth > CDOLockState.DEPTH_NONE)
     {
-      --depth;
+      if (!infiniteDepth)
+      {
+        --depth;
+      }
 
       InternalCDORevision revision = (InternalCDORevision)revisionProvider.getRevision(id);
       if (revision == null)
@@ -132,7 +136,7 @@ public class LockStateIndication extends CDOServerReadIndication
             Object value = revision.getValue(reference);
             if (value instanceof CDOID)
             {
-              prefetchLockStates(depth, (CDOID)value);
+              prefetchLockStates(depth, (CDOID)value, infiniteDepth);
             }
             else if (value instanceof Collection<?>)
             {
@@ -144,7 +148,7 @@ public class LockStateIndication extends CDOServerReadIndication
                 // instanceof CDOID. (See bug 339313.)
                 if (e instanceof CDOID)
                 {
-                  prefetchLockStates(depth, (CDOID)e);
+                  prefetchLockStates(depth, (CDOID)e, infiniteDepth);
                 }
               }
             }

@@ -100,7 +100,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, HorizontalBranchingClassMapping.class);
 
-  private static final Config UNCHUNKED_REVISION_SCAN_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+  private static final Config CACHED_REVISION_SCAN_CONFIG = new Config(LookupMode.CACHE_ONLY, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   @ExcludeFromDump
   private transient SQLStatement sqlInsertAttributes;
@@ -866,7 +866,13 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
           CDOBranchVersion branchVersion = revisionBranch.getVersion(version);
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, UNCHUNKED_REVISION_SCAN_CONFIG);
+
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, CACHED_REVISION_SCAN_CONFIG);
+          if (revision == null)
+          {
+            // Read directly so bulk scans don't intern every revision in the repository-wide cache.
+            revision = accessor.readRevisionByVersion(id, branchVersion, CDORevision.UNCHUNKED, null);
+          }
 
           if (!handler.handleRevision(revision))
           {

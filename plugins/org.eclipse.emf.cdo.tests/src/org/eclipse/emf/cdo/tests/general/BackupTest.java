@@ -12,15 +12,23 @@
 package org.eclipse.emf.cdo.tests.general;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionCache.AdditionEvent;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.bundle.OM;
@@ -40,6 +48,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.common.util.TreeIterator;
@@ -54,7 +64,9 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author Eike Stepper
@@ -191,6 +203,117 @@ public class BackupTest extends AbstractCDOTest
     closeSession(session);
 
     doExportImport();
+  }
+
+  public void testExportDoesNotPopulateRevisionCache() throws Exception
+  {
+    CDOSession session = openSession();
+    try
+    {
+      CDOTransaction transaction = session.openTransaction();
+      CDOResource resource = transaction.createResource(getResourcePath("/cache-test"));
+
+      Customer knownCustomer = null;
+      int objectCount = 150;
+      for (int i = 0; i < objectCount; i++)
+      {
+        Customer customer = createCustomer("Cache test " + i);
+
+        if (knownCustomer == null)
+        {
+          knownCustomer = customer;
+        }
+
+        resource.getContents().add(customer);
+      }
+
+      transaction.commit();
+
+      InternalRepository repository = getRepository();
+      InternalCDORevisionCache cache = repository.getRevisionManager().getCache();
+      CDOBranch mainBranch = repository.getBranchManager().getMainBranch();
+      CDOBranchVersion cachedBranchVersion = mainBranch.getVersion(CDOBranchVersion.FIRST_VERSION);
+      CDOID knownID = CDOUtil.getCDOObject(knownCustomer).cdoID();
+
+      AtomicInteger expectedRevisions = new AtomicInteger();
+      AtomicInteger cacheAdditions = new AtomicInteger();
+
+      StoreThreadLocal.setSession(repository.getSessionManager().getSession(session.getSessionID()));
+      CDORevision cachedRevision;
+      CDORevision cachedInstance;
+
+      try
+      {
+        repository.handleRevisions(null, mainBranch, true, CDOBranchPoint.INVALID_DATE, false, revision -> {
+          expectedRevisions.incrementAndGet();
+          return true;
+        });
+
+        assertTrue(expectedRevisions.get() >= objectCount);
+        cache.clear();
+
+        cachedRevision = repository.getRevisionManager().getRevisionByVersion(knownID, cachedBranchVersion,
+            new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED));
+        assertNotNull("Failed to populate the repository revision cache", cachedRevision);
+
+        cachedInstance = cache.getRevisionByVersion(knownID, cachedBranchVersion);
+        if (cachedInstance != null)
+        {
+          assertSame("Loaded revision was not retained in the repository cache", cachedRevision, cachedInstance);
+        }
+      }
+      finally
+      {
+        StoreThreadLocal.release();
+      }
+
+      IListener listener = new IListener()
+      {
+        @Override
+        public void notifyEvent(IEvent event)
+        {
+          if (event instanceof AdditionEvent)
+          {
+            cacheAdditions.incrementAndGet();
+          }
+        }
+      };
+
+      cache.addListener(listener);
+
+      try
+      {
+        CDOServerExporter<?> exporter = createExporter(repository);
+        exporter.exportRepository(new OutputStream()
+        {
+          @Override
+          public void write(int b)
+          {
+          }
+
+          @Override
+          public void write(byte[] b, int off, int len)
+          {
+          }
+        });
+
+        assertEquals("Unexpected number of exported revisions", expectedRevisions.get(), exporter.getStatistics().revisions);
+        assertEquals("Export added revisions to the repository cache", 0, cacheAdditions.get());
+
+        if (cachedInstance != null)
+        {
+          assertSame("Export replaced the cached revision", cachedInstance, cache.getRevisionByVersion(knownID, cachedBranchVersion));
+        }
+      }
+      finally
+      {
+        cache.removeListener(listener);
+      }
+    }
+    finally
+    {
+      closeSession(session);
+    }
   }
 
   @CleanRepositoriesBefore(reason = "Inactive repository required")

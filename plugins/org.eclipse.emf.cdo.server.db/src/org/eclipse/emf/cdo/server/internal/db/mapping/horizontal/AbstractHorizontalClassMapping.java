@@ -114,7 +114,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalClassMapping.class);
 
-  private static final Config UNCHUNKED_REVISION_SCAN_CONFIG = new Config(LookupMode.CACHE_THEN_LOADER, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
+  private static final Config CACHED_REVISION_SCAN_CONFIG = new Config(LookupMode.CACHE_ONLY, CDORevision.DEPTH_NONE, false, CDORevision.UNCHUNKED);
 
   protected IDBTable table;
 
@@ -1015,7 +1015,13 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         if (version >= CDOBranchVersion.FIRST_VERSION)
         {
           CDOBranchVersion branchVersion = mainBranch.getVersion(version);
-          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, UNCHUNKED_REVISION_SCAN_CONFIG);
+
+          InternalCDORevision revision = (InternalCDORevision)revisionManager.getRevisionByVersion(id, branchVersion, CACHED_REVISION_SCAN_CONFIG);
+          if (revision == null)
+          {
+            // Read directly so bulk scans don't intern every revision in the repository-wide cache.
+            revision = accessor.readRevisionByVersion(id, branchVersion, CDORevision.UNCHUNKED, null);
+          }
 
           if (!handler.handleRevision(revision))
           {

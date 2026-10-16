@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -53,6 +54,7 @@ public class Bugzilla_329179_Test extends AbstractCDOTest
     properties.put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, revisionManager);
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testPrefetchTimeOut() throws Exception
   {
     {

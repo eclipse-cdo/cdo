@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidURIException;
@@ -98,6 +99,7 @@ public class Bugzilla_485487_Test extends AbstractCDOTest
   }
 
   @Skips(IConfig.CAPABILITY_SANITIZE_TIMEOUT)
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   @CleanRepositoriesBefore(reason = "Isolated repository needed")
   @CleanRepositoriesAfter(reason = "Isolated repository needed")
   public void testCancellationDuringCommit() throws Exception

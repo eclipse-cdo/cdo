@@ -15,8 +15,10 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -37,6 +39,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class Bugzilla_246442_Test extends AbstractCDOTest
 {
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testBugzilla_246442() throws Exception
   {
     CDOID lookupObject = null;
@@ -62,9 +65,9 @@ public class Bugzilla_246442_Test extends AbstractCDOTest
     }
 
     CDOSession session = openSession();
-    if (session instanceof org.eclipse.emf.cdo.net4j.CDONet4jSession)
+    if (session instanceof CDONet4jSession)
     {
-      ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(2000L);
+      ((CDONet4jSession)session).options().getNet4jProtocol().setTimeout(2000L);
     }
 
     try

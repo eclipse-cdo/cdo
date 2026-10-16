@@ -13,8 +13,10 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.util.TestRevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -34,11 +36,12 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
 
   private static final long REVISION_DELAY = 500L;
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testBugzilla_241464() throws Exception
   {
     {
       CDOSession session = openSession();
-      if (!(session instanceof org.eclipse.emf.cdo.net4j.CDONet4jSession))
+      if (!(session instanceof CDONet4jSession))
       {
         closeSession(session);
         return;
@@ -59,7 +62,7 @@ public class Bugzilla_241464_Test extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("/test1"));
 
-    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(PROTOCOL_TIMEOUT);
+    ((CDONet4jSession)session).options().getNet4jProtocol().setTimeout(PROTOCOL_TIMEOUT);
 
     TestRevisionManager revisionManager = (TestRevisionManager)getRepository().getRevisionManager();
     revisionManager.setGetRevisionsDelay(REVISION_DELAY); // Make the protocol time out

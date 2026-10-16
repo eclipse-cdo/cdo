@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.model1.Order;
@@ -121,9 +122,9 @@ public class Bugzilla_258933_Test extends AbstractCDOTest
     clearCache(getRepository().getRevisionManager());
 
     CDOSession session = openSession();
-    if (session instanceof org.eclipse.emf.cdo.net4j.CDONet4jSession)
+    if (session instanceof CDONet4jSession)
     {
-      ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(2000L);
+      ((CDONet4jSession)session).options().getNet4jProtocol().setTimeout(2000L);
     }
 
     EPackage subpackage1 = session.getPackageRegistry().getEPackage(topPackage.getESubpackages().get(0).getNsURI());

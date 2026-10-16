@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -86,6 +87,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   /**
    * Test prefetch on different branches with each having changes.
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCDORevisionPrefetchOnOtherBranchWithChanges() throws Exception
   {
     // Setup
@@ -111,6 +113,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   /**
    * Test {@link CDOCollectionLoadingPolicy} on different branches with each having changes.
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCDORevisionCDOFetchRuleOnOtherBranchWithChanges() throws Exception
   {
     // Setup
@@ -207,6 +210,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   /**
    * Test that after a prefetch of infinite depth of CDORevision on a CDOResource, no more LoadRevisionRequest are sent on the main branch.
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCDORevisionPrefetchOnMainBranch() throws Exception
   {
     CDOSession session = openSession();
@@ -217,6 +221,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   /**
    * Test that after a prefetch of infinite depth of CDORevision on a CDOResource, no more LoadRevisionRequest are sent on the branch "B1".
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCDORevisionPrefetchOnOtherBranch() throws Exception
   {
     CDOSession session = openSession();

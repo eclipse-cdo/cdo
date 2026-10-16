@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.CDOLock;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
@@ -53,7 +52,7 @@ public class Bugzilla_541003_Test extends AbstractCDOTest
     CDOLock lock = prepareLock();
     lock.lock();
 
-    CDONet4jSession session = (CDONet4jSession)openSession();
+    CDOSession session = openSession();
 
     CDOView view1 = openView(session, lockStatePrefetchEnabled);
     CDOView view2 = openView(session, false);

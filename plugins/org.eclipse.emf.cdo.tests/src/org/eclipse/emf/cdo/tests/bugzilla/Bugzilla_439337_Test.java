@@ -90,6 +90,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
   /**
    * Test {@link CDOLockState} API without prefetch.
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCDOLockStateWithoutPrefetch() throws Exception
   {
     run(false);
@@ -98,6 +99,7 @@ public class Bugzilla_439337_Test extends AbstractCDOTest
   /**
    * Test {@link CDOLockState} API with prefetch.
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCDOLockStateWithPrefetch() throws Exception
   {
     run(true);

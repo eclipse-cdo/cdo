@@ -19,10 +19,12 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionData;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -441,6 +443,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
     assertTrue(purchaseOrders.containsAll(Collections.singleton(externalObject))); // Bug 537081.
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testWithXMLAndPrefetching() throws Exception
   {
     {
@@ -484,7 +487,7 @@ public class ExternalReferenceTest extends AbstractCDOTest
       }
 
       CDOSession session = openSession();
-      ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
+      ISignalProtocol<?> protocol = ((CDONet4jSession)session).options().getNet4jProtocol();
       SignalCounter signalCounter = new SignalCounter(protocol);
 
       CDOTransaction transaction = session.openTransaction(resourceSet);

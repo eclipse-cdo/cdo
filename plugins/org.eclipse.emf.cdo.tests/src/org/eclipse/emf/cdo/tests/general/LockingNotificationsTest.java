@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.tests.AbstractLockingTest;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -491,6 +492,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testRevisionLockStatePrefetchDefersFutureBaselineCachePopulation() throws Exception
   {
     CDOSession locker = openSession();
@@ -545,6 +547,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testPrefetcherDefersQueryDerivedUnlockedStateUntilCarrier() throws Exception
   {
     CDOSession locker = openSession();
@@ -638,6 +641,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testRefreshLockStatesIncludesRemoteLocksAndWaitsForBaseline() throws Exception
   {
     CDOSession locker = openSession();
@@ -1192,6 +1196,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testStaleLazyLockStateQueryIsRetriedBeforeReturning() throws Exception
   {
     CDOSession locker = openSession();

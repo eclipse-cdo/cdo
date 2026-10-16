@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.tests.general;
 
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -408,11 +409,12 @@ public class SessionTest extends AbstractCDOTest
     }
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testProtocolTimeoutChangedEvent() throws Exception
   {
     final boolean[] eventSent = { false };
 
-    org.eclipse.emf.cdo.net4j.CDONet4jSession session = (org.eclipse.emf.cdo.net4j.CDONet4jSession)openSession();
+    CDONet4jSession session = (CDONet4jSession)openSession();
     session.options().getNet4jProtocol().addListener(new IListener()
     {
       @Override

@@ -13,8 +13,8 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.internal.server.TransactionCommitContext;
-import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -174,7 +174,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     exceptions.clear();
 
     {
-      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
+      CDOSession session = openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
 
@@ -208,15 +208,9 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       session.close();
     }
 
-    // if (!(isConfig(MEM) || isConfig(MEM_AUDITS) || isConfig(MEM_BRANCHES) || isConfig(MEM_OFFLINE)))
-    // {
-    // // do not restart the repository on MEM store
-    // restartRepository();
-    // }
-
     {
       // Just an additional check to make sure that the graph is stored correctly even after repository restart
-      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
+      CDOSession session = openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
       Resource resource = transaction.getResource(getResourcePath(RESOURCE_PATH), true);
@@ -240,7 +234,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     }
 
     {
-      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
+      CDOSession session = openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
 
       // ----- start threads -----
@@ -278,7 +272,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
   {
     String resourcePath = RESOURCE_PATH + "1";
     {
-      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
+      CDOSession session = openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
       CDOTransaction transaction = session.openTransaction();
 
@@ -315,7 +309,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     // restartRepository();
 
     {
-      CDONet4jSession session = (CDONet4jSession)openSession(REPOSITORY_NAME);
+      CDOSession session = openSession(REPOSITORY_NAME);
       idInitSession = session.getSessionID();
 
       // ----- start threads -----
@@ -403,7 +397,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
    */
   private class ThreadA extends AbstactTestThread
   {
-    private CDONet4jSession session;
+    private CDOSession session;
 
     public ThreadA(String resourcePath)
     {
@@ -411,7 +405,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       setName("ThreadA");
 
       msg("Starting Thread A");
-      session = (CDONet4jSession)openSession(REPOSITORY_NAME);
+      session = openSession(REPOSITORY_NAME);
       idSessionA = session.getSessionID();
     }
 
@@ -459,7 +453,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
    */
   private class ThreadB extends AbstactTestThread
   {
-    private CDONet4jSession session;
+    private CDOSession session;
 
     public ThreadB(String resourcePath)
     {
@@ -467,7 +461,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       setName("ThreadB");
 
       msg("Starting Thread B");
-      session = (CDONet4jSession)openSession(REPOSITORY_NAME);
+      session = openSession(REPOSITORY_NAME);
       idSessionB = session.getSessionID();
     }
 
@@ -530,7 +524,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
    */
   private class ThreadX extends AbstactTestThread
   {
-    private CDONet4jSession session;
+    private CDOSession session;
 
     public ThreadX(String resourcePath)
     {
@@ -538,7 +532,7 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
       setName("ThreadX");
 
       msg("Starting Thread X");
-      session = (CDONet4jSession)openSession(REPOSITORY_NAME);
+      session = openSession(REPOSITORY_NAME);
       idSessionB = session.getSessionID();
     }
 

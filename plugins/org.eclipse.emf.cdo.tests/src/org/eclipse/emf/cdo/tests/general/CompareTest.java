@@ -19,12 +19,14 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -44,11 +46,11 @@ import java.lang.reflect.Method;
 @Requires(IRepositoryConfig.CAPABILITY_AUDITING)
 public class CompareTest extends AbstractCDOTest
 {
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  @Requires({ IRepositoryConfig.CAPABILITY_BRANCHING, ISessionConfig.CAPABILITY_NET4J })
   public void testFromEmptyBranches() throws Exception
   {
     CDOSession session = openSession();
-    ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol().setTimeout(1000000000);
+    ((CDONet4jSession)session).options().getNet4jProtocol().setTimeout(1000000000);
 
     CDOBranch mainBranch = session.getBranchManager().getMainBranch();
     CDOTransaction transaction = session.openTransaction(mainBranch);

@@ -17,8 +17,10 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LockStateRequest;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -44,6 +46,7 @@ public class Bugzilla_466951_Test extends AbstractCDOTest
   /**
    * Test that no {@link LockStateRequest} is sent to the server when calling {@link CDOObject#cdoLockState()} for {@link CDOObject} in {@link CDOState#NEW} state.
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCDOObjectCDOLockState() throws Exception
   {
     CDOSession session = openSession();
@@ -55,7 +58,7 @@ public class Bugzilla_466951_Test extends AbstractCDOTest
     Company company1 = getModel1Factory().createCompany();
     resource.getContents().add(company1);
 
-    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
+    ISignalProtocol<?> protocol = ((CDONet4jSession)session).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
 
     try

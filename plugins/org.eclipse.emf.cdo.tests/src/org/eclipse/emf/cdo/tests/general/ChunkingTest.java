@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
@@ -84,6 +85,7 @@ public class ChunkingTest extends AbstractCDOTest
 {
   private static final String RESOURCE_PATH = "/test";
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testSessionChangeSetMaterializesPartialRevision() throws Exception
   {
@@ -135,6 +137,7 @@ public class ChunkingTest extends AbstractCDOTest
   }
 
   @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   @SuppressWarnings("deprecation") // Testing legacy CollectionLoadingPolicy.
   public void testPCL026MaterializationRequestEconomics() throws Exception
   {
@@ -538,6 +541,7 @@ public class ChunkingTest extends AbstractCDOTest
   }
 
   @Skips(IModelConfig.CAPABILITY_LEGACY)
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testPCL030FetchRulePrefetchedRevisionUsesModernConfig() throws Exception
   {
     CDOSession writerSession = openSession();

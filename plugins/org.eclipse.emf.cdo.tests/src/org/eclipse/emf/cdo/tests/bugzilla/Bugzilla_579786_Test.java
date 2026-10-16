@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -25,6 +27,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 /**
  * @author Eike Stepper
  */
+@Requires(ISessionConfig.CAPABILITY_NET4J)
 public class Bugzilla_579786_Test extends AbstractCDOTest
 {
   private static final String LANG = "test-ql";

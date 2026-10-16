@@ -14,8 +14,11 @@ package org.eclipse.emf.cdo.tests.bugzilla;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.ChangeSubscriptionRequest;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
+import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
@@ -29,6 +32,7 @@ import org.eclipse.emf.spi.cdo.CDOMergingConflictResolver;
  *
  * @author Esteban Dugueperoux
  */
+@Requires(ISessionConfig.CAPABILITY_NET4J)
 public class Bugzilla_458279_Test extends AbstractCDOTest
 {
   private static final String RESOURCE_NAME = "test1.model1";
@@ -60,7 +64,7 @@ public class Bugzilla_458279_Test extends AbstractCDOTest
   private void testCDOMergingConflictResolverWithoutChangeSubscriptionRequest(PassiveUpdateMode mode) throws Exception
   {
     CDOSession session1 = openSession();
-    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session1).options().getNet4jProtocol();
+    ISignalProtocol<?> protocol = ((CDONet4jSession)session1).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
 
     session1.options().setPassiveUpdateMode(mode);

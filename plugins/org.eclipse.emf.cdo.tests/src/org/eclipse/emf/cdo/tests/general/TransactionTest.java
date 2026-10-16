@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -261,6 +262,7 @@ public class TransactionTest extends AbstractCDOTest
     }
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCommitManyTransactionsMultiThread() throws Exception
   {
     final int RUNS = 1;
@@ -599,6 +601,7 @@ public class TransactionTest extends AbstractCDOTest
     assertEquals(3, cdoCategory2.cdoRevision().getVersion());
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testLongCommit() throws Exception
   {
     OMPlatform.INSTANCE.setDebugging(true);
@@ -635,6 +638,7 @@ public class TransactionTest extends AbstractCDOTest
     }
   }
 
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void _testLongCommit2() throws Exception
   {
     OMPlatform.INSTANCE.setDebugging(true);
@@ -644,7 +648,7 @@ public class TransactionTest extends AbstractCDOTest
     {
       ReflectUtil.setValue(field, null, 1000L);
 
-      org.eclipse.emf.cdo.net4j.CDONet4jSession session = (org.eclipse.emf.cdo.net4j.CDONet4jSession)openSession();
+      CDONet4jSession session = (CDONet4jSession)openSession();
       session.options().setCommitTimeout(60);
 
       CDOTransaction transaction = session.openTransaction();

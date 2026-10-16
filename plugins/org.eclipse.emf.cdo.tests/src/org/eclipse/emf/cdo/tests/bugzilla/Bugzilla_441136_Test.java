@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -52,6 +53,7 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
   /**
    * Test that a {@link RequestWithMonitoring}/{@link IndicationWithMonitoring} without {@link OMMonitor} does not trigger MonitorProgressRequest/MonitorProgressIndication.
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testRequestWithoutProgressMonitor() throws Exception
   {
     testRequest(false);
@@ -60,6 +62,7 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
   /**
    * Test that a {@link RequestWithMonitoring}/{@link IndicationWithMonitoring} with {@link OMMonitor} does trigger MonitorProgressRequest/MonitorProgressIndication.
    */
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testRequestWithProgressMonitor() throws Exception
   {
     testRequest(true);
@@ -73,7 +76,7 @@ public class Bugzilla_441136_Test extends AbstractCDOTest
     ((CDONet4jSession)session).options().setSignalTimeout(10000 * SignalProtocol.DEFAULT_TIMEOUT);
 
     CDOTransaction transaction = session.openTransaction();
-    SignalCounter signalCounter = new SignalCounter(((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol());
+    SignalCounter signalCounter = new SignalCounter(((CDONet4jSession)session).options().getNet4jProtocol());
 
     try
     {

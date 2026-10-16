@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -183,7 +184,7 @@ public class Bugzilla_576893_Test extends AbstractCDOTest
     prefetcherManager.deactivate();
   }
 
-  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  @Requires({ IRepositoryConfig.CAPABILITY_BRANCHING, ISessionConfig.CAPABILITY_NET4J })
   public void testLockStatePrefetching() throws Exception
   {
     Category root = getModel1Factory().createCategory();

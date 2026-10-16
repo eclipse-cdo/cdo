@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -44,6 +45,7 @@ public class Bugzilla_517225_Test extends AbstractCDOTest
   private static final int PRODUCTS = 15;
 
   @SuppressWarnings("unchecked")
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testStringCompressorLeak() throws Exception
   {
     // Initialize model.

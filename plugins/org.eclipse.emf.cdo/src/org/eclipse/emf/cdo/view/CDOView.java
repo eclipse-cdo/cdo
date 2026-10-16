@@ -617,6 +617,25 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public void refreshLockStates(Consumer<CDOLockState> consumer);
 
   /**
+   * Refreshes the lock states of the specified object IDs with the latest states from the repository.
+   * <p>
+   * Duplicate IDs are refreshed once, and consumer calls follow the iteration order of the distinct IDs. An empty
+   * collection is a no-op. IDs do not need to be registered as objects in this view, and revisions are not loaded to
+   * refresh their lock states. If a consumer is supplied, it is called once for each distinct ID after the cache update
+   * has completed, including IDs that are unlocked. States are queried and cached for this view's branch.
+   * <p>
+   * This method returns only after the query baseline has been applied or superseded by an authoritative snapshot.
+   * In the latter case, the consumer receives the effective states from the cache.
+   *
+   * @param ids
+   *          the object IDs whose lock states are to be refreshed
+   * @param consumer
+   *          an optional consumer of the refreshed lock states
+   * @since 4.31
+   */
+  public void refreshLockStates(Collection<CDOID> ids, Consumer<CDOLockState> consumer);
+
+  /**
    * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOID ids}.
    *
    * If the collection of {@link CDOID ids} is empty, {@link CDOLockState lock states} of all objects are returned.

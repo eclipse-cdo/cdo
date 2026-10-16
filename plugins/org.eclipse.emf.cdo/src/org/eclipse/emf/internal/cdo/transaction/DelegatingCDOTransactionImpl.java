@@ -748,6 +748,21 @@ public class DelegatingCDOTransactionImpl extends Notifier implements Delegating
   }
 
   /**
+   * @since 4.12
+   */
+  @Override
+  public void refreshLockStates(Consumer<CDOLockState> consumer)
+  {
+    delegate.refreshLockStates(consumer);
+  }
+
+  @Override
+  public void refreshLockStates(Collection<CDOID> ids, Consumer<CDOLockState> consumer)
+  {
+    delegate.refreshLockStates(ids, consumer);
+  }
+
+  /**
    * @since 4.6
    */
   @Override
@@ -1218,17 +1233,6 @@ public class DelegatingCDOTransactionImpl extends Notifier implements Delegating
   public <V> V syncExec(Callable<V> callable) throws Exception
   {
     return delegate.syncExec(callable);
-  }
-
-  /**
-   * @since 4.12
-   * @deprecated
-   */
-  @Deprecated
-  @Override
-  public void refreshLockStates(Consumer<CDOLockState> consumer)
-  {
-    delegate.refreshLockStates(consumer);
   }
 
   @Override

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
@@ -740,6 +741,143 @@ public class LockingNotificationsTest extends AbstractLockingTest
     }
   }
 
+  public void testRefreshSelectedLockStates() throws Exception
+  {
+    CDOSession locker = openSession();
+    CDOTransaction lockerTransaction = locker.openTransaction();
+    CDOResource resource = lockerTransaction.createResource(getResourcePath("refreshSelectedLockStates")); //$NON-NLS-1$
+    Company first = getModel1Factory().createCompany();
+    Company second = getModel1Factory().createCompany();
+    Company third = getModel1Factory().createCompany();
+    Company fourth = getModel1Factory().createCompany();
+    resource.getContents().addAll(Arrays.asList(first, second, third, fourth));
+    lockerTransaction.commit();
+
+    CDOObject firstObject = CDOUtil.getCDOObject(first);
+    CDOObject secondObject = CDOUtil.getCDOObject(second);
+    CDOID firstID = firstObject.cdoID();
+    CDOID secondID = secondObject.cdoID();
+    CDOID thirdID = CDOUtil.getCDOObject(third).cdoID();
+    CDOID fourthID = CDOUtil.getCDOObject(fourth).cdoID();
+
+    CDOSession observer = openSession();
+    CDOTransaction observerTransaction = observer.openTransaction();
+    observerTransaction.getObject(firstID);
+    observerTransaction.getObject(fourthID);
+    assertTrue(observerTransaction.isObjectRegistered(firstID));
+    assertTrue(observerTransaction.isObjectRegistered(fourthID));
+    assertFalse(observerTransaction.isObjectRegistered(secondID));
+    assertFalse(observerTransaction.isObjectRegistered(thirdID));
+
+    InternalCDOSession internalObserver = (InternalCDOSession)observer;
+    CDOSessionProtocol originalProtocol = internalObserver.getSessionProtocol();
+    CapturingLockStateQueryProtocol protocol = new CapturingLockStateQueryProtocol(originalProtocol);
+    internalObserver.setSessionProtocol(protocol);
+
+    List<CDOID> requestedIDs = Arrays.asList(secondID, thirdID, firstID, secondID);
+    List<CDOLockState> consumedStates = new ArrayList<>();
+    try
+    {
+      lockerTransaction.lockObjects(Arrays.asList(firstObject, secondObject), LockType.WRITE, DEFAULT_TIMEOUT, false);
+      observerTransaction.refreshLockStates(requestedIDs, consumedStates::add);
+
+      List<LockStateQueryCapture> queries = protocol.getQueries();
+      assertEquals(1, queries.size());
+      LockStateQueryCapture query = queries.get(0);
+      assertEquals(Arrays.asList(secondID, thirdID, firstID), new ArrayList<>(query.ids));
+      assertEquals(observerTransaction.getBranch().getID(), query.branchID);
+      assertEquals(3, consumedStates.size());
+      assertEquals(Arrays.asList(secondID, thirdID, firstID), getLockStateIDs(consumedStates));
+      assertEquals(lockerTransaction.getLockOwner(), findWriteLockOwner(query, secondID));
+      assertEquals(lockerTransaction.getLockOwner(), findWriteLockOwner(query, firstID));
+      assertTrue(query.result.getLockStates().stream().noneMatch(state -> thirdID.equals(state.getID())));
+      assertNull(consumedStates.get(1).getWriteLockOwner());
+
+      observerTransaction.refreshLockStates(Collections.emptyList(), state -> fail("An empty selection must not invoke the consumer")); //$NON-NLS-1$
+      assertEquals("An empty selection must not issue a query", 1, protocol.getQueries().size()); //$NON-NLS-1$
+
+      lockerTransaction.unlockObjects(Collections.singleton(firstObject), LockType.WRITE, false);
+      observerTransaction.refreshLockStates(Collections.singletonList(firstID), null);
+      assertNull("A null consumer must still refresh the cache", //$NON-NLS-1$
+          internalObserver.getLockStateCache().getLockState(observerTransaction.getBranch(), firstID).getWriteLockOwner());
+
+      lockerTransaction.unlockObjects(Collections.singleton(secondObject), LockType.WRITE, false);
+      consumedStates.clear();
+      observerTransaction.refreshLockStates(requestedIDs, consumedStates::add);
+
+      assertEquals(3, consumedStates.size());
+      assertEquals(Arrays.asList(secondID, thirdID, firstID), getLockStateIDs(consumedStates));
+      assertTrue("The unlocked states must be omitted by the server", //$NON-NLS-1$
+          protocol.getQueries().get(2).result.getLockStates().isEmpty());
+      assertTrue(consumedStates.stream().allMatch(state -> state.getWriteLockOwner() == null));
+      assertNull(internalObserver.getLockStateCache().getLockState(observerTransaction.getBranch(), firstID).getWriteLockOwner());
+      assertNull(internalObserver.getLockStateCache().getLockState(observerTransaction.getBranch(), secondID).getWriteLockOwner());
+    }
+    finally
+    {
+      internalObserver.setSessionProtocol(originalProtocol);
+      observer.close();
+      lockerTransaction.unlockObjects(Arrays.asList(firstObject, secondObject), LockType.WRITE, false);
+      locker.close();
+    }
+  }
+
+  @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)
+  public void testRefreshSelectedLockStatesOnNonMainBranch() throws Exception
+  {
+    CDOSession locker = openSession();
+    CDOTransaction mainTransaction = locker.openTransaction();
+    CDOResource resource = mainTransaction.createResource(getResourcePath("refreshSelectedBranchLockState")); //$NON-NLS-1$
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    mainTransaction.commit();
+
+    CDOBranch branch = locker.getBranchManager().getMainBranch().createBranch(getBranchName("refreshSelected")); //$NON-NLS-1$
+    CDOID id = CDOUtil.getCDOObject(company).cdoID();
+    CDOTransaction lockerTransaction = locker.openTransaction(branch);
+    CDOObject lockerObject = lockerTransaction.getObject(id);
+    lockerTransaction.lockObjects(Collections.singleton(lockerObject), LockType.WRITE, DEFAULT_TIMEOUT, false);
+
+    CDOSession observer = openSession();
+    CDOTransaction observerTransaction = observer.openTransaction(branch);
+    InternalCDOSession internalObserver = (InternalCDOSession)observer;
+    CDOSessionProtocol originalProtocol = internalObserver.getSessionProtocol();
+    CapturingLockStateQueryProtocol protocol = new CapturingLockStateQueryProtocol(originalProtocol);
+    internalObserver.setSessionProtocol(protocol);
+
+    try
+    {
+      List<CDOLockState> consumedStates = new ArrayList<>();
+      observerTransaction.refreshLockStates(Collections.singletonList(id), consumedStates::add);
+
+      assertEquals(1, protocol.getQueries().size());
+      assertEquals(branch.getID(), protocol.getQueries().get(0).branchID);
+      assertEquals(Collections.singletonList(id), new ArrayList<>(protocol.getQueries().get(0).ids));
+      assertEquals(lockerTransaction.getLockOwner(), consumedStates.get(0).getWriteLockOwner());
+      assertEquals(lockerTransaction.getLockOwner(),
+          internalObserver.getLockStateCache().getLockState(observerTransaction.getBranch(), id).getWriteLockOwner());
+    }
+    finally
+    {
+      internalObserver.setSessionProtocol(originalProtocol);
+      observer.close();
+      lockerTransaction.unlockObjects(Collections.singleton(lockerObject), LockType.WRITE, false);
+      locker.close();
+    }
+  }
+
+  private static List<CDOID> getLockStateIDs(Collection<? extends CDOLockState> lockStates)
+  {
+    List<CDOID> ids = new ArrayList<>(lockStates.size());
+
+    for (CDOLockState lockState : lockStates)
+    {
+      ids.add(CDOIDUtil.getCDOID(lockState.getID()));
+    }
+
+    return ids;
+  }
+
   public void testLockStatePrefetchQueriesAdditionalRevisionsAtOneBaseline() throws Exception
   {
     CDOSession locker = openSession();
@@ -985,7 +1123,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     Thread refreshThread = new Thread(() -> {
       try
       {
-        transaction.refreshLockStates(lockState -> {
+        transaction.refreshLockStates(Collections.singletonList(objectID), lockState -> {
           if (objectID.equals(lockState.getID()))
           {
             consumedLockState.set(lockState);
@@ -1008,6 +1146,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     {
       refreshThread.start();
       assertTrue("The refresh query did not capture its response", queryCaptured.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+      assertEquals(Collections.singletonList(objectID), new ArrayList<>(delayedProtocol.getQueryIDs()));
       releaseQuery.countDown();
       awaitPendingLockStateQuery(implementation, 0L);
       assertEquals("The accepted baseline action must keep refresh pending", 1L, refreshReturned.getCount()); //$NON-NLS-1$
@@ -2163,7 +2302,7 @@ public class LockingNotificationsTest extends AbstractLockingTest
     public LockStateQueryResult getLockStates3(int branchID, Collection<CDOID> ids, int depth)
     {
       LockStateQueryResult result = super.getLockStates3(branchID, ids, depth);
-      queries.add(new LockStateQueryCapture(new ArrayList<>(ids), result));
+      queries.add(new LockStateQueryCapture(new ArrayList<>(ids), branchID, result));
       return result;
     }
 
@@ -2183,11 +2322,14 @@ public class LockingNotificationsTest extends AbstractLockingTest
   {
     private final Collection<CDOID> ids;
 
+    private final int branchID;
+
     private final LockStateQueryResult result;
 
-    public LockStateQueryCapture(Collection<CDOID> ids, LockStateQueryResult result)
+    public LockStateQueryCapture(Collection<CDOID> ids, int branchID, LockStateQueryResult result)
     {
       this.ids = ids;
+      this.branchID = branchID;
       this.result = result;
     }
   }

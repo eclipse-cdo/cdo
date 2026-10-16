@@ -1024,6 +1024,16 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   }
 
   /**
+   * @since 4.31
+   */
+  @Deprecated
+  @Override
+  public void refreshLockStates(Collection<CDOID> ids, Consumer<CDOLockState> consumer)
+  {
+    delegate.refreshLockStates(ids, consumer);
+  }
+
+  /**
    * @since 4.6
    */
   @Deprecated

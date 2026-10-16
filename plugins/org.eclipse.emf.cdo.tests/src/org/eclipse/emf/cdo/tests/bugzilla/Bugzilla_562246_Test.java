@@ -85,7 +85,6 @@ public class Bugzilla_562246_Test extends AbstractLockingTest
       resource.cdoWriteLock().lock(500);
 
       commitInfo = transaction.commit();
-      sleep(200);
     }
     finally
     {
@@ -97,7 +96,7 @@ public class Bugzilla_562246_Test extends AbstractLockingTest
       }
     }
 
-    view.waitForUpdate(commitInfo.getTimeStamp());
+    assertTrue(view.waitForUpdate(commitInfo.getTimeStamp(), DEFAULT_TIMEOUT));
   }
 
   private String getResourcePath(boolean sameSession)

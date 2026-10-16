@@ -18,6 +18,11 @@ import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * IllegalStateException in CDOStore.getRevision
  * <p>
@@ -30,9 +35,9 @@ public class Bugzilla_266982_Test extends AbstractCDOTest
   public void testBugzilla_266982() throws Exception
   {
     final Customer customer = getModel1Factory().createCustomer();
-    final boolean done[] = new boolean[1];
-    final Exception exception[] = new Exception[1];
-    done[0] = false;
+    AtomicBoolean done = new AtomicBoolean();
+    AtomicReference<Throwable> exception = new AtomicReference<>();
+    CountDownLatch workerReady = new CountDownLatch(1);
     customer.setName("customer");
 
     CDOSession session = openSession();
@@ -46,42 +51,163 @@ public class Bugzilla_266982_Test extends AbstractCDOTest
       @Override
       public void run()
       {
+        CDOSession workerSession = null;
+        CDOTransaction workerTransaction = null;
+        Throwable workerFailure = null;
+
         try
         {
-          CDOSession session = openSession();
-          CDOTransaction transaction = session.openTransaction();
-          Customer customerToLoad = (Customer)CDOUtil.getEObject(transaction.getObject(CDOUtil.getCDOObject(customer).cdoID()));
-          while (!done[0])
+          workerSession = openSession();
+          workerTransaction = workerSession.openTransaction();
+          Customer customerToLoad = (Customer)CDOUtil.getEObject(workerTransaction.getObject(CDOUtil.getCDOObject(customer).cdoID()));
+          customerToLoad.getName();
+          workerReady.countDown();
+
+          while (!done.get())
           {
             // Could fail if the attach is not thread safe
             customerToLoad.getName();
           }
 
-          transaction.close();
-          session.close();
         }
-        catch (Exception ex)
+        catch (Throwable ex)
         {
-          exception[0] = ex;
+          workerFailure = ex;
+          workerReady.countDown();
+        }
+        finally
+        {
+          try
+          {
+            if (workerTransaction != null)
+            {
+              workerTransaction.close();
+            }
+          }
+          catch (Throwable cleanupFailure)
+          {
+            if (workerFailure == null)
+            {
+              workerFailure = cleanupFailure;
+            }
+            else
+            {
+              workerFailure.addSuppressed(cleanupFailure);
+            }
+          }
+
+          try
+          {
+            if (workerSession != null)
+            {
+              workerSession.close();
+            }
+          }
+          catch (Throwable cleanupFailure)
+          {
+            if (workerFailure == null)
+            {
+              workerFailure = cleanupFailure;
+            }
+            else
+            {
+              workerFailure.addSuppressed(cleanupFailure);
+            }
+          }
+
+          if (workerFailure != null)
+          {
+            exception.set(workerFailure);
+          }
         }
       }
     };
 
-    new Thread(changeObjects).start();
+    Thread worker = new Thread(changeObjects, "Bugzilla 266982 reader"); //$NON-NLS-1$
+    worker.start();
 
-    for (int i = 0; i < 500 && exception[0] == null; i++)
+    Throwable failure = null;
+
+    try
     {
-      customer.setName("Ottawa" + i);
-      transaction.commit();
+      assertTrue("Reader thread did not become ready", workerReady.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+
+      for (int i = 0; i < 500 && exception.get() == null; i++)
+      {
+        customer.setName("Ottawa" + i);
+        transaction.commit();
+      }
+    }
+    catch (Throwable ex)
+    {
+      failure = ex;
+    }
+    finally
+    {
+      done.set(true);
+
+      try
+      {
+        worker.join(DEFAULT_TIMEOUT);
+
+        if (worker.isAlive())
+        {
+          worker.interrupt();
+          worker.join(DEFAULT_TIMEOUT);
+        }
+
+        assertFalse("Reader thread did not terminate", worker.isAlive()); //$NON-NLS-1$
+      }
+      catch (Throwable cleanupFailure)
+      {
+        if (failure == null)
+        {
+          failure = cleanupFailure;
+        }
+        else
+        {
+          failure.addSuppressed(cleanupFailure);
+        }
+      }
     }
 
-    done[0] = true;
-    if (exception[0] != null)
+    Throwable workerFailure = exception.get();
+    if (workerFailure != null)
     {
-      exception[0].printStackTrace();
-      fail(exception[0].getMessage());
+      if (failure == null)
+      {
+        failure = workerFailure;
+      }
+      else
+      {
+        failure.addSuppressed(workerFailure);
+      }
     }
 
-    session.close();
+    try
+    {
+      session.close();
+    }
+    catch (Throwable cleanupFailure)
+    {
+      if (failure == null)
+      {
+        failure = cleanupFailure;
+      }
+      else
+      {
+        failure.addSuppressed(cleanupFailure);
+      }
+    }
+
+    if (failure instanceof Exception)
+    {
+      throw (Exception)failure;
+    }
+
+    if (failure instanceof Error)
+    {
+      throw (Error)failure;
+    }
   }
 }

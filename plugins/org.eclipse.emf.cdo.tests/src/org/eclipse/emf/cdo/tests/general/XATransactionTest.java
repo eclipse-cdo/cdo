@@ -98,6 +98,8 @@ public class XATransactionTest extends AbstractCDOTest
 
     CDOTransaction transactionA = sessionA.openTransaction(resourceSetA);
     CDOTransaction transactionB = sessionB.openTransaction(resourceSetB);
+    transactionA.options().setOptimisticLockingTimeout(1000L);
+    transactionB.options().setOptimisticLockingTimeout(1000L);
     String path = getResourcePath("/xaConflictingResource");
     transactionA.createResource(path);
     transactionB.createResource(path);

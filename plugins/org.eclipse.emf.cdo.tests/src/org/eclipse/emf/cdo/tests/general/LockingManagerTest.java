@@ -140,7 +140,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     try
     {
-      lockingManager.lock(2, keys, LockType.WRITE, 1, 100, null, null); // Must fail
+      lockingManager.lock(2, keys, LockType.WRITE, 1, 1, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -160,7 +160,7 @@ public class LockingManagerTest extends AbstractLockingTest
     // Scenario 3: 1 has WO, 2 has R, 1 requests W -> fail
     try
     {
-      lockingManager.lock(1, keys, LockType.WRITE, 1, 100, null, null); // Must fail
+      lockingManager.lock(1, keys, LockType.WRITE, 1, 1, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -170,7 +170,7 @@ public class LockingManagerTest extends AbstractLockingTest
     // Scenario 4: 1 has WO, 2 has R, 2 requests WO -> fail
     try
     {
-      lockingManager.lock(2, keys, LockType.OPTION, 1, 100, null, null); // Must fail
+      lockingManager.lock(2, keys, LockType.OPTION, 1, 1, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -181,7 +181,7 @@ public class LockingManagerTest extends AbstractLockingTest
     lockingManager.unlock(2, keys, LockType.READ, 1, null, null);
     try
     {
-      lockingManager.lock(2, keys, LockType.OPTION, 1, 100, null, null); // Must fail
+      lockingManager.lock(2, keys, LockType.OPTION, 1, 1, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)
@@ -193,7 +193,7 @@ public class LockingManagerTest extends AbstractLockingTest
     lockingManager.lock(1, keys, LockType.WRITE, 1, 100, null, null);
     try
     {
-      lockingManager.lock(2, keys, LockType.OPTION, 1, 100, null, null); // Must fail
+      lockingManager.lock(2, keys, LockType.OPTION, 1, 1, null, null); // Must fail
       fail("Should have thrown an exception");
     }
     catch (TimeoutRuntimeException e)

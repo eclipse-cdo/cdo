@@ -18,8 +18,10 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.AbstractQueue;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -53,9 +55,15 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   private static final int deadlockDetectionInterval = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.util.concurrent.ThreadPool.deadlockDetectionInterval",
       NO_DEADLOCK_DETECTION);
 
-  private final AtomicInteger runningTasks = new AtomicInteger();
+  private final Object admissionLock = new Object();
+
+  private final ThreadLocal<Submission> submission = new ThreadLocal<>();
+
+  private final BlockingQueue<Runnable> queueView;
 
   private final AtomicInteger runTasks = new AtomicInteger();
+
+  private int pendingTaskCount;
 
   private int lastRunTasks = -1;
 
@@ -66,7 +74,11 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   public ThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveSeconds, ThreadFactory threadFactory)
   {
     super(corePoolSize, maximumPoolSize, keepAliveSeconds, TimeUnit.SECONDS, createWorkQueue(), threadFactory);
-    ((WorkQueue)getQueue()).setThreadPool(this);
+
+    WorkQueue workQueue = (WorkQueue)super.getQueue();
+    workQueue.setThreadPool(this);
+
+    queueView = new QueueView(this, workQueue);
 
     // Call super setter because the setter in this class is overridden to set the userHandler field.
     super.setRejectedExecutionHandler(this);
@@ -89,39 +101,142 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     return userHandler;
   }
 
+  /**
+   * Returns a live view of this executor's task queue. Queue operations have the same blocking and ordering behavior as
+   * the underlying queue, and removals through this view are reflected in the pool's pending-task accounting.
+   *
+   * @return the live task-queue view
+   */
+  @Override
+  public BlockingQueue<Runnable> getQueue()
+  {
+    BlockingQueue<Runnable> queue = queueView;
+    return queue == null ? super.getQueue() : queue;
+  }
+
+  /**
+   * Handles a task that the executor could not assign to a worker. The task is retained in the work queue only while
+   * the executor is running and either has reached its maximum size or has an idle worker; otherwise the configured
+   * user handler is invoked, or the task is rejected when no user handler is configured.
+   *
+   * @param task the task that could not be assigned to a worker
+   * @param executor the executor that rejected the task
+   */
   @Override
   public void rejectedExecution(Runnable task, ThreadPoolExecutor executor)
   {
-    if (executor.isShutdown())
+    WorkQueue queue = (WorkQueue)super.getQueue();
+    boolean queued = false;
+
+    if (!executor.isShutdown())
     {
-      rejectTask(task);
-      return;
+      synchronized (admissionLock)
+      {
+        int poolSize = getPoolSize();
+
+        if (!executor.isShutdown() && (poolSize >= getMaximumPoolSize() || super.getActiveCount() < poolSize))
+        {
+          queued = queue.offerLastDirect(task);
+          if (queued)
+          {
+            noteQueueAddition(task);
+          }
+        }
+      }
     }
 
-    WorkQueue queue = (WorkQueue)getQueue();
-    if (!queue.offerLast(task))
+    if (!queued)
     {
       rejectTask(task);
+
+      Submission currentSubmission = submission.get();
+      if (currentSubmission != null //
+          && currentSubmission.task == task //
+          && currentSubmission.reservationPending //
+          && !currentSubmission.queued)
+      {
+        removePendingTask(task);
+      }
     }
   }
 
+  /**
+   * Submits a task through the executor's normal worker creation and queueing sequence.
+   *
+   * @param command the task to execute
+   * @throws RejectedExecutionException if the task cannot be accepted and the configured rejection handler rejects it
+   * @throws NullPointerException if the task is {@code null}
+   */
   @Override
-  public int getActiveCount()
+  public void execute(Runnable command)
   {
-    return runningTasks.get();
+    Submission currentSubmission = new Submission(command);
+    addPendingTask();
+    Submission previousSubmission = submission.get();
+    submission.set(currentSubmission);
+
+    try
+    {
+      super.execute(command);
+    }
+    catch (RuntimeException | Error ex)
+    {
+      if (currentSubmission.reservationPending && !currentSubmission.queued)
+      {
+        removePendingTask(command);
+      }
+
+      throw ex;
+    }
+    finally
+    {
+      submission.set(previousSubmission);
+    }
   }
 
   @Override
   protected void beforeExecute(Thread worker, Runnable task)
   {
-    runningTasks.incrementAndGet();
+    synchronized (admissionLock)
+    {
+      removePendingTask(task);
+    }
+
     incrementRunTasks();
   }
 
   @Override
   protected void afterExecute(Runnable task, Throwable ex)
   {
-    runningTasks.decrementAndGet();
+    super.afterExecute(task, ex);
+  }
+
+  /**
+   * Initiates an orderly shutdown. Task admission and the shutdown transition share a lock so a concurrent task is
+   * either admitted before shutdown or rejected after shutdown begins.
+   */
+  @Override
+  public void shutdown()
+  {
+    synchronized (admissionLock)
+    {
+      super.shutdown();
+    }
+  }
+
+  /**
+   * Attempts to stop active tasks and removes waiting tasks. Queue reservations for the returned waiting tasks are
+   * released before this method returns.
+   *
+   * @return the tasks that were waiting to execute
+   */
+  @Override
+  public List<Runnable> shutdownNow()
+  {
+    synchronized (admissionLock)
+    {
+      return super.shutdownNow();
+    }
   }
 
   @Override
@@ -140,7 +255,7 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
    */
   protected void potentialDeadlockDetected()
   {
-    int size = getQueue().size();
+    int size = super.getQueue().size();
     if (size > 0)
     {
       OM.LOG.warn("Potential deadlock detected in " + this + ". " + size + " tasks are queued."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -159,37 +274,97 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     } while (!runTasks.compareAndSet(current, next));
   }
 
-  /**
-   * This method decides whether a new task will be added to the {@link WorkQueue} (and eventually picked up by
-   * an existing worker), or assigned to a new worker.
-   * <p>
-   * It is called from {@link WorkQueue#offer(Runnable)}, which, in turn, is called from {@link #execute(Runnable)}.
-   * When this method is called the core workers are already created, i.e., {@link #getPoolSize() pool size} >=
-   * {@link #getCorePoolSize() core pool size}.
-   * <p>
-   * Note that, due to the unsynchronized calls to the various metric-providing methods,
-   * it can happen that the thread pool will not be able to actually create a new worker at the time it is supposed
-   * to do it. In this case the {@link #rejectedExecution(Runnable, ThreadPoolExecutor) rejectedExecution()} method
-   * will be called, which, as a last resort, adds the new task to the work queue (even though here
-   * it was decided not to do so).
-   */
-  private boolean shallEnqueue()
+  private boolean offer(Runnable task, WorkQueue queue)
   {
-    int poolSize = getPoolSize();
-    if (getQueue().size() < poolSize - getActiveCount())
-    {
-      // More inactive workers exist than there are tasks in the queue; the task should be enqueued.
-      return true;
-    }
+    boolean isSubmittingTask = isSubmittingTask(task);
 
-    if (poolSize >= getMaximumPoolSize())
+    synchronized (admissionLock)
     {
-      // Pool is full; the task should be enqueued.
-      return true;
-    }
+      if (super.isShutdown())
+      {
+        return false;
+      }
 
-    // A new worker should be created.
-    return false;
+      int poolSize = getPoolSize();
+      int activeCount = super.getActiveCount();
+      int additionalPendingTasks = isSubmittingTask ? 0 : 1;
+
+      if (poolSize < getMaximumPoolSize() && activeCount + pendingTaskCount + additionalPendingTasks > poolSize)
+      {
+        // A task has no available worker and the executor should create another one.
+        return false;
+      }
+
+      boolean offered = queue.offerDirect(task);
+      if (offered)
+      {
+        noteQueueAddition(task);
+      }
+
+      return offered;
+    }
+  }
+
+  private void addPendingTask()
+  {
+    synchronized (admissionLock)
+    {
+      ++pendingTaskCount;
+    }
+  }
+
+  private void noteQueueAddition(Runnable task)
+  {
+    Submission currentSubmission = submission.get();
+    if (currentSubmission != null && currentSubmission.task == task)
+    {
+      currentSubmission.queued = true;
+    }
+    else
+    {
+      addPendingTask();
+    }
+  }
+
+  private void removePendingTask(Runnable task)
+  {
+    synchronized (admissionLock)
+    {
+      if (pendingTaskCount > 0)
+      {
+        --pendingTaskCount;
+
+        Submission currentSubmission = submission.get();
+        if (currentSubmission != null && currentSubmission.task == task)
+        {
+          currentSubmission.reservationPending = false;
+        }
+      }
+    }
+  }
+
+  private boolean isSubmittingTask(Runnable task)
+  {
+    Submission currentSubmission = submission.get();
+    return currentSubmission != null && currentSubmission.task == task;
+  }
+
+  private void queueTaskRemoved(Runnable task)
+  {
+    removePendingTask(task);
+  }
+
+  private void queueTasksRemoved(Collection<? extends Runnable> tasks)
+  {
+    for (Runnable task : tasks)
+    {
+      removePendingTask(task);
+    }
+  }
+
+  private void queueTaskTaken(Runnable task)
+  {
+    removePendingTask(task);
   }
 
   private void rejectTask(Runnable task)
@@ -203,6 +378,68 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     {
       throw new RejectedExecutionException("Thread pool has rejected the task " + task); //$NON-NLS-1$
     }
+  }
+
+  private static ThreadFactory createThreadFactory(String threadGroupName)
+  {
+    if (threadGroupName == null)
+    {
+      threadGroupName = DEFAULT_THREAD_GROUP_NAME;
+    }
+
+    ThreadGroup threadGroup = new ThreadGroup(threadGroupName);
+
+    ThreadFactory threadFactory = new ThreadFactory()
+    {
+      private final AtomicInteger num = new AtomicInteger();
+
+      @Override
+      public Thread newThread(Runnable task)
+      {
+        Thread thread = new Thread(threadGroup, task, threadGroup.getName() + "-thread-" + num.incrementAndGet());
+        thread.setDaemon(true);
+        return thread;
+      }
+    };
+
+    return threadFactory;
+  }
+
+  private static WorkQueue createWorkQueue()
+  {
+    if (LINKED_BLOCKING_DEQUE_CLASS != null)
+    {
+      try
+      {
+        return new WorkQueueJRE16();
+      }
+      catch (Throwable ex)
+      {
+        //$FALL-THROUGH$
+      }
+    }
+
+    return new WorkQueueJRE15();
+  }
+
+  static
+  {
+    Class<?> c = null;
+    Method m = null;
+
+    try
+    {
+      c = Class.forName("java.util.concurrent.LinkedBlockingDeque");
+      m = c.getMethod("offerLast", Object.class);
+    }
+    catch (Throwable ex)
+    {
+      c = null;
+      m = null;
+    }
+
+    LINKED_BLOCKING_DEQUE_CLASS = c;
+    OFFER_LAST_METHOD = m;
   }
 
   public static ThreadPool create()
@@ -270,68 +507,6 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     return new ThreadPool(corePoolSize, maximumPoolSize, keepAliveSeconds, threadFactory);
   }
 
-  private static ThreadFactory createThreadFactory(String threadGroupName)
-  {
-    if (threadGroupName == null)
-    {
-      threadGroupName = DEFAULT_THREAD_GROUP_NAME;
-    }
-
-    ThreadGroup threadGroup = new ThreadGroup(threadGroupName);
-
-    ThreadFactory threadFactory = new ThreadFactory()
-    {
-      private final AtomicInteger num = new AtomicInteger();
-
-      @Override
-      public Thread newThread(Runnable task)
-      {
-        Thread thread = new Thread(threadGroup, task, threadGroup.getName() + "-thread-" + num.incrementAndGet());
-        thread.setDaemon(true);
-        return thread;
-      }
-    };
-
-    return threadFactory;
-  }
-
-  private static WorkQueue createWorkQueue()
-  {
-    if (LINKED_BLOCKING_DEQUE_CLASS != null)
-    {
-      try
-      {
-        return new WorkQueueJRE16();
-      }
-      catch (Throwable ex)
-      {
-        //$FALL-THROUGH$
-      }
-    }
-
-    return new WorkQueueJRE15();
-  }
-
-  static
-  {
-    Class<?> c = null;
-    Method m = null;
-
-    try
-    {
-      c = Class.forName("java.util.concurrent.LinkedBlockingDeque");
-      m = c.getMethod("offerLast", Object.class);
-    }
-    catch (Throwable ex)
-    {
-      c = null;
-      m = null;
-    }
-
-    LINKED_BLOCKING_DEQUE_CLASS = c;
-    OFFER_LAST_METHOD = m;
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -339,7 +514,9 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
   {
     public void setThreadPool(ThreadPool threadPool);
 
-    public boolean offerLast(Runnable task);
+    public boolean offerDirect(Runnable task);
+
+    public boolean offerLastDirect(Runnable task);
 
   }
 
@@ -363,21 +540,151 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     }
 
     @Override
-    public boolean offerLast(Runnable task)
+    public boolean offerDirect(Runnable task)
     {
       // Call the super method because the method in this class is overridden.
       return super.offer(task);
     }
 
     @Override
-    public boolean offer(Runnable task)
+    public boolean offerLastDirect(Runnable task)
     {
-      if (threadPool.shallEnqueue())
+      return super.offer(task);
+    }
+
+    @Override
+    public void put(Runnable task) throws InterruptedException
+    {
+      synchronized (threadPool.admissionLock)
       {
-        return super.offer(task);
+        super.put(task);
+        threadPool.noteQueueAddition(task);
+      }
+    }
+
+    @Override
+    public boolean offer(Runnable task, long timeout, TimeUnit unit) throws InterruptedException
+    {
+      synchronized (threadPool.admissionLock)
+      {
+        boolean offered = super.offer(task, timeout, unit);
+        if (offered)
+        {
+          threadPool.noteQueueAddition(task);
+        }
+
+        return offered;
+      }
+    }
+
+    @Override
+    public boolean remove(Object task)
+    {
+      boolean removed = super.remove(task);
+      if (removed)
+      {
+        threadPool.queueTaskRemoved((Runnable)task);
       }
 
-      return false;
+      return removed;
+    }
+
+    @Override
+    public Runnable poll()
+    {
+      Runnable task = super.poll();
+      if (task != null)
+      {
+        threadPool.queueTaskRemoved(task);
+      }
+
+      return task;
+    }
+
+    @Override
+    public Runnable poll(long timeout, TimeUnit unit) throws InterruptedException
+    {
+      return super.poll(timeout, unit);
+    }
+
+    @Override
+    public Runnable take() throws InterruptedException
+    {
+      return super.take();
+    }
+
+    @Override
+    public int drainTo(Collection<? super Runnable> collection)
+    {
+      if (collection == this)
+      {
+        throw new IllegalArgumentException();
+      }
+
+      List<Runnable> removed = new ArrayList<>();
+      int count = super.drainTo(removed);
+      threadPool.queueTasksRemoved(removed);
+      collection.addAll(removed);
+      return count;
+    }
+
+    @Override
+    public int drainTo(Collection<? super Runnable> collection, int maxElements)
+    {
+      if (collection == this)
+      {
+        throw new IllegalArgumentException();
+      }
+
+      List<Runnable> removed = new ArrayList<>();
+      int count = super.drainTo(removed, maxElements);
+      threadPool.queueTasksRemoved(removed);
+      collection.addAll(removed);
+      return count;
+    }
+
+    @Override
+    public void clear()
+    {
+      drainTo(new ArrayList<>());
+    }
+
+    @Override
+    public Iterator<Runnable> iterator()
+    {
+      Iterator<Runnable> iterator = super.iterator();
+
+      return new Iterator<>()
+      {
+        private Runnable current;
+
+        @Override
+        public boolean hasNext()
+        {
+          return iterator.hasNext();
+        }
+
+        @Override
+        public Runnable next()
+        {
+          current = iterator.next();
+          return current;
+        }
+
+        @Override
+        public void remove()
+        {
+          iterator.remove();
+          threadPool.queueTaskRemoved(current);
+          current = null;
+        }
+      };
+    }
+
+    @Override
+    public boolean offer(Runnable task)
+    {
+      return threadPool.offer(task, this);
     }
   }
 
@@ -401,7 +708,13 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     }
 
     @Override
-    public boolean offerLast(Runnable task)
+    public boolean offerDirect(Runnable task)
+    {
+      return delegate.offer(task);
+    }
+
+    @Override
+    public boolean offerLastDirect(Runnable task)
     {
       try
       {
@@ -416,20 +729,36 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     }
 
     @Override
-    public boolean offer(Runnable task)
+    public boolean remove(Object task)
     {
-      if (threadPool.shallEnqueue())
+      boolean removed = delegate.remove(task);
+      if (removed)
       {
-        return delegate.offer(task);
+        threadPool.queueTaskRemoved((Runnable)task);
       }
 
-      return false;
+      return removed;
+    }
+
+    @Override
+    public boolean offer(Runnable task)
+    {
+      return threadPool.offer(task, this);
     }
 
     @Override
     public boolean offer(Runnable taske, long timeout, TimeUnit unit) throws InterruptedException
     {
-      return delegate.offer(taske, timeout, unit);
+      synchronized (threadPool.admissionLock)
+      {
+        boolean offered = delegate.offer(taske, timeout, unit);
+        if (offered)
+        {
+          threadPool.noteQueueAddition(taske);
+        }
+
+        return offered;
+      }
     }
 
     @Override
@@ -453,13 +782,45 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     @Override
     public Runnable poll()
     {
-      return delegate.poll();
+      Runnable task = delegate.poll();
+      if (task != null)
+      {
+        threadPool.queueTaskRemoved(task);
+      }
+
+      return task;
     }
 
     @Override
     public Iterator<Runnable> iterator()
     {
-      return delegate.iterator();
+      Iterator<Runnable> iterator = delegate.iterator();
+
+      return new Iterator<>()
+      {
+        private Runnable current;
+
+        @Override
+        public boolean hasNext()
+        {
+          return iterator.hasNext();
+        }
+
+        @Override
+        public Runnable next()
+        {
+          current = iterator.next();
+          return current;
+        }
+
+        @Override
+        public void remove()
+        {
+          iterator.remove();
+          threadPool.queueTaskRemoved(current);
+          current = null;
+        }
+      };
     }
 
     @Override
@@ -471,7 +832,11 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     @Override
     public void put(Runnable task) throws InterruptedException
     {
-      delegate.put(task);
+      synchronized (threadPool.admissionLock)
+      {
+        delegate.put(task);
+        threadPool.noteQueueAddition(task);
+      }
     }
 
     @Override
@@ -483,13 +848,37 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     @Override
     public int drainTo(Collection<? super Runnable> c)
     {
-      return delegate.drainTo(c);
+      if (c == this)
+      {
+        throw new IllegalArgumentException();
+      }
+
+      List<Runnable> removed = new ArrayList<>();
+      int count = delegate.drainTo(removed);
+      threadPool.queueTasksRemoved(removed);
+      c.addAll(removed);
+      return count;
     }
 
     @Override
     public int drainTo(Collection<? super Runnable> c, int maxElements)
     {
-      return delegate.drainTo(c, maxElements);
+      if (c == this)
+      {
+        throw new IllegalArgumentException();
+      }
+
+      List<Runnable> removed = new ArrayList<>();
+      int count = delegate.drainTo(removed, maxElements);
+      threadPool.queueTasksRemoved(removed);
+      c.addAll(removed);
+      return count;
+    }
+
+    @Override
+    public void clear()
+    {
+      drainTo(new ArrayList<>());
     }
 
     @SuppressWarnings("unchecked")
@@ -575,6 +964,145 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
           pool.potentialDeadlockDetected();
         }
       }
+    }
+  }
+
+  /**
+   * Exposes the executor queue while accounting for removals made through its public accessor.
+   *
+   * @author Eike Stepper
+   */
+  private static final class QueueView extends AbstractQueue<Runnable> implements BlockingQueue<Runnable>
+  {
+    private final ThreadPool threadPool;
+
+    private final BlockingQueue<Runnable> delegate;
+
+    public QueueView(ThreadPool threadPool, BlockingQueue<Runnable> delegate)
+    {
+      this.threadPool = threadPool;
+      this.delegate = delegate;
+    }
+
+    @Override
+    public boolean offer(Runnable task)
+    {
+      return delegate.offer(task);
+    }
+
+    @Override
+    public void put(Runnable task) throws InterruptedException
+    {
+      delegate.put(task);
+    }
+
+    @Override
+    public boolean offer(Runnable task, long timeout, TimeUnit unit) throws InterruptedException
+    {
+      return delegate.offer(task, timeout, unit);
+    }
+
+    @Override
+    public Runnable take() throws InterruptedException
+    {
+      Runnable task = delegate.take();
+      threadPool.queueTaskTaken(task);
+      return task;
+    }
+
+    @Override
+    public Runnable poll(long timeout, TimeUnit unit) throws InterruptedException
+    {
+      Runnable task = delegate.poll(timeout, unit);
+      if (task != null)
+      {
+        threadPool.queueTaskTaken(task);
+      }
+
+      return task;
+    }
+
+    @Override
+    public Runnable poll()
+    {
+      return delegate.poll();
+    }
+
+    @Override
+    public Runnable peek()
+    {
+      return delegate.peek();
+    }
+
+    @Override
+    public int size()
+    {
+      return delegate.size();
+    }
+
+    @Override
+    public int remainingCapacity()
+    {
+      return delegate.remainingCapacity();
+    }
+
+    @Override
+    public Iterator<Runnable> iterator()
+    {
+      return delegate.iterator();
+    }
+
+    @Override
+    public boolean remove(Object task)
+    {
+      return delegate.remove(task);
+    }
+
+    @Override
+    public int drainTo(Collection<? super Runnable> collection)
+    {
+      if (collection == this)
+      {
+        throw new IllegalArgumentException();
+      }
+
+      return delegate.drainTo(collection);
+    }
+
+    @Override
+    public int drainTo(Collection<? super Runnable> collection, int maxElements)
+    {
+      if (collection == this)
+      {
+        throw new IllegalArgumentException();
+      }
+
+      return delegate.drainTo(collection, maxElements);
+    }
+
+    @Override
+    public void clear()
+    {
+      delegate.clear();
+    }
+  }
+
+  /**
+   * Tracks the reservation associated with one call to {@link ThreadPool#execute(Runnable)}.
+   *
+   * @author Eike Stepper
+   */
+  private static final class Submission
+  {
+    private final Runnable task;
+
+    private boolean reservationPending = true;
+
+    private boolean queued;
+
+    public Submission(Runnable task)
+    {
+      this.task = task;
     }
   }
 }

@@ -55,7 +55,7 @@ public class BufferInputStream extends InputStream implements IBufferHandler
    */
   private boolean ccam;
 
-  private RemoteException exception;
+  private volatile RemoteException exception;
 
   private long stopTimeMillis;
 

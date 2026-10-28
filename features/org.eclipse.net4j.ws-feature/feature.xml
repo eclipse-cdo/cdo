@@ -13,7 +13,7 @@
 <feature
       id="org.eclipse.net4j.ws"
       label="%featureName"
-      version="1.3.5.qualifier"
+      version="2.0.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -38,9 +38,6 @@
 
    <plugin
          id="org.eclipse.net4j.ws"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
+         version="0.0.0"/>
 
 </feature>

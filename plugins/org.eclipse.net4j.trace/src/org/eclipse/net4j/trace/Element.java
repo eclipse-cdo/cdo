@@ -18,6 +18,8 @@ import org.eclipse.net4j.internal.trace.ElementCounters;
 
 import org.eclipse.internal.net4j.buffer.Buffer;
 
+import org.eclipse.spi.net4j.InternalBuffer;
+
 import java.util.Map;
 import java.util.WeakHashMap;
 
@@ -67,6 +69,7 @@ public class Element
     }
   }
 
+  @SuppressWarnings("deprecation")
   public static Element get(Object object)
   {
     Element element;
@@ -77,10 +80,29 @@ public class Element
       element = ELEMENTS.get(object);
       if (element == null)
       {
-        if (object instanceof Buffer)
+        if (object instanceof IBuffer)
         {
-          Buffer buffer = (Buffer)object;
-          element = new BufferElement(buffer.getID());
+          IBuffer buffer = (IBuffer)object;
+
+          int id = buffer instanceof Buffer ? ((Buffer)buffer).getID() : ElementCounters.INSTANCE.nextBufferID();
+          BufferElement bufferElement = new BufferElement(id);
+
+          if (!(buffer instanceof InternalBuffer))
+          {
+            bufferElement.setProvider(buffer.getBufferProvider());
+
+            bufferElement.state = buffer.getState();
+            if (bufferElement.state != BufferState.RELEASED && bufferElement.state != BufferState.DISPOSED)
+            {
+              bufferElement.position = buffer.getPosition();
+              bufferElement.limit = buffer.getLimit();
+            }
+
+            bufferElement.eos = buffer.isEOS();
+            bufferElement.ccam = buffer.isCCAM();
+          }
+
+          element = bufferElement;
           created = true;
         }
         else if (object instanceof Thread)
@@ -183,7 +205,7 @@ public class Element
 
     public void setProvider(Object object)
     {
-      provider = get(object);
+      provider = object == null ? null : get(object);
     }
 
     public Element getOwner()

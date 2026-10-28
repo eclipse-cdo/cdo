@@ -13,8 +13,8 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStore;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStoreAccessor;
 import org.eclipse.emf.cdo.internal.server.mem.MEMStoreChunkReader;
-import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.server.ISession;
+import org.eclipse.emf.cdo.server.IStoreChunkReader;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -104,8 +104,7 @@ public class MEMStoreSynchronizationTest extends AbstractCDOTest
           {
             readerObservedFirstCommit.countDown();
           }
-        }
-        while (writerDone.getCount() != 0);
+        } while (writerDone.getCount() != 0);
       }
       catch (Throwable ex)
       {

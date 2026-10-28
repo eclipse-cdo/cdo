@@ -471,7 +471,17 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
     {
       synchronized (signals)
       {
+        for (Signal signal : signals.values())
+        {
+          BufferInputStream inputStream = signal.getBufferInputStream();
+          if (inputStream != null)
+          {
+            inputStream.setException(new RemoteException("Signal protocol was deactivated", false)); //$NON-NLS-1$
+          }
+        }
+
         signals.clear();
+        signals.notifyAll();
       }
 
       IChannel channel = getChannel();

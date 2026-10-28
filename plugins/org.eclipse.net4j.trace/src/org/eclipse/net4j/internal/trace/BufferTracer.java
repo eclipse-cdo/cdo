@@ -29,7 +29,7 @@ public class BufferTracer
 {
   public static final Listener LISTENER = createListener();
 
-  private static final ThreadLocal<Stack<Call>> CALL_STACKS = new ThreadLocal<Stack<Call>>()
+  private static final ThreadLocal<Stack<Call>> CALL_STACKS = new ThreadLocal<>()
   {
     @Override
     protected Stack<Call> initialValue()
@@ -107,6 +107,7 @@ public class BufferTracer
     return callStack;
   }
 
+  @SuppressWarnings("deprecation")
   private static void handleBuffer(IBuffer buffer, Object caller, String callingMethod, String calledMethod)
   {
     // System.out.println(

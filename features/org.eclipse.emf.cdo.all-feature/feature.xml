@@ -81,7 +81,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.net4j.ws"
+         id="org.eclipse.net4j.ws.jetty.server"
          version="0.0.0"/>
 
    <includes

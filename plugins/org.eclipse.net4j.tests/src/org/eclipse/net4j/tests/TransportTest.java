@@ -141,6 +141,38 @@ public class TransportTest extends AbstractConfigTest
     assertEquals(true, counter.await(2, TimeUnit.SECONDS));
   }
 
+  public void testSendBuffersOnMultipleChannels() throws Exception
+  {
+    final int FIRST_CHANNEL_COUNT = 4;
+    final int SECOND_CHANNEL_COUNT = 2;
+    final CountDownLatch counter = new CountDownLatch(FIRST_CHANNEL_COUNT + SECOND_CHANNEL_COUNT);
+    acceptorContainer.registerFactory(new TestProtocol.ServerFactory(counter));
+    connectorContainer.registerFactory(new TestProtocol.ClientFactory());
+
+    startTransport();
+    IConnector connector = getConnector();
+    IChannel firstChannel = connector.openChannel(TestProtocol.TYPE, null);
+    IChannel secondChannel = connector.openChannel(TestProtocol.TYPE, null);
+
+    for (int i = 0; i < FIRST_CHANNEL_COUNT; i++)
+    {
+      IBuffer buffer = provideBuffer(connector);
+      ByteBuffer byteBuffer = buffer.startPutting(firstChannel.getID());
+      byteBuffer.putInt(i);
+      firstChannel.sendBuffer(buffer);
+    }
+
+    for (int i = 0; i < SECOND_CHANNEL_COUNT; i++)
+    {
+      IBuffer buffer = provideBuffer(connector);
+      ByteBuffer byteBuffer = buffer.startPutting(secondChannel.getID());
+      byteBuffer.putInt(i);
+      secondChannel.sendBuffer(buffer);
+    }
+
+    assertTrue("Buffers were not received on both channels", counter.await(2, TimeUnit.SECONDS)); //$NON-NLS-1$
+  }
+
   public void testHandleEmptyBuffer() throws Exception
   {
     final int COUNT = 3;

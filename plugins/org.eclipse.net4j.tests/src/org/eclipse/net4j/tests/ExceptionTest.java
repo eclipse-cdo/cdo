@@ -20,6 +20,8 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * @author Eike Stepper
@@ -74,6 +76,7 @@ public class ExceptionTest extends AbstractConfigTest
   {
     startTransport();
     TestSignalProtocol protocol = new TestSignalProtocol(getConnector());
+    protocol.setTrustingPeer(false);
 
     try
     {
@@ -83,48 +86,35 @@ public class ExceptionTest extends AbstractConfigTest
     catch (Exception ex)
     {
       IOUtil.print(ex);
-      if (ioProblem)
+
+      if (phase == 2 || phase == 3)
       {
-        IOException ioe = null;
-        if (phase == 2 || phase == 3)
+        assertTrue("RemoteException expected", ex instanceof RemoteException); //$NON-NLS-1$
+        RemoteException remoteException = (RemoteException)ex;
+        assertEquals(phase == 3, remoteException.whileResponding());
+        assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, remoteException.getMessage());
+
+        if (ioProblem)
         {
-          if (ex instanceof RemoteException)
-          {
-            assertEquals(((RemoteException)ex).whileResponding(), phase == 3);
-            ioe = (IOException)ex.getCause();
-          }
-          else
-          {
-            fail("RemoteException expected"); //$NON-NLS-1$
-          }
+          assertEquals(Collections.singletonList(IOException.class.getName()), remoteException.getExceptionNames());
         }
         else
         {
-          ioe = (IOException)ex;
+          assertEquals(Arrays.asList(ClassNotFoundException.class.getName(), AlreadyBoundException.class.getName()), remoteException.getExceptionNames());
         }
 
+        return;
+      }
+
+      if (ioProblem)
+      {
+        IOException ioe = (IOException)ex;
         assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, ioe.getMessage());
       }
       else
       {
-        ClassNotFoundException cnfe = null;
-        if (phase == 2 || phase == 3)
-        {
-          if (ex instanceof RemoteException)
-          {
-            assertEquals(((RemoteException)ex).whileResponding(), phase == 3);
-            cnfe = (ClassNotFoundException)ex.getCause();
-          }
-          else
-          {
-            fail("RemoteException expected"); //$NON-NLS-1$
-          }
-        }
-        else
-        {
-          cnfe = (ClassNotFoundException)ex;
-        }
-
+        ClassNotFoundException cnfe = (ClassNotFoundException)ex;
+        assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, cnfe.getMessage());
         AlreadyBoundException abe = (AlreadyBoundException)cnfe.getCause();
         assertEquals(TestSignalProtocol.SIMULATED_EXCEPTION, abe.getMessage());
       }

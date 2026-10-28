@@ -59,8 +59,10 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * See bug 213782, bug 201366
@@ -265,6 +267,8 @@ public class TransactionTest extends AbstractCDOTest
   @Requires(ISessionConfig.CAPABILITY_NET4J)
   public void testCommitManyTransactionsMultiThread() throws Exception
   {
+    verifyCommitFailureAssertion();
+
     final int RUNS = 1;
     final int THREADS = 100;
     final boolean pessimistic = true;
@@ -285,6 +289,8 @@ public class TransactionTest extends AbstractCDOTest
       System.out.println("RUN " + run);
 
       CountDownLatch latch = new CountDownLatch(THREADS);
+      AtomicInteger successfulCommits = new AtomicInteger();
+      ConcurrentLinkedQueue<CommitFailure> failures = new ConcurrentLinkedQueue<>();
       List<Thread> threadList = new ArrayList<>();
 
       for (int thread = 0; thread < THREADS; thread++)
@@ -293,7 +299,7 @@ public class TransactionTest extends AbstractCDOTest
         final Company company = transaction.getObject(initialCompany);
         final Customer newCustomer = Model1Factory.eINSTANCE.createCustomer();
 
-        threadList.add(new Committer(transaction, latch, new Callable<Boolean>()
+        threadList.add(new Committer(transaction, latch, successfulCommits, failures, new Callable<Boolean>()
         {
           @Override
           public Boolean call() throws Exception
@@ -314,8 +320,55 @@ public class TransactionTest extends AbstractCDOTest
         thread.start();
       }
 
-      await(latch, 2 * DEFAULT_TIMEOUT);
+      boolean completed = latch.await(2 * DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
       signalCounter.dump(IOUtil.OUT(), true);
+
+      AssertionError failure = createCommitFailureAssertion(THREADS, successfulCommits.get(), latch.getCount(), completed, failures, threadList);
+      if (failure != null)
+      {
+        throw failure;
+      }
+    }
+  }
+
+  private static AssertionError createCommitFailureAssertion(int expectedCommits, int successfulCommits, long unfinishedThreads, boolean completed,
+      ConcurrentLinkedQueue<CommitFailure> failures, List<Thread> threadList)
+  {
+    if (completed && unfinishedThreads == 0 && successfulCommits == expectedCommits && failures.isEmpty())
+    {
+      return null;
+    }
+
+    StringBuilder message = new StringBuilder("Expected ").append(expectedCommits).append(" successful commits, but got ").append(successfulCommits)
+        .append("; completed=").append(completed).append(", unfinished threads=").append(unfinishedThreads);
+    for (Thread thread : threadList)
+    {
+      if (thread.isAlive())
+      {
+        message.append("\nStill running: ").append(thread.getName()).append(" state=").append(thread.getState());
+      }
+    }
+
+    AssertionError assertion = new AssertionError(message.toString());
+    for (CommitFailure failure : failures)
+    {
+      AssertionError detail = new AssertionError(failure.threadName + " failed during " + failure.phase, failure.cause);
+      assertion.addSuppressed(detail);
+    }
+
+    return assertion;
+  }
+
+  private static void verifyCommitFailureAssertion()
+  {
+    IllegalStateException expectedCause = new IllegalStateException("synthetic commit failure"); //$NON-NLS-1$
+    ConcurrentLinkedQueue<CommitFailure> failures = new ConcurrentLinkedQueue<>();
+    failures.add(new CommitFailure("Committer-test", "commit", expectedCause)); //$NON-NLS-1$ //$NON-NLS-2$
+    AssertionError assertion = createCommitFailureAssertion(1, 0, 0, true, failures, new ArrayList<>());
+    if (assertion == null || assertion.getSuppressed().length != 1 || assertion.getSuppressed()[0].getCause() != expectedCause
+        || !assertion.getSuppressed()[0].getMessage().contains("Committer-test")) //$NON-NLS-1$
+    {
+      throw new AssertionError("Commit failure assertion did not retain the committer and original exception", assertion); //$NON-NLS-1$
     }
   }
 
@@ -330,13 +383,20 @@ public class TransactionTest extends AbstractCDOTest
 
     private final CountDownLatch latch;
 
+    private final AtomicInteger successfulCommits;
+
+    private final ConcurrentLinkedQueue<CommitFailure> failures;
+
     private final Callable<Boolean> operation;
 
-    public Committer(CDOTransaction transaction, CountDownLatch latch, Callable<Boolean> operation)
+    public Committer(CDOTransaction transaction, CountDownLatch latch, AtomicInteger successfulCommits, ConcurrentLinkedQueue<CommitFailure> failures,
+        Callable<Boolean> operation)
     {
       super(THREAD_GROUP, "Committer-" + transaction.getViewID());
       this.transaction = transaction;
       this.latch = latch;
+      this.successfulCommits = successfulCommits;
+      this.failures = failures;
       this.operation = operation;
     }
 
@@ -346,10 +406,11 @@ public class TransactionTest extends AbstractCDOTest
       try
       {
         transaction.commit(operation, 200, null);
+        successfulCommits.incrementAndGet();
       }
-      catch (Exception ex)
+      catch (Throwable ex)
       {
-        System.out.println(ex.getClass().getName() + " --> " + ex.getMessage());
+        failures.add(new CommitFailure(getName(), "commit", ex)); //$NON-NLS-1$
       }
       finally
       {
@@ -357,11 +418,36 @@ public class TransactionTest extends AbstractCDOTest
         {
           transaction.close();
         }
+        catch (Throwable ex)
+        {
+          failures.add(new CommitFailure(getName(), "transaction cleanup", ex)); //$NON-NLS-1$
+        }
         finally
         {
           latch.countDown();
         }
       }
+    }
+  }
+
+  /**
+   * Retains a committer failure with its original throwable and lifecycle phase.
+   *
+   * @author Eike Stepper
+   */
+  private static final class CommitFailure
+  {
+    private final String threadName;
+
+    private final String phase;
+
+    private final Throwable cause;
+
+    private CommitFailure(String threadName, String phase, Throwable cause)
+    {
+      this.threadName = threadName;
+      this.phase = phase;
+      this.cause = cause;
     }
   }
 

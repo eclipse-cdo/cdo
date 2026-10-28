@@ -40,9 +40,14 @@ import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.TestListener;
 import org.eclipse.net4j.util.tests.TestListener.EventAssertion;
+import org.eclipse.net4j.ws.IWSConnector;
+import org.eclipse.net4j.ws.WSUtil;
 
+import java.net.HttpCookie;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +64,38 @@ import java.util.Map;
 public class Bugzilla_381472_Test extends AbstractCDOTest
 {
   private static final String ADMIN_HANDLER_TYPE = "test";
+
+  private static String getAdminConnectionString(IConnector connector)
+  {
+    if (connector instanceof IWSConnector)
+    {
+      IWSConnector wsConnector = (IWSConnector)connector;
+      List<String> arguments = new ArrayList<>();
+      arguments.add("provider:" + wsConnector.getProviderType());
+
+      for (HttpCookie cookie : wsConnector.getCookies())
+      {
+        arguments.add("cookie:" + cookie.getName() + "=" + cookie.getValue());
+      }
+
+      String description = WSUtil.getConnectorDescription(wsConnector.getServiceURI(), wsConnector.getAcceptorName(), arguments.toArray(new String[0]));
+      return wsConnector.getServiceURI().getScheme() + "://" + description;
+    }
+
+    return connector.getURL();
+  }
+
+  private static List<String> getCookieNamesAndValues(IWSConnector connector)
+  {
+    List<String> cookies = new ArrayList<>();
+
+    for (HttpCookie cookie : connector.getCookies())
+    {
+      cookies.add(cookie.getName() + "=" + cookie.getValue());
+    }
+
+    return cookies;
+  }
 
   private CDOAdmin openAdmin(final Map<String, Object> expectedProperties) throws InterruptedException
   {
@@ -97,10 +134,18 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     IManagedContainer clientContainer = getClientContainer();
     SessionConfig.Net4j sessionConfig = (SessionConfig.Net4j)getSessionConfig();
     IConnector connector = sessionConfig.getConnector();
-    String url = connector.getURL();
+    String connectionString = getAdminConnectionString(connector);
 
-    CDOAdminClient admin = CDOAdminClientUtil.openAdmin(url, DEFAULT_TIMEOUT, clientContainer);
+    CDOAdminClient admin = CDOAdminClientUtil.openAdmin(connectionString, DEFAULT_TIMEOUT, clientContainer);
     assertNoTimeout(admin::isConnected);
+
+    if (connector instanceof IWSConnector)
+    {
+      IWSConnector adminConnector = (IWSConnector)admin.getConnector();
+      IWSConnector wsConnector = (IWSConnector)connector;
+      assertEquals(wsConnector.getProviderType(), adminConnector.getProviderType());
+      assertEquals(getCookieNamesAndValues(wsConnector), getCookieNamesAndValues(adminConnector));
+    }
 
     return admin;
   }

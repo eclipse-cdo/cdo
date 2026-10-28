@@ -24,11 +24,13 @@ import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.IView;
+import org.eclipse.emf.cdo.server.internal.net4j.protocol.LockObjectsIndication;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.AbstractLockingTest;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
@@ -45,11 +47,18 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.signal.Signal;
+import org.eclipse.net4j.signal.SignalFinishedEvent;
+import org.eclipse.net4j.signal.SignalScheduledEvent;
+import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager.LockState;
+import org.eclipse.net4j.util.concurrent.ThreadPool;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EObject;
@@ -59,6 +68,9 @@ import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 
 import org.eclipse.ocl.util.CollectionUtil;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
+import java.lang.management.ThreadMXBean;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -66,11 +78,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.LockSupport;
 
 import junit.framework.AssertionFailedError;
 
@@ -1191,6 +1207,420 @@ public class LockingManagerTest extends AbstractLockingTest
     }
 
     assertWriteLock(false, cdoObject);
+  }
+
+  public void testCommitReleasesWriteLockWithBlockedLockIndications() throws Exception
+  {
+    final int waiterCount = 32;
+    final long waitStateTimeout = DEFAULT_TIMEOUT / 3;
+    CDOSession session = openSession();
+    CDOTransaction ownerTransaction = null;
+    CDOLock ownerLock = null;
+    CDOObject ownerObject = null;
+    boolean ownerLockAcquired = false;
+    List<CDOTransaction> waiterTransactions = new ArrayList<>();
+    List<Thread> waiterThreads = new ArrayList<>();
+    CountDownLatch waiterStarted = new CountDownLatch(waiterCount);
+    CountDownLatch waiterFinished = new CountDownLatch(waiterCount);
+    AtomicInteger successfulWaiters = new AtomicInteger();
+    ConcurrentLinkedQueue<Throwable> waiterFailures = new ConcurrentLinkedQueue<>();
+    ConcurrentMap<Integer, Signal> activeLockSignals = new ConcurrentHashMap<>();
+    List<Throwable> cleanupFailures = new ArrayList<>();
+    IListener serverSignalListener = null;
+    Throwable testFailure = null;
+
+    try
+    {
+      CDOTransaction seedTransaction = session.openTransaction();
+      CDOResource resource = seedTransaction.createResource(getResourcePath("lockCommitProgress")); //$NON-NLS-1$
+      Company company = getModel1Factory().createCompany();
+      resource.getContents().add(company);
+      seedTransaction.commit();
+      seedTransaction.close();
+
+      ownerTransaction = session.openTransaction();
+      Company ownerCompany = (Company)CDOUtil.getEObject(ownerTransaction.getObject(company));
+      ownerObject = CDOUtil.getCDOObject(ownerCompany);
+      ownerLock = ownerObject.cdoWriteLock();
+      ownerLock.lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      ownerLockAcquired = true;
+      assertTrue("Transaction A did not become the WRITE-lock owner", ownerLock.getOwners().contains(ownerTransaction.getLockOwner())); //$NON-NLS-1$
+      assertServerWriteLockOwner(session, ownerTransaction, ownerObject);
+
+      for (int i = 0; i < waiterCount; i++)
+      {
+        CDOTransaction waiterTransaction = session.openTransaction();
+        EObject waiterEObject = CDOUtil.getEObject(waiterTransaction.getObject(company));
+        CDOObject waiterObject = CDOUtil.getCDOObject(waiterEObject);
+        CDOLock waiterLock = waiterObject.cdoWriteLock();
+        waiterTransactions.add(waiterTransaction);
+
+        Thread waiter = new Thread(() -> {
+          boolean acquired = false;
+          waiterStarted.countDown();
+          try
+          {
+            waiterLock.lock(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+            acquired = true;
+
+            if (!waiterLock.getOwners().contains(waiterTransaction.getLockOwner()))
+            {
+              throw new AssertionError("The waiter returned without owning the WRITE lock"); //$NON-NLS-1$
+            }
+
+            assertServerWriteLockOwner(session, waiterTransaction, waiterObject);
+            waiterLock.unlock();
+            acquired = false;
+            successfulWaiters.incrementAndGet();
+          }
+          catch (Throwable ex)
+          {
+            waiterFailures.add(new AssertionError("Waiter transaction " + waiterTransaction.getViewID() + " failed", ex)); //$NON-NLS-1$
+          }
+          finally
+          {
+            if (acquired)
+            {
+              try
+              {
+                waiterLock.unlock();
+              }
+              catch (Throwable ex)
+              {
+                waiterFailures.add(new AssertionError("Waiter transaction " + waiterTransaction.getViewID() + " failed to release its WRITE lock", ex)); //$NON-NLS-1$
+              }
+            }
+
+            waiterFinished.countDown();
+          }
+        }, "LockWaiter-" + waiterTransaction.getViewID()); //$NON-NLS-1$
+
+        waiterThreads.add(waiter);
+      }
+
+      ISignalProtocol<?> serverProtocol = (ISignalProtocol<?>)serverSession(session).getProtocol();
+      serverSignalListener = new IListener()
+      {
+        @Override
+        public void notifyEvent(IEvent event)
+        {
+          Signal signal = null;
+          boolean scheduled = false;
+          if (event instanceof SignalScheduledEvent<?>)
+          {
+            signal = ((SignalScheduledEvent<?>)event).getSignal();
+            scheduled = true;
+          }
+          else if (event instanceof SignalFinishedEvent<?>)
+          {
+            signal = ((SignalFinishedEvent<?>)event).getSignal();
+          }
+
+          if (signal instanceof LockObjectsIndication)
+          {
+            if (scheduled)
+            {
+              activeLockSignals.put(signal.getCorrelationID(), signal);
+            }
+            else
+            {
+              activeLockSignals.remove(signal.getCorrelationID());
+            }
+          }
+        }
+      };
+      serverProtocol.addListener(serverSignalListener);
+
+      for (Thread waiter : waiterThreads)
+      {
+        waiter.start();
+      }
+
+      assertTrue("Not all competing client lock requests started", waiterStarted.await(2, TimeUnit.SECONDS)); //$NON-NLS-1$
+      awaitBlockedLockIndications(activeLockSignals, waiterCount, waitStateTimeout, waiterFinished, successfulWaiters, waiterFailures);
+
+      ownerCompany.setCity("committed while lock indications wait"); //$NON-NLS-1$
+      ownerTransaction.commit();
+
+      LockState<Object, IView> lockState = serverLockState(session, ownerObject.cdoLockState());
+      assertTrue("Transaction A still owns the WRITE lock after its commit", //$NON-NLS-1$
+          lockState == null || lockState.getWriteLockOwner() != serverTransaction(ownerTransaction));
+
+      assertTrue("Not all competing transactions completed", waiterFinished.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+      assertEquals("Not all competing transactions acquired and released the WRITE lock", waiterCount, successfulWaiters.get()); //$NON-NLS-1$
+      if (!waiterFailures.isEmpty())
+      {
+        AssertionError failures = new AssertionError("One or more competing transactions failed: " + waiterFailures); //$NON-NLS-1$
+        for (Throwable waiterFailure : waiterFailures)
+        {
+          failures.addSuppressed(waiterFailure);
+        }
+
+        throw failures;
+      }
+    }
+    catch (Throwable ex)
+    {
+      testFailure = ex;
+    }
+    finally
+    {
+      if (serverSignalListener != null)
+      {
+        try
+        {
+          serverSession(session).getProtocol().removeListener(serverSignalListener);
+        }
+        catch (Throwable ex)
+        {
+          cleanupFailures.add(ex);
+        }
+      }
+
+      if (ownerLockAcquired && ownerLock != null && ownerObject != null && ownerTransaction != null)
+      {
+        try
+        {
+          LockState<Object, IView> lockState = serverLockState(session, ownerObject.cdoLockState());
+          if (lockState != null && lockState.getWriteLockOwner() == serverTransaction(ownerTransaction))
+          {
+            ownerLock.unlock();
+          }
+        }
+        catch (Throwable ex)
+        {
+          cleanupFailures.add(ex);
+        }
+      }
+
+      boolean waitersTerminated = false;
+      try
+      {
+        waitersTerminated = waiterFinished.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+      }
+      catch (InterruptedException ex)
+      {
+        Thread.currentThread().interrupt();
+        cleanupFailures.add(ex);
+      }
+
+      if (!waitersTerminated)
+      {
+        try
+        {
+          session.close();
+        }
+        catch (Throwable ex)
+        {
+          cleanupFailures.add(ex);
+        }
+
+        for (Thread waiter : waiterThreads)
+        {
+          waiter.interrupt();
+        }
+      }
+
+      for (CDOTransaction transaction : waiterTransactions)
+      {
+        try
+        {
+          transaction.close();
+        }
+        catch (Throwable ex)
+        {
+          cleanupFailures.add(ex);
+        }
+      }
+
+      if (ownerTransaction != null)
+      {
+        try
+        {
+          ownerTransaction.close();
+        }
+        catch (Throwable ex)
+        {
+          cleanupFailures.add(ex);
+        }
+      }
+
+      long joinDeadline = System.nanoTime() + TimeUnit.SECONDS.toNanos(2);
+      for (Thread waiter : waiterThreads)
+      {
+        long remaining = joinDeadline - System.nanoTime();
+        if (remaining <= 0)
+        {
+          break;
+        }
+
+        try
+        {
+          waiter.join(Math.max(1L, TimeUnit.NANOSECONDS.toMillis(remaining)));
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+          cleanupFailures.add(ex);
+          break;
+        }
+      }
+
+      try
+      {
+        session.close();
+      }
+      catch (Throwable ex)
+      {
+        cleanupFailures.add(ex);
+      }
+    }
+
+    if (testFailure != null)
+    {
+      for (Throwable cleanupFailure : cleanupFailures)
+      {
+        testFailure.addSuppressed(cleanupFailure);
+      }
+
+      if (testFailure instanceof Error)
+      {
+        throw (Error)testFailure;
+      }
+
+      if (testFailure instanceof Exception)
+      {
+        throw (Exception)testFailure;
+      }
+
+      throw new AssertionError(testFailure);
+    }
+
+    if (!cleanupFailures.isEmpty())
+    {
+      AssertionError cleanupFailure = new AssertionError("Lock progress test cleanup failed"); //$NON-NLS-1$
+      for (Throwable cause : cleanupFailures)
+      {
+        cleanupFailure.addSuppressed(cause);
+      }
+
+      throw cleanupFailure;
+    }
+  }
+
+  private void awaitBlockedLockIndications(ConcurrentMap<Integer, Signal> activeSignals, int expected, long timeoutMillis, CountDownLatch waiterFinished,
+      AtomicInteger successfulWaiters, ConcurrentLinkedQueue<Throwable> waiterFailures)
+  {
+    ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+    long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(timeoutMillis);
+    List<ThreadInfo> blockedThreads = Collections.emptyList();
+    int activeCount = 0;
+
+    while (System.nanoTime() < deadline)
+    {
+      activeCount = activeSignals.size();
+      blockedThreads = findBlockedLockIndicationThreads(threadMXBean);
+      if (activeCount == expected && blockedThreads.size() == expected)
+      {
+        return;
+      }
+
+      LockSupport.parkNanos(TimeUnit.MILLISECONDS.toNanos(10));
+      if (Thread.interrupted())
+      {
+        Thread.currentThread().interrupt();
+        throw new AssertionFailedError("Interrupted while observing blocked server lock indications"); //$NON-NLS-1$
+      }
+    }
+
+    throw new AssertionFailedError(
+        createLockWaitDiagnostics(activeSignals, expected, activeCount, blockedThreads, timeoutMillis, waiterFinished, successfulWaiters, waiterFailures));
+  }
+
+  private String createLockWaitDiagnostics(ConcurrentMap<Integer, Signal> activeSignals, int expected, int activeCount, List<ThreadInfo> blockedThreads,
+      long timeoutMillis, CountDownLatch waiterFinished, AtomicInteger successfulWaiters, ConcurrentLinkedQueue<Throwable> waiterFailures)
+  {
+    StringBuilder message = new StringBuilder("Expected ").append(expected).append(" blocked LockObjectsIndications, but observed ").append(activeCount) //$NON-NLS-1$
+        .append(" scheduled and unfinished server signals and ").append(blockedThreads.size()) //$NON-NLS-1$
+        .append(" distinct server threads waiting in RWOLockManager.changeLocks() within ").append(timeoutMillis).append(" ms"); //$NON-NLS-2$
+    message.append("\nOutstanding indications (scheduled does not prove execution):"); //$NON-NLS-1$
+    for (Signal signal : activeSignals.values())
+    {
+      message.append("\n  correlation=").append(signal.getCorrelationID()).append(", identity=").append(System.identityHashCode(signal)).append(", signal=") //$NON-NLS-1$ //$NON-NLS-2$
+          .append(signal.getClass().getName());
+    }
+
+    ThreadPool pool = (ThreadPool)ReflectUtil.getValue("serverThreadPool", RepositoryConfig.class); //$NON-NLS-1$
+    message.append("\nServer executor: ").append(pool.getClass().getName()).append(" poolSize=").append(pool.getPoolSize()).append(" activeCount=") //$NON-NLS-1$ //$NON-NLS-2$
+        .append(pool.getActiveCount()).append(" queueSize=").append(pool.getQueue().size()); //$NON-NLS-1$
+    message.append("\nWaiters: unfinished=").append(waiterFinished.getCount()).append(", successful=").append(successfulWaiters.get()).append(", failures=") //$NON-NLS-1$ //$NON-NLS-2$
+        .append(waiterFailures);
+
+    ThreadMXBean threadMXBean = ManagementFactory.getThreadMXBean();
+    for (ThreadInfo thread : threadMXBean.dumpAllThreads(true, true))
+    {
+      if (thread == null)
+      {
+        continue;
+      }
+
+      boolean serverWorker = thread.getThreadName().startsWith("server-thread-"); //$NON-NLS-1$
+      boolean executingIndication = isLockIndicationThread(thread);
+      if (serverWorker || executingIndication)
+      {
+        message.append("\nRelevant thread:").append(thread); //$NON-NLS-1$
+      }
+    }
+
+    return message.toString();
+  }
+
+  private static boolean isLockIndicationThread(ThreadInfo thread)
+  {
+    for (StackTraceElement frame : thread.getStackTrace())
+    {
+      if (LockObjectsIndication.class.getName().equals(frame.getClassName()) && "indicating".equals(frame.getMethodName())) //$NON-NLS-1$
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private static List<ThreadInfo> findBlockedLockIndicationThreads(ThreadMXBean threadMXBean)
+  {
+    List<ThreadInfo> matches = new ArrayList<>();
+    Set<Long> threadIDs = new HashSet<>();
+    for (ThreadInfo thread : threadMXBean.dumpAllThreads(false, false))
+    {
+      if (thread == null || thread.getThreadState() != Thread.State.WAITING && thread.getThreadState() != Thread.State.TIMED_WAITING)
+      {
+        continue;
+      }
+
+      boolean inLockIndication = false;
+      boolean inLockManager = false;
+      for (StackTraceElement frame : thread.getStackTrace())
+      {
+        inLockIndication |= LockObjectsIndication.class.getName().equals(frame.getClassName()) && "indicating".equals(frame.getMethodName()); //$NON-NLS-1$
+        inLockManager |= RWOLockManager.class.getName().equals(frame.getClassName()) && "changeLocks".equals(frame.getMethodName()); //$NON-NLS-1$
+      }
+
+      if (inLockIndication && inLockManager && threadIDs.add(thread.getThreadId()))
+      {
+        matches.add(thread);
+      }
+    }
+
+    return matches;
+  }
+
+  private void assertServerWriteLockOwner(CDOSession session, CDOTransaction transaction, CDOObject object)
+  {
+    LockState<Object, IView> lockState = serverLockState(session, object.cdoLockState());
+    assertNotNull("The server has no lock state for a client-owned WRITE lock", lockState); //$NON-NLS-1$
+    assertSame("The server-side WRITE-lock owner does not match the transaction", serverTransaction(transaction), lockState.getWriteLockOwner()); //$NON-NLS-1$
   }
 
   public void testLockContention() throws Exception

@@ -29,7 +29,7 @@
   <!-- Net4j Signaling Platform -->
   <category-def name="org.eclipse.net4j.category" label="Net4j Signaling Platform"/>
   <feature id="org.eclipse.net4j" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>
-  <feature id="org.eclipse.net4j.ws" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>
+  <feature id="org.eclipse.net4j.ws.jetty.server" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>
   <feature id="org.eclipse.net4j.doc" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>
   <feature id="org.eclipse.net4j.examples" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>
   <feature id="org.eclipse.net4j.sdk" version="0.0.0"><category name="org.eclipse.net4j.category"/></feature>

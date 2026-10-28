@@ -33,6 +33,12 @@ import java.text.MessageFormat;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
+ * A pooled, direct-memory implementation of the Net4j buffer state machine.
+ * <p>
+ * Release changes the state to {@link BufferState#RELEASED} and offers the buffer to its current provider. The provider
+ * may later clear and reuse it, or dispose it permanently when storage is evicted. The class is mutable and is intended
+ * to have one active owner at a time; its state transitions and byte-buffer cursor are not synchronized.
+ *
  * @author Eike Stepper
  * @since 4.0
  */
@@ -48,12 +54,24 @@ public class Buffer implements InternalBuffer
 
   private int id = lastID.incrementAndGet();
 
+  /**
+   * Error destination detached when the current ownership cycle is released.
+   */
   private IErrorHandler errorHandler;
 
+  /**
+   * Provider that receives this buffer on release; may be replaced by a pool as it wraps another provider's buffer.
+   */
   private IBufferProvider bufferProvider;
 
+  /**
+   * Direct storage, cleared on reuse and nulled on terminal disposal.
+   */
   private ByteBuffer byteBuffer;
 
+  /**
+   * Governs which framing and payload operations are valid for the current ownership cycle.
+   */
   private BufferState state = BufferState.INITIAL;
 
   private short channelID;
@@ -154,9 +172,28 @@ public class Buffer implements InternalBuffer
     this.state = state;
   }
 
+  /**
+   * Returns the underlying byte buffer without validating the current state.
+   * This accessor is for internal algorithms that must access the storage in states other than {@link BufferState#PUTTING}
+   * or {@link BufferState#GETTING}. Callers must obey the buffer's ownership and lifecycle rules, must not retain the
+   * returned reference beyond the buffer's ownership period, and must preserve the state transitions required by the
+   * public buffer contract.
+   *
+   * @return the underlying byte buffer.
+   */
+  protected final ByteBuffer getRawByteBuffer()
+  {
+    return byteBuffer;
+  }
+
   @Override
   public ByteBuffer getByteBuffer()
   {
+    if (state != BufferState.PUTTING && state != BufferState.GETTING)
+    {
+      throw new IllegalStateException("Cannot access ByteBuffer in state " + state); //$NON-NLS-1$
+    }
+
     return byteBuffer;
   }
 
@@ -168,6 +205,11 @@ public class Buffer implements InternalBuffer
   @Override
   public void clear()
   {
+    if (state == BufferState.DISPOSED)
+    {
+      throw new IllegalStateException("Cannot clear a disposed buffer"); //$NON-NLS-1$
+    }
+
     state = BufferState.INITIAL;
     channelID = NO_CHANNEL;
     flags = 0;
@@ -179,7 +221,7 @@ public class Buffer implements InternalBuffer
   {
     try
     {
-      if (state != BufferState.RELEASED)
+      if (state != BufferState.RELEASED && state != BufferState.DISPOSED)
       {
         state = BufferState.RELEASED;
         errorHandler = null;

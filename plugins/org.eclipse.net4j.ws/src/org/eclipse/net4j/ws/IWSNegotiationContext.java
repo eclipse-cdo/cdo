@@ -14,7 +14,9 @@ package org.eclipse.net4j.ws;
 import org.eclipse.net4j.util.security.INegotiationContext;
 
 /**
- * A {@link INegotiationContext negotiation context} that is used in Websocket transport.
+ * A negotiation context associated with a WebSocket connector.
+ * <p>
+ * The context exposes the connector involved in Net4j negotiation; it does not represent the provider's HTTP handshake.
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -22,5 +24,10 @@ import org.eclipse.net4j.util.security.INegotiationContext;
  */
 public interface IWSNegotiationContext extends INegotiationContext
 {
+  /**
+   * Returns the connector whose Net4j negotiation is represented by this context.
+   *
+   * @return the WebSocket connector associated with this negotiation
+   */
   public IWSConnector getConnector();
 }

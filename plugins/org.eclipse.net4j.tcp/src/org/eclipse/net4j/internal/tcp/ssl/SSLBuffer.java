@@ -78,7 +78,9 @@ public class SSLBuffer extends Buffer
       put(buf.array(), 0, limit);
       buf.position(limit);
       buf.compact();
-      getByteBuffer().flip();
+
+      ByteBuffer byteBuffer = getRawByteBuffer();
+      byteBuffer.flip();
 
       setChannelID(getShort());
       short payloadSize = getShort();
@@ -96,10 +98,10 @@ public class SSLBuffer extends Buffer
       setLimit(payloadSize);
       setState(BufferState.READING_BODY);
 
-      getByteBuffer().flip();
+      byteBuffer.flip();
       setState(BufferState.GETTING);
 
-      return getByteBuffer();
+      return byteBuffer;
     }
     else if (readSize < 0)
     {
@@ -165,7 +167,7 @@ public class SSLBuffer extends Buffer
         setState(BufferState.WRITING);
       }
 
-      sslEngineManager.getAppSendBuf().put(getByteBuffer());
+      sslEngineManager.getAppSendBuf().put(getRawByteBuffer());
       sslEngineManager.write(socketChannel);
 
       if (packetSendBuf.position() > 0)

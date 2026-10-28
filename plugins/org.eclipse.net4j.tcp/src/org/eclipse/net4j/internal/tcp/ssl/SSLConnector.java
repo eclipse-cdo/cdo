@@ -14,18 +14,18 @@
 package org.eclipse.net4j.internal.tcp.ssl;
 
 import org.eclipse.net4j.buffer.IBufferProvider;
+import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import org.eclipse.spi.net4j.InternalChannel;
-
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * SSLConnector responses to perform tasks same as TCPConnector but it attached the SSL functionality into read and
@@ -39,7 +39,11 @@ public abstract class SSLConnector extends TCPConnector
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, SSLConnector.class);
 
+  private final AtomicBoolean handShakeTaskRunning = new AtomicBoolean();
+
   private SSLEngineManager sslEngineManager;
+
+  private volatile boolean sslDeactivating;
 
   public SSLConnector()
   {
@@ -65,7 +69,7 @@ public abstract class SSLConnector extends TCPConnector
     if (!sslEngineManager.isHandshakeComplete() && isClient())
     {
       suspendInitialHandshakeInterests();
-      getConfig().getReceiveExecutor().execute(createHandShakeTask(channel));
+      startHandshakeTask(channel, true);
     }
   }
 
@@ -77,7 +81,7 @@ public abstract class SSLConnector extends TCPConnector
     if (!sslEngineManager.isHandshakeComplete() && isServer())
     {
       suspendInitialHandshakeInterests();
-      getConfig().getReceiveExecutor().execute(createHandShakeTask(socketChannel));
+      startHandshakeTask(socketChannel, true);
     }
   }
 
@@ -103,8 +107,10 @@ public abstract class SSLConnector extends TCPConnector
 
     checkRehandShake(socketChannel);
 
-    // Handle the left data from reading multiple data at once time.
-    while (sslEngineManager.getPacketRecvBuf().position() > 0)
+    // Handle complete records left in the packet buffer without waiting for another read event.
+    while (sslEngineManager.isHandshakeComplete() //
+        && sslEngineManager.hasBufferedReceiveData() //
+        && !sslEngineManager.readNeedsMoreNetworkData())
     {
       try
       {
@@ -131,6 +137,16 @@ public abstract class SSLConnector extends TCPConnector
       return;
     }
 
+    if (sslEngineManager.hasBufferedReceiveData() && !sslEngineManager.readNeedsMoreNetworkData())
+    {
+      handleRead(selector, socketChannel);
+    }
+
+    if (!sslEngineManager.isHandshakeComplete())
+    {
+      return;
+    }
+
     super.handleWrite(selector, socketChannel);
     checkRehandShake(socketChannel);
   }
@@ -138,6 +154,8 @@ public abstract class SSLConnector extends TCPConnector
   @Override
   protected void doActivate() throws Exception
   {
+    sslDeactivating = false;
+
     try
     {
       boolean isClient = isClient();
@@ -168,6 +186,9 @@ public abstract class SSLConnector extends TCPConnector
   @Override
   protected void doDeactivate() throws Exception
   {
+    sslDeactivating = true;
+    suspendInitialHandshakeInterests();
+
     try
     {
       sslEngineManager.close();
@@ -210,6 +231,22 @@ public abstract class SSLConnector extends TCPConnector
     }
   }
 
+  @Override
+  protected void onSendingNoLongerRequired()
+  {
+    if (!sslDeactivating //
+        && sslEngineManager != null //
+        && sslEngineManager.hasBufferedReceiveData() //
+        && !sslEngineManager.readNeedsMoreNetworkData())
+    {
+      super.onSendingRequired();
+    }
+    else
+    {
+      super.onSendingNoLongerRequired();
+    }
+  }
+
   private void checkRehandShake(SocketChannel socketChannel)
   {
     if (!isClosed())
@@ -217,6 +254,12 @@ public abstract class SSLConnector extends TCPConnector
       try
       {
         sslEngineManager.checkRehandShake(socketChannel);
+
+        if (!sslEngineManager.isHandshakeComplete())
+        {
+          suspendInitialHandshakeInterests();
+          startHandshakeTask(socketChannel, false);
+        }
       }
       catch (Exception ex)
       {
@@ -240,7 +283,9 @@ public abstract class SSLConnector extends TCPConnector
 
   private void restoreInitialHandshakeInterests()
   {
-    if (!isActive() || isClosed() || !sslEngineManager.isHandshakeComplete())
+    if (sslDeactivating //
+        || getState() == ConnectorState.DISCONNECTED //
+        || !sslEngineManager.isHandshakeComplete())
     {
       return;
     }
@@ -253,28 +298,47 @@ public abstract class SSLConnector extends TCPConnector
       return;
     }
 
-    BlockingQueue<InternalChannel> writeQueue = getWriteQueue();
-
-    synchronized (writeQueue)
+    if (sslDeactivating || getState() == ConnectorState.DISCONNECTED)
     {
-      boolean client = isClient();
+      return;
+    }
 
-      if (writeQueue.isEmpty())
+    boolean bufferedReceiveData = sslEngineManager.hasBufferedReceiveData() && !sslEngineManager.readNeedsMoreNetworkData();
+    restoreSendingInterest(bufferedReceiveData);
+  }
+
+  private void startHandshakeTask(SocketChannel channel, boolean initial)
+  {
+    if (handShakeTaskRunning.compareAndSet(false, true))
+    {
+      try
       {
-        selector.orderWriteInterest(selectionKey, client, false);
-        selector.orderReadInterest(selectionKey, client, true);
+        ExecutorService receiveExecutor = getConfig().getReceiveExecutor();
+        receiveExecutor.execute(createHandShakeTask(channel, initial));
       }
-      else
+      catch (RejectedExecutionException ex)
       {
-        selector.orderReadInterest(selectionKey, client, false);
-        selector.orderWriteInterest(selectionKey, client, true);
+        handShakeTaskRunning.set(false);
+
+        if (!sslDeactivating)
+        {
+          if (initial)
+          {
+            deferredActivate(false);
+          }
+          else
+          {
+            deactivateAsync();
+          }
+        }
       }
     }
   }
 
-  private Runnable createHandShakeTask(SocketChannel channel)
+  private Runnable createHandShakeTask(SocketChannel channel, boolean initial)
   {
-    final SocketChannel socket = channel;
+    SocketChannel socket = channel;
+
     Runnable task = new Runnable()
     {
       @Override
@@ -282,8 +346,10 @@ public abstract class SSLConnector extends TCPConnector
       {
         try
         {
-          sslEngineManager.checkInitialHandshake(socket);
-          restoreInitialHandshakeInterests();
+          if (!sslDeactivating)
+          {
+            sslEngineManager.checkInitialHandshake(socket);
+          }
         }
         catch (Exception ex)
         {
@@ -292,8 +358,21 @@ public abstract class SSLConnector extends TCPConnector
             TRACER.trace("ssl cannot handshake.", ex); //$NON-NLS-1$
           }
 
-          deferredActivate(false);
+          if (initial)
+          {
+            deferredActivate(false);
+          }
+          else
+          {
+            deactivateAsync();
+          }
         }
+        finally
+        {
+          handShakeTaskRunning.set(false);
+        }
+
+        restoreInitialHandshakeInterests();
       }
     };
 

@@ -1,26 +1,23 @@
 /*
- * Copyright (c) 2024, 2025 Obeo and others.
+ * Copyright (c) 2024-2026 Obeo and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
  *
  * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *    Maxime Porhel (Obeo) - initial API and implementation
  */
-package org.eclipse.net4j.internal.wss;
+package org.eclipse.net4j.internal.ws;
 
 import org.eclipse.net4j.TransportConfigurator.AcceptorDescriptionParser;
-import org.eclipse.net4j.internal.ws.WSAcceptor;
-import org.eclipse.net4j.internal.ws.WSAcceptorFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
-import org.eclipse.net4j.wss.WSSUtil;
+import org.eclipse.net4j.ws.WSSUtil;
 
 import org.w3c.dom.Element;
 
 /**
- * @author mporhel
+ * Creates provider-neutral WSS acceptors.
+ *
+ * @author Eike Stepper
  */
 public class WSSAcceptorFactory extends WSAcceptorFactory
 {
@@ -30,23 +27,9 @@ public class WSSAcceptorFactory extends WSAcceptorFactory
   }
 
   /**
-   * Allows derived classes to override the TYPE identifier
-   */
-  protected WSSAcceptorFactory(String type)
-  {
-    super(type);
-  }
-
-  @Override
-  protected WSAcceptor createAcceptor()
-  {
-    WSAcceptor wsAcceptor = new WSAcceptor();
-    wsAcceptor.setType(WSSUtil.FACTORY_TYPE);
-    return wsAcceptor;
-  }
-
-  /**
-   * @author mporhel
+   * Parses acceptor names from the WSS acceptor configuration element.
+   *
+   * @author Eike Stepper
    */
   public static class DescriptionParserFactory extends AcceptorDescriptionParser.Factory implements AcceptorDescriptionParser
   {

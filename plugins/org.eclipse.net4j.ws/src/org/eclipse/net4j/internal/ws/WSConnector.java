@@ -1,206 +1,206 @@
 /*
- * Copyright (c) 2020, 2025 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
  *
  * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.internal.ws;
 
-import org.eclipse.net4j.buffer.IBuffer;
-import org.eclipse.net4j.channel.ChannelException;
-import org.eclipse.net4j.connector.ConnectorState;
-import org.eclipse.net4j.internal.ws.bundle.OM;
-import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.NegotiationContext;
-import org.eclipse.net4j.util.security.NegotiationException;
 import org.eclipse.net4j.ws.IWSConnector;
 import org.eclipse.net4j.ws.IWSNegotiationContext;
-import org.eclipse.net4j.ws.jetty.Net4jWebSocket;
+import org.eclipse.net4j.ws.WSUtil;
 
-import org.eclipse.spi.net4j.Connector;
-import org.eclipse.spi.net4j.InternalChannel;
-import org.eclipse.spi.net4j.InternalChannelMultiplexer.BufferMultiplexer;
+import org.eclipse.spi.net4j.MessageConnector;
 
-import java.io.IOException;
+import java.net.HttpCookie;
+import java.net.URI;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
+ * WebSocket connector configuration layered on Net4j's asynchronous message connector.
+ * <p>
+ * URI, acceptor route, transport type, and provider type are fixed for this connector product. The cookie list is copied
+ * on construction and exposed as an unmodifiable list; its {@link HttpCookie} elements remain mutable, and callers of
+ * {@link #getCookies()} receive those same element references.
+ *
  * @author Eike Stepper
  */
-public abstract class WSConnector extends Connector implements IWSConnector, BufferMultiplexer
+public class WSConnector extends MessageConnector implements IWSConnector
 {
-  public static final String ACCEPTOR_NAME_HEADER = "Net4jAcceptor"; //$NON-NLS-1$
+  private final URI serviceURI;
 
-  private Net4jWebSocket webSocket;
+  private final String acceptorName;
 
-  public WSConnector()
+  private final String type;
+
+  private final List<HttpCookie> cookies;
+
+  private final String providerType;
+
+  /**
+   * Creates a connector using the default message-connection provider type.
+   *
+   * @param serviceURI base service URI
+   * @param acceptorName target server acceptor route
+   * @param type WS or WSS transport factory type
+   * @param cookies cookies for this connector's handshake
+   */
+  public WSConnector(URI serviceURI, String acceptorName, String type, List<HttpCookie> cookies)
   {
-  }
-
-  public Net4jWebSocket getWebSocket()
-  {
-    return webSocket;
-  }
-
-  public void setWebSocket(Net4jWebSocket webSocket)
-  {
-    this.webSocket = webSocket;
+    this(serviceURI, acceptorName, type, cookies, WSConnectorFactory.DEFAULT_PROVIDER_TYPE);
   }
 
   /**
-   * Override to make the method publicly visible.
+   * Creates a connector with an explicitly selected message-connection provider.
+   *
+   * @param serviceURI base service URI
+   * @param acceptorName target server acceptor route
+   * @param type WS or WSS transport factory type
+   * @param cookies cookies for this connector's handshake
+   * @param providerType registered message-connection factory type
    */
-  @Override
-  public void setNegotiationException(NegotiationException negotiationException)
+  public WSConnector(URI serviceURI, String acceptorName, String type, List<HttpCookie> cookies, String providerType)
   {
-    super.setNegotiationException(negotiationException);
-  }
-
-  /**
-   * Override to make the method publicly visible.
-   */
-  @Override
-  public void leaveConnecting()
-  {
-    super.leaveConnecting();
-  }
-
-  public void multiplexBuffer(InternalChannel channel, IBuffer buffer)
-  {
-    boolean closeChannelAfterMe = buffer.isCCAM();
-
-    webSocket.sendBuffer(buffer);
-
-    // The buffer is released through a WriteCallback in Net4jWebSocket.sendBytes()!!!
-    // buffer.release();
-
-    if (closeChannelAfterMe)
-    {
-      if (channel != null)
-      {
-        // TODO With Net4jWebSocket.ASYNC==true this can be before the buffer is actually written!
-        channel.close();
-      }
-    }
+    this.serviceURI = serviceURI;
+    this.acceptorName = acceptorName;
+    this.type = type;
+    this.cookies = Collections.unmodifiableList(new ArrayList<>(cookies));
+    this.providerType = providerType;
   }
 
   @Override
-  public void multiplexChannel(InternalChannel channel)
+  public URI getServiceURI()
   {
-    throw new UnsupportedOperationException();
+    return serviceURI;
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException
+  public String getAcceptorName()
   {
-    try
-    {
-      webSocket.registerChannel(channelID, timeout, protocol);
-    }
-    catch (IOException ex)
-    {
-      throw new ChannelException(ex);
-    }
+    return acceptorName;
   }
 
   @Override
-  protected void deregisterChannelFromPeer(InternalChannel channel) throws ChannelException
+  public List<HttpCookie> getCookies()
   {
-    if (channel != null)
-    {
-      try
-      {
-        webSocket.deregisterChannel(channel.getID());
-      }
-      catch (IOException ex)
-      {
-        throw new ChannelException(ex);
-      }
-    }
+    return cookies;
+  }
+
+  @Override
+  public String getProviderType()
+  {
+    return providerType;
+  }
+
+  @Override
+  public void setMessageConnection(IMessageConnection connection)
+  {
+    setConnection(connection);
+  }
+
+  @Override
+  public String getURL()
+  {
+    return type + "://" + WSUtil.getConnectorDescription(serviceURI, acceptorName); //$NON-NLS-1$
   }
 
   @Override
   protected INegotiationContext createNegotiationContext()
   {
-    return new WSNegotiationContext();
-  }
-
-  @Override
-  protected void doDeactivate() throws Exception
-  {
-    webSocket.close();
-    super.doDeactivate();
+    return new WSNegotiationContext(super.createNegotiationContext());
   }
 
   /**
+   * Exposes the generic message negotiation behavior through the WS-specific API.
+   *
    * @author Eike Stepper
    */
   private final class WSNegotiationContext extends NegotiationContext implements IWSNegotiationContext
   {
-    private IBuffer buffer;
+    private final INegotiationContext delegate;
 
-    private boolean failed;
-
-    public WSNegotiationContext()
+    private WSNegotiationContext(INegotiationContext delegate)
     {
+      this.delegate = delegate;
     }
 
     @Override
-    public WSConnector getConnector()
+    public IWSConnector getConnector()
     {
       return WSConnector.this;
     }
 
     @Override
-    public void setUserID(String userID)
-    {
-      WSConnector.this.setUserID(userID);
-    }
-
-    @Override
     public ByteBuffer getBuffer()
     {
-      buffer = getConfig().getBufferProvider().provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(Net4jWebSocket.CONTROL_CHANNEL_ID);
-      byteBuffer.put(Net4jWebSocket.OPCODE_NEGOTIATION);
-      return byteBuffer;
+      return delegate.getBuffer();
     }
 
     @Override
-    public void transmitBuffer(ByteBuffer byteBuffer)
+    public void transmitBuffer(ByteBuffer buffer)
     {
-      if (buffer.getByteBuffer() != byteBuffer)
-      {
-        throw new IllegalArgumentException("The passed buffer is not the last that was produced"); //$NON-NLS-1$
-      }
+      delegate.transmitBuffer(buffer);
+    }
 
-      webSocket.sendBuffer(buffer);
-      if (failed)
-      {
-        deactivate();
-      }
+    @Override
+    public Receiver getReceiver()
+    {
+      return delegate.getReceiver();
+    }
+
+    @Override
+    public void setReceiver(Receiver receiver)
+    {
+      delegate.setReceiver(receiver);
+    }
+
+    @Override
+    public Enum<?> getState()
+    {
+      return delegate.getState();
+    }
+
+    @Override
+    public void setState(Enum<?> state)
+    {
+      delegate.setState(state);
+    }
+
+    @Override
+    public void setUserID(String userID)
+    {
+      delegate.setUserID(userID);
+    }
+
+    @Override
+    public Object getInfo()
+    {
+      return delegate.getInfo();
+    }
+
+    @Override
+    public void setInfo(Object info)
+    {
+      delegate.setInfo(info);
     }
 
     @Override
     public void setFinished(boolean success)
     {
-      if (success)
-      {
-        WSConnector.this.setState(ConnectorState.CONNECTED);
-      }
-      else
-      {
-        OM.LOG.error("Connector negotiation failed: " + WSConnector.this); //$NON-NLS-1$
-        failed = true;
-      }
+      delegate.setFinished(success);
+    }
 
-      super.setFinished(success);
+    @Override
+    public Enum<?> waitUntilFinished(long timeout)
+    {
+      return delegate.waitUntilFinished(timeout);
     }
   }
 }

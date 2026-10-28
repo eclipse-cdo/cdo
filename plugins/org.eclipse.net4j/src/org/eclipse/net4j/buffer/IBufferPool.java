@@ -12,7 +12,10 @@
 package org.eclipse.net4j.buffer;
 
 /**
- * Provides clients with the ability to obtain and retain pooled {@link IBuffer}s.
+ * A buffer provider that reuses retained buffers and can evict pooled storage.
+ * <p>
+ * Eviction removes a buffer from the pool and passes it to the underlying provider for retention, which may dispose of
+ * it. A buffer currently checked out by a client is not part of the pool and is not eligible for eviction.
  *
  * @author Eike Stepper
  */

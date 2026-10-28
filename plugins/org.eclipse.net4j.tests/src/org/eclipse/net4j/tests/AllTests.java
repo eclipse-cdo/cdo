@@ -62,6 +62,15 @@ public class AllTests
     suite.addTestSuite(ScopedRegistryTest.class);
     suite.addTestSuite(SynchronizingCorrelatorTest.class);
     suite.addTestSuite(BufferPoolTest.class);
+    suite.addTestSuite(BufferFramingTest.class);
+    suite.addTestSuite(SchedulingConnectorTest.class);
+    suite.addTestSuite(ControlChannelTest.class);
+    suite.addTestSuite(MessageConnectorTest.class);
+    suite.addTestSuite(WSFrameworkTest.class);
+    suite.addTestSuite(JettyServerAdapterTest.class);
+    suite.addTestSuite(WSConfigLifecycleTest.class);
+    suite.addTestSuite(WSSSSLContextIsolationTest.class);
+    suite.addTestSuite(JDKMessageConnectionTest.class);
     suite.addTestSuite(BufferStreamTest.class);
     suite.addTestSuite(ExtendedIOTest.class);
     suite.addTestSuite(StringCompressorTest.class);
@@ -76,6 +85,8 @@ public class AllTests
 
     // Config tests
     suite.addTestSuite(NegotiationTest.class);
+    suite.addTestSuite(SSLNegotiationTest.class);
+    suite.addTestSuite(SSLTransportRegressionTest.class);
     suite.addTestSuite(AcceptorTest.class);
     suite.addTestSuite(ChannelTest.class);
     suite.addTestSuite(TransportTest.class);

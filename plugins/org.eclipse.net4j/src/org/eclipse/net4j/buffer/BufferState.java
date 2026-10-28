@@ -15,7 +15,11 @@ import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 
 /**
- * Enumerates the internal states of an {@link IBuffer}.
+ * Enumerates the access and ownership states of an {@link IBuffer}.
+ * <p>
+ * {@link #RELEASED} marks relinquished ownership and is not a reusable initial state. {@link #DISPOSED} is terminal:
+ * the backing storage has been discarded. Implementations may expose different supported transitions; in particular,
+ * an externally backed incoming buffer can start in {@link #GETTING} and support neither reset nor writing.
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -87,14 +91,15 @@ public enum BufferState
   GETTING,
 
   /**
-   * Indicates that the {@link IBuffer} is owned by its {@link IBufferProvider}.
+   * Indicates that the current owner has relinquished the {@link IBuffer}. It must no longer be accessed by that
+   * owner; a provider may still retain its storage for a later ownership cycle.
    *
    * @since 3.0
    */
   RELEASED,
 
   /**
-   * Indicates that the {@link IBuffer} can not be used anymore.
+   * Indicates that the {@link IBuffer} has been terminally disposed and cannot be reused.
    *
    * @since 3.0
    */

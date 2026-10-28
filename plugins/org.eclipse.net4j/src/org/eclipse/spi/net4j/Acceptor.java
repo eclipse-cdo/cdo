@@ -15,9 +15,11 @@ import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -28,7 +30,11 @@ import org.eclipse.net4j.util.security.INegotiator;
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.bundle.OM;
 
+import java.util.ArrayDeque;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -58,6 +64,12 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   };
 
   private Set<IConnector> acceptedConnectors = new HashSet<>(0);
+
+  private final Map<IConnector, Object> connectorRegistrations = new HashMap<>();
+
+  private final Map<IConnector, ConnectorEventQueue> connectorEventQueues = new HashMap<>();
+
+  private boolean shuttingDown;
 
   public Acceptor()
   {
@@ -132,7 +144,10 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   @Override
   public boolean isEmpty()
   {
-    return acceptedConnectors.isEmpty();
+    synchronized (acceptedConnectors)
+    {
+      return acceptedConnectors.isEmpty();
+    }
   }
 
   @Override
@@ -151,36 +166,89 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
     }
   }
 
+  /**
+   * Adds an active connector or one undergoing deferred activation to this acceptor and publishes its addition. A connector that
+   * terminates during registration is removed again after its lifecycle listener has been installed, so a missed early lifecycle event
+   * cannot leave stale accepted state.
+   *
+   * @param connector the connector to track
+   */
   public void addConnector(InternalConnector connector)
   {
-    synchronized (acceptedConnectors)
+    boolean deferredActivation = LifecycleUtil.isDeferredActivation(connector);
+    if (!isEligibleForTracking(connector, deferredActivation))
     {
-      acceptedConnectors.add(connector);
+      return;
     }
 
-    connector.addListener(connectorListener);
+    Object registration = new Object();
+    ConnectorEventQueue eventQueue;
+    boolean publish;
+
+    synchronized (acceptedConnectors)
+    {
+      if (shuttingDown || !isEligibleForTracking(connector, deferredActivation) || !acceptedConnectors.add(connector))
+      {
+        return;
+      }
+
+      try
+      {
+        connector.addListener(connectorListener);
+      }
+      catch (RuntimeException | Error ex)
+      {
+        acceptedConnectors.remove(connector);
+        connector.removeListener(connectorListener);
+        throw ex;
+      }
+
+      if (!isEligibleForTracking(connector, deferredActivation))
+      {
+        acceptedConnectors.remove(connector);
+        connector.removeListener(connectorListener);
+        return;
+      }
+
+      connectorRegistrations.put(connector, registration);
+      eventQueue = connectorEventQueues.computeIfAbsent(connector, key -> new ConnectorEventQueue());
+      eventQueue.events.add(IContainerDelta.Kind.ADDED);
+      publish = eventQueue.startPublishing();
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.trace("Added connector " + connector); //$NON-NLS-1$
     }
 
-    fireElementAddedEvent(connector);
+    try
+    {
+      if (publish)
+      {
+        publishConnectorEvents(connector, eventQueue);
+      }
+    }
+    catch (RuntimeException | Error ex)
+    {
+      removeConnector(connector, registration);
+      throw ex;
+    }
+
+    if (!isEligibleForTracking(connector, deferredActivation))
+    {
+      removeConnector(connector, registration);
+    }
   }
 
+  /**
+   * Removes a connector that is currently tracked by this acceptor and publishes one removal event. Repeated calls are harmless and do
+   * not publish duplicate removal events.
+   *
+   * @param connector the connector to remove
+   */
   public void removeConnector(IConnector connector)
   {
-    connector.removeListener(connectorListener);
-    synchronized (acceptedConnectors)
-    {
-      acceptedConnectors.remove(connector);
-    }
-
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Removed connector " + connector); //$NON-NLS-1$
-    }
-
-    fireElementRemovedEvent(connector);
+    removeConnector(connector, null);
   }
 
   @Override
@@ -200,6 +268,11 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   {
     super.doBeforeActivate();
 
+    synchronized (acceptedConnectors)
+    {
+      shuttingDown = false;
+    }
+
     if (needsBufferProvider())
     {
       checkState(getConfig().getBufferProvider(), "getConfig().getBufferProvider()"); //$NON-NLS-1$
@@ -207,14 +280,139 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   }
 
   @Override
+  protected void doBeforeDeactivate() throws Exception
+  {
+    synchronized (acceptedConnectors)
+    {
+      shuttingDown = true;
+    }
+
+    super.doBeforeDeactivate();
+  }
+
+  @Override
   protected void doDeactivate() throws Exception
   {
-    for (IConnector connector : getAcceptedConnectors())
+    IConnector[] connectors;
+
+    synchronized (acceptedConnectors)
+    {
+      shuttingDown = true;
+      connectors = acceptedConnectors.toArray(new IConnector[acceptedConnectors.size()]);
+    }
+
+    for (IConnector connector : connectors)
     {
       connector.close();
     }
 
     super.doDeactivate();
+  }
+
+  private void removeConnector(IConnector connector, Object expectedRegistration)
+  {
+    ConnectorEventQueue eventQueue;
+    boolean publish;
+
+    synchronized (acceptedConnectors)
+    {
+      if (expectedRegistration != null && connectorRegistrations.get(connector) != expectedRegistration)
+      {
+        return;
+      }
+
+      if (!acceptedConnectors.remove(connector))
+      {
+        return;
+      }
+
+      connectorRegistrations.remove(connector);
+
+      eventQueue = connectorEventQueues.get(connector);
+      if (eventQueue == null)
+      {
+        throw new IllegalStateException("Missing connector event queue"); //$NON-NLS-1$
+      }
+
+      connector.removeListener(connectorListener);
+      eventQueue.events.add(IContainerDelta.Kind.REMOVED);
+      publish = eventQueue.startPublishing();
+    }
+
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Removed connector " + connector); //$NON-NLS-1$
+    }
+
+    if (publish)
+    {
+      publishConnectorEvents(connector, eventQueue);
+    }
+  }
+
+  private void publishConnectorEvents(IConnector connector, ConnectorEventQueue eventQueue)
+  {
+    Throwable failure = null;
+
+    for (;;)
+    {
+      IContainerDelta.Kind kind;
+
+      synchronized (acceptedConnectors)
+      {
+        kind = eventQueue.events.poll();
+        if (kind == null)
+        {
+          eventQueue.publishing = false;
+
+          if (!acceptedConnectors.contains(connector))
+          {
+            connectorEventQueues.remove(connector, eventQueue);
+          }
+
+          break;
+        }
+      }
+
+      try
+      {
+        if (kind == IContainerDelta.Kind.ADDED)
+        {
+          fireElementAddedEvent(connector);
+        }
+        else
+        {
+          fireElementRemovedEvent(connector);
+        }
+      }
+      catch (RuntimeException | Error ex)
+      {
+        if (failure == null)
+        {
+          failure = ex;
+        }
+        else
+        {
+          failure.addSuppressed(ex);
+        }
+      }
+    }
+
+    if (failure instanceof Error)
+    {
+      throw (Error)failure;
+    }
+
+    if (failure != null)
+    {
+      throw (RuntimeException)failure;
+    }
+  }
+
+  private static boolean isEligibleForTracking(InternalConnector connector, boolean deferredActivation)
+  {
+    LifecycleState state = LifecycleUtil.getLifecycleState(connector);
+    return state == LifecycleState.ACTIVE || state == LifecycleState.ACTIVATING && deferredActivation;
   }
 
   /**
@@ -224,5 +422,28 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   public interface ConnectorPreparer
   {
     public void prepareConnector(InternalConnector connector);
+  }
+
+  /**
+   * Serializes one connector's container events while allowing listeners to reenter acceptor lifecycle operations.
+   *
+   * @author Eike Stepper
+   */
+  private static final class ConnectorEventQueue
+  {
+    private final Queue<IContainerDelta.Kind> events = new ArrayDeque<>();
+
+    private boolean publishing;
+
+    private boolean startPublishing()
+    {
+      if (publishing)
+      {
+        return false;
+      }
+
+      publishing = true;
+      return true;
+    }
   }
 }

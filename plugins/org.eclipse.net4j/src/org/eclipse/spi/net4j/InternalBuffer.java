@@ -15,7 +15,11 @@ import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 
 /**
- * Internal buffer contract that allows the transport to associate a buffer with its provider and dispose it when processing is complete.
+ * Internal buffer contract for storage that can be associated with a provider and terminally disposed.
+ * <p>
+ * {@link IBuffer#release()} relinquishes the current lease and may return storage to the associated provider for reuse.
+ * {@link #dispose()} ends the storage lifetime permanently; a disposed buffer cannot be cleared or reused. External
+ * buffers can implement {@link IBuffer} without implementing this internal pooled-storage contract.
  *
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -23,7 +27,20 @@ import org.eclipse.net4j.buffer.IBufferProvider;
  */
 public interface InternalBuffer extends IBuffer
 {
+  /**
+   * Returns the provider associated with this internal buffer.
+   *
+   * @return The current provider, or <code>null</code> if no provider is associated.
+   */
+  @Override
+  @SuppressWarnings("deprecation")
+  public IBufferProvider getBufferProvider();
+
   public void setBufferProvider(IBufferProvider bufferProvider);
 
+  /**
+   * Permanently disposes this buffer's storage. This is distinct from {@link IBuffer#release()}, which may return a
+   * reusable buffer to its provider.
+   */
   public void dispose();
 }

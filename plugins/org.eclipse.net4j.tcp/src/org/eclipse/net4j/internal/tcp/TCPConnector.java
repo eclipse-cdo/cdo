@@ -14,40 +14,33 @@
 package org.eclipse.net4j.internal.tcp;
 
 import org.eclipse.net4j.buffer.IBuffer;
-import org.eclipse.net4j.channel.ChannelException;
-import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.ConnectorState;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.internal.tcp.messages.Messages;
-import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.tcp.ITCPActiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.ITCPNegotiationContext;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
-import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.collection.RoundRobinBlockingQueue;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.INegotiationContext;
 import org.eclipse.net4j.util.security.NegotiationContext;
 import org.eclipse.net4j.util.security.NegotiationException;
 
-import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.InternalChannel;
+import org.eclipse.spi.net4j.SchedulingConnector;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.Queue;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * @author Eike Stepper
  */
-public abstract class TCPConnector extends Connector implements ITCPConnector, ITCPActiveSelectorListener
+public abstract class TCPConnector extends SchedulingConnector implements ITCPConnector, ITCPActiveSelectorListener
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TCPConnector.class);
 
@@ -58,11 +51,9 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   @ExcludeFromDump
   private SelectionKey selectionKey;
 
-  private BlockingQueue<InternalChannel> writeQueue = new RoundRobinBlockingQueue<>();
+  private final Object sendLock = new Object();
 
   private IBuffer inputBuffer;
-
-  private ControlChannel controlChannel;
 
   private String host;
 
@@ -128,16 +119,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     this.selectionKey = selectionKey;
   }
 
-  public BlockingQueue<InternalChannel> getWriteQueue()
-  {
-    return writeQueue;
-  }
-
-  public void setWriteQueue(BlockingQueue<InternalChannel> writeQueue)
-  {
-    this.writeQueue = writeQueue;
-  }
-
   public IBuffer getInputBuffer()
   {
     return inputBuffer;
@@ -146,16 +127,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   public void setInputBuffer(IBuffer inputBuffer)
   {
     this.inputBuffer = inputBuffer;
-  }
-
-  public ControlChannel getControlChannel()
-  {
-    return controlChannel;
-  }
-
-  public void setControlChannel(ControlChannel controlChannel)
-  {
-    this.controlChannel = controlChannel;
   }
 
   @Override
@@ -237,7 +208,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
       if (byteBuffer != null)
       {
         short channelID = inputBuffer.getChannelID();
-        InternalChannel channel = channelID == ControlChannel.CONTROL_CHANNEL_INDEX ? controlChannel : getChannel(channelID);
+
+        InternalChannel channel = channelID == CONTROL_CHANNEL_ID ? getInternalControlChannel() : getChannel(channelID);
         if (channel != null)
         {
           channel.handleBufferFromMultiplexer(inputBuffer);
@@ -281,111 +253,87 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     }
   }
 
-  /**
-   * Called by an {@link IChannel} each time a new buffer is available for multiplexing. This or another buffer can be
-   * dequeued from the outputQueue of the {@link IChannel}.
-   */
-  @Override
-  public void multiplexChannel(InternalChannel channel)
-  {
-    synchronized (writeQueue)
-    {
-      boolean firstChannel = writeQueue.isEmpty();
-
-      try
-      {
-        writeQueue.put(channel);
-      }
-      catch (InterruptedException ex)
-      {
-        Thread.currentThread().interrupt();
-        throw WrappedException.wrap(ex);
-      }
-
-      if (firstChannel)
-      {
-        if (selectionKey != null)
-        {
-          doOrderWriteInterest(true);
-        }
-      }
-    }
-  }
-
   @Override
   public void handleWrite(ITCPSelector selector, SocketChannel socketChannel)
   {
-    try
+    synchronized (sendLock)
     {
-      synchronized (writeQueue)
+      try
       {
-        InternalChannel channel = writeQueue.peek();
-        if (channel != null)
+        InternalChannel channel = selectScheduledChannel();
+        if (channel == null)
         {
-          Queue<IBuffer> channelSendQueue = channel.getSendQueue();
-          if (channelSendQueue != null)
+          stopSendingIfIdle();
+          return;
+        }
+
+        Queue<IBuffer> sendQueue = channel.getSendQueue();
+        if (sendQueue == null)
+        {
+          completeScheduledChannel(channel, true);
+          return;
+        }
+
+        boolean completed = false;
+        boolean closeChannelAfterMe = false;
+
+        synchronized (sendQueue)
+        {
+          if (channel.isActive() && channel.getSendQueue() == sendQueue)
           {
-            synchronized (channelSendQueue)
+            IBuffer buffer = sendQueue.peek();
+            if (buffer == null)
             {
-              IBuffer buffer = channelSendQueue.peek();
-              if (buffer != null)
-              {
-                // The CCAM flag must be remembered *before* the buffer.write() call below!
-                boolean closeChannelAfterMe = buffer.isCCAM();
+              completed = true;
+            }
+            else
+            {
+              // The CCAM flag must be remembered *before* the buffer.write() call below!
+              closeChannelAfterMe = buffer.isCCAM();
 
-                if (buffer.write(socketChannel))
-                {
-                  writeQueue.poll();
-                  channelSendQueue.poll();
-                  buffer.release();
-
-                  if (closeChannelAfterMe)
-                  {
-                    channel.close();
-                  }
-                }
-              }
-              else
+              if (buffer.write(socketChannel))
               {
-                // The channel was deactivated after it had been queued for writing.
-                writeQueue.poll();
+                sendQueue.poll();
+                buffer.release();
+                completed = true;
               }
             }
           }
-          else
-          {
-            // The channel was deactivated after it had been queued for writing.
-            writeQueue.poll();
-          }
         }
 
-        if (writeQueue.isEmpty())
+        if (completed)
         {
-          if (selectionKey != null)
+          if (closeChannelAfterMe)
           {
-            doOrderWriteInterest(false);
+            channel.close();
           }
+
+          completeScheduledChannel(channel, true);
+        }
+        else
+        {
+          completeScheduledChannel(channel, false);
         }
       }
-    }
-    catch (NullPointerException ignore)
-    {
-    }
-    catch (ClosedChannelException ex)
-    {
-      if (TRACER.isEnabled())
+      catch (NullPointerException ignore)
       {
-        TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
       }
-
-      deactivateAsync();
-    }
-    catch (Exception ex)
-    {
-      if (isActive())
+      catch (ClosedChannelException ex)
       {
-        OM.LOG.error(ex);
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
+        }
+
         deactivateAsync();
+      }
+      catch (Exception ex)
+      {
+        if (isActive())
+        {
+          OM.LOG.error(ex);
+          deactivateAsync();
+        }
       }
     }
   }
@@ -396,20 +344,20 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   }
 
   @Override
-  protected void registerChannelWithPeer(short channelID, long timeout, IProtocol<?> protocol) throws ChannelException
+  protected void onSendingRequired()
   {
-    controlChannel.registerChannel(channelID, timeout, protocol);
+    if (selectionKey != null && selector != null)
+    {
+      doOrderWriteInterest(true);
+    }
   }
 
   @Override
-  protected void deregisterChannelFromPeer(InternalChannel channel) throws ChannelException
+  protected void onSendingNoLongerRequired()
   {
-    if (channel != null && channel.getClass() != ControlChannel.class)
+    if (selectionKey != null && selector != null)
     {
-      if (controlChannel != null && isConnected())
-      {
-        controlChannel.deregisterChannel(channel.getID());
-      }
+      doOrderWriteInterest(false);
     }
   }
 
@@ -423,6 +371,7 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+
     if (socketChannel == null)
     {
       throw new IllegalStateException("socketChannel == null"); //$NON-NLS-1$
@@ -438,8 +387,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    controlChannel = new ControlChannel(this);
-    controlChannel.activate();
     selector.orderRegistration(socketChannel, isClient(), this);
   }
 
@@ -447,9 +394,6 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
   protected void doDeactivate() throws Exception
   {
     cleanUp();
-
-    LifecycleUtil.deactivate(controlChannel);
-    controlChannel = null;
 
     IOUtil.closeSilent(socketChannel);
     socketChannel = null;
@@ -516,8 +460,9 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
     public ByteBuffer getBuffer()
     {
       buffer = provideBuffer();
-      ByteBuffer byteBuffer = buffer.startPutting(ControlChannel.CONTROL_CHANNEL_INDEX);
-      byteBuffer.put(ControlChannel.OPCODE_NEGOTIATION);
+
+      ByteBuffer byteBuffer = buffer.startPutting(CONTROL_CHANNEL_ID);
+      byteBuffer.put(CONTROL_OPCODE_NEGOTIATION);
       return byteBuffer;
     }
 
@@ -529,7 +474,8 @@ public abstract class TCPConnector extends Connector implements ITCPConnector, I
         throw new IllegalArgumentException("The passed buffer is not the last that was produced"); //$NON-NLS-1$
       }
 
-      controlChannel.sendBuffer(buffer);
+      getControlChannel().sendBuffer(buffer);
+
       if (failed)
       {
         deactivate();

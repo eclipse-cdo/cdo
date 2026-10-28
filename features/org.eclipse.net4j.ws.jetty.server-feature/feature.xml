@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Copyright (c) 2020, 2021, 2023-2026 Eike Stepper (Loehne, Germany) and others.
+	All rights reserved. This program and the accompanying materials
+	are made available under the terms of the Eclipse Public License 2.0
+	which is available at https://www.eclipse.org/legal/epl-2.0
+	
+	SPDX-License-Identifier: EPL-2.0
+
+	Contributors:
+	  Eike Stepper - initial API and implementation
+-->
+<feature
+      id="org.eclipse.net4j.ws.jetty.server"
+      label="%featureName"
+      version="1.0.0.qualifier"
+      provider-name="%providerName"
+      image="eclipse_update_120.jpg"
+      license-feature="org.eclipse.emf.cdo.license"
+      license-feature-version="0.0.0">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="%copyrightURL">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
+      <discovery label="%updateSiteName" url="http://www.eclipse.org/modeling/updates/"/>
+   </url>
+
+   <includes
+         id="org.eclipse.net4j.ws"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.net4j.ws.jetty.server"
+         version="0.0.0"/>
+
+</feature>

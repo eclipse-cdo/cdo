@@ -1,46 +1,48 @@
 /*
- * Copyright (c) 2020, 2024, 2025 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2026 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License 2.0
  * which is available at https://www.eclipse.org/legal/epl-2.0
  *
  * SPDX-License-Identifier: EPL-2.0
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
- *    Maxime Porhel (Obeo) - WSS Support
  */
 package org.eclipse.net4j.internal.ws;
 
-import org.eclipse.net4j.TransportConfigurator.AcceptorDescriptionParser;
-import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.concurrent.Worker;
-import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.ws.IWSAcceptor;
-import org.eclipse.net4j.ws.WSUtil;
-import org.eclipse.net4j.ws.jetty.Net4jWebSocket;
 
 import org.eclipse.spi.net4j.Acceptor;
-
-import org.w3c.dom.Element;
-
-import java.text.MessageFormat;
+import org.eclipse.spi.net4j.MessageConnector.IMessageConnection;
 
 /**
+ * Provider-neutral acceptor that routes accepted message connections into Net4j.
+ *
  * @author Eike Stepper
  */
 public class WSAcceptor extends Acceptor implements IWSAcceptor
 {
-  public static final boolean DEFAULT_START_SYNCHRONOUSLY = true;
+  /** Serializes admission with shutdown so a connection is either admitted or rejected as closing begins. */
+  private final Object acceptLock = new Object();
 
-  public static final long DEFAULT_SYNCHRONOUS_START_TIMEOUT = Worker.DEFAULT_TIMEOUT;
+  /** WS or WSS route type used by the provider for transport-specific upgrade handling. */
+  private final String type;
 
+  /** Route name published in the JVM-wide provider lookup registry while active. */
   private String name;
 
-  private String type = WSUtil.FACTORY_TYPE;
+  /** Set under {@link #acceptLock} before deregistration and connector teardown begin. */
+  private boolean closing;
 
-  public WSAcceptor()
+  /**
+   * Creates an acceptor whose provider type is used for WS or WSS routing.
+   *
+   * @param type the transport factory type associated with this acceptor
+   */
+  public WSAcceptor(String type)
   {
+    this.type = type;
   }
 
   @Override
@@ -55,44 +57,127 @@ public class WSAcceptor extends Acceptor implements IWSAcceptor
     this.name = name;
   }
 
-  public void setType(String type)
+  @Override
+  public String getType()
   {
-    checkInactive();
-    this.type = type;
-  }
-
-  public WSServerConnector handleAccept(Net4jWebSocket webSocket)
-  {
-    WSServerConnector connector = createConnector();
-    prepareConnector(connector);
-    connector.setWebSocket(webSocket);
-    connector.activate();
-    addConnector(connector);
-    return connector;
+    return type;
   }
 
   @Override
-  public String toString()
+  public void accept(IMessageConnection connection)
   {
-    if (!WSUtil.FACTORY_TYPE.equalsIgnoreCase(type))
+    if (connection == null)
     {
-      return MessageFormat.format("WSAcceptor[{0}, {1}]", type, name); //$NON-NLS-1$
+      throw new IllegalArgumentException("connection == null"); //$NON-NLS-1$
     }
-    return MessageFormat.format("WSAcceptor[{0}]", name); //$NON-NLS-1$
-  }
 
-  protected WSServerConnector createConnector()
-  {
-    return new WSServerConnector(this);
+    boolean admitted;
+
+    synchronized (acceptLock)
+    {
+      admitted = isActive() && !closing;
+    }
+
+    if (!admitted)
+    {
+      reject(connection);
+      throw new IllegalStateException("Acceptor is not active"); //$NON-NLS-1$
+    }
+
+    WSServerConnector connector = null;
+    boolean tracked = false;
+
+    try
+    {
+      connector = new WSServerConnector(this, connection);
+      prepareConnector(connector);
+
+      synchronized (acceptLock)
+      {
+        checkAcceptanceOpen();
+      }
+
+      LifecycleUtil.activate(connector);
+
+      synchronized (acceptLock)
+      {
+        checkAcceptanceOpen();
+      }
+
+      if (!isViable(connector))
+      {
+        throw new IllegalStateException("Accepted connector was terminated during activation"); //$NON-NLS-1$
+      }
+
+      addConnector(connector);
+
+      tracked = isConnectorTracked(connector);
+      if (!tracked || !isViable(connector))
+      {
+        throw new IllegalStateException("Accepted connector was terminated during registration"); //$NON-NLS-1$
+      }
+
+      synchronized (acceptLock)
+      {
+        checkAcceptanceOpen();
+      }
+    }
+    catch (RuntimeException | Error ex)
+    {
+      if (connector != null)
+      {
+        try
+        {
+          if (tracked && isConnectorTracked(connector))
+          {
+            removeConnector(connector);
+          }
+
+          LifecycleUtil.deactivate(connector);
+        }
+        catch (RuntimeException | Error cleanupException)
+        {
+          ex.addSuppressed(cleanupException);
+        }
+
+        try
+        {
+          connector.abortAcceptedConnection();
+        }
+        catch (RuntimeException | Error cleanupException)
+        {
+          ex.addSuppressed(cleanupException);
+        }
+      }
+      else
+      {
+        try
+        {
+          connection.abort();
+        }
+        catch (RuntimeException | Error cleanupException)
+        {
+          ex.addSuppressed(cleanupException);
+        }
+      }
+
+      throw ex;
+    }
   }
 
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (StringUtil.isEmpty(name))
+
+    if (name == null || name.length() == 0)
     {
-      throw new IllegalStateException("name is null or empty"); //$NON-NLS-1$
+      throw new IllegalStateException("name is empty"); //$NON-NLS-1$
+    }
+
+    synchronized (acceptLock)
+    {
+      closing = false;
     }
   }
 
@@ -100,36 +185,77 @@ public class WSAcceptor extends Acceptor implements IWSAcceptor
   protected void doActivate() throws Exception
   {
     super.doActivate();
-    WSAcceptorManager.INSTANCE.registerAcceptor(this);
+
+    if (!WSAcceptorManager.INSTANCE.registerAcceptor(this))
+    {
+      super.doDeactivate();
+      throw new IllegalStateException("A WebSocket acceptor named '" + name + "' is already registered"); //$NON-NLS-1$
+    }
+  }
+
+  @Override
+  protected void doBeforeDeactivate() throws Exception
+  {
+    synchronized (acceptLock)
+    {
+      closing = true;
+    }
+
+    WSAcceptorManager.INSTANCE.deregisterAcceptor(this);
+    super.doBeforeDeactivate();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
     WSAcceptorManager.INSTANCE.deregisterAcceptor(this);
+
+    for (IConnector acceptedConnector : getAcceptedConnectors())
+    {
+      if (acceptedConnector instanceof WSServerConnector)
+      {
+        WSServerConnector connector = (WSServerConnector)acceptedConnector;
+
+        if (LifecycleUtil.getLifecycleState(connector) == LifecycleState.ACTIVATING)
+        {
+          connector.abortAcceptedConnection();
+          removeConnector(connector);
+        }
+      }
+    }
+
     super.doDeactivate();
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  public static class DescriptionParserFactory extends AcceptorDescriptionParser.Factory implements AcceptorDescriptionParser
+  private void checkAcceptanceOpen()
   {
-    public DescriptionParserFactory()
+    if (closing || !isActive())
     {
-      super(WSUtil.FACTORY_TYPE);
+      throw new IllegalStateException("Acceptor is shutting down"); //$NON-NLS-1$
+    }
+  }
+
+  private boolean isConnectorTracked(WSServerConnector connector)
+  {
+    for (IConnector acceptedConnector : getAcceptedConnectors())
+    {
+      if (acceptedConnector == connector)
+      {
+        return true;
+      }
     }
 
-    @Override
-    public AcceptorDescriptionParser create(String description) throws ProductCreationException
-    {
-      return this;
-    }
+    return false;
+  }
 
-    @Override
-    public String getAcceptorDescription(Element acceptorConfig)
-    {
-      return acceptorConfig.getAttribute("name"); //$NON-NLS-1$
-    }
+  private static boolean isViable(WSServerConnector connector)
+  {
+    LifecycleState state = LifecycleUtil.getLifecycleState(connector);
+    return state == LifecycleState.ACTIVE || state == LifecycleState.ACTIVATING && connector.isDeferredActivation();
+  }
+
+  private static void reject(IMessageConnection connection)
+  {
+    connection.abort();
   }
 }

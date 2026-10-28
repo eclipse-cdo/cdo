@@ -64,7 +64,7 @@ public interface IConnector extends IChannelMultiplexer, IUserAware, Closeable
    * Synchronous connect. Blocks until <code>{@link #isConnected()} == true</code> or the given timeout expired.
    *
    * @param timeout
-   *          The maximum number of milli seconds to block or {@link #NO_TIMEOUT} to block indefinetely in case no
+   *          The maximum number of milliseconds to block or {@link #NO_TIMEOUT} to block indefinitely in case no
    *          connection occurs.
    * @throws ConnectorException
    * @since 4.0

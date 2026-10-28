@@ -44,7 +44,7 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
   private final Queue<BufferRef> buffers = new ConcurrentLinkedQueue<>();
 
   @ExcludeFromDump
-  private final CleanableReferenceQueue<IBuffer> referenceQueue = new CleanableReferenceQueue<IBuffer>()
+  private final CleanableReferenceQueue<IBuffer> referenceQueue = new CleanableReferenceQueue<>()
   {
     @Override
     protected Reference<IBuffer> createReference(IBuffer buffer)
@@ -157,7 +157,22 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
     if (buffer == null)
     {
       buffer = provider.provideBuffer();
-      ((InternalBuffer)buffer).setBufferProvider(this);
+      if (!(buffer instanceof InternalBuffer))
+      {
+        IllegalStateException exception = new IllegalStateException("Underlying provider returned a buffer that does not implement InternalBuffer: " + buffer); //$NON-NLS-1$
+        releaseRejectedBuffer(buffer, exception);
+        throw exception;
+      }
+
+      try
+      {
+        ((InternalBuffer)buffer).setBufferProvider(this);
+      }
+      catch (RuntimeException | Error ex)
+      {
+        releaseRejectedBuffer(buffer, ex);
+        throw ex;
+      }
     }
     else
     {
@@ -176,6 +191,11 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
   @Override
   protected void doRetainBuffer(IBuffer buffer)
   {
+    if (!(buffer instanceof InternalBuffer))
+    {
+      throw new IllegalArgumentException("Only InternalBuffer instances can be retained by a BufferPool: " + buffer); //$NON-NLS-1$
+    }
+
     if (buffer.getCapacity() != getBufferCapacity())
     {
       throw new IllegalArgumentException("buffer.getCapacity() != getBufferCapacity()"); //$NON-NLS-1$
@@ -189,6 +209,21 @@ public class BufferPool extends BufferProvider implements IBufferPool.Introspect
     BufferRef bufferRef = createBufferRef(buffer);
     buffers.add(bufferRef);
     ++pooledBuffers;
+  }
+
+  private static void releaseRejectedBuffer(IBuffer buffer, Throwable exception)
+  {
+    if (buffer != null)
+    {
+      try
+      {
+        buffer.release();
+      }
+      catch (RuntimeException | Error releaseException)
+      {
+        exception.addSuppressed(releaseException);
+      }
+    }
   }
 
   /**

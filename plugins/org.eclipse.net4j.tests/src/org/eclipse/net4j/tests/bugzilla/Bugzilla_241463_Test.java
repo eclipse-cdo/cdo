@@ -13,31 +13,22 @@
  */
 package org.eclipse.net4j.tests.bugzilla;
 
-import org.eclipse.net4j.internal.jvm.JVMAcceptor;
-import org.eclipse.net4j.internal.jvm.JVMAcceptorFactory;
-import org.eclipse.net4j.internal.jvm.JVMClientConnector;
-import org.eclipse.net4j.internal.jvm.JVMServerConnector;
-import org.eclipse.net4j.internal.tcp.TCPAcceptor;
-import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
-import org.eclipse.net4j.internal.tcp.TCPServerConnector;
-import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptor;
-import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory;
-import org.eclipse.net4j.internal.tcp.ssl.SSLServerConnector;
-import org.eclipse.net4j.internal.ws.WSAcceptor;
-import org.eclipse.net4j.internal.ws.WSAcceptorFactory;
-import org.eclipse.net4j.internal.ws.WSServerConnector;
-import org.eclipse.net4j.internal.wss.WSSAcceptorFactory;
-import org.eclipse.net4j.tcp.ITCPAcceptor;
-import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
+import org.eclipse.net4j.tests.config.Net4jTestSuite;
+import org.eclipse.net4j.tests.config.TestConfig.JVM;
+import org.eclipse.net4j.tests.config.TestConfig.SSL;
+import org.eclipse.net4j.tests.config.TestConfig.TCP;
+import org.eclipse.net4j.tests.config.TestConfig.WS;
+import org.eclipse.net4j.tests.config.TestConfig.WSS;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 
-import org.eclipse.spi.net4j.InternalChannel;
+import org.eclipse.spi.net4j.ServerProtocolFactory;
 
-import java.nio.channels.ClosedChannelException;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import junit.framework.Test;
 
 /**
  * See bug 241463.
@@ -46,15 +37,26 @@ import java.nio.channels.SocketChannel;
  */
 public class Bugzilla_241463_Test extends AbstractConfigTest
 {
+  private final AtomicInteger protocolFactoryCalls = new AtomicInteger();
+
+  /**
+   * Runs this regression against every supported transport configuration.
+   *
+   * @return the configured transport regression suite
+   */
+  @SuppressWarnings("unchecked")
+  public static Test suite()
+  {
+    Net4jTestSuite suite = new Net4jTestSuite(Bugzilla_241463_Test.class.getName(), JVM.class, TCP.class, SSL.class, WS.class, WSS.class);
+    suite.addTestSuite(Bugzilla_241463_Test.class);
+    return suite;
+  }
+
   @Override
   protected IManagedContainer createContainer()
   {
     IManagedContainer container = super.createContainer();
-    container.registerFactory(new FakeJVMAcceptorFactory());
-    container.registerFactory(new FakeTCPAcceptorFactory());
-    container.registerFactory(new FakeSSLAcceptorFactory());
-    container.registerFactory(new FakeWSAcceptorFactory());
-    container.registerFactory(new FakeWSSAcceptorFactory());
+    container.registerFactory(new FailingTestSignalProtocolFactory(protocolFactoryCalls));
     return container;
   }
 
@@ -62,185 +64,40 @@ public class Bugzilla_241463_Test extends AbstractConfigTest
   {
     startTransport();
     getConnector().setOpenChannelTimeout(2000L);
+    protocolFactoryCalls.set(0);
 
     try
     {
       new TestSignalProtocol(getConnector());
-      fail("Exception expected"); //$NON-NLS-1$
+      fail("Opening a channel must fail when the server cannot create its protocol"); //$NON-NLS-1$
     }
     catch (Exception expected)
     {
+      assertEquals("The server protocol factory must fail the inverse channel open", 1, protocolFactoryCalls.get()); //$NON-NLS-1$
     }
   }
 
   /**
+   * Forces the server's inverse channel-open path to fail during protocol creation, which exercises the provider-neutral message
+   * connector behavior used by both stream transports and WebSocket acceptors.
+   *
    * @author Eike Stepper
    */
-  private static final class FakeJVMAcceptorFactory extends JVMAcceptorFactory
+  private static final class FailingTestSignalProtocolFactory extends ServerProtocolFactory
   {
-    @Override
-    public JVMAcceptor create(String description)
+    private final AtomicInteger calls;
+
+    private FailingTestSignalProtocolFactory(AtomicInteger calls)
     {
-      JVMAcceptor acceptor = new JVMAcceptor()
-      {
-        @Override
-        public JVMServerConnector handleAccept(JVMClientConnector client)
-        {
-          JVMServerConnector connector = new JVMServerConnector(this, client)
-          {
-            @Override
-            public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
-            {
-              throw new RuntimeException("Simulated problem"); //$NON-NLS-1$
-            }
-          };
-
-          prepareConnector(connector);
-          connector.setName(client.getName());
-          connector.activate();
-          addConnector(connector);
-          return connector;
-        }
-      };
-
-      acceptor.setName(description);
-      return acceptor;
+      super(TestSignalProtocol.PROTOCOL_NAME);
+      this.calls = calls;
     }
-  }
 
-  /**
-   * @author Eike Stepper
-   */
-  private static final class FakeTCPAcceptorFactory extends TCPAcceptorFactory
-  {
     @Override
-    public TCPAcceptor create(String description)
+    public TestSignalProtocol create(String description) throws ProductCreationException
     {
-      TCPAcceptor acceptor = new TCPAcceptor()
-      {
-        @Override
-        protected TCPServerConnector createConnector()
-        {
-          return new TCPServerConnector(this)
-          {
-            @Override
-            public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
-            {
-              throw new RuntimeException("Simulated problem"); //$NON-NLS-1$
-            }
-          };
-        }
-      };
-
-      acceptor.setAddress(ITCPAcceptor.DEFAULT_ADDRESS);
-      acceptor.setPort(ITCPAcceptor.DEFAULT_PORT);
-      return acceptor;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class FakeSSLAcceptorFactory extends SSLAcceptorFactory
-  {
-    @Override
-    public SSLAcceptor create(String description)
-    {
-      SSLAcceptor acceptor = new SSLAcceptor()
-      {
-        @Override
-        public void handleAccept(ITCPSelector selector, ServerSocketChannel serverSocketChannel)
-        {
-          try
-          {
-            SocketChannel socketChannel = serverSocketChannel.accept();
-            if (socketChannel != null)
-            {
-              socketChannel.configureBlocking(false);
-
-              SSLServerConnector connector = new SSLServerConnector(this)
-              {
-                @Override
-                public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
-                {
-                  throw new RuntimeException("Simulated problem"); //$NON-NLS-1$
-                }
-              };
-
-              prepareConnector(connector);
-              connector.setSocketChannel(socketChannel);
-              connector.setSelector(selector);
-              connector.activate();
-            }
-          }
-          catch (ClosedChannelException ex)
-          {
-            deactivateAsync();
-          }
-          catch (Exception ex)
-          {
-            deactivateAsync();
-          }
-        }
-      };
-
-      acceptor.setAddress(ITCPAcceptor.DEFAULT_ADDRESS);
-      acceptor.setPort(ITCPAcceptor.DEFAULT_PORT);
-      return acceptor;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  private static final class FakeWSAcceptorFactory extends WSAcceptorFactory
-  {
-    @Override
-    protected WSAcceptor createAcceptor()
-    {
-      return new WSAcceptor()
-      {
-        @Override
-        protected WSServerConnector createConnector()
-        {
-          return new WSServerConnector(this)
-          {
-
-            @Override
-            public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
-            {
-              throw new RuntimeException("Simulated problem"); //$NON-NLS-1$
-            }
-          };
-        }
-      };
-    }
-  }
-
-  /**
-   * @author Maxime Porhel
-   */
-  private static final class FakeWSSAcceptorFactory extends WSSAcceptorFactory
-  {
-    @Override
-    protected WSAcceptor createAcceptor()
-    {
-      return new WSAcceptor()
-      {
-        @Override
-        protected WSServerConnector createConnector()
-        {
-          return new WSServerConnector(this)
-          {
-
-            @Override
-            public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
-            {
-              throw new RuntimeException("Simulated problem"); //$NON-NLS-1$
-            }
-          };
-        }
-      };
+      calls.incrementAndGet();
+      throw new IllegalStateException("Simulated failure while creating the server protocol"); //$NON-NLS-1$
     }
   }
 }

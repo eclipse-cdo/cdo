@@ -15,24 +15,30 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
 
 /**
- * Provides clients with the ability to obtain and retain {@link IBuffer}s.
+ * Provides {@link IBuffer} storage to clients and accepts buffers whose current ownership has been relinquished.
+ * <p>
+ * A call to {@link #provideBuffer()} transfers one buffer to the caller, which must eventually call
+ * {@link IBuffer#release()}. A provider may then reuse, pool, or dispose of the buffer in
+ * {@link #retainBuffer(IBuffer)}. These methods describe a storage ownership cycle; they do not imply that every buffer
+ * passed to {@code retainBuffer} was originally created by this provider.
  *
  * @author Eike Stepper
  */
 public interface IBufferProvider
 {
   /**
-   * Returns the capacity of the buffers provided by {@link #provideBuffer()} .
+   * Returns the capacity, in bytes, of buffers returned by {@link #provideBuffer()}.
    */
   public short getBufferCapacity();
 
   /**
-   * Provides a buffer from this <code>BufferProvider</code>.
+   * Provides a buffer and transfers its current ownership to the caller.
    */
   public IBuffer provideBuffer();
 
   /**
-   * Retains a buffer to this <code>BufferProvider</code>.
+   * Accepts a buffer whose caller has relinquished ownership. Implementations may keep it for reuse or release its
+   * storage; callers must not use the buffer after handing it over.
    */
   public void retainBuffer(IBuffer buffer);
 

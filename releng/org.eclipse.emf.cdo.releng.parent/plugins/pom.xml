@@ -156,6 +156,9 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.net4j.util.ui</module>
     <module>../../../plugins/org.eclipse.net4j.util.ui.mylyn</module>
     <module>../../../plugins/org.eclipse.net4j.ws</module>
+    <module>../../../plugins/org.eclipse.net4j.ws.jdk</module>
+    <module>../../../plugins/org.eclipse.net4j.ws.jetty</module>
+    <module>../../../plugins/org.eclipse.net4j.ws.jetty.server</module>
     <module>../../../plugins/org.gastro.business</module>
     <module>../../../plugins/org.gastro.business.edit</module>
     <module>../../../plugins/org.gastro.inventory</module>

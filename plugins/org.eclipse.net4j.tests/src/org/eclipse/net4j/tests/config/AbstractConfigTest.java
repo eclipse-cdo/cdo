@@ -85,8 +85,22 @@ public abstract class AbstractConfigTest extends AbstractOMTest
     try
     {
       sleep(20);
-      LifecycleUtil.deactivate(connectorContainer);
-      LifecycleUtil.deactivate(acceptorContainer);
+
+      try
+      {
+        config.beforeContainerDeactivation(connectorContainer, acceptorContainer);
+      }
+      finally
+      {
+        try
+        {
+          LifecycleUtil.deactivate(connectorContainer);
+        }
+        finally
+        {
+          LifecycleUtil.deactivate(acceptorContainer);
+        }
+      }
     }
     finally
     {

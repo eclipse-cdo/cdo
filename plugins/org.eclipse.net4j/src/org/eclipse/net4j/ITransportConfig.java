@@ -16,6 +16,7 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.protocol.IProtocolProvider;
+import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.security.INegotiatorAware;
 
@@ -48,6 +49,12 @@ public interface ITransportConfig extends INegotiatorAware
 
   public void setBufferProvider(IBufferProvider bufferProvider);
 
+  /**
+   * Returns the executor used for transport receive work and exposed to channel protocols. Callers must provide enough capacity for
+   * handlers and protocols that may block. In particular, blocking signal reactors can occupy workers and prevent other receive work
+   * from progressing; {@link SignalProtocol} uses this executor directly for unordered reactors and as the
+   * delegate for its default serial reactor lanes.
+   */
   public ExecutorService getReceiveExecutor();
 
   public void setReceiveExecutor(ExecutorService receiveExecutor);

@@ -24,11 +24,17 @@ import java.nio.channels.SocketChannel;
  * A buffer is well prepared for the usage with asynchronous {@link IChannel}s but can also be used with pure
  * {@link SocketChannel}s. All methods of <code>IBuffer</code> are non-blocking.
  * <p>
- * Usually buffers are obtained from a {@link IBufferProvider}. Buffers can be accessed, passed around and finally
- * {@link #release() released} to their original provider. The capacity of a buffer is determined by its provider.
+ * Buffers may be obtained from an {@link IBufferProvider}, but implementations are not required to have been provided
+ * by one. The current owner must call {@link #release()} when processing is complete; release relinquishes ownership
+ * and lets the implementation return storage to a provider, invoke an external release action, or free resources.
+ * Release does not promise that the same buffer will be pooled or reused. A released buffer must no longer be used
+ * through this interface. A previously returned {@link ByteBuffer} is a separate reference and is not revoked by a
+ * buffer state check, so callers must stop accessing it before releasing the buffer.
  * <p>
- * In addition to its payload data each buffer contains an internal header of four bytes, two of them representing a
- * channel identifier the other two of them denoting the length of the payload data. The payload data may be accessed
+ * In addition to its payload data each Net4j frame contains an internal header of four bytes, two of them representing a
+ * channel identifier the other two of them denoting the length of the payload data. A transport that uses message
+ * boundaries must preserve this complete frame as the unit passed between the transport and Net4j; WebSocket message
+ * boundaries are transport-specific and do not replace the Net4j header. The payload data may be accessed
  * through a {@link #getByteBuffer() ByteBuffer}.
  * <p>
  * This interface is <b>not</b> intended to be implemented by clients.
@@ -111,9 +117,13 @@ public interface IBuffer
   public static final int PAYLOAD_SIZE_POS = Short.BYTES;
 
   /**
-   * Returns the {@link IBufferProvider} that has provided this buffer and that this buffer will be returned to when its
-   * {@link #release()} method is called.
+   * Returns the {@link IBufferProvider} that provided this buffer, or <code>null</code> if the buffer was not provided
+   * by a buffer provider.
+   *
+   * @deprecated Buffers are not required to originate from an {@link IBufferProvider}. Use {@link #release()} to
+   *             relinquish ownership without assuming that the buffer belongs to a provider.
    */
+  @Deprecated
   public IBufferProvider getBufferProvider();
 
   /**
@@ -126,13 +136,13 @@ public interface IBuffer
   /**
    * Returns the capacity of this buffer.
    * <p>
-   * The capacity of this buffer is equal to the {@link IBufferProvider#getBufferCapacity() capacity} of the
-   * {@link IBufferProvider} that has provided this buffer.
+   * For buffers obtained from an {@link IBufferProvider}, this is normally equal to the provider's buffer capacity.
    */
   public short getCapacity();
 
   /**
-   * Returns the internal state of this buffer.
+   * Returns the current lifecycle and access state of this buffer. Implementations may reject operations that are
+   * invalid for that state; this does not invalidate a {@link ByteBuffer} reference previously returned to a caller.
    */
   public BufferState getState();
 
@@ -282,12 +292,15 @@ public interface IBuffer
   public void setCCAM(boolean ccam);
 
   /**
-   * Releases this buffer to its original {@link IBufferProvider}.
+   * Relinquishes ownership of this buffer and releases its associated resources. Implementations may return the buffer
+   * to a provider, release an externally owned resource, or perform another appropriate cleanup action.
    */
   public void release();
 
   /**
-   * Turns the state of this buffer from any state into {@link BufferState#INITIAL INITIAL}.
+   * Resets a live buffer for another read or write operation. This is a reuse operation, not an ownership release:
+   * it does not return storage to a provider or invoke an external release action. Implementations may reject clearing
+   * a terminally disposed buffer.
    */
   public void clear();
 

@@ -13,6 +13,9 @@
 package org.eclipse.net4j.tests;
 
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
+import org.eclipse.net4j.signal.IndicationWithResponse;
+import org.eclipse.net4j.signal.RemoteException;
+import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
@@ -27,6 +30,10 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+
 /**
  * @author Eike Stepper
  */
@@ -38,6 +45,12 @@ public class SignalMonitorTest extends AbstractConfigTest
 
   public static final short SIGNAL_2 = 2;
 
+  public static final short SIGNAL_3 = 3;
+
+  private CountDownLatch pendingConfirmationStarted;
+
+  private CountDownLatch releasePendingConfirmation;
+
   @Override
   protected IManagedContainer createContainer()
   {
@@ -47,7 +60,7 @@ public class SignalMonitorTest extends AbstractConfigTest
       @Override
       public Object create(String description) throws ProductCreationException
       {
-        return new ServerProtocol();
+        return new ServerProtocol(pendingConfirmationStarted, releasePendingConfirmation);
       }
     });
 
@@ -61,7 +74,7 @@ public class SignalMonitorTest extends AbstractConfigTest
     SignalProtocol<Object> protocol = new ClientProtocol();
     protocol.open(getConnector());
 
-    RequestWithMonitoring<Boolean> request = new RequestWithMonitoring<Boolean>(protocol, SIGNAL_1)
+    RequestWithMonitoring<Boolean> request = new RequestWithMonitoring<>(protocol, SIGNAL_1)
     {
       @Override
       protected void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
@@ -102,6 +115,60 @@ public class SignalMonitorTest extends AbstractConfigTest
     protocol.close();
   }
 
+  public void testProtocolDeactivationUnblocksPendingConfirmation() throws Exception
+  {
+    pendingConfirmationStarted = new CountDownLatch(1);
+    releasePendingConfirmation = new CountDownLatch(1);
+    startTransport();
+
+    SignalProtocol<Object> protocol = new ClientProtocol();
+    protocol.open(getConnector());
+    AtomicReference<Throwable> failure = new AtomicReference<>();
+    Thread requestThread = new Thread(() -> {
+      try
+      {
+        new RequestWithConfirmation<Boolean>(protocol, SIGNAL_3)
+        {
+          @Override
+          protected void requesting(ExtendedDataOutputStream out) throws Exception
+          {
+            out.writeBoolean(true);
+          }
+
+          @Override
+          protected Boolean confirming(ExtendedDataInputStream in) throws Exception
+          {
+            return in.readBoolean();
+          }
+        }.send();
+      }
+      catch (Throwable ex)
+      {
+        failure.set(ex);
+      }
+    }, "Pending signal confirmation"); //$NON-NLS-1$
+
+    try
+    {
+      requestThread.start();
+      assertTrue("Server did not receive the pending request", pendingConfirmationStarted.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      protocol.close();
+      requestThread.join(1000);
+      assertFalse("Protocol deactivation left the confirmation reader blocked", requestThread.isAlive()); //$NON-NLS-1$
+      assertTrue("The pending request did not receive a terminal protocol failure", failure.get() instanceof RemoteException); //$NON-NLS-1$
+    }
+    finally
+    {
+      releasePendingConfirmation.countDown();
+      protocol.close();
+      if (requestThread.isAlive())
+      {
+        requestThread.interrupt();
+        requestThread.join(1000);
+      }
+    }
+  }
+
   public void _testMonitorProgressAsync() throws Exception
   {
     startTransport();
@@ -111,7 +178,7 @@ public class SignalMonitorTest extends AbstractConfigTest
     sleep(500);
     protocol.setTimeout(2000L);
 
-    RequestWithMonitoring<Boolean> request = new RequestWithMonitoring<Boolean>(protocol, SIGNAL_2)
+    RequestWithMonitoring<Boolean> request = new RequestWithMonitoring<>(protocol, SIGNAL_2)
     {
       @Override
       protected void requesting(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
@@ -137,9 +204,15 @@ public class SignalMonitorTest extends AbstractConfigTest
    */
   private static final class ServerProtocol extends SignalProtocol<Object>
   {
-    private ServerProtocol()
+    private final CountDownLatch pendingConfirmationStarted;
+
+    private final CountDownLatch releasePendingConfirmation;
+
+    private ServerProtocol(CountDownLatch pendingConfirmationStarted, CountDownLatch releasePendingConfirmation)
     {
       super(PROTOCOL_TYPE);
+      this.pendingConfirmationStarted = pendingConfirmationStarted;
+      this.releasePendingConfirmation = releasePendingConfirmation;
     }
 
     @Override
@@ -222,6 +295,24 @@ public class SignalMonitorTest extends AbstractConfigTest
 
           @Override
           protected void responding(ExtendedDataOutputStream out, OMMonitor monitor) throws Exception
+          {
+            out.writeBoolean(true);
+          }
+        };
+
+      case SIGNAL_3:
+        return new IndicationWithResponse(this, SIGNAL_3)
+        {
+          @Override
+          protected void indicating(ExtendedDataInputStream in) throws Exception
+          {
+            in.readBoolean();
+            pendingConfirmationStarted.countDown();
+            releasePendingConfirmation.await();
+          }
+
+          @Override
+          protected void responding(ExtendedDataOutputStream out) throws Exception
           {
             out.writeBoolean(true);
           }

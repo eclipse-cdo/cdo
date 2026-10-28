@@ -32,7 +32,6 @@ import javax.net.ssl.TrustManagerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
@@ -78,6 +77,8 @@ public class SSLEngineManager
   private ByteBuffer packetRecvBuf;
 
   private SSLEngineResult engineResult;
+
+  private boolean readNeedsMoreNetworkData;
 
   private Object readLock = new ReadLock();
 
@@ -209,27 +210,72 @@ public class SSLEngineManager
       try
       {
         int counter = 0;
-        while (!isHandshakeFinished() && counter <= handShakeTimeOut)
-        {
-          performHandshake(socketChannel, needRehandShake);
 
-          if (handShakeStatus == HandshakeStatus.NEED_UNWRAP)
+        while ((!isHandshakeFinished() || packetSendBuf.position() > 0) && counter < handShakeTimeOut)
+        {
+          boolean progressed = false;
+
+          if (packetSendBuf.position() > 0)
           {
-            ++counter;
+            int written = handleWrite(socketChannel);
+            progressed = written > 0;
+
+            if (packetSendBuf.position() > 0)
+            {
+              if (progressed)
+              {
+                counter = 0;
+              }
+              else
+              {
+                ++counter;
+              }
+
+              if (!progressed && counter < handShakeTimeOut)
+              {
+                Thread.sleep(Math.max(1, handShakeWaitTime));
+              }
+
+              continue;
+            }
           }
-          else
+
+          if (progressed && isHandshakeFinished() && packetSendBuf.position() == 0)
+          {
+            break;
+          }
+
+          HandshakeStatus previousStatus = handShakeStatus;
+
+          progressed |= performHandshake(socketChannel, needRehandShake);
+          progressed |= handShakeStatus != previousStatus;
+          if (progressed)
           {
             counter = 0;
           }
+          else
+          {
+            ++counter;
+
+            if (counter < handShakeTimeOut)
+            {
+              Thread.sleep(Math.max(1, handShakeWaitTime));
+            }
+          }
         }
 
-        if (!isHandshakeFinished() && counter == handShakeTimeOut)
+        if ((!isHandshakeFinished() || packetSendBuf.position() > 0) && counter >= handShakeTimeOut)
         {
           throw new SSLException("SSL handshake timeout");
         }
       }
       catch (Exception ex)
       {
+        if (ex instanceof InterruptedException)
+        {
+          Thread.currentThread().interrupt();
+        }
+
         if (TRACER.isEnabled())
         {
           TRACER.trace("SSL handshake incomplete.", ex); //$NON-NLS-1$
@@ -252,7 +298,7 @@ public class SSLEngineManager
     }
   }
 
-  public int read(SocketChannel socketChannel) throws IOException
+  public synchronized int read(SocketChannel socketChannel) throws IOException
   {
     if (!handShakeComplete)
     {
@@ -261,19 +307,25 @@ public class SSLEngineManager
 
     synchronized (readLock)
     {
-      int readTextCount = appRecvBuf.position();
+      int initialTextCount = appRecvBuf.position();
+      readNeedsMoreNetworkData = false;
 
-      do
+      while (true)
       {
         if (sslEngine.isInboundDone())
         {
-          return readTextCount > 0 ? readTextCount : -1;
+          return appRecvBuf.position() > initialTextCount ? appRecvBuf.position() : -1;
         }
 
-        int count = handleRead(socketChannel);
-        if (count <= 0 && packetRecvBuf.position() == 0)
+        int count = 0;
+
+        if (packetRecvBuf.position() == 0)
         {
-          return count;
+          count = handleRead(socketChannel);
+          if (count <= 0)
+          {
+            return appRecvBuf.position() > initialTextCount ? appRecvBuf.position() : count;
+          }
         }
 
         packetRecvBuf.flip();
@@ -283,6 +335,27 @@ public class SSLEngineManager
         switch (engineResult.getStatus())
         {
         case BUFFER_UNDERFLOW:
+          if (appRecvBuf.position() > initialTextCount)
+          {
+            readNeedsMoreNetworkData = true;
+            return appRecvBuf.position();
+          }
+
+          if (packetRecvBuf.position() == packetRecvBuf.capacity())
+          {
+            ByteBuffer largerBuffer = ByteBuffer.allocate(packetRecvBuf.capacity() * 2);
+            packetRecvBuf.flip();
+            largerBuffer.put(packetRecvBuf);
+            packetRecvBuf = largerBuffer;
+          }
+
+          count = handleRead(socketChannel);
+          if (count <= 0)
+          {
+            readNeedsMoreNetworkData = true;
+            return appRecvBuf.position() > initialTextCount ? appRecvBuf.position() : 0;
+          }
+
           continue;
 
         case BUFFER_OVERFLOW:
@@ -291,7 +364,11 @@ public class SSLEngineManager
             TRACER.trace("Buffer overflow on read method."); //$NON-NLS-1$
           }
 
-          return 0;
+          ByteBuffer largerAppBuffer = ByteBuffer.allocate(appRecvBuf.capacity() * 2);
+          appRecvBuf.flip();
+          largerAppBuffer.put(appRecvBuf);
+          appRecvBuf = largerAppBuffer;
+          continue;
 
         case CLOSED:
           throw new ClosedChannelException();
@@ -300,19 +377,31 @@ public class SSLEngineManager
           // OK
         }
 
-        readTextCount = appRecvBuf.position();
-      } while (engineResult.getStatus() != Status.OK);
+        if (appRecvBuf.position() > initialTextCount)
+        {
+          return appRecvBuf.position();
+        }
 
-      if (sslEngine.isInboundDone())
-      {
-        return -1;
+        if (engineResult.bytesConsumed() == 0 && packetRecvBuf.position() > 0)
+        {
+          readNeedsMoreNetworkData = true;
+          return 0;
+        }
       }
-
-      return readTextCount;
     }
   }
 
-  public int write(SocketChannel socketChannel) throws IOException
+  public synchronized boolean hasBufferedReceiveData()
+  {
+    return appRecvBuf.position() > 0 || packetRecvBuf.position() > 0;
+  }
+
+  public synchronized boolean readNeedsMoreNetworkData()
+  {
+    return readNeedsMoreNetworkData;
+  }
+
+  public synchronized int write(SocketChannel socketChannel) throws IOException
   {
     if (!handShakeComplete)
     {
@@ -324,6 +413,17 @@ public class SSLEngineManager
       int writeCount = 0;
       int count = 0;
       int appSendBufSize = appSendBuf.position();
+
+      if (packetSendBuf.position() > 0)
+      {
+        count = handleWrite(socketChannel);
+        writeCount += count;
+
+        if (packetSendBuf.position() > 0)
+        {
+          return writeCount;
+        }
+      }
 
       do
       {
@@ -342,8 +442,7 @@ public class SSLEngineManager
           return -1;
 
         case BUFFER_OVERFLOW:
-          count = handleWrite(socketChannel);
-          writeCount += count;
+          resizePacketSendBuf();
           continue;
 
         case CLOSED:
@@ -367,7 +466,7 @@ public class SSLEngineManager
    *
    * @return the number of bytes actually written
    */
-  public int handleWrite(SocketChannel socketChannel) throws IOException
+  public synchronized int handleWrite(SocketChannel socketChannel) throws IOException
   {
     try
     {
@@ -419,7 +518,7 @@ public class SSLEngineManager
     }
   }
 
-  public void close() throws IOException
+  public synchronized void close() throws IOException
   {
     if (sslEngine != null)
     {
@@ -427,19 +526,17 @@ public class SSLEngineManager
     }
   }
 
-  public void checkRehandShake(SocketChannel socket) throws Exception
+  public synchronized void checkRehandShake(SocketChannel socket) throws Exception
   {
     handShakeStatus = engineResult.getHandshakeStatus();
-    needRehandShake = handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_TASK || handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_UNWRAP
-        || handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_WRAP;
 
+    needRehandShake = handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_TASK //
+        || handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_UNWRAP //
+        || handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_WRAP;
     if (needRehandShake)
     {
       handShakeComplete = false;
     }
-
-    checkInitialHandshake(socket);
-    return;
   }
 
   public boolean isHandshakeComplete()
@@ -449,16 +546,19 @@ public class SSLEngineManager
 
   private boolean isHandshakeFinished()
   {
-    return handShakeStatus != null && handShakeStatus == SSLEngineResult.HandshakeStatus.FINISHED;
+    return handShakeStatus == HandshakeStatus.FINISHED || handShakeStatus == HandshakeStatus.NOT_HANDSHAKING;
   }
 
   private boolean performHandshake(SocketChannel socketChannel, boolean rehandShake) throws IOException
   {
-    int nBytes = 0;
+    HandshakeStatus previousStatus = handShakeStatus;
+
     if (!rehandShake)
     {
       handShakeStatus = sslEngine.getHandshakeStatus();
     }
+
+    boolean progressed = handShakeStatus != previousStatus;
 
     switch (handShakeStatus)
     {
@@ -467,81 +567,154 @@ public class SSLEngineManager
       engineResult = sslEngine.wrap(appSendBuf, packetSendBuf);
       handShakeStatus = engineResult.getHandshakeStatus();
       appSendBuf.compact();
+      progressed |= handShakeStatus != previousStatus || engineResult.bytesConsumed() > 0 || engineResult.bytesProduced() > 0;
 
       switch (engineResult.getStatus())
       {
       case BUFFER_OVERFLOW:
-        nBytes = handleWrite(socketChannel);
-        break;
+        resizePacketSendBuf();
+        return true;
 
       case OK:
         while (packetSendBuf.position() > 0)
         {
-          nBytes = handleWrite(socketChannel);
-          if (nBytes == 0)
+          int written = handleWrite(socketChannel);
+          progressed |= written > 0;
+
+          if (written == 0)
           {
-            // Prevent spinning if the channel refused the write
             break;
           }
         }
 
-        break;
+        return progressed;
+
+      case CLOSED:
+        throw new ClosedChannelException();
 
       default:
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Need Wrap Operation: cannot handle ssl result status [" + engineResult.getStatus() + "]"); //$NON-NLS-1$
-        }
+        throw new SSLException("Unexpected result from TLS wrap: " + engineResult.getStatus()); //$NON-NLS-1$
       }
 
-      return true;
-
     case NEED_UNWRAP:
-      nBytes = handleRead(socketChannel);
+      int bytesRead = handleRead(socketChannel);
 
       packetRecvBuf.flip();
       engineResult = sslEngine.unwrap(packetRecvBuf, appRecvBuf);
       handShakeStatus = engineResult.getHandshakeStatus();
       packetRecvBuf.compact();
+      progressed |= handShakeStatus != previousStatus || bytesRead > 0 || engineResult.bytesConsumed() > 0 || engineResult.bytesProduced() > 0;
 
-      if (engineResult.getStatus() == SSLEngineResult.Status.BUFFER_UNDERFLOW && sslEngine.isInboundDone())
+      switch (engineResult.getStatus())
       {
-        return false;
-      }
+      case BUFFER_UNDERFLOW:
+        if (sslEngine.isInboundDone())
+        {
+          throw new ClosedChannelException();
+        }
 
-      return engineResult.getStatus() != SSLEngineResult.Status.BUFFER_OVERFLOW;
+        if (packetRecvBuf.position() == packetRecvBuf.capacity())
+        {
+          resizePacketRecvBuf();
+          return true;
+        }
+
+        return progressed;
+
+      case BUFFER_OVERFLOW:
+        resizeAppRecvBuf();
+        return true;
+
+      case CLOSED:
+        throw new ClosedChannelException();
+
+      default:
+        return progressed;
+      }
 
     case NEED_TASK:
-      executeTasks();
-      return true;
+      progressed |= executeTasks();
+      handShakeStatus = sslEngine.getHandshakeStatus();
+      return progressed || handShakeStatus != previousStatus;
 
     case NOT_HANDSHAKING:
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("Not handshaking status occurs."); //$NON-NLS-1$
-      }
-
-      throw new ClosedChannelException();
+      return progressed;
 
     case FINISHED:
-      return false;
+      return progressed;
     }
 
-    return true;
+    return progressed;
   }
 
-  private void executeTasks()
+  private boolean executeTasks()
   {
+    boolean executedTask = false;
     Runnable task;
+
     while ((task = sslEngine.getDelegatedTask()) != null)
     {
-      executor.execute(task);
+      task.run();
+      executedTask = true;
 
       if (TRACER.isEnabled())
       {
         TRACER.trace("Scheduled task: " + task); //$NON-NLS-1$
       }
     }
+
+    return executedTask;
+  }
+
+  private void resizePacketSendBuf() throws SSLException
+  {
+    int currentCapacity = packetSendBuf.capacity();
+    int packetBufferSize = sslEngine.getSession().getPacketBufferSize();
+
+    int newCapacity = Math.max(currentCapacity * 2, packetBufferSize);
+    if (newCapacity <= currentCapacity)
+    {
+      throw new SSLException("Unable to grow TLS packet send buffer"); //$NON-NLS-1$
+    }
+
+    ByteBuffer largerBuffer = ByteBuffer.allocate(newCapacity);
+    packetSendBuf.flip();
+    largerBuffer.put(packetSendBuf);
+    packetSendBuf = largerBuffer;
+  }
+
+  private void resizeAppRecvBuf() throws SSLException
+  {
+    int currentCapacity = appRecvBuf.capacity();
+    int applicationBufferSize = sslEngine.getSession().getApplicationBufferSize();
+
+    int newCapacity = Math.max(currentCapacity * 2, applicationBufferSize);
+    if (newCapacity <= currentCapacity)
+    {
+      throw new SSLException("Unable to grow TLS application receive buffer"); //$NON-NLS-1$
+    }
+
+    ByteBuffer largerBuffer = ByteBuffer.allocate(newCapacity);
+    appRecvBuf.flip();
+    largerBuffer.put(appRecvBuf);
+    appRecvBuf = largerBuffer;
+  }
+
+  private void resizePacketRecvBuf() throws SSLException
+  {
+    int currentCapacity = packetRecvBuf.capacity();
+    int packetBufferSize = sslEngine.getSession().getPacketBufferSize();
+
+    int newCapacity = Math.max(currentCapacity * 2, packetBufferSize);
+    if (newCapacity <= currentCapacity)
+    {
+      throw new SSLException("Unable to grow TLS packet receive buffer"); //$NON-NLS-1$
+    }
+
+    ByteBuffer largerBuffer = ByteBuffer.allocate(newCapacity);
+    packetRecvBuf.flip();
+    largerBuffer.put(packetRecvBuf);
+    packetRecvBuf = largerBuffer;
   }
 
   private static KeyStore createKeyStore(String path, char[] password, boolean checkValidity) throws Exception
@@ -553,7 +726,7 @@ public class SSLEngineManager
 
     try
     {
-      in = new URL(path).openStream();
+      in = IOUtil.newURL(path).openStream();
       keyStore.load(in, password);
 
       if (checkValidity)

@@ -345,6 +345,7 @@ public final class IOUtil
   /**
    * @since 3.25
    */
+  @SuppressWarnings("all")
   public static URL newURL(String url) throws MalformedURLException
   {
     // The java.net.URL constructor becomes deprecated as of Java-20.

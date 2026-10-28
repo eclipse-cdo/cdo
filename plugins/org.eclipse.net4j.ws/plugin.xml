@@ -16,13 +16,15 @@
 <plugin>
 
    <extension point="org.eclipse.net4j.util.factories">
-      <factory productGroup="org.eclipse.net4j.acceptorDescriptionParsers" type="ws" class="org.eclipse.net4j.internal.ws.WSAcceptor$DescriptionParserFactory"/>
+      <factory productGroup="org.eclipse.net4j.acceptorDescriptionParsers" type="ws" class="org.eclipse.net4j.internal.ws.WSAcceptorFactory$DescriptionParserFactory"/>
       <factory productGroup="org.eclipse.net4j.acceptors" type="ws" class="org.eclipse.net4j.internal.ws.WSAcceptorFactory"/>
       <factory productGroup="org.eclipse.net4j.connectors" type="ws" class="org.eclipse.net4j.internal.ws.WSConnectorFactory"/>
-    
-      <factory productGroup="org.eclipse.net4j.acceptorDescriptionParsers" type="wss" class="org.eclipse.net4j.internal.wss.WSSAcceptorFactory$DescriptionParserFactory" />
-      <factory productGroup="org.eclipse.net4j.acceptors" type="wss" class="org.eclipse.net4j.internal.wss.WSSAcceptorFactory" />
-      <factory productGroup="org.eclipse.net4j.connectors" type="wss" class="org.eclipse.net4j.internal.wss.WSSConnectorFactory" />
+
+      <factory productGroup="org.eclipse.net4j.acceptorDescriptionParsers" type="wss" class="org.eclipse.net4j.internal.ws.WSSAcceptorFactory$DescriptionParserFactory" />
+      <factory productGroup="org.eclipse.net4j.acceptors" type="wss" class="org.eclipse.net4j.internal.ws.WSSAcceptorFactory" />
+      <factory productGroup="org.eclipse.net4j.connectors" type="wss" class="org.eclipse.net4j.internal.ws.WSSConnectorFactory" />
+      
+      <factory productGroup="org.eclipse.net4j.messageConnections" type="jdk" class="org.eclipse.net4j.internal.ws.jdk.JDKMessageConnectionFactory" />
    </extension>
 
 </plugin>

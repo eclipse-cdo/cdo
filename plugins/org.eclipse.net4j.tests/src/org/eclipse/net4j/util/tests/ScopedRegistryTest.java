@@ -67,11 +67,20 @@ public class ScopedRegistryTest extends AbstractOMTest
     assertEquals(2, a.keySet().size());
     assertTrue(a.values().contains("1")); //$NON-NLS-1$
     assertFalse(a.values().contains("other")); //$NON-NLS-1$
-    Map.Entry<String, String> entry = a.entrySet().iterator().next();
-    String key = entry.getKey();
+    Map.Entry<String, String> entry = null;
+    for (Map.Entry<String, String> candidate : a.entrySet())
+    {
+      if ("one".equals(candidate.getKey())) //$NON-NLS-1$
+      {
+        entry = candidate;
+        break;
+      }
+    }
+
+    assertNotNull(entry);
     String oldValue = entry.getValue();
     assertEquals(oldValue, entry.setValue("updated")); //$NON-NLS-1$
-    assertEquals("updated", a.get(key)); //$NON-NLS-1$
+    assertEquals("updated", a.get("one")); //$NON-NLS-1$
 
     assertTrue(a.keySet().remove("two")); //$NON-NLS-1$
     assertEquals("updated", a.remove("one")); //$NON-NLS-1$

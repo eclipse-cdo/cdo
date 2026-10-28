@@ -46,6 +46,16 @@ public final class ElementCounters
     return counter.incrementAndGet();
   }
 
+  /**
+   * Allocates an ID from the counter shared with transport buffer elements.
+   *
+   * @return A unique buffer element ID.
+   */
+  public int nextBufferID()
+  {
+    return getBufferCounter().incrementAndGet();
+  }
+
   public void load(Properties properties)
   {
     String lastBufferID = (String)properties.remove(BufferElement.TYPE);

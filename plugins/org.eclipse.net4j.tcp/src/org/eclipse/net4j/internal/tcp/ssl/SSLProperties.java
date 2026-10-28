@@ -13,11 +13,11 @@
 package org.eclipse.net4j.internal.tcp.ssl;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -48,7 +48,7 @@ public class SSLProperties
     // Loading SSL config from local property is optional.
     if (!StringUtil.isEmpty(localConfigUrl))
     {
-      try (InputStream in = new URL(localConfigUrl).openStream())
+      try (InputStream in = IOUtil.newURL(localConfigUrl).openStream())
       {
         localProperties = new Properties();
         localProperties.load(in);

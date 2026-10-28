@@ -38,6 +38,8 @@ import org.eclipse.spi.net4j.InternalChannelMultiplexer.BufferMultiplexer;
 
 import java.text.MessageFormat;
 import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -63,6 +65,8 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
    * The external handler for buffers passed from the {@link #connector}.
    */
   private IBufferHandler receiveHandler;
+
+  private final transient Set<IBuffer> pinnedSendBuffers = ConcurrentHashMap.newKeySet();
 
   private transient volatile Queue<IBuffer> sendQueue;
 
@@ -218,6 +222,59 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     return sendQueue;
   }
 
+  /**
+   * Pins the active send-queue head while an asynchronous transport borrows its storage. The pin prevents channel deactivation from
+   * releasing a buffer while the transport may still access it.
+   *
+   * @param buffer the buffer at the head of this channel's send queue
+   * @return {@code true} if the buffer was pinned
+   * @since 4.23
+   */
+  public final boolean pinSendBuffer(IBuffer buffer)
+  {
+    Queue<IBuffer> queue = sendQueue;
+    if (queue == null)
+    {
+      return false;
+    }
+
+    synchronized (queue)
+    {
+      if (!isActive() || sendQueue != queue || queue.peek() != buffer)
+      {
+        return false;
+      }
+
+      return pinnedSendBuffers.add(buffer);
+    }
+  }
+
+  /**
+   * Ends the pin for an asynchronous send. A completed send is removed and released; a rejected send remains queued for retry while the
+   * channel is active. The original queue is supplied because the channel may have closed or been activated again since selection.
+   *
+   * @param queue the queue from which the buffer was selected
+   * @param buffer the buffer whose provider lease has ended
+   * @param release whether a terminally completed send should be removed and released
+   * @return {@code true} if this call removed and released the buffer
+   * @since 4.23
+   */
+  public final boolean finishPinnedSendBuffer(Queue<IBuffer> queue, IBuffer buffer, boolean release)
+  {
+    synchronized (queue)
+    {
+      pinnedSendBuffers.remove(buffer);
+
+      if ((release || !isActive() || sendQueue != queue) && queue.remove(buffer))
+      {
+        buffer.release();
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   @Override
   public void sendBuffer(IBuffer buffer)
   {
@@ -297,7 +354,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     if (queue != null)
     {
       boolean enqueued = false;
-      
+
       synchronized (queue)
       {
         if (sendQueue == queue && !isClosed())
@@ -437,11 +494,22 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
         {
           sendQueue = null;
 
+          Queue<IBuffer> pinned = new ConcurrentLinkedQueue<>();
           IBuffer buffer;
+
           while ((buffer = queue.poll()) != null)
           {
-            buffer.release();
+            if (pinnedSendBuffers.contains(buffer))
+            {
+              pinned.add(buffer);
+            }
+            else
+            {
+              buffer.release();
+            }
           }
+
+          queue.addAll(pinned);
         }
       }
     }

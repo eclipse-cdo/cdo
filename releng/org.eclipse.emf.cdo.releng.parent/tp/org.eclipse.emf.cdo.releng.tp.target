@@ -66,18 +66,11 @@
       <unit id="org.eclipse.gmf.runtime.notation.edit" version="0.0.0"/>
       <unit id="org.eclipse.gmf.runtime.notation.providers" version="0.0.0"/>
       <unit id="org.eclipse.graphiti.ui" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.alpn.client" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.client" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.ee.webapp" version="0.0.0"/>
       <unit id="org.eclipse.jetty.ee8.security" version="0.0.0"/>
       <unit id="org.eclipse.jetty.ee8.server" version="0.0.0"/>
       <unit id="org.eclipse.jetty.ee8.servlet" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.ee8.webapp" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.ee8.websocket.api" version="0.0.0"/>
       <unit id="org.eclipse.jetty.ee8.websocket.client" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.ee8.websocket.common" version="0.0.0"/>
       <unit id="org.eclipse.jetty.ee8.websocket.server" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.ee8.websocket.servlet" version="0.0.0"/>
       <unit id="org.eclipse.jetty.http" version="0.0.0"/>
       <unit id="org.eclipse.jetty.io" version="0.0.0"/>
       <unit id="org.eclipse.jetty.security" version="0.0.0"/>
@@ -87,11 +80,9 @@
       <unit id="org.eclipse.jetty.util" version="0.0.0"/>
       <unit id="org.eclipse.jetty.websocket.api" version="0.0.0"/>
       <unit id="org.eclipse.jetty.websocket.common" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.websocket.core.client" version="0.0.0"/>
       <unit id="org.eclipse.jetty.websocket.core.common" version="0.0.0"/>
       <unit id="org.eclipse.jetty.websocket.core.server" version="0.0.0"/>
       <unit id="org.eclipse.jetty.websocket.server" version="0.0.0"/>
-      <unit id="org.eclipse.jetty.xml" version="0.0.0"/>
       <unit id="org.eclipse.mylyn.wikitext.feature.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.nebula.widgets.gallery" version="0.0.0"/>
       <unit id="org.eclipse.nebula.widgets.pshelf" version="0.0.0"/>

@@ -1,0 +1,227 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Operating and Troubleshooting WebSockets (Net4j Signaling Platform Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Operating and Troubleshooting WebSockets (Net4j Signaling Platform Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Operating and Troubleshooting WebSockets</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc03_SecuringWebSocketTransports.html" title="Backward to Securing WebSocket Transports"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="DocXX_MigratingWebSocketTransport.html" title="Forward to Migrating the WebSocket Transport"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+This article focuses on day-to-day ownership, shutdown, and diagnosis of Net4j WS/WSS connections. For Jetty deployment
+and TLS setup, see the related Operator's Guide articles linked below.
+<p>
+<b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#Resource_Ownership_and_Lifecycle" title="Chapter in Net4j Signaling Platform Documentation">Resource Ownership and Lifecycle</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#Graceful_Shutdown" title="Chapter in Net4j Signaling Platform Documentation">Graceful Shutdown</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#Diagnosing_Connection_and_Upgrade_Failures" title="Chapter in Net4j Signaling Platform Documentation">Diagnosing Connection and Upgrade Failures</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#TLS_and_Proxy_Diagnosis" title="Chapter in Net4j Signaling Platform Documentation">TLS and Proxy Diagnosis</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#Operational_Checklist" title="Chapter in Net4j Signaling Platform Documentation">Operational Checklist</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Resource_Ownership_and_Lifecycle"></a>1&nbsp;&nbsp;Resource Ownership and Lifecycle</h2>
+<p>
+An <code>IWSConnector</code> is an individual Net4j client connection and can be closed on its own. A managed container
+owns the products it creates, including factories, acceptors, and connectors; deactivate the container only when its
+owner is shutting down that container. A shared application container must remain active when one connector closes.
+<p>
+The application owns any custom JDK <code>HttpClient</code> supplied to a provider and must keep it alive while the
+provider's connectors use it. Java 11 has no <code>HttpClient.close()</code>; Java 21 adds client lifecycle methods.
+Stop its Net4j connectors before using those newer methods. The application that embeds Jetty owns and stops its
+<code>Server</code> and listeners.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Resource_Ownership_and_Lifecycle_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CloseOneConnector.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Resource_Ownership_and_Lifecycle_1')" id="max_Resource_Ownership_and_Lifecycle_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Resource_Ownership_and_Lifecycle_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Resource_Ownership_and_Lifecycle_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;sharedContainer&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSConnector&nbsp;connectorToClose&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            IWSConnector&nbsp;remainingConnector&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;connectorToClose&nbsp;=&nbsp;WSUtil.getConnector(sharedContainer,&nbsp;URI.create(<font color="#2a00ff">&#34;ws://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;public&#34;</font>);<br/>
+            &nbsp;&nbsp;remainingConnector&nbsp;=&nbsp;WSUtil.getConnector(sharedContainer,&nbsp;URI.create(<font color="#2a00ff">&#34;ws://backup.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;public&#34;</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;connectorToClose.connect(<font color="#990000">5</font>_000);<br/>
+            &nbsp;&nbsp;remainingConnector.connect(<font color="#990000">5</font>_000);<br/>
+            <br/>
+            &nbsp;&nbsp;connectorToClose.close();<br/>
+            &nbsp;&nbsp;connectorToClose&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;The&nbsp;remaining&nbsp;connector&nbsp;still&nbsp;uses&nbsp;the&nbsp;shared&nbsp;container&nbsp;after&nbsp;the&nbsp;first&nbsp;connector&nbsp;closes.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(connectorToClose&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connectorToClose.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(remainingConnector&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;remainingConnector.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;This&nbsp;snippet&nbsp;owns&nbsp;the&nbsp;example&nbsp;container;&nbsp;a&nbsp;real&nbsp;shared-container&nbsp;owner&nbsp;does&nbsp;this&nbsp;at&nbsp;application&nbsp;shutdown.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(sharedContainer);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Graceful_Shutdown"></a>2&nbsp;&nbsp;Graceful Shutdown</h2>
+<p>
+Stop producing new application messages first. Close or drain Net4j protocols and connectors, stop admitting new
+HTTP upgrades, then stop the application-owned Jetty server. Deactivate the acceptor and its container after the server
+no longer accepts upgrades. For a container shared with other transports, close only the WebSocket products owned by
+the stopping component; let the container owner choose when the complete container stops.
+<p>
+Cleanup should use nested <code>finally</code> blocks so an exception while stopping one component does not skip the
+remaining resource cleanup. Keep HTTP client shutdown after the connectors that borrow the client have stopped.
+<a href="Doc01_DeployingWebSocketServers.html" title="Article in Net4j Signaling Platform Documentation">Deploying WebSocket Servers</a>
+
+<h2><a name="Diagnosing_Connection_and_Upgrade_Failures"></a>3&nbsp;&nbsp;Diagnosing Connection and Upgrade Failures</h2>
+<p>
+First verify that the WS core bundle is resolved and that the container contains the provider type named in the
+connector description. A missing custom provider is reported as an error identifying the message-connection provider
+type. Next check the endpoint scheme, route name, service path, and whether the expected acceptor is active.
+<p>
+Jetty routing requires the decoded path suffix and the <code>Net4jAcceptor</code> header to name the same acceptor.
+An unknown, inactive, or mismatched route returns HTTP 404. A request whose secure state does not match its WS/WSS
+acceptor returns HTTP 403. Check HTTPS termination and trusted forwarding configuration when WSS gets a 403.
+<p>
+For JDK client failures, inspect the complete exception cause chain from connector activation: it can distinguish a
+provider lookup error, certificate validation error, proxy connection failure, and HTTP upgrade rejection. Do not log
+complete connector descriptions when they carry cookies.
+
+<h2><a name="TLS_and_Proxy_Diagnosis"></a>4&nbsp;&nbsp;TLS and Proxy Diagnosis</h2>
+<p>
+For a certificate error, verify the service host against the certificate name, confirm the server sends its
+intermediates, check expiry, and inspect the trust store used by the selected provider. For a proxy failure, verify
+the configured <code>ProxySelector</code>, proxy reachability, and whether the <code>Authenticator</code> receives a
+proxy or origin challenge. Basic authentication over HTTP CONNECT may be disabled by the JDK unless its JVM-wide
+disabled-schemes setting is changed; assess the security implications before changing that setting.
+<p>
+The Net4j WS and Jetty adapter bundles declare <code>debug</code> tracing options, but the current WS implementation
+does not emit transport events through those tracers. Do not expect enabling those options to produce handshake
+diagnostics. Use the connector exception cause chain and the application's configured Jetty/JDK logging facilities.
+
+<h2><a name="Operational_Checklist"></a>5&nbsp;&nbsp;Operational Checklist</h2>
+<p>
+Before release, verify the deployed WS feature and optional Jetty adapter version; confirm that every client provider
+is registered in the connector's container; keep provider types distinct when clients have different trust or proxy
+rules; and test each acceptor name over the intended scheme. Confirm certificate renewal and trust-store deployment,
+cookie expiry and secrecy, proxy credential rotation, bounded connection timeouts, and coordinated shutdown.
+<p>
+During an incident, record the endpoint scheme and host, acceptor name, provider type, connector state, status code,
+and exception causes. Redact cookie values, credentials, and full descriptions before storing diagnostics.
+
+<p align="right">
+<a href="Doc03_SecuringWebSocketTransports.html" title="Backward to Securing WebSocket Transports"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="DocXX_MigratingWebSocketTransport.html" title="Forward to Migrating the WebSocket Transport"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

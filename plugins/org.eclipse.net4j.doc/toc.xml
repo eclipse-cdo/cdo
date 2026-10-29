@@ -3,6 +3,61 @@
 
 <toc label="Net4j Signaling Platform Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" icon="article" />
+  <topic label="Programmer's Guide" href="html/programmers/index.html">
+    <topic label="WebSocket Transport Architecture" href="html/programmers/Doc01_WebSocketTransportArchitecture.html" icon="article">
+      <topic label="Provider-Neutral Core" href="html/programmers/Doc01_WebSocketTransportArchitecture.html#Provider_Neutral_Core" icon="chapter" />
+      <topic label="Connectors, Acceptors, and WS/WSS" href="html/programmers/Doc01_WebSocketTransportArchitecture.html#Connectors_Acceptors_and_Schemes" icon="chapter" />
+      <topic label="The Message-Connection Boundary" href="html/programmers/Doc01_WebSocketTransportArchitecture.html#Message_Connection_Boundary" icon="chapter" />
+      <topic label="Connection Establishment and Data Flow" href="html/programmers/Doc01_WebSocketTransportArchitecture.html#Connection_Establishment_and_Data_Flow" icon="chapter" />
+      <topic label="Scheduling, Flow Control, and Lifecycle" href="html/programmers/Doc01_WebSocketTransportArchitecture.html#Scheduling_Flow_Control_and_Lifecycle" icon="chapter" />
+      <topic label="Client and Server Integration Boundaries" href="html/programmers/Doc01_WebSocketTransportArchitecture.html#Client_and_Server_Integration_Boundaries" icon="chapter" />
+    </topic>
+    <topic label="Extending WebSocket Transports" href="html/programmers/Doc02_ExtendingWebSocketTransports.html" icon="article">
+      <topic label="Configuring and Registering Client Providers" href="html/programmers/Doc02_ExtendingWebSocketTransports.html#Configuring_and_Registering_Client_Providers" icon="chapter" />
+      <topic label="The Message-Connection Factory Contract" href="html/programmers/Doc02_ExtendingWebSocketTransports.html#Message_Connection_Factory_Contract" icon="chapter" />
+      <topic label="Implementing a Different WebSocket Integration" href="html/programmers/Doc02_ExtendingWebSocketTransports.html#Implementing_a_Different_WebSocket_Integration" icon="chapter" />
+      <topic label="Threading, Buffering, and Backpressure" href="html/programmers/Doc02_ExtendingWebSocketTransports.html#Threading_Buffering_and_Backpressure" icon="chapter" />
+      <topic label="Lifecycle and Testing" href="html/programmers/Doc02_ExtendingWebSocketTransports.html#Lifecycle_and_Testing" icon="chapter" />
+    </topic>
+  </topic>
+  <topic label="Operator's Guide" href="html/operators/index.html">
+    <topic label="Deploying WebSocket Servers" href="html/operators/Doc01_DeployingWebSocketServers.html" icon="article">
+      <topic label="Features, Bundles, and Acceptor Configuration" href="html/operators/Doc01_DeployingWebSocketServers.html#Features_Bundles_and_Acceptors" icon="chapter" />
+      <topic label="Hosting WS over HTTP" href="html/operators/Doc01_DeployingWebSocketServers.html#Hosting_WS_over_HTTP" icon="chapter" />
+      <topic label="Hosting WSS over HTTPS" href="html/operators/Doc01_DeployingWebSocketServers.html#Hosting_WSS_over_HTTPS" icon="chapter" />
+      <topic label="Multiple Acceptors and Routing Isolation" href="html/operators/Doc01_DeployingWebSocketServers.html#Multiple_Acceptors_and_Routing_Isolation" icon="chapter" />
+      <topic label="Startup, Shutdown, and Failure Cleanup" href="html/operators/Doc01_DeployingWebSocketServers.html#Startup_Shutdown_and_Failure_Cleanup" icon="chapter" />
+    </topic>
+    <topic label="Configuring WebSocket Clients" href="html/operators/Doc02_ConfiguringWebSocketClients.html" icon="article">
+      <topic label="Default Provider and Connector Descriptions" href="html/operators/Doc02_ConfiguringWebSocketClients.html#Default_Provider_and_Connector_Descriptions" icon="chapter" />
+      <topic label="Registering Configured Providers" href="html/operators/Doc02_ConfiguringWebSocketClients.html#Registering_Configured_Providers" icon="chapter" />
+      <topic label="Cookies, Authentication, and Proxy Tunnels" href="html/operators/Doc02_ConfiguringWebSocketClients.html#Cookies_Authentication_and_Proxy_Tunnels" icon="chapter" />
+      <topic label="Reconstructing Connectors Safely" href="html/operators/Doc02_ConfiguringWebSocketClients.html#Reconstructing_Connectors_Safely" icon="chapter" />
+    </topic>
+    <topic label="Securing WebSocket Transports" href="html/operators/Doc03_SecuringWebSocketTransports.html" icon="article">
+      <topic label="Client Trust Configuration" href="html/operators/Doc03_SecuringWebSocketTransports.html#Client_Trust_Configuration" icon="chapter" />
+      <topic label="Server Certificates and HTTPS Listeners" href="html/operators/Doc03_SecuringWebSocketTransports.html#Server_Certificates_and_HTTPS_Listeners" icon="chapter" />
+      <topic label="Mutual TLS" href="html/operators/Doc03_SecuringWebSocketTransports.html#Mutual_TLS" icon="chapter" />
+      <topic label="TLS Termination and Secure Request Detection" href="html/operators/Doc03_SecuringWebSocketTransports.html#TLS_Termination_and_Secure_Request_Detection" icon="chapter" />
+      <topic label="Deployment Checks and Common Failures" href="html/operators/Doc03_SecuringWebSocketTransports.html#Deployment_Checks_and_Common_Failures" icon="chapter" />
+    </topic>
+    <topic label="Operating and Troubleshooting WebSockets" href="html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html" icon="article">
+      <topic label="Resource Ownership and Lifecycle" href="html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#Resource_Ownership_and_Lifecycle" icon="chapter" />
+      <topic label="Graceful Shutdown" href="html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#Graceful_Shutdown" icon="chapter" />
+      <topic label="Diagnosing Connection and Upgrade Failures" href="html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#Diagnosing_Connection_and_Upgrade_Failures" icon="chapter" />
+      <topic label="TLS and Proxy Diagnosis" href="html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#TLS_and_Proxy_Diagnosis" icon="chapter" />
+      <topic label="Operational Checklist" href="html/operators/Doc04_OperatingAndTroubleshootingWebSockets.html#Operational_Checklist" icon="chapter" />
+    </topic>
+    <topic label="Migrating the WebSocket Transport" href="html/operators/DocXX_MigratingWebSocketTransport.html" icon="article">
+      <topic label="Migration Overview" href="html/operators/DocXX_MigratingWebSocketTransport.html#Migration_Overview" icon="chapter" />
+      <topic label="Dependencies and Deployment" href="html/operators/DocXX_MigratingWebSocketTransport.html#Dependencies_and_Deployment" icon="chapter" />
+      <topic label="Migrating WebSocket Clients" href="html/operators/DocXX_MigratingWebSocketTransport.html#Migrating_WebSocket_Clients" icon="chapter" />
+      <topic label="Migrating WebSocket Servers" href="html/operators/DocXX_MigratingWebSocketTransport.html#Migrating_WebSocket_Servers" icon="chapter" />
+      <topic label="Migrating Security and Proxy Configuration" href="html/operators/DocXX_MigratingWebSocketTransport.html#Migrating_Security_and_Proxy_Configuration" icon="chapter" />
+      <topic label="Migration Checklist" href="html/operators/DocXX_MigratingWebSocketTransport.html#Migration_Checklist" icon="chapter" />
+      <topic label="Troubleshooting" href="html/operators/DocXX_MigratingWebSocketTransport.html#Troubleshooting" icon="chapter" />
+    </topic>
+  </topic>
   <topic label="API Reference" href="javadoc/overview-summary.html">
     <topic label="Net4j Signaling Platform" href="javadoc/org/eclipse/net4j/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j" href="javadoc/org/eclipse/net4j/package-summary.html" icon="package">
@@ -129,7 +184,14 @@
         <topic label="InternalChannelMultiplexer.BufferMultiplexer" href="javadoc/org/eclipse/spi/net4j/InternalChannelMultiplexer.BufferMultiplexer.html" icon="interface" />
         <topic label="InternalConnector" href="javadoc/org/eclipse/spi/net4j/InternalConnector.html" icon="interface" />
         <topic label="InverseCloseable" href="javadoc/org/eclipse/spi/net4j/InverseCloseable.html" icon="interface" />
+        <topic label="MessageConnectionFactory" href="javadoc/org/eclipse/spi/net4j/MessageConnectionFactory.html" icon="class" />
+        <topic label="MessageConnector" href="javadoc/org/eclipse/spi/net4j/MessageConnector.html" icon="class" />
+        <topic label="MessageConnector.IMessageConnection" href="javadoc/org/eclipse/spi/net4j/MessageConnector.IMessageConnection.html" icon="interface" />
+        <topic label="MessageConnector.IMessageConnection.Listener" href="javadoc/org/eclipse/spi/net4j/MessageConnector.IMessageConnection.Listener.html" icon="interface" />
+        <topic label="MessageConnector.IMessageConnection.SendCallback" href="javadoc/org/eclipse/spi/net4j/MessageConnector.IMessageConnection.SendCallback.html" icon="interface" />
         <topic label="Protocol&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/spi/net4j/Protocol.html" icon="class" />
+        <topic label="SchedulingConnector" href="javadoc/org/eclipse/spi/net4j/SchedulingConnector.html" icon="class" />
+        <topic label="SchedulingConnector.IScheduler" href="javadoc/org/eclipse/spi/net4j/SchedulingConnector.IScheduler.html" icon="interface" />
         <topic label="ServerProtocolFactory" href="javadoc/org/eclipse/spi/net4j/ServerProtocolFactory.html" icon="class" />
       </topic>
     </topic>
@@ -173,14 +235,16 @@
         <topic label="IWSAcceptorManager" href="javadoc/org/eclipse/net4j/ws/IWSAcceptorManager.html" icon="interface" />
         <topic label="IWSConnector" href="javadoc/org/eclipse/net4j/ws/IWSConnector.html" icon="interface" />
         <topic label="IWSNegotiationContext" href="javadoc/org/eclipse/net4j/ws/IWSNegotiationContext.html" icon="interface" />
+        <topic label="WSSUtil" href="javadoc/org/eclipse/net4j/ws/WSSUtil.html" icon="class" />
         <topic label="WSUtil" href="javadoc/org/eclipse/net4j/ws/WSUtil.html" icon="class" />
       </topic>
-      <topic label="org.eclipse.net4j.ws.jetty" href="javadoc/org/eclipse/net4j/ws/jetty/package-summary.html" icon="package">
-        <topic label="Net4jWebSocket" href="javadoc/org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" icon="class" />
-        <topic label="Net4jWebSocketServlet" href="javadoc/org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html" icon="class" />
+      <topic label="org.eclipse.net4j.ws.jdk" href="javadoc/org/eclipse/net4j/ws/jdk/package-summary.html" icon="package">
+        <topic label="JDKWSUtil" href="javadoc/org/eclipse/net4j/ws/jdk/JDKWSUtil.html" icon="class" />
       </topic>
-      <topic label="org.eclipse.net4j.wss" href="javadoc/org/eclipse/net4j/wss/package-summary.html" icon="package">
-        <topic label="WSSUtil" href="javadoc/org/eclipse/net4j/wss/WSSUtil.html" icon="class" />
+    </topic>
+    <topic label="Net4j Signaling Platform Websocket Transport (Jetty Server)" href="javadoc/org/eclipse/net4j/ws/jetty/server/package-summary.html" icon="plugin">
+      <topic label="org.eclipse.net4j.ws.jetty.server" href="javadoc/org/eclipse/net4j/ws/jetty/server/package-summary.html" icon="package">
+        <topic label="JettyWSUtil" href="javadoc/org/eclipse/net4j/ws/jetty/server/JettyWSUtil.html" icon="class" />
       </topic>
     </topic>
   </topic>
@@ -191,6 +255,7 @@
       <topic label="Net4j Buffer Providers" href="productdoc/org.eclipse.net4j.bufferProviders.html" icon="productgroup" />
       <topic label="Net4j Client Protocols" href="productdoc/org.eclipse.net4j.clientProtocols.html" icon="productgroup" />
       <topic label="Net4j Connectors" href="productdoc/org.eclipse.net4j.connectors.html" icon="productgroup" />
+      <topic label="Net4j Message Connections" href="productdoc/org.eclipse.net4j.messageConnections.html" icon="productgroup" />
       <topic label="Net4j Selectors" href="productdoc/org.eclipse.net4j.selectors.html" icon="productgroup" />
       <topic label="Net4j Server Protocols" href="productdoc/org.eclipse.net4j.serverProtocols.html" icon="productgroup" />
     </topic>

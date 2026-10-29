@@ -18,6 +18,7 @@
     <productGroups id="org.eclipse.net4j.bufferProviders" name="Net4j Buffer Providers" description=""/>
     <productGroups id="org.eclipse.net4j.clientProtocols" name="Net4j Client Protocols" description=""/>
     <productGroups id="org.eclipse.net4j.connectors" name="Net4j Connectors" description=""/>
+    <productGroups id="org.eclipse.net4j.messageConnections" name="Net4j Message Connections" description=""/>
     <productGroups id="org.eclipse.net4j.selectors" name="Net4j Selectors" description=""/>
     <productGroups id="org.eclipse.net4j.serverProtocols" name="Net4j Server Protocols" description=""/>
   </article:Plugin>
@@ -33,7 +34,9 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.net4j.ws" label="Net4j Signaling Platform Websocket Transport">
     <packages name="org.eclipse.net4j.ws"/>
-    <packages name="org.eclipse.net4j.ws.jetty"/>
-    <packages name="org.eclipse.net4j.wss"/>
+    <packages name="org.eclipse.net4j.ws.jdk"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.ws.jetty.server" label="Net4j Signaling Platform Websocket Transport (Jetty Server)">
+    <packages name="org.eclipse.net4j.ws.jetty.server"/>
   </article:Plugin>
 </xmi:XMI>

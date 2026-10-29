@@ -13,7 +13,7 @@
 /**
  * Product Group Reference
  *
- * @number 3
+ * @number 666
  */
 package org.eclipse.net4j.doc.reference.product;
 

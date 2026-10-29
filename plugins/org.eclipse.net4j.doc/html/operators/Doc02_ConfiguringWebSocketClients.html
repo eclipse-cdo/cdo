@@ -1,0 +1,423 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Configuring WebSocket Clients (Net4j Signaling Platform Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Configuring WebSocket Clients (Net4j Signaling Platform Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Configuring WebSocket Clients</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_DeployingWebSocketServers.html" title="Backward to Deploying WebSocket Servers"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_SecuringWebSocketTransports.html" title="Forward to Securing WebSocket Transports"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+The core WS bundle registers a JDK WebSocket message-connection provider named <code>jdk</code>. Connector factories
+select that provider by default. Applications can register additional provider factories to bind a client, TLS context,
+proxy policy, authentication policy, or opening-handshake timeout to a distinct provider name.
+<p>
+<b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ConfiguringWebSocketClients.html#Default_Provider_and_Connector_Descriptions" title="Chapter in Net4j Signaling Platform Documentation">Default Provider and Connector Descriptions</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ConfiguringWebSocketClients.html#Registering_Configured_Providers" title="Chapter in Net4j Signaling Platform Documentation">Registering Configured Providers</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ConfiguringWebSocketClients.html#Cookies_Authentication_and_Proxy_Tunnels" title="Chapter in Net4j Signaling Platform Documentation">Cookies, Authentication, and Proxy Tunnels</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ConfiguringWebSocketClients.html#Reconstructing_Connectors_Safely" title="Chapter in Net4j Signaling Platform Documentation">Reconstructing Connectors Safely</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Default_Provider_and_Connector_Descriptions"></a>1&nbsp;&nbsp;Default Provider and Connector Descriptions</h2>
+<p>
+Create connectors with <code>WSUtil</code> for WS and <code>WSSUtil</code> for WSS. A secure connection needs both
+the WSS connector factory and a <code>wss</code> service URI. The named acceptor is encoded in the route path. With no
+provider token, the factory selects <code>jdk</code>.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Default_Provider_and_Connector_Descriptions_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">DefaultWSAndWSS.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Default_Provider_and_Connector_Descriptions_1')" id="max_Default_Provider_and_Connector_Descriptions_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Default_Provider_and_Connector_Descriptions_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Default_Provider_and_Connector_Descriptions_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSConnector&nbsp;ws&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            IWSConnector&nbsp;wss&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;ws&nbsp;=&nbsp;WSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;ws://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;public&#34;</font>);<br/>
+            &nbsp;&nbsp;wss&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;wss://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;secure&#34;</font>);<br/>
+            <br/>
+            &nbsp;&nbsp;ws.connect(<font color="#990000">5</font>_000);<br/>
+            &nbsp;&nbsp;wss.connect(<font color="#990000">5</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;connected&nbsp;transports&nbsp;while&nbsp;the&nbsp;connectors&nbsp;remain&nbsp;active.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(ws&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ws.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(wss&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wss.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+Connector descriptions can include <code>provider:&lt;type&gt;</code> to select a registered message-connection
+factory and <code>cookie:&lt;name&gt;=&lt;value&gt;</code> for a handshake cookie. Use the utility description methods
+instead of manually constructing the route or delimiter escaping. Descriptions are configuration data; protect any
+saved description that contains a session cookie.
+
+<h2><a name="Registering_Configured_Providers"></a>2&nbsp;&nbsp;Registering Configured Providers</h2>
+<p>
+Use <code>JDKWSUtil.createMessageConnectionFactory(type, client, timeout)</code> to configure a provider with a
+caller-owned <code>HttpClient</code>. Register the factory in the same managed container that creates the connector,
+and select the registered type with the provider token. Different provider names allow the same application to use
+distinct trust stores or proxy routes without changing global JDK settings.
+<p>
+The following example uses an explicit proxy selector and handshake cookie. It uses the default JDK trust context as
+a placeholder; use an application-configured trust context for private certificate authorities.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Registering_Configured_Providers_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ConfiguredProvider.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Registering_Configured_Providers_1')" id="max_Registering_Configured_Providers_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Registering_Configured_Providers_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Registering_Configured_Providers_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSConnector&nbsp;connector&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            HttpClient&nbsp;httpClient&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;SSLContext&nbsp;tls&nbsp;=&nbsp;SSLContext.getDefault();<br/>
+            &nbsp;&nbsp;httpClient&nbsp;=&nbsp;HttpClient.newBuilder().sslContext(tls).proxy(ProxySelector.of(<font color="#7f0055"><b>new&nbsp;</b></font>InetSocketAddress(<font color="#2a00ff">&#34;proxy.example.net&#34;</font>,&nbsp;<font color="#990000">8080</font>)))<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.connectTimeout(Duration.ofSeconds(<font color="#990000">8</font>)).build();<br/>
+            &nbsp;&nbsp;IFactory&nbsp;provider&nbsp;=&nbsp;JDKWSUtil.createMessageConnectionFactory(<font color="#2a00ff">&#34;corporate&#34;</font>,&nbsp;httpClient,&nbsp;Duration.ofSeconds(<font color="#990000">12</font>));<br/>
+            &nbsp;&nbsp;container.registerFactory(provider);<br/>
+            <br/>
+            &nbsp;&nbsp;String&nbsp;description&nbsp;=&nbsp;WSSUtil.getConnectorDescription(URI.create(<font color="#2a00ff">&#34;wss://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;secure&#34;</font>,&nbsp;<font color="#2a00ff">&#34;provider:corporate&#34;</font>,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#2a00ff">&#34;cookie:tenant=example&#34;</font>);<br/>
+            &nbsp;&nbsp;connector&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;description);<br/>
+            &nbsp;&nbsp;connector.connect(<font color="#990000">15</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;connector&nbsp;while&nbsp;its&nbsp;container&nbsp;and&nbsp;caller-owned&nbsp;HttpClient&nbsp;remain&nbsp;alive.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;configure&nbsp;or&nbsp;connect&nbsp;the&nbsp;WSS&nbsp;client&#34;</font>,&nbsp;ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(connector&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connector.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;On&nbsp;Java&nbsp;21+,&nbsp;close&nbsp;httpClient&nbsp;here&nbsp;after&nbsp;all&nbsp;connectors&nbsp;that&nbsp;use&nbsp;it&nbsp;have&nbsp;stopped.</font><br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+The HTTP client's <code>connectTimeout</code> limits the connection establishment stage. The provider's
+<code>webSocketConnectTimeout</code> limits the subsequent opening handshake. A connector's
+<code>connect(5000)</code> bounds how long the calling thread waits for the Net4j connector to become connected; these
+are separate limits. The built-in provider defaults the first two stages to ten seconds.
+
+<h2><a name="Cookies_Authentication_and_Proxy_Tunnels"></a>3&nbsp;&nbsp;Cookies, Authentication, and Proxy Tunnels</h2>
+<p>
+Handshake cookies are sent to the WebSocket endpoint during the HTTP upgrade. Treat them like credentials: limit their
+scope and lifetime, use WSS, protect connector descriptions that contain them, and do not log full descriptions.
+<p>
+Configure HTTP origin and proxy authentication on the JDK <code>Authenticator</code>. The requestor type distinguishes
+a server challenge from a proxy challenge; do not send origin credentials to a proxy or vice versa. The application
+should obtain usernames and passwords from its credential store rather than embedding them in code. An authenticator
+can serve several destinations, so restrict each credential to the expected requestor host and port and return
+<code>null</code> for every unknown endpoint.
+<p>
+For HTTP CONNECT, the JDK normally disables Basic authentication for tunneling. The system property
+<code>jdk.http.auth.tunneling.disabledSchemes</code> controls disabled schemes. Setting it to an empty value can enable
+Basic CONNECT authentication, but it changes behavior JVM-wide and may expose credentials to an untrusted proxy.
+Review that boundary carefully and prefer a supported stronger proxy scheme where possible.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Cookies_Authentication_and_Proxy_Tunnels_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ChallengeAuthentication.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Cookies_Authentication_and_Proxy_Tunnels_1')" id="max_Cookies_Authentication_and_Proxy_Tunnels_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Cookies_Authentication_and_Proxy_Tunnels_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Cookies_Authentication_and_Proxy_Tunnels_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            HttpClient&nbsp;httpClient&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            IWSConnector&nbsp;connector&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;String&nbsp;originUser&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_ORIGIN_USER&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;originPassword&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_ORIGIN_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;proxyUser&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_PROXY_USER&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;proxyPassword&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_PROXY_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(originUser&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;originPassword&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;proxyUser&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;proxyPassword&nbsp;==&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Provide&nbsp;origin&nbsp;and&nbsp;proxy&nbsp;credentials&nbsp;through&nbsp;the&nbsp;deployment&nbsp;secret&nbsp;store&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;Authenticator&nbsp;authenticator&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Authenticator()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font>PasswordAuthentication&nbsp;getPasswordAuthentication()<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;requestingHost&nbsp;=&nbsp;getRequestingHost();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>requestingPort&nbsp;=&nbsp;getRequestingPort();<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(getRequestorType()&nbsp;==&nbsp;Authenticator.RequestorType.PROXY&nbsp;&amp;&amp;&nbsp;<font color="#2a00ff">&#34;proxy.example.net&#34;</font>.equalsIgnoreCase(requestingHost)&nbsp;&amp;&amp;&nbsp;requestingPort&nbsp;==&nbsp;<font color="#990000">8080</font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;new&nbsp;</b></font>PasswordAuthentication(proxyUser,&nbsp;proxyPassword.toCharArray());<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(getRequestorType()&nbsp;==&nbsp;Authenticator.RequestorType.SERVER&nbsp;&amp;&amp;&nbsp;<font color="#2a00ff">&#34;gateway.example.net&#34;</font>.equalsIgnoreCase(requestingHost)&nbsp;&amp;&amp;&nbsp;requestingPort&nbsp;==&nbsp;<font color="#990000">443</font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;new&nbsp;</b></font>PasswordAuthentication(originUser,&nbsp;originPassword.toCharArray());<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Never&nbsp;supply&nbsp;credentials&nbsp;to&nbsp;an&nbsp;unknown&nbsp;host,&nbsp;port,&nbsp;or&nbsp;requestor&nbsp;type.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;null</b></font>;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;};<br/>
+            <br/>
+            &nbsp;&nbsp;httpClient&nbsp;=&nbsp;HttpClient.newBuilder().proxy(ProxySelector.of(<font color="#7f0055"><b>new&nbsp;</b></font>InetSocketAddress(<font color="#2a00ff">&#34;proxy.example.net&#34;</font>,&nbsp;<font color="#990000">8080</font>))).authenticator(authenticator)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.connectTimeout(Duration.ofSeconds(<font color="#990000">8</font>)).build();<br/>
+            &nbsp;&nbsp;IFactory&nbsp;provider&nbsp;=&nbsp;JDKWSUtil.createMessageConnectionFactory(<font color="#2a00ff">&#34;authenticated&#34;</font>,&nbsp;httpClient,&nbsp;Duration.ofSeconds(<font color="#990000">10</font>));<br/>
+            &nbsp;&nbsp;container.registerFactory(provider);<br/>
+            &nbsp;&nbsp;connector&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;wss://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;secure&#34;</font>,&nbsp;<font color="#2a00ff">&#34;provider:authenticated&#34;</font>);<br/>
+            &nbsp;&nbsp;connector.connect(<font color="#990000">15</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;connector&nbsp;while&nbsp;the&nbsp;provider,&nbsp;container,&nbsp;and&nbsp;caller-owned&nbsp;client&nbsp;remain&nbsp;alive.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;configure&nbsp;authenticated&nbsp;WSS&#34;</font>,&nbsp;ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(connector&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connector.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;On&nbsp;Java&nbsp;21+,&nbsp;close&nbsp;httpClient&nbsp;here&nbsp;after&nbsp;all&nbsp;connectors&nbsp;that&nbsp;use&nbsp;it&nbsp;have&nbsp;stopped.</font><br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Reconstructing_Connectors_Safely"></a>4&nbsp;&nbsp;Reconstructing Connectors Safely</h2>
+<p>
+<code>IConnector.getURL()</code> reports the endpoint URL, not the complete WS/WSS factory description. It omits the
+selected provider and handshake cookies. Rebuilding from that URL can silently use <code>jdk</code> and lose a custom
+TLS trust policy. Retain the original description or ask the registered connector factory for
+<code>IFactory.getDescriptionFor(connector)</code>. Select the WS or WSS factory based on the connector's scheme.
+<p>
+The example retains the complete string in application configuration. It does not claim to test a restoration by
+looking up the product again in the same container. Protect the stored value because it may contain cookie values.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Reconstructing_Connectors_Safely_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CompleteWSSDescription.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Reconstructing_Connectors_Safely_1')" id="max_Reconstructing_Connectors_Safely_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Reconstructing_Connectors_Safely_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Reconstructing_Connectors_Safely_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;HttpClient&nbsp;httpClient&nbsp;=&nbsp;HttpClient.newBuilder().build();<br/>
+            &nbsp;&nbsp;IFactory&nbsp;provider&nbsp;=&nbsp;JDKWSUtil.createMessageConnectionFactory(<font color="#2a00ff">&#34;corporate&#34;</font>,&nbsp;httpClient,&nbsp;Duration.ofSeconds(<font color="#990000">10</font>));<br/>
+            &nbsp;&nbsp;container.registerFactory(provider);<br/>
+            <br/>
+            &nbsp;&nbsp;IWSConnector&nbsp;connector&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;wss://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;secure&#34;</font>,&nbsp;<font color="#2a00ff">&#34;provider:corporate&#34;</font>,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#2a00ff">&#34;cookie:tenant=example&#34;</font>);<br/>
+            &nbsp;&nbsp;IFactory&nbsp;connectorFactory&nbsp;=&nbsp;container.getFactory(ConnectorFactory.PRODUCT_GROUP,&nbsp;WSSUtil.FACTORY_TYPE);<br/>
+            &nbsp;&nbsp;String&nbsp;completeDescription&nbsp;=&nbsp;connectorFactory.getDescriptionFor(connector);<br/>
+            <br/>
+            &nbsp;&nbsp;Properties&nbsp;protectedConfiguration&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Properties();<br/>
+            &nbsp;&nbsp;protectedConfiguration.setProperty(<font color="#2a00ff">&#34;connector.wss.secure&#34;</font>,&nbsp;completeDescription);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Store&nbsp;protectedConfiguration&nbsp;with&nbsp;the&nbsp;application's&nbsp;credential-aware&nbsp;configuration&nbsp;service.</font><br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;On&nbsp;Java&nbsp;21+,&nbsp;close&nbsp;httpClient&nbsp;after&nbsp;all&nbsp;connectors&nbsp;using&nbsp;it&nbsp;have&nbsp;stopped.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<p align="right">
+<a href="Doc01_DeployingWebSocketServers.html" title="Backward to Deploying WebSocket Servers"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_SecuringWebSocketTransports.html" title="Forward to Securing WebSocket Transports"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

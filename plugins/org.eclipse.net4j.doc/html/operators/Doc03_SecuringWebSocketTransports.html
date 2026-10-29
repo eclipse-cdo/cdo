@@ -1,0 +1,514 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Securing WebSocket Transports (Net4j Signaling Platform Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Securing WebSocket Transports (Net4j Signaling Platform Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Securing WebSocket Transports</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc02_ConfiguringWebSocketClients.html" title="Backward to Configuring WebSocket Clients"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Forward to Operating and Troubleshooting WebSockets"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+WSS secures the HTTP WebSocket opening handshake and the resulting transport with TLS. Net4j selects the WSS connector
+and acceptor factories; TLS trust, server certificates, and client identity are configured on the JDK client and the
+embedding server. Certificate validation and host-name verification remain enabled by default.
+<p>
+<b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#Client_Trust_Configuration" title="Chapter in Net4j Signaling Platform Documentation">Client Trust Configuration</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#Server_Certificates_and_HTTPS_Listeners" title="Chapter in Net4j Signaling Platform Documentation">Server Certificates and HTTPS Listeners</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#Mutual_TLS" title="Chapter in Net4j Signaling Platform Documentation">Mutual TLS</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#TLS_Termination_and_Secure_Request_Detection" title="Chapter in Net4j Signaling Platform Documentation">TLS Termination and Secure Request Detection</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#Deployment_Checks_and_Common_Failures" title="Chapter in Net4j Signaling Platform Documentation">Deployment Checks and Common Failures</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Client_Trust_Configuration"></a>1&nbsp;&nbsp;Client Trust Configuration</h2>
+<p>
+A WSS client must trust the server certificate chain and the requested DNS name must match a certificate subject
+alternative name. The JDK provider uses normal JDK trust when given a default client; to trust a private CA, load the
+approved CA certificates into the client trust store named by <code>net4j.tls.client.trustStore</code> and provide its
+password through <code>NET4J_TLS_CLIENT_TRUSTSTORE_PASSWORD</code>. Build an <code>SSLContext</code> with a
+<code>TrustManagerFactory</code>. Pass that context to a configured <code>HttpClient</code> and register the client
+under a distinct provider type.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Client_Trust_Configuration_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">TrustedWSSClient.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Client_Trust_Configuration_1')" id="max_Client_Trust_Configuration_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Client_Trust_Configuration_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Client_Trust_Configuration_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSConnector&nbsp;connector&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            HttpClient&nbsp;httpClient&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;String&nbsp;trustStoreLocation&nbsp;=&nbsp;System.getProperty(<font color="#2a00ff">&#34;net4j.tls.client.trustStore&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;trustStoreSecret&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_TLS_CLIENT_TRUSTSTORE_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(trustStoreLocation&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;trustStoreLocation.isBlank()&nbsp;||&nbsp;trustStoreSecret&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;trustStoreSecret.isBlank())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Set&nbsp;net4j.tls.client.trustStore&nbsp;and&nbsp;provide&nbsp;NET4J_TLS_CLIENT_TRUSTSTORE_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;Path&nbsp;trustStorePath&nbsp;=&nbsp;Path.of(trustStoreLocation);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>char</b></font>[]&nbsp;trustStorePassword&nbsp;=&nbsp;trustStoreSecret.toCharArray();<br/>
+            &nbsp;&nbsp;KeyStore&nbsp;trustStore&nbsp;=&nbsp;KeyStore.getInstance(KeyStore.getDefaultType());<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(InputStream&nbsp;input&nbsp;=&nbsp;Files.newInputStream(trustStorePath))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;trustStore.load(input,&nbsp;trustStorePassword);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;TrustManagerFactory&nbsp;trustManagers&nbsp;=&nbsp;TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());<br/>
+            &nbsp;&nbsp;trustManagers.init(trustStore);<br/>
+            &nbsp;&nbsp;SSLContext&nbsp;tls&nbsp;=&nbsp;SSLContext.getInstance(<font color="#2a00ff">&#34;TLS&#34;</font>);<br/>
+            &nbsp;&nbsp;tls.init(null,&nbsp;trustManagers.getTrustManagers(),&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>SecureRandom());<br/>
+            <br/>
+            &nbsp;&nbsp;httpClient&nbsp;=&nbsp;HttpClient.newBuilder().sslContext(tls).connectTimeout(Duration.ofSeconds(<font color="#990000">10</font>)).build();<br/>
+            &nbsp;&nbsp;IFactory&nbsp;provider&nbsp;=&nbsp;JDKWSUtil.createMessageConnectionFactory(<font color="#2a00ff">&#34;private-ca&#34;</font>,&nbsp;httpClient,&nbsp;Duration.ofSeconds(<font color="#990000">10</font>));<br/>
+            &nbsp;&nbsp;container.registerFactory(provider);<br/>
+            &nbsp;&nbsp;connector&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;wss://service.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;secure&#34;</font>,&nbsp;<font color="#2a00ff">&#34;provider:private-ca&#34;</font>);<br/>
+            &nbsp;&nbsp;connector.connect(<font color="#990000">15</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Keep&nbsp;the&nbsp;caller-owned&nbsp;HttpClient&nbsp;alive&nbsp;until&nbsp;the&nbsp;connector&nbsp;has&nbsp;stopped.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;configure&nbsp;the&nbsp;trusted&nbsp;WSS&nbsp;client&#34;</font>,&nbsp;ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(connector&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connector.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;On&nbsp;Java&nbsp;21+,&nbsp;close&nbsp;httpClient&nbsp;here&nbsp;after&nbsp;all&nbsp;of&nbsp;its&nbsp;connectors&nbsp;have&nbsp;stopped.</font><br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+Do not install a trust-all manager, disable endpoint identification, or replace a hostname with an unrelated address
+merely to suppress a certificate error. Correct the certificate chain, URI host name, or intended trust anchors.
+
+<h2><a name="Server_Certificates_and_HTTPS_Listeners"></a>2&nbsp;&nbsp;Server Certificates and HTTPS Listeners</h2>
+<p>
+Jetty owns the TLS listener and certificate material. Configure its <code>SslContextFactory.Server</code> with the
+server key store named by <code>net4j.tls.server.keyStore</code> and password from
+<code>NET4J_TLS_SERVER_KEYSTORE_PASSWORD</code>. Keep this separate from client identity and trust stores. Place a
+<code>SecureRequestCustomizer</code> on
+the HTTPS connection factory. Then expose the WSS acceptor through <code>JettyWSUtil</code>. The TLS listener setup is
+programmatic; the Net4j acceptor XML has no invented certificate attributes.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Server_Certificates_and_HTTPS_Listeners_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">JettyWSSListener.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Server_Certificates_and_HTTPS_Listeners_1')" id="max_Server_Certificates_and_HTTPS_Listeners_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Server_Certificates_and_HTTPS_Listeners_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Server_Certificates_and_HTTPS_Listeners_1" style="padding:8px;">
+            <code>
+            String&nbsp;keyStorePath&nbsp;=&nbsp;System.getProperty(<font color="#2a00ff">&#34;net4j.tls.server.keyStore&#34;</font>);<br/>
+            String&nbsp;keyStorePassword&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_TLS_SERVER_KEYSTORE_PASSWORD&#34;</font>);<br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(keyStorePath&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;keyStorePath.isBlank()&nbsp;||&nbsp;keyStorePassword&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;keyStorePassword.isBlank())<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Set&nbsp;net4j.tls.server.keyStore&nbsp;and&nbsp;provide&nbsp;NET4J_TLS_SERVER_KEYSTORE_PASSWORD&#34;</font>);<br/>
+            }<br/>
+            <br/>
+            Server&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Server();<br/>
+            SslContextFactory.Server&nbsp;ssl&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>SslContextFactory.Server();<br/>
+            ssl.setKeyStorePath(keyStorePath);<br/>
+            ssl.setKeyStorePassword(keyStorePassword);<br/>
+            <br/>
+            HttpConfiguration&nbsp;https&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>HttpConfiguration();<br/>
+            https.addCustomizer(<font color="#7f0055"><b>new&nbsp;</b></font>SecureRequestCustomizer());<br/>
+            ServerConnector&nbsp;httpsListener&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ServerConnector(server,&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>SslConnectionFactory(ssl,&nbsp;HttpVersion.HTTP_1_1.toString()),<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>HttpConnectionFactory(https));<br/>
+            httpsListener.setPort(<font color="#990000">8443</font>);<br/>
+            server.addConnector(httpsListener);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Install&nbsp;JettyWSUtil's&nbsp;upgrade&nbsp;handler&nbsp;in&nbsp;a&nbsp;context&nbsp;before&nbsp;starting&nbsp;this&nbsp;application-owned&nbsp;server.</font>            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+The server certificate must cover the public service name and include any required intermediates. Configure file access
+and passwords through deployment-managed secrets. For mutual TLS, Jetty can require a client certificate and the client
+can provide its own key managers; only enable this when the application also maps authenticated client identities to
+authorization decisions.
+
+<h2><a name="Mutual_TLS"></a>3&nbsp;&nbsp;Mutual TLS</h2>
+<p>
+Mutual TLS is supported by the standard TLS components around the transport. Configure Jetty with its server identity,
+a trust store containing only the client CA certificates accepted by this endpoint, and required client authentication.
+The client must present an identity certificate and validate the server certificate. Net4j does not interpret certificate
+identities or replace application authorization; map the verified identity to application permissions after the handshake.
+Client identity material uses <code>net4j.tls.client.keyStore</code>, with the store and private-key passwords supplied
+by <code>NET4J_TLS_CLIENT_KEYSTORE_PASSWORD</code> and <code>NET4J_TLS_CLIENT_KEY_PASSWORD</code>. The client trust store
+is <code>net4j.tls.client.trustStore</code>. The server identity uses <code>net4j.tls.server.keyStore</code>; the server's
+client-CA trust store uses <code>net4j.tls.server.clientTrustStore</code> and
+<code>NET4J_TLS_SERVER_CLIENT_TRUSTSTORE_PASSWORD</code>. Passwords are deployment secrets, never property values or log data.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Mutual_TLS_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">MutualTLSContext.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Mutual_TLS_1')" id="max_Mutual_TLS_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Mutual_TLS_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Mutual_TLS_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            HttpClient&nbsp;mutualTLSClient&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            IWSConnector&nbsp;connector&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;String&nbsp;identityPath&nbsp;=&nbsp;System.getProperty(<font color="#2a00ff">&#34;net4j.tls.client.keyStore&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;identityStoreSecret&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_TLS_CLIENT_KEYSTORE_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;identityKeySecret&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_TLS_CLIENT_KEY_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;trustPath&nbsp;=&nbsp;System.getProperty(<font color="#2a00ff">&#34;net4j.tls.client.trustStore&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;trustStoreSecret&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_TLS_CLIENT_TRUSTSTORE_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(identityPath&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;identityPath.isBlank()&nbsp;||&nbsp;identityStoreSecret&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;identityStoreSecret.isBlank()&nbsp;||&nbsp;identityKeySecret&nbsp;==&nbsp;<font color="#7f0055"><b>null</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;identityKeySecret.isBlank()&nbsp;||&nbsp;trustPath&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;trustPath.isBlank()&nbsp;||&nbsp;trustStoreSecret&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;trustStoreSecret.isBlank())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Configure&nbsp;the&nbsp;client&nbsp;identity&nbsp;and&nbsp;trust-store&nbsp;paths&nbsp;and&nbsp;provide&nbsp;their&nbsp;passwords&nbsp;through&nbsp;the&nbsp;secret&nbsp;store&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>char</b></font>[]&nbsp;identityStorePassword&nbsp;=&nbsp;identityStoreSecret.toCharArray();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>char</b></font>[]&nbsp;identityKeyPassword&nbsp;=&nbsp;identityKeySecret.toCharArray();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>char</b></font>[]&nbsp;trustStorePassword&nbsp;=&nbsp;trustStoreSecret.toCharArray();<br/>
+            &nbsp;&nbsp;KeyStore&nbsp;identity&nbsp;=&nbsp;KeyStore.getInstance(KeyStore.getDefaultType());<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(InputStream&nbsp;input&nbsp;=&nbsp;Files.newInputStream(Path.of(identityPath)))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;identity.load(input,&nbsp;identityStorePassword);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;KeyStore&nbsp;trust&nbsp;=&nbsp;KeyStore.getInstance(KeyStore.getDefaultType());<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try&nbsp;</b></font>(InputStream&nbsp;input&nbsp;=&nbsp;Files.newInputStream(Path.of(trustPath)))<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;trust.load(input,&nbsp;trustStorePassword);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;KeyManagerFactory&nbsp;keys&nbsp;=&nbsp;KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());<br/>
+            &nbsp;&nbsp;keys.init(identity,&nbsp;identityKeyPassword);<br/>
+            &nbsp;&nbsp;TrustManagerFactory&nbsp;trustManagers&nbsp;=&nbsp;TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());<br/>
+            &nbsp;&nbsp;trustManagers.init(trust);<br/>
+            <br/>
+            &nbsp;&nbsp;SSLContext&nbsp;tls&nbsp;=&nbsp;SSLContext.getInstance(<font color="#2a00ff">&#34;TLS&#34;</font>);<br/>
+            &nbsp;&nbsp;tls.init(keys.getKeyManagers(),&nbsp;trustManagers.getTrustManagers(),&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>SecureRandom());<br/>
+            &nbsp;&nbsp;mutualTLSClient&nbsp;=&nbsp;HttpClient.newBuilder().sslContext(tls).connectTimeout(Duration.ofSeconds(<font color="#990000">10</font>)).build();<br/>
+            <br/>
+            &nbsp;&nbsp;IFactory&nbsp;provider&nbsp;=&nbsp;JDKWSUtil.createMessageConnectionFactory(<font color="#2a00ff">&#34;client-mtls&#34;</font>,&nbsp;mutualTLSClient,&nbsp;Duration.ofSeconds(<font color="#990000">10</font>));<br/>
+            &nbsp;&nbsp;container.registerFactory(provider);<br/>
+            &nbsp;&nbsp;connector&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;wss://service.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;mutual-tls&#34;</font>,&nbsp;<font color="#2a00ff">&#34;provider:client-mtls&#34;</font>);<br/>
+            &nbsp;&nbsp;connector.connect(<font color="#990000">15</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;authenticated&nbsp;WSS&nbsp;connector&nbsp;while&nbsp;its&nbsp;caller-owned&nbsp;HttpClient&nbsp;remains&nbsp;alive.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;configure&nbsp;or&nbsp;connect&nbsp;the&nbsp;mutual-TLS&nbsp;WSS&nbsp;client&#34;</font>,&nbsp;ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(connector&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connector.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;On&nbsp;Java&nbsp;21+,&nbsp;close&nbsp;mutualTLSClient&nbsp;after&nbsp;all&nbsp;connectors&nbsp;using&nbsp;it&nbsp;have&nbsp;stopped.</font><br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Mutual_TLS_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">MutualTLSWSS.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Mutual_TLS_2')" id="max_Mutual_TLS_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Mutual_TLS_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Mutual_TLS_2" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSAcceptor&nbsp;acceptor&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            Server&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            Exception&nbsp;startupFailure&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;String&nbsp;keyStorePath&nbsp;=&nbsp;System.getProperty(<font color="#2a00ff">&#34;net4j.tls.server.keyStore&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;keyStorePassword&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_TLS_SERVER_KEYSTORE_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;trustStorePath&nbsp;=&nbsp;System.getProperty(<font color="#2a00ff">&#34;net4j.tls.server.clientTrustStore&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;trustStorePassword&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_TLS_SERVER_CLIENT_TRUSTSTORE_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(keyStorePath&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;keyStorePath.isBlank()&nbsp;||&nbsp;keyStorePassword&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;keyStorePassword.isBlank()&nbsp;||&nbsp;trustStorePath&nbsp;==&nbsp;<font color="#7f0055"><b>null</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||&nbsp;trustStorePath.isBlank()&nbsp;||&nbsp;trustStorePassword&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;trustStorePassword.isBlank())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Configure&nbsp;server&nbsp;identity&nbsp;and&nbsp;client&nbsp;CA&nbsp;trust-store&nbsp;paths&nbsp;and&nbsp;provide&nbsp;passwords&nbsp;through&nbsp;the&nbsp;secret&nbsp;store&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;acceptor&nbsp;=&nbsp;WSSUtil.getAcceptor(container,&nbsp;<font color="#2a00ff">&#34;mutual-tls&#34;</font>);<br/>
+            &nbsp;&nbsp;LifecycleUtil.activate(acceptor);<br/>
+            <br/>
+            &nbsp;&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Server();<br/>
+            &nbsp;&nbsp;server.setStopAtShutdown(<font color="#7f0055"><b>true</b></font>);<br/>
+            <br/>
+            &nbsp;&nbsp;SslContextFactory.Server&nbsp;tls&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>SslContextFactory.Server();<br/>
+            &nbsp;&nbsp;tls.setKeyStorePath(keyStorePath);<br/>
+            &nbsp;&nbsp;tls.setKeyStorePassword(keyStorePassword);<br/>
+            &nbsp;&nbsp;tls.setTrustStorePath(trustStorePath);<br/>
+            &nbsp;&nbsp;tls.setTrustStorePassword(trustStorePassword);<br/>
+            &nbsp;&nbsp;tls.setNeedClientAuth(<font color="#7f0055"><b>true</b></font>);<br/>
+            <br/>
+            &nbsp;&nbsp;HttpConfiguration&nbsp;https&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>HttpConfiguration();<br/>
+            &nbsp;&nbsp;https.addCustomizer(<font color="#7f0055"><b>new&nbsp;</b></font>SecureRequestCustomizer());<br/>
+            &nbsp;&nbsp;ServerConnector&nbsp;listener&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ServerConnector(server,&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>SslConnectionFactory(tls,&nbsp;HttpVersion.HTTP_1_1.toString()),<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>HttpConnectionFactory(https));<br/>
+            &nbsp;&nbsp;listener.setPort(<font color="#990000">8443</font>);<br/>
+            &nbsp;&nbsp;server.addConnector(listener);<br/>
+            <br/>
+            &nbsp;&nbsp;ContextHandler&nbsp;context&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ContextHandler(<font color="#2a00ff">&#34;/&#34;</font>);<br/>
+            &nbsp;&nbsp;WebSocketUpgradeHandler&nbsp;upgradeHandler&nbsp;=&nbsp;JettyWSUtil.createUpgradeHandler(server,&nbsp;context,&nbsp;<font color="#2a00ff">&#34;/net4j/*&#34;</font>,&nbsp;acceptor);<br/>
+            &nbsp;&nbsp;context.setHandler(upgradeHandler);<br/>
+            &nbsp;&nbsp;server.setHandler(context);<br/>
+            &nbsp;&nbsp;server.start();<br/>
+            <br/>
+            &nbsp;&nbsp;URI&nbsp;endpoint&nbsp;=&nbsp;URI.create(<font color="#2a00ff">&#34;wss://service.example.net:&#34;&nbsp;</font>+&nbsp;listener.getLocalPort()&nbsp;+&nbsp;<font color="#2a00ff">&#34;/net4j&#34;</font>);<br/>
+            &nbsp;&nbsp;System.getLogger(Doc03_SecuringWebSocketTransports.<font color="#7f0055"><b>class</b></font>.getName()).log(System.Logger.Level.INFO,&nbsp;<font color="#2a00ff">&#34;Mutual-TLS&nbsp;WSS&nbsp;listening&nbsp;at&nbsp;{0}&#34;</font>,&nbsp;endpoint);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;The&nbsp;JVM&nbsp;hook&nbsp;stops&nbsp;Jetty&nbsp;only;&nbsp;it&nbsp;does&nbsp;not&nbsp;guarantee&nbsp;this&nbsp;waiting&nbsp;thread&nbsp;runs&nbsp;Net4j&nbsp;cleanup&nbsp;in&nbsp;finally.</font><br/>
+            &nbsp;&nbsp;server.join();<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(ex&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>InterruptedException)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;Thread.currentThread().interrupt();<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;startupFailure&nbsp;=&nbsp;ex;<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;start&nbsp;the&nbsp;mutual-TLS&nbsp;WSS&nbsp;endpoint&#34;</font>,&nbsp;ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(server&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server.stop();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;stopFailure)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(startupFailure&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;startupFailure.addSuppressed(stopFailure);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>else</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;stop&nbsp;the&nbsp;application-owned&nbsp;Jetty&nbsp;server&#34;</font>,&nbsp;stopFailure);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(acceptor&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(acceptor);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+During normal application-controlled shutdown, stop Jetty first, then deactivate the WSS acceptor and its owned
+container. The standalone examples' JVM shutdown hook stops Jetty only; JVM shutdown does not guarantee that a thread
+waiting in <code>server.join()</code> resumes to execute the Net4j cleanup in <code>finally</code>. Embedded Jetty hosts
+must coordinate all three lifecycles through their own shutdown manager.
+
+<h2><a name="TLS_Termination_and_Secure_Request_Detection"></a>4&nbsp;&nbsp;TLS Termination and Secure Request Detection</h2>
+<p>
+The Jetty adapter requires the incoming request's secure state to match the acceptor type. It accepts WS only for
+non-secure requests and WSS only for secure requests. If a reverse proxy terminates TLS and forwards plain HTTP, Jetty
+sees a non-secure request unless the deployment has explicitly configured trusted forwarded-request handling. A WSS
+acceptor will then reject the upgrade with 403. Do not trust client-supplied forwarding headers; only honor such
+metadata from a controlled proxy and configure the Jetty edge accordingly.
+<p>
+The simplest arrangement is end-to-end HTTPS from the TLS terminator to Jetty. If TLS terminates before Jetty, validate
+the trusted-proxy chain and secure-request configuration in an integration environment before exposing WSS.
+
+<h2><a name="Deployment_Checks_and_Common_Failures"></a>5&nbsp;&nbsp;Deployment Checks and Common Failures</h2>
+<p>
+A certificate-chain error usually means a missing intermediate or untrusted CA. A host-name error means the URI host
+does not match the certificate. A handshake failure can also result from expired certificates, incompatible protocol
+policy, or a missing client identity when mutual TLS is required. Keep normal certificate-chain and host-name checks
+enabled while diagnosing each case.
+<p>
+WSS requests rejected with 403 often indicate that Jetty reports the wrong secure state for the selected WSS acceptor.
+A 404 usually points to a path/header mismatch or an acceptor outside the handler's explicit allow-list. For proxy
+failures, verify the caller-owned <code>HttpClient</code> proxy selector and authenticator, then review JDK Basic CONNECT
+restrictions. Never place credentials or long-lived cookies in logs or unprotected connector descriptions.
+<p>
+The matching XML entry declares only a named WSS acceptor. It does not configure key stores, listeners, or TLS policy; those
+remain the responsibility of the HTTP server integration.
+
+<p align="right">
+<a href="Doc02_ConfiguringWebSocketClients.html" title="Backward to Configuring WebSocket Clients"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Forward to Operating and Troubleshooting WebSockets"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

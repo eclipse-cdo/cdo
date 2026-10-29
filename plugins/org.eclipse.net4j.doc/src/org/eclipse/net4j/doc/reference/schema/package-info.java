@@ -13,7 +13,7 @@
 /**
  * Extension Point Reference
  *
- * @number 2
+ * @number 777
  */
 package org.eclipse.net4j.doc.reference.schema;
 

@@ -1,0 +1,475 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Deploying WebSocket Servers (Net4j Signaling Platform Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Deploying WebSocket Servers (Net4j Signaling Platform Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Deploying WebSocket Servers</h1></td>
+		<td align="right" valign="middle" nowrap><a href="index.html" title="Backward to Operator's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ConfiguringWebSocketClients.html" title="Forward to Configuring WebSocket Clients"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+This article shows how to host Net4j WS and WSS acceptors inside an application-managed Jetty 12.1 server. Net4j supplies
+named acceptors and routes accepted message connections into its connector lifecycle. The application remains responsible
+for Jetty listeners, TLS, handler composition, startup, and shutdown.
+<p>
+<b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Features_Bundles_and_Acceptors" title="Chapter in Net4j Signaling Platform Documentation">Features, Bundles, and Acceptor Configuration</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Hosting_WS_over_HTTP" title="Chapter in Net4j Signaling Platform Documentation">Hosting WS over HTTP</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Hosting_WSS_over_HTTPS" title="Chapter in Net4j Signaling Platform Documentation">Hosting WSS over HTTPS</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Multiple_Acceptors_and_Routing_Isolation" title="Chapter in Net4j Signaling Platform Documentation">Multiple Acceptors and Routing Isolation</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Startup_Shutdown_and_Failure_Cleanup" title="Chapter in Net4j Signaling Platform Documentation">Startup, Shutdown, and Failure Cleanup</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Features_Bundles_and_Acceptors"></a>1&nbsp;&nbsp;Features, Bundles, and Acceptor Configuration</h2>
+<p>
+Install the <code>org.eclipse.net4j.ws</code> feature for the provider-neutral WS/WSS factories and the JDK client
+provider. Install <code>org.eclipse.net4j.ws.jetty.server</code> when hosting on Jetty; its feature includes the core
+feature and the Jetty adapter and requires Jetty 12.1 server and WebSocket modules. Keep the Jetty server lifecycle
+with the application that embeds it.
+<p>
+WS and WSS acceptor entries in the CDO server configuration create named Net4j acceptor products. They do not create
+Jetty listeners or configure certificates. The following XML is a supported declaration of those named products:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Features_Bundles_and_Acceptors_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-xml.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">WebSocketAcceptors.xml</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Features_Bundles_and_Acceptors_1')" id="max_Features_Bundles_and_Acceptors_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Features_Bundles_and_Acceptors_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Features_Bundles_and_Acceptors_1" style="padding:8px;">
+            <code>
+<font color="#0000e1">&lt;?xml&nbsp;version=</font><font color="#000080">"1.0"<font color="#0000e1">&nbsp;encoding=</font><font color="#000080">"UTF-8"<font color="#0000e1">?&gt;</font><font color="#000080"><br/>
+</font><font color="#0000e1">&lt;cdoServer&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;</font><font color="#0000e1">&lt;acceptor&nbsp;type=</font><font color="#000080">"ws"<font color="#0000e1">&nbsp;name=</font><font color="#000080">"public"<font color="#0000e1">&nbsp;/&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;</font><font color="#0000e1">&lt;acceptor&nbsp;type=</font><font color="#000080">"wss"<font color="#0000e1">&nbsp;name=</font><font color="#000080">"secure"<font color="#0000e1">&nbsp;/&gt;</font><font color="#000080"><br/>
+</font><font color="#0000e1">&lt;/cdoServer&gt;</font><font color="#000080"><br/>
+</font>            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+A managed container can also create products programmatically. <code>WSUtil.getAcceptor</code> and
+<code>WSSUtil.getAcceptor</code> obtain the corresponding factory type; activation registers the active acceptor name
+in the Net4j acceptor manager. Use distinct names for separately exposed routes.
+
+<h2><a name="Hosting_WS_over_HTTP"></a>2&nbsp;&nbsp;Hosting WS over HTTP</h2>
+<p>
+Create an initialized managed container, obtain and activate an acceptor, then construct an application-owned Jetty
+<code>Server</code>, <code>ServerConnector</code>, and <code>ContextHandler</code>. Install
+<code>JettyWSUtil.createUpgradeHandler</code> before starting Jetty. Its path spec must cover the service path and the
+appended <code>/@&lt;acceptor-name&gt;</code> route; <code>/net4j/*</code> is a common mapping. The example binds to an
+ephemeral loopback port and performs a bounded client connection to show the routing end to end.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Hosting_WS_over_HTTP_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">DeployJettyWS.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Hosting_WS_over_HTTP_1')" id="max_Hosting_WS_over_HTTP_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Hosting_WS_over_HTTP_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Hosting_WS_over_HTTP_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSAcceptor&nbsp;acceptor&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            IWSConnector&nbsp;client&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            Server&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            Exception&nbsp;startupFailure&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;acceptor&nbsp;=&nbsp;WSUtil.getAcceptor(container,&nbsp;<font color="#2a00ff">&#34;public&#34;</font>);<br/>
+            &nbsp;&nbsp;LifecycleUtil.activate(acceptor);<br/>
+            <br/>
+            &nbsp;&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Server();<br/>
+            &nbsp;&nbsp;ServerConnector&nbsp;listener&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ServerConnector(server);<br/>
+            &nbsp;&nbsp;listener.setHost(<font color="#2a00ff">&#34;127.0.0.1&#34;</font>);<br/>
+            &nbsp;&nbsp;listener.setPort(<font color="#990000">0</font>);<br/>
+            &nbsp;&nbsp;server.addConnector(listener);<br/>
+            <br/>
+            &nbsp;&nbsp;ContextHandler&nbsp;context&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ContextHandler(<font color="#2a00ff">&#34;/&#34;</font>);<br/>
+            &nbsp;&nbsp;WebSocketUpgradeHandler&nbsp;upgradeHandler&nbsp;=&nbsp;JettyWSUtil.createUpgradeHandler(server,&nbsp;context,&nbsp;<font color="#2a00ff">&#34;/net4j/*&#34;</font>,&nbsp;acceptor);<br/>
+            &nbsp;&nbsp;context.setHandler(upgradeHandler);<br/>
+            &nbsp;&nbsp;server.setHandler(context);<br/>
+            &nbsp;&nbsp;server.start();<br/>
+            <br/>
+            &nbsp;&nbsp;URI&nbsp;serviceURI&nbsp;=&nbsp;URI.create(<font color="#2a00ff">&#34;ws://127.0.0.1:&#34;&nbsp;</font>+&nbsp;listener.getLocalPort()&nbsp;+&nbsp;<font color="#2a00ff">&#34;/net4j&#34;</font>);<br/>
+            &nbsp;&nbsp;client&nbsp;=&nbsp;WSUtil.getConnector(container,&nbsp;serviceURI,&nbsp;<font color="#2a00ff">&#34;public&#34;</font>);<br/>
+            &nbsp;&nbsp;client.connect(<font color="#990000">5</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;Net4j&nbsp;channels&nbsp;while&nbsp;the&nbsp;client&nbsp;and&nbsp;server&nbsp;remain&nbsp;active.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;startupFailure&nbsp;=&nbsp;ex;<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;start&nbsp;the&nbsp;WS&nbsp;endpoint&#34;</font>,&nbsp;ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(client&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;client.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(server&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server.stop();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;stopFailure)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(startupFailure&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;startupFailure.addSuppressed(stopFailure);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>else</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;stop&nbsp;the&nbsp;application-owned&nbsp;Jetty&nbsp;server&#34;</font>,&nbsp;stopFailure);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(acceptor&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(acceptor);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+The utility requires active, uniquely named acceptors and snapshots the supplied acceptor set for this handler. Each
+upgrade must have a decoded path suffix and a <code>Net4jAcceptor</code> header naming the same acceptor. Requests to
+an unknown or mismatched route receive 404; an insecure request sent to a WSS acceptor, or a secure request sent to a
+WS acceptor, is rejected with 403.
+
+<h2><a name="Hosting_WSS_over_HTTPS"></a>3&nbsp;&nbsp;Hosting WSS over HTTPS</h2>
+<p>
+WSS requires a WSS acceptor and a Jetty HTTPS listener. Configure the listener with an application-managed
+<code>SslContextFactory.Server</code>, a key store containing the server private key and certificate chain, and a
+<code>SecureRequestCustomizer</code>. Install the Net4j handler after activating the acceptor so the adapter can verify
+the route. The example reads the key-store location and secret from deployment configuration; it does not disable
+certificate or hostname validation.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Hosting_WSS_over_HTTPS_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">DeployJettyWSS.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Hosting_WSS_over_HTTPS_1')" id="max_Hosting_WSS_over_HTTPS_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Hosting_WSS_over_HTTPS_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Hosting_WSS_over_HTTPS_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSAcceptor&nbsp;acceptor&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            Server&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            Exception&nbsp;startupFailure&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;acceptor&nbsp;=&nbsp;WSSUtil.getAcceptor(container,&nbsp;<font color="#2a00ff">&#34;secure&#34;</font>);<br/>
+            &nbsp;&nbsp;LifecycleUtil.activate(acceptor);<br/>
+            <br/>
+            &nbsp;&nbsp;String&nbsp;keyStorePath&nbsp;=&nbsp;System.getProperty(<font color="#2a00ff">&#34;net4j.tls.server.keyStore&#34;</font>);<br/>
+            &nbsp;&nbsp;String&nbsp;keyStorePassword&nbsp;=&nbsp;System.getenv(<font color="#2a00ff">&#34;NET4J_TLS_SERVER_KEYSTORE_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(keyStorePath&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;keyStorePath.isBlank()&nbsp;||&nbsp;keyStorePassword&nbsp;==&nbsp;<font color="#7f0055"><b>null&nbsp;</b></font>||&nbsp;keyStorePassword.isBlank())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Set&nbsp;net4j.tls.server.keyStore&nbsp;and&nbsp;provide&nbsp;NET4J_TLS_SERVER_KEYSTORE_PASSWORD&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Server();<br/>
+            &nbsp;&nbsp;server.setStopAtShutdown(<font color="#7f0055"><b>true</b></font>);<br/>
+            <br/>
+            &nbsp;&nbsp;SslContextFactory.Server&nbsp;sslContext&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>SslContextFactory.Server();<br/>
+            &nbsp;&nbsp;sslContext.setKeyStorePath(keyStorePath);<br/>
+            &nbsp;&nbsp;sslContext.setKeyStorePassword(keyStorePassword);<br/>
+            <br/>
+            &nbsp;&nbsp;HttpConfiguration&nbsp;https&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>HttpConfiguration();<br/>
+            &nbsp;&nbsp;https.addCustomizer(<font color="#7f0055"><b>new&nbsp;</b></font>SecureRequestCustomizer());<br/>
+            &nbsp;&nbsp;ServerConnector&nbsp;listener&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ServerConnector(server,&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>SslConnectionFactory(sslContext,&nbsp;HttpVersion.HTTP_1_1.toString()),<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>HttpConnectionFactory(https));<br/>
+            &nbsp;&nbsp;listener.setPort(<font color="#990000">8443</font>);<br/>
+            &nbsp;&nbsp;server.addConnector(listener);<br/>
+            <br/>
+            &nbsp;&nbsp;ContextHandler&nbsp;context&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ContextHandler(<font color="#2a00ff">&#34;/&#34;</font>);<br/>
+            &nbsp;&nbsp;WebSocketUpgradeHandler&nbsp;upgradeHandler&nbsp;=&nbsp;JettyWSUtil.createUpgradeHandler(server,&nbsp;context,&nbsp;<font color="#2a00ff">&#34;/net4j/*&#34;</font>,&nbsp;acceptor);<br/>
+            &nbsp;&nbsp;context.setHandler(upgradeHandler);<br/>
+            &nbsp;&nbsp;server.setHandler(context);<br/>
+            &nbsp;&nbsp;server.start();<br/>
+            <br/>
+            &nbsp;&nbsp;URI&nbsp;endpoint&nbsp;=&nbsp;URI.create(<font color="#2a00ff">&#34;wss://service.example.net:&#34;&nbsp;</font>+&nbsp;listener.getLocalPort()&nbsp;+&nbsp;<font color="#2a00ff">&#34;/net4j&#34;</font>);<br/>
+            &nbsp;&nbsp;System.getLogger(Doc01_DeployingWebSocketServers.<font color="#7f0055"><b>class</b></font>.getName()).log(System.Logger.Level.INFO,&nbsp;<font color="#2a00ff">&#34;WSS&nbsp;listening&nbsp;at&nbsp;{0}&#34;</font>,&nbsp;endpoint);<br/>
+            &nbsp;&nbsp;server.join();<br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(ex&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>InterruptedException)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;Thread.currentThread().interrupt();<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;startupFailure&nbsp;=&nbsp;ex;<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;start&nbsp;the&nbsp;WSS&nbsp;endpoint&#34;</font>,&nbsp;ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(server&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server.stop();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;stopFailure)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(startupFailure&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;startupFailure.addSuppressed(stopFailure);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>else</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;stop&nbsp;the&nbsp;application-owned&nbsp;Jetty&nbsp;server&#34;</font>,&nbsp;stopFailure);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(acceptor&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(acceptor);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+The certificate must be valid for the host name clients use and must chain to a trust anchor they accept. Configure the
+server identity with the <code>net4j.tls.server.keyStore</code> system property and
+<code>NET4J_TLS_SERVER_KEYSTORE_PASSWORD</code> secret. Store passwords in a secret manager or protected environment
+configuration, never in source control. Mutual TLS can be enabled
+on the Jetty SSL context with <code>setNeedClientAuth(true)</code> and on the client's <code>SSLContext</code> with
+client key managers when the deployment requires client certificates.
+<p>
+In normal application-controlled shutdown, the owner signals or interrupts this lifecycle thread so it leaves
+<code>server.join()</code>. The <code>finally</code> block then stops Jetty before deactivating the Net4j acceptor and
+its owned container.
+<p>
+Jetty's <code>setStopAtShutdown(true)</code> hook stops Jetty during JVM shutdown, but does not guarantee that the
+waiting application thread resumes and executes this method's <code>finally</code> block. Do not rely on that hook for
+Net4j cleanup. An embedded Jetty deployment must retain the server and coordinate Jetty and Net4j shutdown through the
+embedding application's lifecycle.
+
+<h2><a name="Multiple_Acceptors_and_Routing_Isolation"></a>4&nbsp;&nbsp;Multiple Acceptors and Routing Isolation</h2>
+<p>
+One upgrade handler can expose several active acceptors. Pass only the names intended for that Jetty context; the Jetty
+adapter snapshots this explicit allow-list and does not choose an arbitrary acceptor from the process-wide registry.
+Use separate contexts, mappings, or servers for trust boundaries that must not share an acceptor set. Each request still
+has to match the selected acceptor name in both its route path and <code>Net4jAcceptor</code> header.
+<p>
+The following excerpt shows the relevant public API call. The acceptors must already be active in the container and
+the handler must be installed before Jetty starts.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Multiple_Acceptors_and_Routing_Isolation_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">MultipleAcceptors.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Multiple_Acceptors_and_Routing_Isolation_1')" id="max_Multiple_Acceptors_and_Routing_Isolation_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Multiple_Acceptors_and_Routing_Isolation_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Multiple_Acceptors_and_Routing_Isolation_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSAcceptor&nbsp;publicAcceptor&nbsp;=&nbsp;WSUtil.getAcceptor(container,&nbsp;<font color="#2a00ff">&#34;public&#34;</font>);<br/>
+            IWSAcceptor&nbsp;partnerAcceptor&nbsp;=&nbsp;WSUtil.getAcceptor(container,&nbsp;<font color="#2a00ff">&#34;partner&#34;</font>);<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;LifecycleUtil.activate(publicAcceptor);<br/>
+            &nbsp;&nbsp;LifecycleUtil.activate(partnerAcceptor);<br/>
+            <br/>
+            &nbsp;&nbsp;Server&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Server();<br/>
+            &nbsp;&nbsp;ContextHandler&nbsp;context&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ContextHandler(<font color="#2a00ff">&#34;/&#34;</font>);<br/>
+            &nbsp;&nbsp;WebSocketUpgradeHandler&nbsp;handler&nbsp;=&nbsp;JettyWSUtil.createUpgradeHandler(server,&nbsp;context,&nbsp;<font color="#2a00ff">&#34;/net4j/*&#34;</font>,&nbsp;publicAcceptor,&nbsp;partnerAcceptor);<br/>
+            &nbsp;&nbsp;context.setHandler(handler);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Startup_Shutdown_and_Failure_Cleanup"></a>5&nbsp;&nbsp;Startup, Shutdown, and Failure Cleanup</h2>
+<p>
+Start the Net4j container and activate each acceptor before creating the Jetty upgrade handler. Start Jetty only after
+its listeners and handler tree are complete. During shutdown, stop admission and drain application work, close any
+client connectors, stop the Jetty server, deactivate acceptors, and finally deactivate a container owned by this
+application. Do not deactivate a shared container as a way to close one connector.
+<p>
+If startup fails after Jetty begins initialization, stop the partially started server and release the acceptor and
+container in nested cleanup paths. A failed server start must not leave its acceptor registered as an active route.
+
+<p align="right">
+<a href="index.html" title="Backward to Operator's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ConfiguringWebSocketClients.html" title="Forward to Configuring WebSocket Clients"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

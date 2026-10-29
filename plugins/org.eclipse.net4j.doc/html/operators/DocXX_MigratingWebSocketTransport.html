@@ -1,0 +1,547 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Migrating the WebSocket Transport (Net4j Signaling Platform Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Migrating the WebSocket Transport (Net4j Signaling Platform Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Migrating the WebSocket Transport</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Backward to Operating and Troubleshooting WebSockets"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../../javadoc/overview-summary.html" title="Forward to API Reference"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+Net4j WS 2 separates WebSocket protocol integration from the implementation that performs WebSocket I/O. This article explains
+how to migrate existing WS and WSS deployments, clients, and Jetty servers to that design. It also identifies the parts that
+remain compatible so that operators can limit changes to the installations that need them.
+<p>
+<b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migration_Overview" title="Chapter in Net4j Signaling Platform Documentation">Migration Overview</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Dependencies_and_Deployment" title="Chapter in Net4j Signaling Platform Documentation">Dependencies and Deployment</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migrating_WebSocket_Clients" title="Chapter in Net4j Signaling Platform Documentation">Migrating WebSocket Clients</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migrating_WebSocket_Servers" title="Chapter in Net4j Signaling Platform Documentation">Migrating WebSocket Servers</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migrating_Security_and_Proxy_Configuration" title="Chapter in Net4j Signaling Platform Documentation">Migrating Security and Proxy Configuration</a></td></tr>
+<tr><td>6&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migration_Checklist" title="Chapter in Net4j Signaling Platform Documentation">Migration Checklist</a></td></tr>
+<tr><td>7&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Troubleshooting" title="Chapter in Net4j Signaling Platform Documentation">Troubleshooting</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Migration_Overview"></a>1&nbsp;&nbsp;Migration Overview</h2>
+<p>
+Issue #226 replaces a Jetty-specific transport implementation in the provider-neutral WS bundle with a Net4j framing
+layer and message-connection providers. The built-in provider uses the JDK WebSocket client. A separate optional bundle
+adapts Jetty 12 servers. This keeps Jetty server dependencies out of the core client transport and lets applications
+supply clients with their own TLS, proxy, and authentication policy.
+<p>
+Migrate an installation when it uses the removed Jetty client classes, subclasses or configures the old
+<code>Net4jWebSocketServlet</code>, depends on implicit Eclipse proxy discovery, or packages the old Jetty client
+dependencies as part of Net4j WS. A server without a Jetty host can keep using the WS acceptor API with its own provider
+integration. The WS/WSS URI schemes, named acceptor routing, Net4j channels, and WS/WSS acceptor configuration model
+remain. Connector descriptions continue to identify the service endpoint and acceptor route; current descriptions can
+additionally select a provider and carry handshake cookies.
+<p>
+The operator-facing before/after differences are:
+<ul>
+<li> Client: replace a connector-managed Jetty EE8 <code>WebSocketClient</code> with the JDK WebSocket provider. Configure
+     TLS, proxy selection, and authentication on an application-owned <code>HttpClient</code> when the defaults do not fit.
+<li> Server: replace the old <code>Net4jWebSocketServlet</code> mapping with an application-owned Jetty 12 server and
+     context containing a handler returned by <code>JettyWSUtil</code>.
+<li> Proxy: replace the old implicit Eclipse <code>IProxyService</code> lookup with an explicit JDK
+     <code>ProxySelector</code> and, when needed, <code>Authenticator</code> on the client.
+<li> Protocol core: Net4j owns framing and routing; a registered provider owns WebSocket I/O. Existing WS/WSS schemes,
+     named acceptor routing, Net4j channels, and XML acceptor configuration remain available.
+</ul>
+<p>
+Continue with <a href="Doc01_DeployingWebSocketServers.html" title="Article in Net4j Signaling Platform Documentation">server deployment</a>,
+<a href="Doc02_ConfiguringWebSocketClients.html" title="Article in Net4j Signaling Platform Documentation">client configuration</a>,
+<a href="Doc03_SecuringWebSocketTransports.html" title="Article in Net4j Signaling Platform Documentation">TLS setup</a>, and
+<a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Article in Net4j Signaling Platform Documentation">operations and troubleshooting</a>.
+
+<h2><a name="Dependencies_and_Deployment"></a>2&nbsp;&nbsp;Dependencies and Deployment</h2>
+<p>
+Deploy the <code>org.eclipse.net4j.ws</code> feature (or its <code>org.eclipse.net4j.ws</code> bundle) for WS and WSS
+connectors and acceptors. It contributes the WS and WSS factories and registers the JDK message-connection provider
+under type <code>jdk</code>. A managed container created
+with <code>ContainerUtil.createInitializedContainer()</code> receives these contributions through bundle initialization.
+<p>
+Remove the old Jetty EE8 WebSocket client and server dependencies that were required only by the former core WS bundle.
+Do not remove Jetty modules that the application independently needs. For a Jetty-hosted endpoint, add the optional
+<code>org.eclipse.net4j.ws.jetty.server</code> bundle and compatible Jetty 12 server and WebSocket modules. The
+<code>org.eclipse.net4j.ws.jetty.server</code> feature includes both the core WS feature and server adapter. That
+adapter bundle requires Jetty 12; it is not a replacement client dependency.
+<p>
+The embedding application now owns the Jetty <code>Server</code>, its connectors and TLS configuration, handler tree,
+startup and shutdown. It also owns custom JDK <code>HttpClient</code> instances passed to provider factories. Net4j owns
+the connectors and acceptors registered in its managed container.
+<p>
+There is no new XML setting for creating custom JDK clients or embedding the Jetty upgrade handler. Those are Java
+object configuration tasks; keep XML acceptor declarations where they continue to describe the acceptor. This valid
+WS acceptor declaration uses the same configuration mechanism as the CDO server configuration:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Dependencies_and_Deployment_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-xml.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ws&#8209;acceptor.xml</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Dependencies_and_Deployment_1')" id="max_Dependencies_and_Deployment_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Dependencies_and_Deployment_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Dependencies_and_Deployment_1" style="padding:8px;">
+            <code>
+<font color="#0000e1">&lt;?xml&nbsp;version=</font><font color="#000080">"1.0"<font color="#0000e1">&nbsp;encoding=</font><font color="#000080">"UTF-8"<font color="#0000e1">?&gt;</font><font color="#000080"><br/>
+</font><font color="#0000e1">&lt;cdoServer&gt;</font><font color="#000080"><br/>
+&nbsp;&nbsp;</font><font color="#0000e1">&lt;acceptor&nbsp;type=</font><font color="#000080">"ws"<font color="#0000e1">&nbsp;name=</font><font color="#000080">"production"<font color="#0000e1">&nbsp;/&gt;</font><font color="#000080"><br/>
+</font><font color="#0000e1">&lt;/cdoServer&gt;</font><font color="#000080"><br/>
+</font>            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Migrating_WebSocket_Clients"></a>3&nbsp;&nbsp;Migrating WebSocket Clients</h2>
+<p>
+The JDK provider is selected by default, so a normal WS or WSS connector needs no provider token. Use the utility
+methods to construct connector descriptions rather than assembling route paths by hand. A description targets the
+named acceptor at the service URI; optional arguments include provider selection and <code>cookie:name=value</code>
+handshake cookies. The cookie argument is configuration data, so do not put credentials or session secrets in a
+persistent or logged connector description.
+<p>
+The following example creates its own container and connects one WS connector through the default JDK provider. It
+closes that connector individually, then deactivates the container it created. For WSS, use the WSS connector factory
+through <code>WSSUtil</code> together with a <code>wss</code> URI; changing the URI scheme alone does not select the
+secure connector factory.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Migrating_WebSocket_Clients_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">DefaultJDKClient.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Migrating_WebSocket_Clients_1')" id="max_Migrating_WebSocket_Clients_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Migrating_WebSocket_Clients_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Migrating_WebSocket_Clients_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSConnector&nbsp;ws&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;ws&nbsp;=&nbsp;WSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;ws://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;production&#34;</font>);<br/>
+            &nbsp;&nbsp;ws.connect(<font color="#990000">5</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;connected&nbsp;WS&nbsp;connector&nbsp;here.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(ws&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ws.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+For a custom TLS trust configuration or proxy policy, register a provider factory configured with a caller-owned
+<code>HttpClient</code> in the same container. The example connects a WSS endpoint with the <code>corporate</code>
+provider, a bounded timeout, and a handshake cookie, then closes the connector and its privately owned container.
+It uses the JDK default trust context; substitute the application's configured trust context when required.
+The provider and connector do not close the <code>HttpClient</code>; the application must retain it while any
+connector can use it. Java 11's client has no close method; on Java 21 and later, close it only after its connectors
+stop. The example marks that version-specific cleanup without making this Java 11 source depend on the newer method.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Migrating_WebSocket_Clients_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ConfiguredJDKClient.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Migrating_WebSocket_Clients_2')" id="max_Migrating_WebSocket_Clients_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Migrating_WebSocket_Clients_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Migrating_WebSocket_Clients_2" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSConnector&nbsp;connector&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            HttpClient&nbsp;httpClient&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;SSLContext&nbsp;sslContext&nbsp;=&nbsp;SSLContext.getDefault();<br/>
+            &nbsp;&nbsp;httpClient&nbsp;=&nbsp;HttpClient.newBuilder().sslContext(sslContext).proxy(ProxySelector.of(<font color="#7f0055"><b>new&nbsp;</b></font>InetSocketAddress(<font color="#2a00ff">&#34;proxy.example.net&#34;</font>,&nbsp;<font color="#990000">8080</font>)))<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.connectTimeout(Duration.ofSeconds(<font color="#990000">10</font>)).build();<br/>
+            <br/>
+            &nbsp;&nbsp;IFactory&nbsp;provider&nbsp;=&nbsp;JDKWSUtil.createMessageConnectionFactory(<font color="#2a00ff">&#34;corporate&#34;</font>,&nbsp;httpClient,&nbsp;Duration.ofSeconds(<font color="#990000">10</font>));<br/>
+            &nbsp;&nbsp;container.registerFactory(provider);<br/>
+            <br/>
+            &nbsp;&nbsp;String&nbsp;description&nbsp;=&nbsp;WSSUtil.getConnectorDescription(URI.create(<font color="#2a00ff">&#34;wss://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;production&#34;</font>,&nbsp;<font color="#2a00ff">&#34;provider:corporate&#34;</font>,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#2a00ff">&#34;cookie:tenant=example&#34;</font>);<br/>
+            &nbsp;&nbsp;connector&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;description);<br/>
+            &nbsp;&nbsp;connector.connect(<font color="#990000">5</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;connected&nbsp;WSS&nbsp;connector&nbsp;here.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(NoSuchAlgorithmException&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(connector&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connector.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;On&nbsp;Java&nbsp;21+,&nbsp;close&nbsp;httpClient&nbsp;here&nbsp;after&nbsp;the&nbsp;connector&nbsp;and&nbsp;container&nbsp;have&nbsp;stopped.</font><br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+A connector can be closed without deactivating a shared container. Deactivate a container only when its owner is
+shutting down the container and all products it manages.
+<p>
+<b>Retain the complete factory description.</b> <a href="../../javadoc/org/eclipse/net4j/connector/IConnector.html#getURL()" title="Method in org.eclipse.net4j.connector.IConnector"><code>IConnector.getURL()</code></a> reports the transport endpoint; for
+WS/WSS it omits provider selection and handshake cookies. Reconstructing an equivalent connector from that URL may
+silently select the default <code>jdk</code> provider, losing a custom WSS trust configuration. Retain the original
+description passed to <code>WSUtil</code>/<code>WSSUtil</code>, or ask the registered connector factory for its
+description with <a href="../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/factory/IFactory.html#getDescriptionFor(java.lang.Object)" title="Method in org.eclipse.net4j.util.factory.IFactory"><code>IFactory.getDescriptionFor(Object)</code></a>. For example, use the factory for
+<a href="../../javadoc/org/eclipse/spi/net4j/ConnectorFactory.html#PRODUCT_GROUP" title="Field in org.eclipse.spi.net4j.ConnectorFactory"><code>ConnectorFactory.PRODUCT_GROUP</code></a> and the WS or WSS factory type selected from the connector's scheme.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Migrating_WebSocket_Clients_3"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CompleteConnectorDescription.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Migrating_WebSocket_Clients_3')" id="max_Migrating_WebSocket_Clients_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Migrating_WebSocket_Clients_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Migrating_WebSocket_Clients_3" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;HttpClient&nbsp;httpClient&nbsp;=&nbsp;HttpClient.newBuilder().build();<br/>
+            &nbsp;&nbsp;IFactory&nbsp;provider&nbsp;=&nbsp;JDKWSUtil.createMessageConnectionFactory(<font color="#2a00ff">&#34;corporate&#34;</font>,&nbsp;httpClient,&nbsp;Duration.ofSeconds(<font color="#990000">10</font>));<br/>
+            &nbsp;&nbsp;container.registerFactory(provider);<br/>
+            <br/>
+            &nbsp;&nbsp;IWSConnector&nbsp;connector&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;wss://gateway.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;production&#34;</font>,&nbsp;<font color="#2a00ff">&#34;provider:corporate&#34;</font>,<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#2a00ff">&#34;cookie:tenant=example&#34;</font>);<br/>
+            &nbsp;&nbsp;IFactory&nbsp;factory&nbsp;=&nbsp;container.getFactory(ConnectorFactory.PRODUCT_GROUP,&nbsp;WSSUtil.FACTORY_TYPE);<br/>
+            &nbsp;&nbsp;String&nbsp;completeDescription&nbsp;=&nbsp;factory.getDescriptionFor(connector);<br/>
+            &nbsp;&nbsp;Properties&nbsp;connectorSettings&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Properties();<br/>
+            &nbsp;&nbsp;connectorSettings.setProperty(<font color="#2a00ff">&#34;wss.connector&#34;</font>,&nbsp;completeDescription);<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Hand&nbsp;connectorSettings&nbsp;to&nbsp;protected&nbsp;application&nbsp;storage;&nbsp;the&nbsp;description&nbsp;may&nbsp;contain&nbsp;sensitive&nbsp;cookies.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Migrating_WebSocket_Servers"></a>4&nbsp;&nbsp;Migrating WebSocket Servers</h2>
+<p>
+The previous <code>Net4jWebSocketServlet</code> and Jetty socket endpoint were removed from the core WS bundle. With
+Jetty 12, create an application-owned <code>Server</code> and <code>ContextHandler</code>, then install the returned
+upgrade handler before starting the server. Use a mapping such as <code>/net4j/*</code>; the client appends
+<code>/@&lt;acceptor-name&gt;</code> to that path. The utility wraps the context's existing application handler and routes
+only to the active acceptors passed to it. Both the decoded path suffix and the <code>Net4jAcceptor</code> handshake
+header must identify the same route.
+<p>
+The following example creates an initialized Net4j container and named WS acceptor, installs the adapter in an
+application-owned Jetty server/context, starts the server, and connects a bounded-timeout client. The adapter only
+creates the upgrade handler; the application starts and stops Jetty. It closes the individual client connector, stops
+Jetty, then deactivates the acceptor and the privately owned container. A host with a shared container should close
+the connector and acceptor as appropriate but leave container shutdown to its owner. WSS uses the same integration
+with a WSS acceptor, a WSS connector, and an application-configured HTTPS server connector.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Migrating_WebSocket_Servers_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">Jetty12UpgradeHandler.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Migrating_WebSocket_Servers_1')" id="max_Migrating_WebSocket_Servers_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Migrating_WebSocket_Servers_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Migrating_WebSocket_Servers_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            IWSAcceptor&nbsp;acceptor&nbsp;=&nbsp;WSUtil.getAcceptor(container,&nbsp;<font color="#2a00ff">&#34;production&#34;</font>);<br/>
+            <br/>
+            Server&nbsp;server&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Server();<br/>
+            ServerConnector&nbsp;serverConnector&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ServerConnector(server);<br/>
+            serverConnector.setHost(<font color="#2a00ff">&#34;127.0.0.1&#34;</font>);<br/>
+            serverConnector.setPort(<font color="#990000">0</font>);<br/>
+            server.addConnector(serverConnector);<br/>
+            <br/>
+            ContextHandler&nbsp;context&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ContextHandler(<font color="#2a00ff">&#34;/&#34;</font>);<br/>
+            IWSConnector&nbsp;clientConnector&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;LifecycleUtil.activate(acceptor);<br/>
+            <br/>
+            &nbsp;&nbsp;WebSocketUpgradeHandler&nbsp;upgradeHandler&nbsp;=&nbsp;JettyWSUtil.createUpgradeHandler(server,&nbsp;context,&nbsp;<font color="#2a00ff">&#34;/net4j/*&#34;</font>,&nbsp;acceptor);<br/>
+            &nbsp;&nbsp;context.setHandler(upgradeHandler);<br/>
+            &nbsp;&nbsp;server.setHandler(context);<br/>
+            &nbsp;&nbsp;server.start();<br/>
+            <br/>
+            &nbsp;&nbsp;URI&nbsp;serviceURI&nbsp;=&nbsp;URI.create(<font color="#2a00ff">&#34;ws://127.0.0.1:&#34;&nbsp;</font>+&nbsp;serverConnector.getLocalPort()&nbsp;+&nbsp;<font color="#2a00ff">&#34;/net4j&#34;</font>);<br/>
+            &nbsp;&nbsp;clientConnector&nbsp;=&nbsp;WSUtil.getConnector(container,&nbsp;serviceURI,&nbsp;<font color="#2a00ff">&#34;production&#34;</font>);<br/>
+            &nbsp;&nbsp;clientConnector.connect(<font color="#990000">5</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Exchange&nbsp;Net4j&nbsp;channels&nbsp;while&nbsp;the&nbsp;server&nbsp;and&nbsp;connector&nbsp;remain&nbsp;active.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;start&nbsp;the&nbsp;WebSocket&nbsp;endpoint&#34;</font>,&nbsp;ex);<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(clientConnector&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;clientConnector.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;server.stop();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>catch&nbsp;</b></font>(Exception&nbsp;ex)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException(<font color="#2a00ff">&#34;Unable&nbsp;to&nbsp;stop&nbsp;the&nbsp;application-owned&nbsp;Jetty&nbsp;server&#34;</font>,&nbsp;ex);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(acceptor);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Migrating_Security_and_Proxy_Configuration"></a>5&nbsp;&nbsp;Migrating Security and Proxy Configuration</h2>
+<p>
+Configure TLS at the layer that owns the connection. A WSS client can use the default JDK TLS context, or a custom
+<code>SSLContext</code> configured with the application's trust material. The JDK provider keeps normal certificate
+chain and hostname verification enabled. Never work around trust failures by disabling verification. A Jetty-hosted
+WSS endpoint uses the TLS configuration of the application's HTTPS server connector; the Net4j adapter does not create
+or own TLS connectors.
+<p>
+HTTP origin authentication and proxy authentication belong in the caller-configured <code>HttpClient</code>, typically
+through its <code>Authenticator</code>, <code>ProxySelector</code>, and TLS settings. WS transport no longer discovers
+Eclipse <code>IProxyService</code> implicitly. Applications that relied on Eclipse proxy preferences must translate
+the required policy into JDK client configuration and register a provider factory with that client.
+<p>
+For an HTTP CONNECT proxy, configure a proxy selector and an authenticator for proxy credentials. The JDK normally
+disables Basic authentication for HTTP CONNECT tunneling. Enabling it with
+<code>-Djdk.http.auth.tunneling.disabledSchemes=</code> changes JVM-wide behavior and can expose credentials to
+untrusted proxies; use it only after reviewing the security consequences and the proxy trust boundary. Prefer a proxy
+authentication scheme supported by the JDK without that override.
+
+<h2><a name="Migration_Checklist"></a>6&nbsp;&nbsp;Migration Checklist</h2>
+<p>
+Work through this sequence for each client or server installation:
+<ol>
+<li> Inventory the WS/WSS bundles, Jetty modules, servlet mappings, client factories, TLS settings, proxy policy, and
+     connector descriptions in the deployed product.
+<li> Deploy the provider-neutral <code>org.eclipse.net4j.ws</code> bundle. Remove Jetty EE8 client dependencies that
+     existed only for the former Net4j WS implementation.
+<li> For clients, replace direct Jetty WebSocket client use with Net4j WS/WSS connectors. Add a custom JDK provider
+     only when the application requires client-specific TLS, proxy, or authentication settings.
+<li> For Jetty servers, deploy the optional Jetty 12 adapter, replace the old servlet integration with
+     <code>JettyWSUtil.createUpgradeHandler</code>, and ensure each route matches the URI scheme and TLS state.
+<li> Move proxy, TLS trust, HTTP origin credentials, and proxy credentials into application-owned client/server
+     configuration. Review any Basic CONNECT JVM property with security owners.
+<li> Verify route names, cookies, container startup, and ownership of custom clients and servers. Exercise both WS and
+     WSS endpoints through the production routing and shutdown path.
+<li> Remove obsolete servlet classes, old Jetty client configuration, and bundle requirements only after every
+     application consumer has migrated.
+</ol>
+
+<h2><a name="Troubleshooting"></a>7&nbsp;&nbsp;Troubleshooting</h2>
+<p>
+<b>Missing provider factory:</b> check that the <code>org.eclipse.net4j.ws</code> bundle is resolved and its factories
+are initialized in the same managed container that creates the connector. For a custom provider, register its factory
+before connector creation and ensure the <code>provider:</code> token exactly matches the registered type.
+<p>
+<b>HTTP upgrade or routing rejection:</b> verify the path mapping covers the service path and appended
+<code>/@name</code> route, the acceptor is active and registered under that name, and the handshake header and route
+agree. A request rejected with 404 commonly indicates a missing or mismatched route; 403 commonly indicates that the
+request's secure state does not match the WS/WSS acceptor.
+<p>
+<b>TLS certificate validation failure:</b> check the server certificate chain, the hostname in the service URI, and
+the trust material used by the client provider. Keep hostname and certificate verification enabled.
+<p>
+<b>Authenticated proxy failure:</b> ensure the caller-configured client actually selects the proxy and its
+authenticator supplies credentials for that proxy. If the proxy requires Basic CONNECT authentication, account for
+the JDK's disabled-by-default behavior and assess the JVM-wide property before enabling it.
+<p>
+<b>Leaked or prematurely closed connections:</b> the Net4j container owns connectors and acceptors, while the
+application owns custom <code>HttpClient</code> and Jetty server lifecycles. Stop connectors before closing a shared
+client, deactivate the container during shutdown, and stop the Jetty server through the application's lifecycle.
+
+<p align="right">
+<a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Backward to Operating and Troubleshooting WebSockets"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../../javadoc/overview-summary.html" title="Forward to API Reference"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Operator's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

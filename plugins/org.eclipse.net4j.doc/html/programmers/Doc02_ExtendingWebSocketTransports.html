@@ -1,0 +1,220 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Extending WebSocket Transports (Net4j Signaling Platform Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Extending WebSocket Transports (Net4j Signaling Platform Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Programmer's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Extending WebSocket Transports</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_WebSocketTransportArchitecture.html" title="Backward to WebSocket Transport Architecture"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../operators/index.html" title="Forward to Operator's Guide"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+Net4j exposes a provider boundary for WebSocket implementations that need different client or server libraries. This
+article describes the supported factory and message-connection contracts and the obligations an implementation must
+satisfy. It deliberately does not present a fabricated third-party transport implementation.
+<p>
+<b>Table of Contents</b> <p>
+<table border="0">
+<tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ExtendingWebSocketTransports.html#Configuring_and_Registering_Client_Providers" title="Chapter in Net4j Signaling Platform Documentation">Configuring and Registering Client Providers</a></td></tr>
+<tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ExtendingWebSocketTransports.html#Message_Connection_Factory_Contract" title="Chapter in Net4j Signaling Platform Documentation">The Message-Connection Factory Contract</a></td></tr>
+<tr><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ExtendingWebSocketTransports.html#Implementing_a_Different_WebSocket_Integration" title="Chapter in Net4j Signaling Platform Documentation">Implementing a Different WebSocket Integration</a></td></tr>
+<tr><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ExtendingWebSocketTransports.html#Threading_Buffering_and_Backpressure" title="Chapter in Net4j Signaling Platform Documentation">Threading, Buffering, and Backpressure</a></td></tr>
+<tr><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ExtendingWebSocketTransports.html#Lifecycle_and_Testing" title="Chapter in Net4j Signaling Platform Documentation">Lifecycle and Testing</a></td></tr>
+</table>
+</p>
+
+
+<h2><a name="Configuring_and_Registering_Client_Providers"></a>1&nbsp;&nbsp;Configuring and Registering Client Providers</h2>
+<p>
+The built-in JDK provider is a public utility for configuring a registered factory. Give each distinct client policy
+its own provider type and register the factory in the container that owns the connectors. The connector description's
+<code>provider:</code> token selects that factory. This example uses the existing JDK provider with a custom opening
+timeout; the application still owns the HTTP client.
+Java 11 has no <code>HttpClient.close()</code>. On Java 21 and later, the application may close its client only after
+every connector using that client has stopped; the provider factory does not own or close it.
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Configuring_and_Registering_Client_Providers_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">RegisterJDKProvider.java</font></td>
+      <td width="1px"><img src="../../images/editor-3.png"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Configuring_and_Registering_Client_Providers_1')" id="max_Configuring_and_Registering_Client_Providers_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Configuring_and_Registering_Client_Providers_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Configuring_and_Registering_Client_Providers_1" style="padding:8px;">
+            <code>
+            IManagedContainer&nbsp;container&nbsp;=&nbsp;ContainerUtil.createInitializedContainer();<br/>
+            HttpClient&nbsp;client&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            IWSConnector&nbsp;connector&nbsp;=&nbsp;<font color="#7f0055"><b>null</b></font>;<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;client&nbsp;=&nbsp;HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(<font color="#990000">7</font>)).build();<br/>
+            &nbsp;&nbsp;IFactory&nbsp;provider&nbsp;=&nbsp;JDKWSUtil.createMessageConnectionFactory(<font color="#2a00ff">&#34;partner-client&#34;</font>,&nbsp;client,&nbsp;Duration.ofSeconds(<font color="#990000">9</font>));<br/>
+            &nbsp;&nbsp;container.registerFactory(provider);<br/>
+            <br/>
+            &nbsp;&nbsp;connector&nbsp;=&nbsp;WSSUtil.getConnector(container,&nbsp;URI.create(<font color="#2a00ff">&#34;wss://partner.example.net/net4j&#34;</font>),&nbsp;<font color="#2a00ff">&#34;partner&#34;</font>,&nbsp;<font color="#2a00ff">&#34;provider:partner-client&#34;</font>);<br/>
+            &nbsp;&nbsp;connector.connect(<font color="#990000">15</font>_000);<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Use&nbsp;this&nbsp;connector&nbsp;with&nbsp;the&nbsp;partner's&nbsp;Net4j&nbsp;protocol.</font><br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(connector&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;connector.close();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;LifecycleUtil.deactivate(container);<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h2><a name="Message_Connection_Factory_Contract"></a>2&nbsp;&nbsp;The Message-Connection Factory Contract</h2>
+<p>
+A custom provider extends the SPI <code>MessageConnectionFactory</code> and implements
+<code>create(String description)</code>. It returns a fresh, not-yet-started <code>IMessageConnection</code> for each
+connector. The factory may retain shared immutable configuration or a thread-safe client, but each returned connection
+must have independent runtime state and be owned by its requesting connector.
+<p>
+Register providers under <code>MessageConnectionFactory.PRODUCT_GROUP</code> with a stable type string. In OSGi, the
+bundle can contribute a factory through the standard Net4j factories extension point; programmatic registration is
+useful when the provider depends on application-created configuration. The selected type must be present in the
+connector's managed container before the provider connection is created.
+
+<h2><a name="Implementing_a_Different_WebSocket_Integration"></a>3&nbsp;&nbsp;Implementing a Different WebSocket Integration</h2>
+<p>
+The supported provider boundary is the message-connection SPI, not Net4j's internal JDK or Jetty implementation
+classes. A client provider must perform its own handshake, emit complete Net4j frames, accept outgoing frames, and
+report readiness, received data, writability, and closure to the message connection listener. A server provider must
+perform upgrade routing and pass each accepted transport to <code>IWSAcceptor.accept(IMessageConnection)</code>.
+<p>
+On the server, Jetty's adapter demonstrates one integration policy: it scopes a path mapping to an explicit set of
+active acceptors and requires the path route and <code>Net4jAcceptor</code> header to agree. That policy is specific to
+the Jetty adapter; do not treat its internal classes as extension APIs.
+<p>
+The public <code>IWSConnector</code>, <code>IWSAcceptor</code>, and <code>IMessageConnection</code> contracts are
+appropriate integration points. Packages named <code>internal</code> are implementation details, even when visible in
+a developer workspace or test bundle.
+
+<h2><a name="Threading_Buffering_and_Backpressure"></a>4&nbsp;&nbsp;Threading, Buffering, and Backpressure</h2>
+<p>
+Providers must treat send buffers as borrowed storage. When <code>send</code> accepts a buffer, it returns
+<code>true</code> and invokes exactly one terminal callback only after it stops accessing that storage. If it returns
+<code>false</code> or throws before accepting the buffer, it must not retain the buffer or invoke the callback. It must
+complete accepted sends during shutdown as well as normal operation.
+<p>
+Receive demand counts complete messages. Each delivery consumes one requested message, deliveries remain ordered, and
+each provided storage lease remains valid until its release action runs. The connector may request more data while an
+earlier frame is still leased, so a provider must retain each frame's storage independently. Abort must not wait
+indefinitely for callbacks.
+<p>
+Keep provider callbacks non-blocking where the underlying WebSocket API permits asynchronous completion. Do not add
+another unbounded queue that defeats Net4j's demand and buffer ownership contracts.
+
+<h2><a name="Lifecycle_and_Testing"></a>5&nbsp;&nbsp;Lifecycle and Testing</h2>
+<p>
+A provider factory belongs to its managed container; each connection belongs to one Net4j connector. Connector
+activation starts its provider connection and connector deactivation closes or aborts it according to the transport
+lifecycle. A factory must not close a shared <code>HttpClient</code> that belongs to the application.
+<p>
+Test factory registration and selection, independent state across two connections, failed handshakes, send acceptance
+and rejection, exactly-once completion, ordered receive demand, buffer release timing, graceful close, abort, and
+reactivation. The repository's JDK provider configuration and Jetty server adapter tests are useful references for
+scenario setup and lifecycle assertions. Run a test through the appropriate Net4j suite rather than relying only on
+direct construction when validating integration behavior.
+
+<p align="right">
+<a href="Doc01_WebSocketTransportArchitecture.html" title="Backward to WebSocket Transport Architecture"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../operators/index.html" title="Forward to Operator's Guide"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a> > <a href="index.html" title="Category in Net4j Signaling Platform Documentation">Programmer's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

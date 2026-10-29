@@ -1,0 +1,122 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Operator's Guide (Net4j Signaling Platform Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Operator's Guide (Net4j Signaling Platform Documentation)";
+    }
+}
+</script>
+
+<link rel="stylesheet" href="../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Operator's Guide</h1></td>
+		<td align="right" valign="middle" nowrap><a href="../programmers/Doc02_ExtendingWebSocketTransports.html" title="Backward to Extending WebSocket Transports"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc01_DeployingWebSocketServers.html" title="Forward to Deploying WebSocket Servers"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p>
+<table border="0">
+<tr><td><img src="../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc01_DeployingWebSocketServers.html" title="Article in Net4j Signaling Platform Documentation">Deploying WebSocket Servers</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Features_Bundles_and_Acceptors" title="Chapter in Net4j Signaling Platform Documentation">Features, Bundles, and Acceptor Configuration</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Hosting_WS_over_HTTP" title="Chapter in Net4j Signaling Platform Documentation">Hosting WS over HTTP</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Hosting_WSS_over_HTTPS" title="Chapter in Net4j Signaling Platform Documentation">Hosting WSS over HTTPS</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Multiple_Acceptors_and_Routing_Isolation" title="Chapter in Net4j Signaling Platform Documentation">Multiple Acceptors and Routing Isolation</a></td></tr>
+<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc01_DeployingWebSocketServers.html#Startup_Shutdown_and_Failure_Cleanup" title="Chapter in Net4j Signaling Platform Documentation">Startup, Shutdown, and Failure Cleanup</a></td></tr>
+<tr><td><img src="../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc02_ConfiguringWebSocketClients.html" title="Article in Net4j Signaling Platform Documentation">Configuring WebSocket Clients</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ConfiguringWebSocketClients.html#Default_Provider_and_Connector_Descriptions" title="Chapter in Net4j Signaling Platform Documentation">Default Provider and Connector Descriptions</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ConfiguringWebSocketClients.html#Registering_Configured_Providers" title="Chapter in Net4j Signaling Platform Documentation">Registering Configured Providers</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ConfiguringWebSocketClients.html#Cookies_Authentication_and_Proxy_Tunnels" title="Chapter in Net4j Signaling Platform Documentation">Cookies, Authentication, and Proxy Tunnels</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc02_ConfiguringWebSocketClients.html#Reconstructing_Connectors_Safely" title="Chapter in Net4j Signaling Platform Documentation">Reconstructing Connectors Safely</a></td></tr>
+<tr><td><img src="../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc03_SecuringWebSocketTransports.html" title="Article in Net4j Signaling Platform Documentation">Securing WebSocket Transports</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#Client_Trust_Configuration" title="Chapter in Net4j Signaling Platform Documentation">Client Trust Configuration</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#Server_Certificates_and_HTTPS_Listeners" title="Chapter in Net4j Signaling Platform Documentation">Server Certificates and HTTPS Listeners</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#Mutual_TLS" title="Chapter in Net4j Signaling Platform Documentation">Mutual TLS</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#TLS_Termination_and_Secure_Request_Detection" title="Chapter in Net4j Signaling Platform Documentation">TLS Termination and Secure Request Detection</a></td></tr>
+<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc03_SecuringWebSocketTransports.html#Deployment_Checks_and_Common_Failures" title="Chapter in Net4j Signaling Platform Documentation">Deployment Checks and Common Failures</a></td></tr>
+<tr><td><img src="../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html" title="Article in Net4j Signaling Platform Documentation">Operating and Troubleshooting WebSockets</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#Resource_Ownership_and_Lifecycle" title="Chapter in Net4j Signaling Platform Documentation">Resource Ownership and Lifecycle</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#Graceful_Shutdown" title="Chapter in Net4j Signaling Platform Documentation">Graceful Shutdown</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#Diagnosing_Connection_and_Upgrade_Failures" title="Chapter in Net4j Signaling Platform Documentation">Diagnosing Connection and Upgrade Failures</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#TLS_and_Proxy_Diagnosis" title="Chapter in Net4j Signaling Platform Documentation">TLS and Proxy Diagnosis</a></td></tr>
+<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="Doc04_OperatingAndTroubleshootingWebSockets.html#Operational_Checklist" title="Chapter in Net4j Signaling Platform Documentation">Operational Checklist</a></td></tr>
+<tr><td><img src="../../images/article.gif">&nbsp;</td><td class="te" colspan="4"><a href="DocXX_MigratingWebSocketTransport.html" title="Article in Net4j Signaling Platform Documentation">Migrating the WebSocket Transport</a></td></tr>
+<tr><td></td><td>1&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migration_Overview" title="Chapter in Net4j Signaling Platform Documentation">Migration Overview</a></td></tr>
+<tr><td></td><td>2&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Dependencies_and_Deployment" title="Chapter in Net4j Signaling Platform Documentation">Dependencies and Deployment</a></td></tr>
+<tr><td></td><td>3&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migrating_WebSocket_Clients" title="Chapter in Net4j Signaling Platform Documentation">Migrating WebSocket Clients</a></td></tr>
+<tr><td></td><td>4&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migrating_WebSocket_Servers" title="Chapter in Net4j Signaling Platform Documentation">Migrating WebSocket Servers</a></td></tr>
+<tr><td></td><td>5&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migrating_Security_and_Proxy_Configuration" title="Chapter in Net4j Signaling Platform Documentation">Migrating Security and Proxy Configuration</a></td></tr>
+<tr><td></td><td>6&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Migration_Checklist" title="Chapter in Net4j Signaling Platform Documentation">Migration Checklist</a></td></tr>
+<tr><td></td><td>7&nbsp;</td><td class="te" colspan="3"><a href="DocXX_MigratingWebSocketTransport.html#Troubleshooting" title="Chapter in Net4j Signaling Platform Documentation">Troubleshooting</a></td></tr>
+</table>
+</p>
+
+
+<p align="right">
+<a href="../programmers/Doc02_ExtendingWebSocketTransports.html" title="Backward to Extending WebSocket Transports"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc01_DeployingWebSocketServers.html" title="Forward to Deploying WebSocket Servers"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="Net4j Signaling Platform Documentation">Net4j Signaling Platform Documentation</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2026 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

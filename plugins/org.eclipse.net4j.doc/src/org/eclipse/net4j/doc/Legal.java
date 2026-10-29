@@ -15,7 +15,7 @@ package org.eclipse.net4j.doc;
  * Legal
  *
  * @external about.html
- * @number 666
+ * @number 999
  */
 public class Legal
 {

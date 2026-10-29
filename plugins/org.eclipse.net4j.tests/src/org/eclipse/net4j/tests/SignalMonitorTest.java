@@ -20,6 +20,12 @@ import org.eclipse.net4j.signal.RequestWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
+import org.eclipse.net4j.tests.config.Net4jTestSuite;
+import org.eclipse.net4j.tests.config.TestConfig.JVM;
+import org.eclipse.net4j.tests.config.TestConfig.SSL;
+import org.eclipse.net4j.tests.config.TestConfig.TCP;
+import org.eclipse.net4j.tests.config.TestConfig.WS;
+import org.eclipse.net4j.tests.config.TestConfig.WSS;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
@@ -30,9 +36,15 @@ import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+
+import junit.framework.Test;
 
 /**
  * @author Eike Stepper
@@ -50,6 +62,19 @@ public class SignalMonitorTest extends AbstractConfigTest
   private CountDownLatch pendingConfirmationStarted;
 
   private CountDownLatch releasePendingConfirmation;
+
+  /**
+   * Creates this test class under every supported transport configuration.
+   *
+   * @return the configured test suite
+   */
+  public static Test suite()
+  {
+    @SuppressWarnings("unchecked")
+    Net4jTestSuite suite = new Net4jTestSuite(SignalMonitorTest.class.getName(), JVM.class, TCP.class, SSL.class, WS.class, WSS.class);
+    suite.addTestSuite(SignalMonitorTest.class);
+    return suite;
+  }
 
   @Override
   protected IManagedContainer createContainer()
@@ -110,9 +135,23 @@ public class SignalMonitorTest extends AbstractConfigTest
       }
     };
 
-    request.send(4000L, new TestMonitor());
-    sleep(200);
-    protocol.close();
+    TestMonitor monitor = new TestMonitor(Thread.currentThread());
+
+    try
+    {
+      Boolean result = request.send(4000L, monitor);
+      monitor.operationCompleted();
+
+      assertEquals("Unexpected request result", Boolean.TRUE, result); //$NON-NLS-1$
+      assertTrue("No intermediate remote progress update was received", monitor.hasIntermediateRemoteProgress()); //$NON-NLS-1$
+      assertTrue("Monitor work regressed", monitor.isMonotonic()); //$NON-NLS-1$
+      assertEquals("Monitor did not reach completion", monitor.getTotalWork(), monitor.getWork(), 0.0); //$NON-NLS-1$
+      assertTrue("Monitor.done() was not called", monitor.isDone()); //$NON-NLS-1$
+    }
+    finally
+    {
+      protocol.close();
+    }
   }
 
   public void testProtocolDeactivationUnblocksPendingConfirmation() throws Exception
@@ -235,7 +274,7 @@ public class SignalMonitorTest extends AbstractConfigTest
 
               for (int i = 0; i < 100; i++)
               {
-                sleep(100);
+                sleep(25);
                 monitor.worked();
               }
             }
@@ -340,19 +379,96 @@ public class SignalMonitorTest extends AbstractConfigTest
    */
   private static final class TestMonitor extends Monitor
   {
+    private final Thread callerThread;
+
+    private final List<Double> progress = Collections.synchronizedList(new ArrayList<>());
+
+    private final AtomicBoolean operationCompleted = new AtomicBoolean();
+
+    private final AtomicBoolean done = new AtomicBoolean();
+
+    private volatile boolean intermediateRemoteProgress;
+
+    private TestMonitor()
+    {
+      this(Thread.currentThread());
+    }
+
+    private TestMonitor(Thread callerThread)
+    {
+      this.callerThread = callerThread;
+    }
+
     @Override
     public OMMonitor begin(double totalWork)
     {
-      super.begin(totalWork);
-      System.out.println("totalWork: " + getTotalWork()); //$NON-NLS-1$
-      return this;
+      synchronized (progress)
+      {
+        super.begin(totalWork);
+        progress.add(getWork());
+        return this;
+      }
     }
 
     @Override
     public void worked(double work)
     {
-      super.worked(work);
-      System.out.println("work: " + getWork()); //$NON-NLS-1$
+      synchronized (progress)
+      {
+        super.worked(work);
+        double currentWork = getWork();
+        progress.add(currentWork);
+
+        if (Thread.currentThread() != callerThread && !operationCompleted.get() && currentWork > 0 && currentWork < getTotalWork())
+        {
+          intermediateRemoteProgress = true;
+        }
+      }
+    }
+
+    @Override
+    public void done()
+    {
+      synchronized (progress)
+      {
+        super.done();
+        progress.add(getWork());
+        done.set(true);
+      }
+    }
+
+    private void operationCompleted()
+    {
+      operationCompleted.set(true);
+    }
+
+    private boolean hasIntermediateRemoteProgress()
+    {
+      return intermediateRemoteProgress;
+    }
+
+    private boolean isMonotonic()
+    {
+      synchronized (progress)
+      {
+        double previous = 0;
+        for (double current : progress)
+        {
+          if (Double.isNaN(current) || Double.isInfinite(current) || current < previous || current < 0 || current > getTotalWork())
+          {
+            return false;
+          }
+
+          previous = current;
+        }
+
+        return true;
+      }
+    }
+
+    private boolean isDone()
+    {
+      return done.get();
     }
   }
 }

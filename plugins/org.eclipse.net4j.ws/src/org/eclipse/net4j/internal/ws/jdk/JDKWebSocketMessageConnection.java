@@ -11,6 +11,7 @@ package org.eclipse.net4j.internal.ws.jdk;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.ws.IWSConnector;
+import org.eclipse.net4j.ws.jdk.JDKWSOptions;
 
 import org.eclipse.spi.net4j.MessageConnector.IMessageConnection;
 
@@ -22,6 +23,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
@@ -32,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * Adapts the Java 11 WebSocket client to Net4j's complete-message connection contract.
  * <p>
  * Each complete WebSocket binary message is treated as one candidate Net4j frame; WebSocket fragments are accumulated until the
- * final fragment arrives. The whole message, including the four-byte Net4j header, is limited to {@link #MAX_MESSAGE_SIZE} bytes.
+ * final fragment arrives. The whole message, including the Net4j header, is limited by the immutable provider options.
  * The Net4j connector validates and interprets the frame header after delivery. Higher-level operations, including a logical CDO
  * operation carried by multiple Net4j frames, are outside this adapter's framing boundary.
  * <p>
@@ -47,13 +49,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class JDKWebSocketMessageConnection implements IMessageConnection, WebSocket.Listener
 {
   /**
-   * Maximum complete Net4j frame size representable by the short-sized Net4j buffer contract, including its header.
-   */
-  private static final int MAX_MESSAGE_SIZE = Short.MAX_VALUE;
-
-  private static final long HEARTBEAT_INTERVAL = 20000L;
-
-  /**
    * Shared Provider-default client used by default provider factories and factories configured with a {@code null} SSL context.
    */
   private static final HttpClient CLIENT = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
@@ -67,6 +62,11 @@ public final class JDKWebSocketMessageConnection implements IMessageConnection, 
    * Timeout for the WebSocket opening handshake, distinct from the HTTP client's connection timeout.
    */
   private final Duration webSocketConnectTimeout;
+
+  /**
+   * Immutable limits and heartbeat cadence supplied by the owning provider factory.
+   */
+  private final JDKWSOptions options;
 
   /**
    * Shared timer borrowed from the owning container or class-wide fallback; this connection never cancels it.
@@ -192,10 +192,25 @@ public final class JDKWebSocketMessageConnection implements IMessageConnection, 
 
   public JDKWebSocketMessageConnection(URI uri, List<String> cookies, HttpClient client, Duration webSocketConnectTimeout, Timer heartbeatTimer)
   {
+    this(uri, cookies, client, JDKWSOptions.builder().webSocketConnectTimeout(webSocketConnectTimeout).build(), heartbeatTimer);
+  }
+
+  /**
+   * Creates a connection with immutable per-provider options and a timer borrowed from its managed container.
+   *
+   * @param uri WebSocket target URI
+   * @param cookies cookie header components
+   * @param client shared HTTP client, or {@code null} for the default client
+   * @param options immutable provider connection options
+   * @param heartbeatTimer managed timer, or {@code null} to use the daemon fallback
+   */
+  public JDKWebSocketMessageConnection(URI uri, List<String> cookies, HttpClient client, JDKWSOptions options, Timer heartbeatTimer)
+  {
     this.uri = uri;
     this.cookies = cookies;
     this.client = client == null ? CLIENT : client;
-    this.webSocketConnectTimeout = webSocketConnectTimeout;
+    this.options = Objects.requireNonNull(options, "options"); //$NON-NLS-1$
+    webSocketConnectTimeout = options.getWebSocketConnectTimeout();
     this.heartbeatTimer = heartbeatTimer == null ? FallbackHeartbeatTimer.INSTANCE : heartbeatTimer;
   }
 
@@ -282,6 +297,7 @@ public final class JDKWebSocketMessageConnection implements IMessageConnection, 
     WebSocket socket;
     PendingSend send;
     ByteBuffer data;
+    boolean oversized;
 
     synchronized (lock)
     {
@@ -300,6 +316,13 @@ public final class JDKWebSocketMessageConnection implements IMessageConnection, 
       send = new PendingSend(callback);
       pendingSend = send;
       socket = webSocket;
+      oversized = data.remaining() > options.getMaxMessageSize();
+    }
+
+    if (oversized)
+    {
+      completeSend(send, new IllegalArgumentException("Net4j frame exceeds the configured WebSocket message limit")); //$NON-NLS-1$
+      return true;
     }
 
     CompletionStage<WebSocket> completion;
@@ -508,7 +531,7 @@ public final class JDKWebSocketMessageConnection implements IMessageConnection, 
       int size = data.remaining();
       int currentSize = fragments == null ? 0 : fragments.position();
 
-      if (size > MAX_MESSAGE_SIZE - currentSize)
+      if (size > options.getMaxMessageSize() - currentSize)
       {
         failure = new IllegalArgumentException("WebSocket message exceeds the Net4j frame limit"); //$NON-NLS-1$
         terminateLocked(failure);
@@ -516,11 +539,11 @@ public final class JDKWebSocketMessageConnection implements IMessageConnection, 
 
       if (failure == null && fragments == null)
       {
-        fragments = ByteBuffer.allocate(Math.min(MAX_MESSAGE_SIZE, Math.max(256, size)));
+        fragments = ByteBuffer.allocate(Math.min(options.getMaxMessageSize(), Math.max(256, size)));
       }
       else if (failure == null && fragments.remaining() < size)
       {
-        int capacity = Math.min(MAX_MESSAGE_SIZE, Math.max(fragments.capacity() * 2, fragments.position() + size));
+        int capacity = Math.min(options.getMaxMessageSize(), Math.max(fragments.capacity() * 2, fragments.position() + size));
         ByteBuffer expanded = ByteBuffer.allocate(capacity);
         fragments.flip();
         expanded.put(fragments);
@@ -866,7 +889,8 @@ public final class JDKWebSocketMessageConnection implements IMessageConnection, 
 
     try
     {
-      heartbeatTimer.schedule(task, HEARTBEAT_INTERVAL, HEARTBEAT_INTERVAL);
+      long interval = options.getHeartbeatInterval().toMillis();
+      heartbeatTimer.schedule(task, interval, interval);
     }
     catch (RuntimeException | Error ex)
     {

@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
+import org.eclipse.net4j.ws.jdk.JDKWSOptions;
 
 import org.eclipse.spi.net4j.InternalBuffer;
 import org.eclipse.spi.net4j.MessageConnector;
@@ -40,9 +41,11 @@ import java.net.Socket;
 import java.net.URI;
 import java.net.http.WebSocket;
 import java.nio.ByteBuffer;
+import java.time.Duration;
 import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Queue;
+import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
@@ -357,6 +360,67 @@ public class JDKMessageConnectionTest extends AbstractOMTest
     assertEquals(1, listener.closed.get());
   }
 
+  public void testConfiguredMessageLimitAppliesAcrossFragments() throws Exception
+  {
+    FakeWebSocket socket = new FakeWebSocket();
+    RecordingListener listener = new RecordingListener(new AtomicInteger());
+    JDKWSOptions options = JDKWSOptions.builder().maxMessageSize(IBuffer.HEADER_SIZE + 2).build();
+    JDKWebSocketMessageConnection connection = createConnection(socket, listener, options);
+    connection.request(1);
+
+    connection.onBinary(socket.webSocket, ByteBuffer.wrap(new byte[] { 0, 1, 0, 1 }), false);
+    connection.onBinary(socket.webSocket, ByteBuffer.wrap(new byte[] { 0, 1, 0 }), true);
+
+    assertEquals(0, listener.received.get());
+    assertEquals(1, listener.closed.get());
+    assertTrue(socket.aborted);
+  }
+
+  public void testConfiguredMessageLimitAcceptsExactFrameSize() throws Exception
+  {
+    FakeWebSocket socket = new FakeWebSocket();
+    RecordingListener listener = new RecordingListener(new AtomicInteger());
+    IBuffer frameBuffer = createBuffer();
+    ByteBuffer frame = Net4jUtil.prepareForSending(frameBuffer).duplicate();
+    int frameSize = frame.remaining();
+    JDKWSOptions options = JDKWSOptions.builder().maxMessageSize(frameSize).build();
+    JDKWebSocketMessageConnection connection = createConnection(socket, listener, options);
+    connection.request(1);
+
+    try
+    {
+      connection.onBinary(socket.webSocket, frame, true);
+    }
+    finally
+    {
+      frameBuffer.release();
+    }
+
+    assertEquals(options.getMaxMessageSize(), listener.receivedSize);
+    assertEquals(1, listener.received.get());
+    assertEquals(0, listener.closed.get());
+    assertFalse(socket.aborted);
+    connection.abort();
+  }
+
+  public void testConfiguredMessageLimitAppliesToOutgoingFrames() throws Exception
+  {
+    FakeWebSocket socket = new FakeWebSocket();
+    RecordingListener listener = new RecordingListener(new AtomicInteger());
+    JDKWSOptions options = JDKWSOptions.builder().maxMessageSize(IBuffer.HEADER_SIZE + 1).build();
+    JDKWebSocketMessageConnection connection = createConnection(socket, listener, options);
+    IBuffer buffer = Net4jUtil.createBufferFactory((short)128).provideBuffer();
+    buffer.startPutting((short)1).put((byte)1).put((byte)2);
+    AtomicInteger completed = new AtomicInteger();
+    AtomicInteger failed = new AtomicInteger();
+
+    assertTrue(connection.send(buffer, callback(buffer, completed, failed)));
+    assertEquals(0, socket.sendCount);
+    assertEquals(0, completed.get());
+    assertEquals(1, failed.get());
+    assertEquals(1, listener.closed.get());
+  }
+
   public void testUnsolicitedPongHeartbeatIsSerializedAndCancelled() throws Exception
   {
     IManagedContainer container = ContainerUtil.createInitializedContainer();
@@ -420,6 +484,37 @@ public class JDKMessageConnectionTest extends AbstractOMTest
     taskField.setAccessible(true);
     assertNotNull("The direct constructor must schedule heartbeat after opening", taskField.get(direct)); //$NON-NLS-1$
     direct.abort();
+  }
+
+  public void testConfiguredHeartbeatIntervalIsScheduledAndCancelled() throws Exception
+  {
+    CapturingTimer timer = new CapturingTimer();
+    JDKWSOptions options = JDKWSOptions.builder().heartbeatInterval(Duration.ofMillis(137)).build();
+    JDKWebSocketMessageConnection connection = new JDKWebSocketMessageConnection(URI.create("ws://localhost/net4j/@test"), Collections.emptyList(), null,
+        options, timer);
+    FakeWebSocket socket = new FakeWebSocket();
+    setListener(connection, new RecordingListener(new AtomicInteger()));
+
+    try
+    {
+      connection.onOpen(socket.webSocket);
+
+      assertEquals(137L, timer.initialDelay);
+      assertEquals(137L, timer.period);
+      assertNotNull(timer.task);
+      assertTrue("The scheduled heartbeat did not run", socket.pongSent.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+
+      int heartbeatsBeforeTermination = socket.sendPongCount;
+      connection.abort();
+      assertFalse("Connection termination must cancel the repeating heartbeat", timer.task.cancel()); //$NON-NLS-1$
+      timer.task.run();
+      assertEquals("A cancelled heartbeat must not send after termination", heartbeatsBeforeTermination, socket.sendPongCount); //$NON-NLS-1$
+    }
+    finally
+    {
+      connection.abort();
+      timer.cancel();
+    }
   }
 
   public void testGracefulCloseWaitsForOutstandingHeartbeatPong() throws Exception
@@ -522,7 +617,14 @@ public class JDKMessageConnectionTest extends AbstractOMTest
 
   private static JDKWebSocketMessageConnection createConnection(FakeWebSocket socket, IMessageConnection.Listener listener) throws Exception
   {
-    JDKWebSocketMessageConnection connection = new JDKWebSocketMessageConnection(URI.create("ws://localhost/net4j/@test"), Collections.emptyList()); //$NON-NLS-1$
+    return createConnection(socket, listener, JDKWSOptions.defaults());
+  }
+
+  private static JDKWebSocketMessageConnection createConnection(FakeWebSocket socket, IMessageConnection.Listener listener, JDKWSOptions options)
+      throws Exception
+  {
+    JDKWebSocketMessageConnection connection = new JDKWebSocketMessageConnection(URI.create("ws://localhost/net4j/@test"), Collections.emptyList(), null,
+        options, null);
     setListener(connection, listener);
     connection.onOpen(socket.webSocket);
     return connection;
@@ -602,6 +704,8 @@ public class JDKMessageConnectionTest extends AbstractOMTest
 
     private final AtomicInteger received = new AtomicInteger();
 
+    private int receivedSize;
+
     private RecordingListener(AtomicInteger writable)
     {
       this.writable = writable;
@@ -615,6 +719,7 @@ public class JDKMessageConnectionTest extends AbstractOMTest
     @Override
     public void received(ByteBuffer data, Runnable releaseAction)
     {
+      receivedSize = data.remaining();
       received.incrementAndGet();
       releaseAction.run();
     }
@@ -706,6 +811,8 @@ public class JDKMessageConnectionTest extends AbstractOMTest
 
     private int sendPongCount;
 
+    private final CountDownLatch pongSent = new CountDownLatch(1);
+
     private int sendCloseCount;
 
     private CompletableFuture<WebSocket> pongCompletion;
@@ -761,6 +868,7 @@ public class JDKMessageConnectionTest extends AbstractOMTest
 
       case "sendPong": //$NON-NLS-1$
         ++sendPongCount;
+        pongSent.countDown();
         return pongCompletion == null ? CompletableFuture.completedFuture(webSocket) : pongCompletion;
 
       case "abort": //$NON-NLS-1$
@@ -805,6 +913,29 @@ public class JDKMessageConnectionTest extends AbstractOMTest
    *
    * @author Eike Stepper
    */
+  private static final class CapturingTimer extends Timer
+  {
+    private TimerTask task;
+
+    private long initialDelay;
+
+    private long period;
+
+    public CapturingTimer()
+    {
+      super(true);
+    }
+
+    @Override
+    public void schedule(TimerTask task, long delay, long period)
+    {
+      this.task = task;
+      initialDelay = delay;
+      this.period = period;
+      super.schedule(task, delay, period);
+    }
+  }
+
   private static final class WithheldUpgradeServer implements AutoCloseable
   {
     private final ServerSocket serverSocket;

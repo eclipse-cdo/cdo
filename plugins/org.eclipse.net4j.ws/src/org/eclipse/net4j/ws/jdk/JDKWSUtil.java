@@ -46,7 +46,23 @@ public final class JDKWSUtil
    */
   public static IFactory createMessageConnectionFactory(String providerType, SSLContext sslContext)
   {
-    return new JDKMessageConnectionFactory(providerType, sslContext);
+    return createMessageConnectionFactory(providerType, sslContext, JDKWSOptions.defaults());
+  }
+
+  /**
+   * Creates a JDK WebSocket provider using the supplied TLS context and immutable connection options. A {@code null} context
+   * selects the provider's shared default HTTP client. The HTTP client connect timeout remains ten seconds when a TLS context
+   * creates a client; {@code options} controls the WebSocket handshake, heartbeat, and complete-message limit.
+   *
+   * @param providerType the unique factory type to register and select in the connector description
+   * @param sslContext the TLS context to use, or {@code null} for the provider's default HTTP client
+   * @param options immutable per-provider connection options
+   * @return the configured message-connection provider factory
+   * @throws NullPointerException if {@code options} is {@code null}
+   */
+  public static IFactory createMessageConnectionFactory(String providerType, SSLContext sslContext, JDKWSOptions options)
+  {
+    return new JDKMessageConnectionFactory(providerType, sslContext, options);
   }
 
   /**
@@ -67,6 +83,22 @@ public final class JDKWSUtil
    */
   public static IFactory createMessageConnectionFactory(String providerType, HttpClient client, Duration webSocketConnectTimeout)
   {
-    return new JDKMessageConnectionFactory(providerType, client, webSocketConnectTimeout);
+    JDKWSOptions options = JDKWSOptions.builder().webSocketConnectTimeout(webSocketConnectTimeout).build();
+    return createMessageConnectionFactory(providerType, client, options);
+  }
+
+  /**
+   * Creates a JDK WebSocket provider that shares the supplied caller-owned HTTP client and applies the supplied immutable options
+   * to every connection created by the factory.
+   *
+   * @param providerType the unique factory type to register and select in the connector description
+   * @param client the non-null caller-owned HTTP client shared by connections created through this factory
+   * @param options immutable per-provider connection options
+   * @return the configured message-connection provider factory
+   * @throws NullPointerException if {@code client} or {@code options} is {@code null}
+   */
+  public static IFactory createMessageConnectionFactory(String providerType, HttpClient client, JDKWSOptions options)
+  {
+    return new JDKMessageConnectionFactory(providerType, client, options);
   }
 }

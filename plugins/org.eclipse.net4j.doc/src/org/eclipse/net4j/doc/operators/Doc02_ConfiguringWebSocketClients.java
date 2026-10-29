@@ -123,7 +123,14 @@ public class Doc02_ConfiguringWebSocketClients
    * The HTTP client's <code>connectTimeout</code> limits the connection establishment stage. The provider's
    * <code>webSocketConnectTimeout</code> limits the subsequent opening handshake. A connector's
    * <code>connect(5000)</code> bounds how long the calling thread waits for the Net4j connector to become connected; these
-   * are separate limits. The built-in provider defaults the first two stages to ten seconds.
+   * are separate limits. The built-in provider defaults both network stages to ten seconds. Use
+   * <code>JDKWSOptions.builder()</code> with the <code>HttpClient</code> or <code>SSLContext</code> factory overload to set
+   * the opening-handshake timeout, heartbeat interval, and maximum message size. Defaults are ten seconds, twenty seconds,
+   * and <code>Short.MAX_VALUE</code> bytes respectively. The message limit includes the Net4j frame header and must remain
+   * within the short-sized Net4j framing limit. Options belong to one provider factory and are applied to all of its newly
+   * created connections; separate provider types can use different options concurrently. The heartbeat is an unsolicited
+   * WebSocket Pong sent periodically while the connection is open. Set its interval below the server's WebSocket idle timeout
+   * to keep an otherwise quiet connection alive. It is cancelled when graceful closure or termination begins.
    */
   public class Registering_Configured_Providers
   {

@@ -44,6 +44,7 @@ import org.eclipse.net4j.ws.IWSAcceptor;
 import org.eclipse.net4j.ws.IWSConnector;
 import org.eclipse.net4j.ws.WSSUtil;
 import org.eclipse.net4j.ws.WSUtil;
+import org.eclipse.net4j.ws.jdk.JDKWSOptions;
 import org.eclipse.net4j.ws.jdk.JDKWSUtil;
 import org.eclipse.net4j.ws.jetty.server.JettyWSUtil;
 
@@ -57,6 +58,7 @@ import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.eclipse.jetty.websocket.server.WebSocketUpgradeHandler;
 import org.eclipse.spi.net4j.AcceptorFactory;
 import org.eclipse.spi.net4j.ConnectorFactory;
 import org.eclipse.spi.net4j.MessageConnector;
@@ -72,6 +74,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.security.KeyStore;
 import java.security.SecureRandom;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -85,6 +88,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public abstract class TestConfig
 {
+  private static final String WS_TEST_PROVIDER_TYPE = "jdk-ws-test"; //$NON-NLS-1$
+
   public TestConfig()
   {
   }
@@ -104,6 +109,11 @@ public abstract class TestConfig
   }
 
   public abstract IConnector getConnector(IManagedContainer container, boolean activate);
+
+  public void configureWebSocketIdleTimeout(Duration serverIdleTimeout, JDKWSOptions options)
+  {
+    throw new UnsupportedOperationException("This test configuration does not support WebSocket idle-timeout settings"); //$NON-NLS-1$
+  }
 
   public void closeUnderlyingConnection(IConnector connector) throws IOException
   {
@@ -316,6 +326,10 @@ public abstract class TestConfig
 
         private IWSAcceptor serverAcceptor;
 
+        private IManagedContainer providerContainer;
+
+        private IFactory providerFactory;
+
         @Override
         public boolean needsSeparateContainers()
         {
@@ -335,8 +349,20 @@ public abstract class TestConfig
           {
             startServer(container);
 
-            String serviceURI = "ws://localhost:" + serverConnector.getLocalPort() + "/net4j";
-            String description = WSUtil.getConnectorDescription(serviceURI, ACCEPTOR_NAME);
+            String description;
+
+            if (getProviderOptions() == null)
+            {
+              description = WSUtil.getConnectorDescription("ws://localhost:" + serverConnector.getLocalPort() + "/net4j", ACCEPTOR_NAME);
+            }
+            else
+            {
+              registerProvider(container);
+
+              description = WSUtil.getConnectorDescription("ws://localhost:" + serverConnector.getLocalPort() + "/net4j", ACCEPTOR_NAME,
+                  WSConnectorFactory.PROVIDER_TOKEN_PREFIX + WS_TEST_PROVIDER_TYPE);
+            }
+
             return (IWSConnector)container.getElement(WSConnectorFactory.PRODUCT_GROUP, WSUtil.FACTORY_TYPE, description, activate);
           }
           catch (URISyntaxException ex)
@@ -395,7 +421,9 @@ public abstract class TestConfig
             newServer.addConnector(newConnector);
 
             ContextHandler context = new ContextHandler("/");
-            context.setHandler(JettyWSUtil.createUpgradeHandler(newServer, context, "/net4j/*", acceptor));
+            WebSocketUpgradeHandler upgradeHandler = JettyWSUtil.createUpgradeHandler(newServer, context, "/net4j/*", acceptor);
+            configureServerIdleTimeout(upgradeHandler);
+            context.setHandler(upgradeHandler);
 
             newServer.setHandler(context);
             newServer.start();
@@ -428,6 +456,22 @@ public abstract class TestConfig
           serverAcceptor = null;
 
           stopJettyServer(oldServer);
+        }
+
+        private void registerProvider(IManagedContainer container)
+        {
+          if (container == providerContainer)
+          {
+            return;
+          }
+
+          if (providerFactory == null)
+          {
+            providerFactory = JDKWSUtil.createMessageConnectionFactory(WS_TEST_PROVIDER_TYPE, (SSLContext)null, getProviderOptions());
+          }
+
+          container.registerFactory(providerFactory);
+          providerContainer = container;
         }
       };
     }
@@ -553,7 +597,9 @@ public abstract class TestConfig
             newServer.addConnector(newConnector);
 
             ContextHandler context = new ContextHandler("/");
-            context.setHandler(JettyWSUtil.createUpgradeHandler(newServer, context, "/net4j/*", acceptor));
+            WebSocketUpgradeHandler upgradeHandler = JettyWSUtil.createUpgradeHandler(newServer, context, "/net4j/*", acceptor);
+            configureServerIdleTimeout(upgradeHandler);
+            context.setHandler(upgradeHandler);
             newServer.setHandler(context);
             newServer.start();
 
@@ -596,7 +642,10 @@ public abstract class TestConfig
 
           if (providerFactory == null)
           {
-            providerFactory = JDKWSUtil.createMessageConnectionFactory(WSS_TEST_PROVIDER_TYPE, createSSLContext());
+            JDKWSOptions options = getProviderOptions();
+            providerFactory = options == null //
+                ? JDKWSUtil.createMessageConnectionFactory(WSS_TEST_PROVIDER_TYPE, createSSLContext()) //
+                : JDKWSUtil.createMessageConnectionFactory(WSS_TEST_PROVIDER_TYPE, createSSLContext(), options);
           }
 
           container.registerFactory(providerFactory);
@@ -632,9 +681,33 @@ public abstract class TestConfig
   {
     private final String transportType;
 
+    private Duration serverIdleTimeout;
+
+    private JDKWSOptions providerOptions;
+
     public WebSocketConfig(String transportType)
     {
       this.transportType = transportType;
+    }
+
+    @Override
+    public void configureWebSocketIdleTimeout(Duration serverIdleTimeout, JDKWSOptions options)
+    {
+      this.serverIdleTimeout = serverIdleTimeout;
+      providerOptions = options;
+    }
+
+    protected final JDKWSOptions getProviderOptions()
+    {
+      return providerOptions;
+    }
+
+    protected final void configureServerIdleTimeout(WebSocketUpgradeHandler upgradeHandler)
+    {
+      if (serverIdleTimeout != null)
+      {
+        upgradeHandler.getServerWebSocketContainer().setIdleTimeout(serverIdleTimeout);
+      }
     }
 
     @Override

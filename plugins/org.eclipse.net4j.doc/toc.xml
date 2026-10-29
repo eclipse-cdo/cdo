@@ -239,6 +239,8 @@
         <topic label="WSUtil" href="javadoc/org/eclipse/net4j/ws/WSUtil.html" icon="class" />
       </topic>
       <topic label="org.eclipse.net4j.ws.jdk" href="javadoc/org/eclipse/net4j/ws/jdk/package-summary.html" icon="package">
+        <topic label="JDKWSOptions" href="javadoc/org/eclipse/net4j/ws/jdk/JDKWSOptions.html" icon="class" />
+        <topic label="JDKWSOptions.Builder" href="javadoc/org/eclipse/net4j/ws/jdk/JDKWSOptions.Builder.html" icon="class" />
         <topic label="JDKWSUtil" href="javadoc/org/eclipse/net4j/ws/jdk/JDKWSUtil.html" icon="class" />
       </topic>
     </topic>

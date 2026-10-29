@@ -8,12 +8,14 @@
  */
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 import org.eclipse.net4j.ws.jdk.JDKWSUtil;
+import org.eclipse.net4j.ws.jdk.JDKWSOptions;
 
 import org.eclipse.spi.net4j.MessageConnectionFactory;
 import org.eclipse.spi.net4j.MessageConnector.IMessageConnection;
@@ -63,6 +65,50 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
 {
   public JDKProviderConfigurationTest()
   {
+  }
+
+  public void testJDKWSOptionsDefaultsAndFactoryIsolation() throws Exception
+  {
+    JDKWSOptions defaults = JDKWSOptions.defaults();
+    assertEquals(Duration.ofSeconds(10), defaults.getWebSocketConnectTimeout());
+    assertEquals(Duration.ofSeconds(20), defaults.getHeartbeatInterval());
+    assertEquals(Short.MAX_VALUE, defaults.getMaxMessageSize());
+
+    JDKWSOptions firstOptions = JDKWSOptions.builder().heartbeatInterval(Duration.ofMillis(200)).maxMessageSize(1024).build();
+    JDKWSOptions secondOptions = JDKWSOptions.builder().heartbeatInterval(Duration.ofMillis(500)).maxMessageSize(2048).build();
+    IFactory firstFactory = JDKWSUtil.createMessageConnectionFactory("jdk-options-first", HttpClient.newHttpClient(), firstOptions); //$NON-NLS-1$
+    IFactory secondFactory = JDKWSUtil.createMessageConnectionFactory("jdk-options-second", HttpClient.newHttpClient(), secondOptions); //$NON-NLS-1$
+    Object firstConnection = firstFactory.create("ws://localhost/net4j"); //$NON-NLS-1$
+    Object secondConnection = secondFactory.create("ws://localhost/net4j"); //$NON-NLS-1$
+
+    java.lang.reflect.Field optionsField = firstConnection.getClass().getDeclaredField("options"); //$NON-NLS-1$
+    optionsField.setAccessible(true);
+    assertSame(firstOptions, optionsField.get(firstConnection));
+    assertSame(secondOptions, optionsField.get(secondConnection));
+  }
+
+  public void testJDKWSOptionsRejectInvalidAndOutOfRangeValues()
+  {
+    assertInvalidOptions(JDKWSOptions.builder().webSocketConnectTimeout(Duration.ZERO));
+    assertInvalidOptions(JDKWSOptions.builder().webSocketConnectTimeout(Duration.ofNanos(1)));
+    assertInvalidOptions(JDKWSOptions.builder().heartbeatInterval(Duration.ofMillis(-1)));
+    assertInvalidOptions(JDKWSOptions.builder().heartbeatInterval(Duration.ofSeconds(Long.MAX_VALUE)));
+    assertInvalidOptions(JDKWSOptions.builder().maxMessageSize(IBuffer.HEADER_SIZE - 1));
+    assertInvalidOptions(JDKWSOptions.builder().maxMessageSize(Short.MAX_VALUE + 1));
+    assertEquals(Short.MAX_VALUE, JDKWSOptions.builder().maxMessageSize(Short.MAX_VALUE).build().getMaxMessageSize());
+    assertEquals(IBuffer.HEADER_SIZE, JDKWSOptions.builder().maxMessageSize(IBuffer.HEADER_SIZE).build().getMaxMessageSize());
+  }
+
+  private static void assertInvalidOptions(JDKWSOptions.Builder builder)
+  {
+    try
+    {
+      builder.build();
+      throw new AssertionError("Invalid JDK WebSocket options were accepted"); //$NON-NLS-1$
+    }
+    catch (IllegalArgumentException expected)
+    {
+    }
   }
 
   public void testInjectedHttpClientRoutesWebSocketThroughConfiguredProxy() throws Exception

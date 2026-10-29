@@ -12,6 +12,7 @@ import org.eclipse.net4j.util.concurrent.TimerLifecycle.DaemonFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.ws.jdk.JDKWSOptions;
 
 import org.eclipse.spi.net4j.MessageConnectionFactory;
 import org.eclipse.spi.net4j.MessageConnector.IMessageConnection;
@@ -45,11 +46,6 @@ public final class JDKMessageConnectionFactory extends MessageConnectionFactory 
   public static final String TYPE = "jdk"; //$NON-NLS-1$
 
   /**
-   * Opening-handshake limit used by the convenience constructors, separate from HTTP connection timeout.
-   */
-  private static final Duration DEFAULT_WEBSOCKET_CONNECT_TIMEOUT = Duration.ofSeconds(10);
-
-  /**
    * Shared HTTP client configuration for this provider factory, or {@code null} to use the class-wide default client.
    */
   private final HttpClient client;
@@ -57,7 +53,7 @@ public final class JDKMessageConnectionFactory extends MessageConnectionFactory 
   /**
    * Shared opening-handshake limit applied when each connection starts.
    */
-  private final Duration webSocketConnectTimeout;
+  private final JDKWSOptions options;
 
   private volatile IManagedContainer container;
 
@@ -69,7 +65,7 @@ public final class JDKMessageConnectionFactory extends MessageConnectionFactory 
   {
     super(TYPE);
     client = null;
-    webSocketConnectTimeout = DEFAULT_WEBSOCKET_CONNECT_TIMEOUT;
+    options = JDKWSOptions.defaults();
   }
 
   /**
@@ -82,9 +78,22 @@ public final class JDKMessageConnectionFactory extends MessageConnectionFactory 
    */
   public JDKMessageConnectionFactory(String type, SSLContext sslContext)
   {
+    this(type, sslContext, JDKWSOptions.defaults());
+  }
+
+  /**
+   * Creates a provider factory that builds and shares an HTTP client configured with the given TLS context and applies immutable
+   * connection options to every connection.
+   *
+   * @param type provider name used in connector descriptions
+   * @param sslContext TLS context, or {@code null} to use the default client configuration
+   * @param options immutable connection options
+   */
+  public JDKMessageConnectionFactory(String type, SSLContext sslContext, JDKWSOptions options)
+  {
     super(type);
     client = sslContext == null ? null : HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).sslContext(sslContext).build();
-    webSocketConnectTimeout = DEFAULT_WEBSOCKET_CONNECT_TIMEOUT;
+    this.options = Objects.requireNonNull(options, "options"); //$NON-NLS-1$
   }
 
   /**
@@ -100,16 +109,22 @@ public final class JDKMessageConnectionFactory extends MessageConnectionFactory 
    */
   public JDKMessageConnectionFactory(String type, HttpClient client, Duration webSocketConnectTimeout)
   {
+    this(type, client, JDKWSOptions.builder().webSocketConnectTimeout(webSocketConnectTimeout).build());
+  }
+
+  /**
+   * Creates a provider factory that shares a caller-owned HTTP client and applies the given immutable options to each connection.
+   * The factory and its connections do not close the HTTP client.
+   *
+   * @param type provider name used in connector descriptions
+   * @param client caller-owned HTTP client
+   * @param options immutable connection options
+   */
+  public JDKMessageConnectionFactory(String type, HttpClient client, JDKWSOptions options)
+  {
     super(type);
     this.client = Objects.requireNonNull(client, "client"); //$NON-NLS-1$
-    Objects.requireNonNull(webSocketConnectTimeout, "webSocketConnectTimeout"); //$NON-NLS-1$
-
-    if (webSocketConnectTimeout.isZero() || webSocketConnectTimeout.isNegative())
-    {
-      throw new IllegalArgumentException("webSocketConnectTimeout must be positive"); //$NON-NLS-1$
-    }
-
-    this.webSocketConnectTimeout = webSocketConnectTimeout;
+    this.options = Objects.requireNonNull(options, "options"); //$NON-NLS-1$
   }
 
   @Override
@@ -167,7 +182,7 @@ public final class JDKMessageConnectionFactory extends MessageConnectionFactory 
       IManagedContainer currentContainer = container;
       Timer heartbeatTimer = currentContainer == null ? null : DaemonFactory.getTimer(currentContainer, null);
 
-      return new JDKWebSocketMessageConnection(uri, cookies, client, webSocketConnectTimeout, heartbeatTimer);
+      return new JDKWebSocketMessageConnection(uri, cookies, client, options, heartbeatTimer);
     }
     catch (URISyntaxException | IllegalArgumentException | IndexOutOfBoundsException ex)
     {

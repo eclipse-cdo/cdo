@@ -71,6 +71,7 @@ public class AllTests
     suite.addTestSuite(WSConfigLifecycleTest.class);
     suite.addTestSuite(WSSSSLContextIsolationTest.class);
     suite.addTestSuite(JDKMessageConnectionTest.class);
+    suite.addTestSuite(JDKProviderConfigurationTest.class);
     suite.addTestSuite(BufferStreamTest.class);
     suite.addTestSuite(ExtendedIOTest.class);
     suite.addTestSuite(StringCompressorTest.class);

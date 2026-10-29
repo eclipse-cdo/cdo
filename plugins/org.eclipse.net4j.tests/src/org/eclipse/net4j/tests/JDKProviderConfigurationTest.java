@@ -28,6 +28,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.Authenticator;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.PasswordAuthentication;
@@ -51,12 +52,19 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * Verifies configurable JDK WebSocket message-connection providers.
+ * Verifies configurable JDK WebSocket message-connection providers. The ordinary provider tests are part of {@link AllTests}; Basic
+ * CONNECT authentication scenarios are isolated in nested test classes because one requires the default JDK setting and the other
+ * requires a JVM startup override. Run {@link DefaultProxyAuthenticationTest} without an override and
+ * {@link EnabledProxyAuthenticationTest} in a separate JVM with {@code -Djdk.http.auth.tunneling.disabledSchemes=}.
  *
  * @author Eike Stepper
  */
 public class JDKProviderConfigurationTest extends AbstractOMTest
 {
+  public JDKProviderConfigurationTest()
+  {
+  }
+
   public void testInjectedHttpClientRoutesWebSocketThroughConfiguredProxy() throws Exception
   {
     try (Origin origin = new Origin(); Proxy proxy = new Proxy(origin.getPort()))
@@ -351,51 +359,6 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
     HttpClient.class.getMethod("close").invoke(client); //$NON-NLS-1$
   }
 
-  /**
-   * Records proxy selection for the local WebSocket tests.
-   *
-   * @author Eike Stepper
-   */
-  private static final class RecordingProxySelector extends ProxySelector
-  {
-    private final Proxy proxy;
-
-    private final AtomicInteger selections;
-
-    private final AtomicReference<URI> selectedURI = new AtomicReference<>();
-
-    private final AtomicReference<java.net.Proxy> selectedProxy = new AtomicReference<>();
-
-    private final AtomicReference<java.io.IOException> connectionFailure = new AtomicReference<>();
-
-    private RecordingProxySelector(Proxy proxy)
-    {
-      this(proxy, new AtomicInteger());
-    }
-
-    private RecordingProxySelector(Proxy proxy, AtomicInteger selections)
-    {
-      this.proxy = proxy;
-      this.selections = selections;
-    }
-
-    @Override
-    public List<java.net.Proxy> select(URI uri)
-    {
-      selections.incrementAndGet();
-      selectedURI.set(uri);
-      java.net.Proxy result = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(InetAddress.getLoopbackAddress(), proxy.getPort()));
-      selectedProxy.set(result);
-      return List.of(result);
-    }
-
-    @Override
-    public void connectFailed(URI uri, java.net.SocketAddress address, java.io.IOException failure)
-    {
-      connectionFailure.set(failure);
-    }
-  }
-
   private static SSLContext createSSLContext(boolean server) throws Exception
   {
     KeyStore store = KeyStore.getInstance("JKS");
@@ -481,6 +444,75 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
    *
    * @author Eike Stepper
    */
+  private static void closeSocket(Socket socket) throws Exception
+  {
+    if (socket != null)
+    {
+      socket.close();
+    }
+  }
+
+  private static void joinWorker(Thread worker) throws InterruptedException
+  {
+    if (worker != null)
+    {
+      worker.join(2000);
+
+      if (worker.isAlive())
+      {
+        throw new IllegalStateException(worker.getName() + " did not stop"); //$NON-NLS-1$
+      }
+    }
+  }
+
+  /**
+   * Records proxy selection for the local WebSocket tests.
+   *
+   * @author Eike Stepper
+   */
+  private static final class RecordingProxySelector extends ProxySelector
+  {
+    private final Proxy proxy;
+
+    private final AtomicInteger selections;
+
+    private final AtomicReference<URI> selectedURI = new AtomicReference<>();
+
+    private final AtomicReference<java.net.Proxy> selectedProxy = new AtomicReference<>();
+
+    private final AtomicReference<java.io.IOException> connectionFailure = new AtomicReference<>();
+
+    public RecordingProxySelector(Proxy proxy)
+    {
+      this(proxy, new AtomicInteger());
+    }
+
+    public RecordingProxySelector(Proxy proxy, AtomicInteger selections)
+    {
+      this.proxy = proxy;
+      this.selections = selections;
+    }
+
+    @Override
+    public List<java.net.Proxy> select(URI uri)
+    {
+      selections.incrementAndGet();
+      selectedURI.set(uri);
+      java.net.Proxy result = new java.net.Proxy(java.net.Proxy.Type.HTTP, new InetSocketAddress(InetAddress.getLoopbackAddress(), proxy.getPort()));
+      selectedProxy.set(result);
+      return List.of(result);
+    }
+
+    @Override
+    public void connectFailed(URI uri, java.net.SocketAddress address, java.io.IOException failure)
+    {
+      connectionFailure.set(failure);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private static final class Origin implements AutoCloseable
   {
     private final ServerSocket server;
@@ -499,25 +531,27 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
 
     private final List<String> requests = Collections.synchronizedList(new ArrayList<>());
 
-    private Origin() throws Exception
+    public Origin() throws Exception
     {
       this(null, false, false);
     }
 
-    private Origin(SSLContext context) throws Exception
+    public Origin(SSLContext context) throws Exception
     {
       this(context, false, false);
     }
 
-    private Origin(SSLContext context, boolean authenticationRequired) throws Exception
+    public Origin(SSLContext context, boolean authenticationRequired) throws Exception
     {
       this(context, authenticationRequired, false);
     }
 
-    private Origin(SSLContext context, boolean authenticationRequired, boolean withholdHandshake) throws Exception
+    public Origin(SSLContext context, boolean authenticationRequired, boolean withholdHandshake) throws Exception
     {
-      server = context == null ? new ServerSocket(0, 5, InetAddress.getByName("127.0.0.1"))
+      server = context == null //
+          ? new ServerSocket(0, 5, InetAddress.getByName("127.0.0.1")) //
           : (ServerSocket)context.getServerSocketFactory().createServerSocket(0, 5, InetAddress.getByName("127.0.0.1"));
+
       worker = new Thread(() -> {
         while (!server.isClosed())
         {
@@ -565,7 +599,7 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
       worker.start();
     }
 
-    private int getPort()
+    public int getPort()
     {
       return server.getLocalPort();
     }
@@ -598,9 +632,23 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
    */
   private static final class Proxy implements AutoCloseable
   {
-    private final ServerSocket server = new ServerSocket(0, 5, InetAddress.getByName("127.0.0.1"));
+    private static final String AUTH_USERNAME = "proxy-user"; //$NON-NLS-1$
+
+    private static final String AUTH_PASSWORD = "proxy-secret"; //$NON-NLS-1$
+
+    private final ServerSocket server;
 
     private final Thread worker;
+
+    private final List<String> connectRequests = Collections.synchronizedList(new ArrayList<>());
+
+    private final List<String> proxyAuthorizations = Collections.synchronizedList(new ArrayList<>());
+
+    private final AtomicInteger challenges = new AtomicInteger();
+
+    private final int originPort;
+
+    private final String expectedAuthorization;
 
     private volatile String firstLine;
 
@@ -612,32 +660,69 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
 
     private volatile Thread forwardWorker;
 
-    private Proxy(int originPort) throws Exception
+    public Proxy(int originPort) throws Exception
     {
+      this(originPort, null, null);
+    }
+
+    public Proxy(int originPort, boolean authenticationRequired) throws Exception
+    {
+      this(originPort, authenticationRequired ? AUTH_USERNAME : null, authenticationRequired ? AUTH_PASSWORD : null);
+    }
+
+    public Proxy(int originPort, String username, String password) throws Exception
+    {
+      this.originPort = originPort;
+      expectedAuthorization = username == null //
+          ? null //
+          : "Basic " + Base64.getEncoder().encodeToString((username + ":" + password).getBytes(StandardCharsets.ISO_8859_1)); //$NON-NLS-2$
+
+      server = new ServerSocket(0, 5, InetAddress.getByName("127.0.0.1")); //$NON-NLS-1$
+
       worker = new Thread(() -> {
-        try (Socket socket = server.accept())
+        while (!server.isClosed())
         {
-          clientSocket = socket;
-          socket.setSoTimeout(5000);
-          String request = readHeaders(socket);
-          firstRequest = request;
-          firstLine = request.substring(0, request.indexOf("\r\n"));
-          try (Socket target = new Socket(InetAddress.getByName("127.0.0.1"), originPort))
+          try (Socket socket = server.accept())
           {
-            targetSocket = target;
-            socket.getOutputStream().write("HTTP/1.1 200 Connection Established\r\n\r\n".getBytes(StandardCharsets.ISO_8859_1));
-            socket.getOutputStream().flush();
-            forwardWorker = new Thread(() -> copy(socket, target), "jdk-ws-test-forward"); //$NON-NLS-1$
-            forwardWorker.setDaemon(true);
-            forwardWorker.start();
-            copy(target, socket);
+            clientSocket = socket;
+            socket.setSoTimeout(5000);
+            String request = readHeaders(socket);
+            String requestLine = request.substring(0, request.indexOf("\r\n"));
+            String authorization = optionalHeader(request, "Proxy-Authorization"); //$NON-NLS-1$
+            if (firstRequest == null)
+            {
+              firstRequest = request;
+              firstLine = requestLine;
+            }
+
+            connectRequests.add(requestLine);
+            proxyAuthorizations.add(authorization);
+            if (expectedAuthorization != null && !expectedAuthorization.equals(authorization))
+            {
+              socket.getOutputStream().write(("HTTP/1.1 407 Proxy Authentication Required\r\nProxy-Authenticate: Basic realm=\"local-proxy\"\r\n"
+                  + "Content-Length: 0\r\nConnection: close\r\n\r\n").getBytes(StandardCharsets.ISO_8859_1)); //$NON-NLS-1$
+              socket.getOutputStream().flush();
+              challenges.incrementAndGet();
+              continue;
+            }
+
+            try (Socket target = new Socket(InetAddress.getByName("127.0.0.1"), this.originPort)) //$NON-NLS-1$
+            {
+              targetSocket = target;
+              socket.getOutputStream().write("HTTP/1.1 200 Connection Established\r\n\r\n".getBytes(StandardCharsets.ISO_8859_1)); //$NON-NLS-1$
+              socket.getOutputStream().flush();
+              forwardWorker = new Thread(() -> copy(socket, target), "jdk-ws-test-forward"); //$NON-NLS-1$
+              forwardWorker.setDaemon(true);
+              forwardWorker.start();
+              copy(target, socket);
+            }
           }
-        }
-        catch (Exception ex)
-        {
-          if (!server.isClosed())
+          catch (Exception ex)
           {
-            ex.printStackTrace();
+            if (!server.isClosed())
+            {
+              ex.printStackTrace();
+            }
           }
         }
       }, "jdk-ws-test-proxy"); //$NON-NLS-1$
@@ -645,36 +730,12 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
       worker.start();
     }
 
-    private static void copy(Socket source, Socket target)
+    public PasswordAuthentication createPasswordAuthentication()
     {
-      try
-      {
-        byte[] buffer = new byte[4096];
-        int count;
-        while ((count = source.getInputStream().read(buffer)) >= 0)
-        {
-          target.getOutputStream().write(buffer, 0, count);
-          target.getOutputStream().flush();
-        }
-      }
-      catch (Exception ex)
-      {
-        // Socket closure ends the tunnel.
-      }
-      finally
-      {
-        try
-        {
-          target.shutdownOutput();
-        }
-        catch (Exception ex)
-        {
-          // The opposite tunnel direction may already have closed the socket.
-        }
-      }
+      return new PasswordAuthentication(AUTH_USERNAME, AUTH_PASSWORD.toCharArray());
     }
 
-    private int getPort()
+    public int getPort()
     {
       return server.getLocalPort();
     }
@@ -712,25 +773,172 @@ public class JDKProviderConfigurationTest extends AbstractOMTest
         }
       }
     }
-  }
 
-  private static void closeSocket(Socket socket) throws Exception
-  {
-    if (socket != null)
+    private static void copy(Socket source, Socket target)
     {
-      socket.close();
-    }
-  }
-
-  private static void joinWorker(Thread worker) throws InterruptedException
-  {
-    if (worker != null)
-    {
-      worker.join(2000);
-      if (worker.isAlive())
+      try
       {
-        throw new IllegalStateException(worker.getName() + " did not stop"); //$NON-NLS-1$
+        byte[] buffer = new byte[4096];
+        int count;
+        while ((count = source.getInputStream().read(buffer)) >= 0)
+        {
+          target.getOutputStream().write(buffer, 0, count);
+          target.getOutputStream().flush();
+        }
+      }
+      catch (Exception ex)
+      {
+        // Socket closure ends the tunnel.
+      }
+      finally
+      {
+        try
+        {
+          target.shutdownOutput();
+        }
+        catch (Exception ex)
+        {
+          // The opposite tunnel direction may already have closed the socket.
+        }
       }
     }
   }
+
+  /**
+   * Verifies the default JDK behavior when a proxy challenges Basic authentication for a CONNECT tunnel.
+   *
+   * @author Eike Stepper
+   */
+  public static final class DefaultProxyAuthenticationTest extends AbstractOMTest
+  {
+    public DefaultProxyAuthenticationTest()
+    {
+    }
+
+    public void testDefaultJDKConfigurationRejectsBasicAuthenticationForConnectTunnels() throws Exception
+    {
+      try (Origin origin = new Origin(); Proxy proxy = new Proxy(origin.getPort(), true))
+      {
+        RecordingProxySelector selector = new RecordingProxySelector(proxy);
+        AtomicInteger authenticatorCalls = new AtomicInteger();
+        HttpClient client = HttpClient.newBuilder().proxy(selector).connectTimeout(Duration.ofSeconds(3)).authenticator(new Authenticator()
+        {
+          @Override
+          protected PasswordAuthentication getPasswordAuthentication()
+          {
+            authenticatorCalls.incrementAndGet();
+            return proxy.createPasswordAuthentication();
+          }
+        }).build();
+        IMessageConnection connection = null;
+        try
+        {
+          IFactory factory = JDKWSUtil.createMessageConnectionFactory("jdk-proxy-auth-default", client, Duration.ofSeconds(3)); //$NON-NLS-1$
+          connection = ((MessageConnectionFactory)factory).create("ws://127.0.0.1:" + origin.getPort() + "/proxy-auth"); //$NON-NLS-1$
+          CountDownLatch closed = new CountDownLatch(1);
+          AtomicReference<Throwable> failure = new AtomicReference<>();
+          connection.start(new IMessageConnection.Listener()
+          {
+            @Override
+            public void ready()
+            {
+              fail("Basic proxy authentication unexpectedly succeeded with the JDK default disabled-scheme setting"); //$NON-NLS-1$
+            }
+
+            @Override
+            public void received(java.nio.ByteBuffer data, Runnable releaseAction)
+            {
+            }
+
+            @Override
+            public void writable()
+            {
+            }
+
+            @Override
+            public void closed(Throwable cause)
+            {
+              failure.set(cause);
+              closed.countDown();
+            }
+          });
+
+          assertTrue("The 407 CONNECT response did not terminate the WebSocket opening handshake", closed.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+          assertNotNull(failure.get());
+          assertEquals(1, proxy.connectRequests.size());
+          assertEquals(1, proxy.challenges.get());
+          assertNull(proxy.proxyAuthorizations.get(0));
+          assertEquals(0, authenticatorCalls.get());
+          assertTrue(origin.requests.isEmpty());
+        }
+        finally
+        {
+          try
+          {
+            if (connection != null)
+            {
+              connection.abort();
+            }
+          }
+          finally
+          {
+            closeHttpClient(client);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * Verifies that Basic proxy authentication succeeds when enabled for CONNECT tunnels at JVM startup.
+   *
+   * @author Eike Stepper
+   */
+  public static final class EnabledProxyAuthenticationTest extends AbstractOMTest
+  {
+    public EnabledProxyAuthenticationTest()
+    {
+    }
+
+    public void testAuthenticatedConnectTunnelCompletesWhenBasicTunnelingIsEnabled() throws Exception
+    {
+      assertEquals("Launch this test in a separate JVM with -Djdk.http.auth.tunneling.disabledSchemes=", //$NON-NLS-1$
+          "", System.getProperty("jdk.http.auth.tunneling.disabledSchemes")); //$NON-NLS-1$
+
+      try (Origin origin = new Origin(); Proxy proxy = new Proxy(origin.getPort(), true))
+      {
+        RecordingProxySelector selector = new RecordingProxySelector(proxy);
+        AtomicInteger proxyAuthenticatorCalls = new AtomicInteger();
+        AtomicReference<Authenticator.RequestorType> requestorType = new AtomicReference<>();
+        HttpClient client = HttpClient.newBuilder().proxy(selector).connectTimeout(Duration.ofSeconds(3)).authenticator(new Authenticator()
+        {
+          @Override
+          protected PasswordAuthentication getPasswordAuthentication()
+          {
+            requestorType.set(getRequestorType());
+            proxyAuthenticatorCalls.incrementAndGet();
+            return proxy.createPasswordAuthentication();
+          }
+        }).build();
+        try
+        {
+          IFactory factory = JDKWSUtil.createMessageConnectionFactory("jdk-proxy-auth-enabled", client, Duration.ofSeconds(3)); //$NON-NLS-1$
+          connect(factory, URI.create("ws://127.0.0.1:" + origin.getPort() + "/proxy-auth")); //$NON-NLS-1$
+
+          assertTrue("Proxy authentication challenge was not retried", proxy.connectRequests.size() >= 2); //$NON-NLS-1$
+          assertEquals(1, proxy.challenges.get());
+          assertNull(proxy.proxyAuthorizations.get(0));
+          assertEquals(proxy.expectedAuthorization, proxy.proxyAuthorizations.get(1));
+          assertEquals(Authenticator.RequestorType.PROXY, requestorType.get());
+          assertTrue("Proxy Authenticator was not consulted", proxyAuthenticatorCalls.get() > 0); //$NON-NLS-1$
+          assertEquals("GET /proxy-auth HTTP/1.1", origin.firstLine); //$NON-NLS-1$
+        }
+        finally
+        {
+          closeHttpClient(client);
+        }
+      }
+    }
+  }
+
 }

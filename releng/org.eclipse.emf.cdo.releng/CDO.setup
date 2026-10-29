@@ -1552,7 +1552,7 @@
         value="4.36"/>
     <setupTask
         xsi:type="jdt:JRETask"
-        version="JavaSE-21"
-        location="${jre.location-21}"/>
+        version="JavaSE-25"
+        location="${jre.location-25}"/>
   </stream>
 </setup:Project>

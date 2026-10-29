@@ -73,45 +73,6 @@ Eike Stepper - initial API and implementation
     <plugins>
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-source-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>feature-source</id>
-            <goals>
-              <goal>feature-source</goal>
-            </goals>
-            <configuration>
-            <labelSuffix xml:space="preserve"> Source</labelSuffix>
-              <excludes>
-                <feature id="org.eclipse.emf.cdo.doc"/>
-                <feature id="org.eclipse.emf.cdo.examples.installer"/>
-                <feature id="org.eclipse.net4j.db.doc"/>
-                <feature id="org.eclipse.net4j.doc"/>
-                <feature id="org.eclipse.net4j.examples.installer"/>
-                <feature id="org.eclipse.net4j.util.doc"/>
-                <plugin id="org.apache.commons.commons-codec"/>
-                <plugin id="org.apache.commons.httpclient"/>
-                <plugin id="org.apache.commons.text"/>
-                <plugin id="org.apache.commons.commons-logging"/>
-                <plugin id="org.apache.derby"/>
-                <plugin id="org.eclipse.emf.cdo.doc"/>
-                <plugin id="org.eclipse.emf.cdo.examples.installer"/>
-                <plugin id="org.eclipse.emf.cdo.releng.help"/>
-                <plugin id="org.eclipse.emf.cdo.releng.apireports"/>
-                <plugin id="org.eclipse.nebula.widgets.gallery"/>
-                <plugin id="org.eclipse.nebula.widgets.pshelf"/>
-                <plugin id="org.eclipse.net4j.db.doc"/>
-                <plugin id="org.eclipse.net4j.doc"/>
-                <plugin id="org.eclipse.net4j.examples.installer"/>
-                <plugin id="org.eclipse.net4j.util.doc"/>
-                <plugin id="com.h2database"/>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-p2-plugin</artifactId>
         <executions>
           <execution>

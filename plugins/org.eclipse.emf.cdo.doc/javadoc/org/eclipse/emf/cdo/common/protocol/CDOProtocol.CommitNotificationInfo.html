@@ -7,86 +7,105 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.emf.cdo.common.protocol, interface: CDOProtocol, class: CommitNotificationInfo">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/CDOProtocol.CommitNotificationInfo.html">Use</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../../search.html">Search</a></li>
 <li><a href="../../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li><a href="#field-summary">Field</a></li>
-<li><a href="#constructor-summary">Constr</a></li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li><a href="#field-detail">Field</a></li>
-<li><a href="#constructor-detail">Constr</a></li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.emf.cdo.common.protocol</a></li>
+<li><a href="CDOProtocol.html">CDOProtocol</a></li>
+<li><a href="CDOProtocol.CommitNotificationInfo.html" class="current-selection">CommitNotificationInfo</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#constructor-summary" tabindex="0">Constructor Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#IMPACT_NONE" tabindex="0">IMPACT_NONE</a></li>
+<li><a href="#IMPACT_PERMISSIONS" tabindex="0">IMPACT_PERMISSIONS</a></li>
+<li><a href="#IMPACT_REALM" tabindex="0">IMPACT_REALM</a></li>
+</ol>
+</li>
+<li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
+<ol class="toc-list">
+<li><a href="#%3Cinit%3E()" tabindex="0">CommitNotificationInfo()</a></li>
+<li><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.protocol.CDODataInput)" tabindex="0">CommitNotificationInfo(CDODataInput)</a></li>
+</ol>
+</li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput)" tabindex="0">write(CDODataOutput)</a></li>
+<li><a href="#getSenderID()" tabindex="0">getSenderID()</a></li>
+<li><a href="#getSender()" tabindex="0">getSender()</a></li>
+<li><a href="#setSender(org.eclipse.emf.cdo.common.CDOCommonSession)" tabindex="0">setSender(CDOCommonSession)</a></li>
+<li><a href="#getRevisionProvider()" tabindex="0">getRevisionProvider()</a></li>
+<li><a href="#setRevisionProvider(org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" tabindex="0">setRevisionProvider(CDORevisionProvider)</a></li>
+<li><a href="#getCommitInfo()" tabindex="0">getCommitInfo()</a></li>
+<li><a href="#setCommitInfo(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)" tabindex="0">setCommitInfo(CDOCommitInfo)</a></li>
+<li><a href="#getNewPermissions()" tabindex="0">getNewPermissions()</a></li>
+<li><a href="#setNewPermissions(java.util.Map)" tabindex="0">setNewPermissions(Map)</a></li>
+<li><a href="#getImpactedRules()" tabindex="0">getImpactedRules()</a></li>
+<li><a href="#setImpactedRules(java.util.Set)" tabindex="0">setImpactedRules(Set)</a></li>
+<li><a href="#getSecurityImpact()" tabindex="0">getSecurityImpact()</a></li>
+<li><a href="#setSecurityImpact(byte)" tabindex="0">setSecurityImpact(byte)</a></li>
+<li><a href="#isClearResourcePathCache()" tabindex="0">isClearResourcePathCache()</a></li>
+<li><a href="#setClearResourcePathCache(boolean)" tabindex="0">setClearResourcePathCache(boolean)</a></li>
+<li><a href="#isModifiedByServer()" tabindex="0">isModifiedByServer()</a></li>
+<li><a href="#setModifiedByServer(boolean)" tabindex="0">setModifiedByServer(boolean)</a></li>
+<li><a href="#getLockChangeInfo()" tabindex="0">getLockChangeInfo()</a></li>
+<li><a href="#setLockChangeInfo(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" tabindex="0">setLockChangeInfo(CDOLockChangeInfo)</a></li>
+<li><a href="#getLockModCount()" tabindex="0">getLockModCount()</a></li>
+<li><a href="#setLockModCount(long)" tabindex="0">setLockModCount(long)</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.protocol</a></div>
 <h1 title="Class CDOProtocol.CommitNotificationInfo" class="title">Class CDOProtocol.CommitNotificationInfo</h1>
 </div>
-<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance">org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo</div>
 </div>
 <section class="class-description" id="class-description">
@@ -95,8 +114,9 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a></code></dd>
 </dl>
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">CDOProtocol.CommitNotificationInfo</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">A data transfer object for commit notifications.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -104,6 +124,7 @@ loadScripts(document, 'script');</script>
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -149,15 +170,15 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCommitInfo()" class="member-name-link">getCommitInfo</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getImpactedRules()" class="member-name-link">getImpactedRules</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></div>
@@ -167,9 +188,9 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLockModCount()" class="member-name-link">getLockModCount</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the exact per-session sequence number of the lock change in this
- notification, or zero if no lock change is included.</div>
+notification, or zero if no lock change is included.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNewPermissions()" class="member-name-link">getNewPermissions</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></code></div>
@@ -197,7 +218,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCommitInfo(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)" class="member-name-link">setCommitInfo</a><wbr>(<a href="../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setImpactedRules(java.util.Set)" class="member-name-link">setImpactedRules</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;impactedRules)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setImpactedRules(java.util.Set)" class="member-name-link">setImpactedRules</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;impactedRules)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLockChangeInfo(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)" class="member-name-link">setLockChangeInfo</a><wbr>(<a href="../lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</code></div>
@@ -206,13 +227,13 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLockModCount(long)" class="member-name-link">setLockModCount</a><wbr>(long&nbsp;lockModCount)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the exact per-session sequence number of the lock change in this
- notification.</div>
+notification.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setModifiedByServer(boolean)" class="member-name-link">setModifiedByServer</a><wbr>(boolean&nbsp;modifiedByServer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNewPermissions(java.util.Map)" class="member-name-link">setNewPermissions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNewPermissions(java.util.Map)" class="member-name-link">setNewPermissions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRevisionProvider(org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">setRevisionProvider</a><wbr>(<a href="../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code></div>
@@ -230,8 +251,8 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -246,6 +267,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="IMPACT_NONE">
 <h3>IMPACT_NONE</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">IMPACT_NONE</span></div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -255,11 +277,13 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="IMPACT_PERMISSIONS">
 <h3>IMPACT_PERMISSIONS</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">IMPACT_PERMISSIONS</span></div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -269,11 +293,13 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="IMPACT_REALM">
 <h3>IMPACT_REALM</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">IMPACT_REALM</span></div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -283,6 +309,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -296,18 +323,22 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CommitNotificationInfo</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CommitNotificationInfo</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(org.eclipse.emf.cdo.common.protocol.CDODataInput)">
 <h3>CommitNotificationInfo</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CommitNotificationInfo</span><wbr><span class="parameters">(<a href="CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in)</span>
-                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -321,166 +352,210 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="write(org.eclipse.emf.cdo.common.protocol.CDODataOutput)">
 <h3>write</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">write</span><wbr><span class="parameters">(<a href="CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out)</span>
-           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSenderID()">
 <h3>getSenderID</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getSenderID</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSender()">
 <h3>getSender</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></span>&nbsp;<span class="element-name">getSender</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setSender(org.eclipse.emf.cdo.common.CDOCommonSession)">
 <h3>setSender</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSender</span><wbr><span class="parameters">(<a href="../CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a>&nbsp;sender)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRevisionProvider()">
 <h3>getRevisionProvider</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></span>&nbsp;<span class="element-name">getRevisionProvider</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setRevisionProvider(org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
 <h3>setRevisionProvider</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRevisionProvider</span><wbr><span class="parameters">(<a href="../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCommitInfo()">
 <h3>getCommitInfo</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">getCommitInfo</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setCommitInfo(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">
 <h3>setCommitInfo</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCommitInfo</span><wbr><span class="parameters">(<a href="../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getNewPermissions()">
 <h3>getNewPermissions</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</span>&nbsp;<span class="element-name">getNewPermissions</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</span>&nbsp;<span class="element-name">getNewPermissions</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setNewPermissions(java.util.Map)">
 <h3>setNewPermissions</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setNewPermissions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setNewPermissions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>, <a href="../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;&nbsp;newPermissions)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getImpactedRules()">
 <h3>getImpactedRules</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">getImpactedRules</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">getImpactedRules</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setImpactedRules(java.util.Set)">
 <h3>setImpactedRules</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setImpactedRules</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;impactedRules)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setImpactedRules</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;impactedRules)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getSecurityImpact()">
 <h3>getSecurityImpact</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">getSecurityImpact</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setSecurityImpact(byte)">
 <h3>setSecurityImpact</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSecurityImpact</span><wbr><span class="parameters">(byte&nbsp;securityImpact)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isClearResourcePathCache()">
 <h3>isClearResourcePathCache</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isClearResourcePathCache</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setClearResourcePathCache(boolean)">
 <h3>setClearResourcePathCache</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setClearResourcePathCache</span><wbr><span class="parameters">(boolean&nbsp;clearResourcePathCache)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isModifiedByServer()">
 <h3>isModifiedByServer</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isModifiedByServer</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.8</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setModifiedByServer(boolean)">
 <h3>setModifiedByServer</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setModifiedByServer</span><wbr><span class="parameters">(boolean&nbsp;modifiedByServer)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.8</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLockChangeInfo()">
 <h3>getLockChangeInfo</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></span>&nbsp;<span class="element-name">getLockChangeInfo</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setLockChangeInfo(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo)">
 <h3>setLockChangeInfo</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLockChangeInfo</span><wbr><span class="parameters">(<a href="../lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;lockChangeInfo)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLockModCount()">
 <h3>getLockModCount</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getLockModCount</span>()</div>
 <div class="block">Returns the exact per-session sequence number of the lock change in this
- notification, or zero if no lock change is included.</div>
+notification, or zero if no lock change is included.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.29</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setLockModCount(long)">
 <h3>setLockModCount</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setLockModCount</span><wbr><span class="parameters">(long&nbsp;lockModCount)</span></div>
 <div class="block">Sets the exact per-session sequence number of the lock change in this
- notification.</div>
+notification.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.29</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -489,12 +564,11 @@ loadScripts(document, 'script');</script>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

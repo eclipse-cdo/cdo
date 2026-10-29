@@ -7,96 +7,96 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.net4j.util.security, class: SecurityUtil">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/SecurityUtil.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../search.html">Search</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li><a href="#field-summary">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li><a href="#field-detail">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.net4j.util.security</a></li>
+<li><a href="SecurityUtil.html" class="current-selection">SecurityUtil</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#PBE_WITH_MD5_AND_DES" tabindex="0">PBE_WITH_MD5_AND_DES</a></li>
+<li><a href="#DEFAULT_SALT" tabindex="0">DEFAULT_SALT</a></li>
+<li><a href="#DEFAULT_ITERATION_COUNT" tabindex="0">DEFAULT_ITERATION_COUNT</a></li>
+</ol>
+</li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#pbe(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int,int)" tabindex="0">pbe(byte[], char[], String, byte[], int, int)</a></li>
+<li><a href="#pbeDecrypt(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int)" tabindex="0">pbeDecrypt(byte[], char[], String, byte[], int)</a></li>
+<li><a href="#pbeEncrypt(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int)" tabindex="0">pbeEncrypt(byte[], char[], String, byte[], int)</a></li>
+<li><a href="#toString(char%5B%5D)" tabindex="0">toString(char[])</a></li>
+<li><a href="#toCharArray(java.lang.String)" tabindex="0">toCharArray(String)</a></li>
+<li><a href="#getAuthorizationContext()" tabindex="0">getAuthorizationContext()</a></li>
+<li><a href="#setAuthorizationContext(java.util.Map)" tabindex="0">setAuthorizationContext(Map)</a></li>
+<li><a href="#withAuthorizationContext(java.util.Map,java.lang.Runnable)" tabindex="0">withAuthorizationContext(Map, Runnable)</a></li>
+<li><a href="#encrypt(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int)" tabindex="0">encrypt(byte[], char[], String, byte[], int)</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.security</a></div>
 <h1 title="Class SecurityUtil" class="title">Class SecurityUtil</h1>
 </div>
-<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance">org.eclipse.net4j.util.security.SecurityUtil</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">SecurityUtil</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -115,7 +115,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static final byte[]</code></div>
 <div class="col-second odd-row-color"><code><a href="#DEFAULT_SALT" class="member-name-link">DEFAULT_SALT</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#PBE_WITH_MD5_AND_DES" class="member-name-link">PBE_WITH_MD5_AND_DES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -127,15 +127,15 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static byte[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#encrypt(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int)" class="member-name-link">encrypt</a><wbr>(byte[]&nbsp;data,
  char[]&nbsp;password,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
  byte[]&nbsp;salt,
  int&nbsp;count)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
@@ -143,13 +143,13 @@ loadScripts(document, 'script');</script>
 <div class="deprecation-comment">As of 3.3.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAuthorizationContext()" class="member-name-link">getAuthorizationContext</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#pbe(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int,int)" class="member-name-link">pbe</a><wbr>(byte[]&nbsp;data,
  char[]&nbsp;password,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
  byte[]&nbsp;salt,
  int&nbsp;count,
  int&nbsp;mode)</code></div>
@@ -157,36 +157,36 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#pbeDecrypt(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int)" class="member-name-link">pbeDecrypt</a><wbr>(byte[]&nbsp;data,
  char[]&nbsp;password,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
  byte[]&nbsp;salt,
  int&nbsp;count)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#pbeEncrypt(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int)" class="member-name-link">pbeEncrypt</a><wbr>(byte[]&nbsp;data,
  char[]&nbsp;password,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
  byte[]&nbsp;salt,
  int&nbsp;count)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setAuthorizationContext(java.util.Map)" class="member-name-link">setAuthorizationContext</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;authorizationContext)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setAuthorizationContext(java.util.Map)" class="member-name-link">setAuthorizationContext</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;authorizationContext)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static char[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#toCharArray(java.lang.String)" class="member-name-link">toCharArray</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#toCharArray(java.lang.String)" class="member-name-link">toCharArray</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#toString(char%5B%5D)" class="member-name-link">toString</a><wbr>(char[]&nbsp;chars)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withAuthorizationContext(java.util.Map,java.lang.Runnable)" class="member-name-link">withAuthorizationContext</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;authorizationContext,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#withAuthorizationContext(java.util.Map,java.lang.Runnable)" class="member-name-link">withAuthorizationContext</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;authorizationContext,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -201,7 +201,8 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="PBE_WITH_MD5_AND_DES">
 <h3>PBE_WITH_MD5_AND_DES</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PBE_WITH_MD5_AND_DES</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PBE_WITH_MD5_AND_DES</span></div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
@@ -210,21 +211,25 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="DEFAULT_SALT">
 <h3>DEFAULT_SALT</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">DEFAULT_SALT</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="DEFAULT_ITERATION_COUNT">
 <h3>DEFAULT_ITERATION_COUNT</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">DEFAULT_ITERATION_COUNT</span></div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -236,6 +241,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -249,173 +255,191 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="pbe(byte[],char[],java.lang.String,byte[],int,int)">
 <h3>pbe</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">pbe</span><wbr><span class="parameters">(byte[]&nbsp;data,
  char[]&nbsp;password,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
  byte[]&nbsp;salt,
  int&nbsp;count,
  int&nbsp;mode)</span>
-                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></span></div>
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></code></dd>
 <dt>Since:</dt>
 <dd>3.13</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="pbeDecrypt(byte[],char[],java.lang.String,byte[],int)">
 <h3>pbeDecrypt</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">pbeDecrypt</span><wbr><span class="parameters">(byte[]&nbsp;data,
  char[]&nbsp;password,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
  byte[]&nbsp;salt,
  int&nbsp;count)</span>
-                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></span></div>
+                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></code></dd>
 <dt>Since:</dt>
 <dd>3.13</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="pbeEncrypt(byte[],char[],java.lang.String,byte[],int)">
 <h3>pbeEncrypt</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">pbeEncrypt</span><wbr><span class="parameters">(byte[]&nbsp;data,
  char[]&nbsp;password,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
  byte[]&nbsp;salt,
  int&nbsp;count)</span>
-                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></span></div>
+                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></code></dd>
 <dt>Since:</dt>
 <dd>3.13</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="toString(char[])">
 <h3>toString</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span><wbr><span class="parameters">(char[]&nbsp;chars)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span><wbr><span class="parameters">(char[]&nbsp;chars)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.14</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="toCharArray(java.lang.String)">
 <h3>toCharArray</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char[]</span>&nbsp;<span class="element-name">toCharArray</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">char[]</span>&nbsp;<span class="element-name">toCharArray</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.14</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAuthorizationContext()">
 <h3>getAuthorizationContext</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">getAuthorizationContext</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">getAuthorizationContext</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.23</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setAuthorizationContext(java.util.Map)">
 <h3>setAuthorizationContext</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAuthorizationContext</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;authorizationContext)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setAuthorizationContext</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;authorizationContext)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.23</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="withAuthorizationContext(java.util.Map,java.lang.Runnable)">
 <h3>withAuthorizationContext</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">withAuthorizationContext</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;authorizationContext,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">withAuthorizationContext</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;authorizationContext,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.23</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="encrypt(byte[],char[],java.lang.String,byte[],int)">
 <h3>encrypt</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">encrypt</span><wbr><span class="parameters">(byte[]&nbsp;data,
  char[]&nbsp;password,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;algorithmName,
  byte[]&nbsp;salt,
  int&nbsp;count)</span>
-                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></span></div>
+                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a>,
+<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 3.3. use <a href="#pbeEncrypt(byte%5B%5D,char%5B%5D,java.lang.String,byte%5B%5D,int)"><code>pbeEncrypt(byte[], char[], String, byte[], int)</code></a>.</div>
 </div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a></code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/NoSuchAlgorithmException.html" title="class or interface in java.security" class="external-link">NoSuchAlgorithmException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/spec/InvalidKeySpecException.html" title="class or interface in java.security.spec" class="external-link">InvalidKeySpecException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/NoSuchPaddingException.html" title="class or interface in javax.crypto" class="external-link">NoSuchPaddingException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidKeyException.html" title="class or interface in java.security" class="external-link">InvalidKeyException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/security/InvalidAlgorithmParameterException.html" title="class or interface in java.security" class="external-link">InvalidAlgorithmParameterException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/IllegalBlockSizeException.html" title="class or interface in javax.crypto" class="external-link">IllegalBlockSizeException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/javax/crypto/BadPaddingException.html" title="class or interface in javax.crypto" class="external-link">BadPaddingException</a></code></dd>
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -424,12 +448,11 @@ loadScripts(document, 'script');</script>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

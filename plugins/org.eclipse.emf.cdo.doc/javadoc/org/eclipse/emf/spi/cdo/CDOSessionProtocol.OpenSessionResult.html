@@ -7,86 +7,120 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.emf.spi.cdo, interface: CDOSessionProtocol, class: OpenSessionResult">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/CDOSessionProtocol.OpenSessionResult.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../search.html">Search</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li><a href="#nested-class-summary">Nested</a></li>
-<li>Field</li>
-<li><a href="#constructor-summary">Constr</a></li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li>Field</li>
-<li><a href="#constructor-detail">Constr</a></li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.emf.spi.cdo</a></li>
+<li><a href="CDOSessionProtocol.html">CDOSessionProtocol</a></li>
+<li><a href="CDOSessionProtocol.OpenSessionResult.html" class="current-selection">OpenSessionResult</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
+<li><a href="#constructor-summary" tabindex="0">Constructor Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#constructor-detail" tabindex="0">Constructor Details</a>
+<ol class="toc-list">
+<li><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.protocol.CDODataInput,int)" tabindex="0">OpenSessionResult(CDODataInput, int)</a></li>
+<li><a href="#%3Cinit%3E(int,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.CDOCommonRepository.Type,org.eclipse.emf.cdo.common.CDOCommonRepository.State,java.lang.String,java.util.Set,long,long,org.eclipse.emf.cdo.common.id.CDOID,boolean,boolean,boolean,boolean,org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)" tabindex="0">OpenSessionResult(int, String, String, CDOCommonRepository.Type, CDOCommonRepository.State, String, Set, long, long, CDOID, boolean, boolean, boolean, boolean, CDOCommonRepository.IDGenerationLocation)</a></li>
+</ol>
+</li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#getSessionID()" tabindex="0">getSessionID()</a></li>
+<li><a href="#getUserID()" tabindex="0">getUserID()</a></li>
+<li><a href="#getUUID()" tabindex="0">getUUID()</a></li>
+<li><a href="#getName()" tabindex="0">getName()</a></li>
+<li><a href="#getType()" tabindex="0">getType()</a></li>
+<li><a href="#getState()" tabindex="0">getState()</a></li>
+<li><a href="#getStoreType()" tabindex="0">getStoreType()</a></li>
+<li><a href="#getObjectIDTypes()" tabindex="0">getObjectIDTypes()</a></li>
+<li><a href="#getRootResourceID()" tabindex="0">getRootResourceID()</a></li>
+<li><a href="#getCreationTime()" tabindex="0">getCreationTime()</a></li>
+<li><a href="#isAuthenticating()" tabindex="0">isAuthenticating()</a></li>
+<li><a href="#isSupportingLoginPeeks()" tabindex="0">isSupportingLoginPeeks()</a></li>
+<li><a href="#isSupportingAudits()" tabindex="0">isSupportingAudits()</a></li>
+<li><a href="#isSupportingBranches()" tabindex="0">isSupportingBranches()</a></li>
+<li><a href="#isSupportingUnits()" tabindex="0">isSupportingUnits()</a></li>
+<li><a href="#isSupportingEcore()" tabindex="0">isSupportingEcore()</a></li>
+<li><a href="#isSerializingCommits()" tabindex="0">isSerializingCommits()</a></li>
+<li><a href="#isEnsuringReferentialIntegrity()" tabindex="0">isEnsuringReferentialIntegrity()</a></li>
+<li><a href="#isAuthorizingOperations()" tabindex="0">isAuthorizingOperations()</a></li>
+<li><a href="#getIDGenerationLocation()" tabindex="0">getIDGenerationLocation()</a></li>
+<li><a href="#getLobDigestAlgorithm()" tabindex="0">getLobDigestAlgorithm()</a></li>
+<li><a href="#getCommitInfoStorage()" tabindex="0">getCommitInfoStorage()</a></li>
+<li><a href="#getAuthorizationResults()" tabindex="0">getAuthorizationResults()</a></li>
+<li><a href="#getClientEntities()" tabindex="0">getClientEntities()</a></li>
+<li><a href="#getTagModCount()" tabindex="0">getTagModCount()</a></li>
+<li><a href="#getLockModCount()" tabindex="0">getLockModCount()</a></li>
+<li><a href="#getOpeningTime()" tabindex="0">getOpeningTime()</a></li>
+<li><a href="#getLastUpdateTime()" tabindex="0">getLastUpdateTime()</a></li>
+<li><a href="#getPackageUnits()" tabindex="0">getPackageUnits()</a></li>
+<li><a href="#getRepositoryTimeResult()" tabindex="0">getRepositoryTimeResult()</a></li>
+<li><a href="#setRepositoryTimeResult(org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult)" tabindex="0">setRepositoryTimeResult(CDOSessionProtocol.RepositoryTimeResult)</a></li>
+<li><a href="#getTimeStamp()" tabindex="0">getTimeStamp()</a></li>
+<li><a href="#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)" tabindex="0">waitWhileInitial(IProgressMonitor)</a></li>
+<li><a href="#getRepositoryUUID()" tabindex="0">getRepositoryUUID()</a></li>
+<li><a href="#getRepositoryType()" tabindex="0">getRepositoryType()</a></li>
+<li><a href="#getRepositoryState()" tabindex="0">getRepositoryState()</a></li>
+<li><a href="#getRepositoryCreationTime()" tabindex="0">getRepositoryCreationTime()</a></li>
+<li><a href="#isRepositoryAuthenticating()" tabindex="0">isRepositoryAuthenticating()</a></li>
+<li><a href="#isRepositorySupportingAudits()" tabindex="0">isRepositorySupportingAudits()</a></li>
+<li><a href="#isRepositorySupportingBranches()" tabindex="0">isRepositorySupportingBranches()</a></li>
+<li><a href="#isRepositorySupportingEcore()" tabindex="0">isRepositorySupportingEcore()</a></li>
+<li><a href="#isRepositorySerializingCommits()" tabindex="0">isRepositorySerializingCommits()</a></li>
+<li><a href="#isRepositoryEnsuringReferentialIntegrity()" tabindex="0">isRepositoryEnsuringReferentialIntegrity()</a></li>
+<li><a href="#getRepositoryIDGenerationLocation()" tabindex="0">getRepositoryIDGenerationLocation()</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.spi.cdo</a></div>
 <h1 title="Class CDOSessionProtocol.OpenSessionResult" class="title">Class CDOSessionProtocol.OpenSessionResult</h1>
 </div>
-<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html" title="class or interface in org.eclipse.core.runtime" class="external-link">org.eclipse.core.runtime.PlatformObject</a>
 <div class="inheritance">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult</div>
 </div>
@@ -94,18 +128,19 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a></code>, <code><a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code>, <code><a href="../../cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
+<dd><code><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a>, <a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>, <a href="../../cdo/common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Enclosing interface:</dt>
 <dd><code><a href="CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></code></dd>
 </dl>
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">CDOSessionProtocol.OpenSessionResult</span>
 <span class="extends-implements">extends <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html" title="class or interface in org.eclipse.core.runtime" class="external-link">PlatformObject</a>
 implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></span></div>
 <div class="block">Carries the repository metadata and initial session state returned when a client opens a session. The session uses
- this response to initialize its repository view and to determine which repository capabilities are available.</div>
+this response to initialize its repository view and to determine which repository capabilities are available.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
@@ -114,6 +149,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>No Instantiate</dt>
 <dd>This class is not intended to be instantiated by clients.</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -122,7 +158,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.common.CDOCommonRepository">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h2>
+<h3 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.common.CDOCommonRepository">Nested classes/interfaces inherited from interface&nbsp;<a href="../../cdo/common/CDOCommonRepository.html#nested-class-summary" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
 <code><a href="../../cdo/common/CDOCommonRepository.CommitInfoStorage.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.CommitInfoStorage</a>, <a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a>, <a href="../../cdo/common/CDOCommonRepository.ListOrdering.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.ListOrdering</a>, <a href="../../cdo/common/CDOCommonRepository.Mode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Mode</a>, <a href="../../cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>, <a href="../../cdo/common/CDOCommonRepository.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.StateChangedEvent</a>, <a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>, <a href="../../cdo/common/CDOCommonRepository.TypeChangedEvent.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository.TypeChangedEvent</a></code></div>
 </section>
 </li>
@@ -135,12 +171,12 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.CDOCommonRepository.Type,org.eclipse.emf.cdo.common.CDOCommonRepository.State,java.lang.String,java.util.Set,long,long,org.eclipse.emf.cdo.common.id.CDOID,boolean,boolean,boolean,boolean,org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)" class="member-name-link">OpenSessionResult</a><wbr>(int&nbsp;sessionID,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryUUID,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryUUID,
  <a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;repositoryType,
  <a href="../../cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;repositoryState,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;storeType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum class in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;storeType,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum class in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes,
  long&nbsp;repositoryCreationTime,
  long&nbsp;lastUpdateTime,
  <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID,
@@ -166,12 +202,12 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAuthorizationResults()" class="member-name-link">getAuthorizationResults</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.collection.Entity[]</code></div>
@@ -191,7 +227,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastUpdateTime()" class="member-name-link">getLastUpdateTime</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLobDigestAlgorithm()" class="member-name-link">getLobDigestAlgorithm</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
@@ -199,12 +235,12 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the server-side lock sequence cutoff inherited by this session.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the name of this repository.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum class in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum class in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getObjectIDTypes()" class="member-name-link">getObjectIDTypes</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the type of CDOIDs created by the store of this repository.</div>
@@ -212,7 +248,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOpeningTime()" class="member-name-link">getOpeningTime</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../../cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPackageUnits()" class="member-name-link">getPackageUnits</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>long</code></div>
@@ -246,7 +282,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <div class="deprecation-comment">As of 4.5 use <a href="#getType()"><code>getType()</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getRepositoryUUID()" class="member-name-link">getRepositoryUUID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
@@ -266,7 +302,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the state of this repository.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStoreType()" class="member-name-link">getStoreType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the type of the store of this repository.</div>
@@ -282,10 +318,10 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the type of this repository.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUserID()" class="member-name-link">getUserID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUUID()" class="member-name-link">getUUID</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the UUID of this repository.</div>
@@ -387,16 +423,16 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.core.runtime.PlatformObject">Methods inherited from class&nbsp;org.eclipse.core.runtime.<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html" title="class or interface in org.eclipse.core.runtime" class="external-link">PlatformObject</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.core.runtime.PlatformObject">Methods inherited from class&nbsp;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html#method-summary" title="class or interface in org.eclipse.core.runtime" class="external-link">PlatformObject</a></h3>
 <code><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/PlatformObject.html#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime" class="external-link">getAdapter</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.CDOCommonRepository">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
-<code><a href="../../cdo/common/CDOCommonRepository.html#getMode()">getMode</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.CDOCommonRepository">Methods inherited from interface&nbsp;<a href="../../cdo/common/CDOCommonRepository.html#method-summary" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
+<code><a href="../../cdo/common/CDOCommonRepository.html#getMode()" title="getMode()">getMode</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.core.runtime.IAdaptable">Methods inherited from interface&nbsp;org.eclipse.core.runtime.<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.core.runtime.IAdaptable">Methods inherited from interface&nbsp;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html#method-summary" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a></h3>
 <code><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html#getAdapter-java.lang.Class-" title="class or interface in org.eclipse.core.runtime" class="external-link">getAdapter</a></code></div>
 </section>
 </li>
@@ -412,28 +448,31 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <li>
 <section class="detail" id="&lt;init&gt;(org.eclipse.emf.cdo.common.protocol.CDODataInput,int)">
 <h3>OpenSessionResult</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">OpenSessionResult</span><wbr><span class="parameters">(<a href="../../cdo/common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
  int&nbsp;sessionID)</span>
-                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 <dt>Since:</dt>
 <dd>4.4</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.CDOCommonRepository.Type,org.eclipse.emf.cdo.common.CDOCommonRepository.State,java.lang.String,java.util.Set,long,long,org.eclipse.emf.cdo.common.id.CDOID,boolean,boolean,boolean,boolean,org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation)">
 <h3>OpenSessionResult</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="element-name">OpenSessionResult</span><wbr><span class="parameters">(int&nbsp;sessionID,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryUUID,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryUUID,
  <a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a>&nbsp;repositoryType,
  <a href="../../cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;repositoryState,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;storeType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum class in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;storeType,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum class in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes,
  long&nbsp;repositoryCreationTime,
  long&nbsp;lastUpdateTime,
  <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID,
@@ -449,6 +488,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -462,23 +502,28 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <li>
 <section class="detail" id="getSessionID()">
 <h3>getSessionID</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getSessionID</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getUserID()">
 <h3>getUserID</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUserID</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUserID</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getUUID()">
 <h3>getUUID</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUUID</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUUID</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#getUUID()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns the UUID of this repository.</div>
 <dl class="notes">
@@ -487,12 +532,14 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getName()">
 <h3>getName</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getName</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getName</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#getName()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns the name of this repository.</div>
 <dl class="notes">
@@ -501,11 +548,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getType()">
 <h3>getType</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></span>&nbsp;<span class="element-name">getType</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#getType()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns the type of this repository.</div>
@@ -515,11 +564,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getState()">
 <h3>getState</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></span>&nbsp;<span class="element-name">getState</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#getState()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns the state of this repository.</div>
@@ -529,12 +580,14 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStoreType()">
 <h3>getStoreType</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getStoreType</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getStoreType</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#getStoreType()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns the type of the store of this repository.</div>
 <dl class="notes">
@@ -543,12 +596,14 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getObjectIDTypes()">
 <h3>getObjectIDTypes</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum class in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</span>&nbsp;<span class="element-name">getObjectIDTypes</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../cdo/common/id/CDOID.ObjectType.html" title="enum class in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</span>&nbsp;<span class="element-name">getObjectIDTypes</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#getObjectIDTypes()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns the type of CDOIDs created by the store of this repository.</div>
 <dl class="notes">
@@ -557,11 +612,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRootResourceID()">
 <h3>getRootResourceID</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">getRootResourceID</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#getRootResourceID()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns the ID of the root resource of this repository.</div>
@@ -571,11 +628,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCreationTime()">
 <h3>getCreationTime</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getCreationTime</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#getCreationTime()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns the creation time of this repository.</div>
@@ -585,11 +644,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isAuthenticating()">
 <h3>isAuthenticating</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAuthenticating</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#isAuthenticating()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns <code>true</code> if this repository requires user authentication, <code>false</code> otherwise.</div>
@@ -599,11 +660,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSupportingLoginPeeks()">
 <h3>isSupportingLoginPeeks</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSupportingLoginPeeks</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#isSupportingLoginPeeks()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns <code>true</code> if this repository supports login peeking, <code>false</code> otherwise.</div>
@@ -611,11 +674,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Specified by:</dt>
 <dd><code><a href="../../cdo/common/CDOCommonRepository.html#isSupportingLoginPeeks()">isSupportingLoginPeeks</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSupportingAudits()">
 <h3>isSupportingAudits</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSupportingAudits</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#isSupportingAudits()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.</div>
@@ -625,11 +690,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSupportingBranches()">
 <h3>isSupportingBranches</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSupportingBranches</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#isSupportingBranches()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns <code>true</code> if this repository supports branching, <code>false</code> otherwise.</div>
@@ -639,11 +706,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSupportingUnits()">
 <h3>isSupportingUnits</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSupportingUnits</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#isSupportingUnits()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns <code>true</code> if this repository supports units, <code>false</code> otherwise.</div>
@@ -653,12 +722,14 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSupportingEcore()">
 <h3>isSupportingEcore</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSupportingEcore</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 instances of Ecore are always supported (on demand).</div>
@@ -671,11 +742,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isSerializingCommits()">
 <h3>isSerializingCommits</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSerializingCommits</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#isSerializingCommits()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns <code>true</code> if this repository serializes commits, <code>false</code> otherwise.</div>
@@ -685,11 +758,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isEnsuringReferentialIntegrity()">
 <h3>isEnsuringReferentialIntegrity</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEnsuringReferentialIntegrity</span>()</div>
 <div class="block"><span class="description-from-type-label">Description copied from interface:&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()">CDOCommonRepository</a></code></span></div>
 <div class="block">Returns <code>true</code> if this repository ensures referential integrity, <code>false</code> otherwise.</div>
@@ -699,11 +774,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isAuthorizingOperations()">
 <h3>isAuthorizingOperations</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isAuthorizingOperations</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -711,11 +788,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIDGenerationLocation()">
 <h3>getIDGenerationLocation</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></span>&nbsp;<span class="element-name">getIDGenerationLocation</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -723,21 +802,25 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLobDigestAlgorithm()">
 <h3>getLobDigestAlgorithm</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getLobDigestAlgorithm</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getLobDigestAlgorithm</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="../../cdo/common/CDOCommonRepository.html#getLobDigestAlgorithm()">getLobDigestAlgorithm</a></code>&nbsp;in interface&nbsp;<code><a href="../../cdo/common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code></dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCommitInfoStorage()">
 <h3>getCommitInfoStorage</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/common/CDOCommonRepository.CommitInfoStorage.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.CommitInfoStorage</a></span>&nbsp;<span class="element-name">getCommitInfoStorage</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -745,92 +828,112 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAuthorizationResults()">
 <h3>getAuthorizationResults</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getAuthorizationResults</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getAuthorizationResults</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getClientEntities()">
 <h3>getClientEntities</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.collection.Entity[]</span>&nbsp;<span class="element-name">getClientEntities</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.27</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTagModCount()">
 <h3>getTagModCount</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getTagModCount</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.11</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLockModCount()">
 <h3>getLockModCount</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getLockModCount</span>()</div>
 <div class="block">Returns the server-side lock sequence cutoff inherited by this session.
- This is a stale-carrier cutoff and does not imply that a client cache is
- synchronized to that count.</div>
+This is a stale-carrier cutoff and does not imply that a client cache is
+synchronized to that count.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.31</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getOpeningTime()">
 <h3>getOpeningTime</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getOpeningTime</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.13</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLastUpdateTime()">
 <h3>getLastUpdateTime</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getLastUpdateTime</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPackageUnits()">
 <h3>getPackageUnits</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</span>&nbsp;<span class="element-name">getPackageUnits</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../cdo/spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>&gt;</span>&nbsp;<span class="element-name">getPackageUnits</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRepositoryTimeResult()">
 <h3>getRepositoryTimeResult</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a></span>&nbsp;<span class="element-name">getRepositoryTimeResult</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setRepositoryTimeResult(org.eclipse.emf.spi.cdo.CDOSessionProtocol.RepositoryTimeResult)">
 <h3>setRepositoryTimeResult</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setRepositoryTimeResult</span><wbr><span class="parameters">(<a href="CDOSessionProtocol.RepositoryTimeResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.RepositoryTimeResult</a>&nbsp;repositoryTimeResult)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTimeStamp()">
 <h3>getTimeStamp</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getTimeStamp</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -838,11 +941,13 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)">
 <h3>waitWhileInitial</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">waitWhileInitial</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -850,22 +955,26 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRepositoryUUID()">
 <h3>getRepositoryUUID</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getRepositoryUUID</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getRepositoryUUID</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#getUUID()"><code>getUUID()</code></a>.</div>
+</div>
 </div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRepositoryType()">
 <h3>getRepositoryType</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/common/CDOCommonRepository.Type.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.Type</a></span>&nbsp;<span class="element-name">getRepositoryType</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#getType()"><code>getType()</code></a>.</div>
@@ -874,12 +983,14 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRepositoryState()">
 <h3>getRepositoryState</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/common/CDOCommonRepository.State.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a></span>&nbsp;<span class="element-name">getRepositoryState</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#getState()"><code>getState()</code></a>.</div>
@@ -888,22 +999,26 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRepositoryCreationTime()">
 <h3>getRepositoryCreationTime</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getRepositoryCreationTime</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#getCreationTime()"><code>getCreationTime()</code></a>.</div>
+</div>
 </div>
 </section>
 </li>
 <li>
 <section class="detail" id="isRepositoryAuthenticating()">
 <h3>isRepositoryAuthenticating</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRepositoryAuthenticating</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#isAuthenticating()"><code>isAuthenticating()</code></a>.</div>
@@ -912,22 +1027,26 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.4</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isRepositorySupportingAudits()">
 <h3>isRepositorySupportingAudits</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRepositorySupportingAudits</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#isSupportingAudits()"><code>isSupportingAudits()</code></a>.</div>
+</div>
 </div>
 </section>
 </li>
 <li>
 <section class="detail" id="isRepositorySupportingBranches()">
 <h3>isRepositorySupportingBranches</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRepositorySupportingBranches</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#isSupportingBranches()"><code>isSupportingBranches()</code></a>.</div>
@@ -936,22 +1055,26 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isRepositorySupportingEcore()">
 <h3>isRepositorySupportingEcore</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRepositorySupportingEcore</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 instances of Ecore are always supported (on demand).</div>
+</div>
 </div>
 </section>
 </li>
 <li>
 <section class="detail" id="isRepositorySerializingCommits()">
 <h3>isRepositorySerializingCommits</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRepositorySerializingCommits</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#isSerializingCommits()"><code>isSerializingCommits()</code></a>.</div>
@@ -960,12 +1083,14 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isRepositoryEnsuringReferentialIntegrity()">
 <h3>isRepositoryEnsuringReferentialIntegrity</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isRepositoryEnsuringReferentialIntegrity</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#isEnsuringReferentialIntegrity()"><code>isEnsuringReferentialIntegrity()</code></a>.</div>
@@ -974,12 +1099,14 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getRepositoryIDGenerationLocation()">
 <h3>getRepositoryIDGenerationLocation</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonRepository.IDGenerationLocation</a></span>&nbsp;<span class="element-name">getRepositoryIDGenerationLocation</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.5 use <a href="#getIDGenerationLocation()"><code>getIDGenerationLocation()</code></a>.</div>
@@ -988,6 +1115,7 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 <dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -996,12 +1124,11 @@ implements <a href="../../cdo/common/CDOCommonRepository.html" title="interface 
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

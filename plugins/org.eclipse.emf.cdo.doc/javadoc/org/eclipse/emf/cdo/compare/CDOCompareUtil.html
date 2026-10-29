@@ -7,122 +7,121 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.emf.cdo.compare, class: CDOCompareUtil">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/CDOCompareUtil.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../search.html">Search</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li><a href="#field-summary">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li><a href="#field-detail">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.emf.cdo.compare</a></li>
+<li><a href="CDOCompareUtil.html" class="current-selection">CDOCompareUtil</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#DEFAULT_VIEW_OPENER" tabindex="0">DEFAULT_VIEW_OPENER</a></li>
+</ol>
+</li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#getScope(org.eclipse.emf.compare.Comparison)" tabindex="0">getScope(Comparison)</a></li>
+<li><a href="#compare(org.eclipse.emf.compare.scope.IComparisonScope)" tabindex="0">compare(IComparisonScope)</a></li>
+<li><a href="#compare(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D)" tabindex="0">compare(CDOObject, CDOView, CDOView[])</a></li>
+<li><a href="#compare(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,org.eclipse.emf.cdo.view.CDOViewOpener)" tabindex="0">compare(CDOObject, CDOView, CDOView[], CDOViewOpener)</a></li>
+<li><a href="#compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D)" tabindex="0">compare(CDOView, CDOView, CDOView[])</a></li>
+<li><a href="#compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,org.eclipse.emf.cdo.view.CDOViewOpener)" tabindex="0">compare(CDOView, CDOView, CDOView[], CDOViewOpener)</a></li>
+<li><a href="#compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,java.util.Set)" tabindex="0">compare(CDOView, CDOView, CDOView[], Set)</a></li>
+<li><a href="#compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,java.util.Set,org.eclipse.emf.cdo.view.CDOViewOpener)" tabindex="0">compare(CDOView, CDOView, CDOView[], Set, CDOViewOpener)</a></li>
+<li><a href="#compareUncommittedChanges(org.eclipse.emf.cdo.transaction.CDOTransaction)" tabindex="0">compareUncommittedChanges(CDOTransaction)</a></li>
+<li><a href="#compareUncommittedChanges(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.view.CDOViewOpener)" tabindex="0">compareUncommittedChanges(CDOTransaction, CDOViewOpener)</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.compare</a></div>
 <h1 title="Class CDOCompareUtil" class="title">Class CDOCompareUtil</h1>
 </div>
-<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance">org.eclipse.emf.cdo.compare.CDOCompareUtil</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">CDOCompareUtil</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Provides static factory methods that return CDO-scoped <code>comparisons</code>.
- <p>
- Two different <code>scopes</code> are supported:
- <ul>
- <li><a href="CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare"><code>CDOComparisonScope.AllContents</code></a> takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>)
- and returns <code>matches</code> for <b>all</b> elements of its <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eAllContents--" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>content tree</code></a>. This scope has the advantage that the comparison can
- be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
- matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
- The following method returns comparisons that are based on this scope algorithm:
- <ul>
- <li><a href="#compare(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D)"><code>compare(CDOObject, CDOView, CDOView[])</code></a>
- </ul>
- <li><a href="CDOComparisonScope.Minimal.html" title="class in org.eclipse.emf.cdo.compare"><code>CDOComparisonScope.Minimal</code></a> takes a <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
- and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.
- The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
- objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
- The following method returns comparisons that are based on this scope algorithm:
- <ul>
- <li><a href="#compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D)"><code>compare(CDOView, CDOView, CDOView[])</code></a>
- </ul>
- </ul>
- The <code>origin side</code> of a comparison is automatically <a href="../spi/common/branch/CDOBranchUtil.html#getAncestor(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>determined</code></a> by
- inspecting the <a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch tree</code></a> and used if its different from the left or right side.
- <p>
- The <code>matcher</code> used by the comparisons is based on an <a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.
- <a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>Resources</code></a> and <a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>folders</code></a> are treated as normal <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObject</code></a>s.</div>
+<p>
+Two different <code>scopes</code> are supported:
+<ul>
+<li><a href="CDOComparisonScope.AllContents.html" title="class in org.eclipse.emf.cdo.compare"><code>CDOComparisonScope.AllContents</code></a> takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>)
+and returns <code>matches</code> for <b>all</b> elements of its <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eAllContents--" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>content tree</code></a>. This scope has the advantage that the comparison can
+be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
+matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.
+The following method returns comparisons that are based on this scope algorithm:
+<ul>
+<li><a href="#compare(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D)"><code>compare(CDOObject, CDOView, CDOView[])</code></a>
+</ul>
+<li><a href="CDOComparisonScope.Minimal.html" title="class in org.eclipse.emf.cdo.compare"><code>CDOComparisonScope.Minimal</code></a> takes a <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
+and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.
+The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
+objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.
+The following method returns comparisons that are based on this scope algorithm:
+<ul>
+<li><a href="#compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D)"><code>compare(CDOView, CDOView, CDOView[])</code></a>
+</ul>
+</ul>
+The <code>origin side</code> of a comparison is automatically <a href="../spi/common/branch/CDOBranchUtil.html#getAncestor(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>determined</code></a> by
+inspecting the <a href="../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch tree</code></a> and used if its different from the left or right side.
+<p>
+The <code>matcher</code> used by the comparisons is based on an <a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of the <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.
+<a href="../eresource/CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>Resources</code></a> and <a href="../eresource/CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>folders</code></a> are treated as normal <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObject</code></a>s.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -147,8 +146,8 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -173,19 +172,19 @@ loadScripts(document, 'script');</script>
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Takes a <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
- and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.</div>
+and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.eclipse.emf.compare.Comparison</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,java.util.Set)" class="member-name-link">compare</a><wbr>(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.eclipse.emf.compare.Comparison</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView%5B%5D,java.util.Set,org.eclipse.emf.cdo.view.CDOViewOpener)" class="member-name-link">compare</a><wbr>(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.eclipse.emf.compare.Comparison</code></div>
@@ -195,7 +194,7 @@ loadScripts(document, 'script');</script>
  <a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Takes a <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
- and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.</div>
+and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.eclipse.emf.compare.Comparison</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compare(org.eclipse.emf.compare.scope.IComparisonScope)" class="member-name-link">compare</a><wbr>(org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope)</code></div>
@@ -214,8 +213,8 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -230,11 +229,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="DEFAULT_VIEW_OPENER">
 <h3>DEFAULT_VIEW_OPENER</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a></span>&nbsp;<span class="element-name">DEFAULT_VIEW_OPENER</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -248,113 +249,133 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getScope(org.eclipse.emf.compare.Comparison)">
 <h3>getScope</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.scope.IComparisonScope</span>&nbsp;<span class="element-name">getScope</span><wbr><span class="parameters">(org.eclipse.emf.compare.Comparison&nbsp;comparison)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(org.eclipse.emf.compare.scope.IComparisonScope)">
 <h3>compare</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[])">
 <h3>compare</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</span></div>
 <div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eAllContents--" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>content tree</code></a>. This scope has the advantage that the comparison can
- be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
- matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.</div>
+be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
+matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[],org.eclipse.emf.cdo.view.CDOViewOpener)">
 <h3>compare</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a>&nbsp;left,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
  <a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</span></div>
 <div class="block">Takes an arbitrary <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>object</code></a> (including <a href="../eresource/CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>resource nodes</code></a>) and returns <code>matches</code> for <b>all</b> elements of its <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eAllContents--" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>content tree</code></a>. This scope has the advantage that the comparison can
- be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
- matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.</div>
+be rooted at specific objects that are different from (below of) the root resource. The disadvantage is that all the transitive children of this specific object are
+matched, whether they differ or not. Major parts of huge repositories can be loaded to the client side easily, if no attention is paid.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[])">
 <h3>compare</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView)</span></div>
 <div class="block">Takes a <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
- and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.
- The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
- objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.</div>
+and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.
+The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
+objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[],org.eclipse.emf.cdo.view.CDOViewOpener)">
 <h3>compare</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
  <a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</span></div>
 <div class="block">Takes a <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>/<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>
- and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.
- The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
- objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.</div>
+and returns <code>matches</code> only for the <b>changed</b> elements of the entire content tree of its <a href="../view/CDOView.html#getRootResource()"><code>root resource</code></a>.
+The advantage of this scope is that CDO-specific mechanisms are used to efficiently (remotely) determine the set of changed objects. Only those and their container
+objects are considered as matches, making this scope scale seamlessly with the overall size of a repository.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[],java.util.Set)">
 <h3>compare</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.view.CDOView[],java.util.Set,org.eclipse.emf.cdo.view.CDOViewOpener)">
 <h3>compare</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;leftView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;rightView,
  <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>[]&nbsp;originView,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  <a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compareUncommittedChanges(org.eclipse.emf.cdo.transaction.CDOTransaction)">
 <h3>compareUncommittedChanges</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compareUncommittedChanges</span><wbr><span class="parameters">(<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="compareUncommittedChanges(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.view.CDOViewOpener)">
 <h3>compareUncommittedChanges</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compareUncommittedChanges</span><wbr><span class="parameters">(<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
  <a href="../view/CDOViewOpener.html" title="interface in org.eclipse.emf.cdo.view">CDOViewOpener</a>&nbsp;viewOpener)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -363,12 +384,11 @@ loadScripts(document, 'script');</script>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

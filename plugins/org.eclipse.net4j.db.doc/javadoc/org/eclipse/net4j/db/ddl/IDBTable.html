@@ -7,95 +7,107 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.net4j.db.ddl, interface: IDBTable">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/IDBTable.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../search.html">Search</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li><a href="#nested-class-summary">Nested</a></li>
-<li>Field</li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li>Field</li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.net4j.db.ddl</a></li>
+<li><a href="IDBTable.html" class="current-selection">IDBTable</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#getParent()" tabindex="0">getParent()</a></li>
+<li><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType)" tabindex="0">addField(String, DBType)</a></li>
+<li><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,boolean)" tabindex="0">addField(String, DBType, boolean)</a></li>
+<li><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int)" tabindex="0">addField(String, DBType, int)</a></li>
+<li><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,boolean)" tabindex="0">addField(String, DBType, int, boolean)</a></li>
+<li><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,int)" tabindex="0">addField(String, DBType, int, int)</a></li>
+<li><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)" tabindex="0">addField(String, DBType, int, int, boolean)</a></li>
+<li><a href="#ensureField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)" tabindex="0">ensureField(String, DBType, int, int, boolean)</a></li>
+<li><a href="#getFieldSafe(java.lang.String)" tabindex="0">getFieldSafe(String)</a></li>
+<li><a href="#getField(java.lang.String)" tabindex="0">getField(String)</a></li>
+<li><a href="#getField(int)" tabindex="0">getField(int)</a></li>
+<li><a href="#getFieldCount()" tabindex="0">getFieldCount()</a></li>
+<li><a href="#getFields()" tabindex="0">getFields()</a></li>
+<li><a href="#getFields(java.lang.String...)" tabindex="0">getFields(String...)</a></li>
+<li><a href="#hasIndexFor(org.eclipse.net4j.db.ddl.IDBField...)" tabindex="0">hasIndexFor(IDBField...)</a></li>
+<li><a href="#addIndex(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField...)" tabindex="0">addIndex(String, IDBIndex.Type, IDBField...)</a></li>
+<li><a href="#addIndex(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,java.lang.String...)" tabindex="0">addIndex(String, IDBIndex.Type, String...)</a></li>
+<li><a href="#addIndexEmpty(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type)" tabindex="0">addIndexEmpty(String, IDBIndex.Type)</a></li>
+<li><a href="#addIndex(org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField...)" tabindex="0">addIndex(IDBIndex.Type, IDBField...)</a></li>
+<li><a href="#addIndex(org.eclipse.net4j.db.ddl.IDBIndex.Type,java.lang.String...)" tabindex="0">addIndex(IDBIndex.Type, String...)</a></li>
+<li><a href="#addIndexEmpty(org.eclipse.net4j.db.ddl.IDBIndex.Type)" tabindex="0">addIndexEmpty(IDBIndex.Type)</a></li>
+<li><a href="#getIndexSafe(java.lang.String)" tabindex="0">getIndexSafe(String)</a></li>
+<li><a href="#getIndex(java.lang.String)" tabindex="0">getIndex(String)</a></li>
+<li><a href="#getIndex(int)" tabindex="0">getIndex(int)</a></li>
+<li><a href="#getIndexCount()" tabindex="0">getIndexCount()</a></li>
+<li><a href="#getIndices()" tabindex="0">getIndices()</a></li>
+<li><a href="#getPrimaryKeyIndex()" tabindex="0">getPrimaryKeyIndex()</a></li>
+<li><a href="#as(java.lang.String)" tabindex="0">as(String)</a></li>
+<li><a href="#sqlInsert()" tabindex="0">sqlInsert()</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.db.ddl</a></div>
 <h1 title="Interface IDBTable" class="title">Interface IDBTable</h1>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a>&gt;</code>, <code>org.eclipse.net4j.util.container.IContainer&lt;<a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a>&gt;</code>, <code><a href="IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a></code>, <code><a href="IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a></code>, <code><a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a></code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a>&gt;, org.eclipse.net4j.util.container.IContainer&lt;<a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a>&gt;, <a href="IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>, <a href="IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>, <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a>, org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
 <dd><code><a href="../../spi/db/ddl/InternalDBTable.html" title="interface in org.eclipse.net4j.spi.db.ddl">InternalDBTable</a></code></dd>
 </dl>
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IDBTable</span><span class="extends-implements">
 extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a></span></div>
 <div class="block">A table specification in a <a href="IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl"><code>DB schema</code></a>.</div>
@@ -107,6 +119,7 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>No Extend</dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -126,13 +139,13 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 </div>
 </div>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.container.IContainer">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h2>
+<h3 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.container.IContainer">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
 <code>org.eclipse.net4j.util.container.IContainer.Modifiable&lt;E&gt;, org.eclipse.net4j.util.container.IContainer.Persistable&lt;E&gt;, org.eclipse.net4j.util.container.IContainer.Persistence&lt;E&gt;</code></div>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.db.ddl.IDBSchemaElement">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.db.ddl.<a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a></h2>
+<h3 id="nested-classes-inherited-from-class-org.eclipse.net4j.db.ddl.IDBSchemaElement">Nested classes/interfaces inherited from interface&nbsp;<a href="IDBSchemaElement.html#nested-class-summary" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a></h3>
 <code><a href="IDBSchemaElement.SchemaElementType.html" title="enum class in org.eclipse.net4j.db.ddl">IDBSchemaElement.SchemaElementType</a></code></div>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h2>
+<h3 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
 <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></div>
 </section>
 </li>
@@ -142,76 +155,76 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,boolean)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,boolean)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  boolean&nbsp;notNull)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,boolean)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,boolean)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision,
  boolean&nbsp;notNull)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,int)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,int)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision,
  int&nbsp;scale)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)" class="member-name-link">addField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision,
  int&nbsp;scale,
  boolean&nbsp;notNull)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndex(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,java.lang.String...)" class="member-name-link">addIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndex(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,java.lang.String...)" class="member-name-link">addIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndex(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">addIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndex(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">addIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
  <a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndex(org.eclipse.net4j.db.ddl.IDBIndex.Type,java.lang.String...)" class="member-name-link">addIndex</a><wbr>(<a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndex(org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">addIndex</a><wbr>(<a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
  <a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndexEmpty(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type)" class="member-name-link">addIndexEmpty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndexEmpty(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type)" class="member-name-link">addIndexEmpty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addIndexEmpty(org.eclipse.net4j.db.ddl.IDBIndex.Type)" class="member-name-link">addIndexEmpty</a><wbr>(<a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="../dml/SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#as(java.lang.String)" class="member-name-link">as</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#as(java.lang.String)" class="member-name-link">as</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Creates a table reference with the given SQL alias.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#ensureField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)" class="member-name-link">ensureField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#ensureField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)" class="member-name-link">ensureField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision,
  int&nbsp;scale,
@@ -221,7 +234,7 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getField(int)" class="member-name-link">getField</a><wbr>(int&nbsp;position)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getField(java.lang.String)" class="member-name-link">getField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getField(java.lang.String)" class="member-name-link">getField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFieldCount()" class="member-name-link">getFieldCount</a>()</code></div>
@@ -230,22 +243,22 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFields()" class="member-name-link">getFields</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFields(java.lang.String...)" class="member-name-link">getFields</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFields(java.lang.String...)" class="member-name-link">getFields</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFieldSafe(java.lang.String)" class="member-name-link">getFieldSafe</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFieldSafe(java.lang.String)" class="member-name-link">getFieldSafe</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIndex(int)" class="member-name-link">getIndex</a><wbr>(int&nbsp;position)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIndex(java.lang.String)" class="member-name-link">getIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIndex(java.lang.String)" class="member-name-link">getIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIndexCount()" class="member-name-link">getIndexCount</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIndexSafe(java.lang.String)" class="member-name-link">getIndexSafe</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIndexSafe(java.lang.String)" class="member-name-link">getIndexSafe</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIndices()" class="member-name-link">getIndices</a>()</code></div>
@@ -259,7 +272,7 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#hasIndexFor(org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">hasIndexFor</a><wbr>(<a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sqlInsert()" class="member-name-link">sqlInsert</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
@@ -270,20 +283,20 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Comparable">Methods inherited from interface&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html#compareTo(T)" title="class or interface in java.lang" class="external-link">compareTo</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Comparable">Methods inherited from interface&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Comparable.html#method-summary" title="class or interface in java.lang" class="external-link">Comparable</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Comparable.html#compareTo(T)" title="class or interface in java.lang" class="external-link">compareTo</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.container.IContainer">Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
 <code>getElements, isEmpty</code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.net4j.db.ddl.IDBElement">Methods inherited from interface&nbsp;org.eclipse.net4j.db.ddl.<a href="IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a></h3>
-<code><a href="IDBElement.html#getProperties()">getProperties</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.db.ddl.IDBElement">Methods inherited from interface&nbsp;<a href="IDBElement.html#method-summary" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a></h3>
+<code><a href="IDBElement.html#getProperties()" title="getProperties()">getProperties</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.net4j.db.ddl.IDBNamedElement">Methods inherited from interface&nbsp;org.eclipse.net4j.db.ddl.<a href="IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a></h3>
-<code><a href="IDBNamedElement.html#getName()">getName</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.db.ddl.IDBNamedElement">Methods inherited from interface&nbsp;<a href="IDBNamedElement.html#method-summary" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a></h3>
+<code><a href="IDBNamedElement.html#getName()" title="getName()">getName</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.net4j.db.ddl.IDBSchemaElement">Methods inherited from interface&nbsp;org.eclipse.net4j.db.ddl.<a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a></h3>
-<code><a href="IDBSchemaElement.html#accept(org.eclipse.net4j.db.ddl.IDBSchemaVisitor)">accept</a>, <a href="IDBSchemaElement.html#getElement(java.lang.Class,java.lang.String)">getElement</a>, <a href="IDBSchemaElement.html#getFullName()">getFullName</a>, <a href="IDBSchemaElement.html#getSchema()">getSchema</a>, <a href="IDBSchemaElement.html#getSchemaElementType()">getSchemaElementType</a>, <a href="IDBSchemaElement.html#remove()">remove</a>, <a href="IDBSchemaElement.html#setName(java.lang.String)">setName</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.db.ddl.IDBSchemaElement">Methods inherited from interface&nbsp;<a href="IDBSchemaElement.html#method-summary" title="interface in org.eclipse.net4j.db.ddl">IDBSchemaElement</a></h3>
+<code><a href="IDBSchemaElement.html#accept(org.eclipse.net4j.db.ddl.IDBSchemaVisitor)" title="accept(IDBSchemaVisitor)">accept</a>, <a href="IDBSchemaElement.html#getElement(java.lang.Class,java.lang.String)" title="getElement(Class, String)">getElement</a>, <a href="IDBSchemaElement.html#getFullName()" title="getFullName()">getFullName</a>, <a href="IDBSchemaElement.html#getSchema()" title="getSchema()">getSchema</a>, <a href="IDBSchemaElement.html#getSchemaElementType()" title="getSchemaElementType()">getSchemaElementType</a>, <a href="IDBSchemaElement.html#remove()" title="remove()">remove</a>, <a href="IDBSchemaElement.html#setName(java.lang.String)" title="setName(String)">setName</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
 <code>addListener, getListeners, hasListeners, removeListener</code></div>
@@ -301,6 +314,7 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <li>
 <section class="detail" id="getParent()">
 <h3>getParent</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></span>&nbsp;<span class="element-name">getParent</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
@@ -310,63 +324,77 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addField(java.lang.String,org.eclipse.net4j.db.DBType)">
 <h3>addField</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addField(java.lang.String,org.eclipse.net4j.db.DBType,boolean)">
 <h3>addField</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  boolean&nbsp;notNull)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addField(java.lang.String,org.eclipse.net4j.db.DBType,int)">
 <h3>addField</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addField(java.lang.String,org.eclipse.net4j.db.DBType,int,boolean)">
 <h3>addField</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision,
  boolean&nbsp;notNull)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addField(java.lang.String,org.eclipse.net4j.db.DBType,int,int)">
 <h3>addField</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision,
  int&nbsp;scale)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)">
 <h3>addField</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">addField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision,
  int&nbsp;scale,
  boolean&nbsp;notNull)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="ensureField(java.lang.String,org.eclipse.net4j.db.DBType,int,int,boolean)">
 <h3>ensureField</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">ensureField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">ensureField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../DBType.html" title="enum class in org.eclipse.net4j.db">DBType</a>&nbsp;type,
  int&nbsp;precision,
  int&nbsp;scale,
@@ -375,12 +403,14 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.14</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFieldSafe(java.lang.String)">
 <h3>getFieldSafe</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">getFieldSafe</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">getFieldSafe</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span>
                throws <span class="exceptions"><a href="SchemaElementNotFoundException.html" title="class in org.eclipse.net4j.db.ddl">SchemaElementNotFoundException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -388,36 +418,46 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getField(java.lang.String)">
 <h3>getField</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">getField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">getField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getField(int)">
 <h3>getField</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a></span>&nbsp;<span class="element-name">getField</span><wbr><span class="parameters">(int&nbsp;position)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFieldCount()">
 <h3>getFieldCount</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getFieldCount</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFields()">
 <h3>getFields</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]</span>&nbsp;<span class="element-name">getFields</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFields(java.lang.String...)">
 <h3>getFields</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]</span>&nbsp;<span class="element-name">getFields</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</span>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>[]</span>&nbsp;<span class="element-name">getFields</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</span>
               throws <span class="exceptions"><a href="SchemaElementNotFoundException.html" title="class in org.eclipse.net4j.db.ddl">SchemaElementNotFoundException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -425,36 +465,42 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="hasIndexFor(org.eclipse.net4j.db.ddl.IDBField...)">
 <h3>hasIndexFor</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">hasIndexFor</span><wbr><span class="parameters">(<a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addIndex(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField...)">
 <h3>addIndex</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
  <a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addIndex(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,java.lang.String...)">
 <h3>addIndex</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</span>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</span>
            throws <span class="exceptions"><a href="SchemaElementNotFoundException.html" title="class in org.eclipse.net4j.db.ddl">SchemaElementNotFoundException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -462,31 +508,37 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addIndexEmpty(java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type)">
 <h3>addIndexEmpty</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndexEmpty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndexEmpty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addIndex(org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField...)">
 <h3>addIndex</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndex</span><wbr><span class="parameters">(<a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
  <a href="IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addIndex(org.eclipse.net4j.db.ddl.IDBIndex.Type,java.lang.String...)">
 <h3>addIndex</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndex</span><wbr><span class="parameters">(<a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</span>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;fieldNames)</span>
            throws <span class="exceptions"><a href="SchemaElementNotFoundException.html" title="class in org.eclipse.net4j.db.ddl">SchemaElementNotFoundException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -494,22 +546,26 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addIndexEmpty(org.eclipse.net4j.db.ddl.IDBIndex.Type)">
 <h3>addIndexEmpty</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">addIndexEmpty</span><wbr><span class="parameters">(<a href="IDBIndex.Type.html" title="enum class in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIndexSafe(java.lang.String)">
 <h3>getIndexSafe</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">getIndexSafe</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">getIndexSafe</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span>
                throws <span class="exceptions"><a href="SchemaElementNotFoundException.html" title="class in org.eclipse.net4j.db.ddl">SchemaElementNotFoundException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -517,50 +573,62 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIndex(java.lang.String)">
 <h3>getIndex</h3>
-<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">getIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">getIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIndex(int)">
 <h3>getIndex</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">getIndex</span><wbr><span class="parameters">(int&nbsp;position)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIndexCount()">
 <h3>getIndexCount</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getIndexCount</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getIndices()">
 <h3>getIndices</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a>[]</span>&nbsp;<span class="element-name">getIndices</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getPrimaryKeyIndex()">
 <h3>getPrimaryKeyIndex</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IDBIndex.html" title="interface in org.eclipse.net4j.db.ddl">IDBIndex</a></span>&nbsp;<span class="element-name">getPrimaryKeyIndex</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="as(java.lang.String)">
 <h3>as</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../dml/SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></span>&nbsp;<span class="element-name">as</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../dml/SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></span>&nbsp;<span class="element-name">as</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
 <div class="block">Creates a table reference with the given SQL alias.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -570,13 +638,15 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="sqlInsert()">
 <h3>sqlInsert</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">sqlInsert</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">sqlInsert</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Use <a href="../dml/SQL.html#insertInto(org.eclipse.net4j.db.ddl.IDBTable)"><code>SQL.insertInto(IDBTable)</code></a> to create a structured INSERT definition.</div>
 </div>
@@ -585,6 +655,7 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 <dt>Returns:</dt>
 <dd>the INSERT statement text</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -593,12 +664,11 @@ extends <a href="IDBSchemaElement.html" title="interface in org.eclipse.net4j.db
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

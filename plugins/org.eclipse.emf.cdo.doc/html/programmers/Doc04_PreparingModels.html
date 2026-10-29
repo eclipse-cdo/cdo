@@ -78,7 +78,7 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- <b>Table of Contents</b> <p>
+<b>Table of Contents</b> <p>
 <table border="0">
 <tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_PreparingModels.html#Doc_CreatingEcore" title="Chapter in CDO Model Repository Documentation">Creating an Ecore Model</a></td></tr>
 <tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc04_PreparingModels.html#Doc_UsingImporter" title="Chapter in CDO Model Repository Documentation">Using the CDO Model Importer</a></td></tr>
@@ -92,18 +92,18 @@ function maximize(id)
 
 <h2><a name="Doc_CreatingEcore"></a>1&nbsp;&nbsp;Creating an Ecore Model</h2>
 <p>
- There's really not much to say about this step. The .ecore file for CDO models is the same as for pure EMF models.
- Use the Empty EMF Project New Wizard to create an initial project for your model:
- <p align="center"><img src="EmptyEMFProject.png">
+There's really not much to say about this step. The .ecore file for CDO models is the same as for pure EMF models.
+Use the Empty EMF Project New Wizard to create an initial project for your model:
+<p align="center"><img src="EmptyEMFProject.png">
 
- <p>
- Create an ordinary Ecore model file in the models folder.
- The model1 example model in the usual Ecore model editor looks like follows:
- <p align="center"><img src="Model1Ecore.png">
+<p>
+Create an ordinary Ecore model file in the models folder.
+The model1 example model in the usual Ecore model editor looks like follows:
+<p align="center"><img src="Model1Ecore.png">
 
- <p>
- The XML representation of this Ecore model is:
- 
+<p>
+The XML representation of this Ecore model is:
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_Doc_CreatingEcore_1"></a>
@@ -202,82 +202,82 @@ function maximize(id)
 </div>
 <p>
 
- <p>
- The model project should look similar to this, now:
- <p align="center"><img src="Model1Project.png">
+<p>
+The model project should look similar to this, now:
+<p align="center"><img src="Model1Project.png">
 
 
 <h2><a name="Doc_UsingImporter"></a>2&nbsp;&nbsp;Using the CDO Model Importer</h2>
 <p>
- The CDO SDK contributes an Ecore model importer to the EMF Generator Model wizard. It creates a
- GenModel configured for CDO-native generated objects and adjusts CDO-specific generator
- properties. Choose this importer when generated instances should participate directly in CDO's
- object and revision APIs. An ordinary EMF model can also be used in legacy mode, but generated
- objects then need CDO's adaptation layer and do not necessarily implement CDOObject.
- Right-click the Ecore model file and select New and Other... and choose the EMF Generator Model New Wizard:
- <p align="center"><img src="Migrator0.png">
+The CDO SDK contributes an Ecore model importer to the EMF Generator Model wizard. It creates a
+GenModel configured for CDO-native generated objects and adjusts CDO-specific generator
+properties. Choose this importer when generated instances should participate directly in CDO's
+object and revision APIs. An ordinary EMF model can also be used in legacy mode, but generated
+objects then need CDO's adaptation layer and do not necessarily implement CDOObject.
+Right-click the Ecore model file and select New and Other... and choose the EMF Generator Model New Wizard:
+<p align="center"><img src="Migrator0.png">
 
- <p align="center"><img src="Migrator1.png">
+<p align="center"><img src="Migrator1.png">
 
- <p>
- On the next page, the Select a Model Importer page, select the Ecore model (CDO native) importer:
- <p align="center"><img src="Migrator2.png">
+<p>
+On the next page, the Select a Model Importer page, select the Ecore model (CDO native) importer:
+<p align="center"><img src="Migrator2.png">
 
- <p>
- On the next page, the Ecore Import page, click the Load button:
- <p align="center"><img src="Migrator3.png">
+<p>
+On the next page, the Ecore Import page, click the Load button:
+<p align="center"><img src="Migrator3.png">
 
- <p>
- On the next page, the Package Selection page, adjust the settings depending on your model and its referenced models:
- <p align="center"><img src="Migrator4.png">
+<p>
+On the next page, the Package Selection page, adjust the settings depending on your model and its referenced models:
+<p align="center"><img src="Migrator4.png">
 
- <p>
- After clicking the Finish button your model project should look similar to this (please note that the CDO marker
- file META-INF/CDO.MF has also been created by the importer):
- <p align="center"><img src="Migrator5.png">
+<p>
+After clicking the Finish button your model project should look similar to this (please note that the CDO marker
+file META-INF/CDO.MF has also been created by the importer):
+<p align="center"><img src="Migrator5.png">
 
 
 <h2><a name="Doc_UsingMigrator"></a>3&nbsp;&nbsp;Using the CDO Model Migrator</h2>
 <p>
- To convert an existing GenModel, select the CDO Model Migrator action contributed by the SDK.
- It adjusts the GenModel in place; review and save those changes before regenerating model code.
- Keep generated code synchronized with the updated GenModel rather than editing generated
- implementation classes by hand.
- <p align="center"><img src="Migrator6.png">
+To convert an existing GenModel, select the CDO Model Migrator action contributed by the SDK.
+It adjusts the GenModel in place; review and save those changes before regenerating model code.
+Keep generated code synchronized with the updated GenModel rather than editing generated
+implementation classes by hand.
+<p align="center"><img src="Migrator6.png">
 
- <p>
- In case the generator model was successfully migrated to CDO the following dialog box will appear:
- <p align="center"><img src="Migrator7.png">
+<p>
+In case the generator model was successfully migrated to CDO the following dialog box will appear:
+<p align="center"><img src="Migrator7.png">
 
- <p>
- Proceed with Generate The Model.
+<p>
+Proceed with Generate The Model.
 
 <h2><a name="Doc_MigratingManually"></a>4&nbsp;&nbsp;Migrating a GenModel Manually</h2>
 <p>
- If you migrate a GenModel manually, use the current CDO migrator defaults as the reference. It
- adjusts feature delegation, generated base types, and generator flags so generated objects use
- CDO's reflective feature storage path. The relevant properties are:
- <ul>
- <li> The <i>Feature Delegation</i> property is set to <code>Reflective</code>.
- <li> The <i>Root Extends Class</i> property is set to <a href="../../javadoc/org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="Class in org.eclipse.emf.internal.cdo"><code>org.eclipse.emf.internal.cdo.CDOObjectImpl</code></a>.
-       The migrator currently selects this implementation base for generated native models. It
-       is a generator/runtime dependency, not an application API; application code should use
-       the public <a href="../../javadoc/org/eclipse/emf/cdo/CDOObject.html" title="Interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> contract.
- <li> The <i>Root Extends Interface</i> property is set to <a href="../../javadoc/org/eclipse/emf/cdo/CDOObject.html" title="Interface in org.eclipse.emf.cdo"><code>org.eclipse.emf.cdo.CDOObject</code></a>.
- <li> Model plug-in variables include <code>CDO=org.eclipse.emf.cdo</code>. If generating an edit
-       plug-in, edit plug-in variables include <code>CDO_EDIT=org.eclipse.emf.cdo.edit</code> and
-       the provider root class is <code>org.eclipse.emf.cdo.edit.CDOItemProviderAdapter</code>.
- <li> Boolean flags are disabled and packed enums are disabled, as configured by the migrator.
- </ul>
- <p align="center"><img src="GenModel.png">
+If you migrate a GenModel manually, use the current CDO migrator defaults as the reference. It
+adjusts feature delegation, generated base types, and generator flags so generated objects use
+CDO's reflective feature storage path. The relevant properties are:
+<ul>
+<li> The <i>Feature Delegation</i> property is set to <code>Reflective</code>.
+<li> The <i>Root Extends Class</i> property is set to <a href="../../javadoc/org/eclipse/emf/internal/cdo/CDOObjectImpl.html" title="Class in org.eclipse.emf.internal.cdo"><code>org.eclipse.emf.internal.cdo.CDOObjectImpl</code></a>.
+      The migrator currently selects this implementation base for generated native models. It
+      is a generator/runtime dependency, not an application API; application code should use
+      the public <a href="../../javadoc/org/eclipse/emf/cdo/CDOObject.html" title="Interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> contract.
+<li> The <i>Root Extends Interface</i> property is set to <a href="../../javadoc/org/eclipse/emf/cdo/CDOObject.html" title="Interface in org.eclipse.emf.cdo"><code>org.eclipse.emf.cdo.CDOObject</code></a>.
+<li> Model plug-in variables include <code>CDO=org.eclipse.emf.cdo</code>. If generating an edit
+      plug-in, edit plug-in variables include <code>CDO_EDIT=org.eclipse.emf.cdo.edit</code> and
+      the provider root class is <code>org.eclipse.emf.cdo.edit.CDOItemProviderAdapter</code>.
+<li> Boolean flags are disabled and packed enums are disabled, as configured by the migrator.
+</ul>
+<p align="center"><img src="GenModel.png">
 
- <p>
- Note that you do not need to generate an editor if you want to use your model with the <a href="../users/Doc01_UserInterface.html" title="Article in CDO Model Repository Documentation">CDO User Interface</a>
- A dedicated <a href="../users/Doc07_UsingModels.html#Doc_EditingModelElementsEditor" title="Chapter in CDO Model Repository Documentation">model editor</a> is only needed if you plan to use your model with normal XML based files as well.
- Even in this scenario it could be simpler to use the EMF Reflective Model Editor though.
- <p>
- The XML representation of this GenModel is:
- 
+<p>
+Note that you do not need to generate an editor if you want to use your model with the <a href="../users/Doc01_UserInterface.html" title="Article in CDO Model Repository Documentation">CDO User Interface</a>
+A dedicated <a href="../users/Doc07_UsingModels.html#Doc_EditingModelElementsEditor" title="Chapter in CDO Model Repository Documentation">model editor</a> is only needed if you plan to use your model with normal XML based files as well.
+Even in this scenario it could be simpler to use the EMF Reflective Model Editor though.
+<p>
+The XML representation of this GenModel is:
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_Doc_MigratingManually_1"></a>
@@ -376,21 +376,21 @@ function maximize(id)
 
 <h2><a name="Doc_GeneratingModel"></a>5&nbsp;&nbsp;Generating a Model</h2>
 <p>
- Generate the Java code for your model as you are used to do it:
- <p align="center"><img src="GenerateTheModel.png">
+Generate the Java code for your model as you are used to do it:
+<p align="center"><img src="GenerateTheModel.png">
 
- <p>
- The result of the generation can look similar to this (some artifacts are hidden to remove noise from the Package Explorer):
- <p align="center"><img src="GeneratorResults.png">
+<p>
+The result of the generation can look similar to this (some artifacts are hidden to remove noise from the Package Explorer):
+<p align="center"><img src="GeneratorResults.png">
 
 
 <h2><a name="Doc_ModifyingGeneratedCode"></a>6&nbsp;&nbsp;Modifying Generated Getters and Setters</h2>
 <p>
- Reflective feature delegation lets CDO intercept generated model feature access and store values
- in revision data. Custom getters and setters must preserve that path; switching delegation to
- <code>None</code> can make generated Java fields diverge from repository-backed state. Keep
- custom behavior in generated accessor overrides that delegate to the compatible reflective
- implementation, and verify the generated code against the EMF/CDO versions in use.
+Reflective feature delegation lets CDO intercept generated model feature access and store values
+in revision data. Custom getters and setters must preserve that path; switching delegation to
+<code>None</code> can make generated Java fields diverge from repository-backed state. Keep
+custom behavior in generated accessor overrides that delegate to the compatible reflective
+implementation, and verify the generated code against the EMF/CDO versions in use.
 
 <p align="right">
 <a href="Doc03_PreparingWorkspace.html" title="Backward to Preparing the Workspace"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="client/index.html" title="Forward to Developing Client Applications"><img src="../../images/forward.png" border="0"></a></p>

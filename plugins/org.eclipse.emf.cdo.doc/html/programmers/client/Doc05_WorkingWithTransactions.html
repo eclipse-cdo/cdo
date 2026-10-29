@@ -78,16 +78,16 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- A <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> is a read-write <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the current state of a repository
- branch. It shares the view concepts explained in <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>, but additionally records local
- model changes until they are committed or rolled back.
- <p>
- A root transaction commit is the operation that persists the effective changes in the repository. Savepoints and
- nested scopes are client-side composition mechanisms; completing either one does not create a repository commit.
- Server applications that validate or observe these commits use the supported handlers described in
- <a href="../server/Doc07_RepositoryHandlersAndCommitProcessing.html" title="Article in CDO Model Repository Documentation">Repository Handlers and Commit Processing</a>.
- <p>
- <b>Table of Contents</b> <p>
+A <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> is a read-write <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>view</code></a> on the current state of a repository
+branch. It shares the view concepts explained in <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a>, but additionally records local
+model changes until they are committed or rolled back.
+<p>
+A root transaction commit is the operation that persists the effective changes in the repository. Savepoints and
+nested scopes are client-side composition mechanisms; completing either one does not create a repository commit.
+Server applications that validate or observe these commits use the supported handlers described in
+<a href="../server/Doc07_RepositoryHandlersAndCommitProcessing.html" title="Article in CDO Model Repository Documentation">Repository Handlers and Commit Processing</a>.
+<p>
+<b>Table of Contents</b> <p>
 <table border="0">
 <tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#CreatingAndManagingTransactions" title="Chapter in CDO Model Repository Documentation">Creating and Managing Transactions</a></td></tr>
 <tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc05_WorkingWithTransactions.html#LocalChangesAndDirtyState" title="Chapter in CDO Model Repository Documentation">Local Changes and Dirty State</a></td></tr>
@@ -109,16 +109,16 @@ function maximize(id)
 
 <h2><a name="CreatingAndManagingTransactions"></a>1&nbsp;&nbsp;Creating and Managing Transactions</h2>
 <p>
- Transactions are opened from a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a>. The session supplies the repository connection and
- the transaction owns its view and resource set until it is closed. The common overload of
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionContainer"><code>openTransaction()</code></a> and the more specific overloads inherited from
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionContainer</code></a> allow an application to select a branch point,
- resource set, or durable-locking identity.
- <p>
- A transaction remains usable after a successful commit, so an application can perform another unit of work or
- close it. Closing the transaction releases its client-side resources; it does not replace commit or rollback.
+Transactions are opened from a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a>. The session supplies the repository connection and
+the transaction owns its view and resource set until it is closed. The common overload of
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionContainer"><code>openTransaction()</code></a> and the more specific overloads inherited from
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionContainer</code></a> allow an application to select a branch point,
+resource set, or durable-locking identity.
+<p>
+A transaction remains usable after a successful commit, so an application can perform another unit of work or
+close it. Closing the transaction releases its client-side resources; it does not replace commit or rollback.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_CreatingAndManagingTransactions_1"></a>
@@ -162,15 +162,15 @@ function maximize(id)
 
 <h2><a name="LocalChangesAndDirtyState"></a>2&nbsp;&nbsp;Local Changes and Dirty State</h2>
 <p>
- A transaction is dirty when it contains uncommitted changes. The public transaction API exposes separate maps
- for new, detached, and modified objects through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getNewObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getNewObjects()</code></a>,
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getDetachedObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getDetachedObjects()</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getDirtyObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getDirtyObjects()</code></a>.
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getRevisionDeltas()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getRevisionDeltas()</code></a> exposes the revision-level changes.
- <p>
- These collections describe the transaction's current local state. They are not a second repository history and
- are cleared or reduced as changes are committed or rolled back.
+A transaction is dirty when it contains uncommitted changes. The public transaction API exposes separate maps
+for new, detached, and modified objects through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getNewObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getNewObjects()</code></a>,
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getDetachedObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getDetachedObjects()</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getDirtyObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getDirtyObjects()</code></a>.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getRevisionDeltas()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getRevisionDeltas()</code></a> exposes the revision-level changes.
+<p>
+These collections describe the transaction's current local state. They are not a second repository history and
+are cleared or reduced as changes are committed or rolled back.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_LocalChangesAndDirtyState_1"></a>
@@ -210,17 +210,17 @@ function maximize(id)
 
 <h2><a name="CommittingChanges"></a>3&nbsp;&nbsp;Committing Changes</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.commit()</code></a> sends the transaction's effective changes to the repository and returns a
- <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info</code></a> object. The transaction stays open after a successful commit. Commit comments
- and arbitrary commit properties can be set with <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommitComment(java.lang.String)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommitComment(String)</code></a> and
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommitProperty(java.lang.String,java.lang.String)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommitProperty(String, String)</code></a>; committed metadata can be observed through the
- <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info manager</code></a>.
- <p>
- A commit can fail with <a href="../../../javadoc/org/eclipse/emf/cdo/util/CommitException.html" title="Class in org.eclipse.emf.cdo.util"><code>CommitException</code></a>, including a <a href="../../../javadoc/org/eclipse/emf/cdo/util/CommitConflictException.html" title="Class in org.eclipse.emf.cdo.util"><code>CommitConflictException</code></a> or an
- <a href="../../../javadoc/org/eclipse/emf/cdo/util/OptimisticLockingException.html" title="Class in org.eclipse.emf.cdo.util"><code>OptimisticLockingException</code></a>. Applications must not assume that acquiring explicit locks eliminates every
- possible commit failure.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.commit()</code></a> sends the transaction's effective changes to the repository and returns a
+<a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfo.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info</code></a> object. The transaction stays open after a successful commit. Commit comments
+and arbitrary commit properties can be set with <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommitComment(java.lang.String)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommitComment(String)</code></a> and
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommitProperty(java.lang.String,java.lang.String)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommitProperty(String, String)</code></a>; committed metadata can be observed through the
+<a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoManager.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>commit-info manager</code></a>.
+<p>
+A commit can fail with <a href="../../../javadoc/org/eclipse/emf/cdo/util/CommitException.html" title="Class in org.eclipse.emf.cdo.util"><code>CommitException</code></a>, including a <a href="../../../javadoc/org/eclipse/emf/cdo/util/CommitConflictException.html" title="Class in org.eclipse.emf.cdo.util"><code>CommitConflictException</code></a> or an
+<a href="../../../javadoc/org/eclipse/emf/cdo/util/OptimisticLockingException.html" title="Class in org.eclipse.emf.cdo.util"><code>OptimisticLockingException</code></a>. Applications must not assume that acquiring explicit locks eliminates every
+possible commit failure.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_CommittingChanges_1"></a>
@@ -253,17 +253,17 @@ function maximize(id)
 
 <h2><a name="CommitRetryAndConflicts"></a>4&nbsp;&nbsp;Commit Retry and Conflicts</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#hasConflict()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.hasConflict()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getConflicts()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getConflicts()</code></a> expose objects whose local
- modifications conflict with remote changes. A configured <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>conflict resolver</code></a> can resolve conflicts during invalidation; otherwise an application commonly rolls back,
- reapplies its business operation against the current view, and commits again.
- <p>
- The retry overloads of <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.lang.Runnable,int,org.eclipse.core.runtime.IProgressMonitor)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.commit(Runnable, int, IProgressMonitor)</code></a> and its
- <a href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/Callable.html" target="_blank" title="Interface in java.util.concurrent"><code>Callable</code></a> counterpart run the operation before each attempt. The integer is the total attempt
- count, so 3 permits one initial attempt and two retries. When a <a href="../../../javadoc/org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="Class in org.eclipse.emf.cdo.util"><code>ConcurrentAccessException</code></a>
- occurs, CDO rolls back the failed attempt before trying again; other commit failures are not retried by this
- overload. The operation supplied for retry must therefore be repeatable and must reapply the intended changes.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#hasConflict()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.hasConflict()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#getConflicts()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.getConflicts()</code></a> expose objects whose local
+modifications conflict with remote changes. A configured <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOConflictResolver.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>conflict resolver</code></a> can resolve conflicts during invalidation; otherwise an application commonly rolls back,
+reapplies its business operation against the current view, and commits again.
+<p>
+The retry overloads of <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.lang.Runnable,int,org.eclipse.core.runtime.IProgressMonitor)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.commit(Runnable, int, IProgressMonitor)</code></a> and its
+Callable Callable counterpart run the operation before each attempt. The integer is the total attempt
+count, so 3 permits one initial attempt and two retries. When a <a href="../../../javadoc/org/eclipse/emf/cdo/util/ConcurrentAccessException.html" title="Class in org.eclipse.emf.cdo.util"><code>ConcurrentAccessException</code></a>
+occurs, CDO rolls back the failed attempt before trying again; other commit failures are not retried by this
+overload. The operation supplied for retry must therefore be repeatable and must reapply the intended changes.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_CommitRetryAndConflicts_1"></a>
@@ -294,12 +294,12 @@ function maximize(id)
 
 <h2><a name="RollingBackChanges"></a>5&nbsp;&nbsp;Rolling Back Changes</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.rollback()</code></a> removes all uncommitted changes from the root transaction and leaves the
- transaction open for further work. It is different from rolling back a <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>savepoint</code></a>, which
- retains the earlier part of the transaction, and from rolling back a <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>scope</code></a>, which
- affects only that scope and its descendants.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOTransaction.rollback()</code></a> removes all uncommitted changes from the root transaction and leaves the
+transaction open for further work. It is different from rolling back a <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>savepoint</code></a>, which
+retains the earlier part of the transaction, and from rolling back a <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>scope</code></a>, which
+affects only that scope and its descendants.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_RollingBackChanges_1"></a>
@@ -333,15 +333,15 @@ function maximize(id)
 
 <h2><a name="PartialCommits"></a>6&nbsp;&nbsp;Partial Commits</h2>
 <p>
- A transaction can restrict one commit to a set of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>committable objects</code></a> with
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommittables(Set)</code></a>. CDO filters the transaction's new, dirty, and detached objects against
- this set; it does not automatically compute a dependency closure. If a selected object refers to a new object that
- is not selected, the intended commit may be incomplete or violate model constraints. Include the full set needed
- for a valid repository change. Non-selected changes remain local and the transaction stays dirty. Use partial
- commits only when those staged boundaries make sense to the domain; independent business units are usually easier
- to reason about as separate transactions.
+A transaction can restrict one commit to a set of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>committable objects</code></a> with
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setCommittables(java.util.Set)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setCommittables(Set)</code></a>. CDO filters the transaction's new, dirty, and detached objects against
+this set; it does not automatically compute a dependency closure. If a selected object refers to a new object that
+is not selected, the intended commit may be incomplete or violate model constraints. Include the full set needed
+for a valid repository change. Non-selected changes remain local and the transaction stays dirty. Use partial
+commits only when those staged boundaries make sense to the domain; independent business units are usually easier
+to reason about as separate transactions.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_PartialCommits_1"></a>
@@ -373,16 +373,16 @@ function maximize(id)
 
 <h2><a name="Savepoints"></a>7&nbsp;&nbsp;Savepoints</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setSavepoint()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setSavepoint()</code></a> creates an in-memory client-side boundary in the transaction's change
- history. <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserSavepoint"><code>CDOUserSavepoint.rollback()</code></a> restores the transaction to that boundary by undoing changes made
- after it, while keeping the root transaction active. Savepoints do not flush changes to disk or to the repository.
- <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOSavepoint</code></a> is the richer transaction-specific view of the same boundary. It exposes the objects and
- revision deltas belonging to a savepoint, including <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getDirtyObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOSavepoint"><code>CDOSavepoint.getDirtyObjects()</code></a> and
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getAllChangeSetData()" title="Method in org.eclipse.emf.cdo.transaction.CDOSavepoint"><code>CDOSavepoint.getAllChangeSetData()</code></a>. Use those inspection APIs only when the application needs to reason
- about the change segment itself.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#setSavepoint()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.setSavepoint()</code></a> creates an in-memory client-side boundary in the transaction's change
+history. <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserSavepoint.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserSavepoint"><code>CDOUserSavepoint.rollback()</code></a> restores the transaction to that boundary by undoing changes made
+after it, while keeping the root transaction active. Savepoints do not flush changes to disk or to the repository.
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOSavepoint</code></a> is the richer transaction-specific view of the same boundary. It exposes the objects and
+revision deltas belonging to a savepoint, including <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getDirtyObjects()" title="Method in org.eclipse.emf.cdo.transaction.CDOSavepoint"><code>CDOSavepoint.getDirtyObjects()</code></a> and
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getAllChangeSetData()" title="Method in org.eclipse.emf.cdo.transaction.CDOSavepoint"><code>CDOSavepoint.getAllChangeSetData()</code></a>. Use those inspection APIs only when the application needs to reason
+about the change segment itself.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_Savepoints_1"></a>
@@ -427,21 +427,21 @@ function maximize(id)
 
 <h2><a name="NestedTransactionScopes"></a>8&nbsp;&nbsp;Nested Transaction Scopes</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#openScope()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.openScope()</code></a> creates a stack-disciplined scope inside the root transaction. A scope shares
- the transaction's view, resource set, object identities, cache, dirty state, locks, and session. Its changes are
- immediately visible in the containing transaction.
- <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.commit()</code></a> accepts the scope into its parent but never persists anything to the
- repository. <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.rollback()</code></a> restores the state at the scope boundary, and
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#close()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.close()</code></a> rolls back an active scope. Only a later commit on the root
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> creates the repository commit. Scopes may be nested and must be completed from the
- innermost scope outward.
- <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#asTransaction()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.asTransaction()</code></a> supplies a stable nested transaction facade for APIs that accept a
- transaction. Commit operations on that facade are unsupported; the scope itself is completed with
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.commit()</code></a>.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#openScope()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.openScope()</code></a> creates a stack-disciplined scope inside the root transaction. A scope shares
+the transaction's view, resource set, object identities, cache, dirty state, locks, and session. Its changes are
+immediately visible in the containing transaction.
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.commit()</code></a> accepts the scope into its parent but never persists anything to the
+repository. <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.rollback()</code></a> restores the state at the scope boundary, and
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#close()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.close()</code></a> rolls back an active scope. Only a later commit on the root
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> creates the repository commit. Scopes may be nested and must be completed from the
+innermost scope outward.
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#asTransaction()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.asTransaction()</code></a> supplies a stable nested transaction facade for APIs that accept a
+transaction. Commit operations on that facade are unsupported; the scope itself is completed with
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionScope.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionScope"><code>CDOTransactionScope.commit()</code></a>.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_NestedTransactionScopes_1"></a>
@@ -476,33 +476,33 @@ function maximize(id)
 
 <h2><a name="Merging"></a>9&nbsp;&nbsp;Merge</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.merge(CDOBranch, CDOMerger)</code></a> and the related branch-point overloads apply changes from a
- source branch or branch point to the local transaction. They create local changes; the caller still decides when
- to commit them. The returned <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOChangeSetData</code></a> describes the applied change set. Merge conflicts are part
- of the transaction conflict model and must be resolved before a successful commit.
- <p>
- Branch selection and historical branch points belong in the Branching and Versioning chapter. This section is
- limited to the transaction side of applying and committing a merge.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#merge(org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.emf.cdo.transaction.CDOMerger)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.merge(CDOBranch, CDOMerger)</code></a> and the related branch-point overloads apply changes from a
+source branch or branch point to the local transaction. They create local changes; the caller still decides when
+to commit them. The returned <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOChangeSetData.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOChangeSetData</code></a> describes the applied change set. Merge conflicts are part
+of the transaction conflict model and must be resolved before a successful commit.
+<p>
+Branch selection and historical branch points belong in the Branching and Versioning chapter. This section is
+limited to the transaction side of applying and committing a merge.
 
 <h2><a name="RevertingChanges"></a>10&nbsp;&nbsp;Revert</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#revertTo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.revertTo(CDOBranchPoint)</code></a> creates local changes that restore the transaction's model to a
- specified historical branch point. Revert is not the same as <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>rollback</code></a>: rollback
- discards uncommitted local work, whereas revert prepares a new change set that can itself be reviewed and committed.
- It is also distinct from a savepoint rollback and from opening a historical read-only view.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#revertTo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.revertTo(CDOBranchPoint)</code></a> creates local changes that restore the transaction's model to a
+specified historical branch point. Revert is not the same as <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#rollback()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>rollback</code></a>: rollback
+discards uncommitted local work, whereas revert prepares a new change set that can itself be reviewed and committed.
+It is also distinct from a savepoint rollback and from opening a historical read-only view.
 
 <h2><a name="ChangeExportAndImport"></a>11&nbsp;&nbsp;Change Export and Import</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#exportChanges(java.io.OutputStream)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.exportChanges(OutputStream)</code></a> serializes the transaction's local changes to an output
- stream and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#importChanges(java.io.InputStream,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.importChanges(InputStream, boolean)</code></a> applies serialized transaction
- changes from an input stream. The boolean controls whether savepoints are reconstructed while importing. These
- operations work with transaction changes; they are not repository commits, raw revision history exports, or
- generic model serialization.
- <p>
- The file-backed transaction described below uses these APIs internally, but they can also be used directly when an
- application controls the transfer stream.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#exportChanges(java.io.OutputStream)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.exportChanges(OutputStream)</code></a> serializes the transaction's local changes to an output
+stream and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#importChanges(java.io.InputStream,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.importChanges(InputStream, boolean)</code></a> applies serialized transaction
+changes from an input stream. The boolean controls whether savepoints are reconstructed while importing. These
+operations work with transaction changes; they are not repository commits, raw revision history exports, or
+generic model serialization.
+<p>
+The file-backed transaction described below uses these APIs internally, but they can also be used directly when an
+application controls the transfer stream.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_ChangeExportAndImport_1"></a>
@@ -534,18 +534,18 @@ function maximize(id)
 
 <h2><a name="FileBackedTransactions"></a>12&nbsp;&nbsp;File-Backed Transactions</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a> is the current public API for persisting uncommitted changes in its stable backing file
- (available through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html#getFile()" title="Method in org.eclipse.emf.cdo.transaction.CDOFileTransaction"><code>CDOFileTransaction.getFile()</code></a>) and later pushing them to the repository. Its normal
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOFileTransaction.commit()</code></a> persists the current uncommitted changes to that file and does not commit to
- the repository; <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html#push()" title="Method in org.eclipse.emf.cdo.transaction.CDOFileTransaction"><code>CDOFileTransaction.push()</code></a> performs the repository commit and removes the persisted file
- after success. The inherited rollback operation is unsupported, as are the inherited callable and runnable commit
- overloads. File-backed transactions are therefore appropriate for explicit export-and-push workflows rather than
- ordinary rollback-based editing.
- <p>
- The older CDOPushTransaction API is deprecated as of 4.30 in favor of <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a> and is
- not used in this example.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a> is the current public API for persisting uncommitted changes in its stable backing file
+(available through <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html#getFile()" title="Method in org.eclipse.emf.cdo.transaction.CDOFileTransaction"><code>CDOFileTransaction.getFile()</code></a>) and later pushing them to the repository. Its normal
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOUserTransaction.html#commit()" title="Method in org.eclipse.emf.cdo.transaction.CDOUserTransaction"><code>CDOFileTransaction.commit()</code></a> persists the current uncommitted changes to that file and does not commit to
+the repository; <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html#push()" title="Method in org.eclipse.emf.cdo.transaction.CDOFileTransaction"><code>CDOFileTransaction.push()</code></a> performs the repository commit and removes the persisted file
+after success. The inherited rollback operation is unsupported, as are the inherited callable and runnable commit
+overloads. File-backed transactions are therefore appropriate for explicit export-and-push workflows rather than
+ordinary rollback-based editing.
+<p>
+The older CDOPushTransaction API is deprecated as of 4.30 in favor of <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOFileTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOFileTransaction</code></a> and is
+not used in this example.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_FileBackedTransactions_1"></a>
@@ -589,16 +589,16 @@ function maximize(id)
 
 <h2><a name="TransactionQueries"></a>13&nbsp;&nbsp;Queries in Transactions</h2>
 <p>
- General querying is covered in the Views chapter. A transaction additionally offers
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#createQuery(java.lang.String,java.lang.String,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.createQuery(String, String, boolean)</code></a> and its context overload, whose
- considerDirtyState argument controls whether CDO adds the transaction's local change-set data to the
- query request. This lets query implementations that support change-set data account for new, modified, and
- detached objects alongside repository results. It does not execute an arbitrary query over a complete in-memory
- copy, and a custom query handler must honor the supplied change-set data for the option to affect its results.
- Use true when asking about the transaction's working state; the default repository-only query answers a
- different question.
+General querying is covered in the Views chapter. A transaction additionally offers
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#createQuery(java.lang.String,java.lang.String,boolean)" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.createQuery(String, String, boolean)</code></a> and its context overload, whose
+considerDirtyState argument controls whether CDO adds the transaction's local change-set data to the
+query request. This lets query implementations that support change-set data account for new, modified, and
+detached objects alongside repository results. It does not execute an arbitrary query over a complete in-memory
+copy, and a custom query handler must honor the supplied change-set data for the option to affect its results.
+Use true when asking about the transaction's working state; the default repository-only query answers a
+different question.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_TransactionQueries_1"></a>
@@ -629,16 +629,16 @@ function maximize(id)
 
 <h2><a name="TransactionOptions"></a>14&nbsp;&nbsp;Transaction Options</h2>
 <p>
- <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#options()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.options()</code></a> exposes the transaction-specific options in addition to the view options
- described in the Views chapter. Application developers should normally consider three groups: conflict resolvers
- for automatic handling of remote conflicts; optimistic-locking and commit-info timeouts for bounded commit
- behavior; and automatic lock release, including its exemptions, for predictable lock ownership after commit or
- rollback.
- <p>
- The options API is intentionally linked rather than duplicated here. Its Javadoc documents defaults and the
- complete option set, including undo detection, stale-reference cleaning, and attached-revision handling.
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html#options()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransaction"><code>CDOTransaction.options()</code></a> exposes the transaction-specific options in addition to the view options
+described in the Views chapter. Application developers should normally consider three groups: conflict resolvers
+for automatic handling of remote conflicts; optimistic-locking and commit-info timeouts for bounded commit
+behavior; and automatic lock release, including its exemptions, for predictable lock ownership after commit or
+rollback.
+<p>
+The options API is intentionally linked rather than duplicated here. Its Javadoc documents defaults and the
+complete option set, including undo detection, stale-reference cleaning, and attached-revision handling.
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_TransactionOptions_1"></a>

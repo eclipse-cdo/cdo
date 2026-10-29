@@ -7,90 +7,105 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.net4j.util.om, interface: OMPlatform">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/OMPlatform.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../search.html">Search</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li><a href="#field-summary">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li><a href="#field-detail">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.net4j.util.om</a></li>
+<li><a href="OMPlatform.html" class="current-selection">OMPlatform</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#INSTANCE" tabindex="0">INSTANCE</a></li>
+</ol>
+</li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#bundle(java.lang.String,java.lang.Class)" tabindex="0">bundle(String, Class)</a></li>
+<li><a href="#isOSGiRunning()" tabindex="0">isOSGiRunning()</a></li>
+<li><a href="#isExtensionRegistryAvailable()" tabindex="0">isExtensionRegistryAvailable()</a></li>
+<li><a href="#isDebugging()" tabindex="0">isDebugging()</a></li>
+<li><a href="#setDebugging(boolean)" tabindex="0">setDebugging(boolean)</a></li>
+<li><a href="#addLogFilter(org.eclipse.net4j.util.om.log.OMLogFilter)" tabindex="0">addLogFilter(OMLogFilter)</a></li>
+<li><a href="#removeLogFilter(org.eclipse.net4j.util.om.log.OMLogFilter)" tabindex="0">removeLogFilter(OMLogFilter)</a></li>
+<li><a href="#addLogHandler(org.eclipse.net4j.util.om.log.OMLogHandler)" tabindex="0">addLogHandler(OMLogHandler)</a></li>
+<li><a href="#removeLogHandler(org.eclipse.net4j.util.om.log.OMLogHandler)" tabindex="0">removeLogHandler(OMLogHandler)</a></li>
+<li><a href="#addTraceHandler(org.eclipse.net4j.util.om.trace.OMTraceHandler)" tabindex="0">addTraceHandler(OMTraceHandler)</a></li>
+<li><a href="#removeTraceHandler(org.eclipse.net4j.util.om.trace.OMTraceHandler)" tabindex="0">removeTraceHandler(OMTraceHandler)</a></li>
+<li><a href="#getUserFolder()" tabindex="0">getUserFolder()</a></li>
+<li><a href="#getStateFolder()" tabindex="0">getStateFolder()</a></li>
+<li><a href="#getConfigFolder()" tabindex="0">getConfigFolder()</a></li>
+<li><a href="#getConfigFile(java.lang.String)" tabindex="0">getConfigFile(String)</a></li>
+<li><a href="#getConfigProperties(java.lang.String)" tabindex="0">getConfigProperties(String)</a></li>
+<li><a href="#getProperty(java.lang.String)" tabindex="0">getProperty(String)</a></li>
+<li><a href="#getProperty(java.lang.String,java.lang.String)" tabindex="0">getProperty(String, String)</a></li>
+<li><a href="#getProperty(java.lang.String,int)" tabindex="0">getProperty(String, int)</a></li>
+<li><a href="#getProperty(java.lang.String,long)" tabindex="0">getProperty(String, long)</a></li>
+<li><a href="#getProperty(java.lang.String,java.lang.Class)" tabindex="0">getProperty(String, Class)</a></li>
+<li><a href="#getProperty(java.lang.String,T)" tabindex="0">getProperty(String, T)</a></li>
+<li><a href="#isProperty(java.lang.String)" tabindex="0">isProperty(String)</a></li>
+<li><a href="#isProperty(java.lang.String,boolean)" tabindex="0">isProperty(String, boolean)</a></li>
+<li><a href="#getCommandLineArgs()" tabindex="0">getCommandLineArgs()</a></li>
+<li><a href="#createManagedContainer(java.lang.String)" tabindex="0">createManagedContainer(String)</a></li>
+<li><a href="#createManagedContainer()" tabindex="0">createManagedContainer()</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.om</a></div>
 <h1 title="Interface OMPlatform" class="title">Interface OMPlatform</h1>
 </div>
 <section class="class-description" id="class-description">
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">OMPlatform</span></div>
 <div class="block">Represents the platform that <a href="OMBundle.html" title="interface in org.eclipse.net4j.util.om"><code>bundles</code></a> are deployed into, whether OSGi <a href="#isOSGiRunning()"><code>is
- running</code></a> or not.</div>
+running</code></a> or not.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -99,6 +114,7 @@ loadScripts(document, 'script');</script>
 <dt>No Extend</dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -123,8 +139,8 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -138,60 +154,60 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#addTraceHandler(org.eclipse.net4j.util.om.trace.OMTraceHandler)" class="member-name-link">addTraceHandler</a><wbr>(<a href="trace/OMTraceHandler.html" title="interface in org.eclipse.net4j.util.om.trace">OMTraceHandler</a>&nbsp;traceHandler)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#bundle(java.lang.String,java.lang.Class)" class="member-name-link">bundle</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bundleID,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&nbsp;accessor)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#bundle(java.lang.String,java.lang.Class)" class="member-name-link">bundle</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bundleID,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&nbsp;accessor)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#createManagedContainer()" class="member-name-link">createManagedContainer</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Creates a new independent managed container appropriate for the current runtime platform, initializes it with
- available platform and declarative contributions, activates it, and returns it ready for use.</div>
+available platform and declarative contributions, activates it, and returns it ready for use.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createManagedContainer(java.lang.String)" class="member-name-link">createManagedContainer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createManagedContainer(java.lang.String)" class="member-name-link">createManagedContainer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Creates a new independent managed container appropriate for the current runtime platform, initializes it with
- the platform and declarative contributions available to it, activates it, and returns it ready for use.</div>
+the platform and declarative contributions available to it, activates it, and returns it ready for use.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommandLineArgs()" class="member-name-link">getCommandLineArgs</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConfigFile(java.lang.String)" class="member-name-link">getConfigFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConfigFile(java.lang.String)" class="member-name-link">getConfigFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConfigFolder()" class="member-name-link">getConfigFolder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Properties.html" title="class or interface in java.util" class="external-link">Properties</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConfigProperties(java.lang.String)" class="member-name-link">getConfigProperties</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Properties.html" title="class or interface in java.util" class="external-link">Properties</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getConfigProperties(java.lang.String)" class="member-name-link">getConfigProperties</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,int)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,int)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  int&nbsp;defaultValue)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,long)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,long)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  long&nbsp;defaultValue)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;T&gt;&gt;<br>T</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,java.lang.Class)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;enumType)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;T&gt;&gt;<br>T</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,java.lang.Class)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;enumType)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,java.lang.String)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultValue)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,java.lang.String)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultValue)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;T&gt;&gt;<br>T</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,T)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;T&gt;&gt;<br>T</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperty(java.lang.String,T)" class="member-name-link">getProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  T&nbsp;defaultValue)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStateFolder()" class="member-name-link">getStateFolder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUserFolder()" class="member-name-link">getUserFolder</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
@@ -204,10 +220,10 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isOSGiRunning()" class="member-name-link">isOSGiRunning</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isProperty(java.lang.String)" class="member-name-link">isProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isProperty(java.lang.String)" class="member-name-link">isProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isProperty(java.lang.String,boolean)" class="member-name-link">isProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isProperty(java.lang.String,boolean)" class="member-name-link">isProperty</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  boolean&nbsp;defaultValue)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
@@ -239,7 +255,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="INSTANCE">
 <h3>INSTANCE</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="OMPlatform.html" title="interface in org.eclipse.net4j.util.om">OMPlatform</a></span>&nbsp;<span class="element-name">INSTANCE</span></div>
+</div>
 </section>
 </li>
 </ul>
@@ -253,226 +271,277 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="bundle(java.lang.String,java.lang.Class)">
 <h3>bundle</h3>
-<div class="member-signature"><span class="return-type"><a href="OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</a></span>&nbsp;<span class="element-name">bundle</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bundleID,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&nbsp;accessor)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="OMBundle.html" title="interface in org.eclipse.net4j.util.om">OMBundle</a></span>&nbsp;<span class="element-name">bundle</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;bundleID,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;?&gt;&nbsp;accessor)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isOSGiRunning()">
 <h3>isOSGiRunning</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isOSGiRunning</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isExtensionRegistryAvailable()">
 <h3>isExtensionRegistryAvailable</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isExtensionRegistryAvailable</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isDebugging()">
 <h3>isDebugging</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isDebugging</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setDebugging(boolean)">
 <h3>setDebugging</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setDebugging</span><wbr><span class="parameters">(boolean&nbsp;debugging)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addLogFilter(org.eclipse.net4j.util.om.log.OMLogFilter)">
 <h3>addLogFilter</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addLogFilter</span><wbr><span class="parameters">(<a href="log/OMLogFilter.html" title="interface in org.eclipse.net4j.util.om.log">OMLogFilter</a>&nbsp;logFilter)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="removeLogFilter(org.eclipse.net4j.util.om.log.OMLogFilter)">
 <h3>removeLogFilter</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">removeLogFilter</span><wbr><span class="parameters">(<a href="log/OMLogFilter.html" title="interface in org.eclipse.net4j.util.om.log">OMLogFilter</a>&nbsp;logFilter)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addLogHandler(org.eclipse.net4j.util.om.log.OMLogHandler)">
 <h3>addLogHandler</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addLogHandler</span><wbr><span class="parameters">(<a href="log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log">OMLogHandler</a>&nbsp;logHandler)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="removeLogHandler(org.eclipse.net4j.util.om.log.OMLogHandler)">
 <h3>removeLogHandler</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">removeLogHandler</span><wbr><span class="parameters">(<a href="log/OMLogHandler.html" title="interface in org.eclipse.net4j.util.om.log">OMLogHandler</a>&nbsp;logHandler)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addTraceHandler(org.eclipse.net4j.util.om.trace.OMTraceHandler)">
 <h3>addTraceHandler</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">addTraceHandler</span><wbr><span class="parameters">(<a href="trace/OMTraceHandler.html" title="interface in org.eclipse.net4j.util.om.trace">OMTraceHandler</a>&nbsp;traceHandler)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="removeTraceHandler(org.eclipse.net4j.util.om.trace.OMTraceHandler)">
 <h3>removeTraceHandler</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">removeTraceHandler</span><wbr><span class="parameters">(<a href="trace/OMTraceHandler.html" title="interface in org.eclipse.net4j.util.om.trace">OMTraceHandler</a>&nbsp;traceHandler)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getUserFolder()">
 <h3>getUserFolder</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">getUserFolder</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">getUserFolder</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.18</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getStateFolder()">
 <h3>getStateFolder</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">getStateFolder</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">getStateFolder</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getConfigFolder()">
 <h3>getConfigFolder</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">getConfigFolder</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">getConfigFolder</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getConfigFile(java.lang.String)">
 <h3>getConfigFile</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">getConfigFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></span>&nbsp;<span class="element-name">getConfigFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getConfigProperties(java.lang.String)">
 <h3>getConfigProperties</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Properties.html" title="class or interface in java.util" class="external-link">Properties</a></span>&nbsp;<span class="element-name">getConfigProperties</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Properties.html" title="class or interface in java.util" class="external-link">Properties</a></span>&nbsp;<span class="element-name">getConfigProperties</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProperty(java.lang.String)">
 <h3>getProperty</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProperty(java.lang.String,java.lang.String)">
 <h3>getProperty</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultValue)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultValue)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProperty(java.lang.String,int)">
 <h3>getProperty</h3>
-<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  int&nbsp;defaultValue)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.8</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProperty(java.lang.String,long)">
 <h3>getProperty</h3>
-<div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  long&nbsp;defaultValue)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.8</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProperty(java.lang.String,java.lang.Class)">
 <h3>getProperty</h3>
-<div class="member-signature"><span class="type-parameters">&lt;T extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;T&gt;&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;enumType)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="type-parameters">&lt;T extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;T&gt;&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;enumType)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.8</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getProperty(java.lang.String,T)">
 <h3 id="getProperty(java.lang.String,java.lang.Enum)">getProperty</h3>
-<div class="member-signature"><span class="type-parameters">&lt;T extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;T&gt;&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="type-parameters">&lt;T extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;T&gt;&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  T&nbsp;defaultValue)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.8</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isProperty(java.lang.String)">
 <h3>isProperty</h3>
-<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.7</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isProperty(java.lang.String,boolean)">
 <h3>isProperty</h3>
-<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isProperty</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;key,
  boolean&nbsp;defaultValue)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.7</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getCommandLineArgs()">
 <h3>getCommandLineArgs</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getCommandLineArgs</span>()
-                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">getCommandLineArgs</span>()
+                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code></dd>
 <dt>Since:</dt>
 <dd>3.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createManagedContainer(java.lang.String)">
 <h3>createManagedContainer</h3>
-<div class="member-signature"><span class="return-type"><a href="../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></span>&nbsp;<span class="element-name">createManagedContainer</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></span>&nbsp;<span class="element-name">createManagedContainer</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
 <div class="block">Creates a new independent managed container appropriate for the current runtime platform, initializes it with
- the platform and declarative contributions available to it, activates it, and returns it ready for use. In OSGi
- this is a <code>PluginContainer</code>; outside OSGi it is a <code>StandaloneContainer</code>, which discovers
- <a href="../container/IManagedContainerInitializer.html" title="interface in org.eclipse.net4j.util.container"><code>IManagedContainerInitializer</code></a> providers through <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ServiceLoader.html" title="class or interface in java.util" class="external-link"><code>ServiceLoader</code></a> during activation. Each
- invocation creates a new container; it is distinct from the canonical global <a href="../container/IManagedContainer.html#INSTANCE"><code>IManagedContainer.INSTANCE</code></a>.
- See also <a href="../container/ContainerUtil.html#createInitializedContainer()"><code>ContainerUtil.createInitializedContainer()</code></a> and the raw
- <a href="../container/ContainerUtil.html#createContainer()"><code>ContainerUtil.createContainer()</code></a>.</div>
+the platform and declarative contributions available to it, activates it, and returns it ready for use. In OSGi
+this is a <code>PluginContainer</code>; outside OSGi it is a <code>StandaloneContainer</code>, which discovers
+<a href="../container/IManagedContainerInitializer.html" title="interface in org.eclipse.net4j.util.container"><code>IManagedContainerInitializer</code></a> providers through <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html" title="class or interface in java.util" class="external-link"><code>ServiceLoader</code></a> during activation. Each
+invocation creates a new container; it is distinct from the canonical global <a href="../container/IManagedContainer.html#INSTANCE"><code>IManagedContainer.INSTANCE</code></a>.
+See also <a href="../container/ContainerUtil.html#createInitializedContainer()"><code>ContainerUtil.createInitializedContainer()</code></a> and the raw
+<a href="../container/ContainerUtil.html#createContainer()"><code>ContainerUtil.createContainer()</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>name</code> - the name to assign to the container, or <code>null</code> to use the platform default name.</dd>
@@ -481,24 +550,27 @@ loadScripts(document, 'script');</script>
 <dt>Since:</dt>
 <dd>3.31</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createManagedContainer()">
 <h3>createManagedContainer</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></span>&nbsp;<span class="element-name">createManagedContainer</span>()</div>
 <div class="block">Creates a new independent managed container appropriate for the current runtime platform, initializes it with
- available platform and declarative contributions, activates it, and returns it ready for use. In OSGi this is a
- <code>PluginContainer</code>; outside OSGi it is a <code>StandaloneContainer</code> whose activation discovers
- <a href="../container/IManagedContainerInitializer.html" title="interface in org.eclipse.net4j.util.container"><code>IManagedContainerInitializer</code></a> providers through <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ServiceLoader.html" title="class or interface in java.util" class="external-link"><code>ServiceLoader</code></a>. Each invocation returns
- a new container distinct from the canonical global <a href="../container/IManagedContainer.html#INSTANCE"><code>IManagedContainer.INSTANCE</code></a>. See also
- <a href="../container/ContainerUtil.html#createInitializedContainer()"><code>ContainerUtil.createInitializedContainer()</code></a> and the raw <a href="../container/ContainerUtil.html#createContainer()"><code>ContainerUtil.createContainer()</code></a>.</div>
+available platform and declarative contributions, activates it, and returns it ready for use. In OSGi this is a
+<code>PluginContainer</code>; outside OSGi it is a <code>StandaloneContainer</code> whose activation discovers
+<a href="../container/IManagedContainerInitializer.html" title="interface in org.eclipse.net4j.util.container"><code>IManagedContainerInitializer</code></a> providers through <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/ServiceLoader.html" title="class or interface in java.util" class="external-link"><code>ServiceLoader</code></a>. Each invocation returns
+a new container distinct from the canonical global <a href="../container/IManagedContainer.html#INSTANCE"><code>IManagedContainer.INSTANCE</code></a>. See also
+<a href="../container/ContainerUtil.html#createInitializedContainer()"><code>ContainerUtil.createInitializedContainer()</code></a> and the raw <a href="../container/ContainerUtil.html#createContainer()"><code>ContainerUtil.createContainer()</code></a>.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>a newly created active container, independent of <a href="../container/IManagedContainer.html#INSTANCE"><code>IManagedContainer.INSTANCE</code></a>.</dd>
 <dt>Since:</dt>
 <dd>3.31</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -507,12 +579,11 @@ loadScripts(document, 'script');</script>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

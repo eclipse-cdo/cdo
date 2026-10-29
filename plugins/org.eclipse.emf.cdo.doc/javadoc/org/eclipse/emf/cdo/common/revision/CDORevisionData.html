@@ -7,83 +7,95 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.emf.cdo.common.revision, interface: CDORevisionData">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/CDORevisionData.html">Use</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../../search.html">Search</a></li>
 <li><a href="../../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li><a href="#field-summary">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li><a href="#field-detail">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.emf.cdo.common.revision</a></li>
+<li><a href="CDORevisionData.html" class="current-selection">CDORevisionData</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#NIL" tabindex="0">NIL</a></li>
+</ol>
+</li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#revision()" tabindex="0">revision()</a></li>
+<li><a href="#getResourceID()" tabindex="0">getResourceID()</a></li>
+<li><a href="#getContainerID()" tabindex="0">getContainerID()</a></li>
+<li><a href="#getContainerFeatureID()" tabindex="0">getContainerFeatureID()</a></li>
+<li><a href="#getContainingReference(org.eclipse.emf.ecore.EClass)" tabindex="0">getContainingReference(EClass)</a></li>
+<li><a href="#getValue(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">getValue(EStructuralFeature)</a></li>
+<li><a href="#getListOrNull(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">getListOrNull(EStructuralFeature)</a></li>
+<li><a href="#get(org.eclipse.emf.ecore.EStructuralFeature,int)" tabindex="0">get(EStructuralFeature, int)</a></li>
+<li><a href="#size(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">size(EStructuralFeature)</a></li>
+<li><a href="#isEmpty(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">isEmpty(EStructuralFeature)</a></li>
+<li><a href="#contains(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" tabindex="0">contains(EStructuralFeature, Object)</a></li>
+<li><a href="#indexOf(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" tabindex="0">indexOf(EStructuralFeature, Object)</a></li>
+<li><a href="#lastIndexOf(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" tabindex="0">lastIndexOf(EStructuralFeature, Object)</a></li>
+<li><a href="#toArray(org.eclipse.emf.ecore.EStructuralFeature,T%5B%5D)" tabindex="0">toArray(EStructuralFeature, T[])</a></li>
+<li><a href="#toArray(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">toArray(EStructuralFeature)</a></li>
+<li><a href="#hashCode(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">hashCode(EStructuralFeature)</a></li>
+<li><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor)" tabindex="0">accept(CDORevisionValueVisitor)</a></li>
+<li><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,java.util.function.Predicate)" tabindex="0">accept(CDORevisionValueVisitor, Predicate)</a></li>
+<li><a href="#calculateContainerReferenceID(org.eclipse.emf.ecore.EReference)" tabindex="0">calculateContainerReferenceID(EReference)</a></li>
+<li><a href="#calculateContainerReferenceID(org.eclipse.emf.ecore.EReference,org.eclipse.emf.ecore.EClass)" tabindex="0">calculateContainerReferenceID(EReference, EClass)</a></li>
+<li><a href="#calculateContainingReference(int,org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EClass)" tabindex="0">calculateContainingReference(int, EClass, EClass)</a></li>
+<li><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,org.eclipse.net4j.util.Predicate)" tabindex="0">accept(CDORevisionValueVisitor, Predicate)</a></li>
+<li><a href="#getContainingFeatureID()" tabindex="0">getContainingFeatureID()</a></li>
+<li><a href="#calculateContainingReferenceID(org.eclipse.emf.ecore.EReference)" tabindex="0">calculateContainingReferenceID(EReference)</a></li>
+<li><a href="#calculateContainingReferenceID(org.eclipse.emf.ecore.EReference,org.eclipse.emf.ecore.EClass)" tabindex="0">calculateContainingReferenceID(EReference, EClass)</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.revision</a></div>
 <h1 title="Interface CDORevisionData" class="title">Interface CDORevisionData</h1>
 </div>
 <section class="class-description" id="class-description">
@@ -93,9 +105,10 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="../../spi/common/revision/AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a></code>, <code><a href="../../spi/common/revision/BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a></code>, <code><a href="../../spi/common/revision/DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a></code>, <code><a href="../../spi/common/revision/DetachedCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a></code>, <code><a href="../../spi/common/revision/PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a></code>, <code><a href="../../spi/common/revision/StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a></code>, <code><a href="../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></code></dd>
+<dd><code><a href="../../spi/common/revision/AbstractCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">AbstractCDORevision</a>, <a href="../../spi/common/revision/BaseCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">BaseCDORevision</a>, <a href="../../spi/common/revision/DelegatingCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DelegatingCDORevision</a>, <a href="../../spi/common/revision/DetachedCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">DetachedCDORevision</a>, <a href="../../spi/common/revision/PointerCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">PointerCDORevision</a>, <a href="../../spi/common/revision/StubCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">StubCDORevision</a>, <a href="../../spi/common/revision/SyntheticCDORevision.html" title="class in org.eclipse.emf.cdo.spi.common.revision">SyntheticCDORevision</a></code></dd>
 </dl>
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDORevisionData</span></div>
 <div class="block">Encapsulates the modeled information and the EMF system values of a <a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revision</code></a>.</div>
 <dl class="notes">
@@ -106,6 +119,7 @@ loadScripts(document, 'script');</script>
 <dt>No Extend</dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -118,11 +132,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color"><code><a href="#NIL" class="member-name-link">NIL</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">An object used to represent being set to <code>null</code>
- as opposed to having no value and hence being in the default state.</div>
+as opposed to having no value and hence being in the default state.</div>
 </div>
 </div>
 </section>
@@ -133,8 +147,8 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -145,7 +159,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,java.util.function.Predicate)" class="member-name-link">accept</a><wbr>(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;filter)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;filter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Visits the values that are currently loaded in this revision and whose features pass the filter.</div>
 </div>
@@ -188,9 +202,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#contains(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" class="member-name-link">contains</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#get(org.eclipse.emf.ecore.EStructuralFeature,int)" class="member-name-link">get</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  int&nbsp;index)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -199,7 +213,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the container feature ID.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContainerID()" class="member-name-link">getContainerID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>int</code></div>
@@ -218,7 +232,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getResourceID()" class="member-name-link">getResourceID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValue(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getValue</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Should never return <a href="#NIL"><code>NIL</code></a></div>
@@ -228,14 +242,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#indexOf(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" class="member-name-link">indexOf</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isEmpty(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">isEmpty</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#lastIndexOf(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" class="member-name-link">lastIndexOf</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#revision()" class="member-name-link">revision</a>()</code></div>
@@ -243,7 +257,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#size(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">size</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#toArray(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">toArray</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;T[]</code></div>
@@ -267,15 +281,17 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="NIL">
 <h3>NIL</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">NIL</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">NIL</span></div>
 <div class="block">An object used to represent being set to <code>null</code>
- as opposed to having no value and hence being in the default state.
- <p>
- The equivalent of <code>DynamicValueHolder.NIL</code> (i.e. explicit <code>null</code>).</div>
+as opposed to having no value and hence being in the default state.
+<p>
+The equivalent of <code>DynamicValueHolder.NIL</code> (i.e. explicit <code>null</code>).</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -289,50 +305,57 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="revision()">
 <h3>revision</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></span>&nbsp;<span class="element-name">revision</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getResourceID()">
 <h3>getResourceID</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">getResourceID</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getContainerID()">
 <h3>getContainerID</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getContainerID</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getContainerID</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getContainerFeatureID()">
 <h3>getContainerFeatureID</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getContainerFeatureID</span>()</div>
 <div class="block">Returns the container feature ID.
- If the container isn't a navigable feature, this will be a negative ID indicating the inverse of the containment feature's ID.
- <p>
- Provides the input to the calculation of the feature in the container revision that actually holds this revision.
- <p>
- <b>Usage Example:</b>
- <p>
- <pre>
- CDORevision revision = ...;
- CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
+If the container isn't a navigable feature, this will be a negative ID indicating the inverse of the containment feature's ID.
+<p>
+Provides the input to the calculation of the feature in the container revision that actually holds this revision.
+<p>
+<b>Usage Example:</b>
+<p>
+<pre>
+CDORevision revision = ...;
+CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
 
- int containerFeatureID = revision.data().getContainerFeatureID();
+int containerFeatureID = revision.data().getContainerFeatureID();
 
- EStructuralFeature feature = containerFeatureID &lt;= InternalEObject.EOPPOSITE_FEATURE_BASE ?
-     container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containerFeatureID) :
-     ((EReference)revision.getEClass().getEStructuralFeature(containerFeatureID)).getEOpposite();
- </pre></div>
+EStructuralFeature feature = containerFeatureID &lt;= InternalEObject.EOPPOSITE_FEATURE_BASE ?
+    container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containerFeatureID) :
+    ((EReference)revision.getEClass().getEStructuralFeature(containerFeatureID)).getEOpposite();
+</pre></div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the container feature ID.</dd>
@@ -350,11 +373,13 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getContainingReference(org.eclipse.emf.ecore.EClass)">
 <h3>getContainingReference</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a></span>&nbsp;<span class="element-name">getContainingReference</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;containerClass)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -367,158 +392,186 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getValue(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>getValue</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getValue</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getValue</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <div class="block">Should never return <a href="#NIL"><code>NIL</code></a></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.27</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getListOrNull(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>getListOrNull</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></span>&nbsp;<span class="element-name">getListOrNull</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.27</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="get(org.eclipse.emf.ecore.EStructuralFeature,int)">
 <h3>get</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  int&nbsp;index)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="size(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>size</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">size</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isEmpty(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>isEmpty</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isEmpty</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="contains(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)">
 <h3>contains</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">contains</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="indexOf(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)">
 <h3>indexOf</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">indexOf</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="lastIndexOf(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)">
 <h3>lastIndexOf</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">lastIndexOf</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="toArray(org.eclipse.emf.ecore.EStructuralFeature,T[])">
 <h3 id="toArray(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object[])">toArray</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T[]</span>&nbsp;<span class="element-name">toArray</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  T[]&nbsp;array)</span></div>
 <dl class="notes">
 <dt>Type Parameters:</dt>
-<dd><code>T</code> - the array element type</dd>
+<dd><span id="toArray(org.eclipse.emf.ecore.EStructuralFeature,T[])-type-param-T"><code>T</code> - the array element type</span></dd>
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="toArray(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>toArray</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</span>&nbsp;<span class="element-name">toArray</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</span>&nbsp;<span class="element-name">toArray</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="hashCode(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>hashCode</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">hashCode</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor)">
 <h3>accept</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">accept</span><wbr><span class="parameters">(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor)</span></div>
 <div class="block">Visits the values that are currently loaded in this revision.
- <p>
- Unloaded positions of many-valued features are skipped and are not materialized. The index supplied to the
- visitor remains the logical list position.</div>
+<p>
+Unloaded positions of many-valued features are skipped and are not materialized. The index supplied to the
+visitor remains the logical list position.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,java.util.function.Predicate)">
 <h3>accept</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">accept</span><wbr><span class="parameters">(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;filter)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;filter)</span></div>
 <div class="block">Visits the values that are currently loaded in this revision and whose features pass the filter.
- <p>
- Unloaded positions of many-valued features are skipped and are not materialized. The index supplied to the
- visitor remains the logical list position.</div>
+<p>
+Unloaded positions of many-valued features are skipped and are not materialized. The index supplied to the
+visitor remains the logical list position.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.9</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="calculateContainerReferenceID(org.eclipse.emf.ecore.EReference)">
 <h3>calculateContainerReferenceID</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">calculateContainerReferenceID</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a>&nbsp;containingReference)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -530,11 +583,13 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="calculateContainerReferenceID(org.eclipse.emf.ecore.EReference,org.eclipse.emf.ecore.EClass)">
 <h3>calculateContainerReferenceID</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">calculateContainerReferenceID</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a>&nbsp;containingReference,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;childClass)</span></div>
 <dl class="notes">
@@ -548,28 +603,30 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="calculateContainingReference(int,org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EClass)">
 <h3>calculateContainingReference</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a></span>&nbsp;<span class="element-name">calculateContainingReference</span><wbr><span class="parameters">(int&nbsp;containerFeatureID,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;childClass,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;containerClass)</span></div>
 <div class="block">Provides the input to the calculation of the feature in the container revision that actually holds this revision.
- <p>
- <b>Usage Example:</b>
- <p>
- <pre>
- CDORevision revision = ...;
- CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
+<p>
+<b>Usage Example:</b>
+<p>
+<pre>
+CDORevision revision = ...;
+CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
 
- int containerFeatureID = revision.data().getContainerFeatureID();
+int containerFeatureID = revision.data().getContainerFeatureID();
 
- EStructuralFeature feature = containerFeatureID &lt;= InternalEObject.EOPPOSITE_FEATURE_BASE ?
-     container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containerFeatureID) :
-     ((EReference)revision.getEClass().getEStructuralFeature(containerFeatureID)).getEOpposite();
- </pre></div>
+EStructuralFeature feature = containerFeatureID &lt;= InternalEObject.EOPPOSITE_FEATURE_BASE ?
+    container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containerFeatureID) :
+    ((EReference)revision.getEClass().getEStructuralFeature(containerFeatureID)).getEOpposite();
+</pre></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.26</dd>
@@ -581,12 +638,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="accept(org.eclipse.emf.cdo.common.revision.CDORevisionValueVisitor,org.eclipse.net4j.util.Predicate)">
 <h3>accept</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="return-type">void</span>&nbsp;<span class="element-name">accept</span><wbr><span class="parameters">(<a href="CDORevisionValueVisitor.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionValueVisitor</a>&nbsp;visitor,
  org.eclipse.net4j.util.Predicate&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;filter)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -596,22 +655,26 @@ loadScripts(document, 'script');</script>
 <dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getContainingFeatureID()">
 <h3>getContainingFeatureID</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="return-type">int</span>&nbsp;<span class="element-name">getContainingFeatureID</span>()</div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.27 use <a href="#getContainerFeatureID()"><code>getContainerFeatureID()</code></a>.</div>
+</div>
 </div>
 </section>
 </li>
 <li>
 <section class="detail" id="calculateContainingReferenceID(org.eclipse.emf.ecore.EReference)">
 <h3>calculateContainingReferenceID</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">default</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">calculateContainingReferenceID</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a>&nbsp;containingReference)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.27 use <a href="#calculateContainerReferenceID(org.eclipse.emf.ecore.EReference)"><code>calculateContainerReferenceID(EReference)</code></a>.</div>
@@ -620,12 +683,14 @@ loadScripts(document, 'script');</script>
 <dt>Since:</dt>
 <dd>4.26</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="calculateContainingReferenceID(org.eclipse.emf.ecore.EReference,org.eclipse.emf.ecore.EClass)">
 <h3>calculateContainingReferenceID</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">calculateContainingReferenceID</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EReference</a>&nbsp;containingReference,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;childClass)</span></div>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -635,6 +700,7 @@ loadScripts(document, 'script');</script>
 <dt>Since:</dt>
 <dd>4.26</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -643,12 +709,11 @@ loadScripts(document, 'script');</script>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

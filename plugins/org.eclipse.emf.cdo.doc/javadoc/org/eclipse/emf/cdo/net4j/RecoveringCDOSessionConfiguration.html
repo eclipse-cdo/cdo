@@ -7,99 +7,90 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.emf.cdo.net4j, interface: RecoveringCDOSessionConfiguration">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/RecoveringCDOSessionConfiguration.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../search.html">Search</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li><a href="#nested-class-summary">Nested</a></li>
-<li>Field</li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li>Field</li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.emf.cdo.net4j</a></li>
+<li><a href="RecoveringCDOSessionConfiguration.html" class="current-selection">RecoveringCDOSessionConfiguration</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#nested-class-summary" tabindex="0">Nested Class Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#isHeartBeatEnabled()" tabindex="0">isHeartBeatEnabled()</a></li>
+<li><a href="#setHeartBeatEnabled(boolean)" tabindex="0">setHeartBeatEnabled(boolean)</a></li>
+<li><a href="#getHeartBeatPeriod()" tabindex="0">getHeartBeatPeriod()</a></li>
+<li><a href="#setHeartBeatPeriod(long)" tabindex="0">setHeartBeatPeriod(long)</a></li>
+<li><a href="#getHeartBeatTimeout()" tabindex="0">getHeartBeatTimeout()</a></li>
+<li><a href="#setHeartBeatTimeout(long)" tabindex="0">setHeartBeatTimeout(long)</a></li>
+<li><a href="#getConnectorTimeout()" tabindex="0">getConnectorTimeout()</a></li>
+<li><a href="#setConnectorTimeout(long)" tabindex="0">setConnectorTimeout(long)</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.net4j</a></div>
 <h1 title="Interface RecoveringCDOSessionConfiguration" class="title">Interface RecoveringCDOSessionConfiguration</h1>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></code>, <code><a href="CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></code>, <code><a href="../session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
+<dd><code><a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a>, <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a>, <a href="../session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a>, org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
-<dd><code><a href="FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</a></code>, <code><a href="ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</a></code></dd>
+<dd><code><a href="FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</a>, <a href="ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</a></code></dd>
 </dl>
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">RecoveringCDOSessionConfiguration</span><span class="extends-implements">
 extends <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></span></div>
 <div class="block">A <a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j"><code>session configuration</code></a> that uses a <code>heart beat
- protocol</code> to detect network problems. Subtypes specify the exact behavior to recover from these problems.</div>
+protocol</code> to detect network problems. Subtypes specify the exact behavior to recover from these problems.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
@@ -110,6 +101,7 @@ extends <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.e
 <dt>No Extend</dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -118,10 +110,10 @@ extends <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.e
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Nested Class Summary</h2>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.session.CDOSessionConfiguration">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.session.<a href="../session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></h2>
+<h3 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.session.CDOSessionConfiguration">Nested classes/interfaces inherited from interface&nbsp;<a href="../session/CDOSessionConfiguration.html#nested-class-summary" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></h3>
 <code><a href="../session/CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration.SessionOpenedEvent</a></code></div>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h2>
+<h3 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
 <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></div>
 </section>
 </li>
@@ -131,8 +123,8 @@ extends <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.e
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -164,11 +156,11 @@ extends <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.e
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.net4j.<a href="CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></h3>
-<code><a href="CDONet4jSessionConfiguration.html#getBranchManager()">getBranchManager</a>, <a href="CDONet4jSessionConfiguration.html#getConnector()">getConnector</a>, <a href="CDONet4jSessionConfiguration.html#getPackageRegistry()">getPackageRegistry</a>, <a href="CDONet4jSessionConfiguration.html#getRepositoryName()">getRepositoryName</a>, <a href="CDONet4jSessionConfiguration.html#getRevisionManager()">getRevisionManager</a>, <a href="CDONet4jSessionConfiguration.html#getSignalTimeout()">getSignalTimeout</a>, <a href="CDONet4jSessionConfiguration.html#getStreamWrapper()">getStreamWrapper</a>, <a href="CDONet4jSessionConfiguration.html#openNet4jSession()">openNet4jSession</a>, <a href="CDONet4jSessionConfiguration.html#openSession()">openSession</a>, <a href="CDONet4jSessionConfiguration.html#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">setBranchManager</a>, <a href="CDONet4jSessionConfiguration.html#setConnector(org.eclipse.net4j.connector.IConnector)">setConnector</a>, <a href="CDONet4jSessionConfiguration.html#setPackageRegistry(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)">setPackageRegistry</a>, <a href="CDONet4jSessionConfiguration.html#setRepositoryName(java.lang.String)">setRepositoryName</a>, <a href="CDONet4jSessionConfiguration.html#setRevisionManager(org.eclipse.emf.cdo.common.revision.CDORevisionManager)">setRevisionManager</a>, <a href="CDONet4jSessionConfiguration.html#setSignalTimeout(long)">setSignalTimeout</a>, <a href="CDONet4jSessionConfiguration.html#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)">setStreamWrapper</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration">Methods inherited from interface&nbsp;<a href="CDONet4jSessionConfiguration.html#method-summary" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></h3>
+<code><a href="CDONet4jSessionConfiguration.html#getBranchManager()" title="getBranchManager()">getBranchManager</a>, <a href="CDONet4jSessionConfiguration.html#getConnector()" title="getConnector()">getConnector</a>, <a href="CDONet4jSessionConfiguration.html#getPackageRegistry()" title="getPackageRegistry()">getPackageRegistry</a>, <a href="CDONet4jSessionConfiguration.html#getRepositoryName()" title="getRepositoryName()">getRepositoryName</a>, <a href="CDONet4jSessionConfiguration.html#getRevisionManager()" title="getRevisionManager()">getRevisionManager</a>, <a href="CDONet4jSessionConfiguration.html#getSignalTimeout()" title="getSignalTimeout()">getSignalTimeout</a>, <a href="CDONet4jSessionConfiguration.html#getStreamWrapper()" title="getStreamWrapper()">getStreamWrapper</a>, <a href="CDONet4jSessionConfiguration.html#openNet4jSession()" title="openNet4jSession()">openNet4jSession</a>, <a href="CDONet4jSessionConfiguration.html#openSession()" title="openSession()">openSession</a>, <a href="CDONet4jSessionConfiguration.html#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)" title="setBranchManager(CDOBranchManager)">setBranchManager</a>, <a href="CDONet4jSessionConfiguration.html#setConnector(org.eclipse.net4j.connector.IConnector)" title="setConnector(IConnector)">setConnector</a>, <a href="CDONet4jSessionConfiguration.html#setPackageRegistry(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)" title="setPackageRegistry(CDOPackageRegistry)">setPackageRegistry</a>, <a href="CDONet4jSessionConfiguration.html#setRepositoryName(java.lang.String)" title="setRepositoryName(String)">setRepositoryName</a>, <a href="CDONet4jSessionConfiguration.html#setRevisionManager(org.eclipse.emf.cdo.common.revision.CDORevisionManager)" title="setRevisionManager(CDORevisionManager)">setRevisionManager</a>, <a href="CDONet4jSessionConfiguration.html#setSignalTimeout(long)" title="setSignalTimeout(long)">setSignalTimeout</a>, <a href="CDONet4jSessionConfiguration.html#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)" title="setStreamWrapper(IStreamWrapper)">setStreamWrapper</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.session.CDOSessionConfiguration">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.session.<a href="../session/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></h3>
-<code><a href="../session/CDOSessionConfiguration.html#getAuthenticator()">getAuthenticator</a>, <a href="../session/CDOSessionConfiguration.html#getCredentialsProvider()">getCredentialsProvider</a>, <a href="../session/CDOSessionConfiguration.html#getExceptionHandler()">getExceptionHandler</a>, <a href="../session/CDOSessionConfiguration.html#getFetchRuleManager()">getFetchRuleManager</a>, <a href="../session/CDOSessionConfiguration.html#getIDGenerator()">getIDGenerator</a>, <a href="../session/CDOSessionConfiguration.html#getLockNotificationMode()">getLockNotificationMode</a>, <a href="../session/CDOSessionConfiguration.html#getOneTimeLoginToken()">getOneTimeLoginToken</a>, <a href="../session/CDOSessionConfiguration.html#getPassiveUpdateMode()">getPassiveUpdateMode</a>, <a href="../session/CDOSessionConfiguration.html#getUserID()">getUserID</a>, <a href="../session/CDOSessionConfiguration.html#isActivateOnOpen()">isActivateOnOpen</a>, <a href="../session/CDOSessionConfiguration.html#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</a>, <a href="../session/CDOSessionConfiguration.html#isSessionOpen()">isSessionOpen</a>, <a href="../session/CDOSessionConfiguration.html#setActivateOnOpen(boolean)">setActivateOnOpen</a>, <a href="../session/CDOSessionConfiguration.html#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)">setCredentialsProvider</a>, <a href="../session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)">setExceptionHandler</a>, <a href="../session/CDOSessionConfiguration.html#setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)">setFetchRuleManager</a>, <a href="../session/CDOSessionConfiguration.html#setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)">setIDGenerator</a>, <a href="../session/CDOSessionConfiguration.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</a>, <a href="../session/CDOSessionConfiguration.html#setOneTimeLoginToken(byte%5B%5D)">setOneTimeLoginToken</a>, <a href="../session/CDOSessionConfiguration.html#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</a>, <a href="../session/CDOSessionConfiguration.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</a>, <a href="../session/CDOSessionConfiguration.html#setUserID(java.lang.String)">setUserID</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.session.CDOSessionConfiguration">Methods inherited from interface&nbsp;<a href="../session/CDOSessionConfiguration.html#method-summary" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration</a></h3>
+<code><a href="../session/CDOSessionConfiguration.html#getAuthenticator()" title="getAuthenticator()">getAuthenticator</a>, <a href="../session/CDOSessionConfiguration.html#getCredentialsProvider()" title="getCredentialsProvider()">getCredentialsProvider</a>, <a href="../session/CDOSessionConfiguration.html#getExceptionHandler()" title="getExceptionHandler()">getExceptionHandler</a>, <a href="../session/CDOSessionConfiguration.html#getFetchRuleManager()" title="getFetchRuleManager()">getFetchRuleManager</a>, <a href="../session/CDOSessionConfiguration.html#getIDGenerator()" title="getIDGenerator()">getIDGenerator</a>, <a href="../session/CDOSessionConfiguration.html#getLockNotificationMode()" title="getLockNotificationMode()">getLockNotificationMode</a>, <a href="../session/CDOSessionConfiguration.html#getOneTimeLoginToken()" title="getOneTimeLoginToken()">getOneTimeLoginToken</a>, <a href="../session/CDOSessionConfiguration.html#getPassiveUpdateMode()" title="getPassiveUpdateMode()">getPassiveUpdateMode</a>, <a href="../session/CDOSessionConfiguration.html#getUserID()" title="getUserID()">getUserID</a>, <a href="../session/CDOSessionConfiguration.html#isActivateOnOpen()" title="isActivateOnOpen()">isActivateOnOpen</a>, <a href="../session/CDOSessionConfiguration.html#isPassiveUpdateEnabled()" title="isPassiveUpdateEnabled()">isPassiveUpdateEnabled</a>, <a href="../session/CDOSessionConfiguration.html#isSessionOpen()" title="isSessionOpen()">isSessionOpen</a>, <a href="../session/CDOSessionConfiguration.html#setActivateOnOpen(boolean)" title="setActivateOnOpen(boolean)">setActivateOnOpen</a>, <a href="../session/CDOSessionConfiguration.html#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)" title="setCredentialsProvider(IPasswordCredentialsProvider)">setCredentialsProvider</a>, <a href="../session/CDOSessionConfiguration.html#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)" title="setExceptionHandler(CDOSession.ExceptionHandler)">setExceptionHandler</a>, <a href="../session/CDOSessionConfiguration.html#setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)" title="setFetchRuleManager(CDOFetchRuleManager)">setFetchRuleManager</a>, <a href="../session/CDOSessionConfiguration.html#setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)" title="setIDGenerator(CDOIDGenerator)">setIDGenerator</a>, <a href="../session/CDOSessionConfiguration.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" title="setLockNotificationMode(CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</a>, <a href="../session/CDOSessionConfiguration.html#setOneTimeLoginToken(byte%5B%5D)" title="setOneTimeLoginToken(byte[])">setOneTimeLoginToken</a>, <a href="../session/CDOSessionConfiguration.html#setPassiveUpdateEnabled(boolean)" title="setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</a>, <a href="../session/CDOSessionConfiguration.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)" title="setPassiveUpdateMode(CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</a>, <a href="../session/CDOSessionConfiguration.html#setUserID(java.lang.String)" title="setUserID(String)">setUserID</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
 <code>addListener, getListeners, hasListeners, removeListener</code></div>
@@ -186,49 +178,65 @@ extends <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.e
 <li>
 <section class="detail" id="isHeartBeatEnabled()">
 <h3>isHeartBeatEnabled</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isHeartBeatEnabled</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setHeartBeatEnabled(boolean)">
 <h3>setHeartBeatEnabled</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setHeartBeatEnabled</span><wbr><span class="parameters">(boolean&nbsp;enabled)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getHeartBeatPeriod()">
 <h3>getHeartBeatPeriod</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">getHeartBeatPeriod</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setHeartBeatPeriod(long)">
 <h3>setHeartBeatPeriod</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setHeartBeatPeriod</span><wbr><span class="parameters">(long&nbsp;period)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getHeartBeatTimeout()">
 <h3>getHeartBeatTimeout</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">getHeartBeatTimeout</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setHeartBeatTimeout(long)">
 <h3>setHeartBeatTimeout</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setHeartBeatTimeout</span><wbr><span class="parameters">(long&nbsp;timeout)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getConnectorTimeout()">
 <h3>getConnectorTimeout</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">getConnectorTimeout</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setConnectorTimeout(long)">
 <h3>setConnectorTimeout</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setConnectorTimeout</span><wbr><span class="parameters">(long&nbsp;timeout)</span></div>
+</div>
 </section>
 </li>
 </ul>
@@ -237,12 +245,11 @@ extends <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.e
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

@@ -78,18 +78,18 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- Net4j DB connects database dialects, a managed schema model, coordinated schema evolution, managed JDBC
- connections, per-connection prepared-statement caches, and structured SQL construction. The parts are useful
- individually, but their cooperation is what lets an application keep running managed queries while schema
- metadata evolves and cached statements are invalidated coherently.
- <p>
- JDBC remains the execution substrate: drivers provide Connection, SQL execution, transactions, and result
- sets. Net4j DB adds a database ownership boundary, adapter-directed metadata and DDL, statement lifecycle
- coordination, and a DML compilation pipeline. It does not pool connections or replace database-server
- transaction isolation. This article introduces the shared architecture; <a href="Doc02_DataDefinition.html" title="Article in Net4j DB Framework Documentation">Data Definition</a> explains
- schema design and evolution, and <a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a> explains SQL construction and binding.
- <p>
- <p>
+Net4j DB connects database dialects, a managed schema model, coordinated schema evolution, managed JDBC
+connections, per-connection prepared-statement caches, and structured SQL construction. The parts are useful
+individually, but their cooperation is what lets an application keep running managed queries while schema
+metadata evolves and cached statements are invalidated coherently.
+<p>
+JDBC remains the execution substrate: drivers provide Connection, SQL execution, transactions, and result
+sets. Net4j DB adds a database ownership boundary, adapter-directed metadata and DDL, statement lifecycle
+coordination, and a DML compilation pipeline. It does not pool connections or replace database-server
+transaction isolation. This article introduces the shared architecture; <a href="Doc02_DataDefinition.html" title="Article in Net4j DB Framework Documentation">Data Definition</a> explains
+schema design and evolution, and <a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a> explains SQL construction and binding.
+<p>
+<p>
 <table border="0">
 <tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#Architecture" title="Chapter in Net4j DB Framework Documentation">How the Pieces Fit Together</a></td></tr>
 <tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_GeneralUtilities.html#AdaptersAndDatabases" title="Chapter in Net4j DB Framework Documentation">Adapters, Providers, and Database Instances</a></td></tr>
@@ -103,68 +103,68 @@ function maximize(id)
 
 <h2><a name="Architecture"></a>1&nbsp;&nbsp;How the Pieces Fit Together</h2>
 <p>
- Start from <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>. It is created with an <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> and an
- <a href="../../javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnectionProvider</code></a>; it reads and locks a managed <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html" title="Interface in org.eclipse.net4j.db.ddl"><code>IDBSchema</code></a>, creates and tracks
- <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>s, opens schema transactions, and coordinates schema-change notifications and cache
- invalidation. Each managed connection wraps one JDBC connection and owns its own prepared-statement cache.
- <p>
- DML definitions use schema metadata to create an adapter-neutral <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLTemplate.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLTemplate</code></a>.
- Compiling the template with the adapter produces an adapter-specific <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLStatement.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLStatement</code></a>; preparing it on a managed connection checks out an
- <a href="../../javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html" title="Interface in org.eclipse.net4j.db"><code>IDBPreparedStatement</code></a> from that connection's cache or JDBC driver. The returned statement is still a
- caller-managed resource.
- <p>
- The first diagram shows these relationships at the public API level. Arrows distinguish creation and ownership
- from compilation and preparation. The database coordinates schema access across its managed connections but
- does not own a single shared statement cache.
- <p>
- <embed src="net4j-db-architecture.svg">
+Start from <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>. It is created with an <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> and an
+<a href="../../javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnectionProvider</code></a>; it reads and locks a managed <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html" title="Interface in org.eclipse.net4j.db.ddl"><code>IDBSchema</code></a>, creates and tracks
+<a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>s, opens schema transactions, and coordinates schema-change notifications and cache
+invalidation. Each managed connection wraps one JDBC connection and owns its own prepared-statement cache.
+<p>
+DML definitions use schema metadata to create an adapter-neutral <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLTemplate.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLTemplate</code></a>.
+Compiling the template with the adapter produces an adapter-specific <a href="../../javadoc/org/eclipse/net4j/db/dml/SQLStatement.html" title="Interface in org.eclipse.net4j.db.dml"><code>SQLStatement</code></a>; preparing it on a managed connection checks out an
+<a href="../../javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html" title="Interface in org.eclipse.net4j.db"><code>IDBPreparedStatement</code></a> from that connection's cache or JDBC driver. The returned statement is still a
+caller-managed resource.
+<p>
+The first diagram shows these relationships at the public API level. Arrows distinguish creation and ownership
+from compilation and preparation. The database coordinates schema access across its managed connections but
+does not own a single shared statement cache.
+<p>
+<embed src="net4j-db-architecture.svg">
 
- <p>
- Follow the lower path for query execution: schema-backed expressions are captured in a template, compiled by the
- adapter, and prepared through a managed connection. The upper path shows that the same database instance owns
- the managed schema snapshot and connection population, while each connection retains its own statement cache.
+<p>
+Follow the lower path for query execution: schema-backed expressions are captured in a template, compiled by the
+adapter, and prepared through a managed connection. The upper path shows that the same database instance owns
+the managed schema snapshot and connection population, while each connection retains its own statement cache.
 
 <h2><a name="AdaptersAndDatabases"></a>2&nbsp;&nbsp;Adapters, Providers, and Database Instances</h2>
 <p>
- An <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> handles vendor-sensitive behavior: identifier quoting, logical type adaptation, schema
- inspection and updates, and selected SQL-generation or exception-classification rules. It is not a pool and does
- not supply the application's connection-management policy. An <a href="../../javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnectionProvider</code></a> supplies JDBC
- connections; applications commonly adapt a DataSource with the <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html" title="Class in org.eclipse.net4j.db"><code>DBUtil</code></a> helper method
- createConnectionProvider(DataSource).
- <p>
- Obtain contributed adapters from <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#getDBAdapter(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.getDBAdapter(String)</code></a> or the current
- IDBAdapter.Registry.INSTANCE. In an Eclipse runtime the adapter registry can be populated by the
- org.eclipse.net4j.db.dbAdapters extension point. Standalone applications must register or otherwise make
- their adapter available. Adapter identity includes a name and version. The registry lookup by name selects the
- highest registered version; select an exact identity when reproducible adapter behavior is important.
- <p>
- To resolve an adapter from an existing JDBC connection, call
- IDBAdapter.Registry.INSTANCE.getAdapter(connection). If the connection is an <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a> whose
- <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#getDatabase()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>database</code></a> has an adapter, that association is authoritative and is returned
- directly. An ordinary <a href="https://docs.oracle.com/javase/8/docs/api/java/sql/Connection.html" target="_blank" title="Interface in java.sql"><code>Connection</code></a> is resolved from <a href="https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html#getDatabaseProductName()" target="_blank" title="Method in java.sql.DatabaseMetaData"><code>DatabaseMetaData.getDatabaseProductName()</code></a>
- and any optional driver-name or URL constraints declared for matching adapters. A metadata access failure is
- reported as <a href="../../javadoc/org/eclipse/net4j/db/DBException.html" title="Class in org.eclipse.net4j.db"><code>DBException</code></a>; an unknown or ambiguous product returns null. The lookup does not take
- ownership of or close the supplied connection.
- <p>
- The dbAdapters extension point lets a contribution describe recognition without constructing its adapter.
- Its optional productNames attribute lists comma-separated exact JDBC product names; when omitted, the
- adapter name is used. Product names are trimmed and compared case-insensitively. A product name containing a comma
- must be matched with productNamePattern. The optional
- productNamePattern is a case-insensitive Java regular expression matched against the complete trimmed
- product name, in addition to the exact names. Optional driverNamePattern and urlPattern regular
- expressions constrain the JDBC driver name and URL respectively; when present, each value must be available and
- match the complete trimmed value. Programmatic adapters provide the equivalent metadata by overriding
- <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseProductNames()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseProductNames()</code></a>, <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseProductNamePattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseProductNamePattern()</code></a>,
- <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseDriverNamePattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseDriverNamePattern()</code></a>, and <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseURLPattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseURLPattern()</code></a>.
- <p>
- After metadata constraints are applied, a direct match between the product name and an adapter name takes priority
- over aliases. If multiple versions of the selected adapter name are registered, the highest adapter version is
- selected. If matches remain for different adapter names, the result is ambiguous and the lookup returns
- null. Only the selected lazy descriptor is materialized. Adapter versions describe adapter
- implementations; they are independent of the database product version and JDBC driver version.
- <p>
- The following example retrieves the adapter for a given connection:
- 
+An <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>IDBAdapter</code></a> handles vendor-sensitive behavior: identifier quoting, logical type adaptation, schema
+inspection and updates, and selected SQL-generation or exception-classification rules. It is not a pool and does
+not supply the application's connection-management policy. An <a href="../../javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnectionProvider</code></a> supplies JDBC
+connections; applications commonly adapt a DataSource with the <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html" title="Class in org.eclipse.net4j.db"><code>DBUtil</code></a> helper method
+createConnectionProvider(DataSource).
+<p>
+Obtain contributed adapters from <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#getDBAdapter(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.getDBAdapter(String)</code></a> or the current
+IDBAdapter.Registry.INSTANCE. In an Eclipse runtime the adapter registry can be populated by the
+org.eclipse.net4j.db.dbAdapters extension point. Standalone applications must register or otherwise make
+their adapter available. Adapter identity includes a name and version. The registry lookup by name selects the
+highest registered version; select an exact identity when reproducible adapter behavior is important.
+<p>
+To resolve an adapter from an existing JDBC connection, call
+IDBAdapter.Registry.INSTANCE.getAdapter(connection). If the connection is an <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a> whose
+<a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#getDatabase()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>database</code></a> has an adapter, that association is authoritative and is returned
+directly. An ordinary Connection is resolved from DatabaseMetaData#getDatabaseProductName()
+and any optional driver-name or URL constraints declared for matching adapters. A metadata access failure is
+reported as <a href="../../javadoc/org/eclipse/net4j/db/DBException.html" title="Class in org.eclipse.net4j.db"><code>DBException</code></a>; an unknown or ambiguous product returns null. The lookup does not take
+ownership of or close the supplied connection.
+<p>
+The dbAdapters extension point lets a contribution describe recognition without constructing its adapter.
+Its optional productNames attribute lists comma-separated exact JDBC product names; when omitted, the
+adapter name is used. Product names are trimmed and compared case-insensitively. A product name containing a comma
+must be matched with productNamePattern. The optional
+productNamePattern is a case-insensitive Java regular expression matched against the complete trimmed
+product name, in addition to the exact names. Optional driverNamePattern and urlPattern regular
+expressions constrain the JDBC driver name and URL respectively; when present, each value must be available and
+match the complete trimmed value. Programmatic adapters provide the equivalent metadata by overriding
+<a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseProductNames()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseProductNames()</code></a>, <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseProductNamePattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseProductNamePattern()</code></a>,
+<a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseDriverNamePattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseDriverNamePattern()</code></a>, and <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDatabaseURLPattern()" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.getDatabaseURLPattern()</code></a>.
+<p>
+After metadata constraints are applied, a direct match between the product name and an adapter name takes priority
+over aliases. If multiple versions of the selected adapter name are registered, the highest adapter version is
+selected. If matches remain for different adapter names, the result is ambiguous and the lookup returns
+null. Only the selected lazy descriptor is materialized. Adapter versions describe adapter
+implementations; they are independent of the database product version and JDBC driver version.
+<p>
+The following example retrieves the adapter for a given connection:
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_AdaptersAndDatabases_1"></a>
@@ -203,9 +203,9 @@ function maximize(id)
 </div>
 <p>
 
- <p>
- The following example retrieves the adapter for a given adapter name:
- 
+<p>
+The following example retrieves the adapter for a given adapter name:
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_AdaptersAndDatabases_2"></a>
@@ -243,24 +243,24 @@ function maximize(id)
 
 <h2><a name="ManagedSchemasAndConnections"></a>3&nbsp;&nbsp;Managed Schema and Connections</h2>
 <p>
- A standalone schema made with <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> is an ordinary mutable metadata model. It does
- not represent a live catalog until an API reads from or writes to a database. When <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.openDatabase</code></a>
- constructs an <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>, the implementation reads the selected catalog through a connection and locks
- that schema model. Callers should treat <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getSchema()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getSchema()</code></a> as the database's managed snapshot, not
- as an editable draft. For changes, open an <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Interface in org.eclipse.net4j.db"><code>IDBSchemaTransaction</code></a>; its working copy is the intended edit
- surface. See <a href="Doc02_DataDefinition.html#SchemaModel" title="Chapter in Net4j DB Framework Documentation">Standalone and Managed Schema Models</a>.
- <p>
- Each call to <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getConnection()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getConnection()</code></a> asks the provider for a JDBC connection, lets the adapter
- modify it, wraps it as an <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>, and registers it with the database. The database can then
- coordinate cache invalidation across those open connections. Closing the database closes its managed
- connections. Close individual connections when finished even when the database itself is long-lived.
- <p>
- A connection created by the framework is put into manual-commit mode. Ordinary row changes therefore need an
- explicit commit() or rollback(). This JDBC transaction is independent of the schema working
- copy and its adapter-driven DDL lifecycle.
- <p>
- The following example executes and commits a customer update before closing its statement and managed
- connection: 
+A standalone schema made with <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> is an ordinary mutable metadata model. It does
+not represent a live catalog until an API reads from or writes to a database. When <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.openDatabase</code></a>
+constructs an <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>, the implementation reads the selected catalog through a connection and locks
+that schema model. Callers should treat <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getSchema()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getSchema()</code></a> as the database's managed snapshot, not
+as an editable draft. For changes, open an <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Interface in org.eclipse.net4j.db"><code>IDBSchemaTransaction</code></a>; its working copy is the intended edit
+surface. See <a href="Doc02_DataDefinition.html#SchemaModel" title="Chapter in Net4j DB Framework Documentation">Standalone and Managed Schema Models</a>.
+<p>
+Each call to <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getConnection()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getConnection()</code></a> asks the provider for a JDBC connection, lets the adapter
+modify it, wraps it as an <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>, and registers it with the database. The database can then
+coordinate cache invalidation across those open connections. Closing the database closes its managed
+connections. Close individual connections when finished even when the database itself is long-lived.
+<p>
+A connection created by the framework is put into manual-commit mode. Ordinary row changes therefore need an
+explicit commit() or rollback(). This JDBC transaction is independent of the schema working
+copy and its adapter-driven DDL lifecycle.
+<p>
+The following example executes and commits a customer update before closing its statement and managed
+connection: 
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_ManagedSchemasAndConnections_1"></a>
@@ -312,52 +312,52 @@ function maximize(id)
 
 <h2><a name="SchemaAccessAndCaching"></a>4&nbsp;&nbsp;Coordinated Schema Access and Statement Caches</h2>
 <p>
- Net4j DB coordinates managed preparation with schema transaction completion so that a statement already in use
- is not silently reused across a schema-cache invalidation. When DBConnection.prepareStatement(...) is
- called, it first asks its database for a schema read-access token. The token is associated with the checked-out
- DBPreparedStatement. It remains active for the statement's checkout lifetime, including execution and
- result processing, and is released in the statement-close/return path. Returning a statement can put it into that
- connection's local cache, but the token is released after the return operation.
- <p>
- When a nonempty schema delta reaches transaction completion, DBDatabase.closeSchemaTransaction(...)
- requests exclusive schema write access. The queue admits compatible readers together, orders writers against
- readers, and prevents later readers from continually passing a waiting writer. A writer waits until earlier
- read tokens have ended. The wait is bounded by the implementation's schema-access timeout; a timeout is a
- runtime failure, not a database-server lock timeout. A checked-out statement that is forgotten can therefore
- delay schema completion until that timeout. Close each statement promptly, even when its SQL is likely to be
- reused.
- <p>
- Once exclusive access reaches the head of the queue, the database invalidates each currently managed
- connection's local cached statements, emits a schema-changed event carrying the delta, and then releases the
- write token. A later managed preparation obtains a read token after this phase and cannot take a stale entry
- from the cleared caches. The optional DBConnection.checkOuts structure is enabled only by
- VALIDATE_CHECKOUTS; it adds validation at invalidation time and is not the synchronization mechanism.
- The queue and tokens provide the coordination.
- <p>
- The second diagram separates this cache-coordination phase from physical DDL. In the current implementation,
- DBSchemaTransaction.run() calls IDBAdapter.updateSchema(...) first. In the base
- DBAdapter, updateSchema applies the delta to in-memory schema metadata before traversing it to
- execute DDL. The transaction's finally path then calls completion with that delta even if the adapter
- update throws, so a nonempty delta can still trigger cache invalidation and event delivery on a failing DDL
- path. An event or the current in-memory model is not proof that the physical update succeeded. In the
- connection-backed form, commit() calls JDBC commit() after run() returns; when
- run() throws a checked SQL failure, the implementation attempts rollback instead. This ordering does not
- put all DDL execution under the schema-access writer, establish server isolation, or guarantee identical DDL rollback
- behavior across adapters. An adapter or database may have its own DDL behavior, including implicit commits.
- <p>
- Only preparations made through managed <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>s participate. Raw JDBC connections/statements
- acquired elsewhere bypass these tokens and cache invalidation.
- <p>
- <embed src="net4j-db-schema-coordination.svg">
+Net4j DB coordinates managed preparation with schema transaction completion so that a statement already in use
+is not silently reused across a schema-cache invalidation. When DBConnection.prepareStatement(...) is
+called, it first asks its database for a schema read-access token. The token is associated with the checked-out
+DBPreparedStatement. It remains active for the statement's checkout lifetime, including execution and
+result processing, and is released in the statement-close/return path. Returning a statement can put it into that
+connection's local cache, but the token is released after the return operation.
+<p>
+When a nonempty schema delta reaches transaction completion, DBDatabase.closeSchemaTransaction(...)
+requests exclusive schema write access. The queue admits compatible readers together, orders writers against
+readers, and prevents later readers from continually passing a waiting writer. A writer waits until earlier
+read tokens have ended. The wait is bounded by the implementation's schema-access timeout; a timeout is a
+runtime failure, not a database-server lock timeout. A checked-out statement that is forgotten can therefore
+delay schema completion until that timeout. Close each statement promptly, even when its SQL is likely to be
+reused.
+<p>
+Once exclusive access reaches the head of the queue, the database invalidates each currently managed
+connection's local cached statements, emits a schema-changed event carrying the delta, and then releases the
+write token. A later managed preparation obtains a read token after this phase and cannot take a stale entry
+from the cleared caches. The optional DBConnection.checkOuts structure is enabled only by
+VALIDATE_CHECKOUTS; it adds validation at invalidation time and is not the synchronization mechanism.
+The queue and tokens provide the coordination.
+<p>
+The second diagram separates this cache-coordination phase from physical DDL. In the current implementation,
+DBSchemaTransaction.run() calls IDBAdapter.updateSchema(...) first. In the base
+DBAdapter, updateSchema applies the delta to in-memory schema metadata before traversing it to
+execute DDL. The transaction's finally path then calls completion with that delta even if the adapter
+update throws, so a nonempty delta can still trigger cache invalidation and event delivery on a failing DDL
+path. An event or the current in-memory model is not proof that the physical update succeeded. In the
+connection-backed form, commit() calls JDBC commit() after run() returns; when
+run() throws a checked SQL failure, the implementation attempts rollback instead. This ordering does not
+put all DDL execution under the schema-access writer, establish server isolation, or guarantee identical DDL rollback
+behavior across adapters. An adapter or database may have its own DDL behavior, including implicit commits.
+<p>
+Only preparations made through managed <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html" title="Interface in org.eclipse.net4j.db"><code>IDBConnection</code></a>s participate. Raw JDBC connections/statements
+acquired elsewhere bypass these tokens and cache invalidation.
+<p>
+<embed src="net4j-db-schema-coordination.svg">
 
- <p>
- The practical rule is simple: finish and close every statement before committing a schema change, especially
- when the schema transaction is opened on that same connection. Otherwise the writer can wait on a read token
- held by the caller itself until the queue timeout. After completion, prepare through the managed connection
- again; the old cached statement objects have been discarded.
- <p>
- The following example illustrates how a query statement execution is coordinated with a schema change:
- 
+<p>
+The practical rule is simple: finish and close every statement before committing a schema change, especially
+when the schema transaction is opened on that same connection. Otherwise the writer can wait on a read token
+held by the caller itself until the queue timeout. After completion, prepare through the managed connection
+again; the old cached statement objects have been discarded.
+<p>
+The following example illustrates how a query statement execution is coordinated with a schema change:
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_SchemaAccessAndCaching_1"></a>
@@ -423,34 +423,34 @@ function maximize(id)
 
 <h2><a name="LifecycleAndFailures"></a>5&nbsp;&nbsp;Ownership, Transactions, and Failure Handling</h2>
 <p>
- A managed connection belongs to the <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a> while open and should also be closed by the code that
- acquired it. A prepared statement belongs to that connection; close it after closing its result sets. For a
- query, closing the <a href="../../javadoc/org/eclipse/net4j/db/IDBResultSet.html" title="Interface in org.eclipse.net4j.db"><code>IDBResultSet</code></a> does not return the prepared statement to its cache. For updates, decide
- whether the surrounding JDBC transaction should commit or roll back before releasing the connection. The
- connection's close path performs cleanup, but it is not a substitute for handling the operation's outcome.
- <p>
- A schema transaction is separate. <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.openSchemaTransaction()</code></a> opens one that obtains a
- connection for its adapter update when committed; <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>IDBConnection.openSchemaTransaction()</code></a> associates the
- schema transaction with that existing managed connection. In the latter case, the schema transaction's commit
- path commits that connection after the adapter update and cache-coordination completion. Do not assume the
- operation has portable atomic-DDL semantics. Close the schema transaction in a finally block; after a successful
- commit it has already completed, so the subsequent close is safe cleanup.
- <p>
- Net4j wraps JDBC/provider/adapter failures as <a href="../../javadoc/org/eclipse/net4j/db/DBException.html" title="Class in org.eclipse.net4j.db"><code>DBException</code></a> in APIs whose contracts are unchecked, while
- inherited JDBC methods can still throw SQLException. Preserve the cause and report which phase failed:
- connection acquisition, prepare/bind, SQL execution, DDL update, coordination timeout, or commit. If schema
- completion fails, do not infer the physical database state solely from the in-memory model or event; inspect the
- target database using its supported tooling and adapter behavior.
+A managed connection belongs to the <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a> while open and should also be closed by the code that
+acquired it. A prepared statement belongs to that connection; close it after closing its result sets. For a
+query, closing the <a href="../../javadoc/org/eclipse/net4j/db/IDBResultSet.html" title="Interface in org.eclipse.net4j.db"><code>IDBResultSet</code></a> does not return the prepared statement to its cache. For updates, decide
+whether the surrounding JDBC transaction should commit or roll back before releasing the connection. The
+connection's close path performs cleanup, but it is not a substitute for handling the operation's outcome.
+<p>
+A schema transaction is separate. <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.openSchemaTransaction()</code></a> opens one that obtains a
+connection for its adapter update when committed; <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>IDBConnection.openSchemaTransaction()</code></a> associates the
+schema transaction with that existing managed connection. In the latter case, the schema transaction's commit
+path commits that connection after the adapter update and cache-coordination completion. Do not assume the
+operation has portable atomic-DDL semantics. Close the schema transaction in a finally block; after a successful
+commit it has already completed, so the subsequent close is safe cleanup.
+<p>
+Net4j wraps JDBC/provider/adapter failures as <a href="../../javadoc/org/eclipse/net4j/db/DBException.html" title="Class in org.eclipse.net4j.db"><code>DBException</code></a> in APIs whose contracts are unchecked, while
+inherited JDBC methods can still throw SQLException. Preserve the cause and report which phase failed:
+connection acquisition, prepare/bind, SQL execution, DDL update, coordination timeout, or commit. If schema
+completion fails, do not infer the physical database state solely from the in-memory model or event; inspect the
+target database using its supported tooling and adapter behavior.
 
 <h2><a name="Utilities"></a>6&nbsp;&nbsp;DBUtil and Supporting Facilities</h2>
 <p>
- <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html" title="Class in org.eclipse.net4j.db"><code>DBUtil</code></a> provides focused helpers around the architecture: adapter lookup, connection-provider creation,
- opening a database, creating/copying/reading schema models, SQL-type lookup, naming and identifier utilities,
- transaction helpers, and quiet resource cleanup. Use managed database APIs where coordination and caching matter;
- direct JDBC utilities remain appropriate for standalone metadata work or integrations that intentionally do not
- use a managed database instance. <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a> represents Net4j's logical SQL types; adapters decide how those
- types map to a particular database. The current structured DML API is described in
- <a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a>.
+<a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html" title="Class in org.eclipse.net4j.db"><code>DBUtil</code></a> provides focused helpers around the architecture: adapter lookup, connection-provider creation,
+opening a database, creating/copying/reading schema models, SQL-type lookup, naming and identifier utilities,
+transaction helpers, and quiet resource cleanup. Use managed database APIs where coordination and caching matter;
+direct JDBC utilities remain appropriate for standalone metadata work or integrations that intentionally do not
+use a managed database instance. <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a> represents Net4j's logical SQL types; adapters decide how those
+types map to a particular database. The current structured DML API is described in
+<a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a>.
 
 <p align="right">
 <a href="index.html" title="Backward to Programmer's Guide"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_DataDefinition.html" title="Forward to Data Definition"><img src="../../images/forward.png" border="0"></a></p>

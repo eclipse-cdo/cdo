@@ -78,18 +78,18 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- Net4j DB models database structure as metadata, then delegates physical DDL to the selected adapter. That separation
- gives an application one schema vocabulary for a standalone desired model, a catalog snapshot, or the managed
- schema owned by <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>. The model itself is not the database: adding a field to an ordinary schema
- changes Java metadata, while creating or evolving a managed schema requires a database operation.
- <p>
- Schema evolution also connects Article 1's managed connections and caches. A schema transaction updates the
- managed model through the adapter and then coordinates cache invalidation across the database's managed
- connections. This coordination does not make every vendor's DDL transactional or place all physical DDL under the
- cache-coordination lock. For the broader architecture, see <a href="Doc01_GeneralUtilities.html" title="Article in Net4j DB Framework Documentation">Architecture and Core Concepts</a>; for row-level SQL, see
- <a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a>.
- <p>
- <p>
+Net4j DB models database structure as metadata, then delegates physical DDL to the selected adapter. That separation
+gives an application one schema vocabulary for a standalone desired model, a catalog snapshot, or the managed
+schema owned by <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html" title="Interface in org.eclipse.net4j.db"><code>IDBDatabase</code></a>. The model itself is not the database: adding a field to an ordinary schema
+changes Java metadata, while creating or evolving a managed schema requires a database operation.
+<p>
+Schema evolution also connects Article 1's managed connections and caches. A schema transaction updates the
+managed model through the adapter and then coordinates cache invalidation across the database's managed
+connections. This coordination does not make every vendor's DDL transactional or place all physical DDL under the
+cache-coordination lock. For the broader architecture, see <a href="Doc01_GeneralUtilities.html" title="Article in Net4j DB Framework Documentation">Architecture and Core Concepts</a>; for row-level SQL, see
+<a href="Doc03_DataManipulation.html" title="Article in Net4j DB Framework Documentation">Data Manipulation</a>.
+<p>
+<p>
 <table border="0">
 <tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#SchemaModel" title="Chapter in Net4j DB Framework Documentation">Standalone and Managed Schema Models</a></td></tr>
 <tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc02_DataDefinition.html#TablesFieldsAndIndexes" title="Chapter in Net4j DB Framework Documentation">Tables, Fields, Indexes, and Types</a></td></tr>
@@ -103,18 +103,18 @@ function maximize(id)
 
 <h2><a name="SchemaModel"></a>1&nbsp;&nbsp;Standalone and Managed Schema Models</h2>
 <p>
- <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> creates an independent, mutable metadata model. It is appropriate for
- defining an application's desired tables before opening a database. <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.readSchema(IDBAdapter,
- Connection, String)</code></a> obtains a catalog snapshot through an adapter. When <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.openDatabase</code></a> creates a
- managed database, its implementation reads a schema and locks that model; callers should use
- <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getSchema()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getSchema()</code></a> for inspection and use an <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Interface in org.eclipse.net4j.db"><code>IDBSchemaTransaction</code></a> working copy for edits.
- <p>
- A standalone schema can be copied, compared, exported, created, or dropped using the overload appropriate to
- the application. Those methods call the supplied adapter and may use the supplied connection, data source, or
- provider. They perform actual DDL only when an operation explicitly asks for creation or dropping. They do not
- create a coordinated managed database merely because the schema model is passed to them.
- <p>
- 
+<a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#createSchema(java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.createSchema(String)</code></a> creates an independent, mutable metadata model. It is appropriate for
+defining an application's desired tables before opening a database. <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.readSchema(IDBAdapter,
+Connection, String)</code></a> obtains a catalog snapshot through an adapter. When <a href="../../javadoc/org/eclipse/net4j/db/DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" title="Method in org.eclipse.net4j.db.DBUtil"><code>DBUtil.openDatabase</code></a> creates a
+managed database, its implementation reads a schema and locks that model; callers should use
+<a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#getSchema()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.getSchema()</code></a> for inspection and use an <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Interface in org.eclipse.net4j.db"><code>IDBSchemaTransaction</code></a> working copy for edits.
+<p>
+A standalone schema can be copied, compared, exported, created, or dropped using the overload appropriate to
+the application. Those methods call the supplied adapter and may use the supplied connection, data source, or
+provider. They perform actual DDL only when an operation explicitly asks for creation or dropping. They do not
+create a coordinated managed database merely because the schema model is passed to them.
+<p>
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_SchemaModel_1"></a>
@@ -160,32 +160,32 @@ function maximize(id)
 
 <h2><a name="TablesFieldsAndIndexes"></a>2&nbsp;&nbsp;Tables, Fields, Indexes, and Types</h2>
 <p>
- A table owns ordered fields and indexes. A field records a logical <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>, precision, scale, and
- nullability. An index records its kind (primary key, unique, or non-unique) and ordered fields. The model checks
- structural relationships such as whether an index field belongs to its table; it does not prove that a target
- database accepts every type, name, precision, or index form. The adapter supplies type adaptation, identifier
- rules, maximum lengths, and vendor-specific DDL. SQL builders and DDL generators should use
- <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#quoteIdentifier(java.lang.String)" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.quoteIdentifier(String)</code></a> for one identifier and <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#quoteTableName(org.eclipse.net4j.db.ddl.IDBTable)" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.quoteTableName(IDBTable)</code></a>
- for a table, so schema-qualified names are quoted component by component. A schema element's toString()
- is a general representation and does not know which adapter will execute the SQL.
- <p>
- Use descriptive, stable names and model constraints explicitly. For example, CUSTOMER.EMAIL can have a
- unique index, while ORDERS.CUSTOMER_ID can have a non-unique index for common customer order lookups.
- A model-level index does not itself create or verify a physical index.
+A table owns ordered fields and indexes. A field records a logical <a href="../../javadoc/org/eclipse/net4j/db/DBType.html" title="Enum in org.eclipse.net4j.db"><code>DBType</code></a>, precision, scale, and
+nullability. An index records its kind (primary key, unique, or non-unique) and ordered fields. The model checks
+structural relationships such as whether an index field belongs to its table; it does not prove that a target
+database accepts every type, name, precision, or index form. The adapter supplies type adaptation, identifier
+rules, maximum lengths, and vendor-specific DDL. SQL builders and DDL generators should use
+<a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#quoteIdentifier(java.lang.String)" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.quoteIdentifier(String)</code></a> for one identifier and <a href="../../javadoc/org/eclipse/net4j/db/IDBAdapter.html#quoteTableName(org.eclipse.net4j.db.ddl.IDBTable)" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>IDBAdapter.quoteTableName(IDBTable)</code></a>
+for a table, so schema-qualified names are quoted component by component. A schema element's toString()
+is a general representation and does not know which adapter will execute the SQL.
+<p>
+Use descriptive, stable names and model constraints explicitly. For example, CUSTOMER.EMAIL can have a
+unique index, while ORDERS.CUSTOMER_ID can have a non-unique index for common customer order lookups.
+A model-level index does not itself create or verify a physical index.
 
 <h2><a name="SchemaInspectionAndComparison"></a>3&nbsp;&nbsp;Creating, Reading, and Comparing Schemas</h2>
 <p>
- <a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,javax.sql.DataSource)" title="Method in org.eclipse.net4j.db.ddl.IDBSchema"><code>IDBSchema.create(IDBAdapter, DataSource)</code></a> delegates creation to the adapter. The overloads accepting a
- JDBC connection or IDBConnectionProvider let the caller choose resource ownership. Creation returns the
- tables created; it is not a reconciliation operation and should not be treated as idempotent. To inspect an
- existing catalog, read it through the adapter. To determine differences, compare two schema models. Comparison
- is in-memory and emits a typed <a href="../../javadoc/org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="Interface in org.eclipse.net4j.db.ddl.delta"><code>IDBSchemaDelta</code></a>; it executes no SQL.
- <p>
- A delta can be inspected, visited under a policy, or applied to a schema model. Applying it to a model changes
- that model only. The adapter's updateSchema operation is what maps a delta to database-specific DDL.
- Review removals, type changes, and constraint changes before applying them to production data.
- <p>
- 
+<a href="../../javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html#create(org.eclipse.net4j.db.IDBAdapter,javax.sql.DataSource)" title="Method in org.eclipse.net4j.db.ddl.IDBSchema"><code>IDBSchema.create(IDBAdapter, DataSource)</code></a> delegates creation to the adapter. The overloads accepting a
+JDBC connection or IDBConnectionProvider let the caller choose resource ownership. Creation returns the
+tables created; it is not a reconciliation operation and should not be treated as idempotent. To inspect an
+existing catalog, read it through the adapter. To determine differences, compare two schema models. Comparison
+is in-memory and emits a typed <a href="../../javadoc/org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" title="Interface in org.eclipse.net4j.db.ddl.delta"><code>IDBSchemaDelta</code></a>; it executes no SQL.
+<p>
+A delta can be inspected, visited under a policy, or applied to a schema model. Applying it to a model changes
+that model only. The adapter's updateSchema operation is what maps a delta to database-specific DDL.
+Review removals, type changes, and constraint changes before applying them to production data.
+<p>
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_SchemaInspectionAndComparison_1"></a>
@@ -231,23 +231,23 @@ function maximize(id)
 
 <h2><a name="SchemaTransactions"></a>4&nbsp;&nbsp;Schema Transactions and Working Copies</h2>
 <p>
- <a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.openSchemaTransaction()</code></a> snapshots the current managed schema into a working copy. Edit the
- copy, inspect <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#getSchemaDelta()" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.getSchemaDelta()</code></a>, and commit the transaction to invoke the adapter's
- update operation. Closing an uncommitted transaction abandons the working copy. A transaction can instead be
- opened through <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>IDBConnection.openSchemaTransaction()</code></a>; this associates its schema update with that
- existing managed connection. In that form, schema transaction commit() commits the connection after the
- update/completion path. In the database-opened form, Net4j obtains a managed connection for the update and
- commits it through its connection-execution helper.
- <p>
- Neither form is an ordinary application transaction around arbitrary row updates. Do not assume that JDBC
- rollback can undo DDL: databases differ in whether DDL is transactional, whether it causes an implicit commit,
- and which alterations they support. Keep application data migration and schema changes as explicit deployment
- steps when they need ordering or recovery logic.
- <p>
- The shared base schema already contains CUSTOMER.EMAIL and ORDERS.STATUS. These examples evolve
- it by adding CUSTOMER.LOYALTY_CODE and ORDERS.PROMOTION_CODE fields.
- <p>
- 
+<a href="../../javadoc/org/eclipse/net4j/db/IDBDatabase.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBDatabase"><code>IDBDatabase.openSchemaTransaction()</code></a> snapshots the current managed schema into a working copy. Edit the
+copy, inspect <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#getSchemaDelta()" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.getSchemaDelta()</code></a>, and commit the transaction to invoke the adapter's
+update operation. Closing an uncommitted transaction abandons the working copy. A transaction can instead be
+opened through <a href="../../javadoc/org/eclipse/net4j/db/IDBConnection.html#openSchemaTransaction()" title="Method in org.eclipse.net4j.db.IDBConnection"><code>IDBConnection.openSchemaTransaction()</code></a>; this associates its schema update with that
+existing managed connection. In that form, schema transaction commit() commits the connection after the
+update/completion path. In the database-opened form, Net4j obtains a managed connection for the update and
+commits it through its connection-execution helper.
+<p>
+Neither form is an ordinary application transaction around arbitrary row updates. Do not assume that JDBC
+rollback can undo DDL: databases differ in whether DDL is transactional, whether it causes an implicit commit,
+and which alterations they support. Keep application data migration and schema changes as explicit deployment
+steps when they need ordering or recovery logic.
+<p>
+The shared base schema already contains CUSTOMER.EMAIL and ORDERS.STATUS. These examples evolve
+it by adding CUSTOMER.LOYALTY_CODE and ORDERS.PROMOTION_CODE fields.
+<p>
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_SchemaTransactions_1"></a>
@@ -284,7 +284,7 @@ function maximize(id)
 </div>
 <p>
 
- 
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_SchemaTransactions_2"></a>
@@ -322,28 +322,28 @@ function maximize(id)
 
 <h2><a name="EnsureAndMigrationPolicies"></a>5&nbsp;&nbsp;Ensure Policies and Migration Review</h2>
 <p>
- <a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.ensureSchema(IDBSchema)</code></a> compares a desired model with the transaction's working
- copy, filters the delta under a policy, copies allowed changes, applies them to the working copy, and returns the
- accepted delta. The default policy allows additions and a schema-level change; removals and ordinary element
- changes are ignored. This is deliberately conservative. An explicit policy can allow or forbid combinations of
- delta type and change kind, but allowing a change does not make it safe for existing data or supported by every
- adapter.
- <p>
- Before commit, inspect the proposed delta and plan any required data backfill. Adding a non-null field to a
- populated table may fail unless the database or migration process supplies a value for existing rows. A structural
- delta does not describe data conversion, default-value rollout, or application compatibility across versions.
- In the base adapter, the delta is applied to managed in-memory metadata before adapter DDL is executed. The
- transaction completion path then coordinates invalidation of managed connection caches as explained in
- <a href="Doc01_GeneralUtilities.html#SchemaAccessAndCaching" title="Chapter in Net4j DB Framework Documentation">Coordinated Schema Access and Statement Caches</a>.
+<a href="../../javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)" title="Method in org.eclipse.net4j.db.IDBSchemaTransaction"><code>IDBSchemaTransaction.ensureSchema(IDBSchema)</code></a> compares a desired model with the transaction's working
+copy, filters the delta under a policy, copies allowed changes, applies them to the working copy, and returns the
+accepted delta. The default policy allows additions and a schema-level change; removals and ordinary element
+changes are ignored. This is deliberately conservative. An explicit policy can allow or forbid combinations of
+delta type and change kind, but allowing a change does not make it safe for existing data or supported by every
+adapter.
+<p>
+Before commit, inspect the proposed delta and plan any required data backfill. Adding a non-null field to a
+populated table may fail unless the database or migration process supplies a value for existing rows. A structural
+delta does not describe data conversion, default-value rollout, or application compatibility across versions.
+In the base adapter, the delta is applied to managed in-memory metadata before adapter DDL is executed. The
+transaction completion path then coordinates invalidation of managed connection caches as explained in
+<a href="Doc01_GeneralUtilities.html#SchemaAccessAndCaching" title="Chapter in Net4j DB Framework Documentation">Coordinated Schema Access and Statement Caches</a>.
 
 <h2><a name="DDLBoundaries"></a>6&nbsp;&nbsp;Limitations and Failure Boundaries</h2>
 <p>
- Adapter support determines how table creation, field alterations, indexes, and drops are rendered. The physical
- database determines accepted syntax, DDL transaction behavior, locking, and preservation of data. Net4j DB's
- managed schema model is metadata, not a replacement for migration tooling or a database catalog. If an adapter
- operation fails after some DDL has run, the framework's JDBC rollback attempt cannot establish a portable claim
- that all physical changes were undone. Confirm the resulting catalog and data state using the target database's
- supported inspection tools before retrying a deployment.
+Adapter support determines how table creation, field alterations, indexes, and drops are rendered. The physical
+database determines accepted syntax, DDL transaction behavior, locking, and preservation of data. Net4j DB's
+managed schema model is metadata, not a replacement for migration tooling or a database catalog. If an adapter
+operation fails after some DDL has run, the framework's JDBC rollback attempt cannot establish a portable claim
+that all physical changes were undone. Confirm the resulting catalog and data state using the target database's
+supported inspection tools before retrying a deployment.
 
 <p align="right">
 <a href="Doc01_GeneralUtilities.html" title="Backward to Architecture and Core Concepts"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_DataManipulation.html" title="Forward to Data Manipulation"><img src="../../images/forward.png" border="0"></a></p>

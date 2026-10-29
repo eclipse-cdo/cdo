@@ -78,10 +78,10 @@ function maximize(id)
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- Repository handlers are the focused supported interception points for application behavior. They are not a reason
- to implement a store. Install a handler with <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html#addHandler(org.eclipse.emf.cdo.server.IRepository.Handler)" title="Method in org.eclipse.emf.cdo.server.IRepository"><code>IRepository.addHandler(IRepository.Handler)</code></a> and remove that
- same instance when the owning extension stops.
- <p>
+Repository handlers are the focused supported interception points for application behavior. They are not a reason
+to implement a store. Install a handler with <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.html#addHandler(org.eclipse.emf.cdo.server.IRepository.Handler)" title="Method in org.eclipse.emf.cdo.server.IRepository"><code>IRepository.addHandler(IRepository.Handler)</code></a> and remove that
+same instance when the owning extension stops.
+<p>
 <table border="0">
 <tr><td>1&nbsp;</td><td class="te" colspan="3"><a href="Doc07_RepositoryHandlersAndCommitProcessing.html#AccessHandlers" title="Chapter in CDO Model Repository Documentation">Read and Write Access</a></td></tr>
 <tr><td>2&nbsp;</td><td class="te" colspan="3"><a href="Doc07_RepositoryHandlersAndCommitProcessing.html#CommitObservationAndConflicts" title="Chapter in CDO Model Repository Documentation">Commit Information and Conflicts</a></td></tr>
@@ -92,39 +92,39 @@ function maximize(id)
 
 <h2><a name="AccessHandlers"></a>1&nbsp;&nbsp;Read and Write Access</h2>
 <p>
- A <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>ReadAccessHandler</code></a> receives the exact requested revisions and a separate list of optimizer-supplied
- additional revisions. If any requested revision is forbidden, throw to reject the request; the handler cannot
- silently remove only part of that array. It may remove speculative additional revisions that the client did not
- request. Keep checks bounded because they execute on the read path.
- <p>
- A <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>WriteAccessHandler</code></a> runs before a transaction reaches the store and, after a successful persistence,
- again in its after-commit callback. The before callback receives the server transaction, commit context, and
- progress monitor. Use <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.TransactionValidationException.html" title="Class in org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler"><code>WriteAccessHandler.TransactionValidationException</code></a> for semantic validation; its
- message is returned to the client. The commit context is for inspection; if a supported mutation is needed, use
- its documented modify(...) operation rather than altering its internal state directly. The after callback
- is observation-only and must not mutate the context. Both callbacks are on the commit path and should avoid slow
- work. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>ObjectWriteAccessHandler</code></a> is the supported SPI base for object-level write checks.
+A <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.ReadAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>ReadAccessHandler</code></a> receives the exact requested revisions and a separate list of optimizer-supplied
+additional revisions. If any requested revision is forbidden, throw to reject the request; the handler cannot
+silently remove only part of that array. It may remove speculative additional revisions that the client did not
+request. Keep checks bounded because they execute on the read path.
+<p>
+A <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.html" title="Interface in org.eclipse.emf.cdo.server.IRepository"><code>WriteAccessHandler</code></a> runs before a transaction reaches the store and, after a successful persistence,
+again in its after-commit callback. The before callback receives the server transaction, commit context, and
+progress monitor. Use <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.WriteAccessHandler.TransactionValidationException.html" title="Class in org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler"><code>WriteAccessHandler.TransactionValidationException</code></a> for semantic validation; its
+message is returned to the client. The commit context is for inspection; if a supported mutation is needed, use
+its documented modify(...) operation rather than altering its internal state directly. The after callback
+is observation-only and must not mutate the context. Both callbacks are on the commit path and should avoid slow
+work. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ObjectWriteAccessHandler.html" title="Class in org.eclipse.emf.cdo.spi.server"><code>ObjectWriteAccessHandler</code></a> is the supported SPI base for object-level write checks.
 
 <h2><a name="CommitObservationAndConflicts"></a>2&nbsp;&nbsp;Commit Information and Conflicts</h2>
 <p>
- A write handler's after-commit callback observes the specific transaction and commit context immediately after its
- store commit. A <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoHandler</code></a> registered with the repository's commit-info manager observes completed
- commit-info records, which is a better seam for indexing or auditing that is organized around commit metadata.
- Neither callback should perform unbounded work inline; copy the required immutable values and submit expensive
- processing to an application executor. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>ICommitConflictResolver</code></a> is an expert SPI for resolving eligible
- transaction conflicts and is configured as part of repository setup. Its contract exposes commit-context SPI, so
- use it only when policy cannot be expressed through ordinary validation and client conflict handling.
+A write handler's after-commit callback observes the specific transaction and commit context immediately after its
+store commit. A <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitInfoHandler.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitInfoHandler</code></a> registered with the repository's commit-info manager observes completed
+commit-info records, which is a better seam for indexing or auditing that is organized around commit metadata.
+Neither callback should perform unbounded work inline; copy the required immutable values and submit expensive
+processing to an application executor. <a href="../../../javadoc/org/eclipse/emf/cdo/spi/server/ICommitConflictResolver.html" title="Interface in org.eclipse.emf.cdo.spi.server"><code>ICommitConflictResolver</code></a> is an expert SPI for resolving eligible
+transaction conflicts and is configured as part of repository setup. Its contract exposes commit-context SPI, so
+use it only when policy cannot be expressed through ordinary validation and client conflict handling.
 
 <h2><a name="CommitFlow"></a>3&nbsp;&nbsp;Application-facing Commit Flow</h2>
 <p>
- A client transaction arrives with authenticated session and transaction context. Repository protection and
- authorization decide whether the user may read or write; before-commit handlers apply application validation;
- conflict policy handles eligible concurrent changes; and the configured store persists the accepted change. The
- repository then publishes commit information and update notifications, while after-commit handlers observe the
- result. These are conceptual application phases; exact signal and store-internal sequencing is not a contract.
- The snippets show a read gate, a validation rule, and completed-commit observation.
- <p>
- 
+A client transaction arrives with authenticated session and transaction context. Repository protection and
+authorization decide whether the user may read or write; before-commit handlers apply application validation;
+conflict policy handles eligible concurrent changes; and the configured store persists the accepted change. The
+repository then publishes commit information and update notifications, while after-commit handlers observe the
+result. These are conceptual application phases; exact signal and store-internal sequencing is not a contract.
+The snippets show a read gate, a validation rule, and completed-commit observation.
+<p>
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_CommitFlow_1"></a>
@@ -165,8 +165,8 @@ function maximize(id)
 </div>
 <p>
 
- <p>
- 
+<p>
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_CommitFlow_2"></a>
@@ -214,8 +214,8 @@ function maximize(id)
 </div>
 <p>
 
- <p>
- 
+<p>
+
 
 <div class="snippet" style="margin-left:24px;" align="left">
   <a name="snippet_CommitFlow_3"></a>

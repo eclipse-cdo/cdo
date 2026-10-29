@@ -7,83 +7,83 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.emf.cdo.server.db, interface: IDBStore, interface: Props">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/IDBStore.Props.html">Use</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../../search.html">Search</a></li>
 <li><a href="../../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li><a href="#field-summary">Field</a></li>
-<li>Constr</li>
-<li>Method</li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li><a href="#field-detail">Field</a></li>
-<li>Constr</li>
-<li>Method</li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.emf.cdo.server.db</a></li>
+<li><a href="IDBStore.html">IDBStore</a></li>
+<li><a href="IDBStore.Props.html" class="current-selection">Props</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#SCHEMA_NAME" tabindex="0">SCHEMA_NAME</a></li>
+<li><a href="#PREPEND_SCHEMA_NAME" tabindex="0">PREPEND_SCHEMA_NAME</a></li>
+<li><a href="#CREATE_SCHEMA_IF_NEEDED" tabindex="0">CREATE_SCHEMA_IF_NEEDED</a></li>
+<li><a href="#CONNECTION_KEEPALIVE_PERIOD" tabindex="0">CONNECTION_KEEPALIVE_PERIOD</a></li>
+<li><a href="#BATCH_STATEMENT_SIZE" tabindex="0">BATCH_STATEMENT_SIZE</a></li>
+<li><a href="#OBJECT_TYPE_BATCH_SIZE" tabindex="0">OBJECT_TYPE_BATCH_SIZE</a></li>
+<li><a href="#OBJECT_TYPE_DUPLICATE_POLICY" tabindex="0">OBJECT_TYPE_DUPLICATE_POLICY</a></li>
+<li><a href="#BATCH_COMMIT_SIZE" tabindex="0">BATCH_COMMIT_SIZE</a></li>
+<li><a href="#CONNECTION_RETRY_COUNT" tabindex="0">CONNECTION_RETRY_COUNT</a></li>
+<li><a href="#CONNECTION_RETRY_SECONDS" tabindex="0">CONNECTION_RETRY_SECONDS</a></li>
+<li><a href="#ID_COLUMN_LENGTH" tabindex="0">ID_COLUMN_LENGTH</a></li>
+<li><a href="#READER_POOL_CAPACITY" tabindex="0">READER_POOL_CAPACITY</a></li>
+<li><a href="#WRITER_POOL_CAPACITY" tabindex="0">WRITER_POOL_CAPACITY</a></li>
+<li><a href="#FIELD_CONSTRUCTION_TRACKING" tabindex="0">FIELD_CONSTRUCTION_TRACKING</a></li>
+<li><a href="#DROP_ALL_DATA_ON_ACTIVATE" tabindex="0">DROP_ALL_DATA_ON_ACTIVATE</a></li>
+<li><a href="#JDBC_FETCH_SIZE" tabindex="0">JDBC_FETCH_SIZE</a></li>
+<li><a href="#ZIP_PACKAGE_BYTES" tabindex="0">ZIP_PACKAGE_BYTES</a></li>
+<li><a href="#DISABLE_SQL_QUERY_HANDLER" tabindex="0">DISABLE_SQL_QUERY_HANDLER</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server.db</a></div>
 <h1 title="Interface IDBStore.Props" class="title">Interface IDBStore.Props</h1>
 </div>
 <section class="class-description" id="class-description">
@@ -92,6 +92,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></dd>
 </dl>
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">IDBStore.Props</span></div>
 <div class="block">Contains symbolic constants that specify valid keys of <a href="../IRepository.html#getProperties()"><code>DB store properties</code></a>.</div>
 <dl class="notes">
@@ -104,6 +105,7 @@ loadScripts(document, 'script');</script>
 <dt>No Extend</dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -116,80 +118,80 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#BATCH_COMMIT_SIZE" class="member-name-link">BATCH_COMMIT_SIZE</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Maximum number of pending parameter sets across the current DB commit write.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#BATCH_STATEMENT_SIZE" class="member-name-link">BATCH_STATEMENT_SIZE</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Maximum number of pending parameter sets per JDBC batch statement.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#CONNECTION_KEEPALIVE_PERIOD" class="member-name-link">CONNECTION_KEEPALIVE_PERIOD</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Period at which to execute an SQL statement to keep DB connection alive, in minutes.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#CONNECTION_RETRY_COUNT" class="member-name-link">CONNECTION_RETRY_COUNT</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Number of additional attempts to connect to the DB after initial connection failure.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#CONNECTION_RETRY_SECONDS" class="member-name-link">CONNECTION_RETRY_SECONDS</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Number of seconds to wait before additional attempts to connect to the DB after initial connection failure.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#CREATE_SCHEMA_IF_NEEDED" class="member-name-link">CREATE_SCHEMA_IF_NEEDED</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Whether to create the schema with the specified <a href="#SCHEMA_NAME"><code>name</code></a> at startup time, if it does not exist.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#DISABLE_SQL_QUERY_HANDLER" class="member-name-link">DISABLE_SQL_QUERY_HANDLER</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Whether to disable the SQL query handler.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#DROP_ALL_DATA_ON_ACTIVATE" class="member-name-link">DROP_ALL_DATA_ON_ACTIVATE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#FIELD_CONSTRUCTION_TRACKING" class="member-name-link">FIELD_CONSTRUCTION_TRACKING</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#ID_COLUMN_LENGTH" class="member-name-link">ID_COLUMN_LENGTH</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#JDBC_FETCH_SIZE" class="member-name-link">JDBC_FETCH_SIZE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#OBJECT_TYPE_BATCH_SIZE" class="member-name-link">OBJECT_TYPE_BATCH_SIZE</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Maximum number of ObjectType rows considered by one prequery and ObjectType insert batch.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#OBJECT_TYPE_DUPLICATE_POLICY" class="member-name-link">OBJECT_TYPE_DUPLICATE_POLICY</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">ObjectType duplicate handling mode: <code>SAFE</code> or <code>FAIL</code>.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#PREPEND_SCHEMA_NAME" class="member-name-link">PREPEND_SCHEMA_NAME</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Whether to qualify table names with the <a href="#SCHEMA_NAME"><code>schema name</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#READER_POOL_CAPACITY" class="member-name-link">READER_POOL_CAPACITY</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#SCHEMA_NAME" class="member-name-link">SCHEMA_NAME</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">The name of the DB schema to use for the repository.</div>
 </div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#WRITER_POOL_CAPACITY" class="member-name-link">WRITER_POOL_CAPACITY</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#ZIP_PACKAGE_BYTES" class="member-name-link">ZIP_PACKAGE_BYTES</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Whether to store packages as zipped byte arrays in the database.</div>
@@ -209,10 +211,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="SCHEMA_NAME">
 <h3>SCHEMA_NAME</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">SCHEMA_NAME</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">SCHEMA_NAME</span></div>
 <div class="block">The name of the DB schema to use for the repository.
- If omitted the <code>default schema name</code> of the repository's
- <code>DB adapter</code> is used as the schema name.</div>
+If omitted the <code>default schema name</code> of the repository's
+<code>DB adapter</code> is used as the schema name.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.13</dd>
@@ -223,12 +226,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="PREPEND_SCHEMA_NAME">
 <h3>PREPEND_SCHEMA_NAME</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PREPEND_SCHEMA_NAME</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PREPEND_SCHEMA_NAME</span></div>
 <div class="block">Whether to qualify table names with the <a href="#SCHEMA_NAME"><code>schema name</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -240,12 +245,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="CREATE_SCHEMA_IF_NEEDED">
 <h3>CREATE_SCHEMA_IF_NEEDED</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_SCHEMA_IF_NEEDED</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_SCHEMA_IF_NEEDED</span></div>
 <div class="block">Whether to create the schema with the specified <a href="#SCHEMA_NAME"><code>name</code></a> at startup time, if it does not exist.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -257,12 +264,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="CONNECTION_KEEPALIVE_PERIOD">
 <h3>CONNECTION_KEEPALIVE_PERIOD</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CONNECTION_KEEPALIVE_PERIOD</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CONNECTION_KEEPALIVE_PERIOD</span></div>
 <div class="block">Period at which to execute an SQL statement to keep DB connection alive, in minutes.</div>
 <dl class="notes">
 <dt>See Also:</dt>
@@ -272,14 +281,16 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="BATCH_STATEMENT_SIZE">
 <h3>BATCH_STATEMENT_SIZE</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">BATCH_STATEMENT_SIZE</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">BATCH_STATEMENT_SIZE</span></div>
 <div class="block">Maximum number of pending parameter sets per JDBC batch statement. If absent, the legacy
- <code>org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE</code> property is used as the default.</div>
+<code>org.eclipse.emf.cdo.server.db.LIST_BATCH_SIZE</code> property is used as the default.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
@@ -290,15 +301,17 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="OBJECT_TYPE_BATCH_SIZE">
 <h3>OBJECT_TYPE_BATCH_SIZE</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OBJECT_TYPE_BATCH_SIZE</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OBJECT_TYPE_BATCH_SIZE</span></div>
 <div class="block">Maximum number of ObjectType rows considered by one prequery and ObjectType insert batch.
- <p>
- If omitted, <a href="#BATCH_STATEMENT_SIZE"><code>BATCH_STATEMENT_SIZE</code></a> and its legacy fallback behavior determine the size.</div>
+<p>
+If omitted, <a href="#BATCH_STATEMENT_SIZE"><code>BATCH_STATEMENT_SIZE</code></a> and its legacy fallback behavior determine the size.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
@@ -309,16 +322,18 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="OBJECT_TYPE_DUPLICATE_POLICY">
 <h3>OBJECT_TYPE_DUPLICATE_POLICY</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OBJECT_TYPE_DUPLICATE_POLICY</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OBJECT_TYPE_DUPLICATE_POLICY</span></div>
 <div class="block">ObjectType duplicate handling mode: <code>SAFE</code> or <code>FAIL</code>. SAFE is the default and preserves duplicate
- detection and replay. FAIL skips those safeguards and requires all committed IDs to be fresh. FAIL is suitable
- only when the operator guarantees that commits cannot introduce already-persistent IDs; use SAFE for merge,
- import, backup, clone, and other external-permanent-ID scenarios.</div>
+detection and replay. FAIL skips those safeguards and requires all committed IDs to be fresh. FAIL is suitable
+only when the operator guarantees that commits cannot introduce already-persistent IDs; use SAFE for merge,
+import, backup, clone, and other external-permanent-ID scenarios.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
@@ -329,12 +344,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="BATCH_COMMIT_SIZE">
 <h3>BATCH_COMMIT_SIZE</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">BATCH_COMMIT_SIZE</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">BATCH_COMMIT_SIZE</span></div>
 <div class="block">Maximum number of pending parameter sets across the current DB commit write.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -346,12 +363,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="CONNECTION_RETRY_COUNT">
 <h3>CONNECTION_RETRY_COUNT</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CONNECTION_RETRY_COUNT</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CONNECTION_RETRY_COUNT</span></div>
 <div class="block">Number of additional attempts to connect to the DB after initial connection failure.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -363,12 +382,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="CONNECTION_RETRY_SECONDS">
 <h3>CONNECTION_RETRY_SECONDS</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CONNECTION_RETRY_SECONDS</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CONNECTION_RETRY_SECONDS</span></div>
 <div class="block">Number of seconds to wait before additional attempts to connect to the DB after initial connection failure.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -380,12 +401,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="ID_COLUMN_LENGTH">
 <h3>ID_COLUMN_LENGTH</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ID_COLUMN_LENGTH</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ID_COLUMN_LENGTH</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
@@ -396,12 +419,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="READER_POOL_CAPACITY">
 <h3>READER_POOL_CAPACITY</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">READER_POOL_CAPACITY</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">READER_POOL_CAPACITY</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
@@ -412,12 +437,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="WRITER_POOL_CAPACITY">
 <h3>WRITER_POOL_CAPACITY</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">WRITER_POOL_CAPACITY</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">WRITER_POOL_CAPACITY</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.2</dd>
@@ -428,12 +455,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="FIELD_CONSTRUCTION_TRACKING">
 <h3>FIELD_CONSTRUCTION_TRACKING</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">FIELD_CONSTRUCTION_TRACKING</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">FIELD_CONSTRUCTION_TRACKING</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.3</dd>
@@ -444,12 +473,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="DROP_ALL_DATA_ON_ACTIVATE">
 <h3>DROP_ALL_DATA_ON_ACTIVATE</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">DROP_ALL_DATA_ON_ACTIVATE</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">DROP_ALL_DATA_ON_ACTIVATE</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.4</dd>
@@ -460,12 +491,14 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="JDBC_FETCH_SIZE">
 <h3>JDBC_FETCH_SIZE</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">JDBC_FETCH_SIZE</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">JDBC_FETCH_SIZE</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.4</dd>
@@ -476,23 +509,25 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="ZIP_PACKAGE_BYTES">
 <h3>ZIP_PACKAGE_BYTES</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ZIP_PACKAGE_BYTES</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ZIP_PACKAGE_BYTES</span></div>
 <div class="block">Whether to store packages as zipped byte arrays in the database.
- <p>
- When set to <code>true</code>, packages are stored as zipped byte arrays. This saves database space, but
- makes it harder to inspect the stored packages outside of CDO.
- <p>
- When set to <code>false</code> (the default), packages are stored as plain XML/XMI.
- <p>
- The default value is determined by the "org.eclipse.emf.cdo.server.internal.db.MetaDataManager.ZIP_PACKAGE_BYTES"
- system property, which defaults to <code>true</code>.
- <p>
- Note: This property only affects newly stored packages. Existing packages are not converted.</div>
+<p>
+When set to <code>true</code>, packages are stored as zipped byte arrays. This saves database space, but
+makes it harder to inspect the stored packages outside of CDO.
+<p>
+When set to <code>false</code> (the default), packages are stored as plain XML/XMI.
+<p>
+The default value is determined by the "org.eclipse.emf.cdo.server.internal.db.MetaDataManager.ZIP_PACKAGE_BYTES"
+system property, which defaults to <code>true</code>.
+<p>
+Note: This property only affects newly stored packages. Existing packages are not converted.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.14</dd>
@@ -503,21 +538,23 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="DISABLE_SQL_QUERY_HANDLER">
 <h3>DISABLE_SQL_QUERY_HANDLER</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">DISABLE_SQL_QUERY_HANDLER</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">DISABLE_SQL_QUERY_HANDLER</span></div>
 <div class="block">Whether to disable the SQL query handler.
- <p>
- When set to <code>true</code>, the SQL query handler is disabled.
- This means that clients cannot execute arbitrary SQL queries against the database.
- <p>
- When set to <code>false</code> (the default), the SQL query handler is enabled.
- <p>
- The default value is determined by the "org.eclipse.emf.cdo.server.db.DEFAULT_DISABLE_SQL_QUERY_HANDLER"
- system property, which defaults to <code>false</code>.</div>
+<p>
+When set to <code>true</code>, the SQL query handler is disabled.
+This means that clients cannot execute arbitrary SQL queries against the database.
+<p>
+When set to <code>false</code> (the default), the SQL query handler is enabled.
+<p>
+The default value is determined by the "org.eclipse.emf.cdo.server.db.DEFAULT_DISABLE_SQL_QUERY_HANDLER"
+system property, which defaults to <code>false</code>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
@@ -528,6 +565,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -536,12 +574,11 @@ loadScripts(document, 'script');</script>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

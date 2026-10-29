@@ -7,118 +7,171 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.net4j.db.dml, class: SQL">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/SQL.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../search.html">Search</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li><a href="#field-summary">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li><a href="#field-detail">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.net4j.db.dml</a></li>
+<li><a href="SQL.html" class="current-selection">SQL</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#NULL" tabindex="0">NULL</a></li>
+<li><a href="#ZERO" tabindex="0">ZERO</a></li>
+<li><a href="#ONE" tabindex="0">ONE</a></li>
+</ol>
+</li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#select(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)" tabindex="0">select(SQLSelectItem, SQLSelectItem...)</a></li>
+<li><a href="#selectDistinct(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)" tabindex="0">selectDistinct(SQLSelectItem, SQLSelectItem...)</a></li>
+<li><a href="#selectAll()" tabindex="0">selectAll()</a></li>
+<li><a href="#update(org.eclipse.net4j.db.ddl.IDBTable)" tabindex="0">update(IDBTable)</a></li>
+<li><a href="#update(org.eclipse.net4j.db.ddl.IDBTable.Provider)" tabindex="0">update(IDBTable.Provider)</a></li>
+<li><a href="#insertInto(org.eclipse.net4j.db.ddl.IDBTable)" tabindex="0">insertInto(IDBTable)</a></li>
+<li><a href="#insertInto(org.eclipse.net4j.db.ddl.IDBTable.Provider)" tabindex="0">insertInto(IDBTable.Provider)</a></li>
+<li><a href="#deleteFrom(org.eclipse.net4j.db.ddl.IDBTable)" tabindex="0">deleteFrom(IDBTable)</a></li>
+<li><a href="#deleteFrom(org.eclipse.net4j.db.ddl.IDBTable.Provider)" tabindex="0">deleteFrom(IDBTable.Provider)</a></li>
+<li><a href="#table(org.eclipse.net4j.db.ddl.IDBTable)" tabindex="0">table(IDBTable)</a></li>
+<li><a href="#table(org.eclipse.net4j.db.ddl.IDBTable.Provider)" tabindex="0">table(IDBTable.Provider)</a></li>
+<li><a href="#as(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" tabindex="0">as(IDBTable, String)</a></li>
+<li><a href="#as(org.eclipse.net4j.db.ddl.IDBTable.Provider,java.lang.String)" tabindex="0">as(IDBTable.Provider, String)</a></li>
+<li><a href="#as(org.eclipse.net4j.db.dml.SQLExpression,java.lang.String)" tabindex="0">as(SQLExpression, String)</a></li>
+<li><a href="#column(org.eclipse.net4j.db.ddl.IDBField)" tabindex="0">column(IDBField)</a></li>
+<li><a href="#qualified(org.eclipse.net4j.db.ddl.IDBField)" tabindex="0">qualified(IDBField)</a></li>
+<li><a href="#all()" tabindex="0">all()</a></li>
+<li><a href="#all(org.eclipse.net4j.db.dml.SQLTableRef)" tabindex="0">all(SQLTableRef)</a></li>
+<li><a href="#asc(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">asc(SQLExpression)</a></li>
+<li><a href="#desc(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">desc(SQLExpression)</a></li>
+<li><a href="#param()" tabindex="0">param()</a></li>
+<li><a href="#param(int)" tabindex="0">param(int)</a></li>
+<li><a href="#param(java.util.function.Function)" tabindex="0">param(Function)</a></li>
+<li><a href="#param(int,java.util.function.Function)" tabindex="0">param(int, Function)</a></li>
+<li><a href="#param(org.eclipse.net4j.db.dml.SQLValueSetter)" tabindex="0">param(SQLValueSetter)</a></li>
+<li><a href="#param(int,org.eclipse.net4j.db.dml.SQLValueSetter)" tabindex="0">param(int, SQLValueSetter)</a></li>
+<li><a href="#literal(java.lang.Object)" tabindex="0">literal(Object)</a></li>
+<li><a href="#scalar(org.eclipse.net4j.db.dml.SQLSubSelect)" tabindex="0">scalar(SQLSubSelect)</a></li>
+<li><a href="#exists(org.eclipse.net4j.db.dml.SQLSubSelect)" tabindex="0">exists(SQLSubSelect)</a></li>
+<li><a href="#notExists(org.eclipse.net4j.db.dml.SQLSubSelect)" tabindex="0">notExists(SQLSubSelect)</a></li>
+<li><a href="#count()" tabindex="0">count()</a></li>
+<li><a href="#count(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">count(SQLExpression)</a></li>
+<li><a href="#countDistinct(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">countDistinct(SQLExpression)</a></li>
+<li><a href="#min(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">min(SQLExpression)</a></li>
+<li><a href="#max(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">max(SQLExpression)</a></li>
+<li><a href="#sum(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">sum(SQLExpression)</a></li>
+<li><a href="#avg(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">avg(SQLExpression)</a></li>
+<li><a href="#abs(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">abs(SQLExpression)</a></li>
+<li><a href="#add(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">add(SQLExpression, SQLExpression)</a></li>
+<li><a href="#subtract(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">subtract(SQLExpression, SQLExpression)</a></li>
+<li><a href="#multiply(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">multiply(SQLExpression, SQLExpression)</a></li>
+<li><a href="#divide(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">divide(SQLExpression, SQLExpression)</a></li>
+<li><a href="#eq(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">eq(SQLExpression, SQLExpression)</a></li>
+<li><a href="#ne(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">ne(SQLExpression, SQLExpression)</a></li>
+<li><a href="#lt(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">lt(SQLExpression, SQLExpression)</a></li>
+<li><a href="#le(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">le(SQLExpression, SQLExpression)</a></li>
+<li><a href="#gt(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">gt(SQLExpression, SQLExpression)</a></li>
+<li><a href="#ge(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">ge(SQLExpression, SQLExpression)</a></li>
+<li><a href="#like(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">like(SQLExpression, SQLExpression)</a></li>
+<li><a href="#between(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">between(SQLExpression, SQLExpression, SQLExpression)</a></li>
+<li><a href="#isNull(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">isNull(SQLExpression)</a></li>
+<li><a href="#isNotNull(org.eclipse.net4j.db.dml.SQLExpression)" tabindex="0">isNotNull(SQLExpression)</a></li>
+<li><a href="#and(org.eclipse.net4j.db.dml.SQLCondition,org.eclipse.net4j.db.dml.SQLCondition)" tabindex="0">and(SQLCondition, SQLCondition)</a></li>
+<li><a href="#or(org.eclipse.net4j.db.dml.SQLCondition,org.eclipse.net4j.db.dml.SQLCondition)" tabindex="0">or(SQLCondition, SQLCondition)</a></li>
+<li><a href="#not(org.eclipse.net4j.db.dml.SQLCondition)" tabindex="0">not(SQLCondition)</a></li>
+<li><a href="#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLSubSelect)" tabindex="0">in(SQLExpression, SQLSubSelect)</a></li>
+<li><a href="#in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)" tabindex="0">in(SQLExpression, SQLExpression...)</a></li>
+<li><a href="#in(org.eclipse.net4j.db.dml.SQLExpression,java.lang.Iterable)" tabindex="0">in(SQLExpression, Iterable)</a></li>
+<li><a href="#fragment()" tabindex="0">fragment()</a></li>
+<li><a href="#expression(org.eclipse.net4j.db.dml.SQLFragment)" tabindex="0">expression(SQLFragment)</a></li>
+<li><a href="#condition(org.eclipse.net4j.db.dml.SQLFragment)" tabindex="0">condition(SQLFragment)</a></li>
+<li><a href="#build(org.eclipse.net4j.db.dml.SQLFragment)" tabindex="0">build(SQLFragment)</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.db.dml</a></div>
 <h1 title="Class SQL" class="title">Class SQL</h1>
 </div>
-<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance">org.eclipse.net4j.db.dml.SQL</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">SQL</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Canonical factories for SQL expressions, definitions, references, and fluent statements. Builders
- preserve their operations as immutable templates; compiling a template renders adapter-specific
- SQL text and ordered parameter occurrences for preparation and JDBC parameter binding.
- <p>
- A typical SELECT chain keeps schema fields as expressions and parameters explicit:
- </p>
- <pre>
- SQL.select(SQL.all(table.as("t")), SQL.count(id).as("total")) //
-     .from(table.as("t")) //
-     .where(id).eq(SQL.param()) //
-     .groupBy(name) //
-     .orderByDesc(SQL.count(id)) //
-     .build();
- </pre>
- <p>
- <a href="#literal(java.lang.Object)"><code>literal(Object)</code></a> values are checked by the selected adapter during compilation and may
- not be portable across dialects; application values should generally be supplied through
- <a href="#param()"><code>param()</code></a>. SQL comparisons with a literal or bound NULL retain ordinary SQL comparison
- semantics and are not rewritten to <code>IS NULL</code>.
- </p></div>
+preserve their operations as immutable templates; compiling a template renders adapter-specific
+SQL text and ordered parameter occurrences for preparation and JDBC parameter binding.
+<p>
+A typical SELECT chain keeps schema fields as expressions and parameters explicit:
+</p>
+<pre>
+SQL.select(SQL.all(table.as("t")), SQL.count(id).as("total")) //
+    .from(table.as("t")) //
+    .where(id).eq(SQL.param()) //
+    .groupBy(name) //
+    .orderByDesc(SQL.count(id)) //
+    .build();
+</pre>
+<p>
+<a href="#literal(java.lang.Object)"><code>literal(Object)</code></a> values are checked by the selected adapter during compilation and may
+not be portable across dialects; application values should generally be supplied through
+<a href="#param()"><code>param()</code></a>. SQL comparisons with a literal or bound NULL retain ordinary SQL comparison
+semantics and are not rewritten to <code>IS NULL</code>.
+</p></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -155,8 +208,8 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -189,19 +242,19 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#as(org.eclipse.net4j.db.ddl.IDBTable.Provider,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates an aliased occurrence of the table supplied by the provider, resolving it immediately.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#as(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a table occurrence with a SQL alias.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#as(org.eclipse.net4j.db.dml.SQLExpression,java.lang.String)" class="member-name-link">as</a><wbr>(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Associates a result-column label with an expression in a projection.</div>
 </div>
@@ -308,7 +361,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#in(org.eclipse.net4j.db.dml.SQLExpression,java.lang.Iterable)" class="member-name-link">in</a><wbr>(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&gt;&nbsp;values)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&gt;&nbsp;values)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates an IN condition from a single traversal of the supplied iterable.</div>
 </div>
@@ -357,7 +410,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a LIKE condition.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#literal(java.lang.Object)" class="member-name-link">literal</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#literal(java.lang.Object)" class="member-name-link">literal</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates an expression from an explicit literal value.</div>
 </div>
@@ -415,10 +468,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a new immutable logical parameter identity with an explicit JDBC type.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;JAVA,<wbr>
-JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;JAVA,<wbr>JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#param(int,java.util.function.Function)" class="member-name-link">param</a><wbr>(int&nbsp;sqlType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a new immutable logical parameter identity with an explicit JDBC type and converter.</div>
 </div>
@@ -428,9 +480,8 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a new logical parameter with JDBC type metadata and a complete JDBC value setter.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;JAVA,<wbr>
-JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#param(java.util.function.Function)" class="member-name-link">param</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;JAVA,<wbr>JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#param(java.util.function.Function)" class="member-name-link">param</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Creates a new immutable logical parameter identity with a converter.</div>
 </div>
@@ -501,8 +552,8 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -517,34 +568,40 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <li>
 <section class="detail" id="NULL">
 <h3>NULL</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">NULL</span></div>
 <div class="block">The SQL NULL literal.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="ZERO">
 <h3>ZERO</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">ZERO</span></div>
 <div class="block">The numeric SQL literal 0.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="ONE">
 <h3>ONE</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">ONE</span></div>
 <div class="block">The numeric SQL literal 1.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -558,6 +615,7 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <li>
 <section class="detail" id="select(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)">
 <h3>select</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></span>&nbsp;<span class="element-name">select</span><wbr><span class="parameters">(<a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>&nbsp;first,
  <a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>...&nbsp;others)</span></div>
 <div class="block">Begins a SELECT definition whose projection contains the required first item and any additional items in the supplied order.</div>
@@ -570,11 +628,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="selectDistinct(org.eclipse.net4j.db.dml.SQLSelectItem,org.eclipse.net4j.db.dml.SQLSelectItem...)">
 <h3>selectDistinct</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></span>&nbsp;<span class="element-name">selectDistinct</span><wbr><span class="parameters">(<a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>&nbsp;first,
  <a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a>...&nbsp;others)</span></div>
 <div class="block">Begins a SELECT DISTINCT definition; all supplied projection items participate in duplicate elimination.</div>
@@ -587,11 +647,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="selectAll()">
 <h3>selectAll</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLSelectProjectionStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLSelectProjectionStep</a></span>&nbsp;<span class="element-name">selectAll</span>()</div>
 <div class="block">Begins a SELECT with an unqualified wildcard projection.</div>
 <dl class="notes">
@@ -600,11 +662,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="update(org.eclipse.net4j.db.ddl.IDBTable)">
 <h3>update</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLUpdateStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLUpdateStartStep</a></span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</span></div>
 <div class="block">Begins an UPDATE definition for the supplied schema table. A complete assignment is required before the definition can be built. Without a WHERE clause, the UPDATE may modify every row in the table.</div>
 <dl class="notes">
@@ -615,29 +679,33 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="update(org.eclipse.net4j.db.ddl.IDBTable.Provider)">
 <h3>update</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLUpdateStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLUpdateStartStep</a></span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</span></div>
 <div class="block">Begins an UPDATE definition for the table supplied by the provider. The provider is resolved
- immediately, and the resulting statement retains the table rather than the provider.</div>
+immediately, and the resulting statement retains the table rather than the provider.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>provider</code> - the provider of the existing schema table</dd>
 <dt>Returns:</dt>
 <dd>the corresponding staged builder</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider or its table is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider or its table is <code>null</code></dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="insertInto(org.eclipse.net4j.db.ddl.IDBTable)">
 <h3>insertInto</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLInsertStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInsertStartStep</a></span>&nbsp;<span class="element-name">insertInto</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</span></div>
 <div class="block">Begins an INSERT definition. Choose a values list, explicit columns and values, or dynamic column assignments.</div>
 <dl class="notes">
@@ -648,11 +716,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="insertInto(org.eclipse.net4j.db.ddl.IDBTable.Provider)">
 <h3>insertInto</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLInsertStartStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLInsertStartStep</a></span>&nbsp;<span class="element-name">insertInto</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</span></div>
 <div class="block">Begins an INSERT definition for the table supplied by the provider, resolving it immediately.</div>
 <dl class="notes">
@@ -661,15 +731,17 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Returns:</dt>
 <dd>the corresponding staged builder</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider or its table is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider or its table is <code>null</code></dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="deleteFrom(org.eclipse.net4j.db.ddl.IDBTable)">
 <h3>deleteFrom</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLDeleteStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLDeleteStep</a></span>&nbsp;<span class="element-name">deleteFrom</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</span></div>
 <div class="block">Begins a DELETE definition. It may be built directly or completed with a WHERE condition. Without a WHERE clause, the DELETE may remove every row in the table.</div>
 <dl class="notes">
@@ -680,11 +752,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="deleteFrom(org.eclipse.net4j.db.ddl.IDBTable.Provider)">
 <h3>deleteFrom</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLDeleteStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLDeleteStep</a></span>&nbsp;<span class="element-name">deleteFrom</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</span></div>
 <div class="block">Begins a DELETE definition for the table supplied by the provider, resolving it immediately.</div>
 <dl class="notes">
@@ -693,15 +767,17 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Returns:</dt>
 <dd>the corresponding staged builder</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider or its table is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider or its table is <code>null</code></dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="table(org.eclipse.net4j.db.ddl.IDBTable)">
 <h3>table</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></span>&nbsp;<span class="element-name">table</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</span></div>
 <div class="block">Creates an unaliased occurrence of a schema table for use in a statement.</div>
 <dl class="notes">
@@ -712,11 +788,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="table(org.eclipse.net4j.db.ddl.IDBTable.Provider)">
 <h3>table</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></span>&nbsp;<span class="element-name">table</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider)</span></div>
 <div class="block">Creates an unaliased occurrence of the table supplied by the provider, resolving it immediately.</div>
 <dl class="notes">
@@ -725,17 +803,19 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Returns:</dt>
 <dd>the corresponding immutable SQL API value</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider or its table is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider or its table is <code>null</code></dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="as(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)">
 <h3>as</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></span>&nbsp;<span class="element-name">as</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
 <div class="block">Creates a table occurrence with a SQL alias. This is a table alias, distinct from a result-column alias.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -746,13 +826,15 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="as(org.eclipse.net4j.db.ddl.IDBTable.Provider,java.lang.String)">
 <h3>as</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a></span>&nbsp;<span class="element-name">as</span><wbr><span class="parameters">(<a href="../ddl/IDBTable.Provider.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable.Provider</a>&nbsp;provider,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
 <div class="block">Creates an aliased occurrence of the table supplied by the provider, resolving it immediately.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -761,17 +843,19 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Returns:</dt>
 <dd>the corresponding immutable SQL API value</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider, its table, or alias is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the provider, its table, or alias is <code>null</code></dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="as(org.eclipse.net4j.db.dml.SQLExpression,java.lang.String)">
 <h3>as</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a></span>&nbsp;<span class="element-name">as</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;alias)</span></div>
 <div class="block">Associates a result-column label with an expression in a projection.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -782,11 +866,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="column(org.eclipse.net4j.db.ddl.IDBField)">
 <h3>column</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLColumnRef.html" title="interface in org.eclipse.net4j.db.dml">SQLColumnRef</a></span>&nbsp;<span class="element-name">column</span><wbr><span class="parameters">(<a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;column)</span></div>
 <div class="block">Creates an unqualified reference to a schema column. Use a table reference’s column method when qualification is needed.</div>
 <dl class="notes">
@@ -797,26 +883,30 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="qualified(org.eclipse.net4j.db.ddl.IDBField)">
 <h3>qualified</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLColumnRef.html" title="interface in org.eclipse.net4j.db.dml">SQLColumnRef</a></span>&nbsp;<span class="element-name">qualified</span><wbr><span class="parameters">(<a href="../ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;column)</span></div>
 <div class="block">Creates a table-qualified column reference using the column's owning schema table.
- The table is referenced by its physical name, without an alias. For aliased tables,
- use <a href="SQLTableRef.html#column(org.eclipse.net4j.db.ddl.IDBField)"><code>SQLTableRef.column(IDBField)</code></a> instead.</div>
+The table is referenced by its physical name, without an alias. For aliased tables,
+use <a href="SQLTableRef.html#column(org.eclipse.net4j.db.ddl.IDBField)"><code>SQLTableRef.column(IDBField)</code></a> instead.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>column</code> - the column to qualify with its owning table</dd>
 <dt>Returns:</dt>
 <dd>the qualified column reference</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="all()">
 <h3>all</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a></span>&nbsp;<span class="element-name">all</span>()</div>
 <div class="block">Creates a wildcard projection; the overload with a table reference qualifies the wildcard to that table occurrence.</div>
 <dl class="notes">
@@ -825,11 +915,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="all(org.eclipse.net4j.db.dml.SQLTableRef)">
 <h3>all</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLSelectItem.html" title="interface in org.eclipse.net4j.db.dml">SQLSelectItem</a></span>&nbsp;<span class="element-name">all</span><wbr><span class="parameters">(<a href="SQLTableRef.html" title="interface in org.eclipse.net4j.db.dml">SQLTableRef</a>&nbsp;table)</span></div>
 <div class="block">Creates a wildcard projection; the overload with a table reference qualifies the wildcard to that table occurrence.</div>
 <dl class="notes">
@@ -840,11 +932,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="asc(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>asc</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLOrderItem.html" title="interface in org.eclipse.net4j.db.dml">SQLOrderItem</a></span>&nbsp;<span class="element-name">asc</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Wraps an expression as an ascending ORDER BY item.</div>
 <dl class="notes">
@@ -855,11 +949,13 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="desc(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>desc</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLOrderItem.html" title="interface in org.eclipse.net4j.db.dml">SQLOrderItem</a></span>&nbsp;<span class="element-name">desc</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Wraps an expression as a descending ORDER BY item.</div>
 <dl class="notes">
@@ -870,48 +966,53 @@ JDBC&gt;<br><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="param()">
 <h3>param</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span>()</div>
 <div class="block">Creates a new immutable logical parameter identity. Each appearance of the parameter in a
- compiled statement becomes a JDBC placeholder occurrence; reusing one instance preserves its
- identity across those occurrences.</div>
+compiled statement becomes a JDBC placeholder occurrence; reusing one instance preserves its
+identity across those occurrences.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the corresponding immutable SQL API value</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="param(int)">
 <h3>param</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(int&nbsp;sqlType)</span></div>
 <div class="block">Creates a new immutable logical parameter identity with an explicit JDBC type. Each factory call creates a distinct identity; reusing one instance in a definition preserves that identity across occurrences.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>sqlType</code> - the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Types.html" title="class or interface in java.sql" class="external-link"><code>Types</code></a> code used by typed <code>setObject</code> calls and for NULL binding</dd>
+<dd><code>sqlType</code> - the <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/java/sql/Types.html" title="class or interface in java.sql" class="external-link"><code>Types</code></a> code used by typed <code>setObject</code> calls and for NULL binding</dd>
 <dt>Returns:</dt>
 <dd>the corresponding immutable SQL API value</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="param(java.util.function.Function)">
 <h3>param</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;JAVA,<wbr>
-JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;JAVA,<wbr>JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</span></div>
 <div class="block">Creates a new immutable logical parameter identity with a converter. Each factory call creates a distinct identity; reusing one instance in a definition preserves that identity across occurrences. The converter runs once for every occurrence bound with a non-null input, and its result is passed to default JDBC binding. Converter failures propagate to the caller.</div>
 <dl class="notes">
 <dt>Type Parameters:</dt>
-<dd><code>JAVA</code> - the input value type accepted by the converter</dd>
-<dd><code>JDBC</code> - the converted value type passed to JDBC</dd>
+<dd><span id="param(java.util.function.Function)-type-param-JAVA"><code>JAVA</code> - the input value type accepted by the converter</span></dd>
+<dd><span id="param(java.util.function.Function)-type-param-JDBC"><code>JDBC</code> - the converted value type passed to JDBC</span></dd>
 <dt>Parameters:</dt>
 <dd><code>converter</code> - converts each non-null application value before default JDBC binding; it is bypassed for null input and by an explicit setter override</dd>
 <dt>Returns:</dt>
@@ -919,88 +1020,95 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="param(int,java.util.function.Function)">
 <h3>param</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;JAVA,<wbr>
-JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(int&nbsp;sqlType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;JAVA,<wbr>JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(int&nbsp;sqlType,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;JAVA,<wbr>JDBC&gt;&nbsp;converter)</span></div>
 <div class="block">Creates a new immutable logical parameter identity with an explicit JDBC type and converter. Each factory call creates a distinct identity; reusing one instance in a definition preserves that identity across occurrences. The converter runs once for every occurrence bound with a non-null input, and its result is passed to default JDBC binding. Converter failures propagate to the caller.</div>
 <dl class="notes">
 <dt>Type Parameters:</dt>
-<dd><code>JAVA</code> - the input value type accepted by the converter</dd>
-<dd><code>JDBC</code> - the converted value type passed to JDBC</dd>
+<dd><span id="param(int,java.util.function.Function)-type-param-JAVA"><code>JAVA</code> - the input value type accepted by the converter</span></dd>
+<dd><span id="param(int,java.util.function.Function)-type-param-JDBC"><code>JDBC</code> - the converted value type passed to JDBC</span></dd>
 <dt>Parameters:</dt>
-<dd><code>sqlType</code> - the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Types.html" title="class or interface in java.sql" class="external-link"><code>Types</code></a> code used by typed <code>setObject</code> calls and for NULL binding</dd>
+<dd><code>sqlType</code> - the <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/java/sql/Types.html" title="class or interface in java.sql" class="external-link"><code>Types</code></a> code used by typed <code>setObject</code> calls and for NULL binding</dd>
 <dd><code>converter</code> - converts each non-null application value before default JDBC binding; it is bypassed for null input and by an explicit setter override</dd>
 <dt>Returns:</dt>
 <dd>the corresponding immutable SQL API value</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="param(org.eclipse.net4j.db.dml.SQLValueSetter)">
 <h3>param</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;JAVA&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(<a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a>&lt;JAVA&gt;&nbsp;setter)</span></div>
 <div class="block">Creates a new logical parameter whose setter performs complete JDBC binding for every occurrence.
- The setter receives the original application value, including null, and is responsible for JDBC
- NULL handling. The parameter retains the setter, and compiled statements retain the parameter;
- captured objects may therefore remain reachable for their lifetime. Choose reuse, mutable state,
- thread safety, and connection-specific or execution-specific dependencies to suit your use case.</div>
+The setter receives the original application value, including null, and is responsible for JDBC
+NULL handling. The parameter retains the setter, and compiled statements retain the parameter;
+captured objects may therefore remain reachable for their lifetime. Choose reuse, mutable state,
+thread safety, and connection-specific or execution-specific dependencies to suit your use case.</div>
 <dl class="notes">
 <dt>Type Parameters:</dt>
-<dd><code>JAVA</code> - the application value type</dd>
+<dd><span id="param(org.eclipse.net4j.db.dml.SQLValueSetter)-type-param-JAVA"><code>JAVA</code> - the application value type</span></dd>
 <dt>Parameters:</dt>
 <dd><code>setter</code> - the complete JDBC binding strategy</dd>
 <dt>Returns:</dt>
 <dd>a new logical parameter identity</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>setter</code> is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>setter</code> is <code>null</code></dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="param(int,org.eclipse.net4j.db.dml.SQLValueSetter)">
 <h3>param</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;JAVA&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title="interface in org.eclipse.net4j.db.dml">SQLParameter</a></span>&nbsp;<span class="element-name">param</span><wbr><span class="parameters">(int&nbsp;sqlType,
  <a href="SQLValueSetter.html" title="interface in org.eclipse.net4j.db.dml">SQLValueSetter</a>&lt;JAVA&gt;&nbsp;setter)</span></div>
 <div class="block">Creates a new logical parameter with JDBC type metadata and a complete JDBC value setter.
- The type remains parameter metadata, but the setter owns the entire JDBC operation. Captured
- objects may remain reachable through the parameter and compiled statement; callers choose
- suitable reuse, mutable state, thread safety, and connection-specific dependencies.</div>
+The type remains parameter metadata, but the setter owns the entire JDBC operation. Captured
+objects may remain reachable through the parameter and compiled statement; callers choose
+suitable reuse, mutable state, thread safety, and connection-specific dependencies.</div>
 <dl class="notes">
 <dt>Type Parameters:</dt>
-<dd><code>JAVA</code> - the application value type</dd>
+<dd><span id="param(int,org.eclipse.net4j.db.dml.SQLValueSetter)-type-param-JAVA"><code>JAVA</code> - the application value type</span></dd>
 <dt>Parameters:</dt>
 <dd><code>sqlType</code> - the JDBC type metadata</dd>
 <dd><code>setter</code> - the complete JDBC binding strategy</dd>
 <dt>Returns:</dt>
 <dd>a new logical parameter identity</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>setter</code> is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if <code>setter</code> is <code>null</code></dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="literal(java.lang.Object)">
 <h3>literal</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">literal</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">literal</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
 <div class="block">Creates an expression from an explicit literal value. Compilation supports null, strings,
- characters, booleans, finite numeric values, and SQL date/time values, subject to validation
- by the compiling adapter. Other Java types are rejected rather than rendered through arbitrary
- <code>toString()</code> conversion. Mutable SQL date, time, and timestamp values are snapshotted when
- this expression is created. Literals such as Boolean or SQL NULL may have dialect-specific
- semantics; use parameters for portable application values. Comparisons to NULL are not
- rewritten to <code>IS NULL</code>; use <a href="#isNull(org.eclipse.net4j.db.dml.SQLExpression)"><code>isNull(SQLExpression)</code></a> or
- <a href="#isNotNull(org.eclipse.net4j.db.dml.SQLExpression)"><code>isNotNull(SQLExpression)</code></a> explicitly.</div>
+characters, booleans, finite numeric values, and SQL date/time values, subject to validation
+by the compiling adapter. Other Java types are rejected rather than rendered through arbitrary
+<code>toString()</code> conversion. Mutable SQL date, time, and timestamp values are snapshotted when
+this expression is created. Literals such as Boolean or SQL NULL may have dialect-specific
+semantics; use parameters for portable application values. Comparisons to NULL are not
+rewritten to <code>IS NULL</code>; use <a href="#isNull(org.eclipse.net4j.db.dml.SQLExpression)"><code>isNull(SQLExpression)</code></a> or
+<a href="#isNotNull(org.eclipse.net4j.db.dml.SQLExpression)"><code>isNotNull(SQLExpression)</code></a> explicitly.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>value</code> - the literal value represented by this expression</dd>
@@ -1009,15 +1117,17 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="scalar(org.eclipse.net4j.db.dml.SQLSubSelect)">
 <h3>scalar</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">scalar</span><wbr><span class="parameters">(<a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;query)</span></div>
 <div class="block">Uses a complete SELECT definition as a scalar expression. It must project exactly one column;
- this is validated during compilation. Whether the query returns zero, one, or multiple rows is
- determined by SQL and the database at execution time.</div>
+this is validated during compilation. Whether the query returns zero, one, or multiple rows is
+determined by SQL and the database at execution time.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>query</code> - the complete SELECT definition used by this expression</dd>
@@ -1026,14 +1136,16 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="exists(org.eclipse.net4j.db.dml.SQLSubSelect)">
 <h3>exists</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">exists</span><wbr><span class="parameters">(<a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;query)</span></div>
 <div class="block">Creates an EXISTS condition over a complete SELECT definition. Unlike scalar and IN subqueries,
- EXISTS does not require a single-column projection; width validation occurs during compilation.</div>
+EXISTS does not require a single-column projection; width validation occurs during compilation.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>query</code> - the complete SELECT definition used by this expression</dd>
@@ -1042,14 +1154,16 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="notExists(org.eclipse.net4j.db.dml.SQLSubSelect)">
 <h3>notExists</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">notExists</span><wbr><span class="parameters">(<a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;query)</span></div>
 <div class="block">Creates a NOT EXISTS condition over a complete SELECT definition. Unlike scalar and IN subqueries,
- NOT EXISTS does not require a single-column projection; width validation occurs during compilation.</div>
+NOT EXISTS does not require a single-column projection; width validation occurs during compilation.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>query</code> - the complete SELECT definition used by this expression</dd>
@@ -1058,11 +1172,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="count()">
 <h3>count</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">count</span>()</div>
 <div class="block">Creates the COUNT(*) aggregate.</div>
 <dl class="notes">
@@ -1071,11 +1187,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="count(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>count</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">count</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates COUNT over the non-NULL values produced by the supplied expression.</div>
 <dl class="notes">
@@ -1086,11 +1204,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="countDistinct(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>countDistinct</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">countDistinct</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates COUNT(DISTINCT expression).</div>
 <dl class="notes">
@@ -1101,11 +1221,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="min(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>min</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">min</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates a MIN aggregate over the supplied expression.</div>
 <dl class="notes">
@@ -1116,11 +1238,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="max(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>max</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">max</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates a MAX aggregate over the supplied expression.</div>
 <dl class="notes">
@@ -1131,11 +1255,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="sum(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>sum</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">sum</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates a SUM aggregate over the supplied expression.</div>
 <dl class="notes">
@@ -1146,11 +1272,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="avg(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>avg</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">avg</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates an AVG aggregate over the supplied expression.</div>
 <dl class="notes">
@@ -1161,29 +1289,33 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="abs(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>abs</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">abs</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates a structured absolute-value expression. The database determines numeric conversion,
- range, overflow, and result semantics; a referenced column remains available for parameter type inference.</div>
+range, overflow, and result semantics; a referenced column remains available for parameter type inference.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>expression</code> - the expression whose absolute value is computed</dd>
 <dt>Returns:</dt>
 <dd>the corresponding immutable SQL expression</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the expression is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the expression is <code>null</code></dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="add(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>add</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a binary addition expression.</div>
@@ -1196,11 +1328,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="subtract(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>subtract</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">subtract</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a binary subtraction expression.</div>
@@ -1213,11 +1347,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="multiply(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>multiply</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">multiply</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a binary multiplication expression.</div>
@@ -1230,11 +1366,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="divide(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>divide</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">divide</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a binary division expression.</div>
@@ -1247,16 +1385,18 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="eq(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>eq</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">eq</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates an equality condition using ordinary SQL comparison semantics. If either operand is
- SQL NULL, the result is not rewritten to <code>IS NULL</code>; use <a href="#isNull(org.eclipse.net4j.db.dml.SQLExpression)"><code>isNull(SQLExpression)</code></a>
- for a NULL test.</div>
+SQL NULL, the result is not rewritten to <code>IS NULL</code>; use <a href="#isNull(org.eclipse.net4j.db.dml.SQLExpression)"><code>isNull(SQLExpression)</code></a>
+for a NULL test.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>left</code> - the left operand</dd>
@@ -1266,11 +1406,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="ne(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>ne</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">ne</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates an inequality condition.</div>
@@ -1283,11 +1425,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="lt(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>lt</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">lt</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a less-than condition.</div>
@@ -1300,11 +1444,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="le(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>le</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">le</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a less-than-or-equal condition.</div>
@@ -1317,11 +1463,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="gt(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>gt</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">gt</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a greater-than condition.</div>
@@ -1334,11 +1482,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="ge(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>ge</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">ge</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a greater-than-or-equal condition.</div>
@@ -1351,11 +1501,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="like(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>like</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">like</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;left,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;right)</span></div>
 <div class="block">Creates a LIKE condition. Pattern escaping remains the responsibility of the supplied expression and database dialect.</div>
@@ -1368,11 +1520,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="between(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>between</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">between</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;lower,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;upper)</span></div>
@@ -1387,11 +1541,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isNull(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>isNull</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">isNull</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates an IS NULL condition.</div>
 <dl class="notes">
@@ -1402,11 +1558,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isNotNull(org.eclipse.net4j.db.dml.SQLExpression)">
 <h3>isNotNull</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">isNotNull</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression)</span></div>
 <div class="block">Creates an IS NOT NULL condition.</div>
 <dl class="notes">
@@ -1417,11 +1575,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="and(org.eclipse.net4j.db.dml.SQLCondition,org.eclipse.net4j.db.dml.SQLCondition)">
 <h3>and</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">and</span><wbr><span class="parameters">(<a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a>&nbsp;left,
  <a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a>&nbsp;right)</span></div>
 <div class="block">Creates a condition that combines both supplied conditions with AND.</div>
@@ -1434,11 +1594,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="or(org.eclipse.net4j.db.dml.SQLCondition,org.eclipse.net4j.db.dml.SQLCondition)">
 <h3>or</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">or</span><wbr><span class="parameters">(<a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a>&nbsp;left,
  <a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a>&nbsp;right)</span></div>
 <div class="block">Creates a condition that combines both supplied conditions with OR.</div>
@@ -1451,11 +1613,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="not(org.eclipse.net4j.db.dml.SQLCondition)">
 <h3>not</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">not</span><wbr><span class="parameters">(<a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a>&nbsp;condition)</span></div>
 <div class="block">Creates a negated condition.</div>
 <dl class="notes">
@@ -1466,15 +1630,17 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLSubSelect)">
 <h3>in</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">in</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
  <a href="SQLSubSelect.html" title="interface in org.eclipse.net4j.db.dml">SQLSubSelect</a>&nbsp;subSelect)</span></div>
 <div class="block">Creates an IN condition whose values come from a complete SELECT definition. The subquery must
- project exactly one column; this is validated during compilation.</div>
+project exactly one column; this is validated during compilation.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>expression</code> - the SQL expression to wrap or aggregate</dd>
@@ -1484,15 +1650,17 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="in(org.eclipse.net4j.db.dml.SQLExpression,org.eclipse.net4j.db.dml.SQLExpression...)">
 <h3>in</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">in</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
  <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>...&nbsp;values)</span></div>
 <div class="block">Creates an IN condition over a snapshotted, non-empty ordered list of expressions.
- Parameter identities and SQL NULL semantics are preserved.</div>
+Parameter identities and SQL NULL semantics are preserved.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>expression</code> - the expression tested for membership</dd>
@@ -1500,20 +1668,22 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Returns:</dt>
 <dd>the corresponding immutable condition</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the expression, array, or any value is <code>null</code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the list is empty</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the expression, array, or any value is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the list is empty</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="in(org.eclipse.net4j.db.dml.SQLExpression,java.lang.Iterable)">
 <h3>in</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">in</span><wbr><span class="parameters">(<a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&nbsp;expression,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&gt;&nbsp;values)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a>&gt;&nbsp;values)</span></div>
 <div class="block">Creates an IN condition from a single traversal of the supplied iterable. The expressions are
- snapshotted in iteration order, retaining parameter identity and ordinary SQL NULL semantics.</div>
+snapshotted in iteration order, retaining parameter identity and ordinary SQL NULL semantics.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>expression</code> - the expression tested for membership</dd>
@@ -1521,36 +1691,40 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Returns:</dt>
 <dd>the corresponding immutable condition</dd>
 <dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the expression, iterable, or any value is <code>null</code></dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the iterable is empty</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/NullPointerException.html" title="class or interface in java.lang" class="external-link">NullPointerException</a></code> - if the expression, iterable, or any value is <code>null</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></code> - if the iterable is empty</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="fragment()">
 <h3>fragment</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="fluent/SQLFragmentStep.html" title="interface in org.eclipse.net4j.db.dml.fluent">SQLFragmentStep</a></span>&nbsp;<span class="element-name">fragment</span>()</div>
 <div class="block">Begins a structured fragment. Raw text is trusted SQL, is not parsed for operator precedence,
- and must not contain <code>?</code>, even in a quoted string. Add identifiers and parameters through
- their typed methods. Prefer structured expressions for operators; explicitly group fragment
- expressions when their internal precedence matters.</div>
+and must not contain <code>?</code>, even in a quoted string. Add identifiers and parameters through
+their typed methods. Prefer structured expressions for operators; explicitly group fragment
+expressions when their internal precedence matters.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the corresponding staged builder</dd>
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="expression(org.eclipse.net4j.db.dml.SQLFragment)">
 <h3>expression</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLExpression.html" title="interface in org.eclipse.net4j.db.dml">SQLExpression</a></span>&nbsp;<span class="element-name">expression</span><wbr><span class="parameters">(<a href="SQLFragment.html" title="interface in org.eclipse.net4j.db.dml">SQLFragment</a>&nbsp;fragment)</span></div>
 <div class="block">Wraps a structured fragment as an expression using the canonical factory. Structured operator
- expressions allow compiler-managed precedence; raw fragment text is not parsed, so explicitly
- group it where required.</div>
+expressions allow compiler-managed precedence; raw fragment text is not parsed, so explicitly
+group it where required.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>fragment</code> - the structured SQL fragment</dd>
@@ -1559,11 +1733,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="condition(org.eclipse.net4j.db.dml.SQLFragment)">
 <h3>condition</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLCondition.html" title="interface in org.eclipse.net4j.db.dml">SQLCondition</a></span>&nbsp;<span class="element-name">condition</span><wbr><span class="parameters">(<a href="SQLFragment.html" title="interface in org.eclipse.net4j.db.dml">SQLFragment</a>&nbsp;fragment)</span></div>
 <div class="block">Wraps a structured fragment as a condition using the canonical factory.</div>
 <dl class="notes">
@@ -1574,11 +1750,13 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="build(org.eclipse.net4j.db.dml.SQLFragment)">
 <h3>build</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="SQLTemplate.html" title="interface in org.eclipse.net4j.db.dml">SQLTemplate</a></span>&nbsp;<span class="element-name">build</span><wbr><span class="parameters">(<a href="SQLFragment.html" title="interface in org.eclipse.net4j.db.dml">SQLFragment</a>&nbsp;fragment)</span></div>
 <div class="block">Treats the fragment as a complete template definition. This differs from the fragment builder’s build method, which returns the fragment itself.</div>
 <dl class="notes">
@@ -1589,6 +1767,7 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 <dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -1597,12 +1776,11 @@ JDBC&gt;</span>&nbsp;<span class="return-type"><a href="SQLParameter.html" title
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

@@ -136,6 +136,7 @@
         <topic label="ExecutorServiceFactory" href="javadoc/org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" icon="class" />
         <topic label="ExecutorWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html" icon="class" />
         <topic label="Holder&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/Holder.html" icon="class" />
+        <topic label="ICorrelator&lt;CORRELATION, VALUE&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/ICorrelator.html" icon="interface" />
         <topic label="IExecutorServiceProvider" href="javadoc/org/eclipse/net4j/util/concurrent/IExecutorServiceProvider.html" icon="interface" />
         <topic label="IRWLockManager.LockType" href="javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" icon="enum" />
         <topic label="IRWOLockManager.LockChange&lt;OBJECT&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/IRWOLockManager.LockChange.html" icon="class" />
@@ -165,6 +166,7 @@
         <topic label="SerializingExecutor" href="javadoc/org/eclipse/net4j/util/concurrent/SerializingExecutor.html" icon="class" />
         <topic label="Sleeper" href="javadoc/org/eclipse/net4j/util/concurrent/Sleeper.html" icon="class" />
         <topic label="Stoppable" href="javadoc/org/eclipse/net4j/util/concurrent/Stoppable.html" icon="class" />
+        <topic label="SynchronizingCorrelator&lt;CORRELATION, RESULT&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/SynchronizingCorrelator.html" icon="class" />
         <topic label="SynchronousExecutor" href="javadoc/org/eclipse/net4j/util/concurrent/SynchronousExecutor.html" icon="class" />
         <topic label="SynchronousWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/SynchronousWorkSerializer.html" icon="class" />
         <topic label="TaskQueue&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/TaskQueue.html" icon="class" />
@@ -572,6 +574,7 @@
         <topic label="ComboAutoCompleter" href="javadoc/org/eclipse/net4j/util/ui/ComboAutoCompleter.html" icon="class" />
         <topic label="DefaultActionFilter&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/ui/DefaultActionFilter.html" icon="class" />
         <topic label="DefaultPropertySource&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/ui/DefaultPropertySource.html" icon="class" />
+        <topic label="DefaultPropertySource.Augmented&lt;RECEIVER, AUGMENTING_RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/ui/DefaultPropertySource.Augmented.html" icon="class" />
         <topic label="DefaultPropertySource.DelegatingPropertyDescriptor&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/ui/DefaultPropertySource.DelegatingPropertyDescriptor.html" icon="class" />
         <topic label="DelegatingContentProvider" href="javadoc/org/eclipse/net4j/util/ui/DelegatingContentProvider.html" icon="class" />
         <topic label="FactoryTypeContentProvider" href="javadoc/org/eclipse/net4j/util/ui/FactoryTypeContentProvider.html" icon="class" />

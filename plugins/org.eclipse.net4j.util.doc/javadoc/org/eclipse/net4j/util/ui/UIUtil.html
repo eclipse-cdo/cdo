@@ -7,96 +7,134 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.net4j.util.ui, class: UIUtil">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/UIUtil.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../search.html">Search</a></li>
 <li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li><a href="#field-summary">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li><a href="#field-detail">Field</a></li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.net4j.util.ui</a></li>
+<li><a href="UIUtil.html" class="current-selection">UIUtil</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#field-summary" tabindex="0">Field Summary</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#field-detail" tabindex="0">Field Details</a>
+<ol class="toc-list">
+<li><a href="#ERROR_LOG_ID" tabindex="0">ERROR_LOG_ID</a></li>
+</ol>
+</li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#redColor()" tabindex="0">redColor()</a></li>
+<li><a href="#grayColor()" tabindex="0">grayColor()</a></li>
+<li><a href="#errorImage()" tabindex="0">errorImage()</a></li>
+<li><a href="#copyToClipboard(org.eclipse.swt.widgets.Display,java.lang.String)" tabindex="0">copyToClipboard(Display, String)</a></li>
+<li><a href="#dispose(org.eclipse.swt.graphics.Font)" tabindex="0">dispose(Font)</a></li>
+<li><a href="#dispose(org.eclipse.swt.graphics.Color)" tabindex="0">dispose(Color)</a></li>
+<li><a href="#dispose(org.eclipse.swt.widgets.Widget)" tabindex="0">dispose(Widget)</a></li>
+<li><a href="#getItalicFont(org.eclipse.swt.widgets.Control)" tabindex="0">getItalicFont(Control)</a></li>
+<li><a href="#getBoldFont(org.eclipse.swt.widgets.Control)" tabindex="0">getBoldFont(Control)</a></li>
+<li><a href="#getDisplay()" tabindex="0">getDisplay()</a></li>
+<li><a href="#getShell()" tabindex="0">getShell()</a></li>
+<li><a href="#getWorkbench()" tabindex="0">getWorkbench()</a></li>
+<li><a href="#getActiveWorkbenchWindow()" tabindex="0">getActiveWorkbenchWindow()</a></li>
+<li><a href="#getActiveWorkbenchPage()" tabindex="0">getActiveWorkbenchPage()</a></li>
+<li><a href="#getActiveWorkbenchPart()" tabindex="0">getActiveWorkbenchPart()</a></li>
+<li><a href="#getElementIfOne(org.eclipse.jface.viewers.ISelection)" tabindex="0">getElementIfOne(ISelection)</a></li>
+<li><a href="#getElement(org.eclipse.jface.viewers.ISelection)" tabindex="0">getElement(ISelection)</a></li>
+<li><a href="#getElement(org.eclipse.jface.viewers.ISelection,java.lang.Class)" tabindex="0">getElement(ISelection, Class)</a></li>
+<li><a href="#getElements(org.eclipse.jface.viewers.ISelection)" tabindex="0">getElements(ISelection)</a></li>
+<li><a href="#getElements(org.eclipse.jface.viewers.ISelection,java.lang.Class)" tabindex="0">getElements(ISelection, Class)</a></li>
+<li><a href="#adaptElement(org.eclipse.jface.viewers.ISelection,java.lang.Class)" tabindex="0">adaptElement(ISelection, Class)</a></li>
+<li><a href="#adaptElements(org.eclipse.jface.viewers.ISelection,java.lang.Class)" tabindex="0">adaptElements(ISelection, Class)</a></li>
+<li><a href="#setValidationContext(org.eclipse.swt.widgets.Control,org.eclipse.net4j.util.ui.ValidationContext)" tabindex="0">setValidationContext(Control, ValidationContext)</a></li>
+<li><a href="#createInteractiveCredentialsProvider()" tabindex="0">createInteractiveCredentialsProvider()</a></li>
+<li><a href="#createBrowser(org.eclipse.swt.widgets.Composite)" tabindex="0">createBrowser(Composite)</a></li>
+<li><a href="#createGridComposite(org.eclipse.swt.widgets.Composite,int)" tabindex="0">createGridComposite(Composite, int)</a></li>
+<li><a href="#createGridLayout(int)" tabindex="0">createGridLayout(int)</a></li>
+<li><a href="#createGridData()" tabindex="0">createGridData()</a></li>
+<li><a href="#createGridData(boolean,boolean)" tabindex="0">createGridData(boolean, boolean)</a></li>
+<li><a href="#createGridData(int,int)" tabindex="0">createGridData(int, int)</a></li>
+<li><a href="#createEmptyGridData()" tabindex="0">createEmptyGridData()</a></li>
+<li><a href="#addDecorationMargin(org.eclipse.swt.widgets.Control)" tabindex="0">addDecorationMargin(Control)</a></li>
+<li><a href="#setIndentation(org.eclipse.swt.widgets.Control,int,int)" tabindex="0">setIndentation(Control, int, int)</a></li>
+<li><a href="#initResource(java.util.function.Function)" tabindex="0">initResource(Function)</a></li>
+<li><a href="#syncExec(java.lang.Runnable)" tabindex="0">syncExec(Runnable)</a></li>
+<li><a href="#syncExec(org.eclipse.swt.widgets.Display,java.lang.Runnable)" tabindex="0">syncExec(Display, Runnable)</a></li>
+<li><a href="#asyncExec(java.lang.Runnable)" tabindex="0">asyncExec(Runnable)</a></li>
+<li><a href="#asyncExec(org.eclipse.swt.widgets.Display,java.lang.Runnable)" tabindex="0">asyncExec(Display, Runnable)</a></li>
+<li><a href="#exec(org.eclipse.swt.widgets.Display,boolean,java.lang.Runnable)" tabindex="0">exec(Display, boolean, Runnable)</a></li>
+<li><a href="#runWithProgress(org.eclipse.jface.operation.IRunnableWithProgress)" tabindex="0">runWithProgress(IRunnableWithProgress)</a></li>
+<li><a href="#preserveViewerState(org.eclipse.jface.viewers.Viewer,java.lang.Runnable)" tabindex="0">preserveViewerState(Viewer, Runnable)</a></li>
+<li><a href="#refreshViewer(org.eclipse.jface.viewers.Viewer)" tabindex="0">refreshViewer(Viewer)</a></li>
+<li><a href="#refreshElement(org.eclipse.jface.viewers.StructuredViewer,java.lang.Object,boolean)" tabindex="0">refreshElement(StructuredViewer, Object, boolean)</a></li>
+<li><a href="#updateElements(org.eclipse.jface.viewers.StructuredViewer,java.lang.Object)" tabindex="0">updateElements(StructuredViewer, Object)</a></li>
+<li><a href="#setStatusBarMessage(java.lang.String,org.eclipse.swt.graphics.Image)" tabindex="0">setStatusBarMessage(String, Image)</a></li>
+<li><a href="#addDragSupport(org.eclipse.jface.viewers.StructuredViewer)" tabindex="0">addDragSupport(StructuredViewer)</a></li>
+<li><a href="#isParent(org.eclipse.swt.widgets.Composite,org.eclipse.swt.widgets.Control)" tabindex="0">isParent(Composite, Control)</a></li>
+<li><a href="#forEachChild(org.eclipse.swt.widgets.Composite,java.util.function.Consumer)" tabindex="0">forEachChild(Composite, Consumer)</a></li>
+<li><a href="#selectReveal(java.lang.Object)" tabindex="0">selectReveal(Object)</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.ui</a></div>
 <h1 title="Class UIUtil" class="title">Class UIUtil</h1>
 </div>
-<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance">org.eclipse.net4j.util.ui.UIUtil</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">UIUtil</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -109,7 +147,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#ERROR_LOG_ID" class="member-name-link">ERROR_LOG_ID</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -121,24 +159,24 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;T</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#adaptElement(org.eclipse.jface.viewers.ISelection,java.lang.Class)" class="member-name-link">adaptElement</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Like <a href="#getElement(org.eclipse.jface.viewers.ISelection,java.lang.Class)"><code>getElement(ISelection, Class)</code></a> except that it attempts to adapt
- <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
+<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;T&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;T&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#adaptElements(org.eclipse.jface.viewers.ISelection,java.lang.Class)" class="member-name-link">adaptElements</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Like <a href="#getElements(org.eclipse.jface.viewers.ISelection,java.lang.Class)"><code>getElements(ISelection, Class)</code></a> except that it attempts to adapt
- <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
+<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#addDecorationMargin(org.eclipse.swt.widgets.Control)" class="member-name-link">addDecorationMargin</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;control)</code></div>
@@ -147,15 +185,15 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#addDragSupport(org.eclipse.jface.viewers.StructuredViewer)" class="member-name-link">addDragSupport</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">StructuredViewer</a>&nbsp;viewer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#asyncExec(java.lang.Runnable)" class="member-name-link">asyncExec</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#asyncExec(java.lang.Runnable)" class="member-name-link">asyncExec</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#asyncExec(org.eclipse.swt.widgets.Display,java.lang.Runnable)" class="member-name-link">asyncExec</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>&nbsp;display,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyToClipboard(org.eclipse.swt.widgets.Display,java.lang.String)" class="member-name-link">copyToClipboard</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>&nbsp;display,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="widgets/SafeBrowser.html" title="class in org.eclipse.net4j.util.ui.widgets">SafeBrowser</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createBrowser(org.eclipse.swt.widgets.Composite)" class="member-name-link">createBrowser</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent)</code></div>
@@ -199,11 +237,11 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exec(org.eclipse.swt.widgets.Display,boolean,java.lang.Runnable)" class="member-name-link">exec</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>&nbsp;display,
  boolean&nbsp;sync,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#forEachChild(org.eclipse.swt.widgets.Composite,java.util.function.Consumer)" class="member-name-link">forEachChild</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;composite,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&gt;&nbsp;consumer)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html" title="class or interface in org.eclipse.ui" class="external-link">IWorkbenchPage</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getActiveWorkbenchPage()" class="member-name-link">getActiveWorkbenchPage</a>()</code></div>
@@ -220,22 +258,22 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getDisplay()" class="member-name-link">getDisplay</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getElement(org.eclipse.jface.viewers.ISelection)" class="member-name-link">getElement</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;T</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getElement(org.eclipse.jface.viewers.ISelection,java.lang.Class)" class="member-name-link">getElement</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getElementIfOne(org.eclipse.jface.viewers.ISelection)" class="member-name-link">getElementIfOne</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getElements(org.eclipse.jface.viewers.ISelection)" class="member-name-link">getElements</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;T&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;T&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getElements(org.eclipse.jface.viewers.ISelection,java.lang.Class)" class="member-name-link">getElements</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Font</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getItalicFont(org.eclipse.swt.widgets.Control)" class="member-name-link">getItalicFont</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;control)</code></div>
@@ -250,7 +288,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#grayColor()" class="member-name-link">grayColor</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;T</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#initResource(java.util.function.Function)" class="member-name-link">initResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>,<wbr>T&gt;&nbsp;initializer)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#initResource(java.util.function.Function)" class="member-name-link">initResource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>,<wbr>T&gt;&nbsp;initializer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isParent(org.eclipse.swt.widgets.Composite,org.eclipse.swt.widgets.Control)" class="member-name-link">isParent</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
@@ -258,14 +296,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#preserveViewerState(org.eclipse.jface.viewers.Viewer,java.lang.Runnable)" class="member-name-link">preserveViewerState</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">Viewer</a>&nbsp;viewer,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Color</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#redColor()" class="member-name-link">redColor</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#refreshElement(org.eclipse.jface.viewers.StructuredViewer,java.lang.Object,boolean)" class="member-name-link">refreshElement</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">StructuredViewer</a>&nbsp;viewer,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element,
  boolean&nbsp;updateLabels)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
@@ -275,7 +313,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#runWithProgress(org.eclipse.jface.operation.IRunnableWithProgress)" class="member-name-link">runWithProgress</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/operation/IRunnableWithProgress.html" title="class or interface in org.eclipse.jface.operation" class="external-link">IRunnableWithProgress</a>&nbsp;runnable)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectReveal(java.lang.Object)" class="member-name-link">selectReveal</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectReveal(java.lang.Object)" class="member-name-link">selectReveal</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setIndentation(org.eclipse.swt.widgets.Control,int,int)" class="member-name-link">setIndentation</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;control,
@@ -285,7 +323,7 @@ loadScripts(document, 'script');</script>
 <div class="block">Adds indentation to the control.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setStatusBarMessage(java.lang.String,org.eclipse.swt.graphics.Image)" class="member-name-link">setStatusBarMessage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setStatusBarMessage(java.lang.String,org.eclipse.swt.graphics.Image)" class="member-name-link">setStatusBarMessage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
  <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Image</a>&nbsp;image)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Shows a message in the StatusBar.</div>
@@ -295,22 +333,22 @@ loadScripts(document, 'script');</script>
  <a href="ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#syncExec(java.lang.Runnable)" class="member-name-link">syncExec</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#syncExec(java.lang.Runnable)" class="member-name-link">syncExec</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#syncExec(org.eclipse.swt.widgets.Display,java.lang.Runnable)" class="member-name-link">syncExec</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>&nbsp;display,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#updateElements(org.eclipse.jface.viewers.StructuredViewer,java.lang.Object)" class="member-name-link">updateElements</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">StructuredViewer</a>&nbsp;viewer,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#method-summary" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -325,7 +363,8 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="ERROR_LOG_ID">
 <h3>ERROR_LOG_ID</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ERROR_LOG_ID</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ERROR_LOG_ID</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.1</dd>
@@ -336,6 +375,7 @@ loadScripts(document, 'script');</script>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -349,295 +389,360 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="redColor()">
 <h3>redColor</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Color</a></span>&nbsp;<span class="element-name">redColor</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.12</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="grayColor()">
 <h3>grayColor</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Color</a></span>&nbsp;<span class="element-name">grayColor</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.12</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="errorImage()">
 <h3>errorImage</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Image</a></span>&nbsp;<span class="element-name">errorImage</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.12</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="copyToClipboard(org.eclipse.swt.widgets.Display,java.lang.String)">
 <h3>copyToClipboard</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyToClipboard</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>&nbsp;display,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="dispose(org.eclipse.swt.graphics.Font)">
 <h3>dispose</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dispose</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Font</a>&nbsp;font)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="dispose(org.eclipse.swt.graphics.Color)">
 <h3>dispose</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dispose</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Color.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Color</a>&nbsp;color)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="dispose(org.eclipse.swt.widgets.Widget)">
 <h3>dispose</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dispose</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Widget.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Widget</a>&nbsp;widget)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getItalicFont(org.eclipse.swt.widgets.Control)">
 <h3>getItalicFont</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Font</a></span>&nbsp;<span class="element-name">getItalicFont</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;control)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.3</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getBoldFont(org.eclipse.swt.widgets.Control)">
 <h3>getBoldFont</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Font.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Font</a></span>&nbsp;<span class="element-name">getBoldFont</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;control)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDisplay()">
 <h3>getDisplay</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a></span>&nbsp;<span class="element-name">getDisplay</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getShell()">
 <h3>getShell</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Shell.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Shell</a></span>&nbsp;<span class="element-name">getShell</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getWorkbench()">
 <h3>getWorkbench</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbench.html" title="class or interface in org.eclipse.ui" class="external-link">IWorkbench</a></span>&nbsp;<span class="element-name">getWorkbench</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getActiveWorkbenchWindow()">
 <h3>getActiveWorkbenchWindow</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchWindow.html" title="class or interface in org.eclipse.ui" class="external-link">IWorkbenchWindow</a></span>&nbsp;<span class="element-name">getActiveWorkbenchWindow</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getActiveWorkbenchPage()">
 <h3>getActiveWorkbenchPage</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html" title="class or interface in org.eclipse.ui" class="external-link">IWorkbenchPage</a></span>&nbsp;<span class="element-name">getActiveWorkbenchPage</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getActiveWorkbenchPart()">
 <h3>getActiveWorkbenchPart</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPart.html" title="class or interface in org.eclipse.ui" class="external-link">IWorkbenchPart</a></span>&nbsp;<span class="element-name">getActiveWorkbenchPart</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getElementIfOne(org.eclipse.jface.viewers.ISelection)">
 <h3>getElementIfOne</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getElementIfOne</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getElementIfOne</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getElement(org.eclipse.jface.viewers.ISelection)">
 <h3>getElement</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getElement</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getElement</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getElement(org.eclipse.jface.viewers.ISelection,java.lang.Class)">
 <h3>getElement</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getElement</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getElements(org.eclipse.jface.viewers.ISelection)">
 <h3>getElements</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">getElements</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</span>&nbsp;<span class="element-name">getElements</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getElements(org.eclipse.jface.viewers.ISelection,java.lang.Class)">
 <h3>getElements</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;T&gt;</span>&nbsp;<span class="element-name">getElements</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;T&gt;</span>&nbsp;<span class="element-name">getElements</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="adaptElement(org.eclipse.jface.viewers.ISelection,java.lang.Class)">
 <h3>adaptElement</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">adaptElement</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
 <div class="block">Like <a href="#getElement(org.eclipse.jface.viewers.ISelection,java.lang.Class)"><code>getElement(ISelection, Class)</code></a> except that it attempts to adapt
- <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
+<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.4</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="adaptElements(org.eclipse.jface.viewers.ISelection,java.lang.Class)">
 <h3>adaptElements</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;T&gt;</span>&nbsp;<span class="element-name">adaptElements</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;T&gt;</span>&nbsp;<span class="element-name">adaptElements</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/ISelection.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">ISelection</a>&nbsp;selection,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</span></div>
 <div class="block">Like <a href="#getElements(org.eclipse.jface.viewers.ISelection,java.lang.Class)"><code>getElements(ISelection, Class)</code></a> except that it attempts to adapt
- <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
+<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>IAdaptable</code></a>s to the required <code>type</code>, if necessary.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setValidationContext(org.eclipse.swt.widgets.Control,org.eclipse.net4j.util.ui.ValidationContext)">
 <h3>setValidationContext</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">setValidationContext</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;control,
  <a href="ValidationContext.html" title="interface in org.eclipse.net4j.util.ui">ValidationContext</a>&nbsp;context)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createInteractiveCredentialsProvider()">
 <h3>createInteractiveCredentialsProvider</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../security/IPasswordCredentialsProvider.html" title="interface in org.eclipse.net4j.util.security">IPasswordCredentialsProvider</a></span>&nbsp;<span class="element-name">createInteractiveCredentialsProvider</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createBrowser(org.eclipse.swt.widgets.Composite)">
 <h3>createBrowser</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="widgets/SafeBrowser.html" title="class in org.eclipse.net4j.util.ui.widgets">SafeBrowser</a></span>&nbsp;<span class="element-name">createBrowser</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.19</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createGridComposite(org.eclipse.swt.widgets.Composite,int)">
 <h3>createGridComposite</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a></span>&nbsp;<span class="element-name">createGridComposite</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
  int&nbsp;columns)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createGridLayout(int)">
 <h3>createGridLayout</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridLayout.html" title="class or interface in org.eclipse.swt.layout" class="external-link">GridLayout</a></span>&nbsp;<span class="element-name">createGridLayout</span><wbr><span class="parameters">(int&nbsp;columns)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createGridData()">
 <h3>createGridData</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html" title="class or interface in org.eclipse.swt.layout" class="external-link">GridData</a></span>&nbsp;<span class="element-name">createGridData</span>()</div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createGridData(boolean,boolean)">
 <h3>createGridData</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html" title="class or interface in org.eclipse.swt.layout" class="external-link">GridData</a></span>&nbsp;<span class="element-name">createGridData</span><wbr><span class="parameters">(boolean&nbsp;grabHorizontal,
  boolean&nbsp;grabVertical)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createGridData(int,int)">
 <h3>createGridData</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html" title="class or interface in org.eclipse.swt.layout" class="external-link">GridData</a></span>&nbsp;<span class="element-name">createGridData</span><wbr><span class="parameters">(int&nbsp;horizontalSpan,
  int&nbsp;verticalSpan)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.4</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createEmptyGridData()">
 <h3>createEmptyGridData</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/layout/GridData.html" title="class or interface in org.eclipse.swt.layout" class="external-link">GridData</a></span>&nbsp;<span class="element-name">createEmptyGridData</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addDecorationMargin(org.eclipse.swt.widgets.Control)">
 <h3>addDecorationMargin</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDecorationMargin</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;control)</span></div>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setIndentation(org.eclipse.swt.widgets.Control,int,int)">
 <h3>setIndentation</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setIndentation</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;control,
  int&nbsp;horizontalIndent,
  int&nbsp;verticalIndent)</span></div>
@@ -646,178 +751,211 @@ loadScripts(document, 'script');</script>
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="initResource(java.util.function.Function)">
 <h3>initResource</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">initResource</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>,<wbr>T&gt;&nbsp;initializer)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">initResource</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>,<wbr>T&gt;&nbsp;initializer)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.12</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="syncExec(java.lang.Runnable)">
 <h3>syncExec</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">syncExec</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">syncExec</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="syncExec(org.eclipse.swt.widgets.Display,java.lang.Runnable)">
 <h3>syncExec</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">syncExec</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>&nbsp;display,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="asyncExec(java.lang.Runnable)">
 <h3>asyncExec</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">asyncExec</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">asyncExec</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.9</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="asyncExec(org.eclipse.swt.widgets.Display,java.lang.Runnable)">
 <h3>asyncExec</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">asyncExec</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>&nbsp;display,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.9</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="exec(org.eclipse.swt.widgets.Display,boolean,java.lang.Runnable)">
 <h3>exec</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">exec</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Display</a>&nbsp;display,
  boolean&nbsp;sync,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.9</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="runWithProgress(org.eclipse.jface.operation.IRunnableWithProgress)">
 <h3>runWithProgress</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">runWithProgress</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/operation/IRunnableWithProgress.html" title="class or interface in org.eclipse.jface.operation" class="external-link">IRunnableWithProgress</a>&nbsp;runnable)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.3</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="preserveViewerState(org.eclipse.jface.viewers.Viewer,java.lang.Runnable)">
 <h3>preserveViewerState</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">preserveViewerState</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">Viewer</a>&nbsp;viewer,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.3</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="refreshViewer(org.eclipse.jface.viewers.Viewer)">
 <h3>refreshViewer</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshViewer</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/Viewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">Viewer</a>&nbsp;viewer)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="refreshElement(org.eclipse.jface.viewers.StructuredViewer,java.lang.Object,boolean)">
 <h3>refreshElement</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">refreshElement</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">StructuredViewer</a>&nbsp;viewer,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element,
  boolean&nbsp;updateLabels)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.3</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="updateElements(org.eclipse.jface.viewers.StructuredViewer,java.lang.Object)">
 <h3>updateElements</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateElements</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">StructuredViewer</a>&nbsp;viewer,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="setStatusBarMessage(java.lang.String,org.eclipse.swt.graphics.Image)">
 <h3>setStatusBarMessage</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStatusBarMessage</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setStatusBarMessage</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
  <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Image</a>&nbsp;image)</span></div>
 <div class="block">Shows a message in the StatusBar. Image can be omitted by passing a null parameter</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addDragSupport(org.eclipse.jface.viewers.StructuredViewer)">
 <h3>addDragSupport</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDragSupport</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">StructuredViewer</a>&nbsp;viewer)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isParent(org.eclipse.swt.widgets.Composite,org.eclipse.swt.widgets.Control)">
 <h3>isParent</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isParent</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
  <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&nbsp;controlToCheck)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.9</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="forEachChild(org.eclipse.swt.widgets.Composite,java.util.function.Consumer)">
 <h3>forEachChild</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forEachChild</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;composite,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&gt;&nbsp;consumer)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&gt;&nbsp;consumer)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.9</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="selectReveal(java.lang.Object)">
 <h3>selectReveal</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">selectReveal</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">selectReveal</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.10</dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -826,12 +964,11 @@ loadScripts(document, 'script');</script>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

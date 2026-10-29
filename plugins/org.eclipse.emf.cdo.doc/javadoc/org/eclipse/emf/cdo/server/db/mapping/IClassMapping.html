@@ -7,83 +7,81 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <meta name="description" content="declaration: package: org.eclipse.emf.cdo.server.db.mapping, interface: IClassMapping">
-<meta name="generator" content="javadoc/ClassWriterImpl">
-<link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../../script-dir/jquery-ui.min.css" title="Style">
-<script type="text/javascript" src="../../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../../script-dir/jquery-3.6.1.min.js"></script>
-<script type="text/javascript" src="../../../../../../../script-dir/jquery-ui.min.js"></script>
+<meta name="generator" content="javadoc/ClassWriter">
+<link rel="stylesheet" type="text/css" href="../../../../../../../resource-files/jquery-ui.min.css">
+<link rel="stylesheet" type="text/css" href="../../../../../../../resource-files/stylesheet.css">
+<script type="text/javascript" src="../../../../../../../script-files/script.js"></script>
+<script type="text/javascript" src="../../../../../../../script-files/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="../../../../../../../script-files/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../../../";
+<script type="text/javascript">const pathtoroot = "../../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<div class="flex-box">
-<header role="banner" class="flex-header">
+<header role="banner">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="top-nav" id="navbar-top">
+<div class="nav-content">
+<div class="nav-menu-button"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button></div>
 <div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
 <li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/IClassMapping.html">Use</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
+<li><a href="../../../../../../../search.html">Search</a></li>
 <li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
-<ul class="sub-nav-list-small">
-<li>
-<p>Summary:</p>
-<ul>
-<li>Nested</li>
-<li>Field</li>
-<li>Constr</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-</li>
-<li>
-<p>Detail:</p>
-<ul>
-<li>Field</li>
-<li>Constr</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</li>
-</ul>
+</div>
 </div>
 <div class="sub-nav">
-<div id="navbar-sub-list">
-<ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
-</ul>
-<ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
-</ul>
-</div>
-<div class="nav-list-search"><a href="../../../../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Search">
-<input type="reset" id="reset-button" disabled value="reset">
+<div class="nav-content">
+<ol class="sub-nav-list">
+<li><a href="package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></li>
+<li><a href="IClassMapping.html" class="current-selection">IClassMapping</a></li>
+</ol>
+<div class="nav-list-search"><input type="text" id="search-input" disabled placeholder="Search documentation (type /)" aria-label="Search in documentation" autocomplete="off" spellcheck="false"><input type="reset" id="reset-search" disabled value="Reset"></div>
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
 <span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<div class="flex-content">
+<div class="main-grid">
+<nav role="navigation" class="toc" aria-label="Table of contents">
+<div class="toc-header">Contents&nbsp;<input type="text" class="filter-input" disabled placeholder="Filter contents (type .)" aria-label="Filter table of contents" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="Reset"></div>
+<ol class="toc-list" tabindex="-1">
+<li><a href="#" tabindex="0">Description</a></li>
+<li><a href="#method-summary" tabindex="0">Method Summary</a></li>
+<li><a href="#method-detail" tabindex="0">Method Details</a>
+<ol class="toc-list">
+<li><a href="#getEClass()" tabindex="0">getEClass()</a></li>
+<li><a href="#getDBTables()" tabindex="0">getDBTables()</a></li>
+<li><a href="#getTable()" tabindex="0">getTable()</a></li>
+<li><a href="#getFeatureMapping(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">getFeatureMapping(EStructuralFeature)</a></li>
+<li><a href="#getListMapping(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">getListMapping(EStructuralFeature)</a></li>
+<li><a href="#getListMappings()" tabindex="0">getListMappings()</a></li>
+<li><a href="#getValueMapping(org.eclipse.emf.ecore.EStructuralFeature)" tabindex="0">getValueMapping(EStructuralFeature)</a></li>
+<li><a href="#isMapped()" tabindex="0">isMapped()</a></li>
+<li><a href="#getValueMappings()" tabindex="0">getValueMappings()</a></li>
+<li><a href="#readRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" tabindex="0">readRevision(IDBStoreAccessor, InternalCDORevision, int)</a></li>
+<li><a href="#writeRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" tabindex="0">writeRevision(IDBStoreAccessor, InternalCDORevision, boolean, boolean, OMMonitor)</a></li>
+<li><a href="#detachObject(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,int,org.eclipse.emf.cdo.common.branch.CDOBranch,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" tabindex="0">detachObject(IDBStoreAccessor, CDOID, int, CDOBranch, long, OMMonitor)</a></li>
+<li><a href="#createObjectIDStatement(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" tabindex="0">createObjectIDStatement(IDBStoreAccessor)</a></li>
+<li><a href="#createResourceQueryStatement(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,java.lang.String,boolean,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" tabindex="0">createResourceQueryStatement(IDBStoreAccessor, CDOID, String, boolean, CDOBranchPoint)</a></li>
+<li><a href="#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" tabindex="0">handleRevisions(IDBStoreAccessor, CDOBranch, long, boolean, CDORevisionHandler)</a></li>
+<li><a href="#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)" tabindex="0">readChangeSet(IDBStoreAccessor, CDOChangeSetSegment[])</a></li>
+<li><a href="#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)" tabindex="0">queryXRefs(IDBStoreAccessor, IStoreAccessor.QueryXRefsContext, String)</a></li>
+</ol>
+</li>
+</ol>
+<button class="hide-sidebar"><span>Hide sidebar&nbsp;</span><img src="../../../../../../../resource-files/left.svg" alt="Hide sidebar"></button><button class="show-sidebar"><img src="../../../../../../../resource-files/right.svg" alt="Show sidebar"><span>&nbsp;Show sidebar</span></button></nav>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></div>
 <h1 title="Interface IClassMapping" class="title">Interface IClassMapping</h1>
 </div>
 <section class="class-description" id="class-description">
@@ -96,6 +94,7 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="IClassMappingUnitSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMappingUnitSupport</a></code></dd>
 </dl>
 <hr>
+<div class="horizontal-scroll">
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IClassMapping</span><span class="extends-implements">
 extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <div class="block">Basic interface for class mappings.</div>
@@ -105,6 +104,7 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <dt>Author:</dt>
 <dd>Eike Stepper, Stefan Winkler</dd>
 </dl>
+</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -114,20 +114,20 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Default Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createObjectIDStatement(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">createObjectIDStatement</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Create a prepared statement which returns all IDs of instances of the corresponding class.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createResourceQueryStatement(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,java.lang.String,boolean,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">createResourceQueryStatement</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderId,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  boolean&nbsp;exactMatch,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -143,7 +143,7 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Detaches (deletes) a CDO object leaving a "ghost" revision behind.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.db.ddl.IDBTable&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.db.ddl.IDBTable&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDBTables()" class="member-name-link">getDBTables</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns all DB tables which are used by this class and all its contained features.</div>
@@ -159,7 +159,7 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get the mapping of the many-valued feature.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getListMappings()" class="member-name-link">getListMappings</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default org.eclipse.net4j.db.ddl.IDBTable</code></div>
@@ -170,7 +170,7 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getValueMapping(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getValueMapping</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getValueMappings()" class="member-name-link">getValueMappings</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
@@ -181,9 +181,9 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
  <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Passes all revisions of the store to the <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>handler</code></a> if <b>all</b> of the following
- conditions are met:
- 
- The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.</div>
+conditions are met:
+
+The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isMapped()" class="member-name-link">isMapped</a>()</code></div>
@@ -191,11 +191,11 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;idString)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;idString)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Retrieve cross-references from DB</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)" class="member-name-link">readChangeSet</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -234,17 +234,20 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <li>
 <section class="detail" id="getEClass()">
 <h3>getEClass</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a></span>&nbsp;<span class="element-name">getEClass</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getDBTables()">
 <h3>getDBTables</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;org.eclipse.net4j.db.ddl.IDBTable&gt;</span>&nbsp;<span class="element-name">getDBTables</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;org.eclipse.net4j.db.ddl.IDBTable&gt;</span>&nbsp;<span class="element-name">getDBTables</span>()</div>
 <div class="block">Returns all DB tables which are used by this class and all its contained features.</div>
 <dl class="notes">
 <dt>Returns:</dt>
@@ -252,14 +255,16 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getTable()">
 <h3>getTable</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">org.eclipse.net4j.db.ddl.IDBTable</span>&nbsp;<span class="element-name">getTable</span>()</div>
 <div class="block">Returns the primary DB table for this class mapping. This is the first table returned by
- <a href="#getDBTables()"><code>getDBTables()</code></a>, and does not represent all tables used by the mapping.</div>
+<a href="#getDBTables()"><code>getDBTables()</code></a>, and does not represent all tables used by the mapping.</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code>getTable</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.db.ddl.IDBTable.Provider</code></dd>
@@ -268,97 +273,113 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <dt>Since:</dt>
 <dd>4.14</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getFeatureMapping(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>getFeatureMapping</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="IFeatureMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></span>&nbsp;<span class="element-name">getFeatureMapping</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.14</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getListMapping(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>getListMapping</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type"><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></span>&nbsp;<span class="element-name">getListMapping</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <div class="block">Get the mapping of the many-valued feature.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>feature</code> - the feature for which the mapping should be returned. <code>feature.isMany()</code> has to be
-          <code>true</code>.</dd>
+         <code>true</code>.</dd>
 <dt>Returns:</dt>
 <dd>the list mapping corresponding to the feature.</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getListMappings()">
 <h3>getListMappings</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&gt;</span>&nbsp;<span class="element-name">getListMappings</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&gt;</span>&nbsp;<span class="element-name">getListMappings</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getValueMapping(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>getValueMapping</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></span>&nbsp;<span class="element-name">getValueMapping</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.14</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isMapped()">
 <h3>isMapped</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMapped</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.14</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getValueMappings()">
 <h3>getValueMappings</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&gt;</span>&nbsp;<span class="element-name">getValueMappings</span>()</div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&gt;</span>&nbsp;<span class="element-name">getValueMappings</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="readRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)">
 <h3>readRevision</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">readRevision</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  int&nbsp;listChunk)</span></div>
 <div class="block">Read a revision. The branch and timestamp to be read are derived from the branchPoint which is set to the Revision.
- Note that non-audit stores only support <a href="../../../common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a> and non-branching stores only
- support the main branch.</div>
+Note that non-audit stores only support <a href="../../../common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a> and non-branching stores only
+support the main branch.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>accessor</code> - the accessor to use.</dd>
 <dd><code>revision</code> - the revision object into which the data should be read. The revision has to be have its ID set to the
-          requested object's ID. The version is ignored, as the version parameter is used to determine the version
-          to be read.</dd>
+         requested object's ID. The version is ignored, as the version parameter is used to determine the version
+         to be read.</dd>
 <dd><code>listChunk</code> - the chunk size to read attribute lists.</dd>
 <dt>Returns:</dt>
 <dd><code>true</code>, if the revision has been found and read correctly. <code>false</code> if the revision
-         could not be found. In this case, the content of <code>revision</code> is undefined.</dd>
+        could not be found. In this case, the content of <code>revision</code> is undefined.</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="writeRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)">
 <h3>writeRevision</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">writeRevision</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  boolean&nbsp;firstRevision,
@@ -375,11 +396,13 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="detachObject(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,int,org.eclipse.emf.cdo.common.branch.CDOBranch,long,org.eclipse.net4j.util.om.monitor.OMMonitor)">
 <h3>detachObject</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">detachObject</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  int&nbsp;version,
@@ -397,12 +420,14 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createObjectIDStatement(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)">
 <h3>createObjectIDStatement</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span>&nbsp;<span class="element-name">createObjectIDStatement</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</span></div>
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span>&nbsp;<span class="element-name">createObjectIDStatement</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</span></div>
 <div class="block">Create a prepared statement which returns all IDs of instances of the corresponding class.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -412,14 +437,16 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="createResourceQueryStatement(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,java.lang.String,boolean,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
 <h3>createResourceQueryStatement</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span>&nbsp;<span class="element-name">createResourceQueryStatement</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span>&nbsp;<span class="element-name">createResourceQueryStatement</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderId,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  boolean&nbsp;exactMatch,
  <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</span></div>
 <div class="block">Create a prepared statement which returns all IDs of instances of the corresponding class.</div>
@@ -429,10 +456,10 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <dd><code>folderId</code> - the ID of the containing folder. <code>0</code> means none.</dd>
 <dd><code>name</code> - the name of the resource node to look up</dd>
 <dd><code>exactMatch</code> - if <code>true</code>, <code>name</code> must match exactly, otherwise all resource nodes starting with
-          <code>name</code> are returned.</dd>
+         <code>name</code> are returned.</dd>
 <dd><code>branchPoint</code> - a branchPoint (branch and timestamp). A timestamp in the past if past versions should be looked up. In
-          case of no audit support, this must be <a href="../../../common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a>. In case of non branching
-          support the branch id must be equal to <a href="../../../common/branch/CDOBranch.html#MAIN_BRANCH_ID"><code>CDOBranch.MAIN_BRANCH_ID</code></a>.</dd>
+         case of no audit support, this must be <a href="../../../common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a>. In case of non branching
+         support the branch id must be equal to <a href="../../../common/branch/CDOBranch.html#MAIN_BRANCH_ID"><code>CDOBranch.MAIN_BRANCH_ID</code></a>.</dd>
 <dt>Returns:</dt>
 <dd>the prepared statement ready to be executed using <code>result.executeQuery()</code>.</dd>
 <dt>Throws:</dt>
@@ -440,23 +467,25 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 <dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">
 <h3>handleRevisions</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">handleRevisions</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  long&nbsp;timeStamp,
  boolean&nbsp;exactTime,
  <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</span></div>
 <div class="block">Passes all revisions of the store to the <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>handler</code></a> if <b>all</b> of the following
- conditions are met:
- <ul>
- <li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
- <li>The <code>timeStamp</code> parameter is <a href="../../../common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a> or equal to
- <code>revision.getTimeStamp()</code>.
- </ul></div>
+conditions are met:
+<ul>
+<li>The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.
+<li>The <code>timeStamp</code> parameter is <a href="../../../common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a> or equal to
+<code>revision.getTimeStamp()</code>.
+</ul></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.0</dd>
@@ -467,15 +496,17 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">
 <h3>readChangeSet</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</span>&nbsp;<span class="element-name">readChangeSet</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="horizontal-scroll">
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</span>&nbsp;<span class="element-name">readChangeSet</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</span></div>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
- DetachedCDORevisions must also be considered!</div>
+DetachedCDORevisions must also be considered!</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
@@ -486,19 +517,21 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 <li>
 <section class="detail" id="queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)">
 <h3>queryXRefs</h3>
+<div class="horizontal-scroll">
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">queryXRefs</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;idString)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;idString)</span></div>
 <div class="block">Retrieve cross-references from DB</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>idString</code> - a string of the form "(id1, id2, id3, ...)" which can be used directly in SQL to form the where-part
-          "SELECT * FROM foobar WHERE foobar.target IN [idString]".</dd>
+         "SELECT * FROM foobar WHERE foobar.target IN [idString]".</dd>
 <dt>Since:</dt>
 <dd>4.0</dd>
 <dt>See Also:</dt>
@@ -508,6 +541,7 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 </ul>
 </dd>
 </dl>
+</div>
 </section>
 </li>
 </ul>
@@ -516,12 +550,11 @@ extends org.eclipse.net4j.db.ddl.IDBTable.Provider</span></div>
 </ul>
 </section>
 <!-- ========= END OF CLASS DATA ========= -->
-</main>
 <footer role="contentinfo">
 <hr>
 <p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2025 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
-</div>
+</main>
 </div>
 </body>
 </html>

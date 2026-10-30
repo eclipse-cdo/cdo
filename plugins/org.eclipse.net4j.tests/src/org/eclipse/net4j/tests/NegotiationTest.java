@@ -151,6 +151,7 @@ public class NegotiationTest extends AbstractConfigTest
     getAcceptor();
 
     IConnector connector = getConnector(false);
+    long started = System.nanoTime();
 
     try
     {
@@ -160,6 +161,8 @@ public class NegotiationTest extends AbstractConfigTest
     }
     catch (ConnectorException ex)
     {
+      assertTrue("Authentication failure did not wake waitForConnection", //$NON-NLS-1$
+          TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started) < DEFAULT_TIMEOUT_EXPECTED);
       OM.LOG.info("Expected ConnectorException:", ex); //$NON-NLS-1$
       assertEquals(true, ex.getCause() instanceof NegotiationException);
     }
@@ -173,6 +176,7 @@ public class NegotiationTest extends AbstractConfigTest
     getAcceptor();
 
     IConnector connector = getConnector(false);
+    long started = System.nanoTime();
 
     try
     {
@@ -182,6 +186,8 @@ public class NegotiationTest extends AbstractConfigTest
     }
     catch (ConnectorException ex)
     {
+      assertTrue("Authentication failure did not wake waitForConnection", //$NON-NLS-1$
+          TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - started) < DEFAULT_TIMEOUT_EXPECTED);
       OM.LOG.info("Expected ConnectorException:", ex); //$NON-NLS-1$
       assertEquals(true, ex.getCause() instanceof NegotiationException);
     }

@@ -706,7 +706,7 @@ public class MessageConnectorTest extends AbstractOMTest
       connection.completeImmediately = false;
       connection.deferAbortCompletions = true;
       IBuffer pending = enqueue(connector, connector.getControlChannel());
-      assertTrue("Pending send was not submitted", connection.secondAttempt.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertTrue("Pending send was not recorded", connection.secondPendingSend.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
       LifecycleUtil.deactivate(connector);
       assertTrue("Abort was not requested", connection.aborted); //$NON-NLS-1$
       assertFalse("Borrowed buffer was released before its terminal callback", isReleased(pending)); //$NON-NLS-1$

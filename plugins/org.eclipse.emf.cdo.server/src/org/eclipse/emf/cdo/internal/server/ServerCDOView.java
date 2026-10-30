@@ -199,7 +199,15 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   @Override
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
-    return (InternalCDORevision)revisionProvider.getRevision(id);
+    InternalCDORevision revision = (InternalCDORevision)revisionProvider.getRevision(id);
+
+    // Server views cannot load collection chunks lazily, so revisions must be fully materialized.
+    if (revision != null && !revision.isUnchunked())
+    {
+      session.getRepository().ensureChunks(revision);
+    }
+
+    return revision;
   }
 
   @Override

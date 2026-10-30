@@ -69,14 +69,17 @@ public class OMPlatformBootstrapTest extends AbstractOMTest
     return (BundleContext)Proxy.newProxyInstance(BundleContext.class.getClassLoader(), new Class<?>[] { BundleContext.class }, handler);
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static final class PlatformAccess extends OSGiPlatform
   {
-    PlatformAccess()
+    public PlatformAccess()
     {
       super(null);
     }
 
-    static OMPlatform select(boolean osgiBundle, Object context)
+    public static OMPlatform select(boolean osgiBundle, Object context)
     {
       return PlatformAccess.createPlatform(osgiBundle, context);
     }

@@ -383,6 +383,11 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   protected void setNegotiationException(NegotiationException negotiationException)
   {
     this.negotiationException = negotiationException;
+
+    if (negotiationException != null)
+    {
+      countDown(finishedNegotiating);
+    }
   }
 
   @Override

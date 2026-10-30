@@ -58,20 +58,6 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
   }
 
   @Override
-  @Deprecated
-  public DBConnection getTransaction()
-  {
-    try
-    {
-      return getConnection();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-  }
-
-  @Override
   public String getSQL()
   {
     return sql;
@@ -141,13 +127,6 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
   }
 
   @Override
-  @Deprecated
-  public ResultSet executeQuery(String sql) throws SQLException
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void setString(int parameterIndex, String value) throws SQLException
   {
     value = getConnection().convertString(this, parameterIndex, value);
@@ -207,5 +186,34 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
     Object oldSchemaAccessToken = this.schemaAccessToken;
     this.schemaAccessToken = schemaAccessToken;
     return oldSchemaAccessToken;
+  }
+
+  DBPreparedStatement newCheckout(DBConnection connection)
+  {
+    DBPreparedStatement checkout = new DBPreparedStatement(connection, sql, reuseProbability, getDelegate());
+    checkout.immediateBatchExecution = immediateBatchExecution;
+    checkout.addBatchCount = addBatchCount;
+    return checkout;
+  }
+
+  @Override
+  @Deprecated
+  public DBConnection getTransaction()
+  {
+    try
+    {
+      return getConnection();
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+  }
+
+  @Override
+  @Deprecated
+  public ResultSet executeQuery(String sql) throws SQLException
+  {
+    throw new UnsupportedOperationException();
   }
 }

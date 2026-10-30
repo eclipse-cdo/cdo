@@ -50,6 +50,7 @@ public abstract class DBConfigs extends AllConfigs
     testClasses.add(NonAuditListBatchingTest.class);
     testClasses.add(ObjectTypeBatchingTest.class);
     testClasses.add(ModelEvolutionTest.class);
+    testClasses.add(Issue_00229_Test.class);
 
     testClasses.add(Net4jDBTest.class);
     testClasses.add(DBAnnotationsTest.class);

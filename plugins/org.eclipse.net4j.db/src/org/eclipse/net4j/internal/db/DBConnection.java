@@ -47,6 +47,16 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
 
   private boolean closed;
 
+  /**
+   * All checked-out statements of this connection share one schema read access, see {@link #beginSchemaAccess()}. This
+   * separate monitor is used because a schema writer synchronizes on all connections while it holds the write access.
+   */
+  private final Object schemaReadAccessLock = new Object();
+
+  private Object schemaReadAccessToken;
+
+  private int schemaReadAccessCount;
+
   public DBConnection(DBDatabase database, Connection delegate)
   {
     super(delegate);
@@ -138,7 +148,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
   @Override
   public IDBPreparedStatement prepareStatement(String sql, int resultSetType, int resultSetConcurrency, ReuseProbability reuseProbability)
   {
-    Object schemaAccessToken = database.beginSchemaAccess(false);
+    Object schemaAccessToken = beginSchemaAccess();
 
     try
     {
@@ -168,6 +178,8 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
             cache.put(sql, nextCached);
             preparedStatement.setNextCached(null);
           }
+
+          preparedStatement = preparedStatement.newCheckout(this);
         }
 
         if (VALIDATE_CHECKOUTS)
@@ -176,13 +188,16 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
         }
       }
 
-      preparedStatement.setSchemaAccessToken(schemaAccessToken);
+      synchronized (this)
+      {
+        preparedStatement.setSchemaAccessToken(schemaAccessToken);
+      }
 
       return preparedStatement;
     }
     catch (RuntimeException | Error ex)
     {
-      database.endSchemaAccess(schemaAccessToken);
+      endSchemaAccess();
       throw ex;
     }
   }
@@ -201,16 +216,28 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
 
   public void releasePreparedStatement(DBPreparedStatement preparedStatement)
   {
+    if (preparedStatement == null)
+    {
+      // Bug 276926: Silently accept preparedStatement == null and do nothing.
+      return;
+    }
+
+    Object schemaAccessToken;
+    boolean released = false;
+
     try
     {
-      if (preparedStatement == null)
-      {
-        // Bug 276926: Silently accept preparedStatement == null and do nothing.
-        return;
-      }
-
       synchronized (this)
       {
+        schemaAccessToken = preparedStatement.setSchemaAccessToken(null);
+        if (schemaAccessToken == null)
+        {
+          // The statement has already been released, e.g., by an earlier close() call.
+          return;
+        }
+
+        released = true;
+
         if (VALIDATE_CHECKOUTS)
         {
           checkOuts.remove(preparedStatement);
@@ -243,8 +270,10 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
     }
     finally
     {
-      Object schemaAccessToken = preparedStatement.setSchemaAccessToken(null);
-      database.endSchemaAccess(schemaAccessToken);
+      if (released)
+      {
+        endSchemaAccess();
+      }
     }
   }
 
@@ -287,5 +316,42 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
   public String convertString(DBResultSet resultSet, String columnLabel, String value)
   {
     return getDatabase().convertString(resultSet, columnLabel, value);
+  }
+
+  /**
+   * Only the first checked-out statement of this connection waits in the schema access queue of the database; further
+   * statements share its read access. A further statement must not queue behind a waiting schema writer because that
+   * writer waits for the statements that this connection has already checked out.
+   */
+  private Object beginSchemaAccess()
+  {
+    synchronized (schemaReadAccessLock)
+    {
+      if (schemaReadAccessCount == 0)
+      {
+        schemaReadAccessToken = database.beginSchemaAccess(false);
+      }
+
+      ++schemaReadAccessCount;
+      return schemaReadAccessToken;
+    }
+  }
+
+  private void endSchemaAccess()
+  {
+    synchronized (schemaReadAccessLock)
+    {
+      if (schemaReadAccessCount <= 0)
+      {
+        throw new IllegalStateException("No schema read access is active for " + this);
+      }
+
+      if (--schemaReadAccessCount == 0)
+      {
+        Object token = schemaReadAccessToken;
+        schemaReadAccessToken = null;
+        database.endSchemaAccess(token);
+      }
+    }
   }
 }

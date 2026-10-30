@@ -35,9 +35,11 @@ import org.eclipse.net4j.util.security.IUserAware;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -131,6 +133,16 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     return schemaTransaction;
   }
 
+  /**
+   * Completes a schema transaction by invalidating cached statements and notifying listeners about the schema change.
+   * <p>
+   * The schema write access is exclusive and waits for every checked-out statement to be closed. A caller must close
+   * all statements checked out from the schema transaction's connection before committing the transaction; otherwise
+   * the writer would wait for a read access held by the same connection and deadlock itself.
+   *
+   * @param delta
+   *          the committed schema changes, or {@code null} if the schema did not change.
+   */
   public void closeSchemaTransaction(DBSchemaDelta delta)
   {
     if (delta == null || delta.isEmpty())
@@ -138,12 +150,10 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       return;
     }
 
-    Object schemaAccessToken = null;
+    Object schemaAccessToken = beginSchemaAccess(true);
 
     try
     {
-      schemaAccessToken = beginSchemaAccess(true);
-
       for (IDBConnection transaction : getConnections())
       {
         ((DBConnection)transaction).invalidateStatementCache();
@@ -257,77 +267,58 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       }
     }
 
-    boolean success = false;
-    Object token = null;
-    SchemaAccess schemaAccess = null;
-
-    try
+    synchronized (schemaAccessQueue)
     {
-      synchronized (schemaAccessQueue)
+      SchemaAccess schemaAccess;
+      Object token;
+
+      if (write)
       {
-        if (write)
-        {
-          schemaAccess = createWriteSchemaAccess();
-          token = schemaAccess;
-          schemaAccessQueue.addLast(schemaAccess);
-          ++waitingSchemaWriters;
-        }
-        else
-        {
-          if (waitingSchemaWriters == 0 && !schemaAccessQueue.isEmpty())
-          {
-            schemaAccess = schemaAccessQueue.getFirst();
-            if (schemaAccess instanceof ReadSchemaAccess)
-            {
-              ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)schemaAccess;
-              token = readSchemaAccess.addReader();
-            }
-            else
-            {
-              schemaAccess = null;
-            }
-          }
+        schemaAccess = createWriteSchemaAccess();
+        token = schemaAccess;
+        schemaAccessQueue.addLast(schemaAccess);
+        ++waitingSchemaWriters;
+      }
+      else
+      {
+        ReadSchemaAccess readSchemaAccess = null;
 
-          if (schemaAccess == null)
+        if (waitingSchemaWriters == 0)
+        {
+          SchemaAccess activeSchemaAccess = schemaAccessQueue.peekFirst();
+          if (activeSchemaAccess instanceof ReadSchemaAccess)
           {
-            ReadSchemaAccess readSchemaAccess = createReadSchemaAccess();
-            token = readSchemaAccess.addReader();
-
-            schemaAccess = readSchemaAccess;
-            schemaAccessQueue.addLast(schemaAccess);
+            readSchemaAccess = (ReadSchemaAccess)activeSchemaAccess;
           }
         }
+
+        if (readSchemaAccess == null)
+        {
+          readSchemaAccess = createReadSchemaAccess();
+          schemaAccessQueue.addLast(readSchemaAccess);
+        }
+
+        token = readSchemaAccess.addReader();
+        schemaAccess = readSchemaAccess;
       }
 
-      long end = System.currentTimeMillis() + TIMEOUT_SCHEMA_ACCESS;
+      boolean success = false;
 
-      for (;;)
+      try
       {
-        synchronized (schemaAccessQueue)
-        {
-          SchemaAccess activeSchemaAccess = schemaAccessQueue.getFirst();
-          if (activeSchemaAccess == schemaAccess)
-          {
-            if (write)
-            {
-              --waitingSchemaWriters;
-            }
+        long end = System.currentTimeMillis() + TIMEOUT_SCHEMA_ACCESS;
 
+        for (;;)
+        {
+          // Check for activation before the timeout. An access that became active while waiting is never abandoned.
+          if (schemaAccessQueue.getFirst() == schemaAccess)
+          {
             success = true;
             return token;
           }
 
-          try
-          {
-            schemaAccessQueue.wait(1000L);
-          }
-          catch (InterruptedException ex)
-          {
-            Thread.currentThread().interrupt();
-            throw WrappedException.wrap(ex);
-          }
-
-          if (System.currentTimeMillis() >= end)
+          long remaining = end - System.currentTimeMillis();
+          if (remaining <= 0L)
           {
             StringBuilder builder = new StringBuilder("Schema " + schema.getName() + " could not be locked for " + (write ? "write" : "read")
                 + " access within " + TIMEOUT_SCHEMA_ACCESS + " milliseconds. Schema access queue:" + StringUtil.NL);
@@ -347,14 +338,29 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
             throw new TimeoutRuntimeException(builder.toString());
           }
+
+          try
+          {
+            schemaAccessQueue.wait(remaining);
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.currentThread().interrupt();
+            throw WrappedException.wrap(ex);
+          }
         }
       }
-    }
-    finally
-    {
-      if (!success)
+      finally
       {
-        schemaAccessQueue.remove(schemaAccess);
+        if (write)
+        {
+          --waitingSchemaWriters;
+        }
+
+        if (!success)
+        {
+          releaseSchemaAccess(schemaAccess, token);
+        }
       }
     }
   }
@@ -375,18 +381,13 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
     synchronized (schemaAccessQueue)
     {
-      SchemaAccess activeSchemaAccess = schemaAccessQueue.getFirst();
-      if (activeSchemaAccess instanceof ReadSchemaAccess)
+      SchemaAccess activeSchemaAccess = schemaAccessQueue.peekFirst();
+      if (activeSchemaAccess == null || !activeSchemaAccess.hasToken(token))
       {
-        ReadSchemaAccess readSchemaAccess = (ReadSchemaAccess)activeSchemaAccess;
-        if (readSchemaAccess.removeReader(token))
-        {
-          return;
-        }
+        throw new IllegalStateException("Schema " + schema.getName() + " is not accessed with token " + token);
       }
 
-      schemaAccessQueue.removeFirst();
-      schemaAccessQueue.notifyAll();
+      releaseSchemaAccess(activeSchemaAccess, token);
     }
   }
 
@@ -409,6 +410,21 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
   public String toString()
   {
     return "DBDatabase[schema=" + schema + "]";
+  }
+
+  /**
+   * Must be called while holding the monitor of the {@link #schemaAccessQueue}.
+   */
+  private void releaseSchemaAccess(SchemaAccess schemaAccess, Object token)
+  {
+    if (schemaAccess instanceof ReadSchemaAccess && ((ReadSchemaAccess)schemaAccess).removeReader(token))
+    {
+      // Other readers still share this access.
+      return;
+    }
+
+    schemaAccessQueue.remove(schemaAccess);
+    schemaAccessQueue.notifyAll();
   }
 
   private ReadSchemaAccess createReadSchemaAccess()
@@ -436,6 +452,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
    */
   private interface SchemaAccess
   {
+    public boolean hasToken(Object token);
   }
 
   /**
@@ -443,12 +460,31 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
    */
   private static class ReadSchemaAccess implements SchemaAccess
   {
+    private final Set<Object> tokens = new HashSet<>();
+
     private int readers;
+
+    public ReadSchemaAccess()
+    {
+    }
 
     public Object addReader()
     {
+      Object token = new Object();
+      addReader(token);
+      return token;
+    }
+
+    protected final void addReader(Object token)
+    {
+      tokens.add(token);
       ++readers;
-      return this;
+    }
+
+    @Override
+    public boolean hasToken(Object token)
+    {
+      return tokens.contains(token);
     }
 
     /**
@@ -456,6 +492,11 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
      */
     public boolean removeReader(Object token)
     {
+      if (!tokens.remove(token))
+      {
+        throw new IllegalStateException("Unknown schema read access token: " + token);
+      }
+
       return --readers > 0;
     }
 
@@ -492,14 +533,24 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
         }
 
         stackTraces.put(token, stackTrace);
-        super.addReader();
+        super.addReader(token);
         return token;
+      }
+
+      @Override
+      public boolean hasToken(Object token)
+      {
+        return stackTraces.containsKey(token);
       }
 
       @Override
       public boolean removeReader(Object token)
       {
-        stackTraces.remove(token);
+        if (stackTraces.remove(token) == null)
+        {
+          throw new IllegalStateException("Unknown tracked schema read access token: " + token);
+        }
+
         return super.removeReader(token);
       }
 
@@ -526,6 +577,16 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
    */
   private static class WriteSchemaAccess implements SchemaAccess
   {
+    public WriteSchemaAccess()
+    {
+    }
+
+    @Override
+    public boolean hasToken(Object token)
+    {
+      return token == this;
+    }
+
     @Override
     public String toString()
     {

@@ -19,10 +19,18 @@ import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
+import org.eclipse.net4j.tests.config.Net4jTestSuite;
 import org.eclipse.net4j.tests.config.Net4jTestSuite.ExcludedConfig;
 import org.eclipse.net4j.tests.config.TestConfig.JVM;
+import org.eclipse.net4j.tests.config.TestConfig.SSL;
+import org.eclipse.net4j.tests.config.TestConfig.TCP;
+import org.eclipse.net4j.tests.config.TestConfig.WS;
+import org.eclipse.net4j.tests.config.TestConfig.WSS;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.security.ChallengeNegotiator;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
@@ -36,6 +44,11 @@ import org.eclipse.net4j.util.security.UserManager;
 import org.eclipse.spi.net4j.Connector;
 import org.eclipse.spi.net4j.InternalAcceptor;
 import org.eclipse.spi.net4j.InternalConnector;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
+import junit.framework.Test;
 
 /**
  * @author Eike Stepper
@@ -53,6 +66,19 @@ public class NegotiationTest extends AbstractConfigTest
 
   private static final PasswordCredentials CREDENTIALS = new PasswordCredentials(USER_ID, PASSWORD);
 
+  /**
+   * Creates this test class under the supported socket and WebSocket transports.
+   *
+   * @return the configured test suite
+   */
+  public static Test suite()
+  {
+    @SuppressWarnings("unchecked")
+    Net4jTestSuite suite = new Net4jTestSuite(NegotiationTest.class.getName(), TCP.class, SSL.class, WS.class, WSS.class);
+    suite.addTestSuite(NegotiationTest.class);
+    return suite;
+  }
+
   public void testNegotiationSuccess() throws Exception
   {
     acceptorContainer.addPostProcessor(new AcceptorNegotiatorInjector(USER_ID, PASSWORD));
@@ -64,18 +90,56 @@ public class NegotiationTest extends AbstractConfigTest
 
       IAcceptor acceptor = getAcceptor();
 
-      IConnector connector = getConnector();
+      IConnector connector = getConnector(false);
+      connector.connectAsync();
       connector.waitForConnection(DEFAULT_TIMEOUT);
 
       IChannel clientChannel = connector.openChannel();
       assertEquals(USER_ID, clientChannel.getUserID());
 
-      IConnector serverConnector = acceptor.getElements()[0];
+      IConnector serverConnector = acceptor.getAcceptedConnectors()[0];
       IChannel serverChannel = serverConnector.getElements()[0];
       assertEquals(USER_ID, serverChannel.getUserID());
 
+      closeClientAndWaitForServerConnector(connector, serverConnector);
       stopTransport();
-      sleep(1000);
+
+      assertFalse("Acceptor remains active after stopTransport", LifecycleUtil.isActive(acceptor)); //$NON-NLS-1$
+      assertEquals("Acceptor retained accepted connectors after stopTransport", 0, acceptor.getAcceptedConnectors().length); //$NON-NLS-1$
+    }
+  }
+
+  private void closeClientAndWaitForServerConnector(IConnector clientConnector, IConnector serverConnector) throws Exception
+  {
+    CountDownLatch serverConnectorDeactivated = new CountDownLatch(1);
+
+    IListener listener = new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        serverConnectorDeactivated.countDown();
+      }
+    };
+
+    serverConnector.addListener(listener);
+
+    try
+    {
+      clientConnector.close();
+      connector = null;
+
+      if (LifecycleUtil.isActive(serverConnector))
+      {
+        assertTrue("Server connector did not deactivate after the client closed", serverConnectorDeactivated.await(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS)); //$NON-NLS-1$
+      }
+
+      assertFalse("Server connector remains active after the client closed", LifecycleUtil.isActive(serverConnector)); //$NON-NLS-1$
+      assertEquals("Acceptor retained the disconnected server connector", 0, acceptor.getAcceptedConnectors().length); //$NON-NLS-1$
+    }
+    finally
+    {
+      serverConnector.removeListener(listener);
     }
   }
 

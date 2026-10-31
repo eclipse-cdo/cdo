@@ -829,6 +829,175 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         super(name);
       }
 
+      protected abstract String getServerHost();
+
+      protected abstract int getServerPort();
+
+      protected abstract String getAcceptorName();
+
+      protected abstract ServerState getServerState();
+
+      protected abstract ServerConnector createServerConnector(Server server) throws Exception;
+
+      @Override
+      public String getURIPrefix()
+      {
+        return getURIProtocol() + "://" + getServerHost() + ":" + getServerPort() + "/net4j/@" + getAcceptorName();
+      }
+
+      @Override
+      public void startTransport() throws Exception
+      {
+        try
+        {
+          startServer();
+          super.startTransport();
+        }
+        catch (Exception | Error ex)
+        {
+          try
+          {
+            stopTransport();
+          }
+          catch (Exception | Error cleanupException)
+          {
+            ex.addSuppressed(cleanupException);
+          }
+
+          throw ex;
+        }
+      }
+
+      @Override
+      public void stopTransport() throws Exception
+      {
+        Throwable failure = null;
+
+        try
+        {
+          if (hasClientContainer())
+          {
+            closeWebSocketConnectionsGracefully(this);
+          }
+        }
+        catch (Exception | Error ex)
+        {
+          failure = ex;
+        }
+
+        try
+        {
+          stopServer();
+        }
+        catch (Exception | Error ex)
+        {
+          failure = addFailure(failure, ex);
+        }
+
+        try
+        {
+          if (hasServerContainer())
+          {
+            getAcceptor().close();
+          }
+        }
+        catch (Exception | Error ex)
+        {
+          failure = addFailure(failure, ex);
+        }
+
+        if (failure instanceof Error)
+        {
+          failure = new Exception("WebSocket transport shutdown failed", failure);
+        }
+
+        throwFailure(failure);
+      }
+
+      @Override
+      public void mainSuiteFinished() throws Exception
+      {
+        Throwable failure = null;
+
+        try
+        {
+          super.mainSuiteFinished();
+        }
+        catch (Exception | Error ex)
+        {
+          failure = ex;
+        }
+
+        try
+        {
+          stopServer();
+        }
+        catch (Exception | Error ex)
+        {
+          failure = addFailure(failure, ex);
+        }
+
+        throwFailure(failure);
+      }
+
+      protected final void startServer() throws Exception
+      {
+        IWSAcceptor acceptor = (IWSAcceptor)getAcceptor();
+        LifecycleUtil.activate(acceptor);
+      
+        ServerState serverState = getServerState();
+      
+        if (serverState.server != null && serverState.acceptor == acceptor && serverState.server.isStarted())
+        {
+          return;
+        }
+      
+        stopServer();
+        Server newServer = new Server();
+      
+        try
+        {
+          ServerConnector connector = createServerConnector(newServer);
+          connector.setHost(getServerHost());
+          connector.setPort(getServerPort());
+          newServer.addConnector(connector);
+      
+          ContextHandler context = new ContextHandler("/");
+          context.setHandler(JettyWSUtil.createUpgradeHandler(newServer, context, "/net4j/*", acceptor));
+          newServer.setHandler(context);
+          newServer.start();
+      
+          serverState.server = newServer;
+          serverState.acceptor = acceptor;
+        }
+        catch (Exception | Error ex)
+        {
+          try
+          {
+            stopJettyServer(newServer);
+          }
+          catch (Exception | Error cleanupException)
+          {
+            serverState.server = newServer;
+            serverState.acceptor = acceptor;
+            ex.addSuppressed(cleanupException);
+          }
+      
+          throw ex;
+        }
+      }
+
+      private void stopServer() throws Exception
+      {
+        ServerState serverState = getServerState();
+        Server oldServer = serverState.server;
+      
+        stopJettyServer(oldServer, () -> {
+          serverState.server = null;
+          serverState.acceptor = null;
+        });
+      }
+
       private static void stopJettyServer(Server server) throws Exception
       {
         stopJettyServer(server, null);
@@ -901,8 +1070,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
        * connectors, then propagates the failure. If interrupted, it restores the thread's interrupt status. This deadline bounds only the
        * graceful-deactivation wait; the subsequent close operations have no additional timeout here.
        * <p>
-       * Both WS and WSS {@code stopTransport()} implementations call this helper before stopping Jetty and closing the Net4j acceptor. They
-       * attempt those later shutdown steps even if this helper reports a failure, and aggregate subsequent failures with the first one.
+       * {@link AbstractWebSocket#stopTransport()} calls this helper before stopping Jetty and closing the Net4j acceptor. It attempts those
+       * later shutdown steps even if this helper reports a failure, and aggregates subsequent failures with the first one.
        *
        * @param sessionConfig the WS or WSS session configuration whose active connectors are to be closed
        * @throws Exception if graceful deactivation fails, the deadline expires, or listener removal or fallback closure fails
@@ -1087,6 +1256,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       {
         public static final String NAME = "WS";
 
+        private static final ServerState SERVER_STATE = new ServerState();
+
         public static final WS INSTANCE = new WS();
 
         public static final int HTTP_PORT = 8087;
@@ -1097,26 +1268,9 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
         private static final long serialVersionUID = 1L;
 
-        private static Server server;
-
-        private static IWSAcceptor serverAcceptor;
-
         public WS()
         {
           super(NAME);
-        }
-
-        @Override
-        public void initCapabilities(Set<String> capabilities)
-        {
-          super.initCapabilities(capabilities);
-          capabilities.add(CAPABILITY_NET4J_WS);
-        }
-
-        @Override
-        public String getURIPrefix()
-        {
-          return getURIProtocol() + "://localhost:" + HTTP_PORT + "/net4j/@" + ACCEPTOR_NAME;
         }
 
         @Override
@@ -1139,177 +1293,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         }
 
         @Override
-        public void startTransport() throws Exception
-        {
-          try
-          {
-            startServer();
-            super.startTransport();
-          }
-          catch (Exception | Error ex)
-          {
-            try
-            {
-              stopTransport();
-            }
-            catch (Exception | Error cleanupException)
-            {
-              ex.addSuppressed(cleanupException);
-            }
-
-            throw ex;
-          }
-        }
-
-        @Override
-        public void stopTransport() throws Exception
-        {
-          Throwable failure = null;
-
-          try
-          {
-            if (hasClientContainer())
-            {
-              closeWebSocketConnectionsGracefully(this);
-            }
-          }
-          catch (Exception | Error ex)
-          {
-            failure = ex;
-          }
-
-          try
-          {
-            stopServer();
-          }
-          catch (Exception | Error ex)
-          {
-            if (failure == null)
-            {
-              failure = ex;
-            }
-            else
-            {
-              failure.addSuppressed(ex);
-            }
-          }
-
-          try
-          {
-            if (hasServerContainer())
-            {
-              getAcceptor().close();
-            }
-          }
-          catch (Exception | Error ex)
-          {
-            if (failure == null)
-            {
-              failure = ex;
-            }
-            else
-            {
-              failure.addSuppressed(ex);
-            }
-          }
-
-          if (failure instanceof Error)
-          {
-            failure = new Exception("WebSocket transport shutdown failed", failure);
-          }
-
-          throwFailure(failure);
-        }
-
-        private void startServer() throws Exception
-        {
-          IWSAcceptor acceptor = (IWSAcceptor)getAcceptor();
-          LifecycleUtil.activate(acceptor);
-
-          if (server != null && serverAcceptor == acceptor && server.isStarted())
-          {
-            return;
-          }
-
-          stopServer();
-          Server newServer = new Server();
-
-          try
-          {
-            ServerConnector connector = new ServerConnector(newServer);
-            connector.setHost("localhost");
-            connector.setPort(HTTP_PORT);
-            newServer.addConnector(connector);
-
-            ContextHandler context = new ContextHandler("/");
-            context.setHandler(JettyWSUtil.createUpgradeHandler(newServer, context, "/net4j/*", acceptor));
-            newServer.setHandler(context);
-            newServer.start();
-
-            server = newServer;
-            serverAcceptor = acceptor;
-          }
-          catch (Exception | Error ex)
-          {
-            try
-            {
-              stopJettyServer(newServer);
-            }
-            catch (Exception | Error cleanupException)
-            {
-              server = newServer;
-              serverAcceptor = acceptor;
-              ex.addSuppressed(cleanupException);
-            }
-
-            throw ex;
-          }
-        }
-
-        private static void stopServer() throws Exception
-        {
-          Server oldServer = server;
-
-          stopJettyServer(oldServer, () -> {
-            server = null;
-            serverAcceptor = null;
-          });
-        }
-
-        @Override
-        public void mainSuiteFinished() throws Exception
-        {
-          Throwable failure = null;
-
-          try
-          {
-            super.mainSuiteFinished();
-          }
-          catch (Exception | Error ex)
-          {
-            failure = ex;
-          }
-
-          try
-          {
-            stopServer();
-          }
-          catch (Exception | Error ex)
-          {
-            if (failure == null)
-            {
-              failure = ex;
-            }
-            else
-            {
-              failure.addSuppressed(ex);
-            }
-          }
-
-          throwFailure(failure);
-        }
-
-        @Override
         public CDOViewProvider createViewProvider()
         {
           return new CDONet4jViewProvider.WS()
@@ -1325,16 +1308,53 @@ public abstract class SessionConfig extends Config implements ISessionConfig
               {
                 throw new RuntimeException(ex);
               }
-
+        
               return super.getConnector(authority);
             }
-
+        
             @Override
             protected IManagedContainer getContainer()
             {
               return getClientContainer();
             }
           };
+        }
+
+        @Override
+        public void initCapabilities(Set<String> capabilities)
+        {
+          super.initCapabilities(capabilities);
+          capabilities.add(CAPABILITY_NET4J_WS);
+        }
+
+        @Override
+        protected String getServerHost()
+        {
+          return "localhost";
+        }
+
+        @Override
+        protected int getServerPort()
+        {
+          return HTTP_PORT;
+        }
+
+        @Override
+        protected ServerConnector createServerConnector(Server server)
+        {
+          return new ServerConnector(server);
+        }
+
+        @Override
+        protected ServerState getServerState()
+        {
+          return SERVER_STATE;
+        }
+
+        @Override
+        protected String getAcceptorName()
+        {
+          return ACCEPTOR_NAME;
         }
       }
 
@@ -1344,6 +1364,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       public static final class WSS extends AbstractWebSocket
       {
         public static final String NAME = "WSS";
+
+        private static final ServerState SERVER_STATE = new ServerState();
 
         public static final WSS INSTANCE = new WSS();
 
@@ -1355,10 +1377,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
         private static final long serialVersionUID = 1L;
 
-        private static Server server;
-
-        private static IWSAcceptor serverAcceptor;
-
         private static IFactory providerFactory;
 
         private static IManagedContainer providerContainer;
@@ -1368,19 +1386,6 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         public WSS()
         {
           super(NAME);
-        }
-
-        @Override
-        public void initCapabilities(Set<String> capabilities)
-        {
-          super.initCapabilities(capabilities);
-          capabilities.add(CAPABILITY_NET4J_WSS);
-        }
-
-        @Override
-        public String getURIPrefix()
-        {
-          return getURIProtocol() + "://127.0.0.1:" + HTTPS_PORT + "/net4j/@" + ACCEPTOR_NAME;
         }
 
         @Override
@@ -1405,153 +1410,102 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         }
 
         @Override
-        public void startTransport() throws Exception
+        public void tearDown() throws Exception
         {
           try
           {
-            startServer();
-            super.startTransport();
+            super.tearDown();
           }
-          catch (Exception | Error ex)
+          finally
           {
-            try
-            {
-              stopTransport();
-            }
-            catch (Exception | Error cleanupException)
-            {
-              ex.addSuppressed(cleanupException);
-            }
-
-            throw ex;
+            providerContainer = null;
           }
         }
 
         @Override
-        public void stopTransport() throws Exception
+        public void initCapabilities(Set<String> capabilities)
         {
-          Throwable failure = null;
-
-          try
-          {
-            if (hasClientContainer())
-            {
-              closeWebSocketConnectionsGracefully(this);
-            }
-          }
-          catch (Exception | Error ex)
-          {
-            failure = ex;
-          }
-
-          try
-          {
-            stopServer();
-          }
-          catch (Exception | Error ex)
-          {
-            if (failure == null)
-            {
-              failure = ex;
-            }
-            else
-            {
-              failure.addSuppressed(ex);
-            }
-          }
-
-          try
-          {
-            if (hasServerContainer())
-            {
-              getAcceptor().close();
-            }
-          }
-          catch (Exception | Error ex)
-          {
-            if (failure == null)
-            {
-              failure = ex;
-            }
-            else
-            {
-              failure.addSuppressed(ex);
-            }
-          }
-
-          if (failure instanceof Error)
-          {
-            failure = new Exception("WebSocket transport shutdown failed", failure);
-          }
-
-          throwFailure(failure);
+          super.initCapabilities(capabilities);
+          capabilities.add(CAPABILITY_NET4J_WSS);
         }
 
-        private void startServer() throws Exception
+        @Override
+        public CDOViewProvider createViewProvider()
         {
-          IWSAcceptor acceptor = (IWSAcceptor)getAcceptor();
-          LifecycleUtil.activate(acceptor);
-
-          if (server != null && serverAcceptor == acceptor && server.isStarted())
+          WSS sessionConfig = this;
+        
+          return new CDONet4jViewProvider.WSS()
           {
-            return;
-          }
-
-          stopServer();
-          Server newServer = new Server();
-
-          try
-          {
-            URL baseURL = OM.BUNDLE.getBaseURL();
-            File bundleFolder = URIUtil.toFile(URIUtil.toURI(baseURL));
-            File keyStoreFile = new File(bundleFolder, "sslKey/testKeys");
-
-            SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
-            sslContextFactory.setKeyStorePath(keyStoreFile.getPath());
-            sslContextFactory.setKeyStorePassword("ab987c");
-
-            HttpConfiguration httpsConfig = new HttpConfiguration();
-            httpsConfig.addCustomizer(new SecureRequestCustomizer(false));
-
-            ServerConnector connector = new ServerConnector(newServer, new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.toString()),
-                new HttpConnectionFactory(httpsConfig));
-            connector.setHost("127.0.0.1");
-            connector.setPort(HTTPS_PORT);
-            newServer.addConnector(connector);
-
-            ContextHandler context = new ContextHandler("/");
-            context.setHandler(JettyWSUtil.createUpgradeHandler(newServer, context, "/net4j/*", acceptor));
-            newServer.setHandler(context);
-            newServer.start();
-
-            server = newServer;
-            serverAcceptor = acceptor;
-          }
-          catch (Exception | Error ex)
-          {
-            try
+            @Override
+            protected IConnector getConnector(String authority)
             {
-              stopJettyServer(newServer);
+              try
+              {
+                registerProvider(sessionConfig.getClientContainer());
+                startServer();
+              }
+              catch (Exception ex)
+              {
+                throw new RuntimeException(ex);
+              }
+        
+              return super.getConnector(authority);
             }
-            catch (Exception | Error cleanupException)
+        
+            @Override
+            protected String getConnectorDescription(String authority)
             {
-              server = newServer;
-              serverAcceptor = acceptor;
-              ex.addSuppressed(cleanupException);
+              return authority + "|provider:" + WSS_TEST_PROVIDER_TYPE;
             }
-
-            throw ex;
-          }
+        
+            @Override
+            protected IManagedContainer getContainer()
+            {
+              return getClientContainer();
+            }
+          };
         }
 
-        private static void stopServer() throws Exception
+        @Override
+        protected String getServerHost()
         {
-          Server oldServer = server;
+          return "127.0.0.1";
+        }
 
-          stopJettyServer(oldServer, () -> {
-            server = null;
-            serverAcceptor = null;
-          });
+        @Override
+        protected int getServerPort()
+        {
+          return HTTPS_PORT;
+        }
+
+        @Override
+        protected ServerConnector createServerConnector(Server server) throws Exception
+        {
+          URL baseURL = OM.BUNDLE.getBaseURL();
+          File bundleFolder = URIUtil.toFile(URIUtil.toURI(baseURL));
+          File keyStoreFile = new File(bundleFolder, "sslKey/testKeys");
+
+          SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
+          sslContextFactory.setKeyStorePath(keyStoreFile.getPath());
+          sslContextFactory.setKeyStorePassword("ab987c");
+
+          HttpConfiguration httpsConfig = new HttpConfiguration();
+          httpsConfig.addCustomizer(new SecureRequestCustomizer(false));
+
+          return new ServerConnector(server, new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.toString()),
+              new HttpConnectionFactory(httpsConfig));
+        }
+
+        @Override
+        protected ServerState getServerState()
+        {
+          return SERVER_STATE;
+        }
+
+        @Override
+        protected String getAcceptorName()
+        {
+          return ACCEPTOR_NAME;
         }
 
         private static void registerProvider(IManagedContainer container) throws Exception
@@ -1589,89 +1543,18 @@ public abstract class SessionConfig extends Config implements ISessionConfig
           sslContext.init(null, trustManagers.getTrustManagers(), new SecureRandom());
           return sslContext;
         }
+      }
 
-        @Override
-        public void tearDown() throws Exception
-        {
-          try
-          {
-            super.tearDown();
-          }
-          finally
-          {
-            providerContainer = null;
-          }
-        }
+      /**
+       * Holds the Jetty server and acceptor associated with one WebSocket transport.
+       *
+       * @author Eike Stepper
+       */
+      protected static final class ServerState
+      {
+        private Server server;
 
-        @Override
-        public void mainSuiteFinished() throws Exception
-        {
-          Throwable failure = null;
-
-          try
-          {
-            super.mainSuiteFinished();
-          }
-          catch (Exception | Error ex)
-          {
-            failure = ex;
-          }
-
-          try
-          {
-            stopServer();
-          }
-          catch (Exception | Error ex)
-          {
-            if (failure == null)
-            {
-              failure = ex;
-            }
-            else
-            {
-              failure.addSuppressed(ex);
-            }
-          }
-
-          throwFailure(failure);
-        }
-
-        @Override
-        public CDOViewProvider createViewProvider()
-        {
-          WSS sessionConfig = this;
-
-          return new CDONet4jViewProvider.WSS()
-          {
-            @Override
-            protected IConnector getConnector(String authority)
-            {
-              try
-              {
-                registerProvider(sessionConfig.getClientContainer());
-                startServer();
-              }
-              catch (Exception ex)
-              {
-                throw new RuntimeException(ex);
-              }
-
-              return super.getConnector(authority);
-            }
-
-            @Override
-            protected String getConnectorDescription(String authority)
-            {
-              return authority + "|provider:" + WSS_TEST_PROVIDER_TYPE;
-            }
-
-            @Override
-            protected IManagedContainer getContainer()
-            {
-              return getClientContainer();
-            }
-          };
-        }
+        private IWSAcceptor acceptor;
       }
     }
   }

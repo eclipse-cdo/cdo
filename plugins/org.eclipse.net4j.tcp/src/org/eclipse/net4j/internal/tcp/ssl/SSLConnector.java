@@ -217,6 +217,10 @@ public abstract class SSLConnector extends TCPConnector
   {
     ITCPSelector selector = getSelector();
     SelectionKey selectionKey = getSelectionKey();
+    if (selector == null || selectionKey == null || !selectionKey.isValid())
+    {
+      return;
+    }
 
     if (on)
     {

@@ -64,6 +64,7 @@ public class AllTests
     suite.addTestSuite(BufferPoolTest.class);
     suite.addTestSuite(BufferFramingTest.class);
     suite.addTestSuite(SchedulingConnectorTest.class);
+    suite.addTestSuite(TCPConnectorConcurrencyTest.class);
     suite.addTestSuite(ControlChannelTest.class);
     suite.addTestSuite(MessageConnectorTest.class);
     suite.addTestSuite(WSFrameworkTest.class);

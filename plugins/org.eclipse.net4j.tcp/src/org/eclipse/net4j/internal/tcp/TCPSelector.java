@@ -51,7 +51,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   private transient Thread thread;
 
-  private transient boolean running;
+  private transient volatile boolean running;
 
   public TCPSelector()
   {
@@ -123,7 +123,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST CONNECT " + selectionKey.channel() + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
+        return "INTEREST CONNECT " + (selectionKey == null ? null : selectionKey.channel()) + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
       }
     });
   }
@@ -142,7 +142,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST READ " + selectionKey.channel() + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
+        return "INTEREST READ " + (selectionKey == null ? null : selectionKey.channel()) + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
       }
     });
   }
@@ -161,7 +161,7 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       @Override
       public String toString()
       {
-        return "INTEREST WRITE " + selectionKey.channel() + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
+        return "INTEREST WRITE " + (selectionKey == null ? null : selectionKey.channel()) + " = " + on; //$NON-NLS-1$ //$NON-NLS-2$
       }
     });
   }
@@ -173,11 +173,24 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     {
       try
       {
+        Selector currentSelector = selector;
+        if (currentSelector == null)
+        {
+          if (running)
+          {
+            OM.LOG.error(new IllegalStateException("selector == null")); //$NON-NLS-1$
+          }
+
+          break;
+        }
+
         processOperations(false);
         processOperations(true);
-        if (selector != null && selector.select() > 0)
+
+        if (currentSelector.select() > 0)
         {
-          Iterator<SelectionKey> it = selector.selectedKeys().iterator();
+          Iterator<SelectionKey> it = currentSelector.selectedKeys().iterator();
+
           while (it.hasNext())
           {
             SelectionKey selKey = it.next();
@@ -194,25 +207,22 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
               {
                 // Do nothing
               }
-              catch (NullPointerException ignore)
-              {
-                // Do nothing
-              }
               catch (Exception ex)
               {
-                OM.LOG.info(ex.getMessage());
+                OM.LOG.error(ex);
                 selKey.cancel();
               }
             }
           }
         }
       }
-      catch (NullPointerException ex)
-      {
-        break;
-      }
       catch (ClosedSelectorException ex)
       {
+        if (running)
+        {
+          OM.LOG.error(ex);
+        }
+
         break;
       }
       catch (Exception ex)
@@ -304,7 +314,20 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
   protected void doDeactivate() throws Exception
   {
     running = false;
-    selector.wakeup();
+
+    Selector currentSelector = selector;
+    if (currentSelector != null)
+    {
+      try
+      {
+        currentSelector.wakeup();
+      }
+      catch (ClosedSelectorException ex)
+      {
+        // The selector is already closed.
+      }
+    }
+
     Exception exception = null;
 
     try
@@ -322,7 +345,14 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
     try
     {
-      closeSelector();
+      if (currentSelector != null)
+      {
+        closeSelector();
+      }
+    }
+    catch (ClosedSelectorException ex)
+    {
+      // The selector is already closed.
     }
     catch (Exception ex)
     {
@@ -333,7 +363,10 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
     }
     finally
     {
-      selector = null;
+      if (selector == currentSelector)
+      {
+        selector = null;
+      }
     }
 
     super.doDeactivate();
@@ -353,6 +386,11 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
 
   private void order(boolean client, Runnable operation)
   {
+    if (!running)
+    {
+      return;
+    }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Ordering {0} operation {1}", client ? "client" : "server", operation); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -367,10 +405,22 @@ public class TCPSelector extends Lifecycle implements ITCPSelector, Runnable
       serverOperations.add(operation);
     }
 
-    if (selector != null)
+    Selector currentSelector = selector;
+    if (currentSelector != null)
     {
-      selector.wakeup();
+      try
+      {
+        currentSelector.wakeup();
+      }
+      catch (ClosedSelectorException ex)
+      {
+        if (running)
+        {
+          throw ex;
+        }
+      }
     }
+    // During activation the operation remains queued until the selector is installed and its thread starts.
   }
 
   private void processOperations(boolean client)

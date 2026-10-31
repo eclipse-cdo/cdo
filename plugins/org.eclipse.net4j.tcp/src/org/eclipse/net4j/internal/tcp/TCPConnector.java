@@ -51,9 +51,11 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
   @ExcludeFromDump
   private SelectionKey selectionKey;
 
-  private final Object sendLock = new Object();
+  private final Object inputBufferLock = new Object();
 
   private IBuffer inputBuffer;
+
+  private boolean inputBufferClosed = true;
 
   private String host;
 
@@ -121,12 +123,18 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
 
   public IBuffer getInputBuffer()
   {
-    return inputBuffer;
+    synchronized (inputBufferLock)
+    {
+      return inputBuffer;
+    }
   }
 
   public void setInputBuffer(IBuffer inputBuffer)
   {
-    this.inputBuffer = inputBuffer;
+    synchronized (inputBufferLock)
+    {
+      this.inputBuffer = inputBuffer;
+    }
   }
 
   @Override
@@ -199,32 +207,62 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
   {
     try
     {
-      if (inputBuffer == null)
+      IBuffer buffer;
+      ByteBuffer byteBuffer;
+
+      synchronized (inputBufferLock)
       {
-        inputBuffer = provideBuffer();
+        if (inputBufferClosed)
+        {
+          return;
+        }
+
+        buffer = inputBuffer;
+        if (buffer == null)
+        {
+          buffer = provideBuffer();
+          inputBuffer = buffer;
+        }
+
+        byteBuffer = buffer.startGetting(socketChannel);
+        if (byteBuffer != null)
+        {
+          inputBuffer = null;
+        }
       }
 
-      ByteBuffer byteBuffer = inputBuffer.startGetting(socketChannel);
       if (byteBuffer != null)
       {
-        short channelID = inputBuffer.getChannelID();
+        boolean bufferOwned = true;
 
-        InternalChannel channel = channelID == CONTROL_CHANNEL_ID ? getInternalControlChannel() : getChannel(channelID);
-        if (channel != null)
+        try
         {
-          channel.handleBufferFromMultiplexer(inputBuffer);
-        }
-        else
-        {
-          if (TRACER.isEnabled())
+          short channelID = buffer.getChannelID();
+
+          InternalChannel channel = channelID == CONTROL_CHANNEL_ID ? getInternalControlChannel() : getChannel(channelID);
+          if (channel != null)
           {
-            TRACER.trace("Discarding buffer from unknown channel"); //$NON-NLS-1$
+            bufferOwned = false;
+            channel.handleBufferFromMultiplexer(buffer);
           }
+          else
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.trace("Discarding buffer from unknown channel"); //$NON-NLS-1$
+            }
 
-          inputBuffer.release();
+            bufferOwned = false;
+            buffer.release();
+          }
         }
-
-        inputBuffer = null;
+        finally
+        {
+          if (bufferOwned)
+          {
+            buffer.release();
+          }
+        }
       }
     }
     catch (NegotiationException ex)
@@ -256,109 +294,104 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
   @Override
   public void handleWrite(ITCPSelector selector, SocketChannel socketChannel)
   {
-    synchronized (sendLock)
+    // TCPSelector invokes write callbacks serially on its single selector thread.
+    try
     {
-      try
+      InternalChannel channel = selectScheduledChannel();
+      if (channel == null)
       {
-        InternalChannel channel = selectScheduledChannel();
-        if (channel == null)
-        {
-          stopSendingIfIdle();
-          return;
-        }
+        stopSendingIfIdle();
+        return;
+      }
 
-        Queue<IBuffer> sendQueue = channel.getSendQueue();
-        if (sendQueue == null)
-        {
-          completeScheduledChannel(channel, true);
-          return;
-        }
+      Queue<IBuffer> sendQueue = channel.getSendQueue();
+      if (sendQueue == null)
+      {
+        completeScheduledChannel(channel, true);
+        return;
+      }
 
-        boolean completed = false;
-        boolean closeChannelAfterMe = false;
+      boolean completed = false;
+      boolean closeChannelAfterMe = false;
 
-        synchronized (sendQueue)
+      synchronized (sendQueue)
+      {
+        if (channel.isActive() && channel.getSendQueue() == sendQueue)
         {
-          if (channel.isActive() && channel.getSendQueue() == sendQueue)
+          IBuffer buffer = sendQueue.peek();
+          if (buffer == null)
           {
-            IBuffer buffer = sendQueue.peek();
-            if (buffer == null)
+            completed = true;
+          }
+          else
+          {
+            // The CCAM flag must be remembered *before* the buffer.write() call below!
+            closeChannelAfterMe = buffer.isCCAM();
+
+            if (buffer.write(socketChannel))
             {
+              sendQueue.poll();
+              buffer.release();
               completed = true;
             }
-            else
-            {
-              // The CCAM flag must be remembered *before* the buffer.write() call below!
-              closeChannelAfterMe = buffer.isCCAM();
-
-              if (buffer.write(socketChannel))
-              {
-                sendQueue.poll();
-                buffer.release();
-                completed = true;
-              }
-            }
           }
         }
-
-        if (completed)
-        {
-          if (closeChannelAfterMe)
-          {
-            channel.close();
-          }
-
-          completeScheduledChannel(channel, true);
-        }
-        else
-        {
-          completeScheduledChannel(channel, false);
-        }
       }
-      catch (NullPointerException ignore)
+
+      if (completed)
       {
-      }
-      catch (ClosedChannelException ex)
-      {
-        if (TRACER.isEnabled())
+        if (closeChannelAfterMe)
         {
-          TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
+          channel.close();
         }
 
+        completeScheduledChannel(channel, true);
+      }
+      else
+      {
+        completeScheduledChannel(channel, false);
+      }
+    }
+    catch (ClosedChannelException ex)
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.trace("Socket channel closed: " + socketChannel); //$NON-NLS-1$
+      }
+
+      deactivateAsync();
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+
+      if (isActive())
+      {
         deactivateAsync();
-      }
-      catch (Exception ex)
-      {
-        if (isActive())
-        {
-          OM.LOG.error(ex);
-          deactivateAsync();
-        }
       }
     }
   }
 
   protected void doOrderWriteInterest(boolean on)
   {
-    selector.orderWriteInterest(selectionKey, isClient(), on);
+    ITCPSelector currentSelector = selector;
+    SelectionKey currentSelectionKey = selectionKey;
+    if (currentSelector != null && currentSelectionKey != null && currentSelectionKey.isValid())
+    {
+      currentSelector.orderWriteInterest(currentSelectionKey, isClient(), on);
+    }
   }
 
   @Override
   protected void onSendingRequired()
   {
-    if (selectionKey != null && selector != null)
-    {
-      doOrderWriteInterest(true);
-    }
+    doOrderWriteInterest(true);
   }
 
   @Override
   protected void onSendingNoLongerRequired()
   {
-    if (selectionKey != null && selector != null)
-    {
-      doOrderWriteInterest(false);
-    }
+    doOrderWriteInterest(false);
   }
 
   @Override
@@ -386,6 +419,11 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
   @Override
   protected void doActivate() throws Exception
   {
+    synchronized (inputBufferLock)
+    {
+      inputBufferClosed = false;
+    }
+
     super.doActivate();
     selector.orderRegistration(socketChannel, isClient(), this);
   }
@@ -418,10 +456,18 @@ public abstract class TCPConnector extends SchedulingConnector implements ITCPCo
 
   private void cleanUp()
   {
-    if (inputBuffer != null)
+    IBuffer buffer;
+
+    synchronized (inputBufferLock)
     {
-      inputBuffer.release();
+      inputBufferClosed = true;
+      buffer = inputBuffer;
       inputBuffer = null;
+    }
+
+    if (buffer != null)
+    {
+      buffer.release();
     }
 
     if (selectionKey != null)

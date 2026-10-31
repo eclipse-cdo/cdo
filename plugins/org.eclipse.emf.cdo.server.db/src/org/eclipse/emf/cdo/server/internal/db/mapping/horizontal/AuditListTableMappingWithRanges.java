@@ -164,7 +164,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   private transient SQLStatement sqlRemoveEntry;
 
   @ExcludeFromDump
-  private transient SQLStatement sqlUpdateIndex;
+  private transient SQLStatement sqlShiftCurrentIndexes;
 
   @ExcludeFromDump
   private transient SQLStatement sqlCopyShiftedEntry;
@@ -309,21 +309,21 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
             .and(SQL.eq(versionAddedField, SQL.param()))) //
         .compile(getDBAdapter());
 
-    // ----------------- update index -----------------
-    sqlUpdateIndex = SQL.update(getTable()) //
-        .set(indexField).to(SQL.param()) //
+    // ----------------- shift indexes in the new version -----------------
+    sqlShiftCurrentIndexes = SQL.update(getTable()) //
+        .set(indexField).to(SQL.add(indexField, SQL.param())) //
         .where(SQL.eq(sourceField, SQL.param()) //
             .and(SQL.eq(versionAddedField, SQL.param())) //
-            .and(SQL.eq(indexField, SQL.param()))) //
+            .and(SQL.between(indexField, SQL.param(), SQL.param()))) //
         .compile(getDBAdapter());
 
     // ----------------- copy older entry for index shift -----------------
     sqlCopyShiftedEntry = SQL.insertInto(getTable()) //
         .columns(sourceField, versionAddedField, versionRemovedField, indexField, valueField) //
-        .select(SQL.select(sourceField, SQL.param(), SQL.NULL, SQL.param(), valueField) //
+        .select(SQL.select(sourceField, SQL.param(), SQL.NULL, SQL.add(indexField, SQL.param()), valueField) //
             .from(getTable()) //
             .where(sourceField).eq(SQL.param()) //
-            .and(indexField).eq(SQL.param()) //
+            .and(SQL.between(indexField, SQL.param(), SQL.param())) //
             .and(SQL.isNull(versionRemovedField)) //
             .and(versionAddedField).ne(SQL.param()) //
             .subSelect()) //
@@ -333,7 +333,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     sqlCloseShiftedEntry = SQL.update(getTable()) //
         .set(versionRemovedField).to(SQL.param()) //
         .where(SQL.eq(sourceField, SQL.param()) //
-            .and(SQL.eq(indexField, SQL.param())) //
+            .and(SQL.between(indexField, SQL.param(), SQL.param())) //
             .and(SQL.isNull(versionRemovedField)) //
             .and(SQL.ne(versionAddedField, SQL.param()))) //
         .compile(getDBAdapter());
@@ -1713,9 +1713,9 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
     public void flushForIndexShift()
     {
+      flushRemovals();
       flush(insertEntryStmt);
       flush(copyOriginalEntryStmt);
-      flushRemovals();
       flush(clearListStmt);
       flush(deleteListStmt);
       validateResults();
@@ -1723,6 +1723,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
 
     public void flushPhase()
     {
+      flushRemovals();
       accessor.getBatchingContext().flushPhase();
       validateResults();
     }
@@ -2024,23 +2025,13 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     @Override
     protected void moveOneUp(int startIndex, int endIndex)
     {
-      if (batch != null)
-      {
-        batch.flushForIndexShift();
-      }
-
-      moveOneUp(accessor, id, oldVersion, newVersion, startIndex, endIndex);
+      moveOneUp(accessor, id, newVersion, startIndex, endIndex);
     }
 
     @Override
     protected void moveOneDown(int startIndex, int endIndex)
     {
-      if (batch != null)
-      {
-        batch.flushForIndexShift();
-      }
-
-      moveOneDown(accessor, id, oldVersion, newVersion, startIndex, endIndex);
+      moveOneDown(accessor, id, newVersion, startIndex, endIndex);
     }
 
     /**
@@ -2056,23 +2047,61 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       }
     }
 
-    private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
+    private void moveOneUp(IDBStoreAccessor accessor, CDOID id, int newVersion, int startIndex, int endIndex)
     {
+      shiftRange(accessor, id, newVersion, startIndex, endIndex, -1);
+    }
+
+    private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int newVersion, int startIndex, int endIndex)
+    {
+      shiftRange(accessor, id, newVersion, startIndex, endIndex, 1);
+    }
+
+    private void shiftRange(IDBStoreAccessor accessor, CDOID id, int newVersion, int startIndex, int endIndex, int indexDelta)
+    {
+      if (batch != null)
+      {
+        batch.flushForIndexShift();
+      }
+
+      if (startIndex > endIndex)
+      {
+        return;
+      }
+
       IIDHandler idHandler = getStore().getIDHandler();
-      IDBPreparedStatement moveStmt = DBUtil.prepare(sqlUpdateIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
+      IDBPreparedStatement updateStmt = DBUtil.prepare(sqlShiftCurrentIndexes, accessor.getDBConnection(), ReuseProbability.HIGH);
       IDBPreparedStatement copyStmt = DBUtil.prepare(sqlCopyShiftedEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
       IDBPreparedStatement closeStmt = DBUtil.prepare(sqlCloseShiftedEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
 
       try
       {
-        for (int index = startIndex; index <= endIndex; ++index)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("moveOneUp moving: {0} -> {1}", index, index - 1); //$NON-NLS-1$
-          }
+        sqlShiftCurrentIndexes.bindParameter(updateStmt, 1, indexDelta);
+        sqlShiftCurrentIndexes.bindParameter(updateStmt, 2, id, idHandler);
+        sqlShiftCurrentIndexes.bindParameter(updateStmt, 3, newVersion);
+        sqlShiftCurrentIndexes.bindParameter(updateStmt, 4, startIndex);
+        sqlShiftCurrentIndexes.bindParameter(updateStmt, 5, endIndex);
+        int updated = DBUtil.update(updateStmt, false);
 
-          shiftIndex(idHandler, moveStmt, copyStmt, closeStmt, index, index - 1);
+        sqlCopyShiftedEntry.bindParameter(copyStmt, 1, newVersion);
+        sqlCopyShiftedEntry.bindParameter(copyStmt, 2, indexDelta);
+        sqlCopyShiftedEntry.bindParameter(copyStmt, 3, id, idHandler);
+        sqlCopyShiftedEntry.bindParameter(copyStmt, 4, startIndex);
+        sqlCopyShiftedEntry.bindParameter(copyStmt, 5, endIndex);
+        sqlCopyShiftedEntry.bindParameter(copyStmt, 6, newVersion);
+        int copied = DBUtil.update(copyStmt, false);
+
+        sqlCloseShiftedEntry.bindParameter(closeStmt, 1, newVersion);
+        sqlCloseShiftedEntry.bindParameter(closeStmt, 2, id, idHandler);
+        sqlCloseShiftedEntry.bindParameter(closeStmt, 3, startIndex);
+        sqlCloseShiftedEntry.bindParameter(closeStmt, 4, endIndex);
+        sqlCloseShiftedEntry.bindParameter(closeStmt, 5, newVersion);
+        int closed = DBUtil.update(closeStmt, false);
+
+        int expected = endIndex - startIndex + 1;
+        if (copied != closed || copied + updated != expected)
+        {
+          throw new DBException("Unexpected index shift result: updated=" + updated + ", copied=" + copied + ", closed=" + closed + ", expected=" + expected); //$NON-NLS-1$ //$NON-NLS-2$
         }
       }
       catch (SQLException e)
@@ -2083,70 +2112,7 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
       {
         DBUtil.close(closeStmt);
         DBUtil.close(copyStmt);
-        DBUtil.close(moveStmt);
-      }
-    }
-
-    private void moveOneDown(IDBStoreAccessor accessor, CDOID id, int oldVersion, int newVersion, int startIndex, int endIndex)
-    {
-      IIDHandler idHandler = getStore().getIDHandler();
-      IDBPreparedStatement moveStmt = DBUtil.prepare(sqlUpdateIndex, accessor.getDBConnection(), ReuseProbability.HIGH);
-      IDBPreparedStatement copyStmt = DBUtil.prepare(sqlCopyShiftedEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
-      IDBPreparedStatement closeStmt = DBUtil.prepare(sqlCloseShiftedEntry, accessor.getDBConnection(), ReuseProbability.HIGH);
-
-      try
-      {
-        for (int index = endIndex; index >= startIndex; --index)
-        {
-          if (TRACER.isEnabled())
-          {
-            TRACER.format("moveOneDown moving: {0} -> {1}", index, index + 1); //$NON-NLS-1$
-          }
-
-          shiftIndex(idHandler, moveStmt, copyStmt, closeStmt, index, index + 1);
-        }
-      }
-      catch (SQLException e)
-      {
-        throw new DBException(e);
-      }
-      finally
-      {
-        DBUtil.close(closeStmt);
-        DBUtil.close(copyStmt);
-        DBUtil.close(moveStmt);
-      }
-    }
-
-    private void shiftIndex(IIDHandler idHandler, IDBPreparedStatement moveStmt, IDBPreparedStatement copyStmt, IDBPreparedStatement closeStmt, int sourceIndex,
-        int targetIndex) throws SQLException
-    {
-      sqlCopyShiftedEntry.bindParameter(copyStmt, 1, newVersion);
-      sqlCopyShiftedEntry.bindParameter(copyStmt, 2, targetIndex);
-      sqlCopyShiftedEntry.bindParameter(copyStmt, 3, id, idHandler);
-      sqlCopyShiftedEntry.bindParameter(copyStmt, 4, sourceIndex);
-      sqlCopyShiftedEntry.bindParameter(copyStmt, 5, newVersion);
-      int copyResult = DBUtil.update(copyStmt, false);
-
-      sqlCloseShiftedEntry.bindParameter(closeStmt, 1, newVersion);
-      sqlCloseShiftedEntry.bindParameter(closeStmt, 2, id, idHandler);
-      sqlCloseShiftedEntry.bindParameter(closeStmt, 3, sourceIndex);
-      sqlCloseShiftedEntry.bindParameter(closeStmt, 4, newVersion);
-      int closeResult = DBUtil.update(closeStmt, false);
-
-      sqlUpdateIndex.bindParameter(moveStmt, 1, targetIndex);
-      sqlUpdateIndex.bindParameter(moveStmt, 2, id, idHandler);
-      sqlUpdateIndex.bindParameter(moveStmt, 3, newVersion);
-      sqlUpdateIndex.bindParameter(moveStmt, 4, sourceIndex);
-      int moveResult = DBUtil.update(moveStmt, false);
-
-      if (copyResult > 1 //
-          || closeResult > 1 //
-          || moveResult > 1 //
-          || copyResult != closeResult //
-          || copyResult + moveResult != 1)
-      {
-        throw new DBException("Unexpected index shift result"); //$NON-NLS-1$
+        DBUtil.close(updateStmt);
       }
     }
   }

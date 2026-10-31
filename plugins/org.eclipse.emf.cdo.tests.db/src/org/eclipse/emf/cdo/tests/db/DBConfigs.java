@@ -47,6 +47,7 @@ public abstract class DBConfigs extends AllConfigs
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
     testClasses.add(AuditListBatchingTest.class);
+    testClasses.add(AuditListRangesBatchingTest.class);
     testClasses.add(NonAuditListBatchingTest.class);
     testClasses.add(ObjectTypeBatchingTest.class);
     testClasses.add(ModelEvolutionTest.class);

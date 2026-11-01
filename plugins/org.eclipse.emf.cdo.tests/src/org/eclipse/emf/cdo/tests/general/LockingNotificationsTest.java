@@ -85,6 +85,8 @@ import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.ThreadInfo;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -1684,18 +1686,33 @@ public class LockingNotificationsTest extends AbstractLockingTest
 
         commitThread.start();
 
+        ThreadInfo threadInfo = null;
         long deadline = System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(DEFAULT_TIMEOUT);
-        while (commitThread.getState() != Thread.State.WAITING && commitReturned.getCount() != 0 && System.nanoTime() < deadline)
+
+        while (commitReturned.getCount() != 0 && System.nanoTime() < deadline)
         {
-          if (commitThread.getState() == Thread.State.BLOCKED)
+          threadInfo = ManagementFactory.getThreadMXBean().getThreadInfo(commitThread.threadId(), Integer.MAX_VALUE);
+          if (threadInfo == null)
+          {
+            break;
+          }
+
+          if (threadInfo.getThreadState() == Thread.State.BLOCKED)
           {
             fail("The commit must wait on its sequence completion, not block on the lock cache");
+          }
+
+          if (threadInfo.getThreadState() == Thread.State.WAITING && isWaitingForLockChangeCompletion(threadInfo))
+          {
+            break;
           }
 
           Thread.yield();
         }
 
-        assertEquals(Arrays.toString(commitThread.getStackTrace()), Thread.State.WAITING, commitThread.getState());
+        assertNotNull("The commit thread must still be running", threadInfo);
+        assertTrue(Arrays.toString(threadInfo.getStackTrace()),
+            threadInfo.getThreadState() == Thread.State.WAITING && isWaitingForLockChangeCompletion(threadInfo));
         assertEquals(1L, commitReturned.getCount());
         assertFalse(((AbstractCDOView)transaction1).isAccessHeldBy(commitThread));
         assertEquals(0L, getCurrentLockModCount((InternalCDOSession)session1));
@@ -1713,6 +1730,20 @@ public class LockingNotificationsTest extends AbstractLockingTest
       session2.close();
       session1.close();
     }
+  }
+
+  private boolean isWaitingForLockChangeCompletion(ThreadInfo threadInfo)
+  {
+    for (StackTraceElement frame : threadInfo.getStackTrace())
+    {
+      if (frame.getClassName().equals("org.eclipse.emf.internal.cdo.session.LockChangeSequencer$Completion") //$NON-NLS-1$
+          && frame.getMethodName().equals("awaitUninterruptibly")) //$NON-NLS-1$
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   private CommitNotificationInfo createCommitNotificationInfo(InternalCDOSession session, CDOBranch branch, long timeStamp, long previousTimeStamp,

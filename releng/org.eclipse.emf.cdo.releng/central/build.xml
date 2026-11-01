@@ -124,6 +124,13 @@
 		</java>
 	</target>
 
+	<target name="publication-scope-check" depends="validate-workspace">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="publication-scope-check" />
+			<arg value="${staging.dir}" />
+		</java>
+	</target>
+
 	<target name="prepare" depends="validate-workspace">
 		<echo message="Aggregation work directory: ${work.dir}" />
 		<mkdir dir="${configuration.dir}" />
@@ -322,6 +329,14 @@
 	<target name="workspace-safety-test" depends="compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="workspace-safety-test" />
+		</java>
+	</target>
+
+	<target name="publication-scope-test" depends="validate-workspace">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="publication-scope-test" />
+			<arg value="${workspace.root}" />
+			<arg value="${publishing.metadata.file}" />
 		</java>
 	</target>
 

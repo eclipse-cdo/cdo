@@ -113,7 +113,7 @@ public final class CDOAggregationTool
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|overlay|verify|consumer-versions|sources-javadoc|checksums|audit|publish-check|verify-package|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|overlay|verify|consumer-versions|sources-javadoc|checksums|audit|publish-check|publication-scope-check|verify-package|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -154,6 +154,14 @@ public final class CDOAggregationTool
       PublishCheckCommand.execute(args);
       break;
 
+    case "publication-scope-check":
+      publicationScopeCheck(args);
+      break;
+
+    case "publication-scope-test":
+      publicationScopeTest(args);
+      break;
+
     case "verify-package":
       verifyPackage(args);
       break;
@@ -189,6 +197,20 @@ public final class CDOAggregationTool
     default:
       throw new IllegalArgumentException("Unknown command: " + args[0]);
     }
+  }
+
+  private static void publicationScopeCheck(String[] args) throws Exception
+  {
+    if (args.length != 2)
+    {
+      throw new IllegalArgumentException("publication-scope-check requires a staging directory");
+    }
+
+    File staging = requireDirectory(args[1], "staging directory");
+    requireWorkspaceOutput(staging, "staging directory");
+    rejectSymbolicLinks(staging.toPath(), "staging directory");
+    int artifacts = AuditCommand.validatePublicationScope(staging, false);
+    System.out.println("Validated publication scope for " + artifacts + " approved CDO artifacts.");
   }
 
   /**
@@ -305,15 +327,17 @@ public final class CDOAggregationTool
       Map<String, String> publishing = readProperties(requireFile(new File(args[3]), "publishing metadata"));
 
       List<File> poms = find(root, ".pom");
-      if (poms.isEmpty())
-      {
-        throw new IllegalArgumentException("No generated POMs found under " + root);
-      }
-
+      int overlaid = 0;
       for (File file : poms)
       {
         Document document = parse(file);
         Element project = document.getDocumentElement();
+        String group = text(project, "groupId");
+        String artifact = text(project, "artifactId");
+        if (!"org.eclipse.cdo".equals(group) || !BUNDLES.contains(artifact))
+        {
+          continue;
+        }
 
         Element properties = child(project, "properties");
         if (properties == null)
@@ -362,9 +386,15 @@ public final class CDOAggregationTool
 
         write(document, file);
         ChecksumsCommand.writeChecksums(file);
+        overlaid++;
       }
 
-      System.out.println("Added " + values.size() + " traceability properties to " + poms.size() + " POMs.");
+      if (overlaid == 0)
+      {
+        throw new IllegalArgumentException("No approved CDO POMs found under " + root);
+      }
+
+      System.out.println("Added " + values.size() + " traceability properties to " + overlaid + " approved CDO POMs.");
     }
 
     private static Element ensure(Element parent, String name)
@@ -394,8 +424,8 @@ public final class CDOAggregationTool
    */
   private static final class VerifyCommand
   {
-    private static final Pattern FORBIDDEN = Pattern.compile(
-        "(?:com\\.h2database|org\\.eclipse\\.net4j\\.db\\.(?:derby|hsqldb|mysql|oracle|postgresql|db2)|org\\.eclipse\\.emf\\.cdo\\.(?:ui|tests|examples))");
+    private static final Pattern FORBIDDEN = Pattern
+        .compile("(?:org\\.eclipse\\.net4j\\.db\\.(?:derby|hsqldb|mysql|oracle|postgresql|db2)|org\\.eclipse\\.emf\\.cdo\\.(?:ui|tests|examples))");
 
     public static void execute(String[] args) throws Exception
     {
@@ -405,22 +435,37 @@ public final class CDOAggregationTool
       Map<String, String> values = readProperties(requireFile(new File(args[2]), "metadata properties"));
       List<File> poms = find(root, ".pom");
 
-      Set<String> expected = new LinkedHashSet<>();
-
-      for (String bundle : BUNDLES)
-      {
-        expected.add("org.eclipse.cdo:" + bundle);
-      }
-
-      Set<String> actual = new LinkedHashSet<>();
+      Map<String, String> actualVersions = new LinkedHashMap<>();
 
       for (File file : poms)
       {
         Document doc = parse(file);
         Element project = doc.getDocumentElement();
 
-        String coordinate = text(project, "groupId") + ":" + text(project, "artifactId");
-        actual.add(coordinate);
+        String group = text(project, "groupId");
+        String artifact = text(project, "artifactId");
+
+        if (!isCdoPublicationGroup(group))
+        {
+          continue;
+        }
+
+        String version = text(project, "version");
+        if (!"org.eclipse.cdo".equals(group) || !BUNDLES.contains(artifact) || version.isBlank())
+        {
+          throw new IllegalArgumentException("Unapproved CDO publication coordinate in " + file + ": " + group + ":" + artifact + ":" + version);
+        }
+
+        String expectedPath = "org/eclipse/cdo/" + artifact + "/" + version + "/" + artifact + "-" + version + ".pom";
+        if (!expectedPath.equals(relativePath(root, file)))
+        {
+          throw new IllegalArgumentException("CDO POM does not match its Maven coordinate path: " + file);
+        }
+
+        if (actualVersions.putIfAbsent(artifact, version) != null)
+        {
+          throw new IllegalArgumentException("Duplicate CDO publication coordinate for " + artifact);
+        }
 
         if (!values.get("cdo.git.commit").equals(text(child(child(project, "scm"), "tag"))))
         {
@@ -438,9 +483,9 @@ public final class CDOAggregationTool
         }
       }
 
-      if (!expected.equals(actual))
+      if (!actualVersions.keySet().equals(new LinkedHashSet<>(BUNDLES)))
       {
-        throw new IllegalArgumentException("Generated coordinates differ. Expected=" + expected + " actual=" + actual);
+        throw new IllegalArgumentException("Generated CDO coordinates differ. Expected=" + BUNDLES + " actual=" + actualVersions.keySet());
       }
 
       for (File file : findAll(root))
@@ -451,7 +496,7 @@ public final class CDOAggregationTool
         }
       }
 
-      System.out.println("Verified " + poms.size() + " coordinates, traceability properties, and excluded-artifact guard.");
+      System.out.println("Verified twelve CDO coordinates, traceability properties, external aggregation artifacts, and excluded-artifact guard.");
     }
   }
 
@@ -1106,6 +1151,7 @@ public final class CDOAggregationTool
       List<String> findings = new ArrayList<>();
       List<File> poms = find(repository, ".pom");
       Set<String> coordinates = new LinkedHashSet<>();
+      Map<String, Integer> coordinateCounts = new LinkedHashMap<>();
       Map<String, Integer> dependencyClasses = new LinkedHashMap<>();
 
       for (File pom : poms)
@@ -1116,12 +1162,25 @@ public final class CDOAggregationTool
         String group = text(project, "groupId");
         String artifact = text(project, "artifactId");
         String version = text(project, "version");
-        if (!"org.eclipse.cdo".equals(group) || artifact.isEmpty() || version.isEmpty())
+        if (!isCdoPublicationGroup(group))
         {
           continue;
         }
 
+        if (!"org.eclipse.cdo".equals(group) || !BUNDLES.contains(artifact) || version.isEmpty())
+        {
+          findings.add("Unapproved CDO publication coordinate in " + pom + ": " + group + ":" + artifact + ":" + version);
+          continue;
+        }
+
         coordinates.add(group + ":" + artifact + ":" + version);
+        coordinateCounts.merge(artifact, 1, Integer::sum);
+
+        String expectedPomPath = "org/eclipse/cdo/" + artifact + "/" + version + "/" + artifact + "-" + version + ".pom";
+        if (!expectedPomPath.equals(relativePath(repository, pom)))
+        {
+          findings.add("CDO POM does not match its Maven coordinate path: " + pom);
+        }
 
         File versionDirectory = pom.getParentFile();
         File mainJar = new File(versionDirectory, artifact + "-" + version + ".jar");
@@ -1185,8 +1244,7 @@ public final class CDOAggregationTool
         }
 
         String dependencies = text(child(project, "dependencies"));
-        if (dependencies.contains("com.h2database") //
-            || dependencies.matches(".*org\\.eclipse\\.net4j\\.db\\.(derby|mysql|oracle|postgresql|hsqldb|db2).*"))
+        if (dependencies.matches(".*org\\.eclipse\\.net4j\\.db\\.(derby|mysql|oracle|postgresql|hsqldb|db2).*"))
         {
           findings.add("Unapproved JDBC dependency in " + pom);
         }
@@ -1227,6 +1285,10 @@ public final class CDOAggregationTool
       for (String bundle : BUNDLES)
       {
         expectedArtifacts.add("org.eclipse.cdo:" + bundle);
+        if (coordinateCounts.getOrDefault(bundle, 0) != 1)
+        {
+          findings.add("Expected exactly one Maven coordinate for " + bundle + ", found " + coordinateCounts.getOrDefault(bundle, 0));
+        }
       }
 
       Set<String> actualArtifacts = new LinkedHashSet<>();
@@ -1249,6 +1311,7 @@ public final class CDOAggregationTool
       SourcesJavadocCommand.delete(staging);
       copyMavenStaging(repository, staging);
       Files.copy(metadataFile.toPath(), new File(staging, "cdo-build-metadata.properties").toPath());
+      validatePublicationScope(staging, false);
 
       String status = findings.isEmpty() ? "READY_WITHOUT_SIGNATURES" : "NOT_READY";
 
@@ -1324,14 +1387,14 @@ public final class CDOAggregationTool
       try (Stream<Path> stream = Files.walk(source.toPath()))
       {
         stream.filter(Files::isRegularFile).filter(path -> {
-          String name = path.getFileName().toString();
-          if (name.startsWith("artifacts.jar") || name.startsWith("content.jar") || name.startsWith("aggregate.jar"))
+          String relative = source.toPath().relativize(path).toString().replace(File.separatorChar, '/');
+          if (!isApprovedPublicationPath(relative))
           {
             return false;
           }
 
-          return name.endsWith(".jar") || name.endsWith(".pom") || name.endsWith(".md5") || name.endsWith(".sha1") || name.endsWith(".sha256")
-              || name.endsWith(".sha512") || "maven-metadata.xml".equals(name);
+          String name = path.getFileName().toString();
+          return isMavenPublicationFile(name);
         }).forEach(path -> {
           try
           {
@@ -1345,6 +1408,143 @@ public final class CDOAggregationTool
           }
         });
       }
+    }
+
+    private static boolean isApprovedPublicationPath(String path)
+    {
+      String[] segments = path.split("/");
+      if (segments.length == 5 && "org".equals(segments[0]) && "eclipse".equals(segments[1]) && "cdo".equals(segments[2]) && BUNDLES.contains(segments[3]))
+      {
+        return isMavenMetadataPath(path);
+      }
+
+      if (segments.length != 6 || !"org".equals(segments[0]) || !"eclipse".equals(segments[1]) || !"cdo".equals(segments[2]) || !BUNDLES.contains(segments[3])
+          || segments[4].isBlank())
+      {
+        return false;
+      }
+
+      String base = segments[3] + "-" + segments[4];
+      String name = segments[5];
+      for (String artifactName : new String[] { base + ".pom", base + ".jar", base + "-sources.jar", base + "-javadoc.jar" })
+      {
+        if (name.equals(artifactName) || name.equals(artifactName + ".asc") || name.matches(Pattern.quote(artifactName) + "\\.(?:md5|sha1|sha256|sha512)"))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    private static boolean isMavenPublicationFile(String name)
+    {
+      return name.endsWith(".jar") || name.endsWith(".pom") || name.endsWith(".asc") || name.endsWith(".md5") || name.endsWith(".sha1")
+          || name.endsWith(".sha256") || name.endsWith(".sha512") || "maven-metadata.xml".equals(name)
+          || name.matches("maven-metadata\\.xml\\.(?:md5|sha1|sha256|sha512)");
+    }
+
+    private static int validatePublicationScope(File staging, boolean signaturesRequired) throws Exception
+    {
+      Map<String, String> versions = new LinkedHashMap<>();
+      for (File pom : find(staging, ".pom"))
+      {
+        Element project = parse(pom).getDocumentElement();
+        String group = text(project, "groupId");
+        String artifact = text(project, "artifactId");
+        String version = text(project, "version");
+        if (!"org.eclipse.cdo".equals(group) || !BUNDLES.contains(artifact) || version.isBlank())
+        {
+          throw new IllegalArgumentException("Unapproved Maven publication coordinate in staging: " + group + ":" + artifact + ":" + version);
+        }
+
+        String expectedPom = "org/eclipse/cdo/" + artifact + "/" + version + "/" + artifact + "-" + version + ".pom";
+        if (!expectedPom.equals(relativePath(staging, pom)))
+        {
+          throw new IllegalArgumentException("Staged POM path does not match its Maven coordinate: " + pom);
+        }
+
+        if (versions.putIfAbsent(artifact, version) != null)
+        {
+          throw new IllegalArgumentException("Duplicate Maven publication coordinate in staging: " + group + ":" + artifact);
+        }
+      }
+
+      if (!versions.keySet().equals(new LinkedHashSet<>(BUNDLES)))
+      {
+        throw new IllegalArgumentException("Staging must contain exactly the twelve approved CDO/Net4j coordinates; found " + versions.keySet());
+      }
+
+      Set<String> allowedFiles = new LinkedHashSet<>();
+      List<File> artifacts = new ArrayList<>();
+      for (String bundle : BUNDLES)
+      {
+        String version = versions.get(bundle);
+        String prefix = "org/eclipse/cdo/" + bundle + "/" + version + "/" + bundle + "-" + version;
+        for (String suffix : new String[] { ".pom", ".jar", "-sources.jar", "-javadoc.jar" })
+        {
+          String relative = prefix + suffix;
+          File artifact = new File(staging, relative.replace('/', File.separatorChar));
+          if (!artifact.isFile() || artifact.length() == 0)
+          {
+            throw new IllegalArgumentException("Missing or empty staged Maven artifact: " + relative);
+          }
+
+          artifacts.add(artifact);
+          allowedFiles.add(relative);
+          for (Map.Entry<String, String> algorithm : ChecksumsCommand.ALGORITHMS.entrySet())
+          {
+            String checksumPath = relative + "." + algorithm.getKey();
+            File checksum = new File(staging, checksumPath.replace('/', File.separatorChar));
+            if (!checksum.isFile() || !ChecksumsCommand.digest(artifact, algorithm.getValue()).equalsIgnoreCase(Files.readString(checksum.toPath()).trim()))
+            {
+              throw new IllegalArgumentException("Missing or invalid checksum for staged artifact: " + checksumPath);
+            }
+
+            allowedFiles.add(checksumPath);
+          }
+
+          String signaturePath = relative + ".asc";
+          File signature = new File(staging, signaturePath.replace('/', File.separatorChar));
+          allowedFiles.add(signaturePath);
+          if (signaturesRequired && (!signature.isFile() || signature.length() == 0))
+          {
+            throw new IllegalArgumentException("PACKAGE_FOR_CENTRAL requires a non-empty signature: " + signaturePath);
+          }
+        }
+
+        String metadataPath = "org/eclipse/cdo/" + bundle + "/maven-metadata.xml";
+        File mavenMetadata = new File(staging, metadataPath.replace('/', File.separatorChar));
+        if (mavenMetadata.isFile())
+        {
+          allowedFiles.add(metadataPath);
+          for (String suffix : new String[] { ".md5", ".sha1", ".sha256", ".sha512" })
+          {
+            String checksumPath = metadataPath + suffix;
+            if (new File(staging, checksumPath.replace('/', File.separatorChar)).isFile())
+            {
+              allowedFiles.add(checksumPath);
+            }
+          }
+        }
+      }
+
+      try (Stream<Path> paths = Files.walk(staging.toPath()))
+      {
+        for (Path path : paths.filter(Files::isRegularFile).collect(Collectors.toList()))
+        {
+          String relative = relativePath(staging, path.toFile());
+          if (relative.startsWith("org/") || relative.split("/").length >= 4 || isMavenPublicationFile(path.getFileName().toString()))
+          {
+            if (!allowedFiles.contains(relative))
+            {
+              throw new IllegalArgumentException("Unexpected file in publication staging: " + relative);
+            }
+          }
+        }
+      }
+
+      return artifacts.size();
     }
   }
 
@@ -1444,8 +1644,6 @@ public final class CDOAggregationTool
    */
   private static final class PublishCheckCommand
   {
-    private static final String[] CHECKSUMS = { ".md5", ".sha1", ".sha256", ".sha512" };
-
     static void execute(String[] args) throws Exception
     {
       if (args.length != 5)
@@ -1491,45 +1689,13 @@ public final class CDOAggregationTool
 
     private static int validateStaging(File staging, boolean signaturesRequired) throws Exception
     {
-      List<File> artifacts = new ArrayList<>();
-      try (Stream<Path> files = Files.walk(staging.toPath()))
+      int artifacts = AuditCommand.validatePublicationScope(staging, signaturesRequired);
+      if (artifacts != 48)
       {
-        files.filter(Files::isRegularFile).map(Path::toFile).filter(file -> file.getName().endsWith(".jar") || file.getName().endsWith(".pom"))
-            .forEach(artifacts::add);
+        throw new IllegalArgumentException("Expected exactly 48 approved Maven artifacts in staging; found " + artifacts);
       }
 
-      if (artifacts.isEmpty())
-      {
-        throw new IllegalArgumentException("Staging directory contains no Maven JAR or POM artifacts: " + staging);
-      }
-
-      for (File artifact : artifacts)
-      {
-        if (artifact.length() == 0)
-        {
-          throw new IllegalArgumentException("Empty staging artifact: " + artifact);
-        }
-
-        for (String checksum : CHECKSUMS)
-        {
-          File sidecar = new File(artifact.getPath() + checksum);
-          if (!sidecar.isFile() || sidecar.length() == 0)
-          {
-            throw new IllegalArgumentException("Missing or empty checksum for staging artifact: " + sidecar);
-          }
-        }
-
-        if (signaturesRequired)
-        {
-          File signature = new File(artifact.getPath() + ".asc");
-          if (!signature.isFile() || signature.length() == 0)
-          {
-            throw new IllegalArgumentException("PACKAGE_FOR_CENTRAL requires a non-empty PGP signature: " + signature);
-          }
-        }
-      }
-
-      return artifacts.size();
+      return artifacts;
     }
 
     private static String value(Map<String, String> metadata, String key)
@@ -1599,6 +1765,7 @@ public final class CDOAggregationTool
       throw new IllegalArgumentException("Expected primary-key fingerprint must be a full 40- or 64-character hexadecimal fingerprint");
     }
 
+    AuditCommand.validatePublicationScope(staging, true);
     File keyFile = requireFile(new File(args[6]), "Jenkins signing-key credential");
     File orgDirectory = requireDirectory(new File(staging, "org").getPath(), "staging/org");
     List<File> files = regularFiles(orgDirectory);
@@ -2182,6 +2349,11 @@ public final class CDOAggregationTool
     System.out.println("Stream comparison tests passed for differing chunk sizes, changed bytes, and truncated input.");
   }
 
+  private static boolean isCdoPublicationGroup(String group)
+  {
+    return "org.eclipse.cdo".equals(group) || group != null && group.startsWith("org.eclipse.cdo.");
+  }
+
   private static String relativePath(File root, File file) throws IOException
   {
     return root.toPath().toAbsolutePath().normalize().relativize(file.toPath().toAbsolutePath().normalize()).toString().replace(File.separatorChar, '/');
@@ -2644,6 +2816,234 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException(label + " contains a symbolic link: " + link);
       }
     }
+  }
+
+  private static void publicationScopeTest(String[] args) throws Exception
+  {
+    if (args.length != 3)
+    {
+      throw new IllegalArgumentException("publication-scope-test requires workspace root and stable publishing properties file");
+    }
+
+    Path testWorkspace = Paths.get(args[1]).toAbsolutePath().normalize();
+    if (!Files.isDirectory(testWorkspace, LinkOption.NOFOLLOW_LINKS) || !testWorkspace.equals(testWorkspace.toRealPath()))
+    {
+      throw new IllegalArgumentException("Publication scope test workspace must be an existing non-symlink directory: " + testWorkspace);
+    }
+
+    Path testRoot = Files.createTempDirectory(testWorkspace, "cdo-publication-scope-test-").toRealPath();
+    requireSafeWorkspaceChild(testRoot.toString(), testWorkspace.toString(), "publication scope test files");
+
+    Path repository = Files.createDirectory(testRoot.resolve("repository"));
+    Path staging = testRoot.resolve("staging").toAbsolutePath();
+    Path metadata = testRoot.resolve("metadata.properties");
+    Path report = testRoot.resolve("audit.txt");
+    Path h2Pom = repository.resolve("com/h2database/h2/2.0.0/h2-2.0.0.pom");
+    Path h2Jar = repository.resolve("com/h2database/h2/2.0.0/h2-2.0.0.jar");
+
+    try
+    {
+      Map<String, String> metadataValues = new LinkedHashMap<>();
+      metadataValues.put("cdo.build.type", "R");
+      metadataValues.put("cdo.drop.id", "R20990101-0000");
+      metadataValues.put("cdo.git.commit", "deadbeef");
+      writeProperties(metadata, metadataValues);
+      createPublicationScopeFixture(repository);
+
+      byte[] originalH2Pom = Files.readAllBytes(h2Pom);
+      byte[] originalH2Jar = Files.readAllBytes(h2Jar);
+      File publishingMetadata = requireFile(new File(args[2]), "stable publishing metadata");
+      OverlayCommand.execute(new String[] { "overlay", repository.toString(), metadata.toString(), publishingMetadata.getPath() });
+
+      if (!Arrays.equals(originalH2Pom, Files.readAllBytes(h2Pom)) || !Arrays.equals(originalH2Jar, Files.readAllBytes(h2Jar)))
+      {
+        throw new AssertionError("Metadata overlay modified the external H2 artifact");
+      }
+
+      File cdoPom = new File(repository.toFile(), "org/eclipse/cdo/" + BUNDLES.get(7) + "/1.0.0/" + BUNDLES.get(7) + "-1.0.0.pom");
+      if (!Files.readString(cdoPom.toPath()).contains("com.h2database"))
+      {
+        throw new AssertionError("Metadata overlay removed the legitimate H2 Maven dependency");
+      }
+
+      VerifyCommand.execute(new String[] { "verify", repository.toString(), metadata.toString() });
+      AuditCommand.execute(new String[] { "audit", repository.toString(), metadata.toString(), report.toString(), staging.toString() });
+      PublishCheckCommand.execute(new String[] { "publish-check", staging.toString(), metadata.toString(), "VALIDATE_ONLY", "" });
+      assertPublicationStaging(staging, false);
+
+      for (File artifact : publicationArtifacts(staging.toFile()))
+      {
+        Files.writeString(Path.of(artifact.getPath() + ".asc"), "test signature");
+      }
+
+      PublishCheckCommand.execute(new String[] { "publish-check", staging.toString(), metadata.toString(), "PACKAGE_FOR_CENTRAL", "SIGNED" });
+      assertPublicationStaging(staging, true);
+
+      Path stagedH2 = staging.resolve("com/h2database/h2/2.0.0/h2-2.0.0.pom");
+      Files.createDirectories(stagedH2.getParent());
+      Files.writeString(stagedH2, Files.readString(h2Pom));
+      expectPublicationScopeFailure(staging.toFile(), "Unapproved Maven publication coordinate");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "VALIDATE_ONLY", "");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "PACKAGE_FOR_CENTRAL", "SIGNED");
+      Files.delete(stagedH2);
+
+      Path stagedH2Module = staging.resolve("com/h2database/h2/2.0.0/h2-2.0.0.module");
+      Files.createDirectories(stagedH2Module.getParent());
+      Files.writeString(stagedH2Module, "external H2 module metadata");
+      expectPublicationScopeFailure(staging.toFile(), "Unexpected file in publication staging");
+      Files.delete(stagedH2Module);
+
+      File missingPom = new File(repository.toFile(), "org/eclipse/cdo/" + BUNDLES.get(0) + "/1.0.0/" + BUNDLES.get(0) + "-1.0.0.pom");
+      Path savedMissingPom = testRoot.resolve("missing.pom");
+      Files.copy(missingPom.toPath(), savedMissingPom);
+      Files.delete(missingPom.toPath());
+      expectVerifyFailure(repository.toFile(), metadata.toFile(), "Generated CDO coordinates differ");
+      Files.copy(savedMissingPom, missingPom.toPath());
+
+      String duplicateBundle = BUNDLES.get(0);
+      Path duplicatePom = repository.resolve("org/eclipse/cdo/" + duplicateBundle + "/2.0.0/" + duplicateBundle + "-2.0.0.pom");
+      Files.createDirectories(duplicatePom.getParent());
+      String duplicateContent = Files.readString(missingPom.toPath()).replace("<version>1.0.0</version>", "<version>2.0.0</version>");
+      Files.writeString(duplicatePom, duplicateContent);
+      expectVerifyFailure(repository.toFile(), metadata.toFile(), "Duplicate CDO publication coordinate");
+      Files.delete(duplicatePom);
+
+      Path unapprovedPom = repository.resolve("org/eclipse/cdo/cdo.extra/1.0.0/cdo.extra-1.0.0.pom");
+      Files.createDirectories(unapprovedPom.getParent());
+      Files.writeString(unapprovedPom, "<project><groupId>org.eclipse.cdo</groupId><artifactId>cdo.extra</artifactId><version>1.0.0</version></project>");
+      expectVerifyFailure(repository.toFile(), metadata.toFile(), "Unapproved CDO publication coordinate");
+
+      System.out.println(
+          "Publication scope tests passed: H2 resolves in raw aggregation, remains unchanged, and is excluded from VALIDATE_ONLY and PACKAGE_FOR_CENTRAL staging.");
+    }
+    finally
+    {
+      SourcesJavadocCommand.delete(testRoot.toFile());
+    }
+  }
+
+  private static void createPublicationScopeFixture(Path repository) throws Exception
+  {
+    for (String bundle : BUNDLES)
+    {
+      Path versionDirectory = repository.resolve("org/eclipse/cdo/" + bundle + "/1.0.0");
+      Files.createDirectories(versionDirectory);
+
+      String dependency = BUNDLES.get(7).equals(bundle)
+          ? "<dependencies><dependency><groupId>com.h2database</groupId><artifactId>h2</artifactId><version>2.0.0</version></dependency></dependencies>"
+          : "";
+      String pomContent = "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>" + bundle
+          + "</artifactId><version>1.0.0</version><name>" + bundle + "</name><description>Fixture " + bundle + "</description>" + dependency + "</project>";
+      Path pom = versionDirectory.resolve(bundle + "-1.0.0.pom");
+      Files.writeString(pom, pomContent);
+
+      for (String classifier : new String[] { "", "-sources", "-javadoc" })
+      {
+        Path jar = versionDirectory.resolve(bundle + "-1.0.0" + classifier + ".jar");
+        Files.writeString(jar, "fixture " + bundle + classifier);
+        ChecksumsCommand.writeChecksums(jar.toFile());
+      }
+    }
+
+    Path h2Directory = repository.resolve("com/h2database/h2/2.0.0");
+    Files.createDirectories(h2Directory);
+    Files.writeString(h2Directory.resolve("h2-2.0.0.pom"),
+        "<project><modelVersion>4.0.0</modelVersion><groupId>com.h2database</groupId><artifactId>h2</artifactId><version>2.0.0</version></project>");
+    Files.writeString(h2Directory.resolve("h2-2.0.0.jar"), "external H2 fixture artifact");
+  }
+
+  private static List<File> publicationArtifacts(File staging) throws IOException
+  {
+    try (Stream<Path> paths = Files.walk(staging.toPath()))
+    {
+      return paths.filter(Files::isRegularFile).map(Path::toFile).filter(file -> file.getName().endsWith(".pom") || file.getName().endsWith(".jar"))
+          .sorted(Comparator.comparing(File::getPath)).collect(Collectors.toList());
+    }
+  }
+
+  private static void assertPublicationStaging(Path staging, boolean signaturesPresent) throws Exception
+  {
+    List<File> artifacts = publicationArtifacts(staging.toFile());
+    if (artifacts.size() != 48 || Files.exists(staging.resolve("com/h2database")))
+    {
+      throw new AssertionError("Publication staging must contain exactly 48 CDO Maven artifacts and no H2 files");
+    }
+
+    try (Stream<Path> paths = Files.walk(staging.resolve("org")))
+    {
+      List<Path> files = paths.filter(Files::isRegularFile).collect(Collectors.toList());
+      int expectedFiles = 240 + (signaturesPresent ? 48 : 0);
+      if (files.size() != expectedFiles)
+      {
+        throw new AssertionError("Expected " + expectedFiles + " CDO Maven artifacts, checksums, and signatures under org; found " + files.size());
+      }
+
+      for (Path path : files)
+      {
+        String relative = staging.relativize(path).toString().replace(File.separatorChar, '/');
+        if (!relative.startsWith("org/eclipse/cdo/") || !AuditCommand.isApprovedPublicationPath(relative))
+        {
+          throw new AssertionError("Unexpected file in publication staging: " + relative);
+        }
+      }
+    }
+  }
+
+  private static void expectPublicationScopeFailure(File staging, String expectedMessage) throws Exception
+  {
+    try
+    {
+      AuditCommand.validatePublicationScope(staging, true);
+    }
+    catch (IllegalArgumentException e)
+    {
+      if (e.getMessage().contains(expectedMessage))
+      {
+        return;
+      }
+
+      throw e;
+    }
+
+    throw new AssertionError("Expected publication scope failure containing: " + expectedMessage);
+  }
+
+  private static void expectPublishCheckFailure(File staging, File metadata, String mode, String signatures) throws Exception
+  {
+    try
+    {
+      PublishCheckCommand.execute(new String[] { "publish-check", staging.getPath(), metadata.getPath(), mode, signatures });
+    }
+    catch (IllegalArgumentException e)
+    {
+      if (e.getMessage().contains("Unapproved Maven publication coordinate"))
+      {
+        return;
+      }
+
+      throw e;
+    }
+
+    throw new AssertionError("Expected publish-check to reject out-of-scope Maven artifacts for " + mode);
+  }
+
+  private static void expectVerifyFailure(File repository, File metadata, String expectedMessage) throws Exception
+  {
+    try
+    {
+      VerifyCommand.execute(new String[] { "verify", repository.getPath(), metadata.getPath() });
+    }
+    catch (IllegalArgumentException e)
+    {
+      if (e.getMessage().contains(expectedMessage))
+      {
+        return;
+      }
+
+      throw e;
+    }
+
+    throw new AssertionError("Expected raw aggregation verification failure containing: " + expectedMessage);
   }
 
   private static void workspaceSafetyTest(String[] args) throws Exception

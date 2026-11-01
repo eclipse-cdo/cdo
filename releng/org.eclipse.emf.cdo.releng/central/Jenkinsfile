@@ -341,6 +341,7 @@ pipeline {
                   echo "Staging contains a symlink" >&2
                   exit 2
                 fi
+                ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$CDO_WORKSPACE_ROOT/maven-publishing/work" -Dstaging.dir="$STAGING_DIR" -f releng/org.eclipse.emf.cdo.releng/central/build.xml publication-scope-check
                 for generated_repository in "$CENTRAL_REPO" "$MAVEN_SIGNER_REPO"; do
                   if [ -e "$generated_repository" ] && find "$generated_repository" -type l -print -quit | grep -q .; then
                     echo "Generated Maven repository contains a symlink: $generated_repository" >&2

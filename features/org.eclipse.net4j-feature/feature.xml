@@ -13,7 +13,7 @@
 <feature
       id="org.eclipse.net4j"
       label="%featureName"
-      version="4.26.1.qualifier"
+      version="4.27.0.qualifier"
       provider-name="%providerName"
       image="eclipse_update_120.jpg"
       license-feature="org.eclipse.emf.cdo.license"
@@ -37,7 +37,7 @@
    </url>
 
    <includes
-         id="org.eclipse.net4j.util.ui"
+         id="org.eclipse.net4j.util"
          version="0.0.0"/>
 
    <includes

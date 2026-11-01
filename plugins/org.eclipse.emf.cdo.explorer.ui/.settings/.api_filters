@@ -15,6 +15,12 @@
                 <message_argument value="CDORepositoryElement"/>
             </message_arguments>
         </filter>
+        <filter id="574664731">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.explorer.ui.actions.CheckoutCommitInfoActionDelegate.getRepositoryElement(ISelection)"/>
+                <message_argument value="CDORepositoryElement"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/explorer/ui/checkouts/actions/NewActionProvider.java" type="org.eclipse.emf.cdo.explorer.ui.checkouts.actions.NewActionProvider$WizardDescriptorWrapper">
         <filter id="574619656">

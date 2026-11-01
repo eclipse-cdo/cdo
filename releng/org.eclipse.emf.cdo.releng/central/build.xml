@@ -16,14 +16,11 @@
 	<!-- Override with -Dcbi.aggregator=<path-to-cbiAggrc.exe>. -->
 	<property name="cbi.aggregator" value="cbiAggrc.exe" />
 	<property name="maven.executable" value="mvn" />
+	<property environment="env" />
 	
-	<!-- VALIDATE_ONLY and DRY_RUN are allowed for every supported build type;
-	     PUBLISH is checked against build-info.xml immediately before upload. -->
+	<!-- Only PACKAGE_FOR_CENTRAL is restricted to R builds. -->
 	<property name="publishing.mode" value="VALIDATE_ONLY" />
 	
-	<!-- Identifier of a future Jenkins uploader; empty until Eclipse publishing
-	     infrastructure and credentials are approved. -->
-	<property name="maven.uploader" value="" />
 	
 	<!-- Read-only source cache for Javadoc's Eclipse/EMF classpath. -->
 	<property name="maven.local.repository" location="${user.home}/.m2/repository" />
@@ -38,13 +35,17 @@
 	</condition>
 	<property name="default.work.dir" location="${basedir}/../target/central" />
 	<property name="work.dir" location="${default.work.dir}" />
+	<condition property="workspace.root" value="${env.CDO_WORKSPACE_ROOT}">
+		<isset property="env.CDO_WORKSPACE_ROOT" />
+	</condition>
+	<property name="workspace.root" location="${basedir}/../target" />
 	<condition property="build.root.option" value="--buildRoot &quot;${work.dir}/repository&quot;" else="">
 		<isset property="explicit.work.dir" />
 	</condition>
 	
 	<!-- Isolated Maven cache copied from the source cache before consumer runs. -->
 	<property name="maven.consumer.repository" location="${work.dir}/maven-local" />
-	<property name="classes.dir" location="${work.dir}/classes" />
+	<property name="classes.dir" location="${workspace.root}/.cdo-aggregation-helper/classes" />
 	<condition property="default.build.root" value="${work.dir}/repository" else="${work.dir}">
 		<isset property="explicit.work.dir" />
 	</condition>
@@ -94,13 +95,36 @@
 	</macrodef>
 
 	<target name="compile-helper">
+		<condition property="workspace.root.absolute">
+			<or>
+				<matches string="${workspace.root}" pattern="^/.+" />
+				<matches string="${workspace.root}" pattern="^[A-Za-z]:[/\\\\].+" />
+			</or>
+		</condition>
+		<fail unless="workspace.root.absolute" message="workspace.root must be an absolute, non-root path before compiling the helper." />
+		<fail message="workspace.root must be a non-empty, non-root path before compiling the helper.">
+			<condition>
+				<or>
+					<equals arg1="${workspace.root}" arg2="" />
+					<equals arg1="${workspace.root}" arg2="/" />
+				</or>
+			</condition>
+		</fail>
 		<mkdir dir="${classes.dir}" />
 		<javac srcdir="${basedir}/../src" destdir="${classes.dir}" includeantruntime="false" source="11" target="11" encoding="UTF-8">
 			<include name="org/eclipse/emf/cdo/releng/CDOAggregationTool.java" />
 		</javac>
 	</target>
 
-	<target name="prepare" depends="compile-helper">
+	<target name="validate-workspace" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="validate-workspace-path" />
+			<arg value="${work.dir}" />
+			<arg value="${workspace.root}" />
+		</java>
+	</target>
+
+	<target name="prepare" depends="validate-workspace">
 		<echo message="Aggregation work directory: ${work.dir}" />
 		<mkdir dir="${configuration.dir}" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
@@ -179,7 +203,7 @@
 		</exec>
 	</target>
 
-	<target name="overlay" depends="compile-helper">
+	<target name="overlay" depends="validate-workspace">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="overlay" />
 			<arg value="${build.root}/final" />
@@ -217,7 +241,7 @@
 		<echo message="Generated and validated classifier checksums in ${cdo.maven.repository}" />
 	</target>
 
-	<target name="prepare-maven-local">
+	<target name="prepare-maven-local" depends="validate-workspace">
 		<available file="${maven.local.repository}" type="dir" property="maven.cache.available" />
 		<fail unless="maven.cache.available" message="maven.local.repository is not a valid directory: ${maven.local.repository}" />
 		<copy todir="${maven.consumer.repository}" overwrite="false" includeEmptyDirs="false">
@@ -243,7 +267,7 @@
 			<arg value="${staging.dir}" />
 			<arg value="${metadata.file}" />
 			<arg value="${publishing.mode}" />
-			<arg value="${maven.uploader}" />
+			<arg value="" />
 		</java>
 		<echo message="Validated Maven Central staging package: ${staging.dir}" />
 	</target>
@@ -266,16 +290,38 @@
 		</java>
 	</target>
 
-	<!-- The upload implementation is intentionally not part of this portable
-	     prototype. This target places policy, signature, and credential checks at
-	     its future entry point and refuses to imply that anything was uploaded. -->
-	<target name="publish" depends="publish-policy">
+	<!-- Verifies the signed deployment repository and ZIP using an isolated GnuPG keyring. -->
+	<target name="verify-package" depends="validate-workspace">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
-			<arg value="publish-check" />
+			<arg value="verify-package" />
 			<arg value="${staging.dir}" />
+			<arg value="${work.dir}/signed-repository" />
+			<arg value="${deployment.zip}" />
 			<arg value="${metadata.file}" />
-			<arg value="PUBLISH" />
-			<arg value="${maven.uploader}" />
+			<arg value="${gpg.expected.fingerprint}" />
+			<arg value="${gpg.key.file}" />
+			<arg value="${gpg.executable}" />
+			<arg value="${work.dir}/maven-publishing-package-summary.properties" />
+		</java>
+	</target>
+
+	<target name="signature-test" depends="compile-helper">
+		<fail unless="gpg.executable" message="Set -Dgpg.executable=&lt;path-to-gpg&gt;." />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="signature-test" />
+			<arg value="${gpg.executable}" />
+		</java>
+	</target>
+
+	<target name="stream-test" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="stream-test" />
+		</java>
+	</target>
+
+	<target name="workspace-safety-test" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="workspace-safety-test" />
 		</java>
 	</target>
 
@@ -314,11 +360,12 @@
 
 	<target name="clean-build" depends="clean,build" />
 
-	<target name="clean">
-		<delete dir="${work.dir}" failonerror="false" />
-		<!-- Remove the workspace left by older runs before -data was isolated. -->
-		<delete dir="${basedir}/workspace" failonerror="false" />
-		<delete dir="${basedir}/../workspace" failonerror="false" />
+	<target name="clean" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="safe-delete-work" />
+			<arg value="${work.dir}" />
+			<arg value="${workspace.root}" />
+		</java>
 		<echo message="Removed temporary aggregation directory ${work.dir}" />
 	</target>
 </project>

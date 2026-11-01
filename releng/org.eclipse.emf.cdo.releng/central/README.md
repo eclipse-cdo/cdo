@@ -23,6 +23,9 @@ Windows command line, or later a Unix-like Jenkins agent:
 ```text
 ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -f build.xml validate
 ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -f build.xml clean-build
+ant -f build.xml policy-test
+ant -f build.xml stream-test
+ant -Dgpg.executable=gpg -f build.xml signature-test
 ```
 
 The Ant properties/arguments are:
@@ -61,19 +64,18 @@ used to decide whether a build may be published.
 
 * `VALIDATE_ONLY` runs the normal technical checks and accepts R, S, and I.
 * `DRY_RUN` is an upload-free staging mode and accepts R, S, and I.
-* `PUBLISH` is the future Maven Central upload entry point and is accepted only
-  for an R build. S and I builds fail immediately with a clear diagnostic;
-  missing or unknown build types fail closed. There is no generic force flag.
+* `PACKAGE_FOR_CENTRAL` prepares a signed bundle but does not upload or publish
+  it. It is accepted only for an R build. S and I builds fail immediately with
+  a clear diagnostic; missing or unknown build types fail closed. There is no
+  generic force flag.
 
 Run the policy tests with `ant -f build.xml policy-test`. The `publish-policy`
-target performs all local checks before applying the gate. A `publish` target is
-present as the reserved upload entry point; it currently stops after a
-successful R-only policy check because no uploader or credentials are
-configured. Consequently, no target uploads artifacts or creates PGP
-signatures. A later uploader must call the same policy gate immediately before
-its network operation.
+target performs the staging checks before applying the gate. The separate
+`verify-package` target applies the same R-only rule directly to build metadata
+and then validates an already signed staging tree without rebuilding it. No
+target uploads to Sonatype or publishes to Maven Central.
 
-## Jenkins and future publishing
+## Jenkins and Central packaging
 
 `Jenkinsfile` is a separate declarative entry point for the same Ant workflow.
 It accepts only `PUBLISHING_MODE` and `CDO_DROP_ID`. Jenkins constructs
@@ -92,7 +94,7 @@ generated metadata and reports, but is not part of the path because Eclipse CI
 deletes the workspace after each build and concurrent builds are disabled. The
 drop must contain
 `build-info.xml`, `tp-macro.setup`, and the P2 metadata/artifacts.
-`VALIDATE_ONLY` and `DRY_RUN` require no publishing credentials. The job runs
+`VALIDATE_ONLY` and `DRY_RUN` require no signing credentials. The job runs
 aggregation, CBI validation/CLEAN_BUILD, source and Javadoc generation,
 checksums, the readiness audit, staging validation, the consumer test, and the
 dependency tree.
@@ -102,27 +104,45 @@ the normal Maven path layout and includes each main, POM, source, and Javadoc
 artifact together with its `.md5`, `.sha1`, `.sha256`, and `.sha512` sidecars.
 `staging-validate` checks every JAR and POM and writes
 `maven-publishing-summary.properties` with the drop, commit, build type,
-artifact count, selected mode, and `upload.performed=false`. PGP `.asc` files
-are deliberately not generated yet.
+artifact count, selected mode, and `central.publication.performed=false`.
 
-The reserved `publish` target is the future upload boundary. It rechecks the
-R-only policy, requires an explicitly configured uploader and these Jenkins
-environment variables: `MAVEN_CENTRAL_USERNAME`,
-`MAVEN_CENTRAL_PASSWORD`, `MAVEN_GPG_KEY_ID`, and
-`MAVEN_GPG_PASSPHRASE`. It also requires a non-empty `.asc` signature for every
-artifact. Since no signer or uploader is enabled in this repository, `PUBLISH`
-currently fails with a non-zero exit code and performs no network operation.
-The Jenkinsfile exposes credential IDs for these values without storing any
-secret in the repository. After Eclipse Foundation approval, the remaining
-configuration is the approved Jenkins credentials, the portable signing
-implementation, the Maven Central uploader/namespace, and the promotion or
-unhide job. S- and I-builds remain blocked at this boundary.
+For `PACKAGE_FOR_CENTRAL`, the Jenkinsfile uses pipeline constants for the
+secret-key file credential ID, optional passphrase credential ID, and expected
+primary-key fingerprint. Their values are intentionally blank until Eclipse
+administrators confirm the actual credential IDs, key protection, and
+fingerprint. The [Maven GPG Plugin Bouncy Castle signer](https://maven.apache.org/plugins/maven-gpg-plugin/examples/deploy-signed-artifacts.html)
+needs a passphrase only
+when the secret key is passphrase protected. Ed's EMF setup uses a
+`secret-subkeys.asc` file credential without a separate passphrase credential;
+confirm with the administrators whether the CDO signing key has the same
+configuration. If it is unprotected, leave the optional passphrase constant
+blank. If it is protected, configure the Jenkins secret-text credential ID.
+
+The package stage signs the twelve approved POMs and their main, sources, and
+Javadoc JARs into a local `file:` repository. It verifies all 48 detached
+signatures with GnuPG against the independently configured primary
+fingerprint, including signing subkeys, compares artifacts and checksums with
+the original staging tree, then checks the exact Sonatype ZIP inventory and
+entry bytes. Verification does not rebuild or rewrite staging. Only a
+successful `PACKAGE_FOR_CENTRAL` build archives the deployment ZIP. There is
+no Sonatype uploader or automatic publication step.
+
+Every generated path is rooted under the canonical Jenkins `$WORKSPACE`. The
+pipeline rejects workspace-root, empty, noncanonical, and symlink-resolved
+output paths before cleanup or extraction. The original drop is only fetched
+with explicit HTTP(S) `GET` requests; all extraction and copying use its local
+workspace download. The agent must provide GNU `realpath`, `find`, `awk`,
+`zipinfo`, and `tar` in addition to the tools listed below. No Ant cleanup
+target removes paths outside its validated work directory.
 
 The pipeline deliberately uses `agent any` because this repository cannot
 derive a stable Eclipse CI label. The selected agent must nevertheless be a
 Linux/POSIX node with the configured Jenkins tools `temurin-jdk21-latest`,
-`apache-ant-latest`, and `apache-maven-latest`, plus `sh`, `curl`, `unzip`, and
-standard Jenkins Pipeline credentials support. An Eclipse CI administrator can constrain the
+`apache-ant-latest`, and `apache-maven-latest`, plus `sh`, `curl`, `unzip`,
+`zip`, `sha256sum`, GNU `realpath`, `find`, `awk`, `zipinfo`, `tar`, GnuPG
+(`gpg` and `gpgconf`), and standard Jenkins Pipeline
+credentials support. The selected Linux agent must also be able to start and
+stop its isolated GnuPG agent. An Eclipse CI administrator can constrain the
 job to its approved Linux/Kubernetes label without changing this repository.
 No Windows paths, PowerShell, or globally installed CBI binary are assumed by
 the workflow.
@@ -146,8 +166,8 @@ It caches the verified archive below the workspace and extracts either
 `cbiAggr` (the Linux archive name) or `cbiAggrc`. No `latest` URL is used.
 The Jenkinsfile has only two job parameters: `PUBLISHING_MODE` and
 `CDO_DROP_ID`. The CBI URL, version, checksum, workspace layout, tool names,
-credential IDs, and uploader setting are deliberately global constants in the
-Jenkinsfile. Local manual runs continue to use
+signing credential IDs and expected fingerprint are deliberately pipeline
+constants in the Jenkinsfile. Local manual runs continue to use
 `-Dcdo.drop.location=<local-or-http-drop>` and `-Dcbi.aggregator=...` through Ant; neither
 local override is exposed as a Jenkins parameter.
 
@@ -218,8 +238,9 @@ The `checksums` target runs after `sources-javadoc` and is included in
 `build`. It creates and validates the same lowercase raw-hex sidecar format
 used for the main JARs and POMs: `.md5`, `.sha1`, `.sha256`, and `.sha512`.
 Every generated source/Javadoc classifier and its four checksum files must
-validate before the target succeeds. It writes only below `work/repository/final`; PGP signatures
-and Maven Central publication are not performed.
+validate before the target succeeds. It writes only below
+`work/repository/final`; PGP signatures and Maven Central publication are not
+performed by this technical target.
 
 ## Consumer compatibility test
 
@@ -324,8 +345,9 @@ ant -Dcdo.drop.location="C:\path\to\drop" -Dwork.dir="C:\path\to\work" -f build.
 ```
 
 The audit writes `maven-central-readiness-audit.txt` and a complete local
-staging copy below `staging`. It never uploads anything and never creates PGP
-signatures. The native CBI Nexus check runs before the portable post-generation
+staging copy below `staging`. It never uploads anything or creates PGP
+signatures. The separate Jenkins package stage signs the completed staging
+tree after the audit. The native CBI Nexus check runs before the portable post-generation
 overlay; an unmodified CDO drop can therefore fail it with missing `url`,
 `licenses`, `developers`, or `scm.url`. That is an ordering/metadata limitation,
 not a disabled check. The overlay then supplies these values from the central

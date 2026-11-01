@@ -1,9 +1,9 @@
 final String CBI_AGGREGATOR_URL = 'https://download.eclipse.org/cbi/updates/p2-aggregator/products/milestone/S202311221637/org.eclipse.cbi.p2repo.cli.product-linux.gtk.x86_64.tar.gz'
 final String CBI_AGGREGATOR_SHA256 = 'CF641C257B800018372A057DE0961C3824322527D2A245C26BC16B9DF9F17454'
-final String PUBLISH_CREDENTIALS_ID = 'cdo-maven-central-publish'
-final String GPG_KEY_CREDENTIALS_ID = 'cdo-maven-central-gpg-key-id'
-final String GPG_PASSPHRASE_CREDENTIALS_ID = 'cdo-maven-central-gpg-passphrase'
-final String MAVEN_UPLOADER = 'disabled-until-approved'
+final String GPG_KEY_FILE_CREDENTIAL_ID = ''
+final String GPG_PASSPHRASE_CREDENTIAL_ID = ''
+final String GPG_EXPECTED_PRIMARY_FINGERPRINT = ''
+final String GPG_EXECUTABLE = 'gpg'
 
 pipeline {
   agent any
@@ -20,12 +20,49 @@ pipeline {
   }
 
   parameters {
-    choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PUBLISH'],
-      description: 'Technical validation/staging mode. PUBLISH is R-only and remains uploader-gated.')
+    choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PACKAGE_FOR_CENTRAL'],
+      description: 'PACKAGE_FOR_CENTRAL prepares a signed deployment bundle only; publication is manual.')
     string(name: 'CDO_DROP_ID', defaultValue: '', description: 'Promoted CDO drop qualifier, for example R20260823-1230')
   }
 
   stages {
+    stage('Workspace safety preflight') {
+      steps {
+        script {
+          def workspaceRoot = sh(returnStdout: true, script: '''
+            set -eu
+            test -n "$WORKSPACE"
+            cd "$WORKSPACE"
+            pwd -P
+          ''').trim()
+          if (!workspaceRoot || workspaceRoot == '/') {
+            error('Jenkins WORKSPACE must resolve to a non-root directory')
+          }
+          env.CDO_WORKSPACE_ROOT = workspaceRoot
+          env.JAVA_TOOL_OPTIONS = "${(env.JAVA_TOOL_OPTIONS ?: '').trim()} -Djava.io.tmpdir=\"${workspaceRoot}/.tmp\"".trim()
+          withEnv(["CDO_WORKSPACE_ROOT=${workspaceRoot}"]) {
+            sh '''
+              set -eu
+              workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+              test "$workspace_root" = "$CDO_WORKSPACE_ROOT" || { echo "Workspace root is not canonical" >&2; exit 2; }
+              assert_workspace_path() {
+                candidate=$1
+                test -n "$candidate" || { echo "Refusing an empty output path" >&2; return 1; }
+                case "$candidate" in
+                  "$workspace_root"/*) ;;
+                  *) echo "Output path is outside the Jenkins workspace: $candidate" >&2; return 1 ;;
+                esac
+                resolved=$(realpath -m -- "$candidate")
+                test "$resolved" = "$candidate" || { echo "Output path uses a symlink or non-canonical component: $candidate" >&2; return 1; }
+              }
+              assert_workspace_path "$workspace_root/.tmp"
+              mkdir -p "$workspace_root/.tmp"
+            '''
+          }
+        }
+      }
+    }
+
     stage('Download and verify drop') {
       steps {
         script {
@@ -39,13 +76,29 @@ pipeline {
           // Eclipse CI discards the complete workspace after each build and
           // disableConcurrentBuilds() prevents overlap. The drop ID remains
           // metadata, not a path key.
-          def root = "${env.WORKSPACE}/maven-publishing"
+          def root = "${env.CDO_WORKSPACE_ROOT}/maven-publishing"
           def dropDir = "${root}/drop"
           def workDir = "${root}/work"
           def dropUrl = "https://download.eclipse.org/modeling/emf/cdo/drops/${dropId}/"
-            withEnv(["DROP_ID=${dropId}", "DROP_URL=${dropUrl}", "DROP_PARENT=${root}"]) {
+          withEnv(["DROP_ID=${dropId}", "DROP_URL=${dropUrl}", "DROP_PARENT=${root}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
             sh '''
               set -eu
+              workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+              assert_workspace_path() {
+                candidate=$1
+                test -n "$candidate" || { echo "Refusing an empty output path" >&2; return 1; }
+                case "$candidate" in "$workspace_root"/*) ;; *) echo "Output path is outside the workspace: $candidate" >&2; return 1 ;; esac
+                resolved=$(realpath -m -- "$candidate")
+                test "$resolved" = "$candidate" || { echo "Output path uses a symlink or non-canonical component: $candidate" >&2; return 1; }
+              }
+              assert_workspace_path "$DROP_PARENT"
+              assert_workspace_path "$DROP_PARENT/drop"
+              assert_workspace_path "$DROP_PARENT/unpack"
+              assert_workspace_path "$DROP_PARENT/site.zip"
+              assert_workspace_path "$DROP_PARENT/site.zip.list"
+              assert_workspace_path "$DROP_PARENT/site.zip.info"
+              assert_workspace_path "$DROP_PARENT/work"
+              assert_workspace_path "$workspace_root/.cdo-aggregation-helper/classes"
               mkdir -p "$DROP_PARENT"
               rm -rf "$DROP_PARENT/drop"
               rm -rf "$DROP_PARENT/unpack"
@@ -55,7 +108,7 @@ pipeline {
               # A promoted drop contains one complete p2 repository in zips/*-Site.zip.
               # Download that archive instead of recursively mirroring the generated
               # directory listing (which would also fetch every individual bundle).
-              listing=$(curl --fail --location --retry 3 --silent --show-error \
+              listing=$(curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --fail --location --retry 3 --silent --show-error \
                 "${DROP_URL}zips/")
               site_names=$(printf '%s' "$listing" | sed -nE \
                 "s#.*href=['\"][^'\"]*/([^/'\"]+-[Ss]ite\\.zip)['\"].*#\\1#p" | sort -u)
@@ -66,15 +119,26 @@ pipeline {
                 exit 2
               fi
               site_name=$(printf '%s\n' "$site_names" | sed -n '1p')
+              printf '%s\n' "$site_name" | grep -Eq '^[A-Za-z0-9._+-]+-[Ss]ite\.zip$' || { echo "Unsafe site ZIP name" >&2; exit 2; }
               site_zip="$DROP_PARENT/site.zip"
-              curl --fail --location --retry 3 --silent --show-error \
+              curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --fail --location --retry 3 --silent --show-error \
                 "${DROP_URL}zips/${site_name}" -o "$site_zip"
-              # Do not allow archive entries to escape the workspace extraction directory.
-              if unzip -Z1 "$site_zip" | grep -E '(^/|(^|/)\.\.(\/|$))' >/dev/null; then
+              # Reject traversal names, duplicate entries, and symlink/special-file entries before extraction.
+              unzip -Z1 "$site_zip" > "$site_zip.list"
+              if ! awk 'BEGIN { bad = 0 } /^\// || /^[A-Za-z]:/ || index($0, "\\") { bad = 1 } { n = split($0, parts, "/"); for (i = 1; i <= n; i++) if (parts[i] == "..") bad = 1; if (seen[$0]++) bad = 1 } END { exit bad }' "$site_zip.list"; then
                 echo "Unsafe path in site ZIP: $site_name" >&2
                 exit 3
               fi
+              zipinfo -l "$site_zip" > "$site_zip.info"
+              if ! awk 'NF && $1 ~ /^[bcdhlps-]/ { type = substr($1, 1, 1); if (type != "-" && type != "d") bad = 1 } END { exit bad }' "$site_zip.info"; then
+                echo "Symlink or special entry in site ZIP: $site_name" >&2
+                exit 3
+              fi
               unzip -q "$site_zip" -d "$DROP_PARENT/unpack"
+              if find "$DROP_PARENT/unpack" -type l -print -quit | grep -q .; then
+                echo "Symlink found after site ZIP extraction" >&2
+                exit 3
+              fi
               site_root=$(find "$DROP_PARENT/unpack" -type f -name content.jar -print -quit | sed 's#[\\/]content\.jar$##')
               if [ -z "$site_root" ] || [ ! -f "$site_root/artifacts.jar" ] || [ ! -d "$site_root/plugins" ]; then
                 echo "Site ZIP does not contain a complete p2 repository: $site_name" >&2
@@ -84,7 +148,7 @@ pipeline {
 
               # These small files carry the promoted build identity and target setup.
               for metadata in build-info.xml build-info.properties tp-macro.setup web.properties bookmarks.xml p2.index; do
-                curl --fail --location --retry 3 --silent --show-error \
+                curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --fail --location --retry 3 --silent --show-error \
                   "${DROP_URL}${metadata}" -o "$DROP_PARENT/drop/$metadata"
               done
               test -f "$DROP_PARENT/drop/build-info.xml"
@@ -96,12 +160,17 @@ pipeline {
           }
           env.CDO_DOWNLOADED_DROP = dropDir
           env.CDO_AGGR_WORK_DIR = workDir
-          withEnv(["DROP_ID=${dropId}", "LOCAL_DROP_DIR=${dropDir}", "CDO_AGGR_WORK_DIR=${workDir}"]) {
+          withEnv(["DROP_ID=${dropId}", "LOCAL_DROP_DIR=${dropDir}", "CDO_AGGR_WORK_DIR=${workDir}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
           withAnt(installation: 'apache-ant-latest') {
             sh '''
               set -eu
+              workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+              test "$(realpath -m -- "$CDO_AGGR_WORK_DIR")" = "$CDO_AGGR_WORK_DIR"
+              case "$CDO_AGGR_WORK_DIR" in "$workspace_root"/*) ;; *) echo "Unsafe Ant work directory" >&2; exit 2 ;; esac
+              test "$LOCAL_DROP_DIR" = "$workspace_root/maven-publishing/drop"
               ant -Dcdo.drop.location="$LOCAL_DROP_DIR" -Dcdo.drop.id="$DROP_ID" \
-                -Dwork.dir="$CDO_AGGR_WORK_DIR" -f releng/org.eclipse.emf.cdo.releng/central/build.xml drop-info
+                -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$CDO_AGGR_WORK_DIR" \
+                -f releng/org.eclipse.emf.cdo.releng/central/build.xml drop-info
             '''
           }
           }
@@ -113,35 +182,90 @@ pipeline {
       steps {
         script {
           def aggregator
-          def cbiDir = "${env.WORKSPACE}/cbi"
-          withEnv(["CBI_URL=${CBI_AGGREGATOR_URL}", "CBI_SHA256=${CBI_AGGREGATOR_SHA256}", "CBI_DIR=${cbiDir}"]) {
+          def cbiDir = "${env.CDO_WORKSPACE_ROOT}/cbi"
+          withEnv(["CBI_URL=${CBI_AGGREGATOR_URL}", "CBI_SHA256=${CBI_AGGREGATOR_SHA256}", "CBI_DIR=${cbiDir}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
               aggregator = sh(returnStdout: true, script: '''
                 set -eu
+                workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+                assert_workspace_path() {
+                  candidate=$1
+                  test -n "$candidate" || { echo "Refusing an empty output path" >&2; return 1; }
+                  case "$candidate" in "$workspace_root"/*) ;; *) echo "Output path is outside the workspace: $candidate" >&2; return 1 ;; esac
+                  resolved=$(realpath -m -- "$candidate")
+                  test "$resolved" = "$candidate" || { echo "Output path uses a symlink or non-canonical component: $candidate" >&2; return 1; }
+                }
+                assert_archive_paths() {
+                  awk 'BEGIN { bad = 0 } /^\// || /^[A-Za-z]:/ || index($0, "\\") { bad = 1 } { n = split($0, parts, "/"); for (i = 1; i <= n; i++) if (parts[i] == "..") bad = 1; if (seen[$0]++) bad = 1 } END { exit bad }' "$1"
+                }
+                assert_archive_types() {
+                  awk 'NF && $1 ~ /^[bcdhlps-]/ { type = substr($1, 1, 1); if (type != "-" && type != "d") bad = 1 } END { exit bad }' "$1"
+                }
+                assert_workspace_path "$CBI_DIR"
+                assert_workspace_path "$CBI_DIR/image"
+                assert_workspace_path "$CBI_DIR/distribution"
+                assert_workspace_path "$CBI_DIR/archive.list"
+                assert_workspace_path "$CBI_DIR/archive.info"
+                rm -rf "$CBI_DIR"
                 mkdir -p "$CBI_DIR/image"
                 archive="$CBI_DIR/distribution"
-                curl --fail --location --retry 3 --silent --show-error "$CBI_URL" -o "$archive"
+                archive_list="$CBI_DIR/archive.list"
+                archive_info="$CBI_DIR/archive.info"
+                curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --fail --location --retry 3 --silent --show-error "$CBI_URL" -o "$archive"
                 printf '%s  %s\\n' "$CBI_SHA256" "$archive" | sha256sum --check --status -
                 case "$CBI_URL" in
-                  *.zip) unzip -q "$archive" -d "$CBI_DIR/image" ;;
-                  *.tar.gz|*.tgz) tar -xzf "$archive" -C "$CBI_DIR/image" ;;
-                  *.tar.xz) tar -xJf "$archive" -C "$CBI_DIR/image" ;;
+                  *.zip)
+                    unzip -Z1 "$archive" > "$archive_list"
+                    assert_archive_paths "$archive_list"
+                    zipinfo -l "$archive" > "$archive_info"
+                    assert_archive_types "$archive_info"
+                    unzip -q "$archive" -d "$CBI_DIR/image"
+                    ;;
+                  *.tar.gz|*.tgz)
+                    tar -tzf "$archive" > "$archive_list"
+                    assert_archive_paths "$archive_list"
+                    tar -tvzf "$archive" > "$archive_info"
+                    assert_archive_types "$archive_info"
+                    tar -xzf "$archive" -C "$CBI_DIR/image"
+                    ;;
+                  *.tar.xz)
+                    tar -tJf "$archive" > "$archive_list"
+                    assert_archive_paths "$archive_list"
+                    tar -tJvf "$archive" > "$archive_info"
+                    assert_archive_types "$archive_info"
+                    tar -xJf "$archive" -C "$CBI_DIR/image"
+                    ;;
                   *) echo "Unsupported CBI archive format; use .zip, .tar.gz, .tgz, or .tar.xz" >&2; exit 2 ;;
                 esac
+                if find "$CBI_DIR/image" -type l -print -quit | grep -q .; then
+                  echo "Symlink found after CBI archive extraction" >&2
+                  exit 3
+                fi
                 candidate=$(find "$CBI_DIR/image" -type f \( -name cbiAggrc -o -name cbiAggr \) -print -quit)
                 if [ -z "$candidate" ]; then
                   echo "Pinned CBI archive does not contain cbiAggr or cbiAggrc" >&2
                   exit 3
                 fi
+                assert_workspace_path "$candidate"
                 chmod +x "$candidate"
                 printf '%s\\n' "$candidate"
               ''').trim()
             }
           }
-          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}"]) {
+          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
           withAnt(installation: 'apache-ant-latest') {
             sh '''
               set -eu
-              ant -Dcdo.drop.location="$LOCAL_DROP_DIR" -Dwork.dir="$AGGR_WORK_DIR" \
+              workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+              for output_path in "$LOCAL_DROP_DIR" "$AGGR_WORK_DIR" "$CBI_AGGREGATOR" "$workspace_root/.cdo-aggregation-helper/classes"; do
+                test -n "$output_path"
+                case "$output_path" in "$workspace_root"/*) ;; *) echo "Unsafe workspace path: $output_path" >&2; exit 2 ;; esac
+                test "$(realpath -m -- "$output_path")" = "$output_path" || { echo "Symlink or non-canonical workspace path: $output_path" >&2; exit 2; }
+              done
+              if find "$LOCAL_DROP_DIR" -type l -print -quit | grep -q .; then
+                echo "Downloaded drop contains a symlink" >&2
+                exit 2
+              fi
+              ant -Dcdo.drop.location="$LOCAL_DROP_DIR" -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" \
                 -Dcbi.aggregator="$CBI_AGGREGATOR" -Dpublishing.mode="$PUBLISHING_MODE" \
                 -f releng/org.eclipse.emf.cdo.releng/central/build.xml clean-build consumer-dependency-tree
             '''
@@ -151,27 +275,179 @@ pipeline {
       }
     }
 
-    stage('Publishing boundary') {
+    stage('Check Maven Central coordinates') {
       when {
-        expression { params.PUBLISHING_MODE == 'PUBLISH' }
+        expression { params.PUBLISHING_MODE == 'PACKAGE_FOR_CENTRAL' }
+      }
+      steps {
+        withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+          sh '''
+            set -eu
+            workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+            case "$STAGING_DIR" in "$workspace_root"/*) ;; *) echo "Unsafe staging path" >&2; exit 2 ;; esac
+            test "$(realpath -m -- "$STAGING_DIR")" = "$STAGING_DIR"
+            if find "$STAGING_DIR" -type l -print -quit | grep -q .; then
+              echo "Staging contains a symlink" >&2
+              exit 2
+            fi
+            pom_count=$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)
+            test "$pom_count" -eq 12
+            find "$STAGING_DIR/org" -name '*.pom' -type f -print | while IFS= read -r pom; do
+              version_dir=$(dirname "$pom")
+              artifact_dir=$(dirname "$version_dir")
+              artifact=$(basename "$artifact_dir")
+              version=$(basename "$version_dir")
+              relative=${pom#"$STAGING_DIR"/}
+              group_path=$(dirname "$(dirname "$(dirname "$relative")")")
+              group=$(printf '%s' "$group_path" | tr '/' '.')
+              coordinate="$group:$artifact:$version"
+              url="https://repo.maven.apache.org/maven2/$group_path/$artifact/$version/$artifact-$version.pom"
+              status=$(curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --silent --show-error --output /dev/null --write-out '%{http_code}' "$url") || { echo "Central version check failed for $coordinate" >&2; exit 2; }
+              case "$status" in
+                404) ;;
+                200) echo "Maven Central coordinate already exists: $coordinate" >&2; exit 3 ;;
+                *) echo "Maven Central returned HTTP $status for $coordinate; refusing to infer absence" >&2; exit 4 ;;
+              esac
+            done
+          '''
+        }
+      }
+    }
+
+    stage('Sign and package for Central') {
+      when {
+        expression { params.PUBLISHING_MODE == 'PACKAGE_FOR_CENTRAL' }
       }
       steps {
         script {
-          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "MAVEN_UPLOADER=${MAVEN_UPLOADER}"]) {
-          withCredentials([
-            usernamePassword(credentialsId: PUBLISH_CREDENTIALS_ID,
-              usernameVariable: 'MAVEN_CENTRAL_USERNAME', passwordVariable: 'MAVEN_CENTRAL_PASSWORD'),
-            string(credentialsId: GPG_KEY_CREDENTIALS_ID, variable: 'MAVEN_GPG_KEY_ID'),
-            string(credentialsId: GPG_PASSPHRASE_CREDENTIALS_ID, variable: 'MAVEN_GPG_PASSPHRASE')]) {
-            withAnt(installation: 'apache-ant-latest') {
+          if (!GPG_KEY_FILE_CREDENTIAL_ID?.trim() || !GPG_EXPECTED_PRIMARY_FINGERPRINT?.trim()) {
+            error('Configure GPG_KEY_FILE_CREDENTIAL_ID and GPG_EXPECTED_PRIMARY_FINGERPRINT after confirming them with Eclipse administrators')
+          }
+          def signingCredentials = [file(credentialsId: GPG_KEY_FILE_CREDENTIAL_ID, variable: 'MAVEN_GPG_KEY_FILE')]
+          if (GPG_PASSPHRASE_CREDENTIAL_ID?.trim()) {
+            signingCredentials << string(credentialsId: GPG_PASSPHRASE_CREDENTIAL_ID, variable: 'MAVEN_GPG_PASSPHRASE')
+          }
+          withCredentials(signingCredentials) {
+            withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "MAVEN_SIGNER_REPO=${env.CDO_AGGR_WORK_DIR}/maven-central-signer-repository", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
               sh '''
                 set -eu
-                ant -Dpublishing.mode=PUBLISH -Dcdo.drop.location="$LOCAL_DROP_DIR" \
-                  -Dwork.dir="$AGGR_WORK_DIR" \
-                  -Dmaven.uploader="$MAVEN_UPLOADER" -f releng/org.eclipse.emf.cdo.releng/central/build.xml publish
+                set +x
+                command -v gpg >/dev/null 2>&1 && command -v gpgconf >/dev/null 2>&1 || { echo "GnuPG and gpgconf are required on this Jenkins agent" >&2; exit 6; }
+                workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+                assert_workspace_path() {
+                  candidate=$1
+                  test -n "$candidate" || { echo "Refusing an empty output path" >&2; return 1; }
+                  case "$candidate" in "$workspace_root"/*) ;; *) echo "Output path is outside the workspace: $candidate" >&2; return 1 ;; esac
+                  resolved=$(realpath -m -- "$candidate")
+                  test "$resolved" = "$candidate" || { echo "Output path uses a symlink or non-canonical component: $candidate" >&2; return 1; }
+                }
+                assert_workspace_path "$STAGING_DIR"
+                assert_workspace_path "$CENTRAL_REPO"
+                assert_workspace_path "$MAVEN_SIGNER_REPO"
+                if find "$STAGING_DIR" -type l -print -quit | grep -q .; then
+                  echo "Staging contains a symlink" >&2
+                  exit 2
+                fi
+                for generated_repository in "$CENTRAL_REPO" "$MAVEN_SIGNER_REPO"; do
+                  if [ -e "$generated_repository" ] && find "$generated_repository" -type l -print -quit | grep -q .; then
+                    echo "Generated Maven repository contains a symlink: $generated_repository" >&2
+                    exit 2
+                  fi
+                done
+                mkdir -p "$CENTRAL_REPO"
+                mkdir -p "$MAVEN_SIGNER_REPO"
+                find "$STAGING_DIR/org" -name '*.pom' -type f -print | while IFS= read -r pom; do
+                  version_dir=$(dirname "$pom")
+                  artifact_dir=$(dirname "$version_dir")
+                  artifact=$(basename "$artifact_dir")
+                  version=$(basename "$version_dir")
+                  main="$version_dir/$artifact-$version.jar"
+                  sources="$version_dir/$artifact-$version-sources.jar"
+                  javadoc="$version_dir/$artifact-$version-javadoc.jar"
+                  test -s "$main" && test -s "$sources" && test -s "$javadoc"
+                  mvn --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" \
+                    org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file \
+                    -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" \
+                    -Dgpg.keyFingerprint="$GPG_FINGERPRINT" \
+                    -Dfile="$main" -DpomFile="$pom" -Dsources="$sources" -Djavadoc="$javadoc" \
+                    -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
+                done
+                if find "$CENTRAL_REPO" -type l -print -quit | grep -q .; then
+                  echo "Signed local repository contains a symlink" >&2
+                  exit 2
+                fi
+                find "$CENTRAL_REPO/org/eclipse/cdo" -type f -name '*.asc' -print | while IFS= read -r signature; do
+                  relative=${signature#"$CENTRAL_REPO"/}
+                  case "$relative" in org/eclipse/cdo/*) ;; *) echo "Unexpected signed repository path: $relative" >&2; exit 3 ;; esac
+                  assert_workspace_path "$STAGING_DIR/$relative"
+                  mkdir -p "$STAGING_DIR/$(dirname "$relative")"
+                  cp "$signature" "$STAGING_DIR/$relative"
+                done
+                if find "$STAGING_DIR" -type l -print -quit | grep -q .; then
+                  echo "Signed staging contains a symlink" >&2
+                  exit 2
+                fi
               '''
             }
           }
+          withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "BUNDLE_PATH=${env.CDO_WORKSPACE_ROOT}/maven-publishing/cdo-maven-central-deployment.zip", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+            sh '''
+              set -eu
+              set +x
+              workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+              for output_path in "$STAGING_DIR" "$BUNDLE_PATH" "$STAGING_DIR/maven-publishing-summary.properties"; do
+                test -n "$output_path"
+                case "$output_path" in "$workspace_root"/*) ;; *) echo "Unsafe workspace path: $output_path" >&2; exit 2 ;; esac
+                test "$(realpath -m -- "$output_path")" = "$output_path" || { echo "Symlink or non-canonical workspace path: $output_path" >&2; exit 2; }
+              done
+              if find "$STAGING_DIR" -type l -print -quit | grep -q .; then
+                echo "Staging contains a symlink" >&2
+                exit 2
+              fi
+              test "$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)" -eq 12
+              test "$(find "$STAGING_DIR/org" -name '*.jar' -type f | wc -l)" -eq 36
+              test "$(find "$STAGING_DIR/org" -name '*.asc' -type f | wc -l)" -eq 48
+              mkdir -p "$(dirname "$BUNDLE_PATH")"
+              rm -f "$BUNDLE_PATH"
+              (cd "$STAGING_DIR" && zip -q -r "$BUNDLE_PATH" org)
+              unzip -Z1 "$BUNDLE_PATH" | while IFS= read -r entry; do
+                case "$entry" in
+                  org/|org/eclipse/|org/eclipse/cdo/|org/eclipse/cdo/*|org/eclipse/net4j/|org/eclipse/net4j/*) ;;
+                  *) echo "Unexpected deployment ZIP entry: $entry" >&2; exit 5 ;;
+                esac
+              done
+              zip_sha256=$(sha256sum "$BUNDLE_PATH" | awk '{print $1}')
+              printf 'deployment.zip=%s\ndeployment.zip.sha256=%s\ncentral.publication.performed=false\n' "$(basename "$BUNDLE_PATH")" "$zip_sha256" >> "$STAGING_DIR/maven-publishing-summary.properties"
+              echo "Deployment bundle SHA-256: $zip_sha256"
+            '''
+          }
+          withCredentials([file(credentialsId: GPG_KEY_FILE_CREDENTIAL_ID, variable: 'MAVEN_GPG_KEY_FILE')]) {
+            withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "BUNDLE_PATH=${env.CDO_WORKSPACE_ROOT}/maven-publishing/cdo-maven-central-deployment.zip", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "GPG_EXECUTABLE=${GPG_EXECUTABLE}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+              withAnt(installation: 'apache-ant-latest') {
+                sh '''
+                  set -eu
+                  set +x
+                  workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+                  for output_path in "$STAGING_DIR" "$CENTRAL_REPO" "$AGGR_WORK_DIR" "$BUNDLE_PATH" "$AGGR_WORK_DIR/maven-publishing-package-summary.properties" "$workspace_root/.cdo-aggregation-helper/classes"; do
+                    test -n "$output_path"
+                    case "$output_path" in "$workspace_root"/*) ;; *) echo "Unsafe workspace path: $output_path" >&2; exit 2 ;; esac
+                    test "$(realpath -m -- "$output_path")" = "$output_path" || { echo "Symlink or non-canonical workspace path: $output_path" >&2; exit 2; }
+                  done
+                  if find "$STAGING_DIR" "$CENTRAL_REPO" -type l -print -quit | grep -q .; then
+                    echo "Package inputs contain a symlink" >&2
+                    exit 2
+                  fi
+                  ant -Dpublishing.mode=PACKAGE_FOR_CENTRAL \\
+                    -Dworkspace.root="$CDO_WORKSPACE_ROOT" \\
+                    -Dwork.dir="$AGGR_WORK_DIR" \\
+                    -Ddeployment.zip="$BUNDLE_PATH" \\
+                    -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" \\
+                    -Dgpg.key.file="$MAVEN_GPG_KEY_FILE" \\
+                    -Dgpg.executable="$GPG_EXECUTABLE" \\
+                    -f releng/org.eclipse.emf.cdo.releng/central/build.xml verify-package
+                '''
+              }
+            }
           }
         }
       }
@@ -180,8 +456,16 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts artifacts: 'maven-publishing/work/**/maven-publishing-summary.properties',
+      archiveArtifacts artifacts: 'maven-publishing/work/staging/maven-publishing-summary.properties,maven-publishing/work/maven-publishing-package-summary.properties,maven-publishing/work/maven-central-readiness-audit.txt',
         allowEmptyArchive: true
+    }
+
+    success {
+      script {
+        if (params.PUBLISHING_MODE == 'PACKAGE_FOR_CENTRAL') {
+          archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-deployment.zip', allowEmptyArchive: false
+        }
+      }
     }
   }
 }

@@ -83,8 +83,8 @@ pipeline {
                 exit 7
               }
               primary_fingerprint=$(printf '%s\\n' "$key_data" | awk -F: '
-                $1 == "pub" { primary_count++; record = "pub"; next }
-                $1 == "sub" { record = "sub"; next }
+                $1 == "pub" || $1 == "sec" { primary_count++; record = "pub"; next }
+                $1 == "sub" || $1 == "ssb" { record = "sub"; next }
                 $1 == "fpr" {
                   if (record == "pub") {
                     primary_fingerprint_count++

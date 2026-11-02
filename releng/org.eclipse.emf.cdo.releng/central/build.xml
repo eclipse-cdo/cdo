@@ -22,7 +22,7 @@
 	<property name="publishing.mode" value="VALIDATE_ONLY" />
 	
 	
-	<!-- Read-only source cache for Javadoc's Eclipse/EMF classpath. -->
+	<!-- Source cache used only to isolate and populate the consumer-test Maven repository. -->
 	<property name="maven.local.repository" location="${user.home}/.m2/repository" />
 	<tstamp>
 		<format property="run.id" pattern="yyyyMMdd-HHmmss-SSS" />
@@ -60,7 +60,6 @@
 	<property name="consumer.work.dir" location="${work.dir}/consumer-test" />
 	<property name="consumer.versions.file" location="${consumer.work.dir}/cdo-consumer-versions.properties" />
 	<property name="consumer.project.dir" location="${basedir}/../consumer-test" />
-	<property name="sources.javadoc.dir" location="${work.dir}/sources-javadoc" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
 
@@ -210,14 +209,15 @@
 		</exec>
 	</target>
 
-	<target name="native-classifier-diagnostics" depends="execute-clean-build,compile-helper">
+	<target name="native-classifier-validation" depends="execute-clean-build,compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
-			<arg value="native-classifier-diagnostics" />
+			<arg value="native-classifier-validation" />
 			<arg value="${cdo.maven.repository}" />
+			<arg value="${metadata.file}" />
 		</java>
 	</target>
 
-	<target name="overlay" depends="validate-workspace,native-classifier-diagnostics">
+	<target name="overlay" depends="validate-workspace,native-classifier-validation">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="overlay" />
 			<arg value="${build.root}/final" />
@@ -234,25 +234,12 @@
 		</java>
 	</target>
 
-	<target name="sources-javadoc" depends="check-drop,verify,compile-helper">
-		<available file="${cdo.maven.repository}" type="dir" property="sources.repository.available" />
-		<fail unless="sources.repository.available" message="Final Maven repository does not exist: ${cdo.maven.repository}" />
-		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
-			<arg value="sources-javadoc" />
-			<arg value="${cdo.drop.location}" />
-			<arg value="${cdo.maven.repository}" />
-			<arg value="${sources.javadoc.dir}" />
-			<arg value="${maven.local.repository}" />
-		</java>
-		<echo message="Generated source/Javadoc classifiers in ${cdo.maven.repository}" />
-	</target>
-
-	<target name="checksums" depends="sources-javadoc">
+	<target name="checksums" depends="verify">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="checksums" />
 			<arg value="${cdo.maven.repository}" />
 		</java>
-		<echo message="Generated and validated classifier checksums in ${cdo.maven.repository}" />
+		<echo message="Preserved or generated and validated classifier checksums in ${cdo.maven.repository}" />
 	</target>
 
 	<target name="prepare-maven-local" depends="validate-workspace">
@@ -350,6 +337,13 @@
 	<target name="policy-test" depends="compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="policy-test" />
+		</java>
+	</target>
+
+	<target name="native-classifier-test" depends="validate-workspace">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="native-classifier-test" />
+			<arg value="${workspace.root}" />
 		</java>
 	</target>
 

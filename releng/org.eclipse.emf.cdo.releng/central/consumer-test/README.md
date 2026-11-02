@@ -28,7 +28,7 @@ ant -Dcdo.maven.repository=C:/path/to/repository/final -Dwork.dir=C:/path/to/wor
 ```
 
 The two Maven properties intentionally have different semantics:
-`maven.local.repository` is the read-only source cache used by Javadoc, while
+`maven.local.repository` is the read-only source cache, while
 `maven.consumer.repository` is the isolated Maven cache used by the consumer and
 dependency-tree invocations. Before Maven starts, Ant copies the former into
 the latter below `work.dir`. This avoids stale or locked global JARs on
@@ -51,11 +51,12 @@ The tests instantiate client/common APIs (`ManagedContainer` and `CDOUtil`)
 and server/H2 APIs (`H2Adapter` and H2's `JdbcDataSource`). This is deliberately
 a smoke test, not a full embedded CDO repository/server integration test.
 
-The aggregation also produces matching non-empty `-sources.jar` and
-`-javadoc.jar` classifiers for all twelve CDO/Net4j artifacts. It also creates
-`.md5`, `.sha1`, `.sha256`, and `.sha512` sidecars for each classifier and
-validates all 96 values before the consumer phase. PGP signatures and Maven
-Central publication remain separate release steps. The dependency
+The CBI aggregation produces the `-sources.jar` and README-based
+`-javadoc.jar` classifiers for all twelve CDO/Net4j artifacts. The publishing
+workflow validates these native classifiers and preserves correct existing
+`.md5`, `.sha1`, `.sha256`, and `.sha512` sidecars, filling only missing values.
+The readiness audit validates all 96 classifier checksums. PGP signatures and
+Maven Central publication remain separate release steps. The dependency
 tree should show EMF artifacts under their published Maven coordinates and H2 only
 through this POM's explicit dependency; no CDO/Net4j dependency is expected to
 introduce the JDBC driver transitively. The fixed test prerequisites are H2

@@ -16,10 +16,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.tools.DocumentationTool;
-import javax.tools.JavaFileObject;
-import javax.tools.StandardJavaFileManager;
-import javax.tools.ToolProvider;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -42,8 +38,6 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.AccessDeniedException;
-import java.nio.file.FileSystemException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
@@ -71,9 +65,6 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarOutputStream;
-import java.util.jar.Manifest;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -108,12 +99,44 @@ public final class CDOAggregationTool
   {
   }
 
+  private static File singleVersionDirectory(File repository, String bundle)
+  {
+    File artifact = new File(repository, "org/eclipse/cdo/" + bundle);
+    File[] versions = artifact.listFiles(File::isDirectory);
+    if (versions == null || versions.length != 1)
+    {
+      throw new IllegalArgumentException("Expected one Maven version directory for " + bundle + " in " + artifact);
+    }
+
+    return versions[0];
+  }
+
+  private static void delete(File file) throws IOException
+  {
+    if (file.exists())
+    {
+      try (Stream<Path> stream = Files.walk(file.toPath()))
+      {
+        stream.sorted(Comparator.reverseOrder()).forEach(path -> {
+          try
+          {
+            Files.delete(path);
+          }
+          catch (IOException e)
+          {
+            throw new RuntimeException(e);
+          }
+        });
+      }
+    }
+  }
+
   public static void main(String[] args) throws Exception
   {
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|overlay|verify|consumer-versions|sources-javadoc|native-classifier-diagnostics|checksums|audit|publish-check|publication-scope-check|verify-package|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|overlay|verify|consumer-versions|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -138,12 +161,12 @@ public final class CDOAggregationTool
       ConsumerVersionsCommand.execute(args);
       break;
 
-    case "sources-javadoc":
-      SourcesJavadocCommand.execute(args);
+    case "native-classifier-validation":
+      NativeClassifierValidationCommand.execute(args);
       break;
 
-    case "native-classifier-diagnostics":
-      NativeClassifierDiagnosticsCommand.execute(args);
+    case "native-classifier-test":
+      nativeClassifierTest(args);
       break;
 
     case "checksums":
@@ -563,440 +586,6 @@ public final class CDOAggregationTool
   }
 
   /**
-   * Implements {@code sources-javadoc}: args are command, drop, final repository, work directory, Maven repository.
-   *
-   * @author Eike Stepper
-   */
-  private static final class SourcesJavadocCommand
-  {
-    private static final Set<String> REQUIRED = Set.of( //
-        "org.eclipse.core.expressions", //
-        "org.eclipse.core.jobs", //
-        "org.eclipse.core.runtime", //
-        "org.eclipse.equinox.app", //
-        "org.eclipse.equinox.common", //
-        "org.eclipse.equinox.preferences", //
-        "org.eclipse.equinox.registry", //
-        "org.eclipse.osgi", //
-        "org.eclipse.osgi.services", //
-        "org.osgi.service.component", //
-        "org.osgi.service.log", //
-        "org.osgi.service.prefs");
-
-    public static void execute(String[] args) throws Exception
-    {
-      if (args.length != 5)
-      {
-        throw new IllegalArgumentException("sources-javadoc requires drop, finalRepository, workDirectory, mavenRepository");
-      }
-
-      DropLocation drop = DropLocation.parse(args[1]);
-      File repository = requireDirectory(args[2], "Maven repository");
-      File work = new File(args[3]);
-      requireWorkspaceOutput(repository, "Maven repository");
-      requireWorkspaceOutput(work, "sources/Javadoc work directory");
-      rejectSymbolicLinks(repository.toPath(), "Maven repository");
-      File dropPlugins = drop.materializePlugins(new File(work, "drop-plugins"));
-      Files.createDirectories(work.toPath());
-
-      List<File> plugins = Arrays.asList(dropPlugins.listFiles((dir, name) -> name.endsWith(".jar")));
-      List<File> binaries = new ArrayList<>();
-      List<File> classpathJars = new ArrayList<>();
-
-      try (Stream<Path> stream = Files.walk(repository.toPath()))
-      {
-        stream.filter(p -> p.toString().endsWith(".jar")).forEach(p -> classpathJars.add(p.toFile()));
-      }
-
-      classpathJars.addAll(plugins);
-      File localMavenRepository = new File(args[4]);
-      if (localMavenRepository.isDirectory())
-      {
-        addLatestP2Jars(localMavenRepository, classpathJars);
-      }
-      else
-      {
-        throw new IllegalStateException("Maven dependency cache is not available for Javadoc classpath: " + localMavenRepository);
-      }
-
-      for (String bundle : BUNDLES)
-      {
-        File binary = findBundle(plugins, bundle);
-        binaries.add(binary);
-
-        Manifest binaryManifest = manifest(binary);
-        String binaryVersion = binaryManifest.getMainAttributes().getValue("Bundle-Version");
-
-        File source = findSource(plugins, bundle, binaryVersion);
-        if (source == null)
-        {
-          throw new IllegalArgumentException("No matching source plugin for " + bundle + " version " + binaryVersion);
-        }
-
-        File versionDirectory = singleVersionDirectory(repository, bundle);
-        String version = versionDirectory.getName();
-
-        File sourceJar = new File(versionDirectory, bundle + "-" + version + "-sources.jar");
-        File javadocJar = new File(versionDirectory, bundle + "-" + version + "-javadoc.jar");
-        File sourceDirectory = new File(work, bundle + "/sources");
-
-        extractSources(source, sourceDirectory);
-        jarDirectory(sourceDirectory, sourceJar);
-        generateJavadoc(sourceDirectory, classpathJars, work, bundle, javadocJar);
-        validateClassifier(sourceJar, true, bundle);
-        validateClassifier(javadocJar, false, bundle);
-        System.out.println("Source/Javadoc: " + bundle + " <- " + source.getName());
-      }
-    }
-
-    private static void addLatestP2Jars(File localRepository, List<File> classpathJars) throws IOException
-    {
-      Map<String, File> latest = new LinkedHashMap<>();
-      Path p2 = localRepository.toPath().resolve("p2/osgi/bundle");
-      if (!Files.isDirectory(p2))
-      {
-        return;
-      }
-
-      try (Stream<Path> stream = Files.list(p2))
-      {
-        stream.filter(Files::isDirectory).forEach(bundleDirectory -> {
-          String bsn = bundleDirectory.getFileName().toString();
-          if (!REQUIRED.contains(bsn))
-          {
-            return;
-          }
-
-          try
-          {
-            File selected;
-            try (Stream<Path> jars = Files.walk(bundleDirectory))
-            {
-              selected = jars //
-                  .filter(p -> p.toString().endsWith(".jar") && !p.toString().contains("source") && !p.toString().contains("javadoc")) //
-                  .max(Comparator.comparingLong(p -> p.toFile().lastModified())) //
-                  .map(Path::toFile) //
-                  .orElse(null);
-            }
-
-            if (selected != null)
-            {
-              latest.put(bsn, selected);
-            }
-          }
-          catch (IOException e)
-          {
-            throw new RuntimeException(e);
-          }
-        });
-      }
-
-      classpathJars.addAll(latest.values());
-      addLatestMavenGroup(localRepository, "org/eclipse/emf", classpathJars);
-    }
-
-    private static void addLatestMavenGroup(File localRepository, String groupPath, List<File> classpathJars) throws IOException
-    {
-      Path group = localRepository.toPath().resolve(groupPath);
-      if (!Files.isDirectory(group))
-      {
-        return;
-      }
-
-      try (Stream<Path> stream = Files.list(group))
-      {
-        stream.filter(Files::isDirectory).forEach(artifact -> {
-          try
-          {
-            File selected;
-
-            try (Stream<Path> jars = Files.walk(artifact))
-            {
-              selected = jars.filter(p -> p.toString().endsWith(".jar") && !p.toString().contains("source") && !p.toString().contains("javadoc"))
-                  .max(Comparator.comparingLong(p -> p.toFile().lastModified())).map(Path::toFile).orElse(null);
-            }
-
-            if (selected != null)
-            {
-              classpathJars.add(selected);
-            }
-          }
-          catch (IOException e)
-          {
-            throw new RuntimeException(e);
-          }
-        });
-      }
-    }
-
-    private static File findBundle(List<File> plugins, String bundle) throws Exception
-    {
-      File result = null;
-
-      for (File file : plugins)
-      {
-        Manifest m = manifest(file);
-        if (bundle.equals(symbolicName(m.getMainAttributes().getValue("Bundle-SymbolicName"))))
-        {
-          if (result != null)
-          {
-            throw new IllegalArgumentException("Multiple binary plugins for " + bundle);
-          }
-
-          result = file;
-        }
-      }
-
-      if (result == null)
-      {
-        throw new IllegalArgumentException("Missing binary plugin for " + bundle);
-      }
-
-      return result;
-    }
-
-    private static File findSource(List<File> plugins, String bundle, String version) throws Exception
-    {
-      File result = null;
-
-      for (File file : plugins)
-      {
-        Manifest m = manifest(file);
-
-        String declaration = m.getMainAttributes().getValue("Eclipse-SourceBundle");
-        if (declaration != null && bundle.equals(symbolicName(declaration)))
-        {
-          String sourceVersion = declaration.replaceFirst(".*version=\\\"([^\\\"]+)\\\".*", "$1");
-          if (version.equals(sourceVersion))
-          {
-            if (result != null)
-            {
-              throw new IllegalArgumentException("Multiple matching source plugins for " + bundle + " " + version);
-            }
-
-            result = file;
-          }
-        }
-      }
-
-      return result;
-    }
-
-    private static String symbolicName(String value)
-    {
-      if (value == null)
-      {
-        return null;
-      }
-
-      int separator = value.indexOf(';');
-      return (separator < 0 ? value : value.substring(0, separator)).trim();
-    }
-
-    private static Manifest manifest(File jar) throws IOException
-    {
-      try (JarFile jf = new JarFile(jar))
-      {
-        return jf.getManifest();
-      }
-    }
-
-    private static File singleVersionDirectory(File repository, String bundle)
-    {
-      File artifact = new File(repository, "org/eclipse/cdo/" + bundle);
-      File[] versions = artifact.listFiles(File::isDirectory);
-      if (versions == null || versions.length != 1)
-      {
-        throw new IllegalArgumentException("Expected one Maven version directory for " + bundle + " in " + artifact);
-      }
-
-      return versions[0];
-    }
-
-    private static void extractSources(File sourceJar, File target) throws IOException
-    {
-      delete(target);
-      Files.createDirectories(target.toPath());
-
-      int javaFiles = 0;
-
-      try (JarFile jf = new JarFile(sourceJar))
-      {
-        Enumeration<JarEntry> entries = jf.entries();
-
-        while (entries.hasMoreElements())
-        {
-          JarEntry entry = entries.nextElement();
-          if (entry.isDirectory() || entry.getName().startsWith("META-INF/") && !entry.getName().equals("META-INF/services/"))
-          {
-            continue;
-          }
-
-          File out = new File(target, entry.getName());
-          Files.createDirectories(out.toPath().getParent());
-
-          try (InputStream in = jf.getInputStream(entry))
-          {
-            Files.copy(in, out.toPath());
-          }
-
-          if (entry.getName().endsWith(".java"))
-          {
-            javaFiles++;
-          }
-        }
-      }
-
-      if (javaFiles == 0)
-      {
-        throw new IllegalArgumentException("Source plugin is empty: " + sourceJar);
-      }
-    }
-
-    private static void jarDirectory(File directory, File jar) throws IOException
-    {
-      Files.createDirectories(jar.toPath().getParent());
-
-      try (JarOutputStream out = new JarOutputStream(new BufferedOutputStream(new FileOutputStream(jar))))
-      {
-        try (Stream<Path> stream = Files.walk(directory.toPath()))
-        {
-          stream.filter(Files::isRegularFile).sorted().forEach(path -> {
-            try
-            {
-              String name = directory.toPath().relativize(path).toString().replace(File.separatorChar, '/');
-              JarEntry entry = new JarEntry(name);
-              entry.setTime(0L);
-              out.putNextEntry(entry);
-
-              Files.copy(path, out);
-              out.closeEntry();
-            }
-            catch (IOException e)
-            {
-              throw new RuntimeException(e);
-            }
-          });
-        }
-      }
-    }
-
-    private static void generateJavadoc(File sourceDirectory, List<File> classpathJars, File work, String bundle, File output) throws Exception
-    {
-      DocumentationTool tool = ToolProvider.getSystemDocumentationTool();
-      if (tool == null)
-      {
-        throw new IllegalStateException("No Javadoc tool is available in the running JDK");
-      }
-
-      File docs = new File(work, bundle + "/javadoc");
-      delete(docs);
-      Files.createDirectories(docs.toPath());
-      List<File> sources = new ArrayList<>();
-
-      try (Stream<Path> stream = Files.walk(sourceDirectory.toPath()))
-      {
-        stream.filter(p -> p.toString().endsWith(".java")).forEach(p -> sources.add(p.toFile()));
-      }
-
-      String classpath = classpathJars.stream().map(File::getAbsolutePath).reduce((a, b) -> a + File.pathSeparator + b).orElse("");
-      StandardJavaFileManager fm = tool.getStandardFileManager(null, null, StandardCharsets.UTF_8);
-
-      try
-      {
-        Iterable<? extends JavaFileObject> units = fm.getJavaFileObjectsFromFiles(sources);
-        List<String> options = Arrays.asList("-quiet", "-Xdoclint:none", "-source", "11", "-classpath", classpath, "-d", docs.getAbsolutePath());
-
-        Boolean ok = tool.getTask(new PrintWriter(System.err), fm, null, null, options, units).call();
-        if (!Boolean.TRUE.equals(ok))
-        {
-          throw new IllegalArgumentException("Javadoc generation failed for " + bundle);
-        }
-      }
-      finally
-      {
-        try
-        {
-          fm.close();
-        }
-        catch (IOException e)
-        {
-          // JDK 21 on Windows can report a stale ZipFS entry while closing a
-          // file manager. The helper process exits immediately, releasing it.
-          if (!(e instanceof FileSystemException) && !(e instanceof AccessDeniedException))
-          {
-            throw e;
-          }
-        }
-      }
-
-      jarDirectory(docs, output);
-    }
-
-    private static void validateClassifier(File jar, boolean sources, String bundle) throws IOException
-    {
-      if (!jar.isFile() || jar.length() == 0)
-      {
-        throw new IllegalArgumentException("Empty classifier JAR for " + bundle + ": " + jar);
-      }
-
-      try (JarFile jf = new JarFile(jar))
-      {
-        Set<String> entries = new LinkedHashSet<>();
-        Enumeration<JarEntry> enumeration = jf.entries();
-        while (enumeration.hasMoreElements())
-        {
-          JarEntry entry = enumeration.nextElement();
-          if (!entry.isDirectory())
-          {
-            entries.add(entry.getName());
-          }
-        }
-
-        if (sources)
-        {
-          if (entries.stream().noneMatch(name -> name.endsWith(".java")))
-          {
-            throw new IllegalArgumentException("Sources classifier contains no Java sources for " + bundle + ": " + jar);
-          }
-        }
-        else
-        {
-          boolean hasPackage = entries.stream().anyMatch(name -> name.endsWith("/package-summary.html"));
-          boolean hasClass = entries.stream().anyMatch(name -> name.contains("/") && name.endsWith(".html") && !name.endsWith("/package-summary.html")
-              && !name.endsWith("/package-use.html") && !name.endsWith("/package-tree.html"));
-          boolean hasJavadocIndex = entries.contains("index.html") && (entries.contains("element-list") || entries.contains("package-list"));
-          if (!hasJavadocIndex || !hasPackage || !hasClass)
-          {
-            throw new IllegalArgumentException("Javadoc classifier lacks standard entry points or API pages for " + bundle + ": " + jar);
-          }
-        }
-      }
-    }
-
-    private static void delete(File file) throws IOException
-    {
-      if (file.exists())
-      {
-        try (Stream<Path> stream = Files.walk(file.toPath()))
-        {
-          stream.sorted(Comparator.reverseOrder()).forEach(path -> {
-            try
-            {
-              Files.delete(path);
-            }
-            catch (IOException e)
-            {
-              throw new RuntimeException(e);
-            }
-          });
-        }
-      }
-    }
-
-  }
-
-  /**
    * Implements {@code checksums}: args are command and the final Maven
    * repository. Creates and validates MD5, SHA-1, SHA-256, and SHA-512
    * sidecars for all source and Javadoc classifiers.
@@ -1027,7 +616,7 @@ public final class CDOAggregationTool
       rejectSymbolicLinks(repository.toPath(), "Maven repository");
       for (String bundle : BUNDLES)
       {
-        File versionDirectory = SourcesJavadocCommand.singleVersionDirectory(repository, bundle);
+        File versionDirectory = singleVersionDirectory(repository, bundle);
         String version = versionDirectory.getName();
 
         for (String classifier : CLASSIFIERS)
@@ -1038,14 +627,14 @@ public final class CDOAggregationTool
             throw new IllegalArgumentException("Missing or empty classifier JAR: " + jar);
           }
 
-          writeChecksums(jar);
+          ensureChecksums(jar);
         }
       }
 
       validate(repository);
       int expectedJars = BUNDLES.size() * CLASSIFIERS.size();
       int expectedSidecars = expectedJars * ALGORITHMS.size();
-      System.out.println("Generated and validated " + expectedJars + " classifier JARs and " + expectedSidecars + " checksum files.");
+      System.out.println("Preserved or generated and validated " + expectedJars + " classifier JARs and " + expectedSidecars + " checksum files.");
     }
 
     private static void validate(File repository) throws Exception
@@ -1055,7 +644,7 @@ public final class CDOAggregationTool
 
       for (String bundle : BUNDLES)
       {
-        File versionDirectory = SourcesJavadocCommand.singleVersionDirectory(repository, bundle);
+        File versionDirectory = singleVersionDirectory(repository, bundle);
         String version = versionDirectory.getName();
 
         for (String classifier : CLASSIFIERS)
@@ -1077,7 +666,7 @@ public final class CDOAggregationTool
             }
 
             String actual = Files.readString(checksum.toPath(), StandardCharsets.UTF_8).trim();
-            if (!digest(jar, algorithm.getValue()).equals(actual))
+            if (!digest(jar, algorithm.getValue()).equalsIgnoreCase(actual))
             {
               throw new IllegalArgumentException("Checksum mismatch for " + jar + " (" + algorithm.getKey() + ")");
             }
@@ -1102,6 +691,27 @@ public final class CDOAggregationTool
       {
         File checksum = new File(file.getPath() + "." + algorithm.getKey());
         Files.writeString(checksum.toPath(), digest(file, algorithm.getValue()), StandardCharsets.UTF_8);
+      }
+    }
+
+    private static void ensureChecksums(File file) throws Exception
+    {
+      for (Map.Entry<String, String> algorithm : ALGORITHMS.entrySet())
+      {
+        File checksum = new File(file.getPath() + "." + algorithm.getKey());
+        String expected = digest(file, algorithm.getValue());
+        if (checksum.isFile())
+        {
+          String actual = Files.readString(checksum.toPath(), StandardCharsets.UTF_8).trim();
+          if (!expected.equalsIgnoreCase(actual))
+          {
+            throw new IllegalArgumentException("Existing CBI checksum is incorrect: " + checksum);
+          }
+        }
+        else
+        {
+          Files.writeString(checksum.toPath(), expected, StandardCharsets.UTF_8);
+        }
       }
     }
 
@@ -1240,7 +850,7 @@ public final class CDOAggregationTool
                 findings.add("Missing classifier checksum: " + checksum);
               }
               else if (!ChecksumsCommand.digest(classifierJar, ChecksumsCommand.ALGORITHMS.get(suffix)) //
-                  .equals(Files.readString(checksum.toPath(), StandardCharsets.UTF_8).trim()))
+                  .equalsIgnoreCase(Files.readString(checksum.toPath(), StandardCharsets.UTF_8).trim()))
               {
                 findings.add("Checksum mismatch: " + checksum);
               }
@@ -1336,7 +946,7 @@ public final class CDOAggregationTool
         findings.add("Expected exactly " + BUNDLES.size() + " CDO versions, found " + coordinates.size() + ": " + coordinates);
       }
 
-      SourcesJavadocCommand.delete(staging);
+      delete(staging);
       copyMavenStaging(repository, staging);
       Files.copy(metadataFile.toPath(), new File(staging, "cdo-build-metadata.properties").toPath());
       validatePublicationScope(staging, false);
@@ -1401,7 +1011,7 @@ public final class CDOAggregationTool
           findings.add("Missing checksum: " + checksum);
         }
         else if (!ChecksumsCommand.digest(file, algorithm.getValue()) //
-            .equals(Files.readString(checksum.toPath(), StandardCharsets.UTF_8).trim()))
+            .equalsIgnoreCase(Files.readString(checksum.toPath(), StandardCharsets.UTF_8).trim()))
         {
           findings.add("Checksum mismatch: " + checksum);
         }
@@ -1986,7 +1596,7 @@ public final class CDOAggregationTool
       securePath(publicKey, false);
       stopGpgAgent(gpg, importHome);
 
-      SourcesJavadocCommand.delete(importHome.toFile());
+      delete(importHome.toFile());
       gpg(gpg, verifyHome, "--import", publicKey.toString());
       if (!primaryFingerprints(gpg, verifyHome).equals(Set.of(expectedFingerprint)))
       {
@@ -2013,7 +1623,7 @@ public final class CDOAggregationTool
         stopGpgAgent(gpg, work.resolve("verify"));
       }
 
-      SourcesJavadocCommand.delete(work.toFile());
+      delete(work.toFile());
     }
   }
 
@@ -2568,7 +2178,7 @@ public final class CDOAggregationTool
         stopGpgAgent(gpgExecutable, secondHome);
       }
 
-      SourcesJavadocCommand.delete(work.toFile());
+      delete(work.toFile());
     }
   }
 
@@ -2816,7 +2426,204 @@ public final class CDOAggregationTool
     }
 
     rejectSymbolicLinks(target, "work directory");
-    SourcesJavadocCommand.delete(target.toFile());
+    delete(target.toFile());
+  }
+
+  private static void nativeClassifierTest(String[] args) throws Exception
+  {
+    if (args.length != 2)
+    {
+      throw new IllegalArgumentException("native-classifier-test requires a workspace root");
+    }
+
+    Path workspace = Paths.get(args[1]).toAbsolutePath().normalize();
+    if (!Files.isDirectory(workspace, LinkOption.NOFOLLOW_LINKS) || !workspace.equals(workspace.toRealPath()))
+    {
+      throw new IllegalArgumentException("Native classifier test workspace must be an existing non-symlink directory: " + workspace);
+    }
+
+    Path testRoot = Files.createTempDirectory(workspace, "cdo-native-classifier-test-").toRealPath();
+    requireSafeWorkspaceChild(testRoot.toString(), workspace.toString(), "native classifier test files");
+    String commit = "cdfa15b192bb09ae4aee4c479de839a3d153e5d2";
+    Map<String, String> metadata = Map.of("cdo.git.commit", commit);
+
+    try
+    {
+      Path validRepository = testRoot.resolve("valid");
+      createNativeClassifierFixture(validRepository, commit);
+      NativeClassifierValidationCommand.validate(validRepository.toFile(), metadata);
+      File existingChecksum = new File(singleVersionDirectory(validRepository.toFile(), BUNDLES.get(0)), BUNDLES.get(0) + "-1.0.0-sources.jar.sha256");
+      Files.writeString(existingChecksum.toPath(),
+          ChecksumsCommand.digest(new File(existingChecksum.getParentFile(), BUNDLES.get(0) + "-1.0.0-sources.jar"), "SHA-256"), StandardCharsets.UTF_8);
+      byte[] originalChecksum = Files.readAllBytes(existingChecksum.toPath());
+      ChecksumsCommand.execute(new String[] { "checksums", validRepository.toString() });
+      if (!Arrays.equals(originalChecksum, Files.readAllBytes(existingChecksum.toPath())))
+      {
+        throw new AssertionError("Correct CBI checksum sidecar was rewritten");
+      }
+
+      File incorrectChecksum = new File(singleVersionDirectory(validRepository.toFile(), BUNDLES.get(1)), BUNDLES.get(1) + "-1.0.0-javadoc.jar.sha1");
+      Files.writeString(incorrectChecksum.toPath(), "incorrect", StandardCharsets.UTF_8);
+      try
+      {
+        ChecksumsCommand.execute(new String[] { "checksums", validRepository.toString() });
+        throw new AssertionError("Incorrect preexisting checksum was accepted");
+      }
+      catch (IllegalArgumentException e)
+      {
+        if (!e.getMessage().contains("Existing CBI checksum is incorrect"))
+        {
+          throw e;
+        }
+      }
+
+      expectInvalidNativeFixture(testRoot, "missing-source", metadata, "Missing or empty sources JAR");
+      expectInvalidNativeFixture(testRoot, "empty-source-archive", metadata, "Missing or empty sources JAR");
+      expectInvalidNativeFixture(testRoot, "corrupt-source-archive", metadata, "Unreadable sources archive");
+      expectInvalidNativeFixture(testRoot, "empty-javadoc", metadata, "Missing or empty Javadoc JAR");
+      expectInvalidNativeFixture(testRoot, "corrupt-javadoc", metadata, "Unreadable Javadoc archive");
+      expectInvalidNativeFixture(testRoot, "mismatched-readme-artifact", metadata, "does not identify the expected source repository");
+      expectInvalidNativeFixture(testRoot, "mismatched-readme-revision", metadata, "does not identify the expected source repository");
+      expectInvalidNativeFixture(testRoot, "empty-java-source", metadata, "Empty Java source");
+      expectInvalidNativeFixture(testRoot, "mismatched-coordinate", metadata, "Unexpected native Maven coordinate");
+      expectInvalidNativeFixture(testRoot, "missing-pom", metadata, "Missing or empty POM");
+      expectInvalidNativeFixture(testRoot, "malformed-pom", metadata, null);
+
+      System.out.println("Native classifier tests passed for valid artifacts and eleven missing, empty, corrupt, or mismatched cases.");
+    }
+    finally
+    {
+      delete(testRoot.toFile());
+    }
+  }
+
+  private static void expectInvalidNativeFixture(Path testRoot, String scenario, Map<String, String> metadata, String expectedMessage) throws Exception
+  {
+    Path repository = testRoot.resolve(scenario);
+    String commit = metadata.get("cdo.git.commit");
+    createNativeClassifierFixture(repository, commit);
+    String artifactId = BUNDLES.get(0);
+    File versionDirectory = singleVersionDirectory(repository.toFile(), artifactId);
+    String baseName = artifactId + "-1.0.0";
+
+    switch (scenario)
+    {
+    case "missing-source":
+      Files.delete(new File(versionDirectory, baseName + "-sources.jar").toPath());
+      break;
+
+    case "empty-source-archive":
+      Files.write(new File(versionDirectory, baseName + "-sources.jar").toPath(), new byte[0]);
+      break;
+
+    case "corrupt-source-archive":
+      Files.write(new File(versionDirectory, baseName + "-sources.jar").toPath(), new byte[] { 1, 2, 3 });
+      break;
+
+    case "empty-javadoc":
+      Files.write(new File(versionDirectory, baseName + "-javadoc.jar").toPath(), new byte[0]);
+      break;
+
+    case "corrupt-javadoc":
+      Files.write(new File(versionDirectory, baseName + "-javadoc.jar").toPath(), new byte[] { 1, 2, 3 });
+      break;
+
+    case "mismatched-readme-artifact":
+      writeJavadocFixture(new File(versionDirectory, baseName + "-javadoc.jar").toPath(),
+          "https://github.com/eclipse-cdo/cdo/tree/" + commit + "/plugins/org.eclipse.net4j");
+      break;
+
+    case "mismatched-readme-revision":
+      writeJavadocFixture(new File(versionDirectory, baseName + "-javadoc.jar").toPath(),
+          "https://github.com/eclipse-cdo/cdo/tree/0000000000000000000000000000000000000000/plugins/" + artifactId);
+      break;
+
+    case "empty-java-source":
+      Map<String, byte[]> emptySource = new LinkedHashMap<>();
+      emptySource.put("org/example/Fixture.java", new byte[0]);
+      writeZipFixture(new File(versionDirectory, baseName + "-sources.jar").toPath(), emptySource);
+      break;
+
+    case "mismatched-coordinate":
+      Files.writeString(new File(versionDirectory, baseName + ".pom").toPath(),
+          "<project><groupId>org.eclipse.cdo</groupId><artifactId>wrong</artifactId><version>1.0.0</version></project>", StandardCharsets.UTF_8);
+      break;
+
+    case "missing-pom":
+      Files.delete(new File(versionDirectory, baseName + ".pom").toPath());
+      break;
+
+    case "malformed-pom":
+      Files.writeString(new File(versionDirectory, baseName + ".pom").toPath(), "<project", StandardCharsets.UTF_8);
+      break;
+
+    default:
+      throw new AssertionError("Unknown native classifier test scenario: " + scenario);
+    }
+
+    try
+    {
+      NativeClassifierValidationCommand.validate(repository.toFile(), metadata);
+      throw new AssertionError("Invalid native classifier fixture was accepted: " + scenario);
+    }
+    catch (AssertionError e)
+    {
+      throw e;
+    }
+    catch (Exception e)
+    {
+      if (expectedMessage != null && (e.getMessage() == null || !e.getMessage().contains(expectedMessage)))
+      {
+        throw new AssertionError("Unexpected failure for " + scenario + ": " + e, e);
+      }
+    }
+  }
+
+  private static void createNativeClassifierFixture(Path repository, String commit) throws IOException
+  {
+    for (String artifactId : BUNDLES)
+    {
+      Path versionDirectory = repository.resolve("org/eclipse/cdo/" + artifactId + "/1.0.0");
+      Files.createDirectories(versionDirectory);
+      String baseName = artifactId + "-1.0.0";
+      Files.writeString(versionDirectory.resolve(baseName + ".pom"),
+          "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + artifactId + "</artifactId><version>1.0.0</version></project>", StandardCharsets.UTF_8);
+
+      Map<String, byte[]> binary = new LinkedHashMap<>();
+      binary.put("META-INF/MANIFEST.MF", "Manifest-Version: 1.0\n\n".getBytes(StandardCharsets.UTF_8));
+      binary.put("org/example/Fixture.class", new byte[] { 1 });
+      writeZipFixture(versionDirectory.resolve(baseName + ".jar"), binary);
+
+      Map<String, byte[]> sources = new LinkedHashMap<>();
+      sources.put("org/example/Fixture.java", "package org.example; class Fixture {}\n".getBytes(StandardCharsets.UTF_8));
+      writeZipFixture(versionDirectory.resolve(baseName + "-sources.jar"), sources);
+
+      writeJavadocFixture(versionDirectory.resolve(baseName + "-javadoc.jar"), "https://github.com/eclipse-cdo/cdo/tree/" + commit + "/plugins/" + artifactId);
+    }
+  }
+
+  private static void writeJavadocFixture(Path file, String sourceReference) throws IOException
+  {
+    Map<String, byte[]> entries = new LinkedHashMap<>();
+    entries.put("META-INF/MANIFEST.MF", "Manifest-Version: 1.0\n\n".getBytes(StandardCharsets.UTF_8));
+    entries.put("README.txt", ("CBI-generated documentation for the source plug-in at " + sourceReference + "\n").getBytes(StandardCharsets.UTF_8));
+    writeZipFixture(file, entries);
+  }
+
+  private static void writeZipFixture(Path file, Map<String, byte[]> entries) throws IOException
+  {
+    Files.createDirectories(file.getParent());
+    try (ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(file)))
+    {
+      for (Map.Entry<String, byte[]> entry : entries.entrySet())
+      {
+        ZipEntry zipEntry = new ZipEntry(entry.getKey());
+        zipEntry.setTime(0L);
+        output.putNextEntry(zipEntry);
+        output.write(entry.getValue());
+        output.closeEntry();
+      }
+    }
   }
 
   private static void validateWorkspacePath(String[] args) throws IOException
@@ -2946,7 +2753,7 @@ public final class CDOAggregationTool
     }
     finally
     {
-      SourcesJavadocCommand.delete(testRoot.toFile());
+      delete(testRoot.toFile());
     }
   }
 
@@ -3147,7 +2954,7 @@ public final class CDOAggregationTool
     }
     finally
     {
-      SourcesJavadocCommand.delete(testRoot.toFile());
+      delete(testRoot.toFile());
     }
   }
 
@@ -3368,59 +3175,6 @@ public final class CDOAggregationTool
       return connection.getInputStream();
     }
 
-    public File materializePlugins(File target) throws IOException
-    {
-      if ("file".equalsIgnoreCase(uri.getScheme()))
-      {
-        return requireDirectory(Path.of(uri).resolve("plugins").toString(), "drop/plugins");
-      }
-
-      requireWorkspaceOutput(target, "downloaded drop plugin directory");
-      if (Files.exists(target.toPath(), LinkOption.NOFOLLOW_LINKS))
-      {
-        rejectSymbolicLinks(target.toPath(), "downloaded drop plugin directory");
-      }
-
-      Files.createDirectories(target.toPath());
-      String listing;
-      try (InputStream in = open("plugins/"))
-      {
-        listing = new String(in.readAllBytes(), StandardCharsets.UTF_8);
-      }
-
-      Pattern href = Pattern.compile("href=[\\\"']([^\\\"']+\\.jar)[\\\"']", Pattern.CASE_INSENSITIVE);
-      Matcher matcher = href.matcher(listing);
-      int downloaded = 0;
-      while (matcher.find())
-      {
-        String name = matcher.group(1);
-        int slash = name.lastIndexOf('/');
-        name = slash < 0 ? name : name.substring(slash + 1);
-        String fileName = name;
-        boolean needed = BUNDLES.stream().anyMatch(bundle -> fileName.startsWith(bundle + "-") || fileName.startsWith(bundle + "_")
-            || fileName.startsWith(bundle + ".source") || fileName.startsWith(bundle + "_source"));
-        if (!needed)
-        {
-          continue;
-        }
-
-        Path destination = target.toPath().resolve(name);
-        try (InputStream in = open("plugins/" + name))
-        {
-          Files.copy(in, destination, StandardCopyOption.REPLACE_EXISTING);
-        }
-        downloaded++;
-      }
-
-      if (downloaded == 0)
-      {
-        throw new IOException(
-            "No required plugin JARs were found at " + uri.resolve("plugins/") + "; verify that the drop URL exposes a browsable plugins directory");
-      }
-
-      return target;
-    }
-
     public static DropLocation parse(String value)
     {
       if (value == null || value.isBlank())
@@ -3439,156 +3193,219 @@ public final class CDOAggregationTool
   }
 
   /**
-   * Reports the raw Maven classifiers generated by CBI before the CDO overlay
-   * or the custom source/Javadoc generation target changes the repository.
+   * Validates and reports the native Maven artifacts generated by CBI before the CDO metadata overlay.
    *
    * @author Eike Stepper
    */
-  private static final class NativeClassifierDiagnosticsCommand
+  private static final class NativeClassifierValidationCommand
   {
     public static void execute(String[] args) throws Exception
     {
-      if (args.length != 2)
+      if (args.length != 3)
       {
-        throw new IllegalArgumentException("native-classifier-diagnostics requires the raw Maven repository");
+        throw new IllegalArgumentException("native-classifier-validation requires the raw Maven repository and build metadata");
       }
 
       File repository = requireDirectory(args[1], "raw Maven repository");
+      requireWorkspaceOutput(repository, "raw Maven repository");
       rejectSymbolicLinks(repository.toPath(), "raw Maven repository");
+      Map<String, String> metadata = readProperties(requireFile(new File(args[2]), "build metadata"));
+      validate(repository, metadata);
+      System.out.println("Validated native binary, POM, sources, and Javadoc artifacts for all " + BUNDLES.size() + " approved coordinates.");
+    }
+
+    private static void validate(File repository, Map<String, String> metadata) throws Exception
+    {
+      String commit = metadata.get("cdo.git.commit");
+      if (commit == null || !commit.matches("[0-9a-fA-F]{40,64}"))
+      {
+        throw new IllegalArgumentException("Build metadata has no valid cdo.git.commit for native Javadoc reference validation");
+      }
 
       for (String artifactId : BUNDLES)
       {
-        File artifactDirectory = new File(repository, "org/eclipse/cdo/" + artifactId);
-        File[] versions = artifactDirectory.listFiles(File::isDirectory);
-        if (versions == null || versions.length == 0)
+        File versionDirectory = singleVersionDirectory(repository, artifactId);
+        String version = versionDirectory.getName();
+        String baseName = artifactId + "-" + version;
+        File binary = new File(versionDirectory, baseName + ".jar");
+        File pom = new File(versionDirectory, baseName + ".pom");
+        File sources = new File(versionDirectory, baseName + "-sources.jar");
+        File javadoc = new File(versionDirectory, baseName + "-javadoc.jar");
+
+        requireNonEmpty(binary, "binary JAR");
+        validateArchive(binary, "binary JAR", artifactId);
+        requireNonEmpty(pom, "POM");
+        Element project = parse(pom).getDocumentElement();
+        String coordinate = text(project, "groupId") + ":" + text(project, "artifactId") + ":" + text(project, "version");
+        String expected = "org.eclipse.cdo:" + artifactId + ":" + version;
+        if (!expected.equals(coordinate))
         {
-          reportMissing(artifactId);
-          continue;
+          throw new IllegalArgumentException("Unexpected native Maven coordinate in " + pom + ": " + coordinate + " (expected " + expected + ")");
         }
 
-        Arrays.sort(versions, Comparator.comparing(File::getName));
-        for (File versionDirectory : versions)
-        {
-          reportArtifact(artifactId, versionDirectory);
-        }
+        requireNonEmpty(sources, "sources JAR");
+        validateSources(sources, artifactId);
+        requireNonEmpty(javadoc, "Javadoc JAR");
+        validateJavadoc(javadoc, artifactId, commit);
+
+        System.out.println(expected + "\tbinary=valid[" + checksumStatus(binary) + "]\tpom=valid[" + checksumStatus(pom) + "]\tsources=valid["
+            + checksumStatus(sources) + "]\tjavadoc=valid[" + checksumStatus(javadoc) + "]");
       }
     }
 
-    private static void reportMissing(String artifactId)
+    private static String checksumStatus(File artifact)
     {
-      System.out.println(
-          "org.eclipse.cdo:" + artifactId + ":<missing>\tbinary=missing\tpom=missing\tsources=missing\tjavadoc=missing\tjavadocEntries=[]\tREADME=<missing>");
-    }
-
-    private static void reportArtifact(String artifactId, File versionDirectory) throws Exception
-    {
-      String version = versionDirectory.getName();
-      String baseName = artifactId + "-" + version;
-      File binary = new File(versionDirectory, baseName + ".jar");
-      File pom = new File(versionDirectory, baseName + ".pom");
-      File sources = new File(versionDirectory, baseName + "-sources.jar");
-      File javadoc = new File(versionDirectory, baseName + "-javadoc.jar");
-
-      String coordinate = "org.eclipse.cdo:" + artifactId + ":" + version;
-      String pomStatus = status(pom);
-      if ("present".equals(pomStatus))
+      StringBuilder result = new StringBuilder();
+      for (String suffix : ChecksumsCommand.ALGORITHMS.keySet())
       {
-        try
+        if (result.length() > 0)
         {
-          Element project = parse(pom).getDocumentElement();
-          coordinate = text(project, "groupId") + ":" + text(project, "artifactId") + ":" + text(project, "version");
+          result.append(',');
         }
-        catch (Exception e)
-        {
-          pomStatus = "malformed";
-        }
+
+        File sidecar = new File(artifact.getPath() + "." + suffix);
+        result.append(suffix).append('=').append(sidecar.isFile() ? sidecar.length() == 0 ? "empty" : "present" : "missing");
       }
 
-      JavadocContents javadocContents = inspectJavadoc(javadoc);
-      System.out.println(coordinate + "\tbinary=" + status(binary) + "\tpom=" + pomStatus + "\tsources=" + status(sources) + "\tjavadoc="
-          + javadocContents.status + "\tjavadocEntries=" + javadocContents.entries + "\tREADME=" + javadocContents.readme);
+      return result.toString();
     }
 
-    private static String status(File file)
+    private static void requireNonEmpty(File file, String label)
     {
-      if (!file.isFile())
+      if (!file.isFile() || file.length() == 0)
       {
-        return "missing";
+        throw new IllegalArgumentException("Missing or empty " + label + ": " + file);
       }
-
-      return file.length() == 0 ? "empty" : "present";
     }
 
-    private static JavadocContents inspectJavadoc(File javadoc)
+    private static void validateArchive(File file, String label, String artifactId) throws IOException
     {
-      if (!javadoc.isFile())
+      try (JarFile jar = new JarFile(file))
       {
-        return new JavadocContents("missing", "[]", "<missing>");
-      }
-
-      if (javadoc.length() == 0)
-      {
-        return new JavadocContents("empty", "[]", "<missing>");
-      }
-
-      try (ZipFile zip = new ZipFile(javadoc))
-      {
-        List<String> entries = new ArrayList<>();
-        Enumeration<? extends ZipEntry> enumeration = zip.entries();
-
-        while (enumeration.hasMoreElements())
+        boolean hasContent = false;
+        Enumeration<JarEntry> entries = jar.entries();
+        while (entries.hasMoreElements())
         {
-          ZipEntry entry = enumeration.nextElement();
+          JarEntry entry = entries.nextElement();
           if (!entry.isDirectory())
           {
-            entries.add(entry.getName());
+            hasContent = true;
+            drain(jar.getInputStream(entry));
           }
         }
 
-        entries.sort(String::compareTo);
-        ZipEntry readme = zip.getEntry("README.txt");
-        String readmeContent = "<missing>";
-
-        if (readme != null)
+        if (!hasContent)
         {
-          try (InputStream input = zip.getInputStream(readme))
-          {
-            readmeContent = escape(new String(input.readAllBytes(), StandardCharsets.UTF_8));
-          }
+          throw new IllegalArgumentException("Empty " + label + " archive for " + artifactId + ": " + file);
         }
-
-        String status = entries.isEmpty() ? "empty" : "present";
-        return new JavadocContents(status, entries.toString(), readmeContent);
       }
       catch (IOException e)
       {
-        return new JavadocContents("invalid", "[]", "<unreadable>");
+        throw new IllegalArgumentException("Unreadable " + label + " archive for " + artifactId + ": " + file, e);
       }
     }
 
-    private static String escape(String value)
+    private static void validateSources(File file, String artifactId) throws IOException
     {
-      return "\"" + value.replace("\\", "\\\\").replace("\r", "\\r").replace("\n", "\\n").replace("\t", "\\t").replace("\"", "\\\"") + "\"";
+      int javaFiles = 0;
+      try (JarFile jar = new JarFile(file))
+      {
+        Enumeration<JarEntry> entries = jar.entries();
+        while (entries.hasMoreElements())
+        {
+          JarEntry entry = entries.nextElement();
+          if (!entry.isDirectory())
+          {
+            long size = drain(jar.getInputStream(entry));
+            if (entry.getName().endsWith(".java"))
+            {
+              if (size == 0)
+              {
+                throw new IllegalArgumentException("Empty Java source in " + file + ": " + entry.getName());
+              }
+
+              javaFiles++;
+            }
+          }
+        }
+      }
+      catch (IOException e)
+      {
+        throw new IllegalArgumentException("Unreadable sources archive for " + artifactId + ": " + file, e);
+      }
+
+      if (javaFiles == 0)
+      {
+        throw new IllegalArgumentException("Sources archive contains no Java source files for " + artifactId + ": " + file);
+      }
     }
 
-    /**
-     * Captures the deterministic summary of one native Javadoc classifier.
-     *
-     * @author Eike Stepper
-     */
-    private static final class JavadocContents
+    private static void validateJavadoc(File file, String artifactId, String commit) throws IOException
     {
-      private final String status;
-
-      private final String entries;
-
-      private final String readme;
-
-      public JavadocContents(String status, String entries, String readme)
+      try (ZipFile zip = new ZipFile(file))
       {
-        this.status = status;
-        this.entries = entries;
-        this.readme = readme;
+        ZipEntry manifest = zip.getEntry("META-INF/MANIFEST.MF");
+        ZipEntry readme = zip.getEntry("README.txt");
+        if (manifest == null || manifest.isDirectory() || readme == null || readme.isDirectory())
+        {
+          throw new IllegalArgumentException("Native CBI Javadoc archive must contain META-INF/MANIFEST.MF and README.txt: " + file);
+        }
+
+        String content = null;
+        long manifestSize = 0;
+        Enumeration<? extends ZipEntry> entries = zip.entries();
+        while (entries.hasMoreElements())
+        {
+          ZipEntry entry = entries.nextElement();
+          if (entry.isDirectory())
+          {
+            continue;
+          }
+
+          if ("README.txt".equals(entry.getName()))
+          {
+            try (InputStream in = zip.getInputStream(entry))
+            {
+              content = new String(in.readAllBytes(), StandardCharsets.UTF_8).trim();
+            }
+          }
+          else
+          {
+            long entrySize = drain(zip.getInputStream(entry));
+            if ("META-INF/MANIFEST.MF".equals(entry.getName()))
+            {
+              manifestSize = entrySize;
+            }
+          }
+        }
+
+        Pattern sourceReference = Pattern.compile(
+            "https://github\\.com/eclipse-cdo/cdo/(?:tree|blob)/" + Pattern.quote(commit) + "/plugins/" + Pattern.quote(artifactId) + "(?:/|[?#\\s]|$)");
+        if (manifestSize == 0 || content == null || content.length() < 40 || !sourceReference.matcher(content).find())
+        {
+          throw new IllegalArgumentException(
+              "Native CBI Javadoc README does not identify the expected source repository, revision, and plugin for " + artifactId + ": " + file);
+        }
+      }
+      catch (IOException e)
+      {
+        throw new IllegalArgumentException("Unreadable Javadoc archive for " + artifactId + ": " + file, e);
+      }
+    }
+
+    private static long drain(InputStream input) throws IOException
+    {
+      try (InputStream in = input)
+      {
+        byte[] buffer = new byte[8192];
+        long count = 0;
+        int read;
+        while ((read = in.read(buffer)) != -1)
+        {
+          count += read;
+        }
+
+        return count;
       }
     }
   }

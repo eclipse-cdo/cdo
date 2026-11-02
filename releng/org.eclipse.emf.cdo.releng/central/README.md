@@ -25,6 +25,7 @@ ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -f build.xml validate
 ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -f build.xml clean-build
 ant -f build.xml policy-test
 ant -f build.xml stream-test
+ant -f build.xml native-classifier-test
 ant -Dgpg.executable=gpg -f build.xml signature-test
 ```
 
@@ -39,10 +40,10 @@ The Ant properties/arguments are:
 * `cbi.aggregator` — path to the CBI console executable. The portable default
   is `cbiAggrc.exe`; override it with `-Dcbi.aggregator=...` when the
   executable is not on the working directory/PATH.
-* `maven.local.repository` — optional local Maven cache used both for the
-  Eclipse/EMF dependencies needed while generating Javadoc and for consumer
-  compatibility tests. It defaults to `${user.home}/.m2/repository`; set it
-  explicitly when Ant is launched with a different Java user home.
+* `maven.local.repository` — optional local Maven cache used as the source for
+  the isolated consumer-test repository. It defaults to
+  `${user.home}/.m2/repository`; set it explicitly when Ant is launched with a
+  different Java user home.
 * `maven.consumer.repository` — optional isolated Maven cache for the consumer and
   dependency-tree targets. It defaults to `${work.dir}/maven-local`, avoiding
   stale or locked artifacts in a global cache. The Ant workflow passes it to
@@ -55,9 +56,9 @@ The operation is selected directly by the Ant target: `validate`, `build`, or
 The technical workflow is independent of the eventual Maven Central publishing
 policy. The build type is read only from `build-info.xml` and is carried into
 the generated metadata as `cdo.build.type` (`R`, `S`, or `I`). Aggregation,
-CBI validation/CLEAN_BUILD, classifier generation, consumer tests, audits, and
-local staging accept all three types. The drop name or filesystem path is not
-used to decide whether a build may be published.
+CBI validation/CLEAN_BUILD, native classifier validation, consumer tests,
+audits, and local staging accept all three types. The drop name or filesystem
+path is not used to decide whether a build may be published.
 
 `publishing.mode` selects the explicit policy gate (default:
 `VALIDATE_ONLY`):
@@ -95,7 +96,7 @@ deletes the workspace after each build and concurrent builds are disabled. The
 drop must contain
 `build-info.xml`, `tp-macro.setup`, and the P2 metadata/artifacts.
 `VALIDATE_ONLY` and `DRY_RUN` require no signing credentials. The job runs
-aggregation, CBI validation/CLEAN_BUILD, source and Javadoc generation,
+aggregation, CBI validation/CLEAN_BUILD, native classifier validation,
 checksums, the readiness audit, staging validation, the consumer test, and the
 dependency tree.
 
@@ -225,29 +226,22 @@ workflow does not publish it automatically. If `work.dir` is omitted, the
 repository is under the per-run system temporary directory. For a repeatable
 location, pass `-Dwork.dir="C:\path\to\work"`.
 
-Immediately after the clean CBI aggregation, `native-classifier-diagnostics`
-reports the raw binary, POM, source, and Javadoc classifier files for the twelve
-approved artifacts before the metadata overlay or custom classifier generation
-runs. The diagnostic lists Javadoc archive entries and any `README.txt` content;
-it is observational and does not treat preexisting `target` files as evidence
-because aggregation uses CBI's `CLEAN_BUILD` action.
+Immediately after CBI's clean aggregation, `native-classifier-validation`
+checks the raw binary JAR, POM, sources JAR, and Javadoc JAR for each approved
+coordinate before the metadata overlay. Sources archives must be readable and
+contain nonempty Java sources. The native CBI Javadoc archives must contain
+their manifest and README, whose source reference must identify the release
+commit and corresponding plug-in. This is a read-only validation; CBI is the
+only source of these classifiers. The H2 adapter does not publish the H2
+driver; consumers must declare `com.h2database:h2` explicitly.
 
-The `sources-javadoc` target remains as the current fallback. It extracts each
-matching `*.source` plug-in and generates artifact-specific source/Javadoc
-classifiers. It validates the source plug-in's declared bundle name and exact
-version against each binary plug-in before generation. Javadoc uses the running
-JDK and the configured Maven cache for its Eclipse/EMF classpath. The H2 adapter
-does not publish the H2 driver; consumers must declare `com.h2database:h2`
-explicitly. Review the native classifier diagnostic from Jenkins before
-deciding whether the fallback can be removed.
-
-The `checksums` target runs after `sources-javadoc` and is included in
-`build`. It creates and validates the same lowercase raw-hex sidecar format
-used for the main JARs and POMs: `.md5`, `.sha1`, `.sha256`, and `.sha512`.
-Every generated source/Javadoc classifier and its four checksum files must
-validate before the target succeeds. It writes only below
-`work/repository/final`; PGP signatures and Maven Central publication are not
-performed by this technical target.
+The `checksums` target follows POM verification and is included in `build`.
+For the sources and Javadoc classifiers, it preserves correct existing CBI
+sidecars, creates only missing required `.md5`, `.sha1`, `.sha256`, and
+`.sha512` sidecars, and rejects incorrect existing values. The audit validates
+these along with the main JAR and POM checksums before staging. The target
+writes only below `work/repository/final`; PGP signatures and Maven Central
+publication are not performed by this technical target.
 
 ## Consumer compatibility test
 
@@ -262,9 +256,9 @@ the versioned consumer source tree.
 ## Model scope
 
 `CDO.aggr` statically selects the approved runtime Bundle-SymbolicNames and
-their matching `.source` IUs. The source IUs are validation inputs; the later
-source/Javadoc step creates the two Maven classifiers explicitly. Structural
-changes to this list require a deliberate edit to `CDO.aggr`.
+their matching `.source` IUs. CBI's Maven result creates the sources and
+Javadoc classifiers from those inputs. Structural changes to this list require
+a deliberate edit to `CDO.aggr`.
 The sole Maven mapping fixes their groupId to `org.eclipse.cdo` and retains the
 exact Bundle-SymbolicName as artifactId. No features, UI, tests, examples,
 documentation, JDBC drivers, or database dialects other than H2 are selected.
@@ -334,9 +328,9 @@ The Ant `overlay` target adds these values to every generated POM with an
 XML-aware DOM transformation. The `verify` target checks all twelve coordinates,
 properties, commit identity, and excluded-artifact guards.
 
-The `sources-javadoc` and `checksums` targets are included in `build`, so a complete run produces
-the classes, POMs, metadata, source JARs, and Javadoc JARs below the same
-`repository/final` directory. The generated repository is suitable for serving
+The native classifier validation and `checksums` targets are included in
+`build`, so a complete run produces the binaries, POMs, metadata, sources JARs,
+and Javadoc JARs below the same `repository/final` directory. The generated repository is suitable for serving
 for local consumption after the independent consumer test passes; Maven
 Central publication additionally requires a passing readiness audit and the
 later signing/release steps.
@@ -362,7 +356,6 @@ not a disabled check. The overlay then supplies these values from the central
 resulting POMs. The audit report records the drop ID, Git commit, artifact
 counts, signature status, and every finding.
 
-Source and Javadoc archives are assembled in sorted path order with normalized
-ZIP entry timestamps, so repeated runs against the same drop are byte-stable
-for these generated archives. The audit still records any repository-level
-differences rather than masking them.
+Source and Javadoc archives are generated by the CBI Maven aggregation from the
+selected release inputs. The audit records repository-level differences rather
+than masking them.

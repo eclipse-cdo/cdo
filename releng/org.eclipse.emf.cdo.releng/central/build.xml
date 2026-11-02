@@ -59,7 +59,7 @@
 	<property name="model.file" location="${basedir}/CDO.aggr" />
 	<property name="consumer.work.dir" location="${work.dir}/consumer-test" />
 	<property name="consumer.versions.file" location="${consumer.work.dir}/cdo-consumer-versions.properties" />
-	<property name="consumer.project.dir" location="${basedir}/../consumer-test" />
+	<property name="consumer.project.dir" location="${basedir}/consumer-test" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
 

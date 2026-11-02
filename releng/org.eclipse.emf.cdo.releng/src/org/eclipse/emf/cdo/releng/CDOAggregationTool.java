@@ -95,6 +95,8 @@ public final class CDOAggregationTool
 
   private static final List<String> CLASSIFIERS = Arrays.asList("sources", "javadoc");
 
+  private static final Pattern R_DROP_ID = Pattern.compile("R[0-9]{8}-[0-9]{4}");
+
   private CDOAggregationTool()
   {
   }
@@ -136,7 +138,7 @@ public final class CDOAggregationTool
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|overlay|verify|consumer-versions|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|overlay|verify|consumer-versions|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -167,6 +169,14 @@ public final class CDOAggregationTool
 
     case "native-classifier-test":
       nativeClassifierTest(args);
+      break;
+
+    case "resolve-drop":
+      resolveDrop(args);
+      break;
+
+    case "drop-selection-test":
+      dropSelectionTest(args);
       break;
 
     case "checksums":
@@ -2495,6 +2505,117 @@ public final class CDOAggregationTool
     {
       delete(testRoot.toFile());
     }
+  }
+
+  private static void resolveDrop(String[] args) throws Exception
+  {
+    if (args.length != 4)
+    {
+      throw new IllegalArgumentException("resolve-drop requires the requested ID, drops.txt file, and resolved-ID output file");
+    }
+
+    String requested = args[1];
+    String listing = null;
+
+    if (requested == null || requested.isBlank() || "default".equals(requested.trim()))
+    {
+      File dropListFile = requireFile(new File(args[2]), "Eclipse CDO drops.txt file");
+      requireWorkspaceOutput(dropListFile, "drop list");
+      listing = Files.readString(dropListFile.toPath(), StandardCharsets.UTF_8);
+    }
+
+    String dropId = resolveDropSelection(requested, listing);
+    File output = new File(args[3]);
+    Path outputPath = requireWorkspaceOutput(output, "resolved drop ID");
+
+    Files.createDirectories(outputPath.getParent());
+    Files.writeString(outputPath, dropId, StandardCharsets.UTF_8);
+
+    System.out.println("Resolved CDO drop ID: " + dropId);
+  }
+
+  private static String resolveDropSelection(String requested, String listing)
+  {
+    String value = requested == null ? "" : requested.trim();
+    if (!value.isEmpty() && !"default".equals(value))
+    {
+      if (!value.matches("[A-Za-z][A-Za-z0-9._-]*"))
+      {
+        throw new IllegalArgumentException("Invalid CDO_DROP_ID: " + value);
+      }
+
+      return value;
+    }
+
+    Set<String> candidates = new LinkedHashSet<>();
+
+    if (listing != null)
+    {
+      for (String line : listing.split("\\R"))
+      {
+        String candidate = line.trim();
+
+        if (R_DROP_ID.matcher(candidate).matches())
+        {
+          candidates.add(candidate);
+        }
+      }
+    }
+
+    return candidates.stream().max(String::compareTo)
+        .orElseThrow(() -> new IllegalArgumentException("The Eclipse CDO drops.txt file contains no valid R-drop IDs"));
+  }
+
+  private static void dropSelectionTest(String[] args)
+  {
+    if (args.length != 1)
+    {
+      throw new IllegalArgumentException("drop-selection-test takes no arguments");
+    }
+
+    String unorderedDropList = "R20260901-1311\r\nI20261030-1200\nS20261030-1200\nR20261030-1200\n" + "R20261030-12000\nR2026103A-1200\nnot-a-drop\n";
+    String selected = resolveDropSelection("default", unorderedDropList);
+
+    if (!"R20261030-1200".equals(selected))
+    {
+      throw new AssertionError("Unexpected latest R-drop selection: " + selected);
+    }
+
+    String oneRDrop = "I20261030-1200\nR20260901-1311\nS20261029-0544\n";
+    if (!"R20260901-1311".equals(resolveDropSelection("", oneRDrop)))
+    {
+      throw new AssertionError("R-drop was not selected from the drops.txt format");
+    }
+
+    if (!"R20260901-1311".equals(resolveDropSelection("R20260901-1311", "not a drops.txt file and intentionally ignored")))
+    {
+      throw new AssertionError("Explicit CDO_DROP_ID changed or attempted release discovery");
+    }
+
+    expectDropSelectionFailure("default", "M20261030-1200\nI20261030-1200\nS20261029-0544\n");
+    expectDropSelectionFailure("", "");
+    expectDropSelectionFailure("default", "R20260901-1311x\nR2026090-1311\nR20260901-13110\n");
+
+    System.out.println("Drop selection tests passed for unordered R-drops, non-R entries, malformed names, empty listings, and explicit bypass.");
+  }
+
+  private static void expectDropSelectionFailure(String requested, String listing)
+  {
+    try
+    {
+      resolveDropSelection(requested, listing);
+    }
+    catch (IllegalArgumentException e)
+    {
+      if (e.getMessage().contains("no valid R-drop IDs"))
+      {
+        return;
+      }
+
+      throw e;
+    }
+
+    throw new AssertionError("Invalid or empty drops.txt content was accepted");
   }
 
   private static void expectInvalidNativeFixture(Path testRoot, String scenario, Map<String, String> metadata, String expectedMessage) throws Exception

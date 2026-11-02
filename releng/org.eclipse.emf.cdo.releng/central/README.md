@@ -26,6 +26,7 @@ ant -Dcdo.drop.location="C:\path\to\promoted\CDO-drop" -f build.xml clean-build
 ant -f build.xml policy-test
 ant -f build.xml stream-test
 ant -f build.xml native-classifier-test
+ant -f build.xml drop-selection-test
 ant -Dgpg.executable=gpg -f build.xml signature-test
 ```
 
@@ -100,6 +101,18 @@ aggregation, CBI validation/CLEAN_BUILD, native classifier validation,
 checksums, the readiness audit, staging validation, the consumer test, and the
 dependency tree.
 
+`CDO_DROP_ID` defaults to `default`. An empty value has the same effect: the
+pipeline fetches the official
+[`drops.txt`](https://download.eclipse.org/modeling/emf/cdo/drops/drops.txt)
+file over HTTPS. Eclipse atomically regenerates it when a CDO drop is promoted;
+it contains one drop ID per line. The pipeline selects the lexicographically
+greatest line matching `R[0-9]{8}-[0-9]{4}`, ignoring I-drops, S-drops, and
+malformed lines. It then uses that resolved ID for the ordinary download, Ant
+arguments, metadata, audit, and summary. If the file cannot be fetched or has
+no matching R-drop, the build fails; it does not fall back to an older
+drop. Supplying an explicit drop ID, such as `R20260901-1311`, skips release
+discovery and keeps the existing download path.
+
 The audit creates the upload candidate below the work directory. It preserves
 the normal Maven path layout and includes each main, POM, source, and Javadoc
 artifact together with its `.md5`, `.sha1`, `.sha256`, and `.sha512` sidecars.
@@ -138,7 +151,7 @@ target removes paths outside its validated work directory.
 
 The pipeline deliberately uses `agent any` because this repository cannot
 derive a stable Eclipse CI label. The selected agent must nevertheless be a
-Linux/POSIX node with the configured Jenkins tools `temurin-jdk21-latest`,
+Linux/POSIX node with the configured Jenkins tools `temurin-jdk25-latest`,
 `apache-ant-latest`, and `apache-maven-latest`, plus `sh`, `curl`, `unzip`,
 `zip`, `sha256sum`, GNU `realpath`, `find`, `awk`, `zipinfo`, `tar`, GnuPG
 (`gpg` and `gpgconf`), and standard Jenkins Pipeline

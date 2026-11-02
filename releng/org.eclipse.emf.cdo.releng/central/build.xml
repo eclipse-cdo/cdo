@@ -283,6 +283,21 @@
 		</java>
 	</target>
 
+	<target name="resolve-drop" depends="validate-workspace">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="resolve-drop" />
+			<arg value="${cdo.drop.requested}" />
+			<arg value="${drop.list.file}" />
+			<arg value="${drop.resolved.file}" />
+		</java>
+	</target>
+
+	<target name="drop-selection-test" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="drop-selection-test" />
+		</java>
+	</target>
+
 	<target name="publish-policy" depends="staging-validate,compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="publish-policy" />

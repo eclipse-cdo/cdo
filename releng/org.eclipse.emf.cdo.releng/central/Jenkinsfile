@@ -1,4 +1,5 @@
 final String CBI_AGGREGATOR_URL = 'https://download.eclipse.org/cbi/updates/p2-aggregator/products/nightly/latest/org.eclipse.cbi.p2repo.cli.product-linux.gtk.x86_64.tar.gz'
+final String CDO_DROPS_FILE_URL = 'https://download.eclipse.org/modeling/emf/cdo/drops/drops.txt'
 final String GPG_KEY_FILE_CREDENTIAL_ID = ''
 final String GPG_PASSPHRASE_CREDENTIAL_ID = ''
 final String GPG_EXPECTED_PRIMARY_FINGERPRINT = ''
@@ -21,7 +22,7 @@ pipeline {
   parameters {
     choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PACKAGE_FOR_CENTRAL'],
       description: 'PACKAGE_FOR_CENTRAL prepares a signed deployment bundle only; publication is manual.')
-    string(name: 'CDO_DROP_ID', defaultValue: '', description: 'Promoted CDO drop qualifier, for example R20260823-1230')
+    string(name: 'CDO_DROP_ID', defaultValue: 'default', description: 'Use default for the latest R-drop, or enter an explicit CDO drop ID')
   }
 
   stages {
@@ -65,20 +66,62 @@ pipeline {
     stage('Download and verify drop') {
       steps {
         script {
-          if (!params.CDO_DROP_ID?.trim()) {
-            error('CDO_DROP_ID is required')
-          }
-          def dropId = params.CDO_DROP_ID.trim()
-          if (!(dropId ==~ /[A-Za-z][A-Za-z0-9._-]*/)) {
-            error("Invalid CDO_DROP_ID: ${dropId}")
-          }
+          def requestedDropId = params.CDO_DROP_ID?.trim() ?: ''
+          def automaticDropSelection = !requestedDropId || requestedDropId == 'default'
           // Eclipse CI discards the complete workspace after each build and
           // disableConcurrentBuilds() prevents overlap. The drop ID remains
           // metadata, not a path key.
           def root = "${env.CDO_WORKSPACE_ROOT}/maven-publishing"
           def dropDir = "${root}/drop"
           def workDir = "${root}/work"
+          def resolvedIdFile = "${root}/resolved-drop-id.txt"
+          def dropId
+          if (automaticDropSelection) {
+            def dropListFile = "${root}/drop-list.txt"
+            withEnv(["DROP_LIST_URL=${CDO_DROPS_FILE_URL}", "DROP_LIST_FILE=${dropListFile}",
+              "DROP_RESOLVED_ID_FILE=${resolvedIdFile}", "DROP_PARENT=${root}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+              sh '''
+                set -eu
+                workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+                assert_workspace_path() {
+                  candidate=$1
+                  test -n "$candidate" || { echo "Refusing an empty output path" >&2; return 1; }
+                  case "$candidate" in "$workspace_root"/*) ;; *) echo "Output path is outside the workspace: $candidate" >&2; return 1 ;; esac
+                  resolved=$(realpath -m -- "$candidate")
+                  test "$resolved" = "$candidate" || { echo "Output path uses a symlink or non-canonical component: $candidate" >&2; return 1; }
+                }
+                assert_workspace_path "$DROP_PARENT"
+                assert_workspace_path "$DROP_LIST_FILE"
+                assert_workspace_path "$DROP_RESOLVED_ID_FILE"
+                mkdir -p "$DROP_PARENT"
+                curl --disable --request GET --proto '=https' --proto-redir '=https' --fail --location --retry 3 --silent --show-error \
+                  "$DROP_LIST_URL" -o "$DROP_LIST_FILE" || { echo "Unable to retrieve the official Eclipse CDO drops.txt file: $DROP_LIST_URL" >&2; exit 5; }
+              '''
+            }
+            withEnv(["CDO_DROP_REQUEST=${requestedDropId ?: 'default'}", "DROP_LIST_FILE=${dropListFile}", "DROP_RESOLVED_ID_FILE=${resolvedIdFile}",
+              "CDO_AGGR_WORK_DIR=${workDir}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+              withAnt(installation: 'apache-ant-latest') {
+                sh '''
+                  set -eu
+                  ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$CDO_AGGR_WORK_DIR" \
+                    -Dcdo.drop.requested="$CDO_DROP_REQUEST" -Ddrop.list.file="$DROP_LIST_FILE" \
+                    -Ddrop.resolved.file="$DROP_RESOLVED_ID_FILE" \
+                    -f releng/org.eclipse.emf.cdo.releng/central/build.xml resolve-drop
+                '''
+              }
+            }
+            dropId = readFile(resolvedIdFile).trim()
+            if (!(dropId ==~ /R[0-9]{8}-[0-9]{4}/)) {
+              error("Automatic drop selection returned an invalid R-drop ID: ${dropId}")
+            }
+          } else {
+            dropId = requestedDropId
+            if (!(dropId ==~ /[A-Za-z][A-Za-z0-9._-]*/)) {
+              error("Invalid CDO_DROP_ID: ${dropId}")
+            }
+          }
           def dropUrl = "https://download.eclipse.org/modeling/emf/cdo/drops/${dropId}/"
+          echo "Resolved CDO drop ID: ${dropId}; download URL: ${dropUrl}"
           withEnv(["DROP_ID=${dropId}", "DROP_URL=${dropUrl}", "DROP_PARENT=${root}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
             sh '''
               set -eu

@@ -210,7 +210,14 @@
 		</exec>
 	</target>
 
-	<target name="overlay" depends="validate-workspace">
+	<target name="native-classifier-diagnostics" depends="execute-clean-build,compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failifexecutionfails="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="native-classifier-diagnostics" />
+			<arg value="${cdo.maven.repository}" />
+		</java>
+	</target>
+
+	<target name="overlay" depends="validate-workspace,native-classifier-diagnostics">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="overlay" />
 			<arg value="${build.root}/final" />
@@ -237,7 +244,7 @@
 			<arg value="${sources.javadoc.dir}" />
 			<arg value="${maven.local.repository}" />
 		</java>
-		<echo message="Generated source and Javadoc classifiers in ${cdo.maven.repository}" />
+		<echo message="Generated source/Javadoc classifiers in ${cdo.maven.repository}" />
 	</target>
 
 	<target name="checksums" depends="sources-javadoc">

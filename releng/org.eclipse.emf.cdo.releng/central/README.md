@@ -40,9 +40,9 @@ The Ant properties/arguments are:
   is `cbiAggrc.exe`; override it with `-Dcbi.aggregator=...` when the
   executable is not on the working directory/PATH.
 * `maven.local.repository` — optional local Maven cache used both for the
-  Eclipse/EMF dependencies needed while generating Javadoc. It defaults to
-  `${user.home}/.m2/repository`; set it explicitly when Ant is launched from
-  Eclipse with a different Java user home.
+  Eclipse/EMF dependencies needed while generating Javadoc and for consumer
+  compatibility tests. It defaults to `${user.home}/.m2/repository`; set it
+  explicitly when Ant is launched with a different Java user home.
 * `maven.consumer.repository` — optional isolated Maven cache for the consumer and
   dependency-tree targets. It defaults to `${work.dir}/maven-local`, avoiding
   stale or locked artifacts in a global cache. The Ant workflow passes it to
@@ -157,17 +157,17 @@ Ant fallback remains a unique system temporary directory for local invocations
 where `WORKSPACE` is unavailable. `disableConcurrentBuilds()` prevents two
 builds of the same job from using that directory concurrently.
 
-The Jenkins default uses the pinned Linux distribution
-`S202311221637` from
-`https://download.eclipse.org/cbi/updates/p2-aggregator/products/milestone/S202311221637/org.eclipse.cbi.p2repo.cli.product-linux.gtk.x86_64.tar.gz`
-with SHA-256
-`CF641C257B800018372A057DE0961C3824322527D2A245C26BC16B9DF9F17454`.
-It caches the verified archive below the workspace and extracts either
-`cbiAggr` (the Linux archive name) or `cbiAggrc`. No `latest` URL is used.
+The Jenkins default downloads the latest successful CBI Linux nightly product
+from
+`https://download.eclipse.org/cbi/updates/p2-aggregator/products/nightly/latest/org.eclipse.cbi.p2repo.cli.product-linux.gtk.x86_64.tar.gz`.
+The HTTPS download is stored below the workspace, then the archive paths and
+entry types are validated before extraction. The workflow extracts either
+`cbiAggr` (the Linux archive name) or `cbiAggrc`. The nightly URL is a moving
+reference by design and is not protected by a hardcoded archive checksum.
 The Jenkinsfile has only two job parameters: `PUBLISHING_MODE` and
-`CDO_DROP_ID`. The CBI URL, version, checksum, workspace layout, tool names,
-signing credential IDs and expected fingerprint are deliberately pipeline
-constants in the Jenkinsfile. Local manual runs continue to use
+`CDO_DROP_ID`. The CBI URL, workspace layout, tool names, signing credential
+IDs and expected fingerprint are pipeline constants in the Jenkinsfile.
+Local manual runs continue to use
 `-Dcdo.drop.location=<local-or-http-drop>` and `-Dcbi.aggregator=...` through Ant; neither
 local override is exposed as a Jenkins parameter.
 
@@ -225,14 +225,21 @@ workflow does not publish it automatically. If `work.dir` is omitted, the
 repository is under the per-run system temporary directory. For a repeatable
 location, pass `-Dwork.dir="C:\path\to\work"`.
 
-The `sources-javadoc` target extracts the matching `*.source` plug-in from the
-selected drop and creates non-empty `-sources.jar` and `-javadoc.jar` files for
-all twelve aggregated artifacts. It validates the source plug-in's declared
-bundle name and exact version against the binary plug-in before generation.
-Javadoc uses the running JDK and the configured Maven cache for its Eclipse/EMF
-classpath; documentation warnings are reported but do not fail a successful
-Javadoc invocation. The H2 adapter also does not publish the H2 driver;
-consumers must declare `com.h2database:h2` explicitly.
+Immediately after the clean CBI aggregation, `native-classifier-diagnostics`
+reports the raw binary, POM, source, and Javadoc classifier files for the twelve
+approved artifacts before the metadata overlay or custom classifier generation
+runs. The diagnostic lists Javadoc archive entries and any `README.txt` content;
+it is observational and does not treat preexisting `target` files as evidence
+because aggregation uses CBI's `CLEAN_BUILD` action.
+
+The `sources-javadoc` target remains as the current fallback. It extracts each
+matching `*.source` plug-in and generates artifact-specific source/Javadoc
+classifiers. It validates the source plug-in's declared bundle name and exact
+version against each binary plug-in before generation. Javadoc uses the running
+JDK and the configured Maven cache for its Eclipse/EMF classpath. The H2 adapter
+does not publish the H2 driver; consumers must declare `com.h2database:h2`
+explicitly. Review the native classifier diagnostic from Jenkins before
+deciding whether the fallback can be removed.
 
 The `checksums` target runs after `sources-javadoc` and is included in
 `build`. It creates and validates the same lowercase raw-hex sidecar format

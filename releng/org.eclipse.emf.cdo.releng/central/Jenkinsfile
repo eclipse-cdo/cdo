@@ -1,5 +1,4 @@
-final String CBI_AGGREGATOR_URL = 'https://download.eclipse.org/cbi/updates/p2-aggregator/products/milestone/S202311221637/org.eclipse.cbi.p2repo.cli.product-linux.gtk.x86_64.tar.gz'
-final String CBI_AGGREGATOR_SHA256 = 'CF641C257B800018372A057DE0961C3824322527D2A245C26BC16B9DF9F17454'
+final String CBI_AGGREGATOR_URL = 'https://download.eclipse.org/cbi/updates/p2-aggregator/products/nightly/latest/org.eclipse.cbi.p2repo.cli.product-linux.gtk.x86_64.tar.gz'
 final String GPG_KEY_FILE_CREDENTIAL_ID = ''
 final String GPG_PASSPHRASE_CREDENTIAL_ID = ''
 final String GPG_EXPECTED_PRIMARY_FINGERPRINT = ''
@@ -179,7 +178,7 @@ pipeline {
         script {
           def aggregator
           def cbiDir = "${env.CDO_WORKSPACE_ROOT}/cbi"
-          withEnv(["CBI_URL=${CBI_AGGREGATOR_URL}", "CBI_SHA256=${CBI_AGGREGATOR_SHA256}", "CBI_DIR=${cbiDir}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+          withEnv(["CBI_URL=${CBI_AGGREGATOR_URL}", "CBI_DIR=${cbiDir}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
             aggregator = sh(returnStdout: true, script: '''
               set -eu
               workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
@@ -207,7 +206,6 @@ pipeline {
               archive_list="$CBI_DIR/archive.list"
               archive_info="$CBI_DIR/archive.info"
               curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --fail --location --retry 3 --silent --show-error "$CBI_URL" -o "$archive"
-              printf '%s  %s\\n' "$CBI_SHA256" "$archive" | sha256sum --check --status -
               case "$CBI_URL" in
                 *.zip)
                   unzip -Z1 "$archive" > "$archive_list"
@@ -238,7 +236,7 @@ pipeline {
               fi
               candidate=$(find "$CBI_DIR/image" -type f \\( -name cbiAggrc -o -name cbiAggr \\) -print -quit)
               if [ -z "$candidate" ]; then
-                echo "Pinned CBI archive does not contain cbiAggr or cbiAggrc" >&2
+                echo "CBI archive does not contain cbiAggr or cbiAggrc" >&2
                 exit 3
               fi
               assert_workspace_path "$candidate"

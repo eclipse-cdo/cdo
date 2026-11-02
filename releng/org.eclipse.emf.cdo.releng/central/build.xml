@@ -211,7 +211,7 @@
 	</target>
 
 	<target name="native-classifier-diagnostics" depends="execute-clean-build,compile-helper">
-		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failifexecutionfails="true" failonerror="true" classpathref="helper.classpath">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="native-classifier-diagnostics" />
 			<arg value="${cdo.maven.repository}" />
 		</java>

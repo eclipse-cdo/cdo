@@ -393,6 +393,9 @@ pipeline {
                 export MAVEN_GPG_KEY_FINGERPRINT="$signing_fingerprint"
                 if [ "$GPG_PASSPHRASE_CREDENTIAL_CONFIGURED" != true ]; then
                   unset MAVEN_GPG_PASSPHRASE
+                  gpg_best_practices=false
+                else
+                  gpg_best_practices=true
                 fi
                 for generated_repository in "$CENTRAL_REPO" "$MAVEN_SIGNER_REPO"; do
                   if [ -e "$generated_repository" ] && find "$generated_repository" -type l -print -quit | grep -q .; then
@@ -411,7 +414,7 @@ pipeline {
                   sources="$version_dir/$artifact-$version-sources.jar"
                   javadoc="$version_dir/$artifact-$version-javadoc.jar"
                   test -s "$main" && test -s "$sources" && test -s "$javadoc"
-                  mvn --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file -Dgpg.bestPractices=true -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" -Dgpg.keyFingerprint="$signing_fingerprint" -Dfile="$main" -DpomFile="$pom" -Dsources="$sources" -Djavadoc="$javadoc" -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
+                  mvn -N --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file -Dgpg.bestPractices="$gpg_best_practices" -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" -Dgpg.keyFingerprint="$signing_fingerprint" -Dfile="$main" -DpomFile="$pom" -Dsources="$sources" -Djavadoc="$javadoc" -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
                 done
                 rm -f "$GPG_SIGNING_FINGERPRINT_FILE"
                 if find "$CENTRAL_REPO" -type l -print -quit | grep -q .; then

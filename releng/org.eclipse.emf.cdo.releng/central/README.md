@@ -271,6 +271,14 @@ prints the resulting dependency tree. Both targets pass the generated values
 to Maven as individual `-D` properties; no generated files are written into
 the versioned consumer source tree.
 
+For `PACKAGE_FOR_CENTRAL`, `consumer-central-only` runs after package
+verification. It extracts the verified deployment ZIP into a clean workspace
+repository, starts with a fresh Maven local repository, and runs the same
+consumer compilation/tests with Maven settings that mirror every repository
+except the local deployment bundle to Maven Central. It then generates and
+checks the dependency tree, rejecting SNAPSHOT dependencies. This check does
+not use the agent's Maven cache or Eclipse repositories.
+
 ## Model scope
 
 `CDO.aggr` statically selects the approved runtime Bundle-SymbolicNames and
@@ -314,6 +322,12 @@ Preparation prints every supplied value for diagnostics. CBI 1.1.0 may report
 raw `p2:${key}` text in its generic repository error even after resolving the
 location; diagnose failures against the resolved URL and its repository
 contents, not against that wording alone.
+
+The CDO and SimRel location properties are CBI runtime inputs only. The POM
+overlay removes them from all twelve publication POMs, and publication
+validation rejects either property if it reappears. This prevents workspace
+paths and validation-repository locations from being published as Maven
+metadata.
 
 They provide the external Eclipse, EMF, Orbit, and Java execution-environment
 IUs needed to validate dependency closure, but are never selected or copied to

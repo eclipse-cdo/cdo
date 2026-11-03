@@ -60,6 +60,7 @@ import java.util.Enumeration;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -94,6 +95,12 @@ public final class CDOAggregationTool
       "org.eclipse.emf.cdo.server.db");
 
   private static final List<String> CLASSIFIERS = Arrays.asList("sources", "javadoc");
+
+  private static final String CDO_LOCATION_PROPERTY = "org.eclipse.cbi.p2repo.cdo-location";
+
+  private static final String SIMREL_LOCATION_PROPERTY = "org.eclipse.cbi.p2repo.simrel-location";
+
+  private static final Set<String> INTERNAL_CBI_PROPERTIES = Set.of(CDO_LOCATION_PROPERTY, SIMREL_LOCATION_PROPERTY);
 
   private static final Pattern R_DROP_ID = Pattern.compile("R[0-9]{8}-[0-9]{4}");
 
@@ -138,7 +145,7 @@ public final class CDOAggregationTool
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|overlay|verify|consumer-versions|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|overlay|verify|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -161,6 +168,14 @@ public final class CDOAggregationTool
 
     case "consumer-versions":
       ConsumerVersionsCommand.execute(args);
+      break;
+
+    case "consumer-dependency-tree-check":
+      consumerDependencyTreeCheck(args);
+      break;
+
+    case "consumer-dependency-tree-test":
+      consumerDependencyTreeTest(args);
       break;
 
     case "native-classifier-validation":
@@ -258,6 +273,132 @@ public final class CDOAggregationTool
     System.out.println("Validated publication scope for " + artifacts + " approved CDO artifacts.");
   }
 
+  private static Map<String, String> publicationMetadata(Map<String, String> metadata)
+  {
+    Map<String, String> result = new LinkedHashMap<>();
+    for (Map.Entry<String, String> entry : metadata.entrySet())
+    {
+      if (!INTERNAL_CBI_PROPERTIES.contains(entry.getKey()))
+      {
+        result.put(entry.getKey(), entry.getValue());
+      }
+    }
+
+    return result;
+  }
+
+  private static void removeInternalCbiProperties(Element project)
+  {
+    NodeList projectChildren = project.getChildNodes();
+    for (int i = 0; i < projectChildren.getLength(); i++)
+    {
+      Node projectChild = projectChildren.item(i);
+      String name = projectChild.getLocalName();
+      if (name == null)
+      {
+        name = projectChild.getNodeName();
+      }
+
+      if (projectChild instanceof Element && "properties".equals(name))
+      {
+        Element properties = (Element)projectChild;
+        for (String property : INTERNAL_CBI_PROPERTIES)
+        {
+          Element child = child(properties, property);
+          while (child != null)
+          {
+            properties.removeChild(child);
+            child = child(properties, property);
+          }
+        }
+      }
+    }
+  }
+
+  private static void rejectInternalCbiProperties(Element project, File pom)
+  {
+    NodeList projectChildren = project.getChildNodes();
+    for (int i = 0; i < projectChildren.getLength(); i++)
+    {
+      Node projectChild = projectChildren.item(i);
+      String name = projectChild.getLocalName();
+      if (name == null)
+      {
+        name = projectChild.getNodeName();
+      }
+
+      if (projectChild instanceof Element && "properties".equals(name))
+      {
+        Element properties = (Element)projectChild;
+        for (String property : INTERNAL_CBI_PROPERTIES)
+        {
+          if (child(properties, property) != null)
+          {
+            throw new IllegalArgumentException("Internal CBI property must not be published in " + pom + ": " + property);
+          }
+        }
+      }
+    }
+  }
+
+  private static void consumerDependencyTreeCheck(String[] args) throws Exception
+  {
+    if (args.length != 2)
+    {
+      throw new IllegalArgumentException("consumer-dependency-tree-check requires a Maven dependency-tree file");
+    }
+
+    File dependencyTree = requireFile(new File(args[1]), "Maven consumer dependency tree");
+    requireWorkspaceOutput(dependencyTree, "Maven consumer dependency tree");
+    String tree = Files.readString(dependencyTree.toPath(), StandardCharsets.UTF_8);
+    verifyNoSnapshotDependencies(tree);
+    System.out.println("Verified that the Central-only consumer dependency tree contains no SNAPSHOT dependencies.");
+  }
+
+  private static void consumerDependencyTreeTest(String[] args)
+  {
+    if (args.length != 1)
+    {
+      throw new IllegalArgumentException("consumer-dependency-tree-test takes no arguments");
+    }
+
+    verifyNoSnapshotDependencies(
+        "org.eclipse.cdo.releng:cdo-maven-consumer-test:jar:1.0.0-SNAPSHOT\n+- org.eclipse.cdo:org.eclipse.net4j:jar:4.23.0:compile\n");
+
+    try
+    {
+      verifyNoSnapshotDependencies(
+          "org.eclipse.cdo.releng:cdo-maven-consumer-test:jar:1.0.0-SNAPSHOT\n+- org.eclipse.platform:org.eclipse.osgi:jar:3.24.300-SNAPSHOT:compile\n");
+      throw new AssertionError("Expected a SNAPSHOT dependency to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      if (!expected.getMessage().contains("SNAPSHOT dependency"))
+      {
+        throw expected;
+      }
+    }
+
+    System.out.println("Central-only dependency-tree checks passed: consumer project SNAPSHOT accepted; SNAPSHOT dependency rejected.");
+  }
+
+  private static void verifyNoSnapshotDependencies(String tree)
+  {
+    String[] lines = tree.split("\\R");
+    if (lines.length < 2 || lines[0].isBlank())
+    {
+      throw new IllegalArgumentException("Maven consumer dependency tree is empty or malformed");
+    }
+
+    for (int i = 1; i < lines.length; i++)
+    {
+      if (lines[i].toUpperCase(Locale.ROOT).contains("SNAPSHOT"))
+      {
+        throw new IllegalArgumentException("Maven consumer dependency tree contains a SNAPSHOT dependency: " + lines[i].trim());
+      }
+    }
+  }
+
   /**
    * Implements {@code prepare}: args are command, drop, metadata, repositories.
    *
@@ -266,10 +407,6 @@ public final class CDOAggregationTool
   private static final class PrepareCommand
   {
     private static final LinkedHashMap<String, String> ATTRIBUTES = new LinkedHashMap<>();
-
-    private static final String CDO_LOCATION = "org.eclipse.cbi.p2repo.cdo-location";
-
-    private static final String SIMREL_LOCATION = "org.eclipse.cbi.p2repo.simrel-location";
 
     static
     {
@@ -333,13 +470,13 @@ public final class CDOAggregationTool
       String simrelRepository = repositories.stream().filter(PrepareCommand::isSimrelRepository).findFirst()
           .map(repository -> validationLocation(repository, dropID, drop))
           .orElseThrow(() -> new IllegalArgumentException("Target-platform SimRel repository is missing"));
-      derived.put(CDO_LOCATION, dropRepository);
-      derived.put(SIMREL_LOCATION, simrelRepository);
+      derived.put(CDO_LOCATION_PROPERTY, dropRepository);
+      derived.put(SIMREL_LOCATION_PROPERTY, simrelRepository);
 
       writeProperties(Path.of(args[2]), derived);
       Files.write(Path.of(args[3]), List.of(simrelRepository), StandardCharsets.UTF_8);
-      System.out.println(CDO_LOCATION + "=" + dropRepository);
-      System.out.println(SIMREL_LOCATION + "=" + simrelRepository);
+      System.out.println(CDO_LOCATION_PROPERTY + "=" + dropRepository);
+      System.out.println(SIMREL_LOCATION_PROPERTY + "=" + simrelRepository);
       System.out.println("Validated CDO and SimRel repositories; build=" + dropID);
     }
 
@@ -392,8 +529,15 @@ public final class CDOAggregationTool
           project.insertBefore(properties, modelVersion == null ? project.getFirstChild() : modelVersion.getNextSibling());
         }
 
+        removeInternalCbiProperties(project);
+
         for (Map.Entry<String, String> entry : values.entrySet())
         {
+          if (INTERNAL_CBI_PROPERTIES.contains(entry.getKey()))
+          {
+            continue;
+          }
+
           Element property = child(properties, entry.getKey());
           if (property == null)
           {
@@ -439,7 +583,7 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("No approved CDO POMs found under " + root);
       }
 
-      System.out.println("Added " + values.size() + " traceability properties to " + overlaid + " approved CDO POMs.");
+      System.out.println("Added " + publicationMetadata(values).size() + " traceability properties to " + overlaid + " approved CDO POMs.");
     }
 
     private static Element ensure(Element parent, String name)
@@ -519,11 +663,13 @@ public final class CDOAggregationTool
 
         Element props = child(project, "properties");
 
-        for (String key : values.keySet())
+        rejectInternalCbiProperties(project, file);
+
+        for (Map.Entry<String, String> entry : publicationMetadata(values).entrySet())
         {
-          if (props == null || !values.get(key).equals(text(child(props, key))))
+          if (props == null || !entry.getValue().equals(text(child(props, entry.getKey()))))
           {
-            throw new IllegalArgumentException("Missing traceability property " + key + " in " + file);
+            throw new IllegalArgumentException("Missing traceability property " + entry.getKey() + " in " + file);
           }
         }
       }
@@ -885,7 +1031,9 @@ public final class CDOAggregationTool
         }
 
         Element properties = child(project, "properties");
-        for (Map.Entry<String, String> entry : metadata.entrySet())
+        rejectInternalCbiProperties(project, pom);
+
+        for (Map.Entry<String, String> entry : publicationMetadata(metadata).entrySet())
         {
           if (properties == null || !entry.getValue().equals(text(child(properties, entry.getKey()))))
           {
@@ -1106,6 +1254,7 @@ public final class CDOAggregationTool
       for (File pom : find(staging, ".pom"))
       {
         Element project = parse(pom).getDocumentElement();
+        rejectInternalCbiProperties(project, pom);
         String group = text(project, "groupId");
         String artifact = text(project, "artifactId");
         String version = text(project, "version");
@@ -2989,6 +3138,8 @@ public final class CDOAggregationTool
       metadataValues.put("cdo.build.type", "R");
       metadataValues.put("cdo.drop.id", "R20990101-0000");
       metadataValues.put("cdo.git.commit", "deadbeef");
+      metadataValues.put(CDO_LOCATION_PROPERTY, "file:/workspace/private-drop/");
+      metadataValues.put(SIMREL_LOCATION_PROPERTY, "https://download.eclipse.org/releases/test");
       writeProperties(metadata, metadataValues);
       createPublicationScopeFixture(repository);
 
@@ -3008,10 +3159,31 @@ public final class CDOAggregationTool
         throw new AssertionError("Metadata overlay removed the legitimate H2 Maven dependency");
       }
 
+      String cleanCdoPom = Files.readString(cdoPom.toPath());
+      if (cleanCdoPom.contains(CDO_LOCATION_PROPERTY) || cleanCdoPom.contains(SIMREL_LOCATION_PROPERTY))
+      {
+        throw new AssertionError("Metadata overlay left an internal CBI repository property in a publication POM");
+      }
+
       VerifyCommand.execute(new String[] { "verify", repository.toString(), metadata.toString() });
+      Files.writeString(cdoPom.toPath(),
+          cleanCdoPom.replace("</properties>", "<" + CDO_LOCATION_PROPERTY + ">file:/workspace/private-drop/</" + CDO_LOCATION_PROPERTY + "></properties>"));
+      expectVerifyFailure(repository.toFile(), metadata.toFile(), "Internal CBI property must not be published");
+      Files.writeString(cdoPom.toPath(), cleanCdoPom);
+
       AuditCommand.execute(new String[] { "audit", repository.toString(), metadata.toString(), report.toString(), staging.toString() });
       PublishCheckCommand.execute(new String[] { "publish-check", staging.toString(), metadata.toString(), "VALIDATE_ONLY", "" });
       assertPublicationStaging(staging, false);
+
+      byte[] cleanStagedPom = Files.readAllBytes(staging.resolve("org/eclipse/cdo/" + BUNDLES.get(7) + "/1.0.0/" + BUNDLES.get(7) + "-1.0.0.pom"));
+      Path stagedPom = staging.resolve("org/eclipse/cdo/" + BUNDLES.get(7) + "/1.0.0/" + BUNDLES.get(7) + "-1.0.0.pom");
+      Files.writeString(stagedPom,
+          cleanCdoPom.replace("</properties>", "<" + CDO_LOCATION_PROPERTY + ">file:/workspace/private-drop/</" + CDO_LOCATION_PROPERTY + "></properties>"));
+      ChecksumsCommand.writeChecksums(stagedPom.toFile());
+      expectPublicationScopeFailure(staging.toFile(), "Internal CBI property must not be published");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "VALIDATE_ONLY", "", "Internal CBI property must not be published");
+      Files.write(stagedPom, cleanStagedPom);
+      ChecksumsCommand.writeChecksums(stagedPom.toFile());
 
       for (File artifact : publicationArtifacts(staging.toFile()))
       {
@@ -3021,12 +3193,19 @@ public final class CDOAggregationTool
       PublishCheckCommand.execute(new String[] { "publish-check", staging.toString(), metadata.toString(), "PACKAGE_FOR_CENTRAL", "SIGNED" });
       assertPublicationStaging(staging, true);
 
+      Files.writeString(stagedPom,
+          cleanCdoPom.replace("</properties>", "<" + CDO_LOCATION_PROPERTY + ">file:/workspace/private-drop/</" + CDO_LOCATION_PROPERTY + "></properties>"));
+      ChecksumsCommand.writeChecksums(stagedPom.toFile());
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "PACKAGE_FOR_CENTRAL", "SIGNED", "Internal CBI property must not be published");
+      Files.write(stagedPom, cleanStagedPom);
+      ChecksumsCommand.writeChecksums(stagedPom.toFile());
+
       Path stagedH2 = staging.resolve("com/h2database/h2/2.0.0/h2-2.0.0.pom");
       Files.createDirectories(stagedH2.getParent());
       Files.writeString(stagedH2, Files.readString(h2Pom));
       expectPublicationScopeFailure(staging.toFile(), "Unapproved Maven publication coordinate");
-      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "VALIDATE_ONLY", "");
-      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "PACKAGE_FOR_CENTRAL", "SIGNED");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "VALIDATE_ONLY", "", "Unapproved Maven publication coordinate");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "PACKAGE_FOR_CENTRAL", "SIGNED", "Unapproved Maven publication coordinate");
       Files.delete(stagedH2);
 
       Path stagedH2Module = staging.resolve("com/h2database/h2/2.0.0/h2-2.0.0.module");
@@ -3056,7 +3235,7 @@ public final class CDOAggregationTool
       expectVerifyFailure(repository.toFile(), metadata.toFile(), "Unapproved CDO publication coordinate");
 
       System.out.println(
-          "Publication scope tests passed: H2 resolves in raw aggregation, remains unchanged, and is excluded from VALIDATE_ONLY and PACKAGE_FOR_CENTRAL staging.");
+          "Publication scope tests passed: internal CBI repository properties are stripped and rejected, and external H2 remains unchanged and excluded from staging.");
     }
     finally
     {
@@ -3075,7 +3254,9 @@ public final class CDOAggregationTool
           ? "<dependencies><dependency><groupId>com.h2database</groupId><artifactId>h2</artifactId><version>2.0.0</version></dependency></dependencies>"
           : "";
       String pomContent = "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>" + bundle
-          + "</artifactId><version>1.0.0</version><name>" + bundle + "</name><description>Fixture " + bundle + "</description>" + dependency + "</project>";
+          + "</artifactId><version>1.0.0</version><name>" + bundle + "</name><description>Fixture " + bundle + "</description><properties><"
+          + CDO_LOCATION_PROPERTY + ">file:/workspace/private-drop/</" + CDO_LOCATION_PROPERTY + "><" + SIMREL_LOCATION_PROPERTY
+          + ">https://download.eclipse.org/releases/test</" + SIMREL_LOCATION_PROPERTY + "></properties>" + dependency + "</project>";
       Path pom = versionDirectory.resolve(bundle + "-1.0.0.pom");
       Files.writeString(pom, pomContent);
 
@@ -3150,7 +3331,7 @@ public final class CDOAggregationTool
     throw new AssertionError("Expected publication scope failure containing: " + expectedMessage);
   }
 
-  private static void expectPublishCheckFailure(File staging, File metadata, String mode, String signatures) throws Exception
+  private static void expectPublishCheckFailure(File staging, File metadata, String mode, String signatures, String expectedMessage) throws Exception
   {
     try
     {
@@ -3158,7 +3339,7 @@ public final class CDOAggregationTool
     }
     catch (IllegalArgumentException e)
     {
-      if (e.getMessage().contains("Unapproved Maven publication coordinate"))
+      if (e.getMessage().contains(expectedMessage))
       {
         return;
       }
@@ -3166,7 +3347,7 @@ public final class CDOAggregationTool
       throw e;
     }
 
-    throw new AssertionError("Expected publish-check to reject out-of-scope Maven artifacts for " + mode);
+    throw new AssertionError("Expected publish-check to reject publication staging for " + mode + " with " + expectedMessage);
   }
 
   private static void expectVerifyFailure(File repository, File metadata, String expectedMessage) throws Exception

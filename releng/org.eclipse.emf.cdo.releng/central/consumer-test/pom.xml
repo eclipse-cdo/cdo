@@ -28,7 +28,7 @@
 
   <repositories>
     <repository>
-      <id>cdo-local</id>
+      <id>cdo-deployment-bundle</id>
       <url>file:///${cdo.maven.repository}</url>
     </repository>
     <repository>

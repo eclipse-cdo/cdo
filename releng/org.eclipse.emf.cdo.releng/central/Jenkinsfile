@@ -485,7 +485,7 @@ pipeline {
                     echo "Package inputs contain a symlink" >&2
                     exit 2
                   fi
-                  ant -Dpublishing.mode=PACKAGE_FOR_CENTRAL -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml verify-package
+                  ant -Dpublishing.mode=PACKAGE_FOR_CENTRAL -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml consumer-central-only
                 '''
               }
           }

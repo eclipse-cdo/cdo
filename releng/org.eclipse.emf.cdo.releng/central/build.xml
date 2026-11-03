@@ -60,6 +60,11 @@
 	<property name="consumer.work.dir" location="${work.dir}/consumer-test" />
 	<property name="consumer.versions.file" location="${consumer.work.dir}/cdo-consumer-versions.properties" />
 	<property name="consumer.project.dir" location="${basedir}/consumer-test" />
+	<property name="consumer.central.only.dir" location="${work.dir}/consumer-central-only" />
+	<property name="consumer.central.only.repository" location="${consumer.central.only.dir}/deployment-repository" />
+	<property name="consumer.central.only.maven.repository" location="${consumer.central.only.dir}/maven-local" />
+	<property name="consumer.central.only.versions.file" location="${consumer.central.only.dir}/cdo-consumer-versions.properties" />
+	<property name="consumer.central.only.tree.file" location="${consumer.central.only.dir}/dependency-tree.txt" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
 
@@ -396,6 +401,79 @@
 
 	<target name="consumer-dependency-tree" depends="consumer-test">
 		<run-consumer-maven goals="dependency:tree" />
+	</target>
+
+	<target name="consumer-central-only" depends="verify-package,compile-helper">
+		<fail unless="deployment.zip" message="Set -Ddeployment.zip to the verified Maven Central deployment bundle." />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="consumer-dependency-tree-test" />
+		</java>
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="safe-delete-work" />
+			<arg value="${consumer.central.only.dir}" />
+			<arg value="${workspace.root}" />
+		</java>
+		<unzip src="${deployment.zip}" dest="${consumer.central.only.repository}" />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="consumer-versions" />
+			<arg value="${consumer.central.only.repository}" />
+			<arg value="${consumer.central.only.versions.file}" />
+			<arg value="${metadata.file}" />
+		</java>
+		<property file="${consumer.central.only.versions.file}" />
+		<exec executable="${maven.executable}" dir="${consumer.project.dir}" failifexecutionfails="true" failonerror="true">
+			<arg value="-gs" />
+			<arg value="${basedir}/central-only-settings.xml" />
+			<arg value="-s" />
+			<arg value="${basedir}/central-only-settings.xml" />
+			<arg value="-Dmaven.repo.local=${consumer.central.only.maven.repository}" />
+			<arg value="-Dcdo.maven.repository=${consumer.central.only.repository}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.util=${cdo.version.org.eclipse.net4j.util}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j=${cdo.version.org.eclipse.net4j}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.tcp=${cdo.version.org.eclipse.net4j.tcp}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.db=${cdo.version.org.eclipse.net4j.db}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.db.jdbc=${cdo.version.org.eclipse.net4j.db.jdbc}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.db.h2=${cdo.version.org.eclipse.net4j.db.h2}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.common=${cdo.version.org.eclipse.emf.cdo.common}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo=${cdo.version.org.eclipse.emf.cdo}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.net4j=${cdo.version.org.eclipse.emf.cdo.net4j}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server=${cdo.version.org.eclipse.emf.cdo.server}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.net4j=${cdo.version.org.eclipse.emf.cdo.server.net4j}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.db=${cdo.version.org.eclipse.emf.cdo.server.db}" />
+			<arg value="-B" />
+			<arg value="-ntp" />
+			<arg value="clean" />
+			<arg value="test" />
+		</exec>
+		<exec executable="${maven.executable}" dir="${consumer.project.dir}" failifexecutionfails="true" failonerror="true">
+			<arg value="-gs" />
+			<arg value="${basedir}/central-only-settings.xml" />
+			<arg value="-s" />
+			<arg value="${basedir}/central-only-settings.xml" />
+			<arg value="-Dmaven.repo.local=${consumer.central.only.maven.repository}" />
+			<arg value="-Dcdo.maven.repository=${consumer.central.only.repository}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.util=${cdo.version.org.eclipse.net4j.util}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j=${cdo.version.org.eclipse.net4j}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.tcp=${cdo.version.org.eclipse.net4j.tcp}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.db=${cdo.version.org.eclipse.net4j.db}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.db.jdbc=${cdo.version.org.eclipse.net4j.db.jdbc}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.db.h2=${cdo.version.org.eclipse.net4j.db.h2}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.common=${cdo.version.org.eclipse.emf.cdo.common}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo=${cdo.version.org.eclipse.emf.cdo}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.net4j=${cdo.version.org.eclipse.emf.cdo.net4j}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server=${cdo.version.org.eclipse.emf.cdo.server}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.net4j=${cdo.version.org.eclipse.emf.cdo.server.net4j}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.db=${cdo.version.org.eclipse.emf.cdo.server.db}" />
+			<arg value="-DoutputFile=${consumer.central.only.tree.file}" />
+			<arg value="-B" />
+			<arg value="-ntp" />
+			<arg value="org.apache.maven.plugins:maven-dependency-plugin:3.8.1:tree" />
+		</exec>
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="consumer-dependency-tree-check" />
+			<arg value="${consumer.central.only.tree.file}" />
+		</java>
+		<echo message="Central-only consumer test and dependency-tree verification succeeded using ${deployment.zip}." />
 	</target>
 
 	<target name="validate" depends="execute-validate">

@@ -68,6 +68,10 @@
 	<property name="consumer.central.only.tree.file" location="${consumer.central.only.dir}/dependency-tree.txt" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
+	<property name="bom436.inventory.file" location="${basedir}/maven-central.properties" />
+	<property name="bom436.repository" location="${work.dir}/bom-repository" />
+	<property name="bom436.staging.dir" location="${work.dir}/bom-staging" />
+	<property name="bom436.signed.repository" location="${work.dir}/bom-signed-repository" />
 
 	<path id="helper.classpath">
 		<pathelement location="${classes.dir}" />
@@ -241,6 +245,51 @@
 			<arg value="${publishing.metadata.file}" />
 			<arg value="${work.dir}/bom-repository" />
 			<arg value="${cdo.drop.location}" />
+		</java>
+	</target>
+
+	<!-- One-time CDO 4.36 retrofit path: this uses a pinned inventory and skips bundle aggregation. -->
+	<target name="bom-436-prepare" depends="prepare,compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="generate-bom-436" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.metadata.file}" />
+			<arg value="${bom436.repository}" />
+			<arg value="${cdo.drop.location}" />
+			<arg value="${bom436.inventory.file}" />
+		</java>
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="stage-bom-436" />
+			<arg value="${bom436.repository}" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.metadata.file}" />
+			<arg value="${bom436.inventory.file}" />
+			<arg value="${bom436.staging.dir}" />
+		</java>
+	</target>
+
+	<target name="check-bom-436-central" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="check-bom-central" />
+			<arg value="${metadata.file}" />
+			<arg value="${bom436.inventory.file}" />
+			<arg value="${central.repository.url}" />
+		</java>
+	</target>
+
+	<target name="verify-bom-436-package" depends="validate-workspace,compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="verify-bom-package" />
+			<arg value="${bom436.staging.dir}" />
+			<arg value="${bom436.signed.repository}" />
+			<arg value="${deployment.zip}" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.metadata.file}" />
+			<arg value="${bom436.inventory.file}" />
+			<arg value="${gpg.expected.fingerprint}" />
+			<arg value="${gpg.public.key.file}" />
+			<arg value="${gpg.executable}" />
+			<arg value="${work.dir}/bom-436-package-summary.properties" />
 		</java>
 	</target>
 

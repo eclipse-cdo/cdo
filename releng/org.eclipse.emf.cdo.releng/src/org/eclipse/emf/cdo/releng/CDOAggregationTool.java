@@ -147,7 +147,7 @@ public final class CDOAggregationTool
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|overlay|generate-bom|classify-central|verify|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|overlay|generate-bom|generate-bom-436|stage-bom-436|check-bom-central|verify-bom-package|classify-central|verify|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -166,6 +166,22 @@ public final class CDOAggregationTool
 
     case "generate-bom":
       BomCommand.execute(args);
+      break;
+
+    case "generate-bom-436":
+      Bom436Command.generate(args);
+      break;
+
+    case "stage-bom-436":
+      Bom436Command.stage(args);
+      break;
+
+    case "check-bom-central":
+      Bom436Command.checkCentral(args);
+      break;
+
+    case "verify-bom-package":
+      verifyBomPackage(args);
       break;
 
     case "classify-central":
@@ -463,7 +479,12 @@ public final class CDOAggregationTool
       requireWorkspaceOutput(new File(args[3]), "validation repository list output");
       DropLocation drop = DropLocation.parse(args[1]);
 
-      Document info = parse(drop.open("build-info.xml"), "build-info.xml");
+      Document info;
+      try (InputStream input = drop.open("build-info.xml"))
+      {
+        info = parse(input, "build-info.xml");
+      }
+
       Element build = info.getDocumentElement();
       if (!"build".equals(build.getNodeName()))
       {
@@ -738,8 +759,6 @@ public final class CDOAggregationTool
 
     private static File generate(File bundles, File output, Map<String, String> metadata, Map<String, String> publishing, String version) throws Exception
     {
-      String release = requiredMetadata(metadata, "cdo.project.release");
-      String dropID = requiredMetadata(metadata, "cdo.drop.id");
       Map<String, String> bundleVersions = new LinkedHashMap<>();
       for (String bundle : BUNDLES)
       {
@@ -768,6 +787,19 @@ public final class CDOAggregationTool
         }
 
         bundleVersions.put(bundle, bundleVersion);
+      }
+
+      return generate(output, metadata, publishing, version, bundleVersions);
+    }
+
+    private static File generate(File output, Map<String, String> metadata, Map<String, String> publishing, String version, Map<String, String> bundleVersions)
+        throws Exception
+    {
+      String release = requiredMetadata(metadata, "cdo.project.release");
+      String dropID = requiredMetadata(metadata, "cdo.drop.id");
+      if (!bundleVersions.keySet().equals(new LinkedHashSet<>(BUNDLES)))
+      {
+        throw new IllegalArgumentException("BOM source inventory does not contain exactly the approved bundle coordinates: " + bundleVersions.keySet());
       }
 
       File pom = new File(output, "org/eclipse/cdo/org.eclipse.cdo.bom/" + version + "/org.eclipse.cdo.bom-" + version + ".pom");
@@ -880,6 +912,367 @@ public final class CDOAggregationTool
       }
 
       return value;
+    }
+  }
+
+  /**
+   * Implements the isolated one-time CDO 4.36 BOM retrofit path.
+   *
+   * @author Eike Stepper
+   */
+  private static final class Bom436Command
+  {
+    private static final String RELEASE = "4.36";
+
+    private static final String DROP_ID = "R20260901-1311";
+
+    private static final String BOM_ARTIFACT = "org.eclipse.cdo.bom";
+
+    private static final String[] CHECKSUMS = { "md5", "sha1", "sha256", "sha512" };
+
+    public static void generate(String[] args) throws Exception
+    {
+      if (args.length != 6)
+      {
+        throw new IllegalArgumentException("generate-bom-436 requires metadata, publishing metadata, output repository, selected drop, and inventory manifest");
+      }
+
+      Map<String, String> metadata = readProperties(requireFile(new File(args[1]), "build metadata"));
+      Map<String, String> publishing = readProperties(requireFile(new File(args[2]), "publishing metadata"));
+      Map<String, String> versions = inventory(requireFile(new File(args[5]), "Maven Central coordinate inventory"));
+      String projectRelease = verifySelectedDrop(metadata, versions, args[4]);
+      File output = new File(args[3]);
+      requireWorkspaceOutput(output, "CDO 4.36 BOM repository");
+      if (output.exists())
+      {
+        rejectSymbolicLinks(output.toPath(), "CDO 4.36 BOM repository");
+      }
+
+      String bomVersion = BomCommand.normalizeProjectReleaseVersion(projectRelease);
+      File pom = BomCommand.generate(output, metadata, publishing, bomVersion, versions);
+      validatePom(pom, metadata, publishing, versions);
+      System.out.println("Generated the isolated CDO 4.36 BOM from the pinned published-coordinate inventory: " + pom);
+    }
+
+    public static void stage(String[] args) throws Exception
+    {
+      if (args.length != 6)
+      {
+        throw new IllegalArgumentException(
+            "stage-bom-436 requires BOM repository, build metadata, publishing metadata, inventory manifest, and staging directory");
+      }
+
+      File repository = requireDirectory(args[1], "generated CDO 4.36 BOM repository");
+      requireWorkspaceOutput(repository, "generated CDO 4.36 BOM repository");
+      rejectSymbolicLinks(repository.toPath(), "generated CDO 4.36 BOM repository");
+      Map<String, String> metadata = readProperties(requireFile(new File(args[2]), "build metadata"));
+      Map<String, String> publishing = readProperties(requireFile(new File(args[3]), "publishing metadata"));
+      Map<String, String> versions = inventory(requireFile(new File(args[4]), "Maven Central coordinate inventory"));
+      verifyMetadata(metadata, versions);
+      File source = bomPom(repository);
+      validatePom(source, metadata, publishing, versions);
+      File staging = new File(args[5]);
+      requireWorkspaceOutput(staging, "CDO 4.36 BOM staging");
+      if (staging.exists())
+      {
+        rejectSymbolicLinks(staging.toPath(), "CDO 4.36 BOM staging");
+        try (Stream<Path> entries = Files.list(staging.toPath()))
+        {
+          if (entries.findAny().isPresent())
+          {
+            throw new IllegalArgumentException("CDO 4.36 BOM staging must be absent or empty: " + staging);
+          }
+        }
+      }
+
+      String relativePom = bomRelativePom();
+      File target = new File(staging, relativePom.replace('/', File.separatorChar));
+      Files.createDirectories(target.toPath().getParent());
+      Files.copy(source.toPath(), target.toPath());
+      ChecksumsCommand.writeChecksums(target);
+      validateStaging(staging, metadata, publishing, versions, false);
+      System.out.println("Prepared POM-only CDO 4.36 BOM staging with four verified checksum sidecars.");
+    }
+
+    public static void checkCentral(String[] args) throws Exception
+    {
+      if (args.length != 4)
+      {
+        throw new IllegalArgumentException("check-bom-central requires build metadata, inventory manifest, and Central repository URL");
+      }
+
+      Map<String, String> metadata = readProperties(requireFile(new File(args[1]), "build metadata"));
+      Map<String, String> versions = inventory(requireFile(new File(args[2]), "Maven Central coordinate inventory"));
+      verifyMetadata(metadata, versions);
+      URI repository = CentralClassificationCommand.repositoryURI(args[3]);
+      String base = "org/eclipse/cdo/" + BOM_ARTIFACT + "/4.36.0/" + BOM_ARTIFACT + "-4.36.0";
+      List<String> paths = new ArrayList<>();
+      for (String suffix : List.of(".pom", ".jar", "-sources.jar", "-javadoc.jar"))
+      {
+        paths.add(base + suffix);
+        paths.add(base + suffix + ".asc");
+        for (String checksum : CHECKSUMS)
+        {
+          paths.add(base + suffix + "." + checksum);
+          paths.add(base + suffix + ".asc." + checksum);
+        }
+      }
+
+      for (String path : paths)
+      {
+        CentralClassificationCommand.Response response = CentralClassificationCommand.request(repository, path);
+        if (response.status == HttpURLConnection.HTTP_OK)
+        {
+          throw new IllegalStateException("CDO 4.36 BOM coordinate already exists on Maven Central: " + path);
+        }
+
+        if (response.status != HttpURLConnection.HTTP_NOT_FOUND)
+        {
+          throw new IllegalStateException("Cannot establish CDO 4.36 BOM coordinate absence: HTTP " + response.status + " for " + path);
+        }
+      }
+
+      System.out.println("Maven Central returned authoritative HTTP 404 for every possible CDO 4.36 BOM artifact and sidecar.");
+    }
+
+    private static Map<String, String> inventory(File file) throws Exception
+    {
+      Map<String, String> properties = readProperties(file);
+      Map<String, String> versions = new LinkedHashMap<>();
+      if (properties.size() != BUNDLES.size() + 1 || !"4.36.0".equals(properties.get(BOM_ARTIFACT)))
+      {
+        throw new IllegalArgumentException("Maven Central inventory must identify org.eclipse.cdo.bom=4.36.0 and exactly the 12 published bundles");
+      }
+
+      for (String bundle : BUNDLES)
+      {
+        String version = properties.get(bundle);
+        if (version == null || !version.matches("[0-9]+(?:\\.[0-9A-Za-z_-]+)+"))
+        {
+          throw new IllegalArgumentException("Missing or malformed published version for CDO 4.36 BOM member " + bundle);
+        }
+
+        versions.put(bundle, version);
+      }
+
+      Set<String> expected = new LinkedHashSet<>(BUNDLES);
+      expected.add(BOM_ARTIFACT);
+      if (!properties.keySet().equals(expected))
+      {
+        throw new IllegalArgumentException("Maven Central inventory contains coordinates outside the approved CDO 4.36 BOM and twelve bundles");
+      }
+
+      return versions;
+    }
+
+    private static String verifySelectedDrop(Map<String, String> metadata, Map<String, String> versions, String selectedDrop) throws Exception
+    {
+      verifyMetadata(metadata, versions);
+      DropLocation drop = DropLocation.parse(selectedDrop);
+      Properties web = new Properties();
+      try (InputStream input = drop.open("web.properties"))
+      {
+        web.load(input);
+      }
+
+      Document info;
+      try (InputStream input = drop.open("build-info.xml"))
+      {
+        info = parse(input, "build-info.xml");
+      }
+
+      String projectRelease = web.getProperty("web.label");
+      BomCommand.normalizeProjectReleaseVersion(projectRelease);
+      if (!RELEASE.equals(projectRelease) || !DROP_ID.equals(required(info.getDocumentElement(), "qualifier")))
+      {
+        throw new IllegalArgumentException("Selected drop must be CDO release " + RELEASE + " with qualifier " + DROP_ID);
+      }
+
+      return projectRelease;
+    }
+
+    private static void verifyMetadata(Map<String, String> metadata, Map<String, String> versions)
+    {
+      if (!RELEASE.equals(metadata.get("cdo.project.release")) || !DROP_ID.equals(metadata.get("cdo.drop.id")) || versions.size() != BUNDLES.size())
+      {
+        throw new IllegalArgumentException("BOM-only retrofit metadata must identify CDO 4.36 drop " + DROP_ID);
+      }
+    }
+
+    private static File bomPom(File repository)
+    {
+      return new File(repository, bomRelativePom().replace('/', File.separatorChar));
+    }
+
+    private static String bomRelativePom()
+    {
+      return "org/eclipse/cdo/" + BOM_ARTIFACT + "/4.36.0/" + BOM_ARTIFACT + "-4.36.0.pom";
+    }
+
+    private static void validatePom(File pom, Map<String, String> metadata, Map<String, String> publishing, Map<String, String> versions) throws Exception
+    {
+      Element project = parse(pom).getDocumentElement();
+      if (!"org.eclipse.cdo".equals(text(project, "groupId")) || !BOM_ARTIFACT.equals(text(project, "artifactId")) || !"4.36.0".equals(text(project, "version"))
+          || !"pom".equals(text(project, "packaging")))
+      {
+        throw new IllegalArgumentException("Generated BOM does not have the required org.eclipse.cdo:org.eclipse.cdo.bom:4.36.0 POM coordinate");
+      }
+
+      if (child(project, "dependencies") != null)
+      {
+        throw new IllegalArgumentException("Generated BOM must not declare ordinary dependencies");
+      }
+
+      Element properties = child(project, "properties");
+      if (!RELEASE.equals(text(properties, "cdo.project.release")) || !DROP_ID.equals(text(properties, "cdo.drop.id"))
+          || !RELEASE.equals(metadata.get("cdo.project.release")) || !DROP_ID.equals(metadata.get("cdo.drop.id"))
+          || directChildren(properties, "cdo.project.release").size() != 1 || directChildren(properties, "cdo.drop.id").size() != 1)
+      {
+        throw new IllegalArgumentException("Generated BOM has incorrect project-release/drop traceability");
+      }
+
+      if (!BomCommand.requiredMetadata(publishing, "project.url").equals(text(project, "url"))
+          || !BomCommand.requiredMetadata(publishing, "organization.name").equals(text(child(project, "organization"), "name"))
+          || !BomCommand.requiredMetadata(publishing, "organization.url").equals(text(child(project, "organization"), "url"))
+          || !BomCommand.requiredMetadata(publishing, "license.name").equals(text(child(child(project, "licenses"), "license"), "name"))
+          || !BomCommand.requiredMetadata(publishing, "license.url").equals(text(child(child(project, "licenses"), "license"), "url"))
+          || !BomCommand.requiredMetadata(publishing, "license.distribution").equals(text(child(child(project, "licenses"), "license"), "distribution"))
+          || !BomCommand.requiredMetadata(publishing, "developers.url").equals(text(child(child(project, "developers"), "developer"), "url"))
+          || !BomCommand.requiredMetadata(publishing, "issue.system").equals(text(child(project, "issueManagement"), "system"))
+          || !BomCommand.requiredMetadata(publishing, "issue.url").equals(text(child(project, "issueManagement"), "url"))
+          || !BomCommand.requiredMetadata(publishing, "scm.connection").equals(text(child(project, "scm"), "connection"))
+          || !BomCommand.requiredMetadata(publishing, "scm.developerConnection").equals(text(child(project, "scm"), "developerConnection"))
+          || !BomCommand.requiredMetadata(publishing, "project.url").equals(text(child(project, "scm"), "url"))
+          || !BomCommand.requiredMetadata(metadata, "cdo.git.commit").equals(text(child(project, "scm"), "tag")))
+      {
+        throw new IllegalArgumentException("Generated BOM is missing required Maven Central project metadata");
+      }
+
+      Element dependencies = child(child(project, "dependencyManagement"), "dependencies");
+      List<Element> managed = directChildren(dependencies, "dependency");
+      NodeList allDependencies = project.getElementsByTagNameNS("*", "dependency");
+      NodeList allDependencySections = project.getElementsByTagNameNS("*", "dependencies");
+      if (managed.size() != BUNDLES.size() || elementChildren(dependencies).size() != BUNDLES.size() || allDependencies.getLength() != BUNDLES.size()
+          || allDependencySections.getLength() != 1)
+      {
+        throw new IllegalArgumentException("Generated BOM must manage exactly the twelve published CDO bundle coordinates");
+      }
+
+      for (int i = 0; i < BUNDLES.size(); i++)
+      {
+        Element dependency = managed.get(i);
+        String bundle = BUNDLES.get(i);
+        if (!"org.eclipse.cdo".equals(text(dependency, "groupId")) || !bundle.equals(text(dependency, "artifactId"))
+            || !versions.get(bundle).equals(text(dependency, "version")) || directChildren(dependency, "groupId").size() != 1
+            || directChildren(dependency, "artifactId").size() != 1 || directChildren(dependency, "version").size() != 1)
+        {
+          throw new IllegalArgumentException("Generated BOM member does not match published coordinate org.eclipse.cdo:" + bundle + ":" + versions.get(bundle));
+        }
+      }
+    }
+
+    private static List<Element> directChildren(Element parent, String name)
+    {
+      List<Element> result = new ArrayList<>();
+      if (parent != null)
+      {
+        for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling())
+        {
+          if (node instanceof Element && name.equals(node.getLocalName()))
+          {
+            result.add((Element)node);
+          }
+        }
+      }
+
+      return result;
+    }
+
+    private static List<Element> elementChildren(Element parent)
+    {
+      List<Element> result = new ArrayList<>();
+      if (parent != null)
+      {
+        for (Node node = parent.getFirstChild(); node != null; node = node.getNextSibling())
+        {
+          if (node instanceof Element)
+          {
+            result.add((Element)node);
+          }
+        }
+      }
+
+      return result;
+    }
+
+    private static void validateStaging(File staging, Map<String, String> metadata, Map<String, String> publishing, Map<String, String> versions,
+        boolean signed) throws Exception
+    {
+      rejectSymbolicLinks(staging.toPath(), "CDO 4.36 BOM staging");
+      File pom = new File(staging, bomRelativePom().replace('/', File.separatorChar));
+      validatePom(pom, metadata, publishing, versions);
+      Set<String> expected = new LinkedHashSet<>();
+      expected.add(bomRelativePom());
+      for (String checksum : CHECKSUMS)
+      {
+        String path = bomRelativePom() + "." + checksum;
+        File file = new File(staging, path.replace('/', File.separatorChar));
+        if (!file.isFile() || !ChecksumsCommand.digest(pom, checksumAlgorithm(checksum)).equalsIgnoreCase(Files.readString(file.toPath()).trim()))
+        {
+          throw new IllegalArgumentException("Missing or invalid BOM checksum: " + path);
+        }
+
+        expected.add(path);
+      }
+
+      String signaturePath = bomRelativePom() + ".asc";
+      File signature = new File(staging, signaturePath.replace('/', File.separatorChar));
+      if (signed)
+      {
+        if (!signature.isFile() || !Files.readString(signature.toPath(), StandardCharsets.US_ASCII).startsWith("-----BEGIN PGP SIGNATURE-----"))
+        {
+          throw new IllegalArgumentException("Missing, malformed, or non-armored BOM signature: " + signaturePath);
+        }
+
+        expected.add(signaturePath);
+      }
+      else if (signature.exists())
+      {
+        throw new IllegalArgumentException("Unsigned BOM staging unexpectedly contains a signature: " + signaturePath);
+      }
+
+      List<File> files = regularFiles(staging);
+      Set<String> actual = new LinkedHashSet<>();
+      for (File file : files)
+      {
+        actual.add(relativePath(staging, file));
+      }
+
+      if (!actual.equals(expected))
+      {
+        Set<String> missing = new LinkedHashSet<>(expected);
+        missing.removeAll(actual);
+        Set<String> unexpected = new LinkedHashSet<>(actual);
+        unexpected.removeAll(expected);
+        throw new IllegalArgumentException("BOM-only deployment inventory mismatch; missing=" + missing + " unexpected=" + unexpected);
+      }
+    }
+
+    private static String checksumAlgorithm(String checksum)
+    {
+      switch (checksum)
+      {
+      case "md5":
+        return "MD5";
+      case "sha1":
+        return "SHA-1";
+      case "sha256":
+        return "SHA-256";
+      case "sha512":
+        return "SHA-512";
+      default:
+        throw new IllegalArgumentException("Unknown checksum algorithm: " + checksum);
+      }
     }
   }
 
@@ -2760,6 +3153,94 @@ public final class CDOAggregationTool
     System.out.println("Verified 48 OpenPGP signatures, staged repository bytes, checksums, and exact ZIP inventory. Publication performed=false.");
   }
 
+  private static void verifyBomPackage(String[] args) throws Exception
+  {
+    if (args.length != 11)
+    {
+      throw new IllegalArgumentException(
+          "verify-bom-package requires staging, signed repository, ZIP, build metadata, publishing metadata, inventory, primary fingerprint, public key, GPG executable, and summary");
+    }
+
+    File staging = requireDirectory(args[1], "CDO 4.36 BOM staging");
+    File signedRepository = requireDirectory(args[2], "signed CDO 4.36 BOM repository");
+    File zip = requireFile(new File(args[3]), "CDO 4.36 BOM deployment ZIP");
+    File metadataFile = requireFile(new File(args[4]), "build metadata");
+    File publishingFile = requireFile(new File(args[5]), "publishing metadata");
+    File inventoryFile = requireFile(new File(args[6]), "CDO 4.36 BOM inventory");
+    Map<String, String> metadata = readProperties(metadataFile);
+    Map<String, String> publishing = readProperties(publishingFile);
+    Map<String, String> versions = Bom436Command.inventory(inventoryFile);
+    Bom436Command.verifyMetadata(metadata, versions);
+    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_FOR_CENTRAL");
+    requireWorkspaceOutput(staging, "CDO 4.36 BOM staging");
+    requireWorkspaceOutput(signedRepository, "signed CDO 4.36 BOM repository");
+    requireWorkspaceOutput(zip, "CDO 4.36 BOM deployment ZIP");
+    requireWorkspaceOutput(new File(args[8]), "GnuPG public verification key");
+    requireWorkspaceOutput(new File(args[10]), "CDO 4.36 BOM package summary");
+    rejectSymbolicLinks(staging.toPath(), "CDO 4.36 BOM staging");
+    rejectSymbolicLinks(signedRepository.toPath(), "signed CDO 4.36 BOM repository");
+    File publicKey = requireFile(new File(args[8]), "GnuPG public verification key");
+    if (Files.isSymbolicLink(publicKey.toPath()))
+    {
+      throw new IllegalArgumentException("GnuPG public verification key must not be a symbolic link");
+    }
+
+    Bom436Command.validateStaging(staging, metadata, publishing, versions, true);
+    String expectedFingerprint = args[7].replace(" ", "").toUpperCase();
+    if (!expectedFingerprint.matches("(?:[0-9A-F]{40}|[0-9A-F]{64})"))
+    {
+      throw new IllegalArgumentException("Expected primary-key fingerprint must be a full 40- or 64-character hexadecimal fingerprint");
+    }
+
+    String relativePom = "org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom";
+    String relativeSignature = relativePom + ".asc";
+    File pom = new File(staging, relativePom.replace('/', File.separatorChar));
+    File signature = new File(staging, relativeSignature.replace('/', File.separatorChar));
+    File deployedPom = new File(signedRepository, relativePom.replace('/', File.separatorChar));
+    File deployedSignature = new File(signedRepository, relativeSignature.replace('/', File.separatorChar));
+    if (!deployedPom.isFile() || !sameBytes(pom, deployedPom))
+    {
+      throw new IllegalArgumentException("Signed local repository POM differs from validated BOM staging");
+    }
+
+    if (!deployedSignature.isFile() || !sameBytes(signature, deployedSignature))
+    {
+      throw new IllegalArgumentException("Staged BOM signature differs from local Maven GPG output");
+    }
+
+    Set<String> signedFilesAllowed = new LinkedHashSet<>();
+    signedFilesAllowed.add(relativePom);
+    signedFilesAllowed.add(relativeSignature);
+    for (String checksum : Bom436Command.CHECKSUMS)
+    {
+      signedFilesAllowed.add(relativePom + "." + checksum);
+    }
+
+    for (File file : regularFiles(signedRepository))
+    {
+      String relative = relativePath(signedRepository, file);
+      if (!signedFilesAllowed.contains(relative))
+      {
+        throw new IllegalArgumentException("Unexpected file in signed BOM repository: " + relative);
+      }
+    }
+
+    verifySignatures(args[9], publicKey, expectedFingerprint, List.of(pom), staging);
+    Set<String> expectedFiles = new LinkedHashSet<>();
+    for (File file : regularFiles(staging))
+    {
+      expectedFiles.add(relativePath(staging, file));
+    }
+
+    verifyDeploymentZip(zip, staging, expectedFiles);
+    String sha256 = ChecksumsCommand.digest(zip, "SHA-256");
+    String summary = "deployment.type=BOM_ONLY\ncoordinate=org.eclipse.cdo:org.eclipse.cdo.bom:4.36.0\n" + "signatures.verified=1\n"
+        + "signature.verification=VALIDATED\nsigning.primary.fingerprint=" + expectedFingerprint + "\n" + "deployment.zip=" + zip.getName() + "\n"
+        + "deployment.zip.sha256=" + sha256 + "\ncentral.publication.performed=false\n";
+    Files.writeString(new File(args[10]).toPath(), summary, StandardCharsets.UTF_8);
+    System.out.println("Verified the POM-only CDO 4.36 BOM signature, checksums, local signing output, and exact ZIP inventory. Publication performed=false.");
+  }
+
   private static void verifySignatures(String gpg, File publicKey, String expectedFingerprint, List<File> artifacts, File staging) throws Exception
   {
     String workspace = System.getenv("CDO_WORKSPACE_ROOT");
@@ -3423,8 +3904,8 @@ public final class CDOAggregationTool
 
       String firstSigningFingerprint = findSigningSubkeyFingerprint(
           gpg(gpgExecutable, firstHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"), firstFingerprint);
-      findSigningSubkeyFingerprint(gpg(gpgExecutable, secondHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"),
-          secondFingerprint);
+      String secondSigningFingerprint = findSigningSubkeyFingerprint(
+          gpg(gpgExecutable, secondHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"), secondFingerprint);
 
       File firstPublicKey = exportPublicKey(gpgExecutable, firstHome, firstFingerprint, work.resolve("first-public-key.gpg"));
       File secondPublicKey = exportPublicKey(gpgExecutable, secondHome, secondFingerprint, work.resolve("second-public-key.gpg"));
@@ -3529,8 +4010,9 @@ public final class CDOAggregationTool
 
       createDeploymentZip(staging, zip, "");
       verifyPackage(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary));
+      bom436SignatureTest(gpgExecutable, firstHome, firstFingerprint, firstPublicKey, secondHome, secondSigningFingerprint, work);
       System.out.println(
-          "Disposable GnuPG signing tests passed: valid package, changed bytes, corrupt signature, wrong key/fingerprint, missing key/signature/artifact, and invalid ZIP layout.");
+          "Disposable GnuPG signing tests passed: bundle package protections and POM-only BOM inventory, checksums, identity, signature, and ZIP validation.");
     }
     finally
     {
@@ -3553,6 +4035,143 @@ public final class CDOAggregationTool
     gpg(gpg, home, "--output", destination.toString(), "--export", fingerprint);
     securePath(destination, false);
     return destination.toFile();
+  }
+
+  private static void bom436SignatureTest(String gpg, Path firstHome, String firstPrimary, File firstPublicKey, Path secondHome, String secondSigning,
+      Path work) throws Exception
+  {
+    Path root = work.resolve("bom-436-test");
+    Path staging = root.resolve("staging");
+    Path signedRepository = root.resolve("signed-repository");
+    Path bomRepository = root.resolve("bom-repository");
+    Path metadata = root.resolve("metadata.properties");
+    Path publishing = root.resolve("publishing.properties");
+    Path manifest = root.resolve("inventory.properties");
+    Path zip = root.resolve("bom-deployment.zip");
+    Path summary = root.resolve("summary.properties");
+    Files.createDirectories(root);
+    Files.createDirectories(signedRepository);
+    Map<String, String> buildMetadata = new LinkedHashMap<>();
+    buildMetadata.put("cdo.build.type", "R");
+    buildMetadata.put("cdo.project.release", "4.36");
+    buildMetadata.put("cdo.drop.id", "R20260901-1311");
+    buildMetadata.put("cdo.git.commit", "0123456789abcdef0123456789abcdef01234567");
+    writeProperties(metadata, buildMetadata);
+    String publishingText = "project.url=https://eclipse.dev/cdo/\norganization.name=Eclipse Foundation\norganization.url=https://www.eclipse.org\n"
+        + "license.name=EPL-2.0\nlicense.url=https://www.eclipse.org/legal/epl-2.0/\nlicense.distribution=repo\n"
+        + "developers.url=https://github.com/eclipse-cdo/cdo/graphs/contributors\nissue.system=GitHub\n"
+        + "issue.url=https://github.com/eclipse-cdo/cdo/issues\nscm.connection=scm:git:https://github.com/eclipse-cdo/cdo.git\n"
+        + "scm.developerConnection=scm:git:https://github.com/eclipse-cdo/cdo.git\n";
+    Files.writeString(publishing, publishingText, StandardCharsets.UTF_8);
+    Map<String, String> publishingMetadata = readProperties(publishing.toFile());
+    Map<String, String> versions = new LinkedHashMap<>();
+    String[] publishedVersions = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0", "4.15.0" };
+    for (int i = 0; i < BUNDLES.size(); i++)
+    {
+      versions.put(BUNDLES.get(i), publishedVersions[i]);
+    }
+
+    Map<String, String> inventory = new LinkedHashMap<>();
+    inventory.put(Bom436Command.BOM_ARTIFACT, "4.36.0");
+    versions.forEach(inventory::put);
+    writeProperties(manifest, inventory);
+    File bomPom = BomCommand.generate(bomRepository.toFile(), buildMetadata, publishingMetadata, "4.36.0", versions);
+    Bom436Command
+        .stage(new String[] { "stage-bom-436", bomRepository.toString(), metadata.toString(), publishing.toString(), manifest.toString(), staging.toString() });
+
+    String relativePom = Bom436Command.bomRelativePom();
+    File stagedPom = new File(staging.toFile(), relativePom.replace('/', File.separatorChar));
+    File stagedSignature = new File(stagedPom.getPath() + ".asc");
+    File deployedPom = new File(signedRepository.toFile(), relativePom.replace('/', File.separatorChar));
+    File deployedSignature = new File(deployedPom.getPath() + ".asc");
+    Files.createDirectories(deployedPom.toPath().getParent());
+    Files.copy(bomPom.toPath(), deployedPom.toPath());
+    gpg(gpg, firstHome, "--armor", "--local-user",
+        findSigningSubkeyFingerprint(gpg(gpg, firstHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"),
+            firstPrimary),
+        "--output", stagedSignature.getAbsolutePath(), "--detach-sign", stagedPom.getAbsolutePath());
+    Files.copy(stagedSignature.toPath(), deployedSignature.toPath());
+    createDeploymentZip(staging.toFile(), zip.toFile(), "");
+    String[] args = bomPackageArguments(staging.toFile(), signedRepository.toFile(), zip.toFile(), metadata.toFile(), publishing.toFile(), manifest.toFile(),
+        firstPrimary, firstPublicKey, gpg, summary.toFile());
+    verifyBomPackage(args);
+
+    byte[] signatureBytes = Files.readAllBytes(stagedSignature.toPath());
+    Files.delete(stagedSignature.toPath());
+    createDeploymentZip(staging.toFile(), zip.toFile(), "");
+    expectBomPackageFailure(args, "Missing, malformed, or non-armored BOM signature", "missing BOM signature");
+    Files.write(stagedSignature.toPath(), signatureBytes);
+
+    File sha1 = new File(stagedPom.getPath() + ".sha1");
+    byte[] sha1Bytes = Files.readAllBytes(sha1.toPath());
+    Files.delete(sha1.toPath());
+    createDeploymentZip(staging.toFile(), zip.toFile(), "");
+    expectBomPackageFailure(args, "Missing or invalid BOM checksum", "missing BOM checksum");
+    Files.write(sha1.toPath(), sha1Bytes);
+
+    byte[] corruptedSignature = signatureBytes.clone();
+    int body = new String(corruptedSignature, StandardCharsets.US_ASCII).indexOf("\n\n") + 2;
+    corruptedSignature[body] = corruptedSignature[body] == 'A' ? (byte)'B' : (byte)'A';
+    Files.write(stagedSignature.toPath(), corruptedSignature);
+    Files.write(deployedSignature.toPath(), corruptedSignature);
+    createDeploymentZip(staging.toFile(), zip.toFile(), "");
+    expectBomPackageFailure(args, "GnuPG operation failed", "corrupted BOM signature");
+    Files.write(stagedSignature.toPath(), signatureBytes);
+    Files.write(deployedSignature.toPath(), signatureBytes);
+
+    File checksum = new File(stagedPom.getPath() + ".sha256");
+    byte[] checksumBytes = Files.readAllBytes(checksum.toPath());
+    Files.writeString(checksum.toPath(), "0".repeat(64), StandardCharsets.US_ASCII);
+    createDeploymentZip(staging.toFile(), zip.toFile(), "");
+    expectBomPackageFailure(args, "Missing or invalid BOM checksum", "invalid BOM checksum");
+    Files.write(checksum.toPath(), checksumBytes);
+
+    File unexpected = new File(staging.toFile(), relativePom.replace(".pom", ".jar").replace('/', File.separatorChar));
+    Files.writeString(unexpected.toPath(), "no binaries belong in a BOM package", StandardCharsets.UTF_8);
+    createDeploymentZip(staging.toFile(), zip.toFile(), "");
+    expectBomPackageFailure(args, "inventory mismatch", "unexpected BOM deployment file");
+    Files.delete(unexpected.toPath());
+
+    gpg(gpg, secondHome, "--armor", "--local-user", secondSigning, "--output", stagedSignature.getAbsolutePath(), "--detach-sign", stagedPom.getAbsolutePath());
+    Files.copy(stagedSignature.toPath(), deployedSignature.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    createDeploymentZip(staging.toFile(), zip.toFile(), "");
+    expectBomPackageFailure(args, "GnuPG operation failed", "BOM signature from an untrusted signing identity");
+    gpg(gpg, firstHome, "--armor", "--local-user",
+        findSigningSubkeyFingerprint(gpg(gpg, firstHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"),
+            firstPrimary),
+        "--output", stagedSignature.getAbsolutePath(), "--detach-sign", stagedPom.getAbsolutePath());
+    Files.copy(stagedSignature.toPath(), deployedSignature.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    createDeploymentZip(staging.toFile(), zip.toFile(), "");
+    expectBomPackageFailure(bomPackageArguments(staging.toFile(), signedRepository.toFile(), zip.toFile(), metadata.toFile(), publishing.toFile(),
+        manifest.toFile(), "F".repeat(firstPrimary.length()), firstPublicKey, gpg, summary.toFile()), "unexpected primary key",
+        "incorrect BOM verification identity");
+    verifyBomPackage(args);
+  }
+
+  private static String[] bomPackageArguments(File staging, File signedRepository, File zip, File metadata, File publishing, File manifest, String fingerprint,
+      File publicKey, String gpg, File summary)
+  {
+    return new String[] { "verify-bom-package", staging.getPath(), signedRepository.getPath(), zip.getPath(), metadata.getPath(), publishing.getPath(),
+        manifest.getPath(), fingerprint, publicKey.getPath(), gpg, summary.getPath() };
+  }
+
+  private static void expectBomPackageFailure(String[] args, String message, String scenario) throws Exception
+  {
+    try
+    {
+      verifyBomPackage(args);
+    }
+    catch (Exception e)
+    {
+      if (e.getMessage() != null && e.getMessage().contains(message))
+      {
+        return;
+      }
+
+      throw new AssertionError("Unexpected failure for " + scenario + ": " + e.getMessage(), e);
+    }
+
+    throw new AssertionError("Expected failure for " + scenario);
   }
 
   private static String[] packageArguments(File staging, File signedRepository, File zip, File metadata, String fingerprint, File publicKey, String gpg,

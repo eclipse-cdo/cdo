@@ -397,6 +397,67 @@ incompatible existing BOM is `CONFLICT`; it is never treated as an unpublished c
 The classification target is a separate pre-deployment check. Signing and ZIP packaging do not
 consume its report yet.
 
+## One-time CDO 4.36 BOM-only package
+
+Select `PACKAGE_BOM_436_FOR_CENTRAL` in Jenkins and set `CDO_DROP_ID=R20260901-1311`.
+This isolated mode prepares the selected drop metadata, generates the BOM from the temporary
+`maven-central.properties` artifactId-to-version inventory, and checks that
+the BOM coordinate and any possible partial artifacts all return HTTP 404 from canonical Maven
+Central. It skips CBI bundle aggregation, bundle Central checks, and the bundle audit/sign/package
+stages. A network error or any non-404 result fails closed.
+
+The temporary retrofit inventory contains exactly thirteen `artifactId=version` entries: the BOM
+and its twelve approved bundle coordinates. The release and drop ID are read from the selected
+drop's `web.properties` and `build-info.xml` and checked against the prepared publishing metadata;
+they are not repeated in this inventory. Keep this retrofit-specific Git file only until the
+successful publication is confirmed, then remove it.
+
+Jenkins then signs only the BOM POM using the existing GPG credentials and Maven GPG plugin,
+copies the detached signature into the BOM staging tree, and independently verifies that
+signature using the isolated public-key keyring and configured primary fingerprint. The verifier
+also validates all four checksum sidecars, the exact Maven coordinate and required project
+metadata, all twelve managed versions, the signed-repository POM bytes, and the ZIP file/directory
+inventory. Jenkins archives the ZIP and a summary with its SHA-256; it never uploads or publishes
+the package.
+
+The only expected ZIP files are:
+
+```text
+org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom
+org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom.asc
+org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom.md5
+org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom.sha1
+org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom.sha256
+org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom.sha512
+```
+
+For local preparation without production signing credentials, run `bom-436-prepare`; it creates
+the BOM repository and unsigned `bom-staging`. The authoritative Central absence check is
+`check-bom-436-central`. The signing and final verification steps are deliberately reserved for
+Jenkins. This retrofit mode, manifest, and its Jenkins stages can be removed after the BOM is
+successfully published and the archived package is no longer needed.
+
+Before manual upload, compare the downloaded Jenkins artifact's SHA-256 with
+`deployment.zip.sha256` in the archived `bom-436-package-summary.properties`, check the ZIP
+integrity and six-file inventory, then verify the extracted detached signature with the approved
+public key:
+
+```text
+sha256sum cdo-maven-central-bom-4.36-deployment.zip
+unzip -t cdo-maven-central-bom-4.36-deployment.zip
+unzip -Z1 cdo-maven-central-bom-4.36-deployment.zip
+mkdir bom-436-verify
+unzip -q cdo-maven-central-bom-4.36-deployment.zip -d bom-436-verify
+cd bom-436-verify/org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0
+test "$(sha256sum org.eclipse.cdo.bom-4.36.0.pom | awk '{print $1}')" = "$(cat org.eclipse.cdo.bom-4.36.0.pom.sha256)"
+gpg --status-fd 1 --verify org.eclipse.cdo.bom-4.36.0.pom.asc org.eclipse.cdo.bom-4.36.0.pom
+```
+
+Confirm that the ZIP contains only the six paths listed above, that `VALIDSIG` identifies the
+configured primary fingerprint recorded in the Jenkins package summary, and that the POM checksum
+sidecars match the extracted POM. The Jenkins verifier performs these checks before the artifact is
+archived; the manual checks confirm the downloaded copy before it is uploaded.
+
 ## Maven Central readiness audit and local staging
 
 Run `audit` after `checksums` to validate the generated coordinates, POM

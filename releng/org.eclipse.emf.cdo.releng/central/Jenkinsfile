@@ -20,8 +20,8 @@ pipeline {
   }
 
   parameters {
-    choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PACKAGE_FOR_CENTRAL'],
-      description: 'PACKAGE_FOR_CENTRAL prepares a signed deployment bundle only; publication is manual.')
+    choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PACKAGE_FOR_CENTRAL', 'PACKAGE_BOM_436_FOR_CENTRAL'],
+      description: 'PACKAGE_FOR_CENTRAL prepares the normal signed bundle; PACKAGE_BOM_436_FOR_CENTRAL prepares only the one-time 4.36 BOM. Publication is manual.')
     string(name: 'CDO_DROP_ID', defaultValue: 'default', description: 'Use default for the latest R-drop, or enter an explicit CDO drop ID')
   }
 
@@ -120,7 +120,7 @@ pipeline {
               error("Invalid CDO_DROP_ID: ${dropId}")
             }
           }
-          def modeAbbreviation = [VALIDATE_ONLY: 'VAL', DRY_RUN: 'DRY', PACKAGE_FOR_CENTRAL: 'PACK'][params.PUBLISHING_MODE]
+          def modeAbbreviation = [VALIDATE_ONLY: 'VAL', DRY_RUN: 'DRY', PACKAGE_FOR_CENTRAL: 'PACK', PACKAGE_BOM_436_FOR_CENTRAL: 'BOM436'][params.PUBLISHING_MODE]
           currentBuild.description = "${modeAbbreviation} ${dropId}"
           def dropUrl = "https://download.eclipse.org/modeling/emf/cdo/drops/${dropId}/"
           echo "Resolved CDO drop ID: ${dropId}; download URL: ${dropUrl}"
@@ -219,6 +219,9 @@ pipeline {
     }
 
     stage('Aggregate and validate') {
+      when {
+        expression { params.PUBLISHING_MODE != 'PACKAGE_BOM_436_FOR_CENTRAL' }
+      }
       steps {
         script {
           def aggregator
@@ -307,6 +310,45 @@ pipeline {
               '''
             }
           }
+        }
+      }
+    }
+
+    stage('Prepare isolated CDO 4.36 BOM') {
+      when {
+        expression { params.PUBLISHING_MODE == 'PACKAGE_BOM_436_FOR_CENTRAL' }
+      }
+      steps {
+        withAnt(installation: 'apache-ant-latest') {
+          sh '''
+            set -eu
+            workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+            work_dir="$workspace_root/maven-publishing/work"
+            local_drop="$workspace_root/maven-publishing/drop"
+            for output_path in "$work_dir" "$local_drop" "$workspace_root/.cdo-aggregation-helper/classes"; do
+              case "$output_path" in "$workspace_root"/*) ;; *) echo "Unsafe BOM preparation path: $output_path" >&2; exit 2 ;; esac
+              test "$(realpath -m -- "$output_path")" = "$output_path" || { echo "Symlink or non-canonical BOM preparation path: $output_path" >&2; exit 2; }
+            done
+            ant -Dcdo.drop.location="$local_drop" -Dworkspace.root="$workspace_root" -Dwork.dir="$work_dir" \\
+              -f releng/org.eclipse.emf.cdo.releng/central/build.xml bom-436-prepare
+          '''
+        }
+      }
+    }
+
+    stage('Check CDO 4.36 BOM Central availability') {
+      when {
+        expression { params.PUBLISHING_MODE == 'PACKAGE_BOM_436_FOR_CENTRAL' }
+      }
+      steps {
+        withAnt(installation: 'apache-ant-latest') {
+          sh '''
+            set -eu
+            workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
+            ant -Dworkspace.root="$workspace_root" -Dwork.dir="$workspace_root/maven-publishing/work" \\
+              -Dcentral.repository.url=https://repo.maven.apache.org/maven2/ \\
+              -f releng/org.eclipse.emf.cdo.releng/central/build.xml check-bom-436-central
+          '''
         }
       }
     }
@@ -492,11 +534,98 @@ pipeline {
         }
       }
     }
+
+    stage('Sign and package CDO 4.36 BOM only') {
+      when {
+        expression { params.PUBLISHING_MODE == 'PACKAGE_BOM_436_FOR_CENTRAL' }
+      }
+      steps {
+        script {
+          if (!GPG_KEY_FILE_CREDENTIAL_ID?.trim() || !GPG_EXPECTED_PRIMARY_FINGERPRINT?.trim()) {
+            error('Configure GPG_KEY_FILE_CREDENTIAL_ID and GPG_EXPECTED_PRIMARY_FINGERPRINT after confirming them with Eclipse administrators')
+          }
+          def signingCredentials = [file(credentialsId: GPG_KEY_FILE_CREDENTIAL_ID, variable: 'MAVEN_GPG_KEY_FILE')]
+          if (GPG_PASSPHRASE_CREDENTIAL_ID?.trim()) {
+            signingCredentials << string(credentialsId: GPG_PASSPHRASE_CREDENTIAL_ID, variable: 'MAVEN_GPG_PASSPHRASE')
+          }
+          def passphraseCredentialConfigured = GPG_PASSPHRASE_CREDENTIAL_ID?.trim() ? 'true' : 'false'
+          withCredentials(signingCredentials) {
+            withEnv(["WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}",
+              "STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/bom-staging", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/bom-signed-repository",
+              "MAVEN_SIGNER_REPO=${env.CDO_AGGR_WORK_DIR}/bom-maven-signer-repository",
+              "BOM_POM=${env.CDO_AGGR_WORK_DIR}/bom-staging/org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom",
+              "BUNDLE_PATH=${env.CDO_WORKSPACE_ROOT}/maven-publishing/cdo-maven-central-bom-4.36-deployment.zip",
+              "GPG_SIGNING_FINGERPRINT_FILE=${env.CDO_AGGR_WORK_DIR}/bom-gpg-signing-subkey-fingerprint.txt",
+              "GPG_PUBLIC_KEY_FILE=${env.CDO_AGGR_WORK_DIR}/bom-gpg-verification-public-key.gpg",
+              "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "GPG_EXECUTABLE=${GPG_EXECUTABLE}",
+              "GPG_PASSPHRASE_CREDENTIAL_CONFIGURED=${passphraseCredentialConfigured}"]) {
+              withAnt(installation: 'apache-ant-latest') {
+                sh '''
+                  set -eu
+                  set +x
+                  command -v "$GPG_EXECUTABLE" >/dev/null 2>&1 || { echo "GnuPG is required on this Jenkins agent" >&2; exit 6; }
+                  workspace_root=$(cd "$WORKSPACE_ROOT" && pwd -P)
+                  assert_workspace_path() {
+                    candidate=$1
+                    test -n "$candidate" || { echo "Refusing an empty output path" >&2; return 1; }
+                    case "$candidate" in "$workspace_root"/*) ;; *) echo "Output path is outside the workspace: $candidate" >&2; return 1 ;; esac
+                    test "$(realpath -m -- "$candidate")" = "$candidate" || { echo "Output path uses a symlink or non-canonical component: $candidate" >&2; return 1; }
+                  }
+                  for output_path in "$STAGING_DIR" "$CENTRAL_REPO" "$MAVEN_SIGNER_REPO" "$GPG_SIGNING_FINGERPRINT_FILE" "$GPG_PUBLIC_KEY_FILE" "$BUNDLE_PATH" "$workspace_root/.cdo-aggregation-helper/classes"; do
+                    assert_workspace_path "$output_path"
+                  done
+                  trap 'rm -f "$GPG_SIGNING_FINGERPRINT_FILE" "$GPG_PUBLIC_KEY_FILE"' EXIT
+                  if find "$STAGING_DIR" -type l -print -quit | grep -q .; then
+                    echo "BOM staging contains a symlink" >&2
+                    exit 2
+                  fi
+                  ant -Dworkspace.root="$WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dgpg.executable="$GPG_EXECUTABLE" \\
+                    -Dgpg.key.file="$MAVEN_GPG_KEY_FILE" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" \\
+                    -Dgpg.signing.fingerprint.file="$GPG_SIGNING_FINGERPRINT_FILE" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" \\
+                    -f releng/org.eclipse.emf.cdo.releng/central/build.xml signature-test signing-subkey-test resolve-signing-subkey-fingerprint
+                  test "$(wc -l < "$GPG_SIGNING_FINGERPRINT_FILE")" -eq 1
+                  signing_fingerprint=$(cat "$GPG_SIGNING_FINGERPRINT_FILE")
+                  printf '%s\\n' "$signing_fingerprint" | grep -Eq '^[0-9A-F]{40}$' || { echo "Malformed signing-subkey fingerprint" >&2; exit 7; }
+                  rm -f "$GPG_SIGNING_FINGERPRINT_FILE"
+                  export MAVEN_GPG_KEY_FINGERPRINT="$signing_fingerprint"
+                  if [ "$GPG_PASSPHRASE_CREDENTIAL_CONFIGURED" != true ]; then
+                    unset MAVEN_GPG_PASSPHRASE
+                    gpg_best_practices=false
+                  else
+                    gpg_best_practices=true
+                  fi
+                  mkdir -p "$CENTRAL_REPO" "$MAVEN_SIGNER_REPO"
+                  mvn -N --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" \\
+                    org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file \\
+                    -Dgpg.bestPractices="$gpg_best_practices" -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" \\
+                    -Dgpg.keyFingerprint="$signing_fingerprint" -Dfile="$BOM_POM" -DpomFile="$BOM_POM" \\
+                    -DrepositoryId=cdo-local-central-bom -Durl="file://$CENTRAL_REPO"
+                  signature="$CENTRAL_REPO/org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom.asc"
+                  test -s "$signature" || { echo "Maven GPG plugin did not create the detached BOM signature" >&2; exit 8; }
+                  cp "$signature" "$BOM_POM.asc"
+                  if find "$STAGING_DIR" "$CENTRAL_REPO" -type l -print -quit | grep -q .; then
+                    echo "BOM package inputs contain a symlink" >&2
+                    exit 2
+                  fi
+                  mkdir -p "$(dirname "$BUNDLE_PATH")"
+                  rm -f "$BUNDLE_PATH"
+                  (cd "$STAGING_DIR" && zip -q -r "$BUNDLE_PATH" org)
+                  ant -Dworkspace.root="$WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" \\
+                    -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" \\
+                    -f releng/org.eclipse.emf.cdo.releng/central/build.xml verify-bom-436-package
+                  sha256sum "$BUNDLE_PATH"
+                '''
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   post {
     always {
-      archiveArtifacts artifacts: 'maven-publishing/work/staging/maven-publishing-summary.properties,maven-publishing/work/maven-publishing-package-summary.properties,maven-publishing/work/maven-central-readiness-audit.txt',
+      archiveArtifacts artifacts: 'maven-publishing/work/staging/maven-publishing-summary.properties,maven-publishing/work/maven-publishing-package-summary.properties,maven-publishing/work/bom-436-package-summary.properties,maven-publishing/work/maven-central-readiness-audit.txt',
         allowEmptyArchive: true
     }
 
@@ -504,6 +633,9 @@ pipeline {
       script {
         if (params.PUBLISHING_MODE == 'PACKAGE_FOR_CENTRAL') {
           archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-deployment.zip', allowEmptyArchive: false
+        }
+        if (params.PUBLISHING_MODE == 'PACKAGE_BOM_436_FOR_CENTRAL') {
+          archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-bom-4.36-deployment.zip', allowEmptyArchive: false
         }
       }
     }

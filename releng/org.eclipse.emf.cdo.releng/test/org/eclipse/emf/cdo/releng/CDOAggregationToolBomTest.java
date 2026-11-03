@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.releng;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -38,6 +39,7 @@ import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -45,6 +47,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * Verifies deterministic generation of the standalone CDO project-release BOM.
@@ -56,6 +59,9 @@ public class CDOAggregationToolBomTest
   private static final String[] BUNDLES = { "org.eclipse.net4j.util", "org.eclipse.net4j", "org.eclipse.net4j.tcp", "org.eclipse.net4j.db",
       "org.eclipse.net4j.db.jdbc", "org.eclipse.net4j.db.h2", "org.eclipse.emf.cdo.common", "org.eclipse.emf.cdo", "org.eclipse.emf.cdo.net4j",
       "org.eclipse.emf.cdo.server", "org.eclipse.emf.cdo.server.net4j", "org.eclipse.emf.cdo.server.db" };
+
+  private static final String[] BOM_436_VERSIONS = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0",
+      "4.15.0" };
 
   private static final String PUBLISHING_METADATA = "project.url=https://eclipse.dev/cdo/\n" + "organization.name=Eclipse Foundation\n"
       + "organization.url=https://www.eclipse.org\n" + "license.name=EPL-2.0\n" + "license.url=https://www.eclipse.org/legal/epl-2.0/\n"
@@ -113,6 +119,181 @@ public class CDOAggregationToolBomTest
     File second = generate(root, "second");
     assertEquals("4.36.1", childText(parse(first).getDocumentElement(), "version"));
     assertTrue(Arrays.equals(Files.readAllBytes(first.toPath()), Files.readAllBytes(second.toPath())));
+  }
+
+  @Test
+  public void preparesThePinned436BomOnlyStagingInventory() throws Exception
+  {
+    Path root = fixture("4.36", "R20260901-1311");
+    Path manifest = write436Manifest(root);
+    Path repository = root.resolve("bom-repository");
+    Path staging = root.resolve("bom-staging");
+    CDOAggregationTool.main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(),
+        repository.toString(), root.resolve("drop").toString(), manifest.toString() });
+    CDOAggregationTool.main(new String[] { "stage-bom-436", repository.toString(), root.resolve("metadata.properties").toString(),
+        root.resolve("publishing.properties").toString(), manifest.toString(), staging.toString() });
+
+    Path versionDirectory = staging.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0");
+    File pom = versionDirectory.resolve("org.eclipse.cdo.bom-4.36.0.pom").toFile();
+    assertTrue(Files.isRegularFile(pom.toPath()));
+    Element project = parse(pom).getDocumentElement();
+    assertEquals("org.eclipse.cdo", childText(project, "groupId"));
+    assertEquals("org.eclipse.cdo.bom", childText(project, "artifactId"));
+    assertEquals("4.36.0", childText(project, "version"));
+    assertEquals("pom", childText(project, "packaging"));
+    assertEquals("4.36", childText(child(project, "properties"), "cdo.project.release"));
+    assertEquals("R20260901-1311", childText(child(project, "properties"), "cdo.drop.id"));
+    assertEquals(0, directElements(project, "dependencies"));
+    NodeList managed = elements(child(child(project, "dependencyManagement"), "dependencies"), "dependency");
+    assertEquals(12, managed.getLength());
+    for (int i = 0; i < BUNDLES.length; i++)
+    {
+      Element dependency = (Element)managed.item(i);
+      assertEquals("org.eclipse.cdo", childText(dependency, "groupId"));
+      assertEquals(BUNDLES[i], childText(dependency, "artifactId"));
+      assertEquals(BOM_436_VERSIONS[i], childText(dependency, "version"));
+    }
+
+    Properties manifestProperties = new Properties();
+    try (InputStream input = Files.newInputStream(manifest))
+    {
+      manifestProperties.load(input);
+    }
+
+    assertEquals(BUNDLES.length + 1, manifestProperties.size());
+    assertEquals("4.36.0", manifestProperties.getProperty("org.eclipse.cdo.bom"));
+    assertNull(manifestProperties.getProperty("cdo.project.release"));
+    assertNull(manifestProperties.getProperty("cdo.drop.id"));
+    assertNull(manifestProperties.getProperty("bundle.org.eclipse.net4j.util"));
+    Set<String> unsignedFiles = new LinkedHashSet<>();
+    try (Stream<Path> paths = Files.walk(staging))
+    {
+      paths.filter(Files::isRegularFile).map(staging::relativize).map(Path::toString).map(path -> path.replace(File.separatorChar, '/'))
+          .forEach(unsignedFiles::add);
+    }
+
+    String pomPath = "org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom";
+    Set<String> expectedSignedZipFiles = new LinkedHashSet<>();
+    expectedSignedZipFiles.add(pomPath);
+    expectedSignedZipFiles.add(pomPath + ".asc");
+    expectedSignedZipFiles.add(pomPath + ".md5");
+    expectedSignedZipFiles.add(pomPath + ".sha1");
+    expectedSignedZipFiles.add(pomPath + ".sha256");
+    expectedSignedZipFiles.add(pomPath + ".sha512");
+    Set<String> expectedUnsignedFiles = new LinkedHashSet<>(expectedSignedZipFiles);
+    expectedUnsignedFiles.remove(pomPath + ".asc");
+    assertEquals(expectedUnsignedFiles, unsignedFiles);
+    assertEquals(6, expectedSignedZipFiles.size());
+
+    try (Stream<Path> paths = Files.walk(staging))
+    {
+      assertEquals(0, paths.filter(path -> path.toString().endsWith(".jar") || path.toString().endsWith(".asc")).count());
+    }
+  }
+
+  @Test
+  public void rejectsInvalidMavenCentralCoordinateInventories() throws Exception
+  {
+    Path root = fixture("4.36", "R20260901-1311");
+    Path manifest = write436Manifest(root);
+    String valid = Files.readString(manifest, StandardCharsets.UTF_8);
+    String[] invalidInventories = { valid.replace("org.eclipse.cdo.bom=4.36.0", "org.eclipse.cdo.bom=4.36"),
+        valid.replace("org.eclipse.net4j.util=3.30.0", "bundle.org.eclipse.net4j.util=3.30.0"), valid + "org.eclipse.cdo.unapproved=1.0.0\n",
+        valid.replace("org.eclipse.emf.cdo.server.db=4.15.0\n", "") };
+
+    for (String invalidInventory : invalidInventories)
+    {
+      Files.writeString(manifest, invalidInventory, StandardCharsets.UTF_8);
+      try
+      {
+        CDOAggregationTool
+            .main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(),
+                root.resolve("invalid-inventory-output").toString(), root.resolve("drop").toString(), manifest.toString() });
+        fail("Expected malformed Maven Central inventory to be rejected");
+      }
+      catch (IllegalArgumentException expected)
+      {
+        assertTrue(expected.getMessage().contains("inventory") || expected.getMessage().contains("version"));
+      }
+    }
+  }
+
+  @Test
+  public void bomCoordinateAbsenceCheckRejectsExistingAndAmbiguousCentralResponses() throws Exception
+  {
+    Path root = fixture("4.36", "R20260901-1311");
+    Path manifest = write436Manifest(root);
+    try (CentralFixture central = new CentralFixture())
+    {
+      CDOAggregationTool.main(new String[] { "check-bom-central", root.resolve("metadata.properties").toString(), manifest.toString(), central.baseUrl() });
+      String pom = "org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom";
+      central.setArtifact(pom, "already published".getBytes(StandardCharsets.UTF_8));
+      expectBomCentralFailure(root, manifest, central, "already exists");
+
+      central.setStatus(pom, 429);
+      expectBomCentralFailure(root, manifest, central, "HTTP 429");
+    }
+  }
+
+  @Test
+  public void rejectsASelectedDropOutsideThePinned436Retrofit() throws Exception
+  {
+    Path root = fixture("4.35", "R20260831-1311");
+    Path manifest = write436Manifest(root);
+    try
+    {
+      CDOAggregationTool.main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(),
+          root.resolve("publishing.properties").toString(), root.resolve("bom-repository").toString(), root.resolve("drop").toString(), manifest.toString() });
+      fail("Expected a non-4.36 release/drop to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("metadata must identify CDO 4.36 drop"));
+    }
+  }
+
+  @Test
+  public void rejectsMissingAndUnexpectedFilesAndInvalidChecksumsBeforeSignatureVerification() throws Exception
+  {
+    Path root = fixture("4.36", "R20260901-1311");
+    Path manifest = write436Manifest(root);
+    Path repository = root.resolve("bom-repository");
+    Path staging = root.resolve("bom-staging");
+    Path signedRepository = root.resolve("signed-repository");
+    Path zip = root.resolve("deployment.zip");
+    Path publicKey = root.resolve("public-key.gpg");
+    Files.writeString(root.resolve("metadata.properties"), "cdo.build.type=R\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+    Files.createDirectories(signedRepository);
+    Files.write(zip, new byte[] { 1 });
+    Files.write(publicKey, new byte[] { 1 });
+    CDOAggregationTool.main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(),
+        repository.toString(), root.resolve("drop").toString(), manifest.toString() });
+    CDOAggregationTool.main(new String[] { "stage-bom-436", repository.toString(), root.resolve("metadata.properties").toString(),
+        root.resolve("publishing.properties").toString(), manifest.toString(), staging.toString() });
+
+    String base = "org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom";
+    Path signature = staging.resolve(base + ".asc");
+    String[] arguments = { "verify-bom-package", staging.toString(), signedRepository.toString(), zip.toString(),
+        root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(), manifest.toString(), "A".repeat(40),
+        publicKey.toString(), "gpg-is-not-reached", root.resolve("summary.properties").toString() };
+    expectBomPackageValidationFailure(arguments, "Missing, malformed, or non-armored BOM signature");
+
+    Files.writeString(signature, "-----BEGIN PGP SIGNATURE-----\nfixture\n", StandardCharsets.US_ASCII);
+    Path sha1 = staging.resolve(base + ".sha1");
+    byte[] checksum = Files.readAllBytes(sha1);
+    Files.delete(sha1);
+    expectBomPackageValidationFailure(arguments, "Missing or invalid BOM checksum");
+    Files.write(sha1, checksum);
+
+    Path sha256 = staging.resolve(base + ".sha256");
+    byte[] sha256Bytes = Files.readAllBytes(sha256);
+    Files.writeString(sha256, "0".repeat(64), StandardCharsets.US_ASCII);
+    expectBomPackageValidationFailure(arguments, "Missing or invalid BOM checksum");
+    Files.write(sha256, sha256Bytes);
+
+    Path unexpected = staging.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.jar");
+    Files.writeString(unexpected, "BOM packages have no JARs", StandardCharsets.UTF_8);
+    expectBomPackageValidationFailure(arguments, "BOM-only deployment inventory mismatch");
   }
 
   @Test
@@ -524,6 +705,45 @@ public class CDOAggregationToolBomTest
     Files.writeString(drop.resolve("web.properties"), "web.label=" + release + "\n", StandardCharsets.UTF_8);
     Files.writeString(drop.resolve("build-info.xml"), buildInfo(dropID), StandardCharsets.UTF_8);
     return root;
+  }
+
+  private Path write436Manifest(Path root) throws IOException
+  {
+    StringBuilder content = new StringBuilder("org.eclipse.cdo.bom=4.36.0\n");
+    for (int i = 0; i < BUNDLES.length; i++)
+    {
+      content.append(BUNDLES[i]).append('=').append(BOM_436_VERSIONS[i]).append('\n');
+    }
+
+    Path manifest = root.resolve("maven-central.properties");
+    Files.writeString(manifest, content, StandardCharsets.UTF_8);
+    return manifest;
+  }
+
+  private void expectBomCentralFailure(Path root, Path manifest, CentralFixture central, String message) throws Exception
+  {
+    try
+    {
+      CDOAggregationTool.main(new String[] { "check-bom-central", root.resolve("metadata.properties").toString(), manifest.toString(), central.baseUrl() });
+      fail("Expected BOM Central absence check to fail with " + message);
+    }
+    catch (IllegalStateException expected)
+    {
+      assertTrue(expected.getMessage().contains(message));
+    }
+  }
+
+  private void expectBomPackageValidationFailure(String[] arguments, String message) throws Exception
+  {
+    try
+    {
+      CDOAggregationTool.main(arguments);
+      fail("Expected BOM package validation to fail with " + message);
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains(message));
+    }
   }
 
   private Path classificationFixture(String release, String dropID) throws Exception

@@ -315,7 +315,7 @@
 			<arg value="${deployment.zip}" />
 			<arg value="${metadata.file}" />
 			<arg value="${gpg.expected.fingerprint}" />
-			<arg value="${gpg.key.file}" />
+			<arg value="${gpg.public.key.file}" />
 			<arg value="${gpg.executable}" />
 			<arg value="${work.dir}/maven-publishing-package-summary.properties" />
 		</java>
@@ -342,6 +342,7 @@
 			<arg value="${gpg.key.file}" />
 			<arg value="${gpg.expected.fingerprint}" />
 			<arg value="${gpg.signing.fingerprint.file}" />
+			<arg value="${gpg.public.key.file}" />
 		</java>
 	</target>
 

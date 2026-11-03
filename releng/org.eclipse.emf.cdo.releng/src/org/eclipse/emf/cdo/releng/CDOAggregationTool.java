@@ -1397,7 +1397,7 @@ public final class CDOAggregationTool
     if (args.length != 9)
     {
       throw new IllegalArgumentException(
-          "verify-package requires staging, signed repository, ZIP, metadata, fingerprint, key file, GPG executable, and summary");
+          "verify-package requires staging, signed repository, ZIP, metadata, primary fingerprint, public key file, GPG executable, and summary");
     }
 
     File staging = requireDirectory(args[1], "validated Maven staging");
@@ -1408,6 +1408,7 @@ public final class CDOAggregationTool
     requireWorkspaceOutput(signedRepository, "signed local Maven repository");
     requireWorkspaceOutput(zip, "deployment ZIP");
     requireWorkspaceOutput(new File(args[4]), "build metadata");
+    requireWorkspaceOutput(new File(args[6]), "GnuPG public verification key");
     requireWorkspaceOutput(new File(args[8]), "package verification report");
     rejectSymbolicLinks(staging.toPath(), "validated Maven staging");
     rejectSymbolicLinks(signedRepository.toPath(), "signed local Maven repository");
@@ -1422,7 +1423,11 @@ public final class CDOAggregationTool
     }
 
     AuditCommand.validatePublicationScope(staging, true);
-    File keyFile = requireFile(new File(args[6]), "Jenkins signing-key credential");
+    File publicKey = requireFile(new File(args[6]), "GnuPG public verification key");
+    if (Files.isSymbolicLink(publicKey.toPath()))
+    {
+      throw new IllegalArgumentException("GnuPG public verification key must not be a symbolic link");
+    }
     File orgDirectory = requireDirectory(new File(staging, "org").getPath(), "staging/org");
     List<File> files = regularFiles(orgDirectory);
     List<File> artifacts = new ArrayList<>();
@@ -1567,7 +1572,7 @@ public final class CDOAggregationTool
       throw new IllegalArgumentException("Deployment repository must contain exactly the 48 expected detached signatures");
     }
 
-    verifySignatures(args[7], keyFile, expectedFingerprint, artifacts, staging);
+    verifySignatures(args[7], publicKey, expectedFingerprint, artifacts, staging);
     verifyDeploymentZip(zip, staging, actualFiles);
 
     String sha256 = ChecksumsCommand.digest(zip, "SHA-256");
@@ -1585,37 +1590,18 @@ public final class CDOAggregationTool
     System.out.println("Verified 48 OpenPGP signatures, staged repository bytes, checksums, and exact ZIP inventory. Publication performed=false.");
   }
 
-  private static void verifySignatures(String gpg, File secretKey, String expectedFingerprint, List<File> artifacts, File staging) throws Exception
+  private static void verifySignatures(String gpg, File publicKey, String expectedFingerprint, List<File> artifacts, File staging) throws Exception
   {
-    Path work = Files.createTempDirectory(staging.toPath().getParent(), "cdo-pgp-verify-");
+    String workspace = System.getenv("CDO_WORKSPACE_ROOT");
+    Path temporaryParent = workspace == null || workspace.isBlank() ? staging.toPath().getParent() : Paths.get(workspace).toRealPath();
+    Path work = Files.createTempDirectory(temporaryParent, "cdo-pgp-verify-");
     securePath(work, true);
 
     try
     {
-      Path importHome = Files.createDirectory(work.resolve("import"));
       Path verifyHome = Files.createDirectory(work.resolve("verify"));
-      securePath(importHome, true);
       securePath(verifyHome, true);
-      Path publicKey = work.resolve("expected-public-key.gpg");
-
-      gpg(gpg, importHome, "--import", secretKey.getAbsolutePath());
-      Set<String> importedPrimaryKeys = primaryFingerprints(gpg, importHome);
-      if (!importedPrimaryKeys.contains(expectedFingerprint))
-      {
-        throw new IllegalArgumentException("Jenkins signing-key credential does not contain the configured primary fingerprint");
-      }
-
-      gpg(gpg, importHome, "--output", publicKey.toString(), "--export", expectedFingerprint);
-      if (!Files.isRegularFile(publicKey) || Files.size(publicKey) == 0)
-      {
-        throw new IllegalArgumentException("Unable to export public key for the configured primary fingerprint");
-      }
-
-      securePath(publicKey, false);
-      stopGpgAgent(gpg, importHome);
-
-      delete(importHome.toFile());
-      gpg(gpg, verifyHome, "--import", publicKey.toString());
+      gpg(gpg, verifyHome, "--import", publicKey.getAbsolutePath());
       if (!primaryFingerprints(gpg, verifyHome).equals(Set.of(expectedFingerprint)))
       {
         throw new IllegalArgumentException("Isolated verification keyring contains an unexpected primary key");
@@ -1631,11 +1617,6 @@ public final class CDOAggregationTool
     }
     finally
     {
-      if (Files.isDirectory(work.resolve("import")))
-      {
-        stopGpgAgent(gpg, work.resolve("import"));
-      }
-
       if (Files.isDirectory(work.resolve("verify")))
       {
         stopGpgAgent(gpg, work.resolve("verify"));
@@ -1760,9 +1741,10 @@ public final class CDOAggregationTool
 
   private static void resolveSigningSubkeyFingerprint(String[] args) throws Exception
   {
-    if (args.length != 5)
+    if (args.length != 6)
     {
-      throw new IllegalArgumentException("resolve-signing-subkey-fingerprint requires GnuPG, a key file, the expected primary fingerprint, and an output file");
+      throw new IllegalArgumentException(
+          "resolve-signing-subkey-fingerprint requires GnuPG, a key file, the expected primary fingerprint, and fingerprint and public-key output files");
     }
 
     String gpg = args[1];
@@ -1774,7 +1756,9 @@ public final class CDOAggregationTool
     }
 
     Path output = requireWorkspaceOutput(new File(args[4]), "signing-subkey fingerprint output");
+    Path publicKeyOutput = requireWorkspaceOutput(new File(args[5]), "public verification key output");
     Files.deleteIfExists(output);
+    Files.deleteIfExists(publicKeyOutput);
 
     String workspace = System.getenv("CDO_WORKSPACE_ROOT");
     if (workspace == null || workspace.isBlank())
@@ -1802,6 +1786,11 @@ public final class CDOAggregationTool
 
       String listing = gpg(gpg, temporaryHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys");
       signingFingerprint = findSigningSubkeyFingerprint(listing, expectedPrimary);
+      gpg(gpg, temporaryHome, "--output", publicKeyOutput.toString(), "--export", expectedPrimary);
+      if (!Files.isRegularFile(publicKeyOutput) || Files.size(publicKeyOutput) == 0)
+      {
+        throw new IllegalArgumentException("Unable to export public key for the configured primary fingerprint");
+      }
     }
     finally
     {
@@ -1817,6 +1806,7 @@ public final class CDOAggregationTool
 
     Files.writeString(output, signingFingerprint + "\n", StandardCharsets.US_ASCII);
     securePath(output, false);
+    securePath(publicKeyOutput, false);
     System.out.println("Resolved one usable signing subkey under the configured primary key.");
   }
 
@@ -2266,8 +2256,8 @@ public final class CDOAggregationTool
       findSigningSubkeyFingerprint(gpg(gpgExecutable, secondHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"),
           secondFingerprint);
 
-      File firstSecretKey = exportSecretKey(gpgExecutable, firstHome, firstFingerprint, work.resolve("first-secret-key.gpg"));
-      File secondSecretKey = exportSecretKey(gpgExecutable, secondHome, secondFingerprint, work.resolve("second-secret-key.gpg"));
+      File firstPublicKey = exportPublicKey(gpgExecutable, firstHome, firstFingerprint, work.resolve("first-public-key.gpg"));
+      File secondPublicKey = exportPublicKey(gpgExecutable, secondHome, secondFingerprint, work.resolve("second-public-key.gpg"));
 
       File staging = work.resolve("staging").toFile();
       File signedRepository = work.resolve("signed-repository").toFile();
@@ -2283,7 +2273,7 @@ public final class CDOAggregationTool
       createSignedFixture(gpgExecutable, firstHome, firstSigningFingerprint, staging, signedRepository);
       createDeploymentZip(staging, zip, "");
 
-      String[] valid = packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary);
+      String[] valid = packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary);
       verifyPackage(valid);
 
       File artifact = new File(staging, "org/eclipse/cdo/" + BUNDLES.get(0) + "/1.0.0/" + BUNDLES.get(0) + "-1.0.0.jar");
@@ -2296,7 +2286,7 @@ public final class CDOAggregationTool
       ChecksumsCommand.writeChecksums(artifact);
 
       createDeploymentZip(staging, zip, "");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary),
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
           "GnuPG operation failed", "modified artifact bytes");
 
       Files.write(artifact.toPath(), originalArtifact);
@@ -2316,59 +2306,59 @@ public final class CDOAggregationTool
       Files.write(deployedSignature.toPath(), corruptedSignature);
 
       createDeploymentZip(staging, zip, "");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary),
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
           "GnuPG operation failed", "corrupted signature");
 
       Files.write(signature.toPath(), originalSignature);
       Files.write(deployedSignature.toPath(), originalSignature);
 
       createDeploymentZip(staging, zip, "");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, secondFingerprint, secondSecretKey, gpgExecutable, summary),
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, secondFingerprint, secondPublicKey, gpgExecutable, summary),
           "GnuPG operation failed", "signature from a wrong key");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, secondFingerprint, firstSecretKey, gpgExecutable, summary),
-          "does not contain the configured primary fingerprint", "wrong expected key fingerprint");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, "invalid-fingerprint", firstSecretKey, gpgExecutable, summary),
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, secondFingerprint, firstPublicKey, gpgExecutable, summary),
+          "unexpected primary key", "wrong expected key fingerprint");
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, "invalid-fingerprint", firstPublicKey, gpgExecutable, summary),
           "full 40- or 64-character hexadecimal fingerprint", "malformed expected fingerprint");
       expectPackageFailure(
           packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, work.resolve("missing-key.gpg").toFile(), gpgExecutable, summary),
-          "Jenkins signing-key credential", "missing signing key file");
+          "GnuPG public verification key", "missing public key file");
 
       File checksum = new File(artifact.getPath() + ".sha256");
       byte[] correctChecksum = Files.readAllBytes(checksum.toPath());
       Files.writeString(checksum.toPath(), "0".repeat(64), StandardCharsets.US_ASCII);
 
       createDeploymentZip(staging, zip, "");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary),
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
           "Missing or invalid checksum", "mismatched checksum");
       Files.write(checksum.toPath(), correctChecksum);
 
       File unexpectedSignature = new File(artifact.getPath() + ".unexpected.asc");
       Files.writeString(unexpectedSignature.toPath(), "-----BEGIN PGP SIGNATURE-----\nextra\n", StandardCharsets.US_ASCII);
       createDeploymentZip(staging, zip, "");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary),
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
           "Unexpected file in deployment repository", "unexpected signature");
       Files.delete(unexpectedSignature.toPath());
 
       File missingSignature = new File(signature.getPath());
       Files.delete(missingSignature.toPath());
       createDeploymentZip(staging, zip, "");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary),
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
           "Missing, malformed, or non-armored signature", "missing signature");
       Files.write(missingSignature.toPath(), originalSignature);
 
       Files.delete(artifact.toPath());
       createDeploymentZip(staging, zip, "");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary), "Expected 48",
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary), "Expected 48",
           "missing Maven artifact");
       Files.write(artifact.toPath(), originalArtifact);
       ChecksumsCommand.writeChecksums(artifact);
 
       createDeploymentZip(staging, zip, "unexpected-wrapper/");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary),
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
           "inventory mismatch", "enclosing ZIP directory");
 
       createDeploymentZip(staging, zip, "");
-      verifyPackage(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary));
+      verifyPackage(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary));
       System.out.println(
           "Disposable GnuPG signing tests passed: valid package, changed bytes, corrupt signature, wrong key/fingerprint, missing key/signature/artifact, and invalid ZIP layout.");
     }
@@ -2388,17 +2378,17 @@ public final class CDOAggregationTool
     }
   }
 
-  private static File exportSecretKey(String gpg, Path home, String fingerprint, Path destination) throws Exception
+  private static File exportPublicKey(String gpg, Path home, String fingerprint, Path destination) throws Exception
   {
-    gpg(gpg, home, "--output", destination.toString(), "--export-secret-subkeys", fingerprint);
+    gpg(gpg, home, "--output", destination.toString(), "--export", fingerprint);
     securePath(destination, false);
     return destination.toFile();
   }
 
-  private static String[] packageArguments(File staging, File signedRepository, File zip, File metadata, String fingerprint, File secretKey, String gpg,
+  private static String[] packageArguments(File staging, File signedRepository, File zip, File metadata, String fingerprint, File publicKey, String gpg,
       File summary)
   {
-    return new String[] { "verify-package", staging.getPath(), signedRepository.getPath(), zip.getPath(), metadata.getPath(), fingerprint, secretKey.getPath(),
+    return new String[] { "verify-package", staging.getPath(), signedRepository.getPath(), zip.getPath(), metadata.getPath(), fingerprint, publicKey.getPath(),
         gpg, summary.getPath() };
   }
 

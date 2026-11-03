@@ -120,6 +120,8 @@ pipeline {
               error("Invalid CDO_DROP_ID: ${dropId}")
             }
           }
+          def modeAbbreviation = [VALIDATE_ONLY: 'VAL', DRY_RUN: 'DRY', PACKAGE_FOR_CENTRAL: 'PACK'][params.PUBLISHING_MODE]
+          currentBuild.description = "${modeAbbreviation} ${dropId}"
           def dropUrl = "https://download.eclipse.org/modeling/emf/cdo/drops/${dropId}/"
           echo "Resolved CDO drop ID: ${dropId}; download URL: ${dropUrl}"
           withEnv(["DROP_ID=${dropId}", "DROP_URL=${dropUrl}", "DROP_PARENT=${root}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
@@ -363,7 +365,7 @@ pipeline {
           }
           def passphraseCredentialConfigured = GPG_PASSPHRASE_CREDENTIAL_ID?.trim() ? 'true' : 'false'
           withCredentials(signingCredentials) {
-            withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "MAVEN_SIGNER_REPO=${env.CDO_AGGR_WORK_DIR}/maven-central-signer-repository", "GPG_SIGNING_FINGERPRINT_FILE=${env.CDO_AGGR_WORK_DIR}/gpg-signing-subkey-fingerprint.txt", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "GPG_EXECUTABLE=${GPG_EXECUTABLE}", "GPG_PASSPHRASE_CREDENTIAL_CONFIGURED=${passphraseCredentialConfigured}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+            withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "MAVEN_SIGNER_REPO=${env.CDO_AGGR_WORK_DIR}/maven-central-signer-repository", "GPG_SIGNING_FINGERPRINT_FILE=${env.CDO_AGGR_WORK_DIR}/gpg-signing-subkey-fingerprint.txt", "GPG_PUBLIC_KEY_FILE=${env.CDO_AGGR_WORK_DIR}/gpg-verification-public-key.gpg", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "GPG_EXECUTABLE=${GPG_EXECUTABLE}", "GPG_PASSPHRASE_CREDENTIAL_CONFIGURED=${passphraseCredentialConfigured}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
               sh '''
                 set -eu
                 set +x
@@ -381,12 +383,13 @@ pipeline {
                 assert_workspace_path "$CENTRAL_REPO"
                 assert_workspace_path "$MAVEN_SIGNER_REPO"
                 assert_workspace_path "$GPG_SIGNING_FINGERPRINT_FILE"
+                assert_workspace_path "$GPG_PUBLIC_KEY_FILE"
                 if find "$STAGING_DIR" -type l -print -quit | grep -q .; then
                   echo "Staging contains a symlink" >&2
                   exit 2
                 fi
                 ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$CDO_WORKSPACE_ROOT/maven-publishing/work" -Dstaging.dir="$STAGING_DIR" -f releng/org.eclipse.emf.cdo.releng/central/build.xml publication-scope-check
-                ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dgpg.executable="$GPG_EXECUTABLE" -Dgpg.key.file="$MAVEN_GPG_KEY_FILE" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.signing.fingerprint.file="$GPG_SIGNING_FINGERPRINT_FILE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml signing-subkey-test resolve-signing-subkey-fingerprint
+                ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dgpg.executable="$GPG_EXECUTABLE" -Dgpg.key.file="$MAVEN_GPG_KEY_FILE" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.signing.fingerprint.file="$GPG_SIGNING_FINGERPRINT_FILE" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml signing-subkey-test resolve-signing-subkey-fingerprint
                 test "$(wc -l < "$GPG_SIGNING_FINGERPRINT_FILE")" -eq 1 || { echo "Expected exactly one signing-subkey fingerprint" >&2; exit 7; }
                 signing_fingerprint=$(cat "$GPG_SIGNING_FINGERPRINT_FILE")
                 printf '%s\\n' "$signing_fingerprint" | grep -Eq '^[0-9A-F]{40}$' || { echo "Signing-subkey fingerprint resolution returned a malformed value" >&2; exit 7; }
@@ -466,26 +469,25 @@ pipeline {
               echo "Deployment bundle SHA-256: $zip_sha256"
             '''
           }
-          withCredentials([file(credentialsId: GPG_KEY_FILE_CREDENTIAL_ID, variable: 'MAVEN_GPG_KEY_FILE')]) {
-            withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "BUNDLE_PATH=${env.CDO_WORKSPACE_ROOT}/maven-publishing/cdo-maven-central-deployment.zip", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "GPG_EXECUTABLE=${GPG_EXECUTABLE}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+          withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "BUNDLE_PATH=${env.CDO_WORKSPACE_ROOT}/maven-publishing/cdo-maven-central-deployment.zip", "GPG_PUBLIC_KEY_FILE=${env.CDO_AGGR_WORK_DIR}/gpg-verification-public-key.gpg", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "GPG_EXECUTABLE=${GPG_EXECUTABLE}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
               withAnt(installation: 'apache-ant-latest') {
                 sh '''
                   set -eu
                   set +x
                   workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
-                  for output_path in "$STAGING_DIR" "$CENTRAL_REPO" "$AGGR_WORK_DIR" "$BUNDLE_PATH" "$AGGR_WORK_DIR/maven-publishing-package-summary.properties" "$workspace_root/.cdo-aggregation-helper/classes"; do
+                  for output_path in "$STAGING_DIR" "$CENTRAL_REPO" "$AGGR_WORK_DIR" "$BUNDLE_PATH" "$GPG_PUBLIC_KEY_FILE" "$AGGR_WORK_DIR/maven-publishing-package-summary.properties" "$workspace_root/.cdo-aggregation-helper/classes"; do
                     test -n "$output_path"
                     case "$output_path" in "$workspace_root"/*) ;; *) echo "Unsafe workspace path: $output_path" >&2; exit 2 ;; esac
                     test "$(realpath -m -- "$output_path")" = "$output_path" || { echo "Symlink or non-canonical workspace path: $output_path" >&2; exit 2; }
                   done
+                  trap 'rm -f "$GPG_PUBLIC_KEY_FILE"' EXIT
                   if find "$STAGING_DIR" "$CENTRAL_REPO" -type l -print -quit | grep -q .; then
                     echo "Package inputs contain a symlink" >&2
                     exit 2
                   fi
-                  ant -Dpublishing.mode=PACKAGE_FOR_CENTRAL -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.key.file="$MAVEN_GPG_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml verify-package
+                  ant -Dpublishing.mode=PACKAGE_FOR_CENTRAL -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml verify-package
                 '''
               }
-            }
           }
         }
       }

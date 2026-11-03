@@ -20,6 +20,7 @@
 	
 	<!-- Only PACKAGE_FOR_CENTRAL is restricted to R builds. -->
 	<property name="publishing.mode" value="VALIDATE_ONLY" />
+	<property name="central.repository.url" value="https://repo.maven.apache.org/maven2/" />
 	
 	
 	<!-- Source cache used only to isolate and populate the consumer-test Maven repository. -->
@@ -228,6 +229,30 @@
 			<arg value="${build.root}/final" />
 			<arg value="${metadata.file}" />
 			<arg value="${publishing.metadata.file}" />
+		</java>
+	</target>
+
+	<!-- Generates a separate, unsigned BOM repository; this is not part of bundle staging yet. -->
+	<target name="generate-bom" depends="verify,compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="generate-bom" />
+			<arg value="${cdo.maven.repository}" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.metadata.file}" />
+			<arg value="${work.dir}/bom-repository" />
+			<arg value="${cdo.drop.location}" />
+		</java>
+	</target>
+
+	<!-- Read-only Central classification report; no signing or deployment staging occurs here. -->
+	<target name="classify-central" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="classify-central" />
+			<arg value="${cdo.maven.repository}" />
+			<arg value="${work.dir}/bom-repository" />
+			<arg value="${metadata.file}" />
+			<arg value="${work.dir}/central-coordinate-classification.properties" />
+			<arg value="${central.repository.url}" />
 		</java>
 	</target>
 

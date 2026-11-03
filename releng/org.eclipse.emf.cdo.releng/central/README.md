@@ -369,6 +369,36 @@ later signing/release steps.
 
 ## Maven Central readiness audit and local staging
 
+## Read-only Central coordinate classification
+
+After preparing the normal bundle repository and the separate temporary BOM repository, run
+`ant -Dcdo.drop.location=<selected-drop> -Dwork.dir=<workspace-local-work> -f build.xml classify-central`.
+The target compares every approved bundle coordinate and the project-release BOM against the
+canonical Maven Central repository. It writes
+`<work.dir>/central-coordinate-classification.properties` in deterministic release-inventory
+order. `release.component.*` records the complete BOM-managed release inventory and each
+`NEW`, `REUSABLE`, `CONFLICT`, or `LOOKUP_ERROR` result. `publication.coordinate.*` lists only
+coordinates classified `NEW`. Any conflict or lookup error fails the Ant target after writing
+the report. This command is read-only with respect to Central and does not change signed staging.
+
+The only POM properties treated as publication provenance are `cdo.drop.id` and
+`cdo.project.release`. For an existing 4.36 bundle coordinate, a missing published
+`cdo.project.release` is allowed, while a present value must identify 4.36 and the published
+`cdo.drop.id` must match the selected 4.36 drop. For later releases, those two properties may
+retain valid original-publication values; all other POM metadata, including unknown properties,
+must remain semantically equivalent. Bundle JARs, sources JARs, and Javadoc JARs must match
+byte-for-byte and validate against available published checksums. Existing bundle POMs are never
+rewritten.
+
+An existing BOM is reported as `REUSABLE` only if its POM and checksum are valid and its consumer
+metadata matches. Its report reason explicitly excludes it from new publication candidates. An
+incompatible existing BOM is `CONFLICT`; it is never treated as an unpublished coordinate.
+
+The classification target is a separate pre-deployment check. Signing and ZIP packaging do not
+consume its report yet.
+
+## Maven Central readiness audit and local staging
+
 Run `audit` after `checksums` to validate the generated coordinates, POM
 dependencies, traceability properties, SCM commit, classifier files, and all
 classifier checksums:

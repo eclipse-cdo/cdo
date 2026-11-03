@@ -62,7 +62,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -145,7 +147,7 @@ public final class CDOAggregationTool
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|overlay|verify|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|overlay|generate-bom|classify-central|verify|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -160,6 +162,14 @@ public final class CDOAggregationTool
 
     case "overlay":
       OverlayCommand.execute(args);
+      break;
+
+    case "generate-bom":
+      BomCommand.execute(args);
+      break;
+
+    case "classify-central":
+      CentralClassificationCommand.execute(args);
       break;
 
     case "verify":
@@ -341,6 +351,22 @@ public final class CDOAggregationTool
     }
   }
 
+  private static int countChildren(Element parent, String name)
+  {
+    int count = 0;
+    NodeList children = parent.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
+    {
+      Node node = children.item(i);
+      if (node instanceof Element && name.equals(node.getLocalName() == null ? node.getNodeName() : node.getLocalName()))
+      {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
   private static void consumerDependencyTreeCheck(String[] args) throws Exception
   {
     if (args.length != 2)
@@ -456,6 +482,20 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("build/@qualifier must not be empty");
       }
 
+      Properties webProperties = new Properties();
+      try (InputStream input = drop.open("web.properties"))
+      {
+        webProperties.load(input);
+      }
+
+      String projectRelease = webProperties.getProperty("web.label");
+      if (projectRelease == null || !projectRelease.matches("[0-9]+(?:\\.[0-9]+){1,2}"))
+      {
+        throw new IllegalArgumentException("web.properties does not define a numeric web.label project-release version");
+      }
+
+      values.put("cdo.project.release", projectRelease);
+
       LinkedHashSet<String> repositories = extractRepositories(drop.open("tp-macro.setup"));
       if (repositories.isEmpty())
       {
@@ -531,6 +571,11 @@ public final class CDOAggregationTool
 
         removeInternalCbiProperties(project);
 
+        if (countChildren(properties, "cdo.drop.id") > 1)
+        {
+          throw new IllegalArgumentException("Multiple cdo.drop.id properties found in " + file);
+        }
+
         for (Map.Entry<String, String> entry : values.entrySet())
         {
           if (INTERNAL_CBI_PROPERTIES.contains(entry.getKey()))
@@ -539,6 +584,11 @@ public final class CDOAggregationTool
           }
 
           Element property = child(properties, entry.getKey());
+          if ("cdo.drop.id".equals(entry.getKey()) && property != null && !entry.getValue().equals(text(property)))
+          {
+            throw new IllegalArgumentException("Existing cdo.drop.id property does not match the selected drop in " + file + ": " + text(property));
+          }
+
           if (property == null)
           {
             property = document.createElementNS(project.getNamespaceURI(), entry.getKey());
@@ -602,6 +652,977 @@ public final class CDOAggregationTool
       if (value != null && !value.isBlank())
       {
         ensure(parent, name).setTextContent(value);
+      }
+    }
+  }
+
+  /**
+   * Generates a standalone temporary project-release BOM repository without changing bundle staging.
+   *
+   * @author Eike Stepper
+   */
+  private static final class BomCommand
+  {
+    private static final String MAVEN_NAMESPACE = "http://maven.apache.org/POM/4.0.0";
+
+    public static void execute(String[] args) throws Exception
+    {
+      if (args.length != 6)
+      {
+        throw new IllegalArgumentException(
+            "generate-bom requires bundle repository, build metadata, publishing metadata, output repository, and selected drop location");
+      }
+
+      File bundles = requireDirectory(args[1], "approved bundle repository");
+      File metadataFile = requireFile(new File(args[2]), "build metadata");
+      File publishingFile = requireFile(new File(args[3]), "publishing metadata");
+      File output = new File(args[4]);
+      requireWorkspaceOutput(bundles, "approved bundle repository");
+      requireWorkspaceOutput(output, "BOM output repository");
+      rejectSymbolicLinks(bundles.toPath(), "approved bundle repository");
+      if (output.exists())
+      {
+        rejectSymbolicLinks(output.toPath(), "BOM output repository");
+      }
+
+      Path bundlePath = bundles.toPath().toAbsolutePath().normalize();
+      Path outputPath = output.toPath().toAbsolutePath().normalize();
+      if (bundlePath.startsWith(outputPath) || outputPath.startsWith(bundlePath))
+      {
+        throw new IllegalArgumentException("BOM output repository must be separate from the approved bundle repository");
+      }
+
+      Map<String, String> metadata = readProperties(metadataFile);
+      Map<String, String> publishing = readProperties(publishingFile);
+      String release = requiredMetadata(metadata, "cdo.project.release");
+      String dropID = requiredMetadata(metadata, "cdo.drop.id");
+      String version = normalizeProjectReleaseVersion(release);
+      DropLocation drop = DropLocation.parse(args[5]);
+      Properties webProperties = new Properties();
+      try (InputStream input = drop.open("web.properties"))
+      {
+        webProperties.load(input);
+      }
+
+      String selectedRelease = webProperties.getProperty("web.label");
+      if (!release.equals(selectedRelease))
+      {
+        throw new IllegalArgumentException("BOM project-release metadata " + release + " does not match selected drop web.label " + selectedRelease);
+      }
+
+      Document buildInfo = parse(drop.open("build-info.xml"), "build-info.xml");
+      String selectedDropID = required(buildInfo.getDocumentElement(), "qualifier");
+      if (!dropID.equals(selectedDropID))
+      {
+        throw new IllegalArgumentException("BOM drop-ID metadata " + dropID + " does not match selected drop qualifier " + selectedDropID);
+      }
+
+      if (!dropID.matches("[A-Za-z][A-Za-z0-9._-]*"))
+      {
+        throw new IllegalArgumentException("Invalid cdo.drop.id metadata: " + dropID);
+      }
+
+      File pom = generate(bundles, output, metadata, publishing, version);
+      System.out.println("Generated standalone CDO BOM POM " + pom + " for release " + release + " from drop " + dropID + ".");
+    }
+
+    static String normalizeProjectReleaseVersion(String release)
+    {
+      if (release == null || !release.matches("[0-9]+\\.[0-9]+(?:\\.[0-9]+)?"))
+      {
+        throw new IllegalArgumentException("Invalid web.label project-release version: " + release);
+      }
+
+      return release.split("\\.").length == 2 ? release + ".0" : release;
+    }
+
+    private static File generate(File bundles, File output, Map<String, String> metadata, Map<String, String> publishing, String version) throws Exception
+    {
+      String release = requiredMetadata(metadata, "cdo.project.release");
+      String dropID = requiredMetadata(metadata, "cdo.drop.id");
+      Map<String, String> bundleVersions = new LinkedHashMap<>();
+      for (String bundle : BUNDLES)
+      {
+        File artifactDirectory = new File(bundles, "org/eclipse/cdo/" + bundle);
+        File[] versions = artifactDirectory.listFiles(File::isDirectory);
+        if (versions == null || versions.length != 1)
+        {
+          throw new IllegalArgumentException(
+              "Expected exactly one actual Maven version directory for approved BOM member " + bundle + " in " + artifactDirectory);
+        }
+
+        String bundleVersion = versions[0].getName();
+        File bundlePom = new File(versions[0], bundle + "-" + bundleVersion + ".pom");
+        if (!bundlePom.isFile())
+        {
+          throw new IllegalArgumentException("Missing bundle POM for BOM member " + bundle + " at " + bundlePom);
+        }
+
+        Element bundleProject = parse(bundlePom).getDocumentElement();
+        String actualCoordinate = text(bundleProject, "groupId") + ":" + text(bundleProject, "artifactId") + ":" + text(bundleProject, "version");
+        String expectedCoordinate = "org.eclipse.cdo:" + bundle + ":" + bundleVersion;
+        if (!expectedCoordinate.equals(actualCoordinate))
+        {
+          throw new IllegalArgumentException(
+              "Bundle POM coordinate mismatch for BOM member " + bundle + ": expected " + expectedCoordinate + " but found " + actualCoordinate);
+        }
+
+        bundleVersions.put(bundle, bundleVersion);
+      }
+
+      File pom = new File(output, "org/eclipse/cdo/org.eclipse.cdo.bom/" + version + "/org.eclipse.cdo.bom-" + version + ".pom");
+      if (pom.exists())
+      {
+        throw new IllegalArgumentException("BOM output coordinate already exists: org.eclipse.cdo:org.eclipse.cdo.bom:" + version);
+      }
+
+      Document document = newDocument();
+      Element project = element(document, "project");
+      project.setAttribute("xmlns", MAVEN_NAMESPACE);
+      project.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+      project.setAttribute("xsi:schemaLocation", MAVEN_NAMESPACE + " https://maven.apache.org/xsd/maven-4.0.0.xsd");
+      document.appendChild(project);
+      append(document, project, "modelVersion", "4.0.0");
+      append(document, project, "groupId", "org.eclipse.cdo");
+      append(document, project, "artifactId", "org.eclipse.cdo.bom");
+      append(document, project, "version", version);
+      append(document, project, "packaging", "pom");
+      append(document, project, "name", "CDO Maven BOM");
+      append(document, project, "description", "Dependency management for CDO project release " + release);
+      append(document, project, "url", requiredMetadata(publishing, "project.url"));
+      appendOrganization(document, project, publishing);
+      appendLicenses(document, project, publishing);
+      appendDevelopers(document, project, publishing);
+      appendIssues(document, project, publishing);
+      appendScm(document, project, publishing, metadata);
+
+      Element properties = append(document, project, "properties", null);
+      append(document, properties, "cdo.project.release", release);
+      append(document, properties, "cdo.drop.id", dropID);
+      Element management = append(document, project, "dependencyManagement", null);
+      Element dependencies = append(document, management, "dependencies", null);
+      for (Map.Entry<String, String> bundle : bundleVersions.entrySet())
+      {
+        Element dependency = append(document, dependencies, "dependency", null);
+        append(document, dependency, "groupId", "org.eclipse.cdo");
+        append(document, dependency, "artifactId", bundle.getKey());
+        append(document, dependency, "version", bundle.getValue());
+      }
+
+      Files.createDirectories(pom.toPath().getParent());
+      write(document, pom);
+      ChecksumsCommand.writeChecksums(pom);
+      return pom;
+    }
+
+    private static void appendOrganization(Document document, Element project, Map<String, String> publishing)
+    {
+      Element organization = append(document, project, "organization", null);
+      append(document, organization, "name", requiredMetadata(publishing, "organization.name"));
+      append(document, organization, "url", requiredMetadata(publishing, "organization.url"));
+    }
+
+    private static void appendLicenses(Document document, Element project, Map<String, String> publishing)
+    {
+      Element licenses = append(document, project, "licenses", null);
+      Element license = append(document, licenses, "license", null);
+      append(document, license, "name", requiredMetadata(publishing, "license.name"));
+      append(document, license, "url", requiredMetadata(publishing, "license.url"));
+      append(document, license, "distribution", requiredMetadata(publishing, "license.distribution"));
+    }
+
+    private static void appendDevelopers(Document document, Element project, Map<String, String> publishing)
+    {
+      Element developers = append(document, project, "developers", null);
+      Element developer = append(document, developers, "developer", null);
+      append(document, developer, "url", requiredMetadata(publishing, "developers.url"));
+    }
+
+    private static void appendIssues(Document document, Element project, Map<String, String> publishing)
+    {
+      Element issues = append(document, project, "issueManagement", null);
+      append(document, issues, "system", requiredMetadata(publishing, "issue.system"));
+      append(document, issues, "url", requiredMetadata(publishing, "issue.url"));
+    }
+
+    private static void appendScm(Document document, Element project, Map<String, String> publishing, Map<String, String> metadata)
+    {
+      Element scm = append(document, project, "scm", null);
+      append(document, scm, "connection", requiredMetadata(publishing, "scm.connection"));
+      append(document, scm, "developerConnection", requiredMetadata(publishing, "scm.developerConnection"));
+      append(document, scm, "tag", requiredMetadata(metadata, "cdo.git.commit"));
+      append(document, scm, "url", requiredMetadata(publishing, "project.url"));
+    }
+
+    private static Element append(Document document, Element parent, String name, String value)
+    {
+      Element child = element(document, name);
+      if (value != null)
+      {
+        child.setTextContent(value);
+      }
+
+      parent.appendChild(child);
+      return child;
+    }
+
+    private static Element element(Document document, String name)
+    {
+      return document.createElementNS(MAVEN_NAMESPACE, name);
+    }
+
+    private static String requiredMetadata(Map<String, String> properties, String key)
+    {
+      String value = properties.get(key);
+      if (value == null || value.isBlank())
+      {
+        throw new IllegalArgumentException("Missing required publishing metadata: " + key);
+      }
+
+      return value;
+    }
+  }
+
+  /**
+   * Classifies a release's immutable Maven coordinates against a read-only Central repository.
+   *
+   * @author Eike Stepper
+   */
+  private static final class CentralClassificationCommand
+  {
+    private static final String DEFAULT_REPOSITORY = "https://repo.maven.apache.org/maven2/";
+
+    private static final String[] CHECKSUMS = { "sha256", "sha1", "md5" };
+
+    private static final Map<String, String> DIGESTS = Map.of("sha256", "SHA-256", "sha1", "SHA-1", "md5", "MD5");
+
+    private static final Set<String> PROVENANCE_PROPERTIES = Set.of("cdo.drop.id", "cdo.project.release");
+
+    private static final int MAX_ARTIFACT_SIZE = 100 * 1024 * 1024;
+
+    public static void execute(String[] args) throws Exception
+    {
+      if (args.length != 6)
+      {
+        throw new IllegalArgumentException(
+            "classify-central requires bundle repository, BOM repository, build metadata, report file, and Central repository URL");
+      }
+
+      File bundles = requireDirectory(args[1], "approved bundle repository");
+      File bomRepository = requireDirectory(args[2], "generated BOM repository");
+      Map<String, String> metadata = readProperties(requireFile(new File(args[3]), "build metadata"));
+      File report = new File(args[4]);
+      requireWorkspaceOutput(bundles, "approved bundle repository");
+      requireWorkspaceOutput(bomRepository, "generated BOM repository");
+      requireWorkspaceOutput(report, "Central coordinate classification report");
+      rejectSymbolicLinks(bundles.toPath(), "approved bundle repository");
+      rejectSymbolicLinks(bomRepository.toPath(), "generated BOM repository");
+      String release = metadataValue(metadata, "cdo.project.release");
+      String dropID = metadataValue(metadata, "cdo.drop.id");
+      String bomVersion = BomCommand.normalizeProjectReleaseVersion(release);
+      URI repository = repositoryURI(args[5]);
+      List<Coordinate> inventory = collectInventory(bundles, bomRepository, release, dropID, bomVersion);
+      List<CoordinateResult> results = new ArrayList<>();
+      for (Coordinate coordinate : inventory)
+      {
+        results.add(classify(coordinate, repository, release, dropID));
+      }
+
+      writeReport(report, release, dropID, inventory, results);
+      long failures = results.stream()
+          .filter(result -> result.classification == Classification.CONFLICT || result.classification == Classification.LOOKUP_ERROR).count();
+      System.out.println("Central coordinate classification report: " + report + "; components=" + inventory.size() + "; new="
+          + results.stream().filter(result -> result.classification == Classification.NEW).count() + "; conflicts/errors=" + failures + ".");
+      if (failures != 0)
+      {
+        throw new IllegalStateException("Central classification found " + failures + " conflict(s) or lookup error(s); see " + report);
+      }
+    }
+
+    private static URI repositoryURI(String value)
+    {
+      if (value == null || value.isBlank())
+      {
+        value = DEFAULT_REPOSITORY;
+      }
+
+      URI uri = URI.create(value.endsWith("/") ? value : value + "/");
+      if (uri.getScheme() == null || !("https".equalsIgnoreCase(uri.getScheme()) || "http".equalsIgnoreCase(uri.getScheme())))
+      {
+        throw new IllegalArgumentException("Central repository URL must use HTTP(S): " + value);
+      }
+
+      return uri;
+    }
+
+    private static List<Coordinate> collectInventory(File bundles, File bomRepository, String release, String dropID, String bomVersion) throws Exception
+    {
+      List<Coordinate> inventory = new ArrayList<>();
+      Map<String, String> versions = new LinkedHashMap<>();
+      for (String bundle : BUNDLES)
+      {
+        File directory = new File(bundles, "org/eclipse/cdo/" + bundle);
+        File[] versionDirectories = directory.listFiles(File::isDirectory);
+        if (versionDirectories == null || versionDirectories.length != 1)
+        {
+          throw new IllegalArgumentException("Expected one release coordinate directory for " + bundle + " in " + directory);
+        }
+
+        File versionDirectory = versionDirectories[0];
+        String version = versionDirectory.getName();
+        File pom = requireFile(new File(versionDirectory, bundle + "-" + version + ".pom"), "proposed bundle POM");
+        validateCoordinatePom(pom, "org.eclipse.cdo", bundle, version, false, release, dropID);
+        for (String suffix : new String[] { ".jar", "-sources.jar", "-javadoc.jar" })
+        {
+          File artifact = new File(versionDirectory, bundle + "-" + version + suffix);
+          if (!artifact.isFile() || artifact.length() == 0)
+          {
+            throw new IllegalArgumentException("Missing or empty proposed bundle artifact: " + artifact);
+          }
+        }
+
+        versions.put(bundle, version);
+        inventory.add(new Coordinate("org.eclipse.cdo", bundle, version, versionDirectory, false));
+      }
+
+      File bomVersionDirectory = new File(bomRepository, "org/eclipse/cdo/org.eclipse.cdo.bom/" + bomVersion);
+      File bomPom = requireFile(new File(bomVersionDirectory, "org.eclipse.cdo.bom-" + bomVersion + ".pom"), "generated BOM POM");
+      validateCoordinatePom(bomPom, "org.eclipse.cdo", "org.eclipse.cdo.bom", bomVersion, true, release, dropID);
+      validateBomMembers(bomPom, versions);
+      inventory.add(new Coordinate("org.eclipse.cdo", "org.eclipse.cdo.bom", bomVersion, bomVersionDirectory, true));
+      return inventory;
+    }
+
+    private static void validateBomMembers(File pom, Map<String, String> versions) throws Exception
+    {
+      Element project = parse(pom).getDocumentElement();
+      if (child(project, "dependencies") != null)
+      {
+        throw new IllegalArgumentException("Generated BOM must not declare ordinary dependencies: " + pom);
+      }
+
+      Element management = child(project, "dependencyManagement");
+      Element dependencies = child(management, "dependencies");
+      NodeList nodes = dependencies == null ? null : dependencies.getElementsByTagNameNS("*", "dependency");
+      if (nodes == null || nodes.getLength() != versions.size())
+      {
+        throw new IllegalArgumentException("Generated BOM must manage exactly " + versions.size() + " approved bundle coordinates: " + pom);
+      }
+
+      int index = 0;
+      for (Map.Entry<String, String> expected : versions.entrySet())
+      {
+        Element dependency = (Element)nodes.item(index++);
+        String coordinate = text(dependency, "groupId") + ":" + text(dependency, "artifactId") + ":" + text(dependency, "version");
+        String expectedCoordinate = "org.eclipse.cdo:" + expected.getKey() + ":" + expected.getValue();
+        if (!expectedCoordinate.equals(coordinate))
+        {
+          throw new IllegalArgumentException("Generated BOM member mismatch: expected " + expectedCoordinate + " but found " + coordinate);
+        }
+      }
+    }
+
+    private static CoordinateResult classify(Coordinate coordinate, URI repository, String release, String dropID)
+    {
+      try
+      {
+        return classifyExisting(coordinate, repository, release, dropID);
+      }
+      catch (LookupFailure e)
+      {
+        return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, e.getMessage());
+      }
+      catch (Exception e)
+      {
+        return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "Unable to verify Central coordinate: " + concise(e));
+      }
+    }
+
+    private static CoordinateResult classifyExisting(Coordinate coordinate, URI repository, String release, String dropID) throws Exception
+    {
+      List<String> suffixes = coordinate.bom ? List.of(".pom") : List.of(".pom", ".jar", "-sources.jar", "-javadoc.jar");
+      String base = mavenPath(coordinate);
+      Response pomResponse = request(repository, base + ".pom");
+      if (pomResponse.status == HttpURLConnection.HTTP_NOT_FOUND)
+      {
+        for (String suffix : suffixes)
+        {
+          if (!".pom".equals(suffix))
+          {
+            Response partial = request(repository, base + suffix);
+            if (partial.status == HttpURLConnection.HTTP_OK)
+            {
+              return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM returned 404 but artifact exists: " + suffix);
+            }
+
+            if (partial.status != HttpURLConnection.HTTP_NOT_FOUND)
+            {
+              return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR,
+                  "POM returned 404 but artifact lookup returned HTTP " + partial.status + " for " + suffix);
+            }
+          }
+
+          Response signature = request(repository, base + suffix + ".asc");
+          if (signature.status == HttpURLConnection.HTTP_OK)
+          {
+            return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM/artifact returned 404 but a detached signature exists for " + suffix);
+          }
+
+          if (signature.status != HttpURLConnection.HTTP_NOT_FOUND)
+          {
+            return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR,
+                "Ambiguous detached-signature lookup for absent artifact " + suffix + ": HTTP " + signature.status);
+          }
+
+          for (String checksum : CHECKSUMS)
+          {
+            Response sidecar = request(repository, base + suffix + "." + checksum);
+            if (sidecar.status == HttpURLConnection.HTTP_OK)
+            {
+              return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM and artifact returned 404 but checksum exists for " + suffix);
+            }
+
+            if (sidecar.status != HttpURLConnection.HTTP_NOT_FOUND)
+            {
+              return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR,
+                  "Ambiguous checksum lookup for absent artifact " + suffix + ": HTTP " + sidecar.status);
+            }
+          }
+        }
+
+        return new CoordinateResult(coordinate, Classification.NEW, "POM and every required artifact/classifier are absent from Central.");
+      }
+
+      if (pomResponse.status != HttpURLConnection.HTTP_OK)
+      {
+        return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM lookup returned HTTP " + pomResponse.status);
+      }
+
+      Map<String, byte[]> published = new LinkedHashMap<>();
+      published.put(".pom", verifyPublishedArtifact(repository, base + ".pom", pomResponse.body));
+      for (String suffix : suffixes)
+      {
+        if (".pom".equals(suffix))
+        {
+          continue;
+        }
+
+        published.put(suffix, verifyPublishedArtifact(repository, base + suffix, null));
+      }
+
+      String pomConflict = comparePoms(coordinate, published.get(".pom"), release, dropID);
+      if (pomConflict != null)
+      {
+        return new CoordinateResult(coordinate, Classification.CONFLICT, pomConflict);
+      }
+
+      for (String suffix : suffixes)
+      {
+        File proposedFile = new File(coordinate.versionDirectory, coordinate.artifact + "-" + coordinate.version + suffix);
+        if (!proposedFile.isFile() || proposedFile.length() == 0)
+        {
+          return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "Proposed coordinate is incomplete; missing " + proposedFile.getName());
+        }
+
+        if (!".pom".equals(suffix) && !Arrays.equals(Files.readAllBytes(proposedFile.toPath()), published.get(suffix)))
+        {
+          return new CoordinateResult(coordinate, Classification.CONFLICT, "Published artifact bytes differ: " + proposedFile.getName());
+        }
+      }
+
+      String reason = coordinate.bom ? "Existing BOM coordinate is equivalent and is not a new deployment candidate."
+          : "All published artifacts and consumer-relevant POM metadata match.";
+      return new CoordinateResult(coordinate, Classification.REUSABLE, reason);
+    }
+
+    private static byte[] verifyPublishedArtifact(URI repository, String path, byte[] firstResponse) throws LookupFailure
+    {
+      byte[] artifact = firstResponse;
+      if (artifact == null)
+      {
+        Response response = request(repository, path);
+        if (response.status != HttpURLConnection.HTTP_OK)
+        {
+          throw new LookupFailure("Published coordinate is incomplete: " + path + " returned HTTP " + response.status);
+        }
+
+        artifact = response.body;
+      }
+
+      boolean strongChecksumFound = false;
+      for (String checksum : CHECKSUMS)
+      {
+        Response response = request(repository, path + "." + checksum);
+        if (response.status == HttpURLConnection.HTTP_NOT_FOUND)
+        {
+          continue;
+        }
+
+        if (response.status != HttpURLConnection.HTTP_OK)
+        {
+          throw new LookupFailure("Checksum lookup returned HTTP " + response.status + " for " + path + "." + checksum);
+        }
+
+        String value = new String(response.body, StandardCharsets.US_ASCII).trim().split("\\s+")[0];
+        String algorithm = DIGESTS.get(checksum);
+        String expectedLength = "SHA-256".equals(algorithm) ? "64" : "SHA-1".equals(algorithm) ? "40" : "32";
+        if (!value.matches("(?i)[0-9a-f]{" + expectedLength + "}"))
+        {
+          throw new LookupFailure("Malformed published checksum for " + path + "." + checksum);
+        }
+
+        String actual = digest(artifact, algorithm);
+        if (!actual.equalsIgnoreCase(value))
+        {
+          throw new LookupFailure("Published checksum mismatch for " + path + "." + checksum);
+        }
+
+        if ("sha256".equals(checksum) || "sha1".equals(checksum))
+        {
+          strongChecksumFound = true;
+        }
+      }
+
+      if (!strongChecksumFound)
+      {
+        throw new LookupFailure("No published SHA-256 or SHA-1 checksum is available for " + path);
+      }
+
+      return artifact;
+    }
+
+    private static Response request(URI repository, String path) throws LookupFailure
+    {
+      HttpURLConnection connection = null;
+      try
+      {
+        connection = (HttpURLConnection)repository.resolve(path).toURL().openConnection();
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(30000);
+        connection.setReadTimeout(30000);
+        connection.setInstanceFollowRedirects(false);
+        connection.setRequestProperty("Accept-Encoding", "identity");
+        int status = connection.getResponseCode();
+        if (status != HttpURLConnection.HTTP_OK)
+        {
+          InputStream error = connection.getErrorStream();
+          if (error != null)
+          {
+            error.close();
+          }
+
+          return new Response(status, new byte[0]);
+        }
+
+        long contentLength = connection.getContentLengthLong();
+        if (contentLength > MAX_ARTIFACT_SIZE)
+        {
+          throw new LookupFailure("Central response exceeds maximum artifact size: " + path);
+        }
+
+        byte[] body;
+        try (InputStream input = connection.getInputStream())
+        {
+          body = input.readNBytes(MAX_ARTIFACT_SIZE + 1);
+        }
+
+        if (body.length > MAX_ARTIFACT_SIZE || contentLength >= 0 && body.length != contentLength)
+        {
+          throw new LookupFailure("Central response is oversized or truncated: " + path);
+        }
+
+        return new Response(status, body);
+      }
+      catch (IOException e)
+      {
+        throw new LookupFailure("Central request failed for " + path + ": " + concise(e), e);
+      }
+      finally
+      {
+        if (connection != null)
+        {
+          connection.disconnect();
+        }
+      }
+    }
+
+    private static String comparePoms(Coordinate coordinate, byte[] publishedBytes, String release, String dropID) throws Exception
+    {
+      Document published = parse(new ByteArrayInputStream(publishedBytes), "published POM " + coordinate.coordinate());
+      Document proposed = parse(new File(coordinate.versionDirectory, coordinate.artifact + "-" + coordinate.version + ".pom"));
+      Element publishedProject = published.getDocumentElement();
+      Element proposedProject = proposed.getDocumentElement();
+      if (!coordinate.group.equals(text(publishedProject, "groupId")) || !coordinate.artifact.equals(text(publishedProject, "artifactId"))
+          || !coordinate.version.equals(text(publishedProject, "version")))
+      {
+        throw new LookupFailure("Published POM coordinates do not match repository path for " + coordinate.coordinate());
+      }
+
+      String proposedPackaging = packaging(proposedProject);
+      String publishedPackaging = packaging(publishedProject);
+      if (!proposedPackaging.equals(publishedPackaging))
+      {
+        return "POM packaging changed from " + publishedPackaging + " to " + proposedPackaging;
+      }
+
+      if (!coordinate.bom)
+      {
+        if (!coordinate.group.equals(text(proposedProject, "groupId")) || !coordinate.artifact.equals(text(proposedProject, "artifactId"))
+            || !coordinate.version.equals(text(proposedProject, "version")))
+        {
+          return "Proposed POM coordinates do not match repository path.";
+        }
+
+        Element proposedProperties = child(proposedProject, "properties");
+        Element publishedProperties = child(publishedProject, "properties");
+        String proposedDrop = text(child(proposedProperties, "cdo.drop.id"));
+        String proposedRelease = text(child(proposedProperties, "cdo.project.release"));
+        if (!dropID.equals(proposedDrop) || !release.equals(proposedRelease))
+        {
+          return "Proposed bundle POM traceability does not match selected drop/project release.";
+        }
+
+        String publishedDrop = text(child(publishedProperties, "cdo.drop.id"));
+        if (!publishedDrop.matches("[A-Za-z][A-Za-z0-9._-]*"))
+        {
+          throw new LookupFailure("Published bundle POM has missing or invalid cdo.drop.id provenance: " + coordinate.coordinate());
+        }
+
+        if ("4.36".equals(release) && !dropID.equals(publishedDrop))
+        {
+          return "Published cdo.drop.id " + publishedDrop + " does not match the selected 4.36 retrofit drop " + dropID;
+        }
+
+        String publishedRelease = text(child(publishedProperties, "cdo.project.release"));
+        if (!publishedRelease.isEmpty() && !publishedRelease.matches("[0-9]+\\.[0-9]+(?:\\.[0-9]+)?"))
+        {
+          throw new LookupFailure("Published bundle POM has malformed cdo.project.release provenance: " + coordinate.coordinate());
+        }
+
+        if ("4.36".equals(release) && !publishedRelease.isEmpty() && !release.equals(publishedRelease))
+        {
+          return "Published cdo.project.release " + publishedRelease + " does not match the selected 4.36 retrofit release.";
+        }
+
+        removeProvenanceProperties(publishedProject);
+        removeProvenanceProperties(proposedProject);
+      }
+
+      String difference = semanticDifference(publishedProject, proposedProject, "/project");
+      if (difference != null)
+      {
+        return "Consumer-relevant POM metadata differs at " + difference + " after the explicit provenance-property allowlist.";
+      }
+
+      return null;
+    }
+
+    private static void validateCoordinatePom(File pom, String group, String artifact, String version, boolean bom, String release, String dropID)
+        throws Exception
+    {
+      Element project = parse(pom).getDocumentElement();
+      String actual = text(project, "groupId") + ":" + text(project, "artifactId") + ":" + text(project, "version");
+      String expected = group + ":" + artifact + ":" + version;
+      if (!expected.equals(actual))
+      {
+        throw new IllegalArgumentException("Proposed POM coordinate mismatch: expected " + expected + " but found " + actual + " in " + pom);
+      }
+
+      String expectedPackaging = bom ? "pom" : "jar";
+      if (!expectedPackaging.equals(packaging(project)))
+      {
+        throw new IllegalArgumentException("Proposed POM has unexpected packaging for " + expected + ": " + packaging(project));
+      }
+
+      if (!bom)
+      {
+        Element properties = child(project, "properties");
+        if (!dropID.equals(text(child(properties, "cdo.drop.id"))) || !release.equals(text(child(properties, "cdo.project.release")))
+            || !"org.eclipse.cdo".equals(group))
+        {
+          throw new IllegalArgumentException("Proposed bundle POM has incorrect drop/project-release traceability: " + pom);
+        }
+      }
+      else
+      {
+        Element properties = child(project, "properties");
+        if (!dropID.equals(text(child(properties, "cdo.drop.id"))) || !release.equals(text(child(properties, "cdo.project.release"))))
+        {
+          throw new IllegalArgumentException("Generated BOM has incorrect drop/project-release traceability: " + pom);
+        }
+      }
+    }
+
+    private static void removeProvenanceProperties(Element project)
+    {
+      Element properties = child(project, "properties");
+      if (properties == null)
+      {
+        return;
+      }
+
+      NodeList children = properties.getChildNodes();
+      for (int i = children.getLength() - 1; i >= 0; i--)
+      {
+        Node node = children.item(i);
+        if (node instanceof Element && PROVENANCE_PROPERTIES.contains(localName(node)))
+        {
+          properties.removeChild(node);
+        }
+      }
+
+      if (!properties.hasChildNodes())
+      {
+        project.removeChild(properties);
+      }
+    }
+
+    private static String semanticDifference(Node left, Node right, String path)
+    {
+      if (left instanceof Element != right instanceof Element)
+      {
+        return path;
+      }
+
+      if (left instanceof Element)
+      {
+        Element leftElement = (Element)left;
+        Element rightElement = (Element)right;
+        String leftName = localName(leftElement);
+        String rightName = localName(rightElement);
+        if (!leftName.equals(rightName) || !equal(leftElement.getNamespaceURI(), rightElement.getNamespaceURI()))
+        {
+          return path;
+        }
+
+        if (!attributes(leftElement).equals(attributes(rightElement)))
+        {
+          return path + "/@attributes";
+        }
+
+        List<Node> leftChildren = normalizedChildren(leftElement);
+        List<Node> rightChildren = normalizedChildren(rightElement);
+        if ("properties".equals(leftName))
+        {
+          leftChildren.sort(Comparator.comparing(CentralClassificationCommand::localName));
+          rightChildren.sort(Comparator.comparing(CentralClassificationCommand::localName));
+        }
+
+        if (leftChildren.size() != rightChildren.size())
+        {
+          return path + "/children";
+        }
+
+        for (int i = 0; i < leftChildren.size(); i++)
+        {
+          Node leftChild = leftChildren.get(i);
+          Node rightChild = rightChildren.get(i);
+          String childName = leftChild instanceof Element ? localName(leftChild) : "text";
+          String difference = semanticDifference(leftChild, rightChild, path + "/" + childName);
+          if (difference != null)
+          {
+            return difference;
+          }
+        }
+
+        return null;
+      }
+
+      return left.getTextContent().trim().equals(right.getTextContent().trim()) ? null : path;
+    }
+
+    private static List<Node> normalizedChildren(Element element)
+    {
+      List<Node> result = new ArrayList<>();
+      for (Node child = element.getFirstChild(); child != null; child = child.getNextSibling())
+      {
+        if (child instanceof Element
+            || (child.getNodeType() == Node.TEXT_NODE || child.getNodeType() == Node.CDATA_SECTION_NODE) && !child.getTextContent().trim().isEmpty())
+        {
+          result.add(child);
+        }
+      }
+
+      return result;
+    }
+
+    private static Map<String, String> attributes(Element element)
+    {
+      Map<String, String> result = new TreeMap<>();
+      for (int i = 0; i < element.getAttributes().getLength(); i++)
+      {
+        Node attribute = element.getAttributes().item(i);
+        if (!"http://www.w3.org/2000/xmlns/".equals(attribute.getNamespaceURI()))
+        {
+          String name = attribute.getNamespaceURI() + "|" + localName(attribute);
+          result.put(name, attribute.getNodeValue());
+        }
+      }
+
+      return result;
+    }
+
+    private static String localName(Node node)
+    {
+      String name = node.getLocalName();
+      return name == null ? node.getNodeName() : name;
+    }
+
+    private static boolean equal(Object left, Object right)
+    {
+      return left == null ? right == null : left.equals(right);
+    }
+
+    private static String packaging(Element project)
+    {
+      String packaging = text(project, "packaging");
+      return packaging.isEmpty() ? "jar" : packaging;
+    }
+
+    private static String mavenPath(Coordinate coordinate)
+    {
+      return coordinate.group.replace('.', '/') + "/" + coordinate.artifact + "/" + coordinate.version + "/" + coordinate.artifact + "-" + coordinate.version;
+    }
+
+    private static void writeReport(File report, String release, String dropID, List<Coordinate> inventory, List<CoordinateResult> results) throws IOException
+    {
+      requireWorkspaceOutput(report, "Central coordinate classification report");
+      Files.createDirectories(report.toPath().getParent());
+      try (PrintWriter out = new PrintWriter(Files.newBufferedWriter(report.toPath(), StandardCharsets.UTF_8)))
+      {
+        out.println("cdo.project.release=" + release);
+        out.println("cdo.drop.id=" + dropID);
+        out.println("release.component.count=" + inventory.size());
+        List<CoordinateResult> newCoordinates = results.stream().filter(result -> result.classification == Classification.NEW).collect(Collectors.toList());
+        out.println("publication.coordinate.count=" + newCoordinates.size());
+        for (int i = 0; i < results.size(); i++)
+        {
+          CoordinateResult result = results.get(i);
+          int index = i + 1;
+          out.println("release.component." + index + ".coordinate=" + result.coordinate.coordinate());
+          out.println("release.component." + index + ".kind=" + (result.coordinate.bom ? "bom" : "bundle"));
+          out.println("release.component." + index + ".classification=" + result.classification);
+          out.println("release.component." + index + ".reason=" + result.reason.replace("\r", " ").replace("\n", " "));
+        }
+
+        for (int i = 0; i < newCoordinates.size(); i++)
+        {
+          out.println("publication.coordinate." + (i + 1) + "=" + newCoordinates.get(i).coordinate.coordinate());
+        }
+      }
+    }
+
+    private static String concise(Exception e)
+    {
+      String message = e.getMessage();
+      return message == null || message.isBlank() ? e.getClass().getSimpleName() : message;
+    }
+
+    private static String metadataValue(Map<String, String> metadata, String key)
+    {
+      String value = metadata.get(key);
+      if (value == null || value.isBlank())
+      {
+        throw new IllegalArgumentException("Missing required build metadata: " + key);
+      }
+
+      return value;
+    }
+
+    private static String digest(byte[] bytes, String algorithm)
+    {
+      byte[] digest;
+      try
+      {
+        digest = MessageDigest.getInstance(algorithm).digest(bytes);
+      }
+      catch (NoSuchAlgorithmException e)
+      {
+        throw new IllegalStateException("Required digest algorithm is unavailable: " + algorithm, e);
+      }
+
+      StringBuilder hex = new StringBuilder(digest.length * 2);
+      for (byte value : digest)
+      {
+        hex.append(String.format(Locale.ROOT, "%02x", value & 0xff));
+      }
+
+      return hex.toString();
+    }
+
+    private enum Classification
+    {
+      NEW, REUSABLE, CONFLICT, LOOKUP_ERROR
+    }
+
+    private static final class Coordinate
+    {
+      private final String group;
+
+      private final String artifact;
+
+      private final String version;
+
+      private final File versionDirectory;
+
+      private final boolean bom;
+
+      Coordinate(String group, String artifact, String version, File versionDirectory, boolean bom)
+      {
+        this.group = group;
+        this.artifact = artifact;
+        this.version = version;
+        this.versionDirectory = versionDirectory;
+        this.bom = bom;
+      }
+
+      String coordinate()
+      {
+        return group + ":" + artifact + ":" + version;
+      }
+    }
+
+    private static final class CoordinateResult
+    {
+      private final Coordinate coordinate;
+
+      private final Classification classification;
+
+      private final String reason;
+
+      CoordinateResult(Coordinate coordinate, Classification classification, String reason)
+      {
+        this.coordinate = coordinate;
+        this.classification = classification;
+        this.reason = reason;
+      }
+    }
+
+    private static final class Response
+    {
+      private final int status;
+
+      private final byte[] body;
+
+      Response(int status, byte[] body)
+      {
+        this.status = status;
+        this.body = body;
+      }
+    }
+
+    private static final class LookupFailure extends Exception
+    {
+      private static final long serialVersionUID = 1L;
+
+      LookupFailure(String message)
+      {
+        super(message);
+      }
+
+      LookupFailure(String message, Throwable cause)
+      {
+        super(message, cause);
       }
     }
   }
@@ -3488,6 +4509,16 @@ public final class CDOAggregationTool
   private static Document parse(File file) throws Exception
   {
     return parse(new FileInputStream(file), file.getPath());
+  }
+
+  private static Document newDocument() throws Exception
+  {
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    factory.setNamespaceAware(true);
+    factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+    factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+    factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, "");
+    return factory.newDocumentBuilder().newDocument();
   }
 
   private static Document parse(InputStream in, String label) throws Exception

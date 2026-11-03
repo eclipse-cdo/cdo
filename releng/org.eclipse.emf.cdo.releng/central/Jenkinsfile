@@ -1,8 +1,8 @@
 final String CBI_AGGREGATOR_URL = 'https://download.eclipse.org/cbi/updates/p2-aggregator/products/nightly/latest/org.eclipse.cbi.p2repo.cli.product-linux.gtk.x86_64.tar.gz'
 final String CDO_DROPS_FILE_URL = 'https://download.eclipse.org/modeling/emf/cdo/drops/drops.txt'
-final String GPG_KEY_FILE_CREDENTIAL_ID = ''
+final String GPG_KEY_FILE_CREDENTIAL_ID = 'secret-subkeys.asc'
 final String GPG_PASSPHRASE_CREDENTIAL_ID = ''
-final String GPG_EXPECTED_PRIMARY_FINGERPRINT = ''
+final String GPG_EXPECTED_PRIMARY_FINGERPRINT = '439BB94FD1FEF2D2615941A35604EF4E098FFAAE'
 final String GPG_EXECUTABLE = 'gpg'
 
 pipeline {
@@ -57,52 +57,6 @@ pipeline {
               }
               assert_workspace_path "$workspace_root/.tmp"
               mkdir -p "$workspace_root/.tmp"
-            '''
-          }
-        }
-      }
-    }
-
-    stage('TEMPORARY: Inspect Jenkins OpenPGP primary fingerprint') {
-      when {
-        expression { params.PUBLISHING_MODE == 'VALIDATE_ONLY' }
-      }
-      steps {
-        withCredentials([file(credentialsId: 'secret-subkeys.asc', variable: 'MAVEN_GPG_KEY_FILE')]) {
-          withEnv(["CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
-            sh '''#!/bin/sh
-              set +x
-              set -eu
-              command -v gpg >/dev/null 2>&1 || { echo "GnuPG is required for the temporary key diagnostic" >&2; exit 6; }
-              workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
-              case "$workspace_root" in /|"") echo "Unsafe Jenkins workspace root" >&2; exit 2 ;; esac
-              gpg_home=$(mktemp -d "$workspace_root/.tmp/gpg-inspect.XXXXXX")
-              trap 'rm -rf -- "$gpg_home"' EXIT HUP INT TERM
-              key_data=$(gpg --no-options --homedir "$gpg_home" --batch --no-tty --show-keys --with-colons --fingerprint "$MAVEN_GPG_KEY_FILE" 2>/dev/null) || {
-                echo "Unable to inspect the configured Jenkins OpenPGP key file" >&2
-                exit 7
-              }
-              primary_fingerprint=$(printf '%s\\n' "$key_data" | awk -F: '
-                $1 == "pub" || $1 == "sec" { primary_count++; record = "pub"; next }
-                $1 == "sub" || $1 == "ssb" { record = "sub"; next }
-                $1 == "fpr" {
-                  if (record == "pub") {
-                    primary_fingerprint_count++
-                    fingerprint = toupper($10)
-                    if ((length(fingerprint) != 40 && length(fingerprint) != 64) || fingerprint !~ /^[0-9A-F]+$/) malformed = 1
-                    selected = fingerprint
-                  }
-                  record = ""
-                }
-                END {
-                  if (primary_count != 1 || primary_fingerprint_count != 1 || malformed) exit 1
-                  print selected
-                }
-              ') || {
-                echo "The Jenkins key file must contain exactly one primary key with a valid fingerprint" >&2
-                exit 8
-              }
-              printf 'GPG_PRIMARY_FINGERPRINT=%s\\n' "$primary_fingerprint"
             '''
           }
         }

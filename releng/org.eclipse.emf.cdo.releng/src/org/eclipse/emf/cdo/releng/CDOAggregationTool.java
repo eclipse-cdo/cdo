@@ -138,7 +138,7 @@ public final class CDOAggregationTool
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|overlay|verify|consumer-versions|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|overlay|verify|consumer-versions|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -201,6 +201,14 @@ public final class CDOAggregationTool
 
     case "verify-package":
       verifyPackage(args);
+      break;
+
+    case "resolve-signing-subkey-fingerprint":
+      resolveSigningSubkeyFingerprint(args);
+      break;
+
+    case "signing-subkey-test":
+      signingSubkeyFingerprintTest();
       break;
 
     case "signature-test":
@@ -1750,6 +1758,187 @@ public final class CDOAggregationTool
     return fingerprints;
   }
 
+  private static void resolveSigningSubkeyFingerprint(String[] args) throws Exception
+  {
+    if (args.length != 5)
+    {
+      throw new IllegalArgumentException("resolve-signing-subkey-fingerprint requires GnuPG, a key file, the expected primary fingerprint, and an output file");
+    }
+
+    String gpg = args[1];
+    File keyFile = requireFile(new File(args[2]), "Jenkins signing-key credential");
+    String expectedPrimary = args[3].replace(" ", "").toUpperCase();
+    if (!expectedPrimary.matches("(?:[0-9A-F]{40}|[0-9A-F]{64})"))
+    {
+      throw new IllegalArgumentException("Expected primary-key fingerprint must be a full 40- or 64-character hexadecimal fingerprint");
+    }
+
+    Path output = requireWorkspaceOutput(new File(args[4]), "signing-subkey fingerprint output");
+    Files.deleteIfExists(output);
+
+    String workspace = System.getenv("CDO_WORKSPACE_ROOT");
+    if (workspace == null || workspace.isBlank())
+    {
+      throw new IllegalArgumentException("CDO_WORKSPACE_ROOT is required to inspect the signing key safely");
+    }
+
+    Path workspaceRoot = Paths.get(workspace).toRealPath();
+    if (workspaceRoot.equals(workspaceRoot.getRoot()))
+    {
+      throw new IllegalArgumentException("Refusing to inspect a signing key under a filesystem root");
+    }
+
+    Path temporaryHome = Files.createTempDirectory(workspaceRoot, "cdo-signing-key-");
+    String signingFingerprint;
+
+    try
+    {
+      securePath(temporaryHome, true);
+      gpg(gpg, temporaryHome, "--import", keyFile.getAbsolutePath());
+      if (!primaryFingerprints(gpg, temporaryHome).contains(expectedPrimary))
+      {
+        throw new IllegalArgumentException("Jenkins signing-key credential does not contain the configured primary fingerprint");
+      }
+
+      String listing = gpg(gpg, temporaryHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys");
+      signingFingerprint = findSigningSubkeyFingerprint(listing, expectedPrimary);
+    }
+    finally
+    {
+      try
+      {
+        stopGpgAgent(gpg, temporaryHome);
+      }
+      finally
+      {
+        delete(temporaryHome.toFile());
+      }
+    }
+
+    Files.writeString(output, signingFingerprint + "\n", StandardCharsets.US_ASCII);
+    securePath(output, false);
+    System.out.println("Resolved one usable signing subkey under the configured primary key.");
+  }
+
+  private static String findSigningSubkeyFingerprint(String listing, String expectedPrimary)
+  {
+    String normalizedPrimary = expectedPrimary.replace(" ", "").toUpperCase();
+    if (!normalizedPrimary.matches("(?:[0-9A-F]{40}|[0-9A-F]{64})"))
+    {
+      throw new IllegalArgumentException("Expected primary-key fingerprint must be a full 40- or 64-character hexadecimal fingerprint");
+    }
+
+    String currentPrimary = null;
+    String currentRecord = "";
+    boolean usableSigningSubkey = false;
+    List<String> candidates = new ArrayList<>();
+
+    for (String line : listing.split("\\R"))
+    {
+      String[] fields = line.split(":", -1);
+      if (fields.length == 0)
+      {
+        continue;
+      }
+
+      String record = fields[0];
+      if (record.startsWith("sec"))
+      {
+        currentPrimary = null;
+        currentRecord = "primary";
+      }
+      else if (record.startsWith("ssb"))
+      {
+        currentRecord = "subkey";
+        String validity = fields.length > 1 ? fields[1] : "";
+        String capabilities = fields.length > 11 ? fields[11] : "";
+        String token = fields.length > 14 ? fields[14] : "";
+        boolean revokedExpiredOrDisabled = Arrays.asList("r", "e", "d", "i", "n").contains(validity);
+        usableSigningSubkey = "ssb".equals(record) && !revokedExpiredOrDisabled && capabilities.indexOf('s') >= 0 && (token.isEmpty() || "+".equals(token));
+      }
+      else if ("fpr".equals(record))
+      {
+        if (fields.length <= 9)
+        {
+          throw new IllegalArgumentException("Malformed GnuPG fingerprint record while inspecting the signing key");
+        }
+
+        String fingerprint = fields[9].replace(" ", "").toUpperCase();
+        if ("primary".equals(currentRecord))
+        {
+          currentPrimary = fingerprint;
+        }
+        else if ("subkey".equals(currentRecord) && usableSigningSubkey && normalizedPrimary.equals(currentPrimary))
+        {
+          if (!fingerprint.matches("[0-9A-F]{40}"))
+          {
+            throw new IllegalArgumentException("GnuPG returned a malformed signing-subkey fingerprint");
+          }
+
+          candidates.add(fingerprint);
+        }
+
+        currentRecord = "";
+        usableSigningSubkey = false;
+      }
+    }
+
+    if (candidates.size() != 1)
+    {
+      throw new IllegalArgumentException("Expected exactly one usable signing subkey for the configured primary fingerprint; found " + candidates.size());
+    }
+
+    return candidates.get(0);
+  }
+
+  private static void signingSubkeyFingerprintTest()
+  {
+    String expectedPrimary = "1".repeat(40);
+    String otherPrimary = "2".repeat(40);
+    String unknownPrimary = "7".repeat(40);
+    String encryptionFingerprint = "3".repeat(40);
+    String unavailableSigningFingerprint = "4".repeat(40);
+    String signingFingerprint = "5".repeat(40);
+    String otherSigningFingerprint = "6".repeat(40);
+
+    String listing = String.join("\n", "sec#:-:3072:1:PRIMARY:1700000000::::::sc:", "fpr:::::::::" + expectedPrimary + ":", "uid:-::::1700000000:::Primary:",
+        "ssb:-:3072:1:ENCRYPTION:1700000000::::::e:", "fpr:::::::::" + encryptionFingerprint + ":", "ssb#:-:3072:1:UNAVAILABLE:1700000000::::::s:",
+        "fpr:::::::::" + unavailableSigningFingerprint + ":", "ssb:-:3072:1:SIGNING:1700000000::::::s:", "fpr:::::::::" + signingFingerprint + ":",
+        "sec#:-:3072:1:OTHER:1700000000::::::sc:", "fpr:::::::::" + otherPrimary + ":", "ssb:-:3072:1:OTHER_SIGNING:1700000000::::::s:",
+        "fpr:::::::::" + otherSigningFingerprint + ":");
+
+    if (!signingFingerprint.equals(findSigningSubkeyFingerprint(listing, expectedPrimary)))
+    {
+      throw new AssertionError("Did not select the unique usable signing subkey belonging to the expected primary key");
+    }
+
+    String ambiguousListing = listing.replace("sec#:-:3072:1:OTHER:1700000000::::::sc:",
+        "ssb:-:3072:1:DUPLICATE:1700000000::::::s:\nfpr:::::::::" + otherSigningFingerprint + ":\nsec#:-:3072:1:OTHER:1700000000::::::sc:");
+    expectSigningSubkeyFailure(ambiguousListing, expectedPrimary, "ambiguous signing subkeys");
+    expectSigningSubkeyFailure(listing.replace("ssb:-:3072:1:SIGNING:1700000000::::::s:", "ssb:-:3072:1:SIGNING:1700000000::::::e:"), expectedPrimary,
+        "no signing-capable subkey");
+    expectSigningSubkeyFailure(listing.replace("ssb:-:3072:1:SIGNING:", "ssb:e:3072:1:SIGNING:"), expectedPrimary, "expired signing subkey");
+    expectSigningSubkeyFailure(listing, unknownPrimary, "wrong primary fingerprint");
+    expectSigningSubkeyFailure(listing.replace(signingFingerprint, "not-a-fingerprint"), expectedPrimary, "malformed signing-subkey fingerprint");
+
+    System.out
+        .println("Signing-subkey selection tests passed: primary identity, signing capability, unavailable subkeys, ambiguity, and malformed fingerprints.");
+  }
+
+  private static void expectSigningSubkeyFailure(String listing, String expectedPrimary, String scenario)
+  {
+    try
+    {
+      findSigningSubkeyFingerprint(listing, expectedPrimary);
+    }
+    catch (IllegalArgumentException e)
+    {
+      return;
+    }
+
+    throw new AssertionError("Expected signing-subkey selection failure for " + scenario);
+  }
+
   private static void requireValidSignature(String output, String expectedPrimary, File signature)
   {
     List<String[]> valid = new ArrayList<>();
@@ -2063,12 +2252,19 @@ public final class CDOAggregationTool
       securePath(firstHome, true);
       securePath(secondHome, true);
 
-      gpg(gpgExecutable, firstHome, "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", "CDO temporary signing key", "rsa2048", "sign",
+      gpg(gpgExecutable, firstHome, "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", "CDO temporary signing key", "rsa2048", "cert",
           "1d");
-      gpg(gpgExecutable, secondHome, "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", "CDO wrong test key", "rsa2048", "sign", "1d");
+      gpg(gpgExecutable, secondHome, "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", "CDO wrong test key", "rsa2048", "cert", "1d");
 
       String firstFingerprint = primaryFingerprints(gpgExecutable, firstHome).iterator().next();
       String secondFingerprint = primaryFingerprints(gpgExecutable, secondHome).iterator().next();
+      gpg(gpgExecutable, firstHome, "--pinentry-mode", "loopback", "--passphrase", "", "--quick-add-key", firstFingerprint, "rsa2048", "sign", "1d");
+      gpg(gpgExecutable, secondHome, "--pinentry-mode", "loopback", "--passphrase", "", "--quick-add-key", secondFingerprint, "rsa2048", "sign", "1d");
+
+      String firstSigningFingerprint = findSigningSubkeyFingerprint(
+          gpg(gpgExecutable, firstHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"), firstFingerprint);
+      findSigningSubkeyFingerprint(gpg(gpgExecutable, secondHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"),
+          secondFingerprint);
 
       File firstSecretKey = exportSecretKey(gpgExecutable, firstHome, firstFingerprint, work.resolve("first-secret-key.gpg"));
       File secondSecretKey = exportSecretKey(gpgExecutable, secondHome, secondFingerprint, work.resolve("second-secret-key.gpg"));
@@ -2084,7 +2280,7 @@ public final class CDOAggregationTool
       Files.writeString(metadata.toPath(), "cdo.build.type=R\ncdo.drop.id=R20990101-0000\ncdo.git.commit=deadbeef\n", StandardCharsets.UTF_8);
       Files.writeString(summary.toPath(), "publishing.mode=PACKAGE_FOR_CENTRAL\n", StandardCharsets.UTF_8);
 
-      createSignedFixture(gpgExecutable, firstHome, firstFingerprint, staging, signedRepository);
+      createSignedFixture(gpgExecutable, firstHome, firstSigningFingerprint, staging, signedRepository);
       createDeploymentZip(staging, zip, "");
 
       String[] valid = packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstSecretKey, gpgExecutable, summary);
@@ -2194,7 +2390,7 @@ public final class CDOAggregationTool
 
   private static File exportSecretKey(String gpg, Path home, String fingerprint, Path destination) throws Exception
   {
-    gpg(gpg, home, "--output", destination.toString(), "--export-secret-keys", fingerprint);
+    gpg(gpg, home, "--output", destination.toString(), "--export-secret-subkeys", fingerprint);
     securePath(destination, false);
     return destination.toFile();
   }

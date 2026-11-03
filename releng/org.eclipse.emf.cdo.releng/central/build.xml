@@ -329,6 +329,22 @@
 		</java>
 	</target>
 
+	<target name="signing-subkey-test" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="signing-subkey-test" />
+		</java>
+	</target>
+
+	<target name="resolve-signing-subkey-fingerprint" depends="validate-workspace,compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="resolve-signing-subkey-fingerprint" />
+			<arg value="${gpg.executable}" />
+			<arg value="${gpg.key.file}" />
+			<arg value="${gpg.expected.fingerprint}" />
+			<arg value="${gpg.signing.fingerprint.file}" />
+		</java>
+	</target>
+
 	<target name="stream-test" depends="compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="stream-test" />

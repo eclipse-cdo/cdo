@@ -120,17 +120,22 @@ artifact together with its `.md5`, `.sha1`, `.sha256`, and `.sha512` sidecars.
 `maven-publishing-summary.properties` with the drop, commit, build type,
 artifact count, selected mode, and `central.publication.performed=false`.
 
-For `PACKAGE_FOR_CENTRAL`, the Jenkinsfile uses pipeline constants for the
-secret-key file credential ID, optional passphrase credential ID, and expected
-primary-key fingerprint. Their values are intentionally blank until Eclipse
-administrators confirm the actual credential IDs, key protection, and
-fingerprint. The [Maven GPG Plugin Bouncy Castle signer](https://maven.apache.org/plugins/maven-gpg-plugin/examples/deploy-signed-artifacts.html)
-needs a passphrase only
-when the secret key is passphrase protected. Ed's EMF setup uses a
-`secret-subkeys.asc` file credential without a separate passphrase credential;
-confirm with the administrators whether the CDO signing key has the same
-configuration. If it is unprotected, leave the optional passphrase constant
-blank. If it is protected, configure the Jenkins secret-text credential ID.
+For `PACKAGE_FOR_CENTRAL`, the Jenkinsfile binds the Jenkins Secret file
+credential `secret-subkeys.asc` and pins the expected primary-key fingerprint
+to `439BB94FD1FEF2D2615941A35604EF4E098FFAAE`. It imports the key into a
+temporary workspace-local GnuPG home, verifies that primary identity, and
+selects the unique usable signing-capable secret subkey under that primary.
+The subkey fingerprint is passed to the Maven GPG Plugin Bouncy Castle signer;
+the configured primary fingerprint remains the independent trust anchor for
+package verification. The signing key is not copied into the repository or
+archived.
+
+The optional passphrase credential ID is blank. The signer runs with Maven GPG
+Plugin best-practices mode enabled, so it does not load a passphrase from
+`settings.xml` or project configuration. If the secret subkey is encrypted,
+the plugin can use an explicitly configured Jenkins secret-text credential
+through `MAVEN_GPG_PASSPHRASE` or an already-cached GnuPG agent passphrase; the
+pipeline does not require or guess a passphrase credential.
 
 The package stage signs the twelve approved POMs and their main, sources, and
 Javadoc JARs into a local `file:` repository. It verifies all 48 detached

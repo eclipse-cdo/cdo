@@ -361,8 +361,9 @@ pipeline {
           if (GPG_PASSPHRASE_CREDENTIAL_ID?.trim()) {
             signingCredentials << string(credentialsId: GPG_PASSPHRASE_CREDENTIAL_ID, variable: 'MAVEN_GPG_PASSPHRASE')
           }
+          def passphraseCredentialConfigured = GPG_PASSPHRASE_CREDENTIAL_ID?.trim() ? 'true' : 'false'
           withCredentials(signingCredentials) {
-            withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "MAVEN_SIGNER_REPO=${env.CDO_AGGR_WORK_DIR}/maven-central-signer-repository", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+            withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "MAVEN_SIGNER_REPO=${env.CDO_AGGR_WORK_DIR}/maven-central-signer-repository", "GPG_SIGNING_FINGERPRINT_FILE=${env.CDO_AGGR_WORK_DIR}/gpg-signing-subkey-fingerprint.txt", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "GPG_EXECUTABLE=${GPG_EXECUTABLE}", "GPG_PASSPHRASE_CREDENTIAL_CONFIGURED=${passphraseCredentialConfigured}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
               sh '''
                 set -eu
                 set +x
@@ -376,13 +377,23 @@ pipeline {
                   test "$resolved" = "$candidate" || { echo "Output path uses a symlink or non-canonical component: $candidate" >&2; return 1; }
                 }
                 assert_workspace_path "$STAGING_DIR"
+                assert_workspace_path "$AGGR_WORK_DIR"
                 assert_workspace_path "$CENTRAL_REPO"
                 assert_workspace_path "$MAVEN_SIGNER_REPO"
+                assert_workspace_path "$GPG_SIGNING_FINGERPRINT_FILE"
                 if find "$STAGING_DIR" -type l -print -quit | grep -q .; then
                   echo "Staging contains a symlink" >&2
                   exit 2
                 fi
                 ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$CDO_WORKSPACE_ROOT/maven-publishing/work" -Dstaging.dir="$STAGING_DIR" -f releng/org.eclipse.emf.cdo.releng/central/build.xml publication-scope-check
+                ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dgpg.executable="$GPG_EXECUTABLE" -Dgpg.key.file="$MAVEN_GPG_KEY_FILE" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.signing.fingerprint.file="$GPG_SIGNING_FINGERPRINT_FILE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml signing-subkey-test resolve-signing-subkey-fingerprint
+                test "$(wc -l < "$GPG_SIGNING_FINGERPRINT_FILE")" -eq 1 || { echo "Expected exactly one signing-subkey fingerprint" >&2; exit 7; }
+                signing_fingerprint=$(cat "$GPG_SIGNING_FINGERPRINT_FILE")
+                printf '%s\\n' "$signing_fingerprint" | grep -Eq '^[0-9A-F]{40}$' || { echo "Signing-subkey fingerprint resolution returned a malformed value" >&2; exit 7; }
+                export MAVEN_GPG_KEY_FINGERPRINT="$signing_fingerprint"
+                if [ "$GPG_PASSPHRASE_CREDENTIAL_CONFIGURED" != true ]; then
+                  unset MAVEN_GPG_PASSPHRASE
+                fi
                 for generated_repository in "$CENTRAL_REPO" "$MAVEN_SIGNER_REPO"; do
                   if [ -e "$generated_repository" ] && find "$generated_repository" -type l -print -quit | grep -q .; then
                     echo "Generated Maven repository contains a symlink: $generated_repository" >&2
@@ -400,8 +411,9 @@ pipeline {
                   sources="$version_dir/$artifact-$version-sources.jar"
                   javadoc="$version_dir/$artifact-$version-javadoc.jar"
                   test -s "$main" && test -s "$sources" && test -s "$javadoc"
-                  mvn --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" -Dgpg.keyFingerprint="$GPG_FINGERPRINT" -Dfile="$main" -DpomFile="$pom" -Dsources="$sources" -Djavadoc="$javadoc" -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
+                  mvn --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file -Dgpg.bestPractices=true -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" -Dgpg.keyFingerprint="$signing_fingerprint" -Dfile="$main" -DpomFile="$pom" -Dsources="$sources" -Djavadoc="$javadoc" -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
                 done
+                rm -f "$GPG_SIGNING_FINGERPRINT_FILE"
                 if find "$CENTRAL_REPO" -type l -print -quit | grep -q .; then
                   echo "Signed local repository contains a symlink" >&2
                   exit 2

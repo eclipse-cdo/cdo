@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.releng;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -35,6 +36,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -322,6 +324,23 @@ public class CDOAggregationToolBomTest
     Path missingArtifact = staging.resolve(path(BUNDLES[0], "1.0.0", ".jar"));
     Files.delete(missingArtifact);
     expectPublicationScopeFailure(validArguments, "Missing or empty staged Maven artifact");
+  }
+
+  @Test
+  public void bomSignedRepositoryAllowsMavenMetadataOnlyAtTheBomArtifactRoot() throws Exception
+  {
+    Set<String> signedFilesAllowed = new LinkedHashSet<>();
+    String metadata = "org/eclipse/cdo/org.eclipse.cdo.bom/maven-metadata.xml";
+    assertTrue(isAllowedSignedBomRepositoryPath(metadata, signedFilesAllowed));
+    for (String checksum : new String[] { ".md5", ".sha1", ".sha256", ".sha512" })
+    {
+      assertTrue(isAllowedSignedBomRepositoryPath(metadata + checksum, signedFilesAllowed));
+    }
+
+    assertFalse(isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.emf.cdo/maven-metadata.xml", signedFilesAllowed));
+    assertFalse(isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/maven-metadata.xml", signedFilesAllowed));
+    assertFalse(isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.cdo.bom/other.txt", signedFilesAllowed));
+    assertFalse(isAllowedSignedBomRepositoryPath(metadata + ".asc", signedFilesAllowed));
   }
 
   @Test
@@ -790,6 +809,13 @@ public class CDOAggregationToolBomTest
     {
       assertTrue(expected.getMessage().startsWith(message));
     }
+  }
+
+  private boolean isAllowedSignedBomRepositoryPath(String path, Set<String> allowedPaths) throws Exception
+  {
+    Method method = CDOAggregationTool.class.getDeclaredMethod("isAllowedSignedBomRepositoryPath", String.class, Set.class);
+    method.setAccessible(true);
+    return (Boolean)method.invoke(null, path, allowedPaths);
   }
 
   private void expectBomCentralFailure(Path root, Path manifest, CentralFixture central, String message) throws Exception

@@ -3219,7 +3219,7 @@ public final class CDOAggregationTool
     for (File file : regularFiles(signedRepository))
     {
       String relative = relativePath(signedRepository, file);
-      if (!signedFilesAllowed.contains(relative))
+      if (!isAllowedSignedBomRepositoryPath(relative, signedFilesAllowed))
       {
         throw new IllegalArgumentException("Unexpected file in signed BOM repository: " + relative);
       }
@@ -3239,6 +3239,12 @@ public final class CDOAggregationTool
         + "deployment.zip.sha256=" + sha256 + "\ncentral.publication.performed=false\n";
     Files.writeString(new File(args[10]).toPath(), summary, StandardCharsets.UTF_8);
     System.out.println("Verified the POM-only CDO 4.36 BOM signature, checksums, local signing output, and exact ZIP inventory. Publication performed=false.");
+  }
+
+  private static boolean isAllowedSignedBomRepositoryPath(String relative, Set<String> signedFilesAllowed)
+  {
+    String bomArtifactRoot = "org/eclipse/cdo/" + Bom436Command.BOM_ARTIFACT;
+    return signedFilesAllowed.contains(relative) || relative.startsWith(bomArtifactRoot + "/") && isMavenMetadataPath(relative);
   }
 
   private static void verifySignatures(String gpg, File publicKey, String expectedFingerprint, List<File> artifacts, File staging) throws Exception

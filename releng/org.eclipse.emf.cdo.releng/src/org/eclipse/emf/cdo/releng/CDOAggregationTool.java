@@ -3245,13 +3245,14 @@ public final class CDOAggregationTool
   {
     String workspace = System.getenv("CDO_WORKSPACE_ROOT");
     Path temporaryParent = workspace == null || workspace.isBlank() ? staging.toPath().getParent() : Paths.get(workspace).toRealPath();
-    Path work = Files.createTempDirectory(temporaryParent, "cdo-pgp-verify-");
+    Path work = Files.createTempDirectory(temporaryParent, "g-");
     securePath(work, true);
 
     try
     {
-      Path verifyHome = Files.createDirectory(work.resolve("verify"));
+      Path verifyHome = Files.createDirectory(work.resolve("v"));
       securePath(verifyHome, true);
+      validateGpgSocketPaths(gpg, verifyHome);
       gpg(gpg, verifyHome, "--import", publicKey.getAbsolutePath());
       if (!primaryFingerprints(gpg, verifyHome).equals(Set.of(expectedFingerprint)))
       {
@@ -3268,36 +3269,103 @@ public final class CDOAggregationTool
     }
     finally
     {
-      if (Files.isDirectory(work.resolve("verify")))
+      try
       {
-        stopGpgAgent(gpg, work.resolve("verify"));
+        if (Files.isDirectory(work.resolve("v")))
+        {
+          stopGpgAgent(gpg, work.resolve("v"));
+        }
       }
-
-      delete(work.toFile());
+      finally
+      {
+        delete(work.toFile());
+      }
     }
   }
 
   private static void stopGpgAgent(String gpg, Path home) throws Exception
   {
-    Path configuredGpg = Paths.get(gpg);
-    Path gpgconfPath = configuredGpg.getParent() == null ? Paths.get("gpgconf")
-        : configuredGpg.toAbsolutePath().normalize().resolveSibling(isWindows() ? "gpgconf.exe" : "gpgconf");
+    runGpgconf(gpg, home, "--kill", "gpg-agent");
+  }
 
-    ProcessBuilder builder = new ProcessBuilder(gpgconfPath.toString(), "--homedir", home.toString(), "--kill", "gpg-agent");
+  private static void validateGpgSocketPaths(String gpg, Path home) throws Exception
+  {
+    if (isWindows())
+    {
+      return;
+    }
+
+    String version = gpg(gpg, home, "--version").lines().findFirst().orElse("unknown GnuPG version");
+    String directories = runGpgconf(gpg, home, "--list-dirs");
+    Set<String> sockets = new LinkedHashSet<>();
+    for (String line : directories.split("\\R"))
+    {
+      int separator = line.indexOf(':');
+      if (separator > 0 && (line.startsWith("agent-socket:") || line.startsWith("agent-extra-socket:") || line.startsWith("agent-browser-socket:")
+          || line.startsWith("agent-ssh-socket:")))
+      {
+        String socket = line.substring(separator + 1);
+        sockets.add(socket);
+        int pathBytes = socket.getBytes(StandardCharsets.UTF_8).length;
+        int maximumPathBytes = System.getProperty("os.name", "").toLowerCase(Locale.ROOT).contains("linux") ? 107 : 99;
+        if (pathBytes > maximumPathBytes)
+        {
+          throw new IllegalArgumentException("GnuPG " + version + " socket path exceeds the safe Unix-domain limit: " + socket + " (" + pathBytes + " bytes)");
+        }
+      }
+    }
+
+    if (sockets.isEmpty())
+    {
+      throw new IllegalArgumentException("GnuPG " + version + " did not report any agent socket paths for isolated home " + home);
+    }
+
+    System.out.println("GnuPG socket preflight: " + version + "; " + String.join(", ", sockets));
+  }
+
+  private static String runGpgconf(String gpg, Path home, String... arguments) throws Exception
+  {
+    Path gpgconfPath = gpgconfPath(gpg);
+    Path output = Files.createTempFile(home, "gconf-", ".txt");
+    securePath(output, false);
+
+    List<String> command = new ArrayList<>(Arrays.asList(gpgconfPath.toString(), "--homedir", home.toString()));
+    command.addAll(Arrays.asList(arguments));
+    ProcessBuilder builder = new ProcessBuilder(command);
     builder.redirectErrorStream(true);
-    builder.redirectOutput(ProcessBuilder.Redirect.DISCARD);
+    builder.redirectOutput(output.toFile());
+    builder.environment().put("GNUPGHOME", home.toString());
+    builder.environment().put("LC_ALL", "C");
+    builder.environment().put("LANG", "C");
 
-    Process process = builder.start();
-    if (!process.waitFor(10, TimeUnit.SECONDS))
+    try
     {
-      process.destroyForcibly();
-      throw new IllegalArgumentException("Timed out stopping the isolated GnuPG agent");
-    }
+      Process process = builder.start();
+      if (!process.waitFor(10, TimeUnit.SECONDS))
+      {
+        process.destroyForcibly();
+        throw new IllegalArgumentException("Timed out running gpgconf for isolated GnuPG home " + home);
+      }
 
-    if (process.exitValue() != 0)
-    {
-      throw new IllegalArgumentException("Unable to stop the isolated GnuPG agent");
+      String result = Files.readString(output, StandardCharsets.UTF_8);
+      if (process.exitValue() != 0)
+      {
+        throw new IllegalArgumentException("gpgconf failed with exit code " + process.exitValue() + " for isolated GnuPG home " + home + ": " + result.trim());
+      }
+
+      return result;
     }
+    finally
+    {
+      Files.deleteIfExists(output);
+    }
+  }
+
+  private static Path gpgconfPath(String gpg)
+  {
+    Path configuredGpg = Paths.get(gpg);
+    return configuredGpg.getParent() == null ? Paths.get(isWindows() ? "gpgconf.exe" : "gpgconf")
+        : configuredGpg.toAbsolutePath().normalize().resolveSibling(isWindows() ? "gpgconf.exe" : "gpgconf");
   }
 
   private static boolean isWindows()
@@ -3423,12 +3491,13 @@ public final class CDOAggregationTool
       throw new IllegalArgumentException("Refusing to inspect a signing key under a filesystem root");
     }
 
-    Path temporaryHome = Files.createTempDirectory(workspaceRoot, "cdo-signing-key-");
+    Path temporaryHome = Files.createTempDirectory(workspaceRoot, "g-");
     String signingFingerprint;
 
     try
     {
       securePath(temporaryHome, true);
+      validateGpgSocketPaths(gpg, temporaryHome);
       gpg(gpg, temporaryHome, "--import", keyFile.getAbsolutePath());
       if (!primaryFingerprints(gpg, temporaryHome).contains(expectedPrimary))
       {
@@ -3878,10 +3947,9 @@ public final class CDOAggregationTool
     String gpgExecutable = args[1];
     String workspace = System.getenv("CDO_WORKSPACE_ROOT");
 
-    Path work = workspace == null || workspace.isBlank() ? Files.createTempDirectory("cdo-signature-tests-")
-        : Files.createTempDirectory(Paths.get(workspace), "cdo-signature-tests-");
-    Path firstHome = work.resolve("first-key");
-    Path secondHome = work.resolve("second-key");
+    Path work = workspace == null || workspace.isBlank() ? Files.createTempDirectory("g-") : Files.createTempDirectory(Paths.get(workspace), "g-");
+    Path firstHome = work.resolve("a");
+    Path secondHome = work.resolve("b");
 
     securePath(work, true);
 
@@ -3892,6 +3960,8 @@ public final class CDOAggregationTool
 
       securePath(firstHome, true);
       securePath(secondHome, true);
+      validateGpgSocketPaths(gpgExecutable, firstHome);
+      validateGpgSocketPaths(gpgExecutable, secondHome);
 
       gpg(gpgExecutable, firstHome, "--pinentry-mode", "loopback", "--passphrase", "", "--quick-generate-key", "CDO temporary signing key", "rsa2048", "cert",
           "1d");
@@ -4016,17 +4086,27 @@ public final class CDOAggregationTool
     }
     finally
     {
-      if (Files.isDirectory(firstHome))
+      try
       {
-        stopGpgAgent(gpgExecutable, firstHome);
+        if (Files.isDirectory(firstHome))
+        {
+          stopGpgAgent(gpgExecutable, firstHome);
+        }
       }
-
-      if (Files.isDirectory(secondHome))
+      finally
       {
-        stopGpgAgent(gpgExecutable, secondHome);
+        try
+        {
+          if (Files.isDirectory(secondHome))
+          {
+            stopGpgAgent(gpgExecutable, secondHome);
+          }
+        }
+        finally
+        {
+          delete(work.toFile());
+        }
       }
-
-      delete(work.toFile());
     }
   }
 

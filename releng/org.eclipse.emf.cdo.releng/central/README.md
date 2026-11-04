@@ -400,17 +400,18 @@ consume its report yet.
 ## One-time CDO 4.36 BOM-only package
 
 Select `PACKAGE_BOM_436_FOR_CENTRAL` in Jenkins and set `CDO_DROP_ID=R20260901-1311`.
-This isolated mode prepares the selected drop metadata, generates the BOM from the temporary
-`maven-central.properties` artifactId-to-version inventory, and checks that
+This isolated mode prepares the selected drop metadata, derives the approved bundle versions
+from the drop's `index.xml`, generates the BOM, and checks that
 the BOM coordinate and any possible partial artifacts all return HTTP 404 from canonical Maven
 Central. It skips CBI bundle aggregation, bundle Central checks, and the bundle audit/sign/package
 stages. A network error or any non-404 result fails closed.
 
-The temporary retrofit inventory contains exactly thirteen `artifactId=version` entries: the BOM
-and its twelve approved bundle coordinates. The release and drop ID are read from the selected
-drop's `web.properties` and `build-info.xml` and checked against the prepared publishing metadata;
-they are not repeated in this inventory. Keep this retrofit-specific Git file only until the
-successful publication is confirmed, then remove it.
+The runtime inventory uses the permanent approved bundle list and the CBI `MavenRelease`
+transformation. The project release (`web.label`) and drop identity (`build-info.xml`) are checked
+against the prepared metadata. No release-specific inventory is committed. Since the 4.36.0 BOM is
+already published, rerunning the Central-absence check now fails closed on its existing coordinate;
+it cannot overwrite or republish it. The historical packaging, signature, checksum, and
+negative-test paths remain available for regression validation.
 
 Jenkins then signs only the BOM POM using the existing GPG credentials and Maven GPG plugin,
 copies the detached signature into the BOM staging tree, and independently verifies that
@@ -434,8 +435,8 @@ org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom.sha512
 For local preparation without production signing credentials, run `bom-436-prepare`; it creates
 the BOM repository and unsigned `bom-staging`. The authoritative Central absence check is
 `check-bom-436-central`. The signing and final verification steps are deliberately reserved for
-Jenkins. This retrofit mode, manifest, and its Jenkins stages can be removed after the BOM is
-successfully published and the archived package is no longer needed.
+Jenkins. This retrofit mode and its Jenkins stages are historical and can be removed after the
+archived package is no longer needed.
 
 Before manual upload, compare the downloaded Jenkins artifact's SHA-256 with
 `deployment.zip.sha256` in the archived `bom-436-package-summary.properties`, check the ZIP
@@ -457,6 +458,51 @@ Confirm that the ZIP contains only the six paths listed above, that `VALIDSIG` i
 configured primary fingerprint recorded in the Jenkins package summary, and that the POM checksum
 sidecars match the extracted POM. The Jenkins verifier performs these checks before the artifact is
 archived; the manual checks confirm the downloaded copy before it is uploaded.
+
+## Maven Central post-publication verification
+
+The separate `maven-verify` Jenkins job uses
+`central/verify/Jenkinsfile`. It is intentionally independent of the
+`maven-publish` job and runs on an ordinary `basic` agent. The job reads
+`index.xml`, `web.properties`, and `build-info.xml` from the selected release
+drop to generate a run-local inventory before contacting Maven Central. This
+inventory is independent of the published BOM. `index.xml` entries must match
+both the approved bundle name and `type="osgi.bundle"`; similarly named
+feature entries do not count. The approved names and Maven mappings come from
+the permanent aggregation model in `CDO.aggr` and its shared releng bundle
+list. Version conversion follows CBI's
+`MavenRelease` behavior: recognized OSGi qualifiers are removed, while CBI's
+Maven-trick pattern is preserved. In the CBI implementation,
+`VersionUtil.getVersionString(..., VersionFormat.MAVEN_RELEASE, ...)` checks
+the Maven-trick pattern before stripping an OSGi qualifier. Unsupported or
+malformed versions fail closed. The project release remains the actual
+`web.label` value (for example
+`4.36`), while the BOM coordinate version is normalized to `4.36.0`.
+
+The job downloads the published BOM directly from
+`https://repo.maven.apache.org/maven2/`, checks its coordinates, project
+release, drop identity, and exact managed inventory against the generated
+data, then generates a minimal consumer that imports the BOM and declares all
+twelve managed CDO/Net4j artifacts without versions. It does not maintain a
+second approved-bundle list.
+
+Maven receives a fresh local repository and settings that mirror every remote
+repository to canonical Maven Central. The job checks Maven's resolved
+dependency tree and verifies non-empty artifact JARs were downloaded for all
+twelve expected coordinates. `verification-report.json` records the drop,
+BOM coordinates, verified artifacts, and result; the report, downloaded BOM,
+and dependency tree are archived. Failed runs also archive a machine-readable
+FAIL report. The verification is read-only against Maven Central and
+`download.eclipse.org`; it does not use publishing credentials or upload
+anything.
+
+No release-specific inventory files belong in Git; only the generated
+workspace inventory is archived with the verification report. After
+successful verification, a later implementation may write
+`maven-central.properties` into the corresponding release drop, listing the
+twelve bundle versions and BOM. That remote-write step is not implemented
+yet; it must use the existing Jenkins SSH credential and define safe
+idempotent replacement and remote-write failure recovery first.
 
 ## Maven Central readiness audit and local staging
 

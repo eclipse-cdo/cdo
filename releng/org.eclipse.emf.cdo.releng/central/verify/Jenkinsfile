@@ -1,0 +1,154 @@
+import groovy.json.JsonOutput
+import java.io.StringReader
+import java.util.Properties
+
+pipeline {
+  agent {
+    label 'basic'
+  }
+
+  options {
+    timeout(time: 60, unit: 'MINUTES')
+    disableConcurrentBuilds()
+  }
+
+  tools {
+    ant 'apache-ant-latest'
+    jdk 'temurin-jdk25-latest'
+    maven 'apache-maven-latest'
+  }
+
+  parameters {
+    string(name: 'CDO_DROP_ID', defaultValue: '', description: 'Required promoted CDO release drop identity')
+  }
+
+  stages {
+    stage('Validate inputs and prepare consumer') {
+      steps {
+        script {
+          if (!params.CDO_DROP_ID?.trim() || !(params.CDO_DROP_ID ==~ /R[0-9]{8}-[0-9]{4}/)) {
+            error('Specify a valid CDO release drop identity')
+          }
+          env.WORKSPACE_ROOT = sh(returnStdout: true, script: 'cd "$WORKSPACE" && pwd -P').trim()
+          if (!env.WORKSPACE_ROOT || env.WORKSPACE_ROOT == '/') {
+            error('Jenkins WORKSPACE must resolve to a non-root directory')
+          }
+          env.VERIFY_ROOT = "${env.WORKSPACE_ROOT}/central-verification"
+          env.DROP_URL = "https://download.eclipse.org/modeling/emf/cdo/drops/${params.CDO_DROP_ID}/"
+          env.INVENTORY = "${env.VERIFY_ROOT}/release-inventory.properties"
+          env.BOM_FILE = "${env.VERIFY_ROOT}/org.eclipse.cdo.bom.pom"
+          env.CONSUMER_POM = "${env.VERIFY_ROOT}/consumer/pom.xml"
+          env.MAVEN_REPO = "${env.VERIFY_ROOT}/maven-local"
+          env.RESOLVED = "${env.VERIFY_ROOT}/resolved"
+          env.TREE_FILE = "${env.VERIFY_ROOT}/dependency-tree.txt"
+          env.REPORT_FILE = "${env.VERIFY_ROOT}/verification-report.json"
+          env.SETTINGS = "${env.WORKSPACE}/releng/org.eclipse.emf.cdo.releng/central/verify/central-only-settings.xml"
+          sh '''
+            set -eu
+            workspace_root=$(cd "$WORKSPACE_ROOT" && pwd -P)
+            test "$workspace_root" = "$WORKSPACE_ROOT"
+            test "$VERIFY_ROOT" = "$workspace_root/central-verification"
+            test "$(realpath -m -- "$VERIFY_ROOT")" = "$VERIFY_ROOT"
+            rm -rf "$VERIFY_ROOT"
+            mkdir -p "$VERIFY_ROOT/consumer" "$MAVEN_REPO" "$RESOLVED"
+          '''
+          withAnt(installation: 'apache-ant-latest') {
+            sh '''
+              set -eu
+              ant -Dworkspace.root="$WORKSPACE" -Dcentral.verify.drop="$DROP_URL" \
+                -Dcentral.verify.drop.id="$CDO_DROP_ID" -Dcentral.verify.inventory="$INVENTORY" \
+                -f releng/org.eclipse.emf.cdo.releng/central/build.xml central-verify-inventory
+            '''
+          }
+          env.BOM_VERSION = sh(returnStdout: true, script: '''
+            set -eu
+            value=$(awk -F= '$1 == "bom.version" { count++; print $2 } END { if (count != 1) exit 1 }' "$INVENTORY")
+            printf '%s' "$value" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'
+            printf '%s\n' "$value"
+          ''').trim()
+          env.PROJECT_RELEASE = sh(returnStdout: true, script: '''
+            set -eu
+            awk -F= '$1 == "project.release" { count++; print $2 } END { if (count != 1) exit 1 }' "$INVENTORY"
+          ''').trim()
+          env.BOM_FILE = "${env.VERIFY_ROOT}/org.eclipse.cdo.bom-${env.BOM_VERSION}.pom"
+          withEnv(["BOM_FILE=${env.BOM_FILE}"]) {
+            sh '''
+              set -eu
+            curl --disable --request GET --proto '=https' --proto-redir '=https' --fail --location --retry 3 --silent --show-error \
+              "https://repo.maven.apache.org/maven2/org/eclipse/cdo/org.eclipse.cdo.bom/${BOM_VERSION}/org.eclipse.cdo.bom-${BOM_VERSION}.pom" \
+              -o "$BOM_FILE"
+            '''
+          }
+          withAnt(installation: 'apache-ant-latest') {
+            sh '''
+              set -eu
+              ant -Dworkspace.root="$WORKSPACE" -Dcentral.verify.inventory="$INVENTORY" \
+                -Dcentral.verify.bom="$BOM_FILE" -Dcentral.verify.consumer.pom="$CONSUMER_POM" \
+                -Dcentral.verify.tree="$TREE_FILE" -Dcentral.verify.resolved="$RESOLVED" \
+                -Dcentral.verify.report="$REPORT_FILE" \
+                -f releng/org.eclipse.emf.cdo.releng/central/build.xml central-verify-prepare
+            '''
+          }
+        }
+      }
+    }
+
+    stage('Resolve published artifacts from Central') {
+      steps {
+        withAnt(installation: 'apache-ant-latest') {
+          sh '''
+            set -eu
+            ant -Dworkspace.root="$WORKSPACE" -Dcentral.verify.dir="$VERIFY_ROOT/consumer" \
+              -Dcentral.verify.settings="$SETTINGS" -Dcentral.verify.local.repository="$MAVEN_REPO" \
+              -Dcentral.verify.consumer.pom="$CONSUMER_POM" -Dcentral.verify.tree="$TREE_FILE" \
+              -Dcentral.verify.resolved="$RESOLVED" -f releng/org.eclipse.emf.cdo.releng/central/build.xml central-verify-maven
+          '''
+        }
+      }
+    }
+
+    stage('Verify and report') {
+      steps {
+        withAnt(installation: 'apache-ant-latest') {
+          sh '''
+            set -eu
+            ant -Dworkspace.root="$WORKSPACE" -Dcentral.verify.inventory="$INVENTORY" \
+              -Dcentral.verify.bom="$BOM_FILE" -Dcentral.verify.consumer.pom="$CONSUMER_POM" \
+              -Dcentral.verify.tree="$TREE_FILE" -Dcentral.verify.resolved="$RESOLVED" \
+              -Dcentral.verify.report="$REPORT_FILE" \
+              -f releng/org.eclipse.emf.cdo.releng/central/build.xml central-verify-report
+          '''
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      script {
+        if (!fileExists('central-verification/verification-report.json')) {
+          sh 'mkdir -p central-verification'
+          def inventory = new Properties()
+          if (fileExists('central-verification/release-inventory.properties')) {
+            inventory.load(new StringReader(readFile('central-verification/release-inventory.properties')))
+          }
+          def derivedInventory = inventory.stringPropertyNames().findAll { it.startsWith('artifact.') }.sort().collect { key ->
+            def artifactId = key.substring('artifact.'.length())
+            [groupId: 'org.eclipse.cdo', artifactId: artifactId, osgiVersion: inventory.getProperty("osgi.${artifactId}"),
+              mavenVersion: inventory.getProperty(key)]
+          }
+          def failureReport = [sourceDrop: [id: inventory.getProperty('drop.id', params.CDO_DROP_ID ?: ''),
+            location: inventory.getProperty('drop.location', env.DROP_URL ?: ''), projectRelease: inventory.getProperty('project.release', env.PROJECT_RELEASE ?: ''),
+            gitCommit: inventory.getProperty('cdo.git.commit', ''), buildBranch: inventory.getProperty('cdo.build.branch', ''),
+            jenkinsJob: inventory.getProperty('cdo.jenkins.job', ''), jenkinsBuild: inventory.getProperty('cdo.jenkins.build', ''),
+            buildTimestamp: inventory.getProperty('cdo.build.timestamp', ''), buildType: inventory.getProperty('cdo.build.type', '')],
+            bom: "org.eclipse.cdo:org.eclipse.cdo.bom:pom:${inventory.getProperty('bom.version', env.BOM_VERSION ?: '')}", result: 'FAIL',
+            derivedInventory: derivedInventory, verifiedArtifacts: []]
+          writeFile file: 'central-verification/verification-report.json', text: JsonOutput.prettyPrint(JsonOutput.toJson(failureReport)) + '\n'
+          currentBuild.result = 'FAILURE'
+        }
+        archiveArtifacts artifacts: 'central-verification/verification-report.json,central-verification/release-inventory.properties,central-verification/dependency-tree.txt,central-verification/org.eclipse.cdo.bom-*.pom', allowEmptyArchive: true
+      }
+    }
+  }
+}

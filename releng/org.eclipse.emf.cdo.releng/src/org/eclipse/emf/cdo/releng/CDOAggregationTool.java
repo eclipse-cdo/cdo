@@ -68,6 +68,7 @@ import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -147,7 +148,7 @@ public final class CDOAggregationTool
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|overlay|generate-bom|generate-bom-436|stage-bom-436|check-bom-central|verify-bom-package|classify-central|verify|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|overlay|generate-bom|generate-bom-436|stage-bom-436|check-bom-central|verify-bom-package|classify-central|verify|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|derive-release-inventory|central-verify-prepare|central-verify-report|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -158,6 +159,10 @@ public final class CDOAggregationTool
 
     case "drop-info":
       verifyDropInfo(args);
+      break;
+
+    case "derive-release-inventory":
+      deriveReleaseInventory(args);
       break;
 
     case "overlay":
@@ -202,6 +207,14 @@ public final class CDOAggregationTool
 
     case "consumer-dependency-tree-test":
       consumerDependencyTreeTest(args);
+      break;
+
+    case "central-verify-prepare":
+      CentralVerificationTool.prepare(args);
+      break;
+
+    case "central-verify-report":
+      CentralVerificationTool.report(args);
       break;
 
     case "native-classifier-validation":
@@ -932,15 +945,15 @@ public final class CDOAggregationTool
 
     public static void generate(String[] args) throws Exception
     {
-      if (args.length != 6)
+      if (args.length != 5)
       {
-        throw new IllegalArgumentException("generate-bom-436 requires metadata, publishing metadata, output repository, selected drop, and inventory manifest");
+        throw new IllegalArgumentException("generate-bom-436 requires metadata, publishing metadata, output repository, and selected drop");
       }
 
       Map<String, String> metadata = readProperties(requireFile(new File(args[1]), "build metadata"));
       Map<String, String> publishing = readProperties(requireFile(new File(args[2]), "publishing metadata"));
-      Map<String, String> versions = inventory(requireFile(new File(args[5]), "Maven Central coordinate inventory"));
-      String projectRelease = verifySelectedDrop(metadata, versions, args[4]);
+      Map<String, String> inventory = verifySelectedDrop(metadata, args[4]);
+      Map<String, String> versions = releaseInventoryVersions(inventory);
       File output = new File(args[3]);
       requireWorkspaceOutput(output, "CDO 4.36 BOM repository");
       if (output.exists())
@@ -948,18 +961,16 @@ public final class CDOAggregationTool
         rejectSymbolicLinks(output.toPath(), "CDO 4.36 BOM repository");
       }
 
-      String bomVersion = BomCommand.normalizeProjectReleaseVersion(projectRelease);
-      File pom = BomCommand.generate(output, metadata, publishing, bomVersion, versions);
+      File pom = BomCommand.generate(output, metadata, publishing, inventory.get("bom.version"), versions);
       validatePom(pom, metadata, publishing, versions);
-      System.out.println("Generated the isolated CDO 4.36 BOM from the pinned published-coordinate inventory: " + pom);
+      System.out.println("Generated the isolated CDO 4.36 BOM from release-drop metadata: " + pom);
     }
 
     public static void stage(String[] args) throws Exception
     {
       if (args.length != 6)
       {
-        throw new IllegalArgumentException(
-            "stage-bom-436 requires BOM repository, build metadata, publishing metadata, inventory manifest, and staging directory");
+        throw new IllegalArgumentException("stage-bom-436 requires BOM repository, build metadata, publishing metadata, selected drop, and staging directory");
       }
 
       File repository = requireDirectory(args[1], "generated CDO 4.36 BOM repository");
@@ -967,8 +978,8 @@ public final class CDOAggregationTool
       rejectSymbolicLinks(repository.toPath(), "generated CDO 4.36 BOM repository");
       Map<String, String> metadata = readProperties(requireFile(new File(args[2]), "build metadata"));
       Map<String, String> publishing = readProperties(requireFile(new File(args[3]), "publishing metadata"));
-      Map<String, String> versions = inventory(requireFile(new File(args[4]), "Maven Central coordinate inventory"));
-      verifyMetadata(metadata, versions);
+      Map<String, String> inventory = verifySelectedDrop(metadata, args[4]);
+      Map<String, String> versions = releaseInventoryVersions(inventory);
       File source = bomPom(repository);
       validatePom(source, metadata, publishing, versions);
       File staging = new File(args[5]);
@@ -998,12 +1009,11 @@ public final class CDOAggregationTool
     {
       if (args.length != 4)
       {
-        throw new IllegalArgumentException("check-bom-central requires build metadata, inventory manifest, and Central repository URL");
+        throw new IllegalArgumentException("check-bom-central requires build metadata, selected drop, and Central repository URL");
       }
 
       Map<String, String> metadata = readProperties(requireFile(new File(args[1]), "build metadata"));
-      Map<String, String> versions = inventory(requireFile(new File(args[2]), "Maven Central coordinate inventory"));
-      verifyMetadata(metadata, versions);
+      verifySelectedDrop(metadata, args[2]);
       URI repository = CentralClassificationCommand.repositoryURI(args[3]);
       String base = "org/eclipse/cdo/" + BOM_ARTIFACT + "/4.36.0/" + BOM_ARTIFACT + "-4.36.0";
       List<String> paths = new ArrayList<>();
@@ -1035,67 +1045,24 @@ public final class CDOAggregationTool
       System.out.println("Maven Central returned authoritative HTTP 404 for every possible CDO 4.36 BOM artifact and sidecar.");
     }
 
-    private static Map<String, String> inventory(File file) throws Exception
+    private static Map<String, String> verifySelectedDrop(Map<String, String> metadata, String selectedDrop) throws Exception
     {
-      Map<String, String> properties = readProperties(file);
-      Map<String, String> versions = new LinkedHashMap<>();
-      if (properties.size() != BUNDLES.size() + 1 || !"4.36.0".equals(properties.get(BOM_ARTIFACT)))
-      {
-        throw new IllegalArgumentException("Maven Central inventory must identify org.eclipse.cdo.bom=4.36.0 and exactly the 12 published bundles");
-      }
-
-      for (String bundle : BUNDLES)
-      {
-        String version = properties.get(bundle);
-        if (version == null || !version.matches("[0-9]+(?:\\.[0-9A-Za-z_-]+)+"))
-        {
-          throw new IllegalArgumentException("Missing or malformed published version for CDO 4.36 BOM member " + bundle);
-        }
-
-        versions.put(bundle, version);
-      }
-
-      Set<String> expected = new LinkedHashSet<>(BUNDLES);
-      expected.add(BOM_ARTIFACT);
-      if (!properties.keySet().equals(expected))
-      {
-        throw new IllegalArgumentException("Maven Central inventory contains coordinates outside the approved CDO 4.36 BOM and twelve bundles");
-      }
-
-      return versions;
-    }
-
-    private static String verifySelectedDrop(Map<String, String> metadata, Map<String, String> versions, String selectedDrop) throws Exception
-    {
-      verifyMetadata(metadata, versions);
-      DropLocation drop = DropLocation.parse(selectedDrop);
-      Properties web = new Properties();
-      try (InputStream input = drop.open("web.properties"))
-      {
-        web.load(input);
-      }
-
-      Document info;
-      try (InputStream input = drop.open("build-info.xml"))
-      {
-        info = parse(input, "build-info.xml");
-      }
-
-      String projectRelease = web.getProperty("web.label");
-      BomCommand.normalizeProjectReleaseVersion(projectRelease);
-      if (!RELEASE.equals(projectRelease) || !DROP_ID.equals(required(info.getDocumentElement(), "qualifier")))
+      Map<String, String> inventory = readReleaseInventory(selectedDrop);
+      verifyMetadata(metadata, inventory);
+      if (!RELEASE.equals(inventory.get("project.release")) || !DROP_ID.equals(inventory.get("drop.id")))
       {
         throw new IllegalArgumentException("Selected drop must be CDO release " + RELEASE + " with qualifier " + DROP_ID);
       }
 
-      return projectRelease;
+      return inventory;
     }
 
-    private static void verifyMetadata(Map<String, String> metadata, Map<String, String> versions)
+    private static void verifyMetadata(Map<String, String> metadata, Map<String, String> inventory)
     {
-      if (!RELEASE.equals(metadata.get("cdo.project.release")) || !DROP_ID.equals(metadata.get("cdo.drop.id")) || versions.size() != BUNDLES.size())
+      if (!inventory.get("project.release").equals(metadata.get("cdo.project.release")) || !inventory.get("drop.id").equals(metadata.get("cdo.drop.id"))
+          || releaseInventoryVersions(inventory).size() != BUNDLES.size())
       {
-        throw new IllegalArgumentException("BOM-only retrofit metadata must identify CDO 4.36 drop " + DROP_ID);
+        throw new IllegalArgumentException("BOM-only retrofit metadata does not match the selected CDO 4.36 release drop " + DROP_ID);
       }
     }
 
@@ -3166,11 +3133,10 @@ public final class CDOAggregationTool
     File zip = requireFile(new File(args[3]), "CDO 4.36 BOM deployment ZIP");
     File metadataFile = requireFile(new File(args[4]), "build metadata");
     File publishingFile = requireFile(new File(args[5]), "publishing metadata");
-    File inventoryFile = requireFile(new File(args[6]), "CDO 4.36 BOM inventory");
     Map<String, String> metadata = readProperties(metadataFile);
     Map<String, String> publishing = readProperties(publishingFile);
-    Map<String, String> versions = Bom436Command.inventory(inventoryFile);
-    Bom436Command.verifyMetadata(metadata, versions);
+    Map<String, String> inventory = Bom436Command.verifySelectedDrop(metadata, args[6]);
+    Map<String, String> versions = releaseInventoryVersions(inventory);
     PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_FOR_CENTRAL");
     requireWorkspaceOutput(staging, "CDO 4.36 BOM staging");
     requireWorkspaceOutput(signedRepository, "signed CDO 4.36 BOM repository");
@@ -4132,11 +4098,18 @@ public final class CDOAggregationTool
     Path bomRepository = root.resolve("bom-repository");
     Path metadata = root.resolve("metadata.properties");
     Path publishing = root.resolve("publishing.properties");
-    Path manifest = root.resolve("inventory.properties");
+    Path drop = root.resolve("drop");
     Path zip = root.resolve("bom-deployment.zip");
     Path summary = root.resolve("summary.properties");
     Files.createDirectories(root);
     Files.createDirectories(signedRepository);
+    Files.createDirectories(drop);
+    Files.writeString(drop.resolve("web.properties"), "web.label=4.36\n", StandardCharsets.UTF_8);
+    Files.writeString(drop.resolve("build-info.xml"),
+        "<build qualifier=\"R20260901-1311\" revision=\"0123456789abcdef0123456789abcdef01234567\" branch=\"main\""
+            + " eclipse=\"2026-09\" emf=\"2.42\" hudson=\"https://ci.eclipse.org/cdo/\" job=\"cdo\" number=\"1\" stream=\"4.36\""
+            + " timestamp=\"2026-09-01T13:11:00Z\" train=\"2026-09\" trigger=\"signature-test\" type=\"R\"/>",
+        StandardCharsets.UTF_8);
     Map<String, String> buildMetadata = new LinkedHashMap<>();
     buildMetadata.put("cdo.build.type", "R");
     buildMetadata.put("cdo.project.release", "4.36");
@@ -4157,13 +4130,18 @@ public final class CDOAggregationTool
       versions.put(BUNDLES.get(i), publishedVersions[i]);
     }
 
-    Map<String, String> inventory = new LinkedHashMap<>();
-    inventory.put(Bom436Command.BOM_ARTIFACT, "4.36.0");
-    versions.forEach(inventory::put);
-    writeProperties(manifest, inventory);
+    StringBuilder index = new StringBuilder("<index>\n");
+    for (int i = 0; i < BUNDLES.size(); i++)
+    {
+      index.append("<element name=\"").append(BUNDLES.get(i)).append("\" type=\"osgi.bundle\" version=\"").append(publishedVersions[i])
+          .append(".v20260901-1311\"/>\n");
+    }
+
+    index.append("</index>\n");
+    Files.writeString(drop.resolve("index.xml"), index, StandardCharsets.UTF_8);
     File bomPom = BomCommand.generate(bomRepository.toFile(), buildMetadata, publishingMetadata, "4.36.0", versions);
     Bom436Command
-        .stage(new String[] { "stage-bom-436", bomRepository.toString(), metadata.toString(), publishing.toString(), manifest.toString(), staging.toString() });
+        .stage(new String[] { "stage-bom-436", bomRepository.toString(), metadata.toString(), publishing.toString(), drop.toString(), staging.toString() });
 
     String relativePom = Bom436Command.bomRelativePom();
     File stagedPom = new File(staging.toFile(), relativePom.replace('/', File.separatorChar));
@@ -4178,7 +4156,7 @@ public final class CDOAggregationTool
         "--output", stagedSignature.getAbsolutePath(), "--detach-sign", stagedPom.getAbsolutePath());
     Files.copy(stagedSignature.toPath(), deployedSignature.toPath());
     createDeploymentZip(staging.toFile(), zip.toFile(), "");
-    String[] args = bomPackageArguments(staging.toFile(), signedRepository.toFile(), zip.toFile(), metadata.toFile(), publishing.toFile(), manifest.toFile(),
+    String[] args = bomPackageArguments(staging.toFile(), signedRepository.toFile(), zip.toFile(), metadata.toFile(), publishing.toFile(), drop.toFile(),
         firstPrimary, firstPublicKey, gpg, summary.toFile());
     verifyBomPackage(args);
 
@@ -4230,16 +4208,16 @@ public final class CDOAggregationTool
     Files.copy(stagedSignature.toPath(), deployedSignature.toPath(), StandardCopyOption.REPLACE_EXISTING);
     createDeploymentZip(staging.toFile(), zip.toFile(), "");
     expectBomPackageFailure(bomPackageArguments(staging.toFile(), signedRepository.toFile(), zip.toFile(), metadata.toFile(), publishing.toFile(),
-        manifest.toFile(), "F".repeat(firstPrimary.length()), firstPublicKey, gpg, summary.toFile()), "unexpected primary key",
+        drop.toFile(), "F".repeat(firstPrimary.length()), firstPublicKey, gpg, summary.toFile()), "unexpected primary key",
         "incorrect BOM verification identity");
     verifyBomPackage(args);
   }
 
-  private static String[] bomPackageArguments(File staging, File signedRepository, File zip, File metadata, File publishing, File manifest, String fingerprint,
+  private static String[] bomPackageArguments(File staging, File signedRepository, File zip, File metadata, File publishing, File drop, String fingerprint,
       File publicKey, String gpg, File summary)
   {
     return new String[] { "verify-bom-package", staging.getPath(), signedRepository.getPath(), zip.getPath(), metadata.getPath(), publishing.getPath(),
-        manifest.getPath(), fingerprint, publicKey.getPath(), gpg, summary.getPath() };
+        drop.getPath(), fingerprint, publicKey.getPath(), gpg, summary.getPath() };
   }
 
   private static void expectBomPackageFailure(String[] args, String message, String scenario) throws Exception
@@ -5212,7 +5190,7 @@ public final class CDOAggregationTool
     return file;
   }
 
-  private static Document parse(File file) throws Exception
+  static Document parse(File file) throws Exception
   {
     return parse(new FileInputStream(file), file.getPath());
   }
@@ -5353,6 +5331,153 @@ public final class CDOAggregationTool
     }
 
     return result;
+  }
+
+  private static final Pattern OSGI_VERSION = Pattern.compile("([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:\\.([A-Za-z0-9_-]+))?");
+
+  private static final Pattern MAVEN_RELEASE_TRICK = Pattern.compile("[0-9]+\\.[0-9]+\\.[0-9]+(?:\\.[0-9]+-[a-zA-Z][a-zA-Z0-9_]*)?");
+
+  private static void deriveReleaseInventory(String[] args) throws Exception
+  {
+    if (args.length != 4)
+    {
+      throw new IllegalArgumentException("derive-release-inventory requires selected drop, expected drop ID, and output properties file");
+    }
+
+    Map<String, String> inventory = readReleaseInventory(args[1]);
+    if (!inventory.get("drop.id").equals(args[2]))
+    {
+      throw new IllegalArgumentException("Selected drop ID " + args[2] + " does not match drop build-info qualifier " + inventory.get("drop.id"));
+    }
+
+    writeProperties(Path.of(args[3]), inventory);
+    System.out.println("Derived " + BUNDLES.size() + " approved Maven coordinates for project release " + inventory.get("project.release") + " from "
+        + inventory.get("drop.location"));
+  }
+
+  private static Map<String, String> readReleaseInventory(String location) throws Exception
+  {
+    DropLocation drop = DropLocation.parse(location);
+    Properties web = new Properties();
+    try (InputStream input = drop.open("web.properties"))
+    {
+      web.load(input);
+    }
+
+    String release = web.getProperty("web.label");
+    String bomVersion = BomCommand.normalizeProjectReleaseVersion(release);
+    Document buildInfo = parse(drop.open("build-info.xml"), "build-info.xml");
+    Element build = buildInfo.getDocumentElement();
+    if (!"build".equals(localName(build)))
+    {
+      throw new IllegalArgumentException("build-info.xml root is not <build>");
+    }
+
+    Map<String, String> provenance = new LinkedHashMap<>();
+    for (Map.Entry<String, String> attribute : PrepareCommand.ATTRIBUTES.entrySet())
+    {
+      provenance.put(attribute.getValue(), required(build, attribute.getKey()));
+    }
+
+    String dropID = provenance.get("cdo.drop.id");
+    if (!dropID.matches("[A-Za-z][A-Za-z0-9._-]*"))
+    {
+      throw new IllegalArgumentException("Invalid release-drop qualifier: " + dropID);
+    }
+
+    Document index = parse(drop.open("index.xml"), "index.xml");
+    Map<String, String> inventory = new LinkedHashMap<>();
+    inventory.put("drop.id", dropID);
+    inventory.put("drop.location", drop.location());
+    inventory.put("project.release", release);
+    inventory.put("cdo.project.release", release);
+    inventory.putAll(provenance);
+    inventory.put("bom.groupId", "org.eclipse.cdo");
+    inventory.put("bom.artifactId", "org.eclipse.cdo.bom");
+    inventory.put("bom.version", bomVersion);
+    NodeList elements = index.getElementsByTagNameNS("*", "element");
+    for (String bundle : BUNDLES)
+    {
+      List<Element> matches = new ArrayList<>();
+      for (int i = 0; i < elements.getLength(); i++)
+      {
+        Node node = elements.item(i);
+        if (node instanceof Element)
+        {
+          Element element = (Element)node;
+          if (bundle.equals(element.getAttribute("name")) && "osgi.bundle".equals(element.getAttribute("type")))
+          {
+            matches.add(element);
+          }
+        }
+      }
+
+      if (matches.size() != 1)
+      {
+        throw new IllegalArgumentException("Expected exactly one osgi.bundle index.xml entry for " + bundle + ", found " + matches.size());
+      }
+
+      String osgiVersion = matches.get(0).getAttribute("version");
+      inventory.put("osgi." + bundle, osgiVersion);
+      inventory.put("artifact." + bundle, toMavenReleaseVersion(osgiVersion, bundle));
+    }
+
+    return inventory;
+  }
+
+  private static Map<String, String> releaseInventoryVersions(Map<String, String> inventory)
+  {
+    Map<String, String> versions = new LinkedHashMap<>();
+    for (String bundle : BUNDLES)
+    {
+      String version = inventory.get("artifact." + bundle);
+      if (version == null)
+      {
+        throw new IllegalArgumentException("Release inventory is missing approved bundle " + bundle);
+      }
+
+      versions.put(bundle, version);
+    }
+
+    return versions;
+  }
+
+  private static String toMavenReleaseVersion(String version, String bundle)
+  {
+    Matcher osgi = OSGI_VERSION.matcher(version);
+    if (!osgi.matches())
+    {
+      throw new IllegalArgumentException("Unsupported or malformed OSGi version for " + bundle + ": " + version);
+    }
+
+    for (int i = 1; i <= 3; i++)
+    {
+      if (!osgi.group(i).matches("0|[1-9][0-9]*"))
+      {
+        throw new IllegalArgumentException("Non-canonical OSGi version component for " + bundle + ": " + version);
+      }
+
+      try
+      {
+        Integer.parseInt(osgi.group(i));
+      }
+      catch (NumberFormatException ex)
+      {
+        throw new IllegalArgumentException("OSGi version component is outside the supported integer range for " + bundle + ": " + version, ex);
+      }
+    }
+
+    if (MAVEN_RELEASE_TRICK.matcher(version).matches())
+    {
+      return version;
+    }
+
+    return osgi.group(1) + "." + osgi.group(2) + "." + osgi.group(3);
+  }
+
+  private static String localName(Node node)
+  {
+    return node.getLocalName() == null ? node.getNodeName() : node.getLocalName();
   }
 
   /**

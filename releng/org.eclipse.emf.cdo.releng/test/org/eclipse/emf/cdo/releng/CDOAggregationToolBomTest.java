@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.releng;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -124,16 +123,26 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
-  public void preparesThePinned436BomOnlyStagingInventory() throws Exception
+  public void preparesHistorical436BomOnlyStagingFromDropInventory() throws Exception
   {
     Path root = fixture("4.36", "R20260901-1311");
-    Path manifest = write436Manifest(root);
     Path repository = root.resolve("bom-repository");
     Path staging = root.resolve("bom-staging");
     CDOAggregationTool.main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(),
-        repository.toString(), root.resolve("drop").toString(), manifest.toString() });
+        repository.toString(), root.resolve("drop").toString() });
     CDOAggregationTool.main(new String[] { "stage-bom-436", repository.toString(), root.resolve("metadata.properties").toString(),
-        root.resolve("publishing.properties").toString(), manifest.toString(), staging.toString() });
+        root.resolve("publishing.properties").toString(), root.resolve("drop").toString(), staging.toString() });
+
+    try
+    {
+      CDOAggregationTool.main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(),
+          root.resolve("publishing.properties").toString(), repository.toString(), root.resolve("drop").toString() });
+      fail("Expected historical BOM generation to refuse an existing coordinate");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("BOM output coordinate already exists"));
+    }
 
     Path versionDirectory = staging.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0");
     File pom = versionDirectory.resolve("org.eclipse.cdo.bom-4.36.0.pom").toFile();
@@ -156,17 +165,20 @@ public class CDOAggregationToolBomTest
       assertEquals(BOM_436_VERSIONS[i], childText(dependency, "version"));
     }
 
-    Properties manifestProperties = new Properties();
-    try (InputStream input = Files.newInputStream(manifest))
+    Path inventory = deriveInventory(root);
+    Properties inventoryProperties = new Properties();
+    try (InputStream input = Files.newInputStream(inventory))
     {
-      manifestProperties.load(input);
+      inventoryProperties.load(input);
     }
 
-    assertEquals(BUNDLES.length + 1, manifestProperties.size());
-    assertEquals("4.36.0", manifestProperties.getProperty("org.eclipse.cdo.bom"));
-    assertNull(manifestProperties.getProperty("cdo.project.release"));
-    assertNull(manifestProperties.getProperty("cdo.drop.id"));
-    assertNull(manifestProperties.getProperty("bundle.org.eclipse.net4j.util"));
+    assertEquals("4.36", inventoryProperties.getProperty("project.release"));
+    assertEquals("4.36.0", inventoryProperties.getProperty("bom.version"));
+    assertEquals("R20260901-1311", inventoryProperties.getProperty("drop.id"));
+    assertEquals(BOM_436_VERSIONS[0], inventoryProperties.getProperty("artifact." + BUNDLES[0]));
+    assertEquals(BOM_436_VERSIONS[0] + ".v20260901-1311", inventoryProperties.getProperty("osgi." + BUNDLES[0]));
+    assertEquals("0123456789abcdef0123456789abcdef01234567", inventoryProperties.getProperty("cdo.git.commit"));
+    assertEquals(44, inventoryProperties.size());
     Set<String> unsignedFiles = new LinkedHashSet<>();
     try (Stream<Path> paths = Files.walk(staging))
     {
@@ -194,29 +206,67 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
-  public void rejectsInvalidMavenCentralCoordinateInventories() throws Exception
+  public void rejectsMissingDuplicateMalformedAndUnsupportedReleaseDropBundleEntries() throws Exception
   {
     Path root = fixture("4.36", "R20260901-1311");
-    Path manifest = write436Manifest(root);
-    String valid = Files.readString(manifest, StandardCharsets.UTF_8);
-    String[] invalidInventories = { valid.replace("org.eclipse.cdo.bom=4.36.0", "org.eclipse.cdo.bom=4.36"),
-        valid.replace("org.eclipse.net4j.util=3.30.0", "bundle.org.eclipse.net4j.util=3.30.0"), valid + "org.eclipse.cdo.unapproved=1.0.0\n",
-        valid.replace("org.eclipse.emf.cdo.server.db=4.15.0\n", "") };
+    Path index = root.resolve("drop/index.xml");
+    String valid = Files.readString(index, StandardCharsets.UTF_8);
+    String[] invalidIndexes = { valid.replaceFirst("<element name=\"" + BUNDLES[0] + "\" type=\"osgi.bundle\"[^>]*/>", ""),
+        valid.replace("</index>", "<element name=\"" + BUNDLES[0] + "\" type=\"osgi.bundle\" version=\"9.9.9.v2\"/></index>"),
+        valid.replace(BOM_436_VERSIONS[0] + ".v20260901-1311", "1.2.bad.qualifier"),
+        valid.replace(BOM_436_VERSIONS[0] + ".v20260901-1311", "1.2.3.4.qualifier"),
+        valid.replace(BOM_436_VERSIONS[0] + ".v20260901-1311", "01.2.3.qualifier") };
 
-    for (String invalidInventory : invalidInventories)
+    for (String invalidIndex : invalidIndexes)
     {
-      Files.writeString(manifest, invalidInventory, StandardCharsets.UTF_8);
+      Files.writeString(index, invalidIndex, StandardCharsets.UTF_8);
       try
       {
-        CDOAggregationTool
-            .main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(),
-                root.resolve("invalid-inventory-output").toString(), root.resolve("drop").toString(), manifest.toString() });
-        fail("Expected malformed Maven Central inventory to be rejected");
+        deriveInventory(root);
+        fail("Expected malformed release-drop inventory to be rejected");
       }
       catch (IllegalArgumentException expected)
       {
-        assertTrue(expected.getMessage().contains("inventory") || expected.getMessage().contains("version"));
+        assertTrue(expected.getMessage().contains("Expected exactly one") || expected.getMessage().contains("version"));
       }
+    }
+
+    Files.writeString(index, valid, StandardCharsets.UTF_8);
+  }
+
+  @Test
+  public void preservesTheCbiMavenReleaseTrickAndRejectsDropIdentityMismatches() throws Exception
+  {
+    Path root = fixture("4.36", "R20260901-1311");
+    Path index = root.resolve("drop/index.xml");
+    String valid = Files.readString(index, StandardCharsets.UTF_8);
+    Files.writeString(index, valid.replace(BOM_436_VERSIONS[0] + ".v20260901-1311", "1.2.3.4-r"), StandardCharsets.UTF_8);
+    Properties inventory = readProperties(deriveInventory(root));
+    assertEquals("1.2.3.4-r", inventory.getProperty("artifact." + BUNDLES[0]));
+
+    try
+    {
+      CDOAggregationTool.main(
+          new String[] { "derive-release-inventory", root.resolve("drop").toString(), "R20260901-9999", root.resolve("wrong-drop.properties").toString() });
+      fail("Expected selected drop identity mismatch to fail");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("does not match drop build-info qualifier"));
+    }
+
+    Files.writeString(index, valid, StandardCharsets.UTF_8);
+    Files.writeString(root.resolve("metadata.properties"),
+        "cdo.project.release=4.37\ncdo.drop.id=R20260901-1311\ncdo.git.commit=0123456789abcdef0123456789abcdef01234567\n", StandardCharsets.UTF_8);
+    try
+    {
+      CDOAggregationTool.main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(),
+          root.resolve("publishing.properties").toString(), root.resolve("mismatch-output").toString(), root.resolve("drop").toString() });
+      fail("Expected build metadata release mismatch to fail");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("metadata does not match"));
     }
   }
 
@@ -224,16 +274,16 @@ public class CDOAggregationToolBomTest
   public void bomCoordinateAbsenceCheckRejectsExistingAndAmbiguousCentralResponses() throws Exception
   {
     Path root = fixture("4.36", "R20260901-1311");
-    Path manifest = write436Manifest(root);
     try (CentralFixture central = new CentralFixture())
     {
-      CDOAggregationTool.main(new String[] { "check-bom-central", root.resolve("metadata.properties").toString(), manifest.toString(), central.baseUrl() });
+      CDOAggregationTool
+          .main(new String[] { "check-bom-central", root.resolve("metadata.properties").toString(), root.resolve("drop").toString(), central.baseUrl() });
       String pom = "org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom";
       central.setArtifact(pom, "already published".getBytes(StandardCharsets.UTF_8));
-      expectBomCentralFailure(root, manifest, central, "already exists");
+      expectBomCentralFailure(root, central, "already exists");
 
       central.setStatus(pom, 429);
-      expectBomCentralFailure(root, manifest, central, "HTTP 429");
+      expectBomCentralFailure(root, central, "HTTP 429");
     }
   }
 
@@ -241,16 +291,15 @@ public class CDOAggregationToolBomTest
   public void rejectsASelectedDropOutsideThePinned436Retrofit() throws Exception
   {
     Path root = fixture("4.35", "R20260831-1311");
-    Path manifest = write436Manifest(root);
     try
     {
       CDOAggregationTool.main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(),
-          root.resolve("publishing.properties").toString(), root.resolve("bom-repository").toString(), root.resolve("drop").toString(), manifest.toString() });
+          root.resolve("publishing.properties").toString(), root.resolve("bom-repository").toString(), root.resolve("drop").toString() });
       fail("Expected a non-4.36 release/drop to be rejected");
     }
     catch (IllegalArgumentException expected)
     {
-      assertTrue(expected.getMessage().contains("metadata must identify CDO 4.36 drop"));
+      assertTrue(expected.getMessage().contains("Selected drop must be CDO release 4.36"));
     }
   }
 
@@ -258,7 +307,6 @@ public class CDOAggregationToolBomTest
   public void rejectsMissingAndUnexpectedFilesAndInvalidChecksumsBeforeSignatureVerification() throws Exception
   {
     Path root = fixture("4.36", "R20260901-1311");
-    Path manifest = write436Manifest(root);
     Path repository = root.resolve("bom-repository");
     Path staging = root.resolve("bom-staging");
     Path signedRepository = root.resolve("signed-repository");
@@ -269,14 +317,14 @@ public class CDOAggregationToolBomTest
     Files.write(zip, new byte[] { 1 });
     Files.write(publicKey, new byte[] { 1 });
     CDOAggregationTool.main(new String[] { "generate-bom-436", root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(),
-        repository.toString(), root.resolve("drop").toString(), manifest.toString() });
+        repository.toString(), root.resolve("drop").toString() });
     CDOAggregationTool.main(new String[] { "stage-bom-436", repository.toString(), root.resolve("metadata.properties").toString(),
-        root.resolve("publishing.properties").toString(), manifest.toString(), staging.toString() });
+        root.resolve("publishing.properties").toString(), root.resolve("drop").toString(), staging.toString() });
 
     String base = "org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/org.eclipse.cdo.bom-4.36.0.pom";
     Path signature = staging.resolve(base + ".asc");
     String[] arguments = { "verify-bom-package", staging.toString(), signedRepository.toString(), zip.toString(),
-        root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(), manifest.toString(), "A".repeat(40),
+        root.resolve("metadata.properties").toString(), root.resolve("publishing.properties").toString(), root.resolve("drop").toString(), "A".repeat(40),
         publicKey.toString(), "gpg-is-not-reached", root.resolve("summary.properties").toString() };
     expectBomPackageValidationFailure(arguments, "Missing, malformed, or non-armored BOM signature");
 
@@ -751,20 +799,35 @@ public class CDOAggregationToolBomTest
     Files.createDirectories(drop);
     Files.writeString(drop.resolve("web.properties"), "web.label=" + release + "\n", StandardCharsets.UTF_8);
     Files.writeString(drop.resolve("build-info.xml"), buildInfo(dropID), StandardCharsets.UTF_8);
+    StringBuilder index = new StringBuilder("<index>\n");
+    for (int i = 0; i < BUNDLES.length; i++)
+    {
+      index.append("  <element name=\"").append(BUNDLES[i]).append("\" type=\"osgi.bundle\" version=\"").append(BOM_436_VERSIONS[i])
+          .append(".v20260901-1311\"/>\n");
+      index.append("  <element name=\"").append(BUNDLES[i]).append("\" type=\"org.eclipse.update.feature\" version=\"99.0.0\"/>\n");
+    }
+
+    index.append("</index>\n");
+    Files.writeString(drop.resolve("index.xml"), index, StandardCharsets.UTF_8);
     return root;
   }
 
-  private Path write436Manifest(Path root) throws IOException
+  private Properties readProperties(Path file) throws IOException
   {
-    StringBuilder content = new StringBuilder("org.eclipse.cdo.bom=4.36.0\n");
-    for (int i = 0; i < BUNDLES.length; i++)
+    Properties properties = new Properties();
+    try (InputStream input = Files.newInputStream(file))
     {
-      content.append(BUNDLES[i]).append('=').append(BOM_436_VERSIONS[i]).append('\n');
+      properties.load(input);
     }
 
-    Path manifest = root.resolve("maven-central.properties");
-    Files.writeString(manifest, content, StandardCharsets.UTF_8);
-    return manifest;
+    return properties;
+  }
+
+  private Path deriveInventory(Path root) throws Exception
+  {
+    Path inventory = root.resolve("runtime-release-inventory.properties");
+    CDOAggregationTool.main(new String[] { "derive-release-inventory", root.resolve("drop").toString(), "R20260901-1311", inventory.toString() });
+    return inventory;
   }
 
   private void createPublicationStaging(Path staging) throws Exception
@@ -818,11 +881,12 @@ public class CDOAggregationToolBomTest
     return (Boolean)method.invoke(null, path, allowedPaths);
   }
 
-  private void expectBomCentralFailure(Path root, Path manifest, CentralFixture central, String message) throws Exception
+  private void expectBomCentralFailure(Path root, CentralFixture central, String message) throws Exception
   {
     try
     {
-      CDOAggregationTool.main(new String[] { "check-bom-central", root.resolve("metadata.properties").toString(), manifest.toString(), central.baseUrl() });
+      CDOAggregationTool
+          .main(new String[] { "check-bom-central", root.resolve("metadata.properties").toString(), root.resolve("drop").toString(), central.baseUrl() });
       fail("Expected BOM Central absence check to fail with " + message);
     }
     catch (IllegalStateException expected)

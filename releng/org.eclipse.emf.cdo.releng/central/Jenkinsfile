@@ -190,7 +190,9 @@ pipeline {
               cp -a "$site_root"/. "$DROP_PARENT/drop"/
 
               # These small files carry the promoted build identity and target setup.
-              for metadata in build-info.xml build-info.properties tp-macro.setup web.properties bookmarks.xml p2.index; do
+              metadata_files='build-info.xml build-info.properties tp-macro.setup web.properties bookmarks.xml p2.index'
+              if [ "${PUBLISHING_MODE:-}" = PACKAGE_BOM_436_FOR_CENTRAL ]; then metadata_files="$metadata_files index.xml"; fi
+              for metadata in $metadata_files; do
                 curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --fail --location --retry 3 --silent --show-error "${DROP_URL}${metadata}" -o "$DROP_PARENT/drop/$metadata"
               done
               test -f "$DROP_PARENT/drop/build-info.xml"
@@ -346,6 +348,7 @@ pipeline {
             set -eu
             workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
             ant -Dworkspace.root="$workspace_root" -Dwork.dir="$workspace_root/maven-publishing/work" \\
+              -Dcdo.drop.location="$workspace_root/maven-publishing/drop" \\
               -Dcentral.repository.url=https://repo.maven.apache.org/maven2/ \\
               -f releng/org.eclipse.emf.cdo.releng/central/build.xml check-bom-436-central
           '''
@@ -611,6 +614,7 @@ pipeline {
                   rm -f "$BUNDLE_PATH"
                   (cd "$STAGING_DIR" && zip -q -r "$BUNDLE_PATH" org)
                   ant -Dworkspace.root="$WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" \\
+                    -Dcdo.drop.location="$WORKSPACE_ROOT/maven-publishing/drop" \\
                     -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" \\
                     -f releng/org.eclipse.emf.cdo.releng/central/build.xml verify-bom-436-package
                   sha256sum "$BUNDLE_PATH"

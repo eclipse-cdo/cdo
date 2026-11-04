@@ -68,7 +68,6 @@
 	<property name="consumer.central.only.tree.file" location="${consumer.central.only.dir}/dependency-tree.txt" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
-	<property name="bom436.inventory.file" location="${basedir}/maven-central.properties" />
 	<property name="bom436.repository" location="${work.dir}/bom-repository" />
 	<property name="bom436.staging.dir" location="${work.dir}/bom-staging" />
 	<property name="bom436.signed.repository" location="${work.dir}/bom-signed-repository" />
@@ -122,7 +121,59 @@
 		<mkdir dir="${classes.dir}" />
 		<javac srcdir="${basedir}/../src" destdir="${classes.dir}" includeantruntime="false" source="11" target="11" encoding="UTF-8">
 			<include name="org/eclipse/emf/cdo/releng/CDOAggregationTool.java" />
+			<include name="org/eclipse/emf/cdo/releng/CentralVerificationTool.java" />
 		</javac>
+	</target>
+
+	<target name="central-verify-prepare" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="central-verify-prepare" />
+			<arg file="${central.verify.inventory}" />
+			<arg file="${central.verify.bom}" />
+			<arg file="${central.verify.consumer.pom}" />
+			<arg file="${central.verify.tree}" />
+			<arg file="${central.verify.resolved}" />
+			<arg file="${central.verify.report}" />
+		</java>
+	</target>
+
+	<target name="central-verify-inventory" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="derive-release-inventory" />
+			<arg value="${central.verify.drop}" />
+			<arg value="${central.verify.drop.id}" />
+			<arg value="${central.verify.inventory}" />
+		</java>
+	</target>
+
+	<target name="central-verify-maven">
+		<exec executable="${maven.executable}" dir="${central.verify.dir}" failifexecutionfails="true" failonerror="true">
+			<arg value="-B" />
+			<arg value="-s" />
+			<arg file="${central.verify.settings}" />
+			<arg value="-Dmaven.repo.local=${central.verify.local.repository}" />
+			<arg value="-f" />
+			<arg file="${central.verify.consumer.pom}" />
+			<arg value="org.apache.maven.plugins:maven-dependency-plugin:3.8.1:tree" />
+			<arg value="-DoutputType=text" />
+			<arg value="-DoutputFile=${central.verify.tree}" />
+			<arg value="-Dverbose=false" />
+			<arg value="org.apache.maven.plugins:maven-dependency-plugin:3.8.1:copy-dependencies" />
+			<arg value="-DoutputDirectory=${central.verify.resolved}" />
+			<arg value="-DincludeScope=runtime" />
+		</exec>
+	</target>
+
+	<target name="central-verify-report" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="central-verify-report" />
+			<arg file="${central.verify.inventory}" />
+			<arg file="${central.verify.bom}" />
+			<arg file="${central.verify.consumer.pom}" />
+			<arg file="${central.verify.tree}" />
+			<arg file="${central.verify.resolved}" />
+			<arg file="${central.verify.report}" />
+		</java>
 	</target>
 
 	<target name="validate-workspace" depends="compile-helper">
@@ -248,7 +299,7 @@
 		</java>
 	</target>
 
-	<!-- One-time CDO 4.36 retrofit path: this uses a pinned inventory and skips bundle aggregation. -->
+	<!-- One-time CDO 4.36 retrofit path: derives its expected versions from the selected release drop. -->
 	<target name="bom-436-prepare" depends="prepare,compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="generate-bom-436" />
@@ -256,14 +307,13 @@
 			<arg value="${publishing.metadata.file}" />
 			<arg value="${bom436.repository}" />
 			<arg value="${cdo.drop.location}" />
-			<arg value="${bom436.inventory.file}" />
 		</java>
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="stage-bom-436" />
 			<arg value="${bom436.repository}" />
 			<arg value="${metadata.file}" />
 			<arg value="${publishing.metadata.file}" />
-			<arg value="${bom436.inventory.file}" />
+			<arg value="${cdo.drop.location}" />
 			<arg value="${bom436.staging.dir}" />
 		</java>
 	</target>
@@ -272,7 +322,7 @@
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="check-bom-central" />
 			<arg value="${metadata.file}" />
-			<arg value="${bom436.inventory.file}" />
+			<arg value="${cdo.drop.location}" />
 			<arg value="${central.repository.url}" />
 		</java>
 	</target>
@@ -285,7 +335,7 @@
 			<arg value="${deployment.zip}" />
 			<arg value="${metadata.file}" />
 			<arg value="${publishing.metadata.file}" />
-			<arg value="${bom436.inventory.file}" />
+			<arg value="${cdo.drop.location}" />
 			<arg value="${gpg.expected.fingerprint}" />
 			<arg value="${gpg.public.key.file}" />
 			<arg value="${gpg.executable}" />

@@ -1,6 +1,13 @@
 import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
 import java.io.StringReader
 import java.util.Properties
+import java.util.UUID
+
+final String CDO_DROPS_FILE_URL = 'https://download.eclipse.org/modeling/emf/cdo/drops/drops.txt'
+final String MARKER_SSH_CREDENTIAL = 'projects-storage.eclipse.org-bot-ssh'
+final String MARKER_SSH_TARGET = 'genie.cdo@projects-storage.eclipse.org'
+final String MARKER_REMOTE_ROOT = '/home/data/httpd/download.eclipse.org/modeling/emf/cdo/drops'
 
 pipeline {
   agent {
@@ -19,22 +26,26 @@ pipeline {
   }
 
   parameters {
-    string(name: 'CDO_DROP_ID', defaultValue: '', description: 'Required promoted CDO release drop identity')
+    string(name: 'CDO_DROP_ID', defaultValue: 'default', description: 'Promoted CDO release drop identity, or default for the latest R-drop')
   }
 
   stages {
     stage('Validate inputs and prepare consumer') {
       steps {
         script {
-          if (!params.CDO_DROP_ID?.trim() || !(params.CDO_DROP_ID ==~ /R[0-9]{8}-[0-9]{4}/)) {
-            error('Specify a valid CDO release drop identity')
+          def requestedDropId = params.CDO_DROP_ID?.trim() ?: 'default'
+          def automaticDropSelection = requestedDropId == 'default'
+          if (!(requestedDropId ==~ /R[0-9]{8}-[0-9]{4}/) && !automaticDropSelection) {
+            error('CDO_DROP_ID must be a properly formatted R-drop ID or default')
           }
           env.WORKSPACE_ROOT = sh(returnStdout: true, script: 'cd "$WORKSPACE" && pwd -P').trim()
           if (!env.WORKSPACE_ROOT || env.WORKSPACE_ROOT == '/') {
             error('Jenkins WORKSPACE must resolve to a non-root directory')
           }
           env.VERIFY_ROOT = "${env.WORKSPACE_ROOT}/central-verification"
-          env.DROP_URL = "https://download.eclipse.org/modeling/emf/cdo/drops/${params.CDO_DROP_ID}/"
+          env.REQUESTED_DROP_ID = requestedDropId
+          env.DROP_LIST_FILE = "${env.VERIFY_ROOT}/drops.txt"
+          env.DROP_RESOLVED_ID_FILE = "${env.VERIFY_ROOT}/resolved-drop-id.txt"
           env.INVENTORY = "${env.VERIFY_ROOT}/release-inventory.properties"
           env.BOM_FILE = "${env.VERIFY_ROOT}/org.eclipse.cdo.bom.pom"
           env.CONSUMER_POM = "${env.VERIFY_ROOT}/consumer/pom.xml"
@@ -42,6 +53,8 @@ pipeline {
           env.RESOLVED = "${env.VERIFY_ROOT}/resolved"
           env.TREE_FILE = "${env.VERIFY_ROOT}/dependency-tree.txt"
           env.REPORT_FILE = "${env.VERIFY_ROOT}/verification-report.json"
+          env.MARKER_FILE = "${env.VERIFY_ROOT}/maven-central.properties"
+          env.MARKER_PUBLICATION_REPORT = "${env.VERIFY_ROOT}/marker-publication-report.json"
           env.SETTINGS = "${env.WORKSPACE}/releng/org.eclipse.emf.cdo.releng/central/verify/central-only-settings.xml"
           sh '''
             set -eu
@@ -52,11 +65,36 @@ pipeline {
             rm -rf "$VERIFY_ROOT"
             mkdir -p "$VERIFY_ROOT/consumer" "$MAVEN_REPO" "$RESOLVED"
           '''
+          if (automaticDropSelection) {
+            withEnv(["DROP_LIST_URL=${CDO_DROPS_FILE_URL}"]) {
+              sh '''
+                set -eu
+                curl --disable --request GET --proto '=https' --proto-redir '=https' --fail --location --retry 3 --silent --show-error \
+                  "$DROP_LIST_URL" -o "$DROP_LIST_FILE" || { echo "Unable to retrieve the official Eclipse CDO drops.txt file: $DROP_LIST_URL" >&2; exit 5; }
+              '''
+            }
+          }
           withAnt(installation: 'apache-ant-latest') {
             sh '''
               set -eu
-              ant -Dworkspace.root="$WORKSPACE" -Dcentral.verify.drop="$DROP_URL" \
-                -Dcentral.verify.drop.id="$CDO_DROP_ID" -Dcentral.verify.inventory="$INVENTORY" \
+              ant -Dworkspace.root="$WORKSPACE_ROOT" -Dwork.dir="$VERIFY_ROOT/work" \
+                -Dcdo.drop.requested="$REQUESTED_DROP_ID" -Ddrop.list.file="$DROP_LIST_FILE" \
+                -Ddrop.resolved.file="$DROP_RESOLVED_ID_FILE" \
+                -f releng/org.eclipse.emf.cdo.releng/central/build.xml resolve-drop
+            '''
+          }
+          env.EFFECTIVE_DROP_ID = readFile(env.DROP_RESOLVED_ID_FILE).trim()
+          if (!(env.EFFECTIVE_DROP_ID ==~ /R[0-9]{8}-[0-9]{4}/)) {
+            error("Drop selection did not return a properly formatted R-drop ID: ${env.EFFECTIVE_DROP_ID}")
+          }
+          currentBuild.description = "VERIFY ${env.EFFECTIVE_DROP_ID}"
+          env.DROP_URL = "https://download.eclipse.org/modeling/emf/cdo/drops/${env.EFFECTIVE_DROP_ID}/"
+          echo "Resolved CDO drop ID: ${env.EFFECTIVE_DROP_ID}; download URL: ${env.DROP_URL}"
+          withAnt(installation: 'apache-ant-latest') {
+            sh '''
+              set -eu
+              ant -Dworkspace.root="$WORKSPACE_ROOT" -Dcentral.verify.drop="$DROP_URL" \
+                -Dcentral.verify.drop.id="$EFFECTIVE_DROP_ID" -Dcentral.verify.inventory="$INVENTORY" \
                 -f releng/org.eclipse.emf.cdo.releng/central/build.xml central-verify-inventory
             '''
           }
@@ -82,7 +120,7 @@ pipeline {
           withAnt(installation: 'apache-ant-latest') {
             sh '''
               set -eu
-              ant -Dworkspace.root="$WORKSPACE" -Dcentral.verify.inventory="$INVENTORY" \
+              ant -Dworkspace.root="$WORKSPACE_ROOT" -Dcentral.verify.inventory="$INVENTORY" \
                 -Dcentral.verify.bom="$BOM_FILE" -Dcentral.verify.consumer.pom="$CONSUMER_POM" \
                 -Dcentral.verify.tree="$TREE_FILE" -Dcentral.verify.resolved="$RESOLVED" \
                 -Dcentral.verify.report="$REPORT_FILE" \
@@ -98,7 +136,7 @@ pipeline {
         withAnt(installation: 'apache-ant-latest') {
           sh '''
             set -eu
-            ant -Dworkspace.root="$WORKSPACE" -Dcentral.verify.dir="$VERIFY_ROOT/consumer" \
+            ant -Dworkspace.root="$WORKSPACE_ROOT" -Dcentral.verify.dir="$VERIFY_ROOT/consumer" \
               -Dcentral.verify.settings="$SETTINGS" -Dcentral.verify.local.repository="$MAVEN_REPO" \
               -Dcentral.verify.consumer.pom="$CONSUMER_POM" -Dcentral.verify.tree="$TREE_FILE" \
               -Dcentral.verify.resolved="$RESOLVED" -f releng/org.eclipse.emf.cdo.releng/central/build.xml central-verify-maven
@@ -112,12 +150,100 @@ pipeline {
         withAnt(installation: 'apache-ant-latest') {
           sh '''
             set -eu
-            ant -Dworkspace.root="$WORKSPACE" -Dcentral.verify.inventory="$INVENTORY" \
+            ant -Dworkspace.root="$WORKSPACE_ROOT" -Dcentral.verify.inventory="$INVENTORY" \
               -Dcentral.verify.bom="$BOM_FILE" -Dcentral.verify.consumer.pom="$CONSUMER_POM" \
               -Dcentral.verify.tree="$TREE_FILE" -Dcentral.verify.resolved="$RESOLVED" \
-              -Dcentral.verify.report="$REPORT_FILE" \
+              -Dcentral.verify.report="$REPORT_FILE" -Dcentral.verify.marker="$MARKER_FILE" \
               -f releng/org.eclipse.emf.cdo.releng/central/build.xml central-verify-report
           '''
+        }
+      }
+    }
+
+    stage('Publish verified release marker') {
+      steps {
+        script {
+          def verificationResult = 'UNKNOWN'
+          try {
+            if (!fileExists(env.REPORT_FILE) || !fileExists(env.MARKER_FILE)) {
+              error('Verified marker generation did not complete')
+            }
+
+            def verification = new JsonSlurper().parseText(readFile(env.REPORT_FILE))
+            verificationResult = verification.result?.toString() ?: 'UNKNOWN'
+            if (verificationResult != 'PASS') {
+              error('Maven Central verification report is not successful')
+            }
+
+            if (!(env.EFFECTIVE_DROP_ID ==~ /R[0-9]{8}-[0-9]{4}/)) {
+              error("Refusing to publish marker for non-release drop ID: ${env.EFFECTIVE_DROP_ID}")
+            }
+
+            env.MARKER_REMOTE_DIR = "${MARKER_REMOTE_ROOT}/${env.EFFECTIVE_DROP_ID}"
+            env.MARKER_REMOTE_DEST = "${env.MARKER_REMOTE_DIR}/maven-central.properties"
+            env.MARKER_REMOTE_TOKEN = UUID.randomUUID().toString().replace('-', '')
+            env.MARKER_REMOTE_TMP = "${env.MARKER_REMOTE_DEST}.tmp.${env.MARKER_REMOTE_TOKEN}"
+            env.MARKER_REMOTE_SCRIPT = "${env.WORKSPACE}/releng/org.eclipse.emf.cdo.releng/central/verify/publish-marker-remote.sh"
+            if (MARKER_REMOTE_ROOT != '/home/data/httpd/download.eclipse.org/modeling/emf/cdo/drops' ||
+                env.MARKER_REMOTE_DIR != "${MARKER_REMOTE_ROOT}/${env.EFFECTIVE_DROP_ID}" ||
+                env.MARKER_REMOTE_DEST != "${env.MARKER_REMOTE_DIR}/maven-central.properties" || !(env.MARKER_REMOTE_TOKEN ==~ /[0-9a-f]{32}/)) {
+              error('Refusing to publish marker to an invalid release-drop destination')
+            }
+
+            env.MARKER_EXPECTED_SHA256 = sh(returnStdout: true, script: '''
+              set -eu
+              sha256sum "$MARKER_FILE" | awk '{print $1}'
+            ''').trim()
+            if (!(env.MARKER_EXPECTED_SHA256 ==~ /[0-9a-f]{64}/)) {
+              error('Could not calculate the local marker SHA-256')
+            }
+
+            def publicationStatus
+            withEnv(["MARKER_FILE=${env.MARKER_FILE}", "MARKER_REMOTE_ROOT=${MARKER_REMOTE_ROOT}",
+              "MARKER_REMOTE_DIR=${env.MARKER_REMOTE_DIR}", "MARKER_REMOTE_DEST=${env.MARKER_REMOTE_DEST}",
+              "MARKER_REMOTE_TMP=${env.MARKER_REMOTE_TMP}", "MARKER_REMOTE_TOKEN=${env.MARKER_REMOTE_TOKEN}",
+              "MARKER_EFFECTIVE_DROP_ID=${env.EFFECTIVE_DROP_ID}", "MARKER_SSH_TARGET=${MARKER_SSH_TARGET}",
+              "MARKER_REMOTE_SCRIPT=${env.MARKER_REMOTE_SCRIPT}", "MARKER_EXPECTED_SHA256=${env.MARKER_EXPECTED_SHA256}"]) {
+              sshagent(credentials: [MARKER_SSH_CREDENTIAL]) {
+                try {
+                  publicationStatus = sh(returnStdout: true, script: '''
+                    set -eu
+                    case "$MARKER_EFFECTIVE_DROP_ID" in R[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]) ;; *) echo "Invalid release drop ID" >&2; exit 2 ;; esac
+                    test "$MARKER_REMOTE_DIR" = "$MARKER_REMOTE_ROOT/$MARKER_EFFECTIVE_DROP_ID"
+                    test "$MARKER_REMOTE_DEST" = "$MARKER_REMOTE_DIR/maven-central.properties"
+                    test "$MARKER_REMOTE_TMP" = "$MARKER_REMOTE_DEST.tmp.$MARKER_REMOTE_TOKEN"
+                    test -f "$MARKER_REMOTE_SCRIPT"
+                    actual_dir=$(ssh -oBatchMode=yes "$MARKER_SSH_TARGET" "realpath -e -- '$MARKER_REMOTE_DIR'")
+                    test "$actual_dir" = "$MARKER_REMOTE_DIR"
+                    ssh -oBatchMode=yes "$MARKER_SSH_TARGET" "test -d '$MARKER_REMOTE_DIR' && test ! -L '$MARKER_REMOTE_DIR' && test -w '$MARKER_REMOTE_DIR' && test ! -e '$MARKER_REMOTE_TMP' && test ! -L '$MARKER_REMOTE_TMP'"
+                    scp -q "$MARKER_FILE" "$MARKER_SSH_TARGET:$MARKER_REMOTE_TMP"
+                    ssh -oBatchMode=yes "$MARKER_SSH_TARGET" "sh -s -- '$MARKER_REMOTE_ROOT' '$MARKER_EFFECTIVE_DROP_ID' '$MARKER_REMOTE_TOKEN' '$MARKER_REMOTE_DIR' '$MARKER_REMOTE_DEST' '$MARKER_REMOTE_TMP' '$MARKER_EXPECTED_SHA256'" < "$MARKER_REMOTE_SCRIPT"
+                  ''').trim()
+                } finally {
+                  int cleanupStatus = sh(returnStatus: true, script: '''
+                    ssh -oBatchMode=yes "$MARKER_SSH_TARGET" "rm -f -- '$MARKER_REMOTE_TMP'"
+                  ''')
+                  if (cleanupStatus != 0) {
+                    echo "Could not remove temporary remote marker file: ${env.MARKER_REMOTE_TMP}"
+                  }
+                }
+              }
+            }
+
+            if (!(publicationStatus in ['PUBLISHED', 'ALREADY_PRESENT'])) {
+              error("Remote marker publisher returned an unexpected status: ${publicationStatus}")
+            }
+
+            writeFile file: env.MARKER_PUBLICATION_REPORT, text: JsonOutput.prettyPrint(JsonOutput.toJson([
+              result: 'PASS', markerStatus: publicationStatus, verificationResult: verificationResult,
+              dropId: env.EFFECTIVE_DROP_ID, destination: env.MARKER_REMOTE_DEST, sha256: env.MARKER_EXPECTED_SHA256])) + '\n'
+          } catch (Exception ex) {
+            writeFile file: env.MARKER_PUBLICATION_REPORT, text: JsonOutput.prettyPrint(JsonOutput.toJson([
+              result: 'FAIL', markerStatus: 'FAILED', verificationResult: verificationResult,
+              dropId: env.EFFECTIVE_DROP_ID ?: '', destination: env.MARKER_REMOTE_DEST ?: '',
+              message: ex.message ?: ex.toString()])) + '\n'
+            throw ex
+          }
         }
       }
     }
@@ -137,7 +263,7 @@ pipeline {
             [groupId: 'org.eclipse.cdo', artifactId: artifactId, osgiVersion: inventory.getProperty("osgi.${artifactId}"),
               mavenVersion: inventory.getProperty(key)]
           }
-          def failureReport = [sourceDrop: [id: inventory.getProperty('drop.id', params.CDO_DROP_ID ?: ''),
+          def failureReport = [sourceDrop: [id: inventory.getProperty('drop.id', env.EFFECTIVE_DROP_ID ?: params.CDO_DROP_ID ?: ''),
             location: inventory.getProperty('drop.location', env.DROP_URL ?: ''), projectRelease: inventory.getProperty('project.release', env.PROJECT_RELEASE ?: ''),
             gitCommit: inventory.getProperty('cdo.git.commit', ''), buildBranch: inventory.getProperty('cdo.build.branch', ''),
             jenkinsJob: inventory.getProperty('cdo.jenkins.job', ''), jenkinsBuild: inventory.getProperty('cdo.jenkins.build', ''),
@@ -147,7 +273,37 @@ pipeline {
           writeFile file: 'central-verification/verification-report.json', text: JsonOutput.prettyPrint(JsonOutput.toJson(failureReport)) + '\n'
           currentBuild.result = 'FAILURE'
         }
-        archiveArtifacts artifacts: 'central-verification/verification-report.json,central-verification/release-inventory.properties,central-verification/dependency-tree.txt,central-verification/org.eclipse.cdo.bom-*.pom', allowEmptyArchive: true
+        if (!fileExists('central-verification/marker-publication-report.json')) {
+          def verificationResult = 'UNKNOWN'
+          if (fileExists('central-verification/verification-report.json')) {
+            try {
+              verificationResult = new JsonSlurper().parseText(readFile('central-verification/verification-report.json')).result?.toString() ?: 'UNKNOWN'
+            } catch (parseError) {
+              verificationResult = 'INVALID_REPORT'
+            }
+          }
+
+          def publicationResult = verificationResult == 'PASS' ? 'NOT_COMPLETED' : 'NOT_ATTEMPTED'
+          writeFile file: 'central-verification/marker-publication-report.json', text: JsonOutput.prettyPrint(JsonOutput.toJson([
+            result: publicationResult, verificationResult: verificationResult, dropId: env.EFFECTIVE_DROP_ID ?: ''])) + '\n'
+        }
+        if (env.MARKER_REMOTE_TMP && env.MARKER_REMOTE_TMP ==~ /\/home\/data\/httpd\/download\.eclipse\.org\/modeling\/emf\/cdo\/drops\/R[0-9]{8}-[0-9]{4}\/maven-central\.properties\.tmp\.[0-9a-f]{32}/) {
+          try {
+            sshagent(credentials: [MARKER_SSH_CREDENTIAL]) {
+              withEnv(["MARKER_REMOTE_TMP=${env.MARKER_REMOTE_TMP}", "MARKER_SSH_TARGET=${MARKER_SSH_TARGET}"]) {
+                int cleanupStatus = sh(returnStatus: true, script: '''
+                  ssh -oBatchMode=yes "$MARKER_SSH_TARGET" "rm -f -- '$MARKER_REMOTE_TMP'"
+                ''')
+                if (cleanupStatus != 0) {
+                  echo "Remote temporary marker cleanup failed: ${env.MARKER_REMOTE_TMP}"
+                }
+              }
+            }
+          } catch (cleanupError) {
+            echo "Remote temporary marker cleanup could not run: ${cleanupError.message}"
+          }
+        }
+        archiveArtifacts artifacts: 'central-verification/verification-report.json,central-verification/marker-publication-report.json,central-verification/release-inventory.properties,central-verification/dependency-tree.txt,central-verification/org.eclipse.cdo.bom-*.pom,central-verification/maven-central.properties', allowEmptyArchive: true
       }
     }
   }

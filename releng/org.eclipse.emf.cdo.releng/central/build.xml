@@ -173,7 +173,14 @@
 			<arg file="${central.verify.tree}" />
 			<arg file="${central.verify.resolved}" />
 			<arg file="${central.verify.report}" />
+			<arg file="${central.verify.marker}" />
 		</java>
+	</target>
+
+	<target name="central-verify-marker-shell-test">
+		<exec executable="sh" failifexecutionfails="true" failonerror="true">
+			<arg file="${basedir}/verify/publish-marker-remote-test.sh" />
+		</exec>
 	</target>
 
 	<target name="validate-workspace" depends="compile-helper">

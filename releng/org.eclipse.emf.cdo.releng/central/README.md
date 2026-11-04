@@ -462,8 +462,12 @@ archived; the manual checks confirm the downloaded copy before it is uploaded.
 ## Maven Central post-publication verification
 
 The separate `maven-verify` Jenkins job uses
-`central/verify/Jenkinsfile`. It is intentionally independent of the
-`maven-publish` job and runs on an ordinary `basic` agent. The job reads
+`central/verify/Jenkinsfile`. Its `CDO_DROP_ID` parameter defaults to
+`default`, which resolves the latest R-drop from the official `drops.txt`
+through the existing `resolve-drop` command; explicit drop IDs remain
+supported. The build description records the resolved drop ID. The job is
+intentionally independent of `maven-publish` and runs on an ordinary `basic`
+agent. It reads
 `index.xml`, `web.properties`, and `build-info.xml` from the selected release
 drop to generate a run-local inventory before contacting Maven Central. This
 inventory is independent of the published BOM. `index.xml` entries must match
@@ -497,12 +501,24 @@ FAIL report. The verification is read-only against Maven Central and
 anything.
 
 No release-specific inventory files belong in Git; only the generated
-workspace inventory is archived with the verification report. After
-successful verification, a later implementation may write
-`maven-central.properties` into the corresponding release drop, listing the
-twelve bundle versions and BOM. That remote-write step is not implemented
-yet; it must use the existing Jenkins SSH credential and define safe
-idempotent replacement and remote-write failure recovery first.
+workspace inventory is archived with the verification report. After the
+complete verification passes, the job generates the 13-entry
+`maven-central.properties` marker from that same inventory and uploads it to
+the selected drop through `projects-storage.eclipse.org-bot-ssh`. The upload
+uses a uniquely named same-directory temporary file and an atomic no-replace
+hard link. The report command creates the marker from the inventory and
+artifact results it has just verified, without parsing its JSON report as
+text. Publication is restricted to a correctly formatted R-drop ID, including
+in the remote script. An identical existing marker is idempotent, conflicting
+content fails without replacing it, and the published file is mode `0644`.
+Jenkins compares the local marker SHA-256 with the remote file after either a
+new publication or an identical retry. The archived
+`marker-publication-report.json` records publication separately from
+`verification-report.json`, so SSH or destination failures do not rewrite a
+successful Maven verification result. Temporary files are cleaned on success
+and failure. The job writes no other release-drop files and needs no Sonatype
+or GPG credentials. The local remote-script fixture can be run on a POSIX
+agent with `ant -f build.xml central-verify-marker-shell-test`.
 
 ## Maven Central readiness audit and local staging
 

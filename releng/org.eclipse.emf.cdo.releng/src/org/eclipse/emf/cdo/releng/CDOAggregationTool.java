@@ -298,6 +298,11 @@ public final class CDOAggregationTool
     }
   }
 
+  static List<String> approvedBundles()
+  {
+    return List.copyOf(BUNDLES);
+  }
+
   private static void publicationScopeCheck(String[] args) throws Exception
   {
     if (args.length != 2)

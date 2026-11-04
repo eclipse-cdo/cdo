@@ -27,10 +27,13 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 /**
@@ -63,9 +66,10 @@ final class CentralVerificationTool
 
   static void report(String[] args) throws Exception
   {
-    if (args.length != 7)
+    if (args.length != 8)
     {
-      throw new IllegalArgumentException("central-verify-report requires inventory, published BOM, consumer POM, tree, resolved directory, and report");
+      throw new IllegalArgumentException(
+          "central-verify-report requires inventory, published BOM, consumer POM, tree, resolved directory, report, and marker output");
     }
 
     Map<String, String> trusted = inventory(new File(args[1]).toPath());
@@ -74,6 +78,7 @@ final class CentralVerificationTool
     Path tree = new File(args[4]).toPath();
     Path resolved = new File(args[5]).toPath();
     Path report = new File(args[6]).toPath();
+    Path marker = new File(args[7]).toPath();
     verifyBom(bom, trusted, artifacts);
     verifyTree(tree, artifacts);
     for (Map.Entry<String, String> artifact : artifacts.entrySet())
@@ -86,6 +91,28 @@ final class CentralVerificationTool
     }
 
     writeReport(report, trusted, artifacts);
+    writeMarker(trusted, artifacts, marker);
+  }
+
+  private static void writeMarker(Map<String, String> trusted, Map<String, String> artifacts, Path markerPath) throws Exception
+  {
+    List<String> approved = CDOAggregationTool.approvedBundles();
+    if (!Pattern.matches("R[0-9]{8}-[0-9]{4}", trusted.get("drop.id")) || !artifacts.keySet().equals(new LinkedHashSet<>(approved))
+        || !"org.eclipse.cdo".equals(trusted.get("bom.groupId")) || !"org.eclipse.cdo.bom".equals(trusted.get("bom.artifactId"))
+        || !Pattern.matches("[0-9]+\\.[0-9]+\\.[0-9]+", trusted.get("bom.version")))
+    {
+      throw new IllegalArgumentException("Verified release inventory does not match the approved bundle and BOM coordinates");
+    }
+
+    List<String> lines = new ArrayList<>();
+    for (String artifact : approved)
+    {
+      lines.add(artifact + "=" + artifacts.get(artifact));
+    }
+
+    lines.add(trusted.get("bom.artifactId") + "=" + trusted.get("bom.version"));
+    Files.createDirectories(markerPath.getParent());
+    Files.write(markerPath, lines, StandardCharsets.UTF_8, StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE);
   }
 
   private static Map<String, String> inventory(Path path) throws Exception
@@ -123,8 +150,9 @@ final class CentralVerificationTool
       }
     }
 
-    if (artifacts.size() != 12 || !properties.containsKey("drop.id") || !properties.containsKey("drop.location") || !properties.containsKey("project.release")
-        || !properties.containsKey("bom.version"))
+    Set<String> approved = new LinkedHashSet<>(CDOAggregationTool.approvedBundles());
+    if (artifacts.size() != 12 || !artifacts.keySet().equals(approved) || !properties.containsKey("drop.id") || !properties.containsKey("drop.location")
+        || !properties.containsKey("project.release") || !properties.containsKey("bom.version"))
     {
       throw new IllegalArgumentException("Derived release inventory must identify its source drop, project release, BOM, and exactly 12 artifacts");
     }

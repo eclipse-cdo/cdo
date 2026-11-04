@@ -23,8 +23,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * Exercises the runtime-derived inventory and independent Maven Central consumer checks.
@@ -52,7 +54,7 @@ public class CentralVerificationToolTest
     String[] arguments = fixture.arguments();
     CentralVerificationTool.prepare(arguments);
     fixture.writeTreeAndResolvedArtifacts();
-    CentralVerificationTool.report(arguments);
+    CentralVerificationTool.report(fixture.reportArguments());
 
     String consumer = Files.readString(fixture.consumer, StandardCharsets.UTF_8);
     assertTrue(consumer.contains("<scope>import</scope>"));
@@ -104,7 +106,7 @@ public class CentralVerificationToolTest
     fixture.deriveInventory();
     fixture.writeBom();
     fixture.writeTreeAndResolvedArtifacts();
-    CentralVerificationTool.report(fixture.arguments());
+    CentralVerificationTool.report(fixture.reportArguments());
 
     fixture.writeTree(fixture.expectedTree(true));
     expectTreeFailure(fixture, "unexpected direct dependency");
@@ -120,11 +122,78 @@ public class CentralVerificationToolTest
     expectTreeFailure(fixture, "incorrect direct version");
   }
 
+  @Test
+  public void generatesExactlyTheApprovedBundleVersionsAndBomMarker() throws Exception
+  {
+    Fixture fixture = new Fixture();
+    fixture.deriveInventory();
+    fixture.verifyAndWriteMarker();
+
+    List<String> lines = Files.readAllLines(fixture.marker, StandardCharsets.UTF_8);
+    assertEquals(13, lines.size());
+    Set<String> coordinates = new LinkedHashSet<>();
+    for (int i = 0; i < BUNDLES.length; i++)
+    {
+      assertEquals(BUNDLES[i] + "=" + VERSIONS[i], lines.get(i));
+      coordinates.add(lines.get(i).substring(0, lines.get(i).indexOf('=')));
+    }
+
+    assertEquals("org.eclipse.cdo.bom=4.36.0", lines.get(lines.size() - 1));
+    coordinates.add("org.eclipse.cdo.bom");
+    assertEquals(13, coordinates.size());
+  }
+
+  @Test
+  public void failedMavenVerificationDoesNotGenerateMarker() throws Exception
+  {
+    Fixture fixture = new Fixture();
+    fixture.deriveInventory();
+    fixture.writeBom();
+    fixture.writeTreeAndResolvedArtifacts();
+    List<String> invalidTree = fixture.expectedTree();
+    invalidTree.remove(0);
+    fixture.writeTree(invalidTree);
+    try
+    {
+      CentralVerificationTool.report(fixture.reportArguments());
+      fail("Expected failed verification to block marker generation");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("dependency tree differs"));
+      assertTrue(!Files.exists(fixture.marker));
+    }
+  }
+
+  @Test
+  public void reportNeverGeneratesMarkerForNonReleaseDrop() throws Exception
+  {
+    Fixture fixture = new Fixture();
+    fixture.deriveInventory();
+    String inventory = Files.readString(fixture.inventory, StandardCharsets.UTF_8).replace("drop.id=R20260901-1311", "drop.id=I20260901-1311")
+        .replace("cdo.drop.id=R20260901-1311", "cdo.drop.id=I20260901-1311");
+    Files.writeString(fixture.inventory, inventory, StandardCharsets.UTF_8);
+    fixture.writeBom();
+    fixture.writeTreeAndResolvedArtifacts();
+
+    try
+    {
+      CentralVerificationTool.report(fixture.reportArguments());
+      fail("Expected non-release drop marker generation to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("approved bundle and BOM coordinates"));
+      assertTrue(Files.readString(fixture.report, StandardCharsets.UTF_8).contains("\"result\": \"PASS\""));
+      assertTrue(!Files.exists(fixture.marker));
+    }
+  }
+
   private static void expectTreeFailure(Fixture fixture, String description) throws Exception
   {
     try
     {
-      CentralVerificationTool.report(fixture.arguments());
+      CentralVerificationTool.report(fixture.reportArguments());
       fail("Expected " + description + " to be rejected");
     }
     catch (IllegalArgumentException expected)
@@ -150,6 +219,8 @@ public class CentralVerificationToolTest
     private final Path resolved = root.resolve("resolved");
 
     private final Path report = root.resolve("verification-report.json");
+
+    private final Path marker = root.resolve("maven-central.properties");
 
     private Fixture() throws Exception
     {
@@ -177,6 +248,12 @@ public class CentralVerificationToolTest
 
     private void writeBom() throws Exception
     {
+      Properties properties = new Properties();
+      try (var input = Files.newInputStream(inventory))
+      {
+        properties.load(input);
+      }
+
       StringBuilder dependencies = new StringBuilder();
       for (int i = 0; i < BUNDLES.length; i++)
       {
@@ -184,10 +261,13 @@ public class CentralVerificationToolTest
             .append(VERSIONS[i]).append("</version></dependency>");
       }
 
-      Files.writeString(bom, "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId>"
-          + "<artifactId>org.eclipse.cdo.bom</artifactId><version>4.36.0</version><packaging>pom</packaging><properties><cdo.project.release>4.36</cdo.project.release>"
-          + "<cdo.drop.id>R20260901-1311</cdo.drop.id></properties><dependencyManagement><dependencies>" + dependencies
-          + "</dependencies></dependencyManagement></project>", StandardCharsets.UTF_8);
+      Files.writeString(bom,
+          "<project xmlns=\"http://maven.apache.org/POM/4.0.0\"><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId>"
+              + "<artifactId>org.eclipse.cdo.bom</artifactId><version>" + properties.getProperty("bom.version")
+              + "</version><packaging>pom</packaging><properties><cdo.project.release>" + properties.getProperty("project.release")
+              + "</cdo.project.release><cdo.drop.id>" + properties.getProperty("drop.id") + "</cdo.drop.id></properties><dependencyManagement><dependencies>"
+              + dependencies + "</dependencies></dependencyManagement></project>",
+          StandardCharsets.UTF_8);
     }
 
     private void writeTreeAndResolvedArtifacts() throws Exception
@@ -247,10 +327,23 @@ public class CentralVerificationToolTest
       Files.write(tree, lines, StandardCharsets.UTF_8);
     }
 
+    private void verifyAndWriteMarker() throws Exception
+    {
+      writeBom();
+      writeTreeAndResolvedArtifacts();
+      CentralVerificationTool.report(reportArguments());
+    }
+
     private String[] arguments()
     {
       return new String[] { "central-verify-prepare", inventory.toString(), bom.toString(), consumer.toString(), tree.toString(), resolved.toString(),
           report.toString() };
+    }
+
+    private String[] reportArguments()
+    {
+      return new String[] { "central-verify-report", inventory.toString(), bom.toString(), consumer.toString(), tree.toString(), resolved.toString(),
+          report.toString(), marker.toString() };
     }
   }
 }

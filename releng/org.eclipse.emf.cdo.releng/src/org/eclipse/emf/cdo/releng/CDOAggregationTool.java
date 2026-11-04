@@ -4057,7 +4057,7 @@ public final class CDOAggregationTool
       Files.writeString(unexpectedSignature.toPath(), "-----BEGIN PGP SIGNATURE-----\nextra\n", StandardCharsets.US_ASCII);
       createDeploymentZip(staging, zip, "");
       expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
-          "Unexpected file in deployment repository", "unexpected signature");
+          "Unexpected file in publication staging", "unexpected signature");
       Files.delete(unexpectedSignature.toPath());
 
       File missingSignature = new File(signature.getPath());
@@ -4069,8 +4069,8 @@ public final class CDOAggregationTool
 
       Files.delete(artifact.toPath());
       createDeploymentZip(staging, zip, "");
-      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary), "Expected 48",
-          "missing Maven artifact");
+      expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
+          "Missing or empty staged Maven artifact", "missing Maven artifact");
       Files.write(artifact.toPath(), originalArtifact);
       ChecksumsCommand.writeChecksums(artifact);
 

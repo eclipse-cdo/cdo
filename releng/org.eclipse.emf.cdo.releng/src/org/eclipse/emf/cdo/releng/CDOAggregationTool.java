@@ -4212,14 +4212,15 @@ public final class CDOAggregationTool
     expectBomPackageFailure(args, "inventory mismatch", "unexpected BOM deployment file");
     Files.delete(unexpected.toPath());
 
-    gpg(gpg, secondHome, "--armor", "--local-user", secondSigning, "--output", stagedSignature.getAbsolutePath(), "--detach-sign", stagedPom.getAbsolutePath());
+    gpg(gpg, secondHome, "--armor", "--local-user", secondSigning, "--yes", "--output", stagedSignature.getAbsolutePath(), "--detach-sign",
+        stagedPom.getAbsolutePath());
     Files.copy(stagedSignature.toPath(), deployedSignature.toPath(), StandardCopyOption.REPLACE_EXISTING);
     createDeploymentZip(staging.toFile(), zip.toFile(), "");
     expectBomPackageFailure(args, "GnuPG operation failed", "BOM signature from an untrusted signing identity");
     gpg(gpg, firstHome, "--armor", "--local-user",
         findSigningSubkeyFingerprint(gpg(gpg, firstHome, "--with-colons", "--fixed-list-mode", "--fingerprint", "--fingerprint", "--list-secret-keys"),
             firstPrimary),
-        "--output", stagedSignature.getAbsolutePath(), "--detach-sign", stagedPom.getAbsolutePath());
+        "--yes", "--output", stagedSignature.getAbsolutePath(), "--detach-sign", stagedPom.getAbsolutePath());
     Files.copy(stagedSignature.toPath(), deployedSignature.toPath(), StandardCopyOption.REPLACE_EXISTING);
     createDeploymentZip(staging.toFile(), zip.toFile(), "");
     expectBomPackageFailure(bomPackageArguments(staging.toFile(), signedRepository.toFile(), zip.toFile(), metadata.toFile(), publishing.toFile(),

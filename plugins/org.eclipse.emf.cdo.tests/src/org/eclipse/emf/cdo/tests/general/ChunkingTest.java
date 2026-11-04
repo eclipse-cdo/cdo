@@ -67,6 +67,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -1079,6 +1080,171 @@ public class ChunkingTest extends AbstractCDOTest
 
     transaction.close();
     session.close();
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testModernPartialListSavepointAndCommit() throws Exception
+  {
+    partialListSavepointAndCommit(true);
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testLegacyPartialListSavepointAndCommit() throws Exception
+  {
+    partialListSavepointAndCommit(false);
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testModernPartialListRemoteRefresh() throws Exception
+  {
+    partialListRemoteRefresh(true);
+  }
+
+  @Skips(IModelConfig.CAPABILITY_LEGACY)
+  public void testLegacyPartialListRemoteRefresh() throws Exception
+  {
+    partialListRemoteRefresh(false);
+  }
+
+  @SuppressWarnings("deprecation") // Comparing the legacy loading policy with modern PCL.
+  private void partialListRemoteRefresh(boolean modern) throws Exception
+  {
+    createInitialCompanyWithCategories();
+
+    CDOSession readerSession = openSession();
+    readerSession.options().setPassiveUpdateEnabled(false);
+    if (modern)
+    {
+      readerSession.options().setCollectionLoadingConfig(new CDOCollectionLoadingConfig(new ChunkConfig(1, 2), Collections.emptyMap()));
+    }
+    else
+    {
+      readerSession.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 2));
+    }
+
+    CDOView reader = readerSession.openView();
+    Company company = (Company)reader.getResource(getResourcePath("/pcl033")).getContents().get(0);
+    EList<Category> categories = company.getCategories();
+    Category first = categories.get(0);
+    CDOList revisionList = ((InternalCDORevision)CDOUtil.getCDOObject(company).cdoRevision()).getListOrNull(getModel1Package().getCompany_Categories());
+    assertFalse(revisionList.isFullyLoaded());
+    assertFalse(revisionList.isLoadedAt(7));
+
+    CDOSession writerSession = openSession();
+    CDOTransaction writer = writerSession.openTransaction();
+    Company writerCompany = (Company)writer.getResource(getResourcePath("/pcl033")).getContents().get(0);
+    EList<Category> writerCategories = writerCompany.getCategories();
+    writerCategories.remove(2);
+    writerCategories.move(1, 5);
+    Category inserted = getModel1Factory().createCategory();
+    inserted.setName("remote");
+    writerCategories.add(3, inserted);
+    writer.commit();
+    CDOID insertedID = CDOUtil.getCDOObject(inserted).cdoID();
+    List<CDOID> expectedIDs = new ArrayList<>();
+
+    for (Category category : writerCategories)
+    {
+      expectedIDs.add(CDOUtil.getCDOObject(category).cdoID());
+    }
+
+    readerSession.refresh();
+    List<String> expected = Arrays.asList("category-0", "category-6", "category-1", "remote", "category-3", "category-4", "category-5", "category-7");
+    assertEquals(expected.size(), categories.size());
+    assertSame(first, categories.get(0));
+
+    for (int i = 0; i < expected.size(); i++)
+    {
+      assertEquals(expected.get(i), categories.get(i).getName());
+      assertEquals(expectedIDs.get(i), CDOUtil.getCDOObject(categories.get(i)).cdoID());
+    }
+
+    assertEquals(insertedID, CDOUtil.getCDOObject(categories.get(3)).cdoID());
+    writer.close();
+    writerSession.close();
+    reader.close();
+    readerSession.close();
+    clearCache(getRepository().getRevisionManager());
+
+    CDOSession verifySession = openSession();
+    CDOView view = verifySession.openView();
+    Company verified = (Company)view.getResource(getResourcePath("/pcl033")).getContents().get(0);
+    EList<Category> actual = verified.getCategories();
+    assertEquals(expected.size(), actual.size());
+
+    for (int i = 0; i < expected.size(); i++)
+    {
+      assertEquals(expected.get(i), actual.get(i).getName());
+      assertEquals(expectedIDs.get(i), CDOUtil.getCDOObject(actual.get(i)).cdoID());
+    }
+
+    assertEquals(insertedID, CDOUtil.getCDOObject(actual.get(3)).cdoID());
+    assertSame(actual.get(3), CDOUtil.getEObject(view.getObject(insertedID)));
+    view.close();
+    verifySession.close();
+  }
+
+  @SuppressWarnings("deprecation") // Comparing the legacy loading policy with modern PCL.
+  private void partialListSavepointAndCommit(boolean modern) throws Exception
+  {
+    createInitialCompanyWithCategories();
+
+    CDOSession session = openSession();
+    if (modern)
+    {
+      session.options().setCollectionLoadingConfig(new CDOCollectionLoadingConfig(new ChunkConfig(1, 2), Collections.emptyMap()));
+    }
+    else
+    {
+      session.options().setCollectionLoadingPolicy(CDOUtil.createCollectionLoadingPolicy(1, 2));
+    }
+
+    CDOTransaction transaction = session.openTransaction();
+    Company company = (Company)transaction.getResource(getResourcePath("/pcl033")).getContents().get(0);
+    EList<Category> categories = company.getCategories();
+    CDOList revisionList = ((InternalCDORevision)CDOUtil.getCDOObject(company).cdoRevision()).getListOrNull(getModel1Package().getCompany_Categories());
+    assertFalse(revisionList.isFullyLoaded());
+    assertFalse(revisionList.isLoadedAt(7));
+
+    Category inserted = getModel1Factory().createCategory();
+    inserted.setName("inserted");
+    categories.add(0, inserted);
+    CDOUserSavepoint savepoint = transaction.setSavepoint();
+    Category resolved = categories.get(7);
+    assertEquals("category-6", resolved.getName());
+    categories.remove(3);
+    categories.move(1, 6);
+    savepoint.rollback();
+
+    assertSame(inserted, categories.get(0));
+    assertSame(resolved, categories.get(7));
+    categories.remove(2);
+    categories.move(1, 6);
+    transaction.commit();
+
+    CDOID insertedID = CDOUtil.getCDOObject(inserted).cdoID();
+    CDOID resolvedID = CDOUtil.getCDOObject(resolved).cdoID();
+    transaction.close();
+    session.close();
+    clearCache(getRepository().getRevisionManager());
+
+    CDOSession verifySession = openSession();
+    CDOView view = verifySession.openView();
+    Company verified = (Company)view.getResource(getResourcePath("/pcl033")).getContents().get(0);
+    EList<Category> actual = verified.getCategories();
+    List<String> expected = Arrays.asList("inserted", "category-6", "category-0", "category-2", "category-3", "category-4", "category-5", "category-7");
+    assertEquals(expected.size(), actual.size());
+
+    for (int i = 0; i < expected.size(); i++)
+    {
+      assertEquals(expected.get(i), actual.get(i).getName());
+    }
+
+    assertEquals(insertedID, CDOUtil.getCDOObject(actual.get(0)).cdoID());
+    assertEquals(resolvedID, CDOUtil.getCDOObject(actual.get(1)).cdoID());
+    assertSame(actual.get(0), CDOUtil.getEObject(view.getObject(insertedID)));
+    view.close();
+    verifySession.close();
   }
 
   private void createInitialCompanyWithCategories() throws CommitException

@@ -297,6 +297,34 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
+  public void publicationScopeReportsTheFirstMissingOrUnexpectedSignatureFailure() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path staging = root.resolve("staging");
+    Path metadata = root.resolve("metadata.properties");
+    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
+    createPublicationStaging(staging);
+
+    String[] validArguments = { "publish-check", staging.toString(), metadata.toString(), "PACKAGE_FOR_CENTRAL", "SIGNED" };
+    CDOAggregationTool.main(validArguments);
+
+    Path missingSignature = staging.resolve(path(BUNDLES[0], "1.0.0", ".pom") + ".asc");
+    byte[] signature = Files.readAllBytes(missingSignature);
+    Files.delete(missingSignature);
+    expectPublicationScopeFailure(validArguments, "PACKAGE_FOR_CENTRAL requires a non-empty signature");
+    Files.write(missingSignature, signature);
+
+    Path unexpectedSignature = staging.resolve(path(BUNDLES[0], "1.0.0", ".pom") + ".unexpected.asc");
+    Files.writeString(unexpectedSignature, "-----BEGIN PGP SIGNATURE-----\nfixture\n", StandardCharsets.US_ASCII);
+    expectPublicationScopeFailure(validArguments, "Unexpected file in publication staging");
+    Files.delete(unexpectedSignature);
+
+    Path missingArtifact = staging.resolve(path(BUNDLES[0], "1.0.0", ".jar"));
+    Files.delete(missingArtifact);
+    expectPublicationScopeFailure(validArguments, "Missing or empty staged Maven artifact");
+  }
+
+  @Test
   public void rejectsMalformedReleaseVersion() throws Exception
   {
     Path root = fixture("4.36.0.qualifier", "R20260901-1311");
@@ -718,6 +746,50 @@ public class CDOAggregationToolBomTest
     Path manifest = root.resolve("maven-central.properties");
     Files.writeString(manifest, content, StandardCharsets.UTF_8);
     return manifest;
+  }
+
+  private void createPublicationStaging(Path staging) throws Exception
+  {
+    String[][] algorithms = { { "md5", "MD5" }, { "sha1", "SHA-1" }, { "sha256", "SHA-256" }, { "sha512", "SHA-512" } };
+    for (String bundle : BUNDLES)
+    {
+      for (String suffix : new String[] { ".pom", ".jar", "-sources.jar", "-javadoc.jar" })
+      {
+        String relative = path(bundle, "1.0.0", suffix);
+        Path artifact = staging.resolve(relative);
+        Files.createDirectories(artifact.getParent());
+        String content = suffix.equals(".pom")
+            ? "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + bundle + "</artifactId><version>1.0.0</version></project>\n"
+            : "fixture artifact " + relative + "\n";
+        Files.writeString(artifact, content, StandardCharsets.UTF_8);
+        for (String[] algorithm : algorithms)
+        {
+          byte[] digest = MessageDigest.getInstance(algorithm[1]).digest(Files.readAllBytes(artifact));
+          StringBuilder hexadecimal = new StringBuilder();
+          for (byte value : digest)
+          {
+            hexadecimal.append(String.format("%02x", value & 0xff));
+          }
+
+          Files.writeString(Path.of(artifact + "." + algorithm[0]), hexadecimal.toString(), StandardCharsets.US_ASCII);
+        }
+
+        Files.writeString(Path.of(artifact + ".asc"), "-----BEGIN PGP SIGNATURE-----\nfixture\n", StandardCharsets.US_ASCII);
+      }
+    }
+  }
+
+  private void expectPublicationScopeFailure(String[] arguments, String message) throws Exception
+  {
+    try
+    {
+      CDOAggregationTool.main(arguments);
+      fail("Expected publication-scope validation to fail with " + message);
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().startsWith(message));
+    }
   }
 
   private void expectBomCentralFailure(Path root, Path manifest, CentralFixture central, String message) throws Exception

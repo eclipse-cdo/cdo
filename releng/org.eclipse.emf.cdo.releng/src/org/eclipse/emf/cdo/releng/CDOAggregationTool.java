@@ -4064,7 +4064,7 @@ public final class CDOAggregationTool
       Files.delete(missingSignature.toPath());
       createDeploymentZip(staging, zip, "");
       expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
-          "Missing, malformed, or non-armored signature", "missing signature");
+          "PACKAGE_FOR_CENTRAL requires a non-empty signature", "missing signature");
       Files.write(missingSignature.toPath(), originalSignature);
 
       Files.delete(artifact.toPath());

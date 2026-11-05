@@ -420,10 +420,9 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
           {
             int currentVersion;
 
-            boolean complete;
             try
             {
-              complete = readLists(accessor, revision, listChunk);
+              readListValues(accessor, revision, listChunk);
               currentVersion = readVersion(stmtVersion);
             }
             catch (IndexOutOfBoundsException ex)
@@ -434,16 +433,16 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
               continue;
             }
 
-            if (!complete)
-            {
-              throw new DBException(new IllegalStateException("Incomplete list values in a fully loaded revision")); //$NON-NLS-1$
-            }
-
             if (currentVersion != revision.getVersion())
             {
               // A commit has changed the revision while reading the lists. Start from scratch!
               revision.clearValues(); // Make sure that lists are recreated
               continue;
+            }
+
+            if (!finishLists(revision, listChunk))
+            {
+              throw new DBException(new IllegalStateException("Incomplete list values in a fully loaded revision")); //$NON-NLS-1$
             }
           }
         }

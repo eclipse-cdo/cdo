@@ -506,10 +506,37 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected final boolean readLists(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
+    readListValues(accessor, revision, listChunk);
+    return finishLists(revision, listChunk);
+  }
+
+  /**
+   * Reads the list rows into the construction slots created from the revision's stored list sizes.
+   * The caller must subsequently either finish the lists or discard the revision values.
+   *
+   * @param accessor the accessor supplying the database connection
+   * @param revision the revision whose scalar values and list sizes have already been read
+   * @param listChunk the maximum number of values to load per list, or {@link CDORevision#UNCHUNKED}
+   */
+  protected final void readListValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
+  {
     for (IListMapping listMapping : listMappings)
     {
       listMapping.readValues(accessor, revision, listChunk);
+    }
+  }
 
+  /**
+   * Finalizes previously read lists, rejecting unfilled construction slots for fully loaded lists.
+   *
+   * @param revision the revision containing the lists to finish
+   * @param listChunk the requested list chunk size, or {@link CDORevision#UNCHUNKED} for complete lists
+   * @return whether all values required for a complete revision were loaded
+   */
+  protected final boolean finishLists(InternalCDORevision revision, int listChunk)
+  {
+    for (IListMapping listMapping : listMappings)
+    {
       CDOList list = revision.getListOrNull(listMapping.getFeature());
       if (list instanceof InternalCDOList)
       {

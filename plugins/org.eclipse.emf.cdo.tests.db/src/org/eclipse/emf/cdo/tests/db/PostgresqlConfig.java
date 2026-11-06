@@ -115,9 +115,15 @@ public class PostgresqlConfig extends AbstractSetupDBConfig
   }
 
   @Override
+  protected void initDatabase(Connection connection, Statement stmt, String dbName) throws SQLException
+  {
+    stmt.execute("CREATE DATABASE " + createDBAdapter().quoteIdentifier(dbName));
+  }
+
+  @Override
   protected void dropDatabase(Connection connection, Statement stmt, String dbName) throws SQLException
   {
-    stmt.execute("DROP DATABASE IF EXISTS " + dbName);
+    stmt.execute("DROP DATABASE IF EXISTS " + createDBAdapter().quoteIdentifier(dbName));
   }
 
   /**

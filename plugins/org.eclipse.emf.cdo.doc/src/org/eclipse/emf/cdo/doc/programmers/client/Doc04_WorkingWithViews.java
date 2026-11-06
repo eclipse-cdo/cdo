@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.doc.programmers.client;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
@@ -28,18 +29,30 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
+import org.eclipse.emf.cdo.view.CDOQuery;
+import org.eclipse.emf.cdo.view.CDOUnit;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewEvent;
 
+import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.concurrent.CriticalSection.LockedCriticalSection;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.swt.widgets.Display;
@@ -47,6 +60,8 @@ import org.eclipse.swt.widgets.Display;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -677,146 +692,663 @@ public class Doc04_WorkingWithViews
   /**
    * Resource Sets and Their Usage
    * <p>
-   * A view is associated with a {@code ResourceSet}; resources loaded through it contain objects owned by that view.
-   * Keep the resource set with the view that created it and close the view when the application is done. Do not move
-   * CDO resources or their objects to another resource set and assume their view context changes with them. A
-   * {@code ResourceSet} can also contain ordinary EMF resources, but their persistence and lifecycle remain the
-   * responsibility of their own resource implementation. See {@link Doc10_IntegratingWithEMFAndOtherFrameworks} for
-   * URI-based loading and resource factories.
+   * A {@link CDOView} is the CDO access context; its {@link CDOView#getResourceSet() ResourceSet} is the EMF loading
+   * context used to resolve CDO resource URIs and keep the resulting objects associated with that view. A session can
+   * create a ResourceSet for a view or the caller can supply one through a {@link CDOSession#openView(ResourceSet)}
+   * overload. In either case, use that set
+   * with its view for the view's lifetime. CDO objects are view-scoped; moving a resource to another set does not
+   * transfer its identity or make its objects usable in another view. Reopen objects there by {@link CDOObject#cdoID()}.
+   * <p>
+   * Use {@link CDOView#getResource(String) getResource(path)} when the repository path is already known. Use
+   * {@link CDOView#createResourceURI(String)} with {@link ResourceSet#getResource(URI, boolean)} when integrating
+   * with code that follows normal EMF URI loading. Proxy resolution then uses the resource set's URI handling and
+   * resolves CDO targets in the owning view. Ordinary EMF resources may coexist in a ResourceSet when their resource
+   * factories and URI handlers are registered; those resources retain their own persistence semantics and are not
+   * made persistent by being placed beside a CDO resource. See {@link Doc10_IntegratingWithEMFAndOtherFrameworks} for
+   * broader EMF integration.
+   * <p>
+   * The examples show direct path lookup and EMF URI loading from the same view ResourceSet:
+   * {@link #loadResources(CDOView) LoadResources.java}
    */
   public class ResourceSetsAndTheirUsage
   {
+    /**
+     * @snip
+     */
+    public void loadResources(CDOView view)
+    {
+      CDOResource byPath = view.getResource("/library/books");
+      ResourceSet resourceSet = view.getResourceSet();
+
+      URI uri = view.createResourceURI("/library/authors");
+      Resource byURI = resourceSet.getResource(uri, true);
+      System.out.println(byPath.getContents().size() + ": " + byURI.getURI());
+    }
   }
 
   /**
    * Navigating Models
    * <p>
-   * Use ordinary EMF navigation for a known, bounded part of the graph. References may be proxies, so reading one can
-   * trigger additional loading. A broad walk can therefore cause many round trips and retain many objects. When the
-   * desired result is defined by a type or predicate over repository contents, prefer a repository query and load
-   * only the returned objects. Choose deliberately between traversal and query; neither is always cheaper.
+   * Use ordinary EMF navigation for a known, bounded part of the graph: {@link EObject#eContainer()},
+   * {@link EObject#eContents()}, {@link EObject#eGet(EStructuralFeature)}, and generated getters all preserve normal
+   * EMF semantics. Containment navigation visits already-related objects, while non-containment references can be
+   * represented by proxies. Resolving a proxy may fetch a target from the repository, so a broad traversal can produce
+   * many remote loads and a large view cache. Keep navigation in one view; do not compare object identity across views.
+   * <p>
+   * For a known persistent identifier use {@link CDOView#getObject(CDOID)}; for several identifiers,
+   * {@link CDOView#getObjects(java.util.Collection)} retrieves missing objects in one round trip. For repository-wide
+   * selection by EClass use {@link CDOView#queryInstances(org.eclipse.emf.ecore.EClass)}. Prefer traversal for a
+   * bounded local graph, bulk lookup for a known ID set, and a query when the repository should select candidates.
+   * The example receives two persistent identifiers: {@code rootID} for the traversal root and {@code relatedID} for
+   * the independent bulk lookup. It demonstrates graph walking and batched ID lookup:
+   * {@link #navigateAndLoad(CDOView, CDOID, CDOID) NavigateAndLoad.java}
    */
   public class NavigatingModels
   {
+    /**
+     * @snip
+     */
+    public void navigateAndLoad(CDOView view, CDOID rootID, CDOID relatedID)
+    {
+      CDOObject root = view.getObject(rootID);
+      TreeIterator<EObject> contents = root.eAllContents();
+
+      while (contents.hasNext())
+      {
+        EObject child = contents.next();
+
+        for (EReference reference : child.eClass().getEAllReferences())
+        {
+          child.eGet(reference);
+        }
+      }
+
+      CDOObject related = view.getObjects(Collections.singleton(relatedID)).get(relatedID);
+      System.out.println(related);
+    }
   }
 
   /**
    * Waiting For Updates
    * <p>
-   * Passive updates advance or invalidate a live head view according to its session update mode. An application that
-   * needs to wait for such updates can use the view/session update-waiting API; a fixed-time historical view does not
-   * move forward. Waiting should happen outside a view critical section, because update processing may need that same
-   * synchronization boundary. Use view or session events for notification rather than polling model values.
+   * {@link CDOView} implements {@link org.eclipse.emf.cdo.util.CDOUpdatable}. Its
+   * {@link org.eclipse.emf.cdo.util.CDOUpdatable#getLastUpdateTime()} reports the timestamp of the last processed
+   * update; this may be inaccurate when {@link CDOSession.Options#isPassiveUpdateEnabled() passive updates} are
+   * disabled. {@link org.eclipse.emf.cdo.util.CDOUpdatable#waitForUpdate(long, long)} blocks until the view has
+   * processed at least the requested commit timestamp or its timeout expires, returning {@code true} only when the
+   * timestamp is reached. Pass {@link org.eclipse.emf.cdo.util.CDOUpdatable#NO_TIMEOUT} to wait indefinitely.
+   * <p>
+   * Waiting does not enable passive updates. That is session-wide configuration and must be enabled on
+   * {@link CDOSession.Options}; it affects views from that session. Head views then process remote commits according
+   * to their invalidation policy. A historical view remains at its selected branch point. For event-driven UI work,
+   * observe view invalidation events instead of polling. Never wait while holding {@link CDOView#sync()}: update
+   * processing may need the view's synchronization lock. Also avoid blocking a UI thread or a callback needed by the
+   * update dispatcher.
+   * <p>
+   * This example waits for an expected commit timestamp with a bounded timeout. In a two-session application, obtain
+   * the timestamp from the committing session's commit result or commit-info event and pass it to the observing view:
+   * {@link #waitForRemoteCommit(CDOView, long) WaitForRemoteCommit.java}
    */
   public class WaitingForUpdates
   {
+    /**
+     * @snip
+     */
+    public void waitForRemoteCommit(CDOView view, long commitTime)
+    {
+      boolean received = view.waitForUpdate(commitTime, 10_000);
+      if (received)
+      {
+        System.out.println("View reached commit time " + view.getLastUpdateTime());
+      }
+      else
+      {
+        System.out.println("Timed out; last processed update was " + view.getLastUpdateTime());
+      }
+    }
   }
 
   /**
    * Querying Resources
    * <p>
-   * Queries are created from the view and executed by the repository. Use a query when selecting candidate resources
-   * is cheaper than loading and traversing a broad resource tree; result limits and asynchronous consumption are
-   * covered in {@link Doc11_AdvancedTopics.LargeScaleAccess}.
+   * {@link CDOView#queryResources(CDOResourceFolder, String, boolean)} searches child resource nodes in one folder;
+   * pass {@code null} for the folder to search at the repository root. With {@code exactMatch == true}, the name must
+   * match exactly; otherwise the name is a prefix. The synchronous method returns a {@link java.util.List}. Its
+   * asynchronous counterpart {@link CDOView#queryResourcesAsync(CDOResourceFolder, String, boolean)} streams through
+   * a {@link org.eclipse.net4j.util.collection.CloseableIterator}, which must be closed even when iteration stops
+   * early. A resource query does not recursively search every descendant folder. Use it to select nodes before loading
+   * model contents, rather than walking a large folder tree and opening every resource.
+   * <p>
+   * This example contrasts exact matching with prefix matching and closes the asynchronous iterator:
+   * {@link #findResources(CDOView, CDOResourceFolder) FindResources.java}
    */
   public class QueryingResources
   {
+    /**
+     * @snip
+     */
+    public void findResources(CDOView view, CDOResourceFolder folder)
+    {
+      List<CDOResourceNode> exact = view.queryResources(folder, "books", true);
+      System.out.println("Exact matches: " + exact.size());
+
+      CloseableIterator<CDOResourceNode> matches = view.queryResourcesAsync(folder, "book", false);
+
+      try
+      {
+        while (matches.hasNext())
+        {
+          System.out.println(matches.next().getPath());
+        }
+      }
+      finally
+      {
+        matches.close();
+      }
+    }
   }
 
   /**
    * Querying Model Objects
    * <p>
-   * A query runs against the view's repository coordinate and returns objects associated with that view. Select a
-   * language supported by both the client and server, bind parameters instead of building expressions from untrusted
-   * strings, and close asynchronous result iterators. For a transaction, query options determine whether local dirty
-   * state participates; this does not turn a repository query into arbitrary in-memory graph evaluation. OCL is an
-   * optional integration, not a universally available language.
+   * {@link CDOView#queryInstances(org.eclipse.emf.ecore.EClass)} selects instances of an {@link org.eclipse.emf.ecore.EClass};
+   * use {@link CDOView#queryInstancesAsync(org.eclipse.emf.ecore.EClass, boolean)} when results should be consumed
+   * incrementally. The {@code exact} flag controls whether only that EClass is matched or compatible subtypes are
+   * included. Returned EObjects belong to the querying view and must not outlive or be passed to another view as if
+   * their identity were shared. Asynchronous iterators are closeable and should be used in try-with-resources.
+   * <p>
+   * Repository selection is useful when a matching set is spread across resources. Avoid querying an overly broad
+   * base type when the result is large; constrain the EClass or use a supported custom query when the predicate needs
+   * server-side expression. Transaction queries have transaction-specific behavior for local changes; see
+   * {@link CDOTransaction} and do not treat them as arbitrary in-memory graph scans. Here is a synchronous and
+   * asynchronous pattern, where {@code type} is the desired package classifier:
+   * {@link #findInstances(CDOView, EClass) FindInstances.java}
    */
   public class QueryingModelObjects
   {
+    /**
+     * @snip
+     */
+    public void findInstances(CDOView view, EClass type)
+    {
+      List<EObject> all = view.queryInstances(type);
+      System.out.println("Instances: " + all.size());
+
+      CloseableIterator<EObject> matches = view.queryInstancesAsync(type, true);
+
+      try
+      {
+        while (matches.hasNext())
+        {
+          EObject object = matches.next();
+          System.out.println(CDOUtil.getCDOObject(object).cdoID());
+        }
+      }
+      finally
+      {
+        matches.close();
+      }
+    }
   }
 
   /**
    * Querying Cross References
    * <p>
-   * {@code queryXRefs} asks the repository for objects whose selected source references point at one or more target
-   * objects. This is useful when reverse navigation is not already loaded locally. Restrict the source reference set
-   * where possible, and use the asynchronous iterator for large results so the whole result list need not be retained
-   * at once. The iterator is a resource and must be closed.
+   * {@link CDOView#queryXRefs(CDOObject, EReference...)} and its set overload ask the repository for incoming
+   * references to one or several targets. An empty reference array means all source references; supplying features
+   * narrows the search. Each {@link CDOObjectReference} describes the referencing
+   * source object and the source reference (and, for many-valued features, the list index); it is not an inverse
+   * reference value already loaded into the target EObject. This server-assisted lookup is useful when inverse edges
+   * have not been loaded. If the local graph is already loaded and bounded, normal EMF traversal may be simpler.
+   * <p>
+   * The asynchronous form streams results and requires closure. The example filters by one EReference:
+   * {@link #findIncomingReferences(CDOView, CDOObject, EReference) FindIncomingReferences.java}
    */
   public class QueryingCrossReferences
   {
+    /**
+     * @snip
+     */
+    public void findIncomingReferences(CDOView view, CDOObject target, EReference reference)
+    {
+      CloseableIterator<CDOObjectReference> refs = view.queryXRefsAsync(Collections.singleton(target), reference);
+
+      try
+      {
+        while (refs.hasNext())
+        {
+          CDOObjectReference ref = refs.next();
+          System.out.println(ref.getSourceObject() + " via " + ref.getSourceReference().getName());
+        }
+      }
+      finally
+      {
+        refs.close();
+      }
+    }
   }
 
   /**
    * Custom Queries
    * <p>
-   * A custom query language is only usable when the server has a matching {@link IQueryHandler server query handler}
-   * registered and the client supplies the language identifier and parameters that handler expects. It is not enough
-   * to install a parser on the client. Handler registration and result delivery are covered in
+   * A {@link org.eclipse.emf.cdo.view.CDOQuery} is a request associated with the creating view. Create it with
+   * {@link CDOView#createQuery(String, String)} or its context overload, set named arguments with
+   * {@link org.eclipse.emf.cdo.view.CDOQuery#setParameter(String, Object)}, and optionally cap transfer with
+   * {@link org.eclipse.emf.cdo.view.CDOQuery#setMaxResults(int)}. Query language identifiers and expressions are
+   * interpreted by a matching server {@link IQueryHandler}; availability depends on server registration and any
+   * required integration bundles. A client-side language constant alone does not install server support.
+   * <p>
+   * {@link org.eclipse.emf.cdo.view.CDOQuery#getResult(Class)} waits for the complete typed result list;
+   * {@link org.eclipse.emf.cdo.view.CDOQuery#getResultAsync(Class)} returns a streaming closeable iterator.
+   * {@link org.eclipse.emf.cdo.view.CDOQuery#getResultValue(Class)} is for a scalar result produced by the handler.
+   * Choose the result type expected by that handler. Async iterators must be closed, including on errors or early
+   * termination. Invalid parameter names or value types can fail during binding; parsing and execution failures are
+   * reported by query execution. For server handler implementation and registration, see
    * {@link Doc08_SecurityQueriesAndSpecializedExtensions.QueryHandlers}.
+   * <p>
+   * This example uses the optional OCL integration and therefore requires its server handler to be installed. The
+   * supplied context object must have a {@code purchaseOrders} reference:
+   * {@link #executeOCLQuery(CDOView, EObject) ExecuteOCLQuery.java}
    */
   public class CustomQueries
   {
+    /**
+     * @snip
+     */
+    public void executeOCLQuery(CDOView view, EObject company)
+    {
+      CDOQuery query = view.createQuery("ocl", "self.purchaseOrders->size()", company);
+      Integer count = query.getResultValue(Integer.class);
+      System.out.println("Purchase orders: " + count);
+    }
   }
 
   /**
    * Units
    * <p>
-   * A unit is a repository-defined subtree that the view can treat as a bounded working set. Units can help an
-   * application load and manage a coherent part of a large model, but they do not make unrelated object access free
-   * or replace transaction boundaries. Unit membership and lifecycle must follow the repository's unit-manager
-   * support; close units and views according to the APIs that opened them.
+   * A {@link org.eclipse.emf.cdo.view.CDOUnit} is a managed set of disjunct object subtrees rooted at CDO objects.
+   * Unlike a resource, a unit can gather related subtrees without requiring one common containment root. The view's
+   * {@link CDOView#getUnitManager() unit manager} discovers and opens units, creates them, and manages units opened
+   * for the view. Unit APIs expose roots and loaded element counts; they do not change the transaction boundary or make
+   * arbitrary objects outside the unit free to access. Unit availability and persistence behavior depend on the
+   * repository/store implementation and its capabilities, so do not assume every store supports every operation.
+   * <p>
+   * Units belong to their view and must be closed before that view. Closing releases retained elements and
+   * subscriptions. Open units can receive change notifications according to their subscription configuration.
+   * Retaining a large unit trades fewer later loads for client memory. CDO also manages resource units for
+   * resource-backed loading; these are distinct from explicitly created units. Create/open operations have explicit
+   * lifetimes; use on-demand opening only when a missing unit should be created. Create through a transaction and
+   * supply a root object from that same view. Repository configuration must support units. This example creates and
+   * closes one:
+   * {@link #createAndCloseUnit(CDOTransaction, CDOObject) CreateAndCloseUnit.java}
+   * <p>
+   * To open an existing unit, use {@link org.eclipse.emf.cdo.view.CDOUnitManager#openUnit(EObject, boolean, org.eclipse.core.runtime.IProgressMonitor)}.
+   * The inspection example checks membership using {@link org.eclipse.emf.cdo.view.CDOUnitManager#getOpenUnit(EObject)}:
+   * {@link #inspectUnit(CDOView, CDOObject) InspectUnit.java}
    */
   public class Units
   {
+    /**
+     * @snip
+     */
+    public void createAndCloseUnit(CDOTransaction transaction, CDOObject root)
+    {
+      CDOUnit unit = transaction.getUnitManager().createUnit(root, true, null);
+
+      try
+      {
+        System.out.println("Unit root: " + unit.getRoot());
+        System.out.println("Loaded elements: " + unit.getElements());
+      }
+      finally
+      {
+        unit.close();
+      }
+    }
+
+    /**
+     * @snip
+     */
+    public void inspectUnit(CDOView view, CDOObject root)
+    {
+      CDOUnit unit = view.getUnitManager().getOpenUnit(root);
+      if (unit != null)
+      {
+        System.out.println("Unit root: " + unit.getRoot());
+        System.out.println("Loaded elements: " + unit.getElements());
+        unit.close();
+      }
+    }
   }
 
   /**
    * View Events
    * <p>
-   * View events report lifecycle and target/update changes for that view. Register listeners only for the period in
-   * which the application needs them and remove them when the owning component is disposed. Event callbacks may run
-   * on a CDO-managed thread; capture the data needed by the UI and dispatch UI work to its thread instead of blocking
-   * the callback. See {@link Doc09_NotificationsAndEventHandling} for event categories and threading guidance.
+   * {@link org.eclipse.emf.cdo.view.CDOViewEvent} is the common view-scoped event contract; its source is the affected
+   * view. Listen on the view's {@link org.eclipse.net4j.util.event.INotifier#addListener(org.eclipse.net4j.util.event.IListener)}
+   * mechanism and remove the same listener when its owner is disposed. Events may be delivered on CDO-managed threads.
+   * Copy the event data needed by the UI and dispatch UI work to the UI thread; do not block update processing or hold
+   * a view critical section while calling application code. Session lifecycle events remain session events. EMF
+   * notifications go to adapters attached to model objects; option-change events come from {@code view.options()};
+   * and {@link org.eclipse.emf.cdo.view.CDOViewEventProducer} produces events for its specialized adapters. These
+   * channels have different sources and purposes. See {@link Doc09_NotificationsAndEventHandling} for general guidance.
+   * <p>
+   * Registering and removing a listener:
+   * {@link #observeViewEvents(CDOView) ObserveViewEvents.java}
    */
   public class ViewEvents
   {
+    /**
+     * @snip
+     */
+    public void observeViewEvents(CDOView view)
+    {
+      IListener listener = event -> {
+        if (event instanceof CDOViewEvent)
+        {
+          System.out.println("View event: " + event.getClass().getSimpleName());
+        }
+      };
+
+      view.addListener(listener);
+      view.removeListener(listener);
+    }
+
+    /**
+     * View Invalidation Events
+     * <p>
+     * {@link org.eclipse.emf.cdo.view.CDOViewInvalidationEvent} is emitted after a view processes a remote commit.
+     * It exposes the commit timestamp, dirty objects, revision deltas, and detached objects. It reports view update
+     * processing; adapters receive their own EMF notifications separately. Keep listeners fast and use the timestamp
+     * to correlate with {@link org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent}.
+     */
+    public class InvalidationEvents
+    {
+    }
+
+    /**
+     * View Lock Events
+     * <p>
+     * {@link org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent} reports lock changes visible to the view, including
+     * sender and affected objects. Use it to refresh lock decorations; it is distinct from a lock acquisition call
+     * result. Delivery follows view event threading rules.
+     */
+    public class LockEvents
+    {
+    }
+
+    /**
+     * View Permission Events
+     * <p>
+     * {@link org.eclipse.emf.cdo.view.CDOViewPermissionsChangedEvent} carries a map of object IDs to old/new
+     * permissions when permissions visible to the view change. Applications can refresh enabled actions from this
+     * event. Permission state may also depend on server security configuration.
+     */
+    public class PermissionEvents
+    {
+    }
+
+    /**
+     * View Target Events
+     * <p>
+     * {@link org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent} reports the old and new branch point when a
+     * movable view changes target. It is useful for invalidating client presentations tied to a branch point. A
+     * fixed historical view does not advance merely because a commit occurs.
+     */
+    public class TargetEvents
+    {
+    }
+
+    /**
+     * Adapter Notification Completion Events
+     * <p>
+     * {@link org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent} indicates that the view has finished notifying
+     * EMF adapters for a remote commit; its timestamp correlates with the invalidation event. This is a view event
+     * about completed adapter delivery, not an individual {@link Notification} and not an adapter notification itself.
+     */
+    public class AdaptersNotifiedEvents
+    {
+    }
+
+    /**
+     * Durability Events
+     * <p>
+     * {@link org.eclipse.emf.cdo.view.CDOViewDurabilityChangedEvent} reports changes to a view's durable-locking
+     * identifier, exposing the old and new IDs. Use it to track durability state; lock operations and lock-change
+     * events remain separate APIs.
+     */
+    public class DurabilityEvents
+    {
+    }
+
+    /**
+     * Provider Events
+     * <p>
+     * {@link org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent} reports the old and new provider associated with
+     * a view. It is primarily useful to infrastructure managing view-provider selection; ordinary clients rarely
+     * need it. Treat it as a view event and keep its callback short.
+     */
+    public class ProviderEvents
+    {
+    }
   }
 
   /**
    * View Options
    * <p>
-   * View options control view-local behavior such as invalidation, object-cache references, adapters, and locking or
-   * notification details. Configure options before relying on the resulting policy, and distinguish them from
-   * session options that apply to all views opened by that session. A view option cannot enable a repository feature
-   * that the server/store does not provide.
+   * {@link CDOView.Options} controls view-local notification, invalidation, cache, and loading behavior. These
+   * settings differ from {@link CDOSession.Options}, which configures the session and can affect all its views (for
+   * example passive updates). Option changes emit {@link org.eclipse.net4j.util.options.IOptionsEvent}s from the
+   * options object, not {@link org.eclipse.emf.cdo.view.CDOViewEvent}s from the view. Defaults below refer to the
+   * current API implementation; session configuration and repository capabilities can affect observed behavior.
+   * <p>
+   * A listener can observe option changes directly:
+   * {@link #watchOptions(CDOView) WatchOptions.java}
    */
   public class ViewOptions
   {
+    /**
+     * @snip
+     */
+    public void watchOptions(CDOView view)
+    {
+      IListener listener = event -> System.out.println(event.getClass().getSimpleName());
+
+      view.options().addListener(listener);
+      view.options().setLoadNotificationEnabled(true);
+      view.options().removeListener(listener);
+    }
+
+    /**
+     * Load Notification Enabled
+     * <p>
+     * {@link CDOView.Options#isLoadNotificationEnabled()} and {@link CDOView.Options#setLoadNotificationEnabled(boolean)}
+     * control EMF adapter notifications when objects load. The implementation default is {@code false}. Enable this
+     * when adapters maintain derived or presentation state that must react to loading. It is separate from remote
+     * invalidation and subscriptions; changes emit {@link CDOView.LoadNotificationEvent}.
+     */
+    public class LoadNotificationEnabled
+    {
+    }
+
+    /**
+     * Detachment Notification Enabled
+     * <p>
+     * {@link CDOView.Options#isDetachmentNotificationEnabled()} and {@link CDOView.Options#setDetachmentNotificationEnabled(boolean)}
+     * control adapter notification when remote changes detach objects. The default is {@code false}. Enable it when
+     * clients need to discard references to removed objects. It does not subscribe objects; changes emit
+     * {@link CDOView.DetachmentNotificationEvent}.
+     */
+    public class DetachmentNotificationEnabled
+    {
+    }
+
+    /**
+     * Invalidation Notification Enabled
+     * <p>
+     * {@link CDOView.Options#isInvalidationNotificationEnabled()} and {@link CDOView.Options#setInvalidationNotificationEnabled(boolean)}
+     * control object adapter invalidation notifications. Default is {@code false}. This controls EMF notifications,
+     * not whether the view processes remote commits or emits its view-level invalidation event. Changes emit
+     * {@link CDOView.InvalidationNotificationEvent}.
+     */
+    public class InvalidationNotificationEnabled
+    {
+    }
+
+    /**
+     * Invalidation Policy
+     * <p>
+     * {@link CDOView.Options#getInvalidationPolicy()} and {@link CDOView.Options#setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)}
+    * select how a view treats remotely changed objects. The default is
+    * {@link org.eclipse.emf.cdo.view.CDOInvalidationPolicy#RELAXED}; {@link org.eclipse.emf.cdo.view.CDOInvalidationPolicy#STRICT}
+    * clears the object's revision on invalidation and reports objects that have become invalid, while RELAXED leaves
+    * that handling to later access. This is view-local and requires the session to receive passive updates. Changes
+    * emit {@link CDOView.InvalidationPolicyEvent}.
+     */
+    public class InvalidationPolicy
+    {
+    }
+
+    /**
+     * Change Subscription Policies
+     * <p>
+     * {@link CDOView.Options#getChangeSubscriptionPolicies()}, {@link CDOView.Options#addChangeSubscriptionPolicy(CDOAdapterPolicy)},
+     * and {@link CDOView.Options#removeChangeSubscriptionPolicy(CDOAdapterPolicy)} select adapted objects registered
+     * for remote changes. Initially the policy set is empty. Common policies are {@link CDOAdapterPolicy#NONE},
+     * {@link CDOAdapterPolicy#ALL}, and {@link CDOAdapterPolicy#CDO}; an object needs a matching adapter. Session
+     * passive updates must also be enabled. Changes emit {@link CDOView.ChangeSubscriptionPoliciesEvent}.
+     */
+    public class ChangeSubscriptionPolicies
+    {
+    }
+
+    /**
+     * Cache Reference Type
+     * <p>
+     * {@link CDOView.Options#getCacheReferenceType()} and {@link CDOView.Options#setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)}
+     * select strong, soft, or weak references in the view cache. The implementation default is
+     * {@link org.eclipse.net4j.util.ref.ReferenceType#SOFT}. Strong references retain objects and increase memory;
+     * soft and weak references permit collection subject to the strong-reference policy. Passing {@code null}
+     * restores soft references. The setter reports whether it changed and emits
+     * {@link CDOView.CacheReferenceTypeEvent}.
+     */
+    public class CacheReferenceType
+    {
+    }
+
+    /**
+     * Strong Reference Policy
+     * <p>
+     * {@link CDOView.Options#getStrongReferencePolicy()} and {@link CDOView.Options#setStrongReferencePolicy(CDOAdapterPolicy)}
+     * choose which adapted objects remain strongly referenced when the cache reference type is non-strong. Default
+     * is {@link CDOAdapterPolicy#ALL}; policies can be narrowed to {@code NONE}, {@code CDO}, or a custom policy.
+     * Balance memory use against adapter/object continuity. Changes emit {@link CDOView.StrongReferencePolicyEvent}.
+     */
+    public class StrongReferencePolicy
+    {
+    }
+
+    /**
+     * Stale Reference Policy
+     * <p>
+     * {@link CDOView.Options#getStaleReferencePolicy()} and {@link CDOView.Options#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)}
+    * control references to objects absent at the view target. The default is
+    * {@link org.eclipse.emf.cdo.view.CDOStaleReferencePolicy#PROXY}, which supplies a dynamic proxy; the
+    * {@link org.eclipse.emf.cdo.view.CDOStaleReferencePolicy#EXCEPTION} policy throws an
+    * {@link org.eclipse.emf.cdo.util.ObjectNotFoundException}. The older Behaviour methods are deprecated. Changes
+    * emit {@link CDOView.StaleReferencePolicyEvent}.
+     */
+    public class StaleReferencePolicy
+    {
+    }
+
+    /**
+     * Revision Prefetching Policy
+     * <p>
+     * {@link CDOView.Options#getRevisionPrefetchingPolicy()} and
+     * {@link CDOView.Options#setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)}
+     * control fetching revisions in advance to reduce later round trips. The current implementation initializes the
+     * policy to {@code NO_REVISION_PREFETCHING}; {@code DEFAULT_REVISION_PREFETCHING} is a policy constant, not a
+     * guarantee of every read's batch size. Profile before tuning because prefetching trades transfer and memory for
+     * fewer later requests. Changes emit {@link CDOView.RevisionPrefetchingPolicyEvent}.
+     */
+    public class RevisionPrefetchingPolicy
+    {
+    }
+
+    /**
+     * Feature Analyzer
+     * <p>
+     * {@link CDOView.Options#getFeatureAnalyzer()} and {@link CDOView.Options#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)}
+     * install analysis of feature access for loading strategies. Default is {@link CDOFeatureAnalyzer#NOOP}. It does
+     * not change model semantics. Changes emit {@link CDOView.FeatureAnalyzerEvent}.
+     */
+    public class FeatureAnalyzer
+    {
+    }
+
+    /**
+     * Clear Adapter Policy
+     * <p>
+     * {@link CDOView.Options#getClearAdapterPolicy()} and {@link CDOView.Options#setClearAdapterPolicy(CDOAdapterPolicy)}
+     * select which adapters CDO removes when clearing object adapters. Per-view default is {@code null}, so the view
+     * set's default policy applies. Changes emit {@link CDOView.ClearAdapterPolicyEvent}.
+     */
+    public class ClearAdapterPolicy
+    {
+    }
+
+    /**
+     * Lock Notification Enabled
+     * <p>
+     * This inherited option is managed by {@link org.eclipse.emf.cdo.common.CDOCommonView.Options#isLockNotificationEnabled()}
+     * and {@link org.eclipse.emf.cdo.common.CDOCommonView.Options#setLockNotificationEnabled(boolean)}. Default is
+     * {@code false}; enabling it requests protocol lock-state updates for this view and requires appropriate server
+    * support. The session's {@link org.eclipse.emf.cdo.common.CDOCommonSession.Options#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)}
+    * also controls notification delivery modes. Changes emit the inherited
+    * {@link org.eclipse.emf.cdo.common.CDOCommonView.Options.LockNotificationEvent}; this is an option event, not a
+    * view event.
+     */
+    public class LockNotificationEnabled
+    {
+    }
   }
 
   /**
    * View Properties
    * <p>
-   * View properties are an application-owned key/value area associated with a view. They are useful for associating
-   * client-side metadata with that view; they are not persisted model features, are not shared with the repository,
-   * and should not be used to smuggle objects between views. Remove values that retain large application objects
-   * when they are no longer needed.
+   * {@link CDOView#properties()} exposes the view's {@link org.eclipse.net4j.util.properties.IPropertiesContainer}
+   * for application metadata. Properties are local to that view's lifetime, are not persisted in the repository, and
+   * are distinct from session properties and persistent EStructuralFeatures. Use application-owned keys and remove
+   * values when they are no longer needed, especially if they retain large UI or model graphs. Property access and
+   * listener behavior follow the properties-container API; do not assume cross-thread safety beyond the guarantees
+   * of the concrete container. The example sets, reads, and removes a value:
+   * {@link #useViewProperties(CDOView) UseViewProperties.java}
    */
   public class ViewProperties
   {
+    /**
+     * @snip
+     */
+    public void useViewProperties(CDOView view)
+    {
+      String key = "com.example.selection";
+      view.properties().put(key, "current-page");
+
+      Object selection = view.properties().get(key);
+      System.out.println(selection);
+
+      view.properties().remove(key);
+    }
   }
 
   /**
-   * Example: Open a read-only view from a session
    * @snip
-   * Opens a CDOView and prints its ID.
-   * @param session the CDOSession
    */
   public void openReadOnlyView(CDOSession session)
   {
     CDOView view = session.openView();
+
     try
     {
       System.out.println("Opened view with ID: " + view.getViewID());
@@ -828,12 +1360,7 @@ public class Doc04_WorkingWithViews
   }
 
   /**
-   * Example: Open a transaction, change a feature on a persistent object, and commit it.
    * @snip
-   * @param session the CDOSession
-   * @param objectID the persistent ID of the object to modify
-   * @param feature a feature belonging to the object's EClass
-   * @param value a value valid for the feature's type and multiplicity
    */
   public void modifyAndCommit(CDOSession session, CDOID objectID, EStructuralFeature feature, Object value) throws CommitException
   {

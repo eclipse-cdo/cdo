@@ -104,7 +104,26 @@ to use views effectively is key to building responsive and scalable applications
 <tr><td>11&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#CustomQueries" title="Chapter in CDO Model Repository Documentation">Custom Queries</a></td></tr>
 <tr><td>12&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#Units" title="Chapter in CDO Model Repository Documentation">Units</a></td></tr>
 <tr><td>13&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#ViewEvents" title="Chapter in CDO Model Repository Documentation">View Events</a></td></tr>
+<tr><td></td><td>13.1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#InvalidationEvents" title="Chapter in CDO Model Repository Documentation">View Invalidation Events</a></td></tr>
+<tr><td></td><td>13.2&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#LockEvents" title="Chapter in CDO Model Repository Documentation">View Lock Events</a></td></tr>
+<tr><td></td><td>13.3&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#PermissionEvents" title="Chapter in CDO Model Repository Documentation">View Permission Events</a></td></tr>
+<tr><td></td><td>13.4&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#TargetEvents" title="Chapter in CDO Model Repository Documentation">View Target Events</a></td></tr>
+<tr><td></td><td>13.5&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#AdaptersNotifiedEvents" title="Chapter in CDO Model Repository Documentation">Adapter Notification Completion Events</a></td></tr>
+<tr><td></td><td>13.6&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#DurabilityEvents" title="Chapter in CDO Model Repository Documentation">Durability Events</a></td></tr>
+<tr><td></td><td>13.7&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#ProviderEvents" title="Chapter in CDO Model Repository Documentation">Provider Events</a></td></tr>
 <tr><td>14&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#ViewOptions" title="Chapter in CDO Model Repository Documentation">View Options</a></td></tr>
+<tr><td></td><td>14.1&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#LoadNotificationEnabled" title="Chapter in CDO Model Repository Documentation">Load Notification Enabled</a></td></tr>
+<tr><td></td><td>14.2&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#DetachmentNotificationEnabled" title="Chapter in CDO Model Repository Documentation">Detachment Notification Enabled</a></td></tr>
+<tr><td></td><td>14.3&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#InvalidationNotificationEnabled" title="Chapter in CDO Model Repository Documentation">Invalidation Notification Enabled</a></td></tr>
+<tr><td></td><td>14.4&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#InvalidationPolicy" title="Chapter in CDO Model Repository Documentation">Invalidation Policy</a></td></tr>
+<tr><td></td><td>14.5&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#ChangeSubscriptionPolicies" title="Chapter in CDO Model Repository Documentation">Change Subscription Policies</a></td></tr>
+<tr><td></td><td>14.6&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#CacheReferenceType" title="Chapter in CDO Model Repository Documentation">Cache Reference Type</a></td></tr>
+<tr><td></td><td>14.7&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#StrongReferencePolicy" title="Chapter in CDO Model Repository Documentation">Strong Reference Policy</a></td></tr>
+<tr><td></td><td>14.8&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#StaleReferencePolicy" title="Chapter in CDO Model Repository Documentation">Stale Reference Policy</a></td></tr>
+<tr><td></td><td>14.9&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#RevisionPrefetchingPolicy" title="Chapter in CDO Model Repository Documentation">Revision Prefetching Policy</a></td></tr>
+<tr><td></td><td>14.10&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#FeatureAnalyzer" title="Chapter in CDO Model Repository Documentation">Feature Analyzer</a></td></tr>
+<tr><td></td><td>14.11&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#ClearAdapterPolicy" title="Chapter in CDO Model Repository Documentation">Clear Adapter Policy</a></td></tr>
+<tr><td></td><td>14.12&nbsp;</td><td class="te" colspan="3"><a href="Doc04_WorkingWithViews.html#LockNotificationEnabled" title="Chapter in CDO Model Repository Documentation">Lock Notification Enabled</a></td></tr>
 <tr><td>15&nbsp;</td><td class="te" colspan="4"><a href="Doc04_WorkingWithViews.html#ViewProperties" title="Chapter in CDO Model Repository Documentation">View Properties</a></td></tr>
 </table>
 </p>
@@ -138,6 +157,7 @@ instead of carrying model objects across view lifetimes.
           <div id="editor_content_2_UnderstandingViewsAndTheirTypes_1" style="padding:8px;">
             <code>
             CDOView&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
+            <br/>
             <font color="#7f0055"><b>try</b></font><br/>
             {<br/>
             &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Opened&nbsp;view&nbsp;with&nbsp;ID:&nbsp;&#34;&nbsp;</font>+&nbsp;view.getViewID());<br/>
@@ -234,6 +254,7 @@ avoid reopening it; view lifetime should match the consistency and object-identi
           <div id="editor_content_2_OpeningAndClosingViews_1" style="padding:8px;">
             <code>
             CDOView&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
+            <br/>
             <font color="#7f0055"><b>try</b></font><br/>
             {<br/>
             &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Opened&nbsp;view&nbsp;with&nbsp;ID:&nbsp;&#34;&nbsp;</font>+&nbsp;view.getViewID());<br/>
@@ -1116,82 +1137,745 @@ notifications, and so on.
 
 <h2><a name="ResourceSetsAndTheirUsage"></a>5&nbsp;&nbsp;Resource Sets and Their Usage</h2>
 <p>
-A view is associated with a ResourceSet; resources loaded through it contain objects owned by that view.
-Keep the resource set with the view that created it and close the view when the application is done. Do not move
-CDO resources or their objects to another resource set and assume their view context changes with them. A
-ResourceSet can also contain ordinary EMF resources, but their persistence and lifecycle remain the
-responsibility of their own resource implementation. See <a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Article in CDO Model Repository Documentation">Integrating with EMF and Other Frameworks</a> for
-URI-based loading and resource factories.
+A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> is the CDO access context; its <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getResourceSet()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>ResourceSet</code></a> is the EMF loading
+context used to resolve CDO resource URIs and keep the resulting objects associated with that view. A session can
+create a ResourceSet for a view or the caller can supply one through a <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewContainer.html#openView(org.eclipse.emf.ecore.resource.ResourceSet)" title="Method in org.eclipse.emf.cdo.view.CDOViewContainer"><code>CDOSession.openView(ResourceSet)</code></a>
+overload. In either case, use that set
+with its view for the view's lifetime. CDO objects are view-scoped; moving a resource to another set does not
+transfer its identity or make its objects usable in another view. Reopen objects there by <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoID()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoID()</code></a>.
+<p>
+Use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getResource(java.lang.String)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>getResource(path)</code></a> when the repository path is already known. Use
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#createResourceURI(java.lang.String)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.createResourceURI(String)</code></a> with <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html#getResource(org.eclipse.emf.common.util.URI,boolean)" target="_blank" title="Method in org.eclipse.emf.ecore.resource.ResourceSet"><code>ResourceSet.getResource(URI, boolean)</code></a> when integrating
+with code that follows normal EMF URI loading. Proxy resolution then uses the resource set's URI handling and
+resolves CDO targets in the owning view. Ordinary EMF resources may coexist in a ResourceSet when their resource
+factories and URI handlers are registered; those resources retain their own persistence semantics and are not
+made persistent by being placed beside a CDO resource. See <a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Article in CDO Model Repository Documentation">Integrating with EMF and Other Frameworks</a> for
+broader EMF integration.
+<p>
+The examples show direct path lookup and EMF URI loading from the same view ResourceSet:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ResourceSetsAndTheirUsage_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">LoadResources.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ResourceSetsAndTheirUsage_1')" id="max_ResourceSetsAndTheirUsage_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ResourceSetsAndTheirUsage_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ResourceSetsAndTheirUsage_1" style="padding:8px;">
+            <code>
+            CDOResource&nbsp;byPath&nbsp;=&nbsp;view.getResource(<font color="#2a00ff">&#34;/library/books&#34;</font>);<br/>
+            ResourceSet&nbsp;resourceSet&nbsp;=&nbsp;view.getResourceSet();<br/>
+            <br/>
+            URI&nbsp;uri&nbsp;=&nbsp;view.createResourceURI(<font color="#2a00ff">&#34;/library/authors&#34;</font>);<br/>
+            Resource&nbsp;byURI&nbsp;=&nbsp;resourceSet.getResource(uri,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            System.out.println(byPath.getContents().size()&nbsp;+&nbsp;<font color="#2a00ff">&#34;:&nbsp;&#34;&nbsp;</font>+&nbsp;byURI.getURI());            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="NavigatingModels"></a>6&nbsp;&nbsp;Navigating Models</h2>
 <p>
-Use ordinary EMF navigation for a known, bounded part of the graph. References may be proxies, so reading one can
-trigger additional loading. A broad walk can therefore cause many round trips and retain many objects. When the
-desired result is defined by a type or predicate over repository contents, prefer a repository query and load
-only the returned objects. Choose deliberately between traversal and query; neither is always cheaper.
+Use ordinary EMF navigation for a known, bounded part of the graph: <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainer()" target="_blank" title="Method in org.eclipse.emf.ecore.EObject"><code>EObject.eContainer()</code></a>,
+<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContents()" target="_blank" title="Method in org.eclipse.emf.ecore.EObject"><code>EObject.eContents()</code></a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eGet(org.eclipse.emf.ecore.EStructuralFeature)" target="_blank" title="Method in org.eclipse.emf.ecore.EObject"><code>EObject.eGet(EStructuralFeature)</code></a>, and generated getters all preserve normal
+EMF semantics. Containment navigation visits already-related objects, while non-containment references can be
+represented by proxies. Resolving a proxy may fetch a target from the repository, so a broad traversal can produce
+many remote loads and a large view cache. Keep navigation in one view; do not compare object identity across views.
+<p>
+For a known persistent identifier use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getObject(CDOID)</code></a>; for several identifiers,
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getObjects(java.util.Collection)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getObjects(java.util.Collection)</code></a> retrieves missing objects in one round trip. For repository-wide
+selection by EClass use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryInstances(org.eclipse.emf.ecore.EClass)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryInstances(org.eclipse.emf.ecore.EClass)</code></a>. Prefer traversal for a
+bounded local graph, bulk lookup for a known ID set, and a query when the repository should select candidates.
+The example receives two persistent identifiers: rootID for the traversal root and relatedID for
+the independent bulk lookup. It demonstrates graph walking and batched ID lookup:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_NavigatingModels_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">NavigateAndLoad.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('NavigatingModels_1')" id="max_NavigatingModels_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_NavigatingModels_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_NavigatingModels_1" style="padding:8px;">
+            <code>
+            CDOObject&nbsp;root&nbsp;=&nbsp;view.getObject(rootID);<br/>
+            TreeIterator&lt;EObject&gt;&nbsp;contents&nbsp;=&nbsp;root.eAllContents();<br/>
+            <br/>
+            <font color="#7f0055"><b>while&nbsp;</b></font>(contents.hasNext())<br/>
+            {<br/>
+            &nbsp;&nbsp;EObject&nbsp;child&nbsp;=&nbsp;contents.next();<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>for&nbsp;</b></font>(EReference&nbsp;reference&nbsp;:&nbsp;child.eClass().getEAllReferences())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;child.eGet(reference);<br/>
+            &nbsp;&nbsp;}<br/>
+            }<br/>
+            <br/>
+            CDOObject&nbsp;related&nbsp;=&nbsp;view.getObjects(Collections.singleton(relatedID)).get(relatedID);<br/>
+            System.out.println(related);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="WaitingForUpdates"></a>7&nbsp;&nbsp;Waiting For Updates</h2>
 <p>
-Passive updates advance or invalidate a live head view according to its session update mode. An application that
-needs to wait for such updates can use the view/session update-waiting API; a fixed-time historical view does not
-move forward. Waiting should happen outside a view critical section, because update processing may need that same
-synchronization boundary. Use view or session events for notification rather than polling model values.
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> implements <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUpdatable.html" title="Interface in org.eclipse.emf.cdo.util"><code>org.eclipse.emf.cdo.util.CDOUpdatable</code></a>. Its
+<a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUpdatable.html#getLastUpdateTime()" title="Method in org.eclipse.emf.cdo.util.CDOUpdatable"><code>org.eclipse.emf.cdo.util.CDOUpdatable.getLastUpdateTime()</code></a> reports the timestamp of the last processed
+update; this may be inaccurate when <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>passive updates</code></a> are
+disabled. <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUpdatable.html#waitForUpdate(long,long)" title="Method in org.eclipse.emf.cdo.util.CDOUpdatable"><code>org.eclipse.emf.cdo.util.CDOUpdatable.waitForUpdate(long, long)</code></a> blocks until the view has
+processed at least the requested commit timestamp or its timeout expires, returning true only when the
+timestamp is reached. Pass <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUpdatable.html#NO_TIMEOUT" title="Field in org.eclipse.emf.cdo.util.CDOUpdatable"><code>org.eclipse.emf.cdo.util.CDOUpdatable.NO_TIMEOUT</code></a> to wait indefinitely.
+<p>
+Waiting does not enable passive updates. That is session-wide configuration and must be enabled on
+<a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html" title="Interface in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.Options</code></a>; it affects views from that session. Head views then process remote commits according
+to their invalidation policy. A historical view remains at its selected branch point. For event-driven UI work,
+observe view invalidation events instead of polling. Never wait while holding <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a>: update
+processing may need the view's synchronization lock. Also avoid blocking a UI thread or a callback needed by the
+update dispatcher.
+<p>
+This example waits for an expected commit timestamp with a bounded timeout. In a two-session application, obtain
+the timestamp from the committing session's commit result or commit-info event and pass it to the observing view:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_WaitingForUpdates_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">WaitForRemoteCommit.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('WaitingForUpdates_1')" id="max_WaitingForUpdates_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_WaitingForUpdates_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_WaitingForUpdates_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>boolean&nbsp;</b></font>received&nbsp;=&nbsp;view.waitForUpdate(commitTime,&nbsp;<font color="#990000">10</font>_000);<br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(received)<br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;View&nbsp;reached&nbsp;commit&nbsp;time&nbsp;&#34;&nbsp;</font>+&nbsp;view.getLastUpdateTime());<br/>
+            }<br/>
+            <font color="#7f0055"><b>else</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Timed&nbsp;out;&nbsp;last&nbsp;processed&nbsp;update&nbsp;was&nbsp;&#34;&nbsp;</font>+&nbsp;view.getLastUpdateTime());<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="QueryingResources"></a>8&nbsp;&nbsp;Querying Resources</h2>
 <p>
-Queries are created from the view and executed by the repository. Use a query when selecting candidate resources
-is cheaper than loading and traversing a broad resource tree; result limits and asynchronous consumption are
-covered in <a href="Doc11_AdvancedTopics.html#LargeScaleAccess" title="Chapter in CDO Model Repository Documentation">Queries and Large-Scale Model Access</a>.
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryResources(org.eclipse.emf.cdo.eresource.CDOResourceFolder,java.lang.String,boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryResources(CDOResourceFolder, String, boolean)</code></a> searches child resource nodes in one folder;
+pass null for the folder to search at the repository root. With exactMatch == true, the name must
+match exactly; otherwise the name is a prefix. The synchronous method returns a java.util.List. Its
+asynchronous counterpart <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryResourcesAsync(org.eclipse.emf.cdo.eresource.CDOResourceFolder,java.lang.String,boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryResourcesAsync(CDOResourceFolder, String, boolean)</code></a> streams through
+a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html" title="Interface in org.eclipse.net4j.util.collection"><code>org.eclipse.net4j.util.collection.CloseableIterator</code></a>, which must be closed even when iteration stops
+early. A resource query does not recursively search every descendant folder. Use it to select nodes before loading
+model contents, rather than walking a large folder tree and opening every resource.
+<p>
+This example contrasts exact matching with prefix matching and closes the asynchronous iterator:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_QueryingResources_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">FindResources.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('QueryingResources_1')" id="max_QueryingResources_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_QueryingResources_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_QueryingResources_1" style="padding:8px;">
+            <code>
+            List&lt;CDOResourceNode&gt;&nbsp;exact&nbsp;=&nbsp;view.queryResources(folder,&nbsp;<font color="#2a00ff">&#34;books&#34;</font>,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Exact&nbsp;matches:&nbsp;&#34;&nbsp;</font>+&nbsp;exact.size());<br/>
+            <br/>
+            CloseableIterator&lt;CDOResourceNode&gt;&nbsp;matches&nbsp;=&nbsp;view.queryResourcesAsync(folder,&nbsp;<font color="#2a00ff">&#34;book&#34;</font>,&nbsp;<font color="#7f0055"><b>false</b></font>);<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(matches.hasNext())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(matches.next().getPath());<br/>
+            &nbsp;&nbsp;}<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;matches.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="QueryingModelObjects"></a>9&nbsp;&nbsp;Querying Model Objects</h2>
 <p>
-A query runs against the view's repository coordinate and returns objects associated with that view. Select a
-language supported by both the client and server, bind parameters instead of building expressions from untrusted
-strings, and close asynchronous result iterators. For a transaction, query options determine whether local dirty
-state participates; this does not turn a repository query into arbitrary in-memory graph evaluation. OCL is an
-optional integration, not a universally available language.
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryInstances(org.eclipse.emf.ecore.EClass)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryInstances(org.eclipse.emf.ecore.EClass)</code></a> selects instances of an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>org.eclipse.emf.ecore.EClass</code></a>;
+use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryInstancesAsync(org.eclipse.emf.ecore.EClass,boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryInstancesAsync(org.eclipse.emf.ecore.EClass, boolean)</code></a> when results should be consumed
+incrementally. The exact flag controls whether only that EClass is matched or compatible subtypes are
+included. Returned EObjects belong to the querying view and must not outlive or be passed to another view as if
+their identity were shared. Asynchronous iterators are closeable and should be used in try-with-resources.
+<p>
+Repository selection is useful when a matching set is spread across resources. Avoid querying an overly broad
+base type when the result is large; constrain the EClass or use a supported custom query when the predicate needs
+server-side expression. Transaction queries have transaction-specific behavior for local changes; see
+<a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransaction</code></a> and do not treat them as arbitrary in-memory graph scans. Here is a synchronous and
+asynchronous pattern, where type is the desired package classifier:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_QueryingModelObjects_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">FindInstances.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('QueryingModelObjects_1')" id="max_QueryingModelObjects_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_QueryingModelObjects_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_QueryingModelObjects_1" style="padding:8px;">
+            <code>
+            List&lt;EObject&gt;&nbsp;all&nbsp;=&nbsp;view.queryInstances(type);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Instances:&nbsp;&#34;&nbsp;</font>+&nbsp;all.size());<br/>
+            <br/>
+            CloseableIterator&lt;EObject&gt;&nbsp;matches&nbsp;=&nbsp;view.queryInstancesAsync(type,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(matches.hasNext())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;EObject&nbsp;object&nbsp;=&nbsp;matches.next();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(CDOUtil.getCDOObject(object).cdoID());<br/>
+            &nbsp;&nbsp;}<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;matches.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="QueryingCrossReferences"></a>10&nbsp;&nbsp;Querying Cross References</h2>
 <p>
-queryXRefs asks the repository for objects whose selected source references point at one or more target
-objects. This is useful when reverse navigation is not already loaded locally. Restrict the source reference set
-where possible, and use the asynchronous iterator for large results so the whole result list need not be retained
-at once. The iterator is a resource and must be closed.
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#queryXRefs(org.eclipse.emf.cdo.CDOObject,org.eclipse.emf.ecore.EReference[])" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.queryXRefs(CDOObject, EReference...)</code></a> and its set overload ask the repository for incoming
+references to one or several targets. An empty reference array means all source references; supplying features
+narrows the search. Each <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObjectReference.html" title="Interface in org.eclipse.emf.cdo"><code>CDOObjectReference</code></a> describes the referencing
+source object and the source reference (and, for many-valued features, the list index); it is not an inverse
+reference value already loaded into the target EObject. This server-assisted lookup is useful when inverse edges
+have not been loaded. If the local graph is already loaded and bounded, normal EMF traversal may be simpler.
+<p>
+The asynchronous form streams results and requires closure. The example filters by one EReference:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_QueryingCrossReferences_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">FindIncomingReferences.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('QueryingCrossReferences_1')" id="max_QueryingCrossReferences_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_QueryingCrossReferences_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_QueryingCrossReferences_1" style="padding:8px;">
+            <code>
+            CloseableIterator&lt;CDOObjectReference&gt;&nbsp;refs&nbsp;=&nbsp;view.queryXRefsAsync(Collections.singleton(target),&nbsp;reference);<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>while&nbsp;</b></font>(refs.hasNext())<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;CDOObjectReference&nbsp;ref&nbsp;=&nbsp;refs.next();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(ref.getSourceObject()&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;via&nbsp;&#34;&nbsp;</font>+&nbsp;ref.getSourceReference().getName());<br/>
+            &nbsp;&nbsp;}<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;refs.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="CustomQueries"></a>11&nbsp;&nbsp;Custom Queries</h2>
 <p>
-A custom query language is only usable when the server has a matching <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>server query handler</code></a>
-registered and the client supplies the language identifier and parameters that handler expects. It is not enough
-to install a parser on the client. Handler registration and result delivery are covered in
+A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOQuery</code></a> is a request associated with the creating view. Create it with
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#createQuery(java.lang.String,java.lang.String)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.createQuery(String, String)</code></a> or its context overload, set named arguments with
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html#setParameter(java.lang.String,java.lang.Object)" title="Method in org.eclipse.emf.cdo.view.CDOQuery"><code>org.eclipse.emf.cdo.view.CDOQuery.setParameter(String, Object)</code></a>, and optionally cap transfer with
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html#setMaxResults(int)" title="Method in org.eclipse.emf.cdo.view.CDOQuery"><code>org.eclipse.emf.cdo.view.CDOQuery.setMaxResults(int)</code></a>. Query language identifiers and expressions are
+interpreted by a matching server <a href="../../../javadoc/org/eclipse/emf/cdo/server/IQueryHandler.html" title="Interface in org.eclipse.emf.cdo.server"><code>IQueryHandler</code></a>; availability depends on server registration and any
+required integration bundles. A client-side language constant alone does not install server support.
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html#getResult(java.lang.Class)" title="Method in org.eclipse.emf.cdo.view.CDOQuery"><code>org.eclipse.emf.cdo.view.CDOQuery.getResult(Class)</code></a> waits for the complete typed result list;
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html#getResultAsync(java.lang.Class)" title="Method in org.eclipse.emf.cdo.view.CDOQuery"><code>org.eclipse.emf.cdo.view.CDOQuery.getResultAsync(Class)</code></a> returns a streaming closeable iterator.
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOQuery.html#getResultValue(java.lang.Class)" title="Method in org.eclipse.emf.cdo.view.CDOQuery"><code>org.eclipse.emf.cdo.view.CDOQuery.getResultValue(Class)</code></a> is for a scalar result produced by the handler.
+Choose the result type expected by that handler. Async iterators must be closed, including on errors or early
+termination. Invalid parameter names or value types can fail during binding; parsing and execution failures are
+reported by query execution. For server handler implementation and registration, see
 <a href="../server/Doc08_SecurityQueriesAndSpecializedExtensions.html#QueryHandlers" title="Chapter in CDO Model Repository Documentation">Query Handlers</a>.
+<p>
+This example uses the optional OCL integration and therefore requires its server handler to be installed. The
+supplied context object must have a purchaseOrders reference:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_CustomQueries_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ExecuteOCLQuery.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('CustomQueries_1')" id="max_CustomQueries_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_CustomQueries_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_CustomQueries_1" style="padding:8px;">
+            <code>
+            CDOQuery&nbsp;query&nbsp;=&nbsp;view.createQuery(<font color="#2a00ff">&#34;ocl&#34;</font>,&nbsp;<font color="#2a00ff">&#34;self.purchaseOrders-&gt;size()&#34;</font>,&nbsp;company);<br/>
+            Integer&nbsp;count&nbsp;=&nbsp;query.getResultValue(Integer.<font color="#7f0055"><b>class</b></font>);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Purchase&nbsp;orders:&nbsp;&#34;&nbsp;</font>+&nbsp;count);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="Units"></a>12&nbsp;&nbsp;Units</h2>
 <p>
-A unit is a repository-defined subtree that the view can treat as a bounded working set. Units can help an
-application load and manage a coherent part of a large model, but they do not make unrelated object access free
-or replace transaction boundaries. Unit membership and lifecycle must follow the repository's unit-manager
-support; close units and views according to the APIs that opened them.
+A <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOUnit.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOUnit</code></a> is a managed set of disjunct object subtrees rooted at CDO objects.
+Unlike a resource, a unit can gather related subtrees without requiring one common containment root. The view's
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getUnitManager()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>unit manager</code></a> discovers and opens units, creates them, and manages units opened
+for the view. Unit APIs expose roots and loaded element counts; they do not change the transaction boundary or make
+arbitrary objects outside the unit free to access. Unit availability and persistence behavior depend on the
+repository/store implementation and its capabilities, so do not assume every store supports every operation.
+<p>
+Units belong to their view and must be closed before that view. Closing releases retained elements and
+subscriptions. Open units can receive change notifications according to their subscription configuration.
+Retaining a large unit trades fewer later loads for client memory. CDO also manages resource units for
+resource-backed loading; these are distinct from explicitly created units. Create/open operations have explicit
+lifetimes; use on-demand opening only when a missing unit should be created. Create through a transaction and
+supply a root object from that same view. Repository configuration must support units. This example creates and
+closes one:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Units_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateAndCloseUnit.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Units_1')" id="max_Units_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Units_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Units_1" style="padding:8px;">
+            <code>
+            CDOUnit&nbsp;unit&nbsp;=&nbsp;transaction.getUnitManager().createUnit(root,&nbsp;true,&nbsp;<font color="#7f0055"><b>null</b></font>);<br/>
+            <br/>
+            <font color="#7f0055"><b>try</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Unit&nbsp;root:&nbsp;&#34;&nbsp;</font>+&nbsp;unit.getRoot());<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Loaded&nbsp;elements:&nbsp;&#34;&nbsp;</font>+&nbsp;unit.getElements());<br/>
+            }<br/>
+            <font color="#7f0055"><b>finally</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;unit.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+<p>
+To open an existing unit, use <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOUnitManager.html#openUnit(org.eclipse.emf.ecore.EObject,boolean,org.eclipse.core.runtime.IProgressMonitor)" title="Method in org.eclipse.emf.cdo.view.CDOUnitManager"><code>org.eclipse.emf.cdo.view.CDOUnitManager.openUnit(EObject, boolean, org.eclipse.core.runtime.IProgressMonitor)</code></a>.
+The inspection example checks membership using <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOUnitManager.html#getOpenUnit(org.eclipse.emf.ecore.EObject)" title="Method in org.eclipse.emf.cdo.view.CDOUnitManager"><code>org.eclipse.emf.cdo.view.CDOUnitManager.getOpenUnit(EObject)</code></a>:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_Units_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">InspectUnit.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('Units_2')" id="max_Units_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_Units_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_Units_2" style="padding:8px;">
+            <code>
+            CDOUnit&nbsp;unit&nbsp;=&nbsp;view.getUnitManager().getOpenUnit(root);<br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(unit&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Unit&nbsp;root:&nbsp;&#34;&nbsp;</font>+&nbsp;unit.getRoot());<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Loaded&nbsp;elements:&nbsp;&#34;&nbsp;</font>+&nbsp;unit.getElements());<br/>
+            &nbsp;&nbsp;unit.close();<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <h2><a name="ViewEvents"></a>13&nbsp;&nbsp;View Events</h2>
 <p>
-View events report lifecycle and target/update changes for that view. Register listeners only for the period in
-which the application needs them and remove them when the owning component is disposed. Event callbacks may run
-on a CDO-managed thread; capture the data needed by the UI and dispatch UI work to its thread instead of blocking
-the callback. See <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a> for event categories and threading guidance.
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewEvent</code></a> is the common view-scoped event contract; its source is the affected
+view. Listen on the view's <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)" title="Method in org.eclipse.net4j.util.event.INotifier"><code>org.eclipse.net4j.util.event.INotifier.addListener(org.eclipse.net4j.util.event.IListener)</code></a>
+mechanism and remove the same listener when its owner is disposed. Events may be delivered on CDO-managed threads.
+Copy the event data needed by the UI and dispatch UI work to the UI thread; do not block update processing or hold
+a view critical section while calling application code. Session lifecycle events remain session events. EMF
+notifications go to adapters attached to model objects; option-change events come from view.options();
+and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewEventProducer.html" title="Class in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewEventProducer</code></a> produces events for its specialized adapters. These
+channels have different sources and purposes. See <a href="Doc09_NotificationsAndEventHandling.html" title="Article in CDO Model Repository Documentation">Notifications and Event Handling</a> for general guidance.
+<p>
+Registering and removing a listener:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ViewEvents_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ObserveViewEvents.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ViewEvents_1')" id="max_ViewEvents_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ViewEvents_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ViewEvents_1" style="padding:8px;">
+            <code>
+            IListener&nbsp;listener&nbsp;=&nbsp;event&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(event&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>CDOViewEvent)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;View&nbsp;event:&nbsp;&#34;&nbsp;</font>+&nbsp;event.getClass().getSimpleName());<br/>
+            &nbsp;&nbsp;}<br/>
+            };<br/>
+            <br/>
+            view.addListener(listener);<br/>
+            view.removeListener(listener);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h3><a name="InvalidationEvents"></a>13.1&nbsp;&nbsp;View Invalidation Events</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewInvalidationEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewInvalidationEvent</code></a> is emitted after a view processes a remote commit.
+It exposes the commit timestamp, dirty objects, revision deltas, and detached objects. It reports view update
+processing; adapters receive their own EMF notifications separately. Keep listeners fast and use the timestamp
+to correlate with <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent</code></a>.
+
+<h3><a name="LockEvents"></a>13.2&nbsp;&nbsp;View Lock Events</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewLocksChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent</code></a> reports lock changes visible to the view, including
+sender and affected objects. Use it to refresh lock decorations; it is distinct from a lock acquisition call
+result. Delivery follows view event threading rules.
+
+<h3><a name="PermissionEvents"></a>13.3&nbsp;&nbsp;View Permission Events</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewPermissionsChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewPermissionsChangedEvent</code></a> carries a map of object IDs to old/new
+permissions when permissions visible to the view change. Applications can refresh enabled actions from this
+event. Permission state may also depend on server security configuration.
+
+<h3><a name="TargetEvents"></a>13.4&nbsp;&nbsp;View Target Events</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewTargetChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent</code></a> reports the old and new branch point when a
+movable view changes target. It is useful for invalidating client presentations tied to a branch point. A
+fixed historical view does not advance merely because a commit occurs.
+
+<h3><a name="AdaptersNotifiedEvents"></a>13.5&nbsp;&nbsp;Adapter Notification Completion Events</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewAdaptersNotifiedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent</code></a> indicates that the view has finished notifying
+EMF adapters for a remote commit; its timestamp correlates with the invalidation event. This is a view event
+about completed adapter delivery, not an individual <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notification.html" target="_blank" title="Interface in org.eclipse.emf.common.notify"><code>Notification</code></a> and not an adapter notification itself.
+
+<h3><a name="DurabilityEvents"></a>13.6&nbsp;&nbsp;Durability Events</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewDurabilityChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewDurabilityChangedEvent</code></a> reports changes to a view's durable-locking
+identifier, exposing the old and new IDs. Use it to track durability state; lock operations and lock-change
+events remain separate APIs.
+
+<h3><a name="ProviderEvents"></a>13.7&nbsp;&nbsp;Provider Events</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProviderChangedEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent</code></a> reports the old and new provider associated with
+a view. It is primarily useful to infrastructure managing view-provider selection; ordinary clients rarely
+need it. Treat it as a view event and keep its callback short.
 
 <h2><a name="ViewOptions"></a>14&nbsp;&nbsp;View Options</h2>
 <p>
-View options control view-local behavior such as invalidation, object-cache references, adapters, and locking or
-notification details. Configure options before relying on the resulting policy, and distinguish them from
-session options that apply to all views opened by that session. A view option cannot enable a repository feature
-that the server/store does not provide.
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html" title="Interface in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.Options</code></a> controls view-local notification, invalidation, cache, and loading behavior. These
+settings differ from <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html" title="Interface in org.eclipse.emf.cdo.session.CDOSession"><code>CDOSession.Options</code></a>, which configures the session and can affect all its views (for
+example passive updates). Option changes emit <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html" title="Interface in org.eclipse.net4j.util.options"><code>org.eclipse.net4j.util.options.IOptionsEvent</code></a>s from the
+options object, not <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewEvent.html" title="Interface in org.eclipse.emf.cdo.view"><code>org.eclipse.emf.cdo.view.CDOViewEvent</code></a>s from the view. Defaults below refer to the
+current API implementation; session configuration and repository capabilities can affect observed behavior.
+<p>
+A listener can observe option changes directly:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ViewOptions_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">WatchOptions.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ViewOptions_1')" id="max_ViewOptions_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ViewOptions_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ViewOptions_1" style="padding:8px;">
+            <code>
+            IListener&nbsp;listener&nbsp;=&nbsp;event&nbsp;-&gt;&nbsp;System.out.println(event.getClass().getSimpleName());<br/>
+            <br/>
+            view.options().addListener(listener);<br/>
+            view.options().setLoadNotificationEnabled(<font color="#7f0055"><b>true</b></font>);<br/>
+            view.options().removeListener(listener);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h3><a name="LoadNotificationEnabled"></a>14.1&nbsp;&nbsp;Load Notification Enabled</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#isLoadNotificationEnabled()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.isLoadNotificationEnabled()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setLoadNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setLoadNotificationEnabled(boolean)</code></a>
+control EMF adapter notifications when objects load. The implementation default is false. Enable this
+when adapters maintain derived or presentation state that must react to loading. It is separate from remote
+invalidation and subscriptions; changes emit CDOView.LoadNotificationEvent.
+
+<h3><a name="DetachmentNotificationEnabled"></a>14.2&nbsp;&nbsp;Detachment Notification Enabled</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#isDetachmentNotificationEnabled()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.isDetachmentNotificationEnabled()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setDetachmentNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setDetachmentNotificationEnabled(boolean)</code></a>
+control adapter notification when remote changes detach objects. The default is false. Enable it when
+clients need to discard references to removed objects. It does not subscribe objects; changes emit
+CDOView.DetachmentNotificationEvent.
+
+<h3><a name="InvalidationNotificationEnabled"></a>14.3&nbsp;&nbsp;Invalidation Notification Enabled</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#isInvalidationNotificationEnabled()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.isInvalidationNotificationEnabled()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setInvalidationNotificationEnabled(boolean)</code></a>
+control object adapter invalidation notifications. Default is false. This controls EMF notifications,
+not whether the view processes remote commits or emits its view-level invalidation event. Changes emit
+CDOView.InvalidationNotificationEvent.
+
+<h3><a name="InvalidationPolicy"></a>14.4&nbsp;&nbsp;Invalidation Policy</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getInvalidationPolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getInvalidationPolicy()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setInvalidationPolicy(org.eclipse.emf.cdo.view.CDOInvalidationPolicy)</code></a>
+select how a view treats remotely changed objects. The default is
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html#RELAXED" title="Field in org.eclipse.emf.cdo.view.CDOInvalidationPolicy"><code>org.eclipse.emf.cdo.view.CDOInvalidationPolicy.RELAXED</code></a>; <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOInvalidationPolicy.html#STRICT" title="Field in org.eclipse.emf.cdo.view.CDOInvalidationPolicy"><code>org.eclipse.emf.cdo.view.CDOInvalidationPolicy.STRICT</code></a>
+clears the object's revision on invalidation and reports objects that have become invalid, while RELAXED leaves
+that handling to later access. This is view-local and requires the session to receive passive updates. Changes
+emit CDOView.InvalidationPolicyEvent.
+
+<h3><a name="ChangeSubscriptionPolicies"></a>14.5&nbsp;&nbsp;Change Subscription Policies</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getChangeSubscriptionPolicies()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getChangeSubscriptionPolicies()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#addChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.addChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a>,
+and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#removeChangeSubscriptionPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.removeChangeSubscriptionPolicy(CDOAdapterPolicy)</code></a> select adapted objects registered
+for remote changes. Initially the policy set is empty. Common policies are <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#NONE" title="Field in org.eclipse.emf.cdo.view.CDOAdapterPolicy"><code>CDOAdapterPolicy.NONE</code></a>,
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL" title="Field in org.eclipse.emf.cdo.view.CDOAdapterPolicy"><code>CDOAdapterPolicy.ALL</code></a>, and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#CDO" title="Field in org.eclipse.emf.cdo.view.CDOAdapterPolicy"><code>CDOAdapterPolicy.CDO</code></a>; an object needs a matching adapter. Session
+passive updates must also be enabled. Changes emit CDOView.ChangeSubscriptionPoliciesEvent.
+
+<h3><a name="CacheReferenceType"></a>14.6&nbsp;&nbsp;Cache Reference Type</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getCacheReferenceType()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getCacheReferenceType()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setCacheReferenceType(org.eclipse.net4j.util.ref.ReferenceType)</code></a>
+select strong, soft, or weak references in the view cache. The implementation default is
+<a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/ref/ReferenceType.html#SOFT" title="Enum constant in org.eclipse.net4j.util.ref.ReferenceType"><code>org.eclipse.net4j.util.ref.ReferenceType.SOFT</code></a>. Strong references retain objects and increase memory;
+soft and weak references permit collection subject to the strong-reference policy. Passing null
+restores soft references. The setter reports whether it changed and emits
+CDOView.CacheReferenceTypeEvent.
+
+<h3><a name="StrongReferencePolicy"></a>14.7&nbsp;&nbsp;Strong Reference Policy</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getStrongReferencePolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getStrongReferencePolicy()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setStrongReferencePolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setStrongReferencePolicy(CDOAdapterPolicy)</code></a>
+choose which adapted objects remain strongly referenced when the cache reference type is non-strong. Default
+is <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOAdapterPolicy.html#ALL" title="Field in org.eclipse.emf.cdo.view.CDOAdapterPolicy"><code>CDOAdapterPolicy.ALL</code></a>; policies can be narrowed to NONE, CDO, or a custom policy.
+Balance memory use against adapter/object continuity. Changes emit CDOView.StrongReferencePolicyEvent.
+
+<h3><a name="StaleReferencePolicy"></a>14.8&nbsp;&nbsp;Stale Reference Policy</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getStaleReferencePolicy()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)</code></a>
+control references to objects absent at the view target. The default is
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html#PROXY" title="Field in org.eclipse.emf.cdo.view.CDOStaleReferencePolicy"><code>org.eclipse.emf.cdo.view.CDOStaleReferencePolicy.PROXY</code></a>, which supplies a dynamic proxy; the
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOStaleReferencePolicy.html#EXCEPTION" title="Field in org.eclipse.emf.cdo.view.CDOStaleReferencePolicy"><code>org.eclipse.emf.cdo.view.CDOStaleReferencePolicy.EXCEPTION</code></a> policy throws an
+<a href="../../../javadoc/org/eclipse/emf/cdo/util/ObjectNotFoundException.html" title="Class in org.eclipse.emf.cdo.util"><code>org.eclipse.emf.cdo.util.ObjectNotFoundException</code></a>. The older Behaviour methods are deprecated. Changes
+emit CDOView.StaleReferencePolicyEvent.
+
+<h3><a name="RevisionPrefetchingPolicy"></a>14.9&nbsp;&nbsp;Revision Prefetching Policy</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getRevisionPrefetchingPolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getRevisionPrefetchingPolicy()</code></a> and
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setRevisionPrefetchingPolicy(org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy)</code></a>
+control fetching revisions in advance to reduce later round trips. The current implementation initializes the
+policy to NO_REVISION_PREFETCHING; DEFAULT_REVISION_PREFETCHING is a policy constant, not a
+guarantee of every read's batch size. Profile before tuning because prefetching trades transfer and memory for
+fewer later requests. Changes emit CDOView.RevisionPrefetchingPolicyEvent.
+
+<h3><a name="FeatureAnalyzer"></a>14.10&nbsp;&nbsp;Feature Analyzer</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getFeatureAnalyzer()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getFeatureAnalyzer()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)</code></a>
+install analysis of feature access for loading strategies. Default is <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOFeatureAnalyzer.html#NOOP" title="Field in org.eclipse.emf.cdo.view.CDOFeatureAnalyzer"><code>CDOFeatureAnalyzer.NOOP</code></a>. It does
+not change model semantics. Changes emit CDOView.FeatureAnalyzerEvent.
+
+<h3><a name="ClearAdapterPolicy"></a>14.11&nbsp;&nbsp;Clear Adapter Policy</h3>
+<p>
+<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#getClearAdapterPolicy()" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.getClearAdapterPolicy()</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.Options.html#setClearAdapterPolicy(org.eclipse.emf.cdo.view.CDOAdapterPolicy)" title="Method in org.eclipse.emf.cdo.view.CDOView.Options"><code>CDOView.Options.setClearAdapterPolicy(CDOAdapterPolicy)</code></a>
+select which adapters CDO removes when clearing object adapters. Per-view default is null, so the view
+set's default policy applies. Changes emit CDOView.ClearAdapterPolicyEvent.
+
+<h3><a name="LockNotificationEnabled"></a>14.12&nbsp;&nbsp;Lock Notification Enabled</h3>
+<p>
+This inherited option is managed by <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonView.Options.html#isLockNotificationEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonView.Options"><code>org.eclipse.emf.cdo.common.CDOCommonView.Options.isLockNotificationEnabled()</code></a>
+and <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonView.Options.html#setLockNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonView.Options"><code>org.eclipse.emf.cdo.common.CDOCommonView.Options.setLockNotificationEnabled(boolean)</code></a>. Default is
+false; enabling it requests protocol lock-state updates for this view and requires appropriate server
+support. The session's <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>org.eclipse.emf.cdo.common.CDOCommonSession.Options.setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)</code></a>
+also controls notification delivery modes. Changes emit the inherited
+<a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonView.Options.LockNotificationEvent.html" title="Interface in org.eclipse.emf.cdo.common.CDOCommonView.Options"><code>org.eclipse.emf.cdo.common.CDOCommonView.Options.LockNotificationEvent</code></a>; this is an option event, not a
+view event.
 
 <h2><a name="ViewProperties"></a>15&nbsp;&nbsp;View Properties</h2>
 <p>
-View properties are an application-owned key/value area associated with a view. They are useful for associating
-client-side metadata with that view; they are not persisted model features, are not shared with the repository,
-and should not be used to smuggle objects between views. Remove values that retain large application objects
-when they are no longer needed.
+<a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html#properties()" title="Method in org.eclipse.net4j.util.properties.IPropertiesContainer"><code>CDOView.properties()</code></a> exposes the view's <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html" title="Interface in org.eclipse.net4j.util.properties"><code>org.eclipse.net4j.util.properties.IPropertiesContainer</code></a>
+for application metadata. Properties are local to that view's lifetime, are not persisted in the repository, and
+are distinct from session properties and persistent EStructuralFeatures. Use application-owned keys and remove
+values when they are no longer needed, especially if they retain large UI or model graphs. Property access and
+listener behavior follow the properties-container API; do not assume cross-thread safety beyond the guarantees
+of the concrete container. The example sets, reads, and removes a value:
+
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ViewProperties_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">UseViewProperties.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ViewProperties_1')" id="max_ViewProperties_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ViewProperties_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ViewProperties_1" style="padding:8px;">
+            <code>
+            String&nbsp;key&nbsp;=&nbsp;<font color="#2a00ff">&#34;com.example.selection&#34;</font>;<br/>
+            view.properties().put(key,&nbsp;<font color="#2a00ff">&#34;current-page&#34;</font>);<br/>
+            <br/>
+            Object&nbsp;selection&nbsp;=&nbsp;view.properties().get(key);<br/>
+            System.out.println(selection);<br/>
+            <br/>
+            view.properties().remove(key);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
 
 <p align="right">
 <a href="Doc03_WorkingWithSessions.html" title="Backward to Working with Sessions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_WorkingWithTransactions.html" title="Forward to Working with Transactions"><img src="../../../images/forward.png" border="0"></a></p>

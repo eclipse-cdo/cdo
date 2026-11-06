@@ -331,8 +331,29 @@
         <topic label="Querying Cross References" href="html/programmers/client/Doc04_WorkingWithViews.html#QueryingCrossReferences" icon="chapter" />
         <topic label="Custom Queries" href="html/programmers/client/Doc04_WorkingWithViews.html#CustomQueries" icon="chapter" />
         <topic label="Units" href="html/programmers/client/Doc04_WorkingWithViews.html#Units" icon="chapter" />
-        <topic label="View Events" href="html/programmers/client/Doc04_WorkingWithViews.html#ViewEvents" icon="chapter" />
-        <topic label="View Options" href="html/programmers/client/Doc04_WorkingWithViews.html#ViewOptions" icon="chapter" />
+        <topic label="View Events" href="html/programmers/client/Doc04_WorkingWithViews.html#ViewEvents" icon="chapter">
+          <topic label="View Invalidation Events" href="html/programmers/client/Doc04_WorkingWithViews.html#InvalidationEvents" icon="chapter" />
+          <topic label="View Lock Events" href="html/programmers/client/Doc04_WorkingWithViews.html#LockEvents" icon="chapter" />
+          <topic label="View Permission Events" href="html/programmers/client/Doc04_WorkingWithViews.html#PermissionEvents" icon="chapter" />
+          <topic label="View Target Events" href="html/programmers/client/Doc04_WorkingWithViews.html#TargetEvents" icon="chapter" />
+          <topic label="Adapter Notification Completion Events" href="html/programmers/client/Doc04_WorkingWithViews.html#AdaptersNotifiedEvents" icon="chapter" />
+          <topic label="Durability Events" href="html/programmers/client/Doc04_WorkingWithViews.html#DurabilityEvents" icon="chapter" />
+          <topic label="Provider Events" href="html/programmers/client/Doc04_WorkingWithViews.html#ProviderEvents" icon="chapter" />
+        </topic>
+        <topic label="View Options" href="html/programmers/client/Doc04_WorkingWithViews.html#ViewOptions" icon="chapter">
+          <topic label="Load Notification Enabled" href="html/programmers/client/Doc04_WorkingWithViews.html#LoadNotificationEnabled" icon="chapter" />
+          <topic label="Detachment Notification Enabled" href="html/programmers/client/Doc04_WorkingWithViews.html#DetachmentNotificationEnabled" icon="chapter" />
+          <topic label="Invalidation Notification Enabled" href="html/programmers/client/Doc04_WorkingWithViews.html#InvalidationNotificationEnabled" icon="chapter" />
+          <topic label="Invalidation Policy" href="html/programmers/client/Doc04_WorkingWithViews.html#InvalidationPolicy" icon="chapter" />
+          <topic label="Change Subscription Policies" href="html/programmers/client/Doc04_WorkingWithViews.html#ChangeSubscriptionPolicies" icon="chapter" />
+          <topic label="Cache Reference Type" href="html/programmers/client/Doc04_WorkingWithViews.html#CacheReferenceType" icon="chapter" />
+          <topic label="Strong Reference Policy" href="html/programmers/client/Doc04_WorkingWithViews.html#StrongReferencePolicy" icon="chapter" />
+          <topic label="Stale Reference Policy" href="html/programmers/client/Doc04_WorkingWithViews.html#StaleReferencePolicy" icon="chapter" />
+          <topic label="Revision Prefetching Policy" href="html/programmers/client/Doc04_WorkingWithViews.html#RevisionPrefetchingPolicy" icon="chapter" />
+          <topic label="Feature Analyzer" href="html/programmers/client/Doc04_WorkingWithViews.html#FeatureAnalyzer" icon="chapter" />
+          <topic label="Clear Adapter Policy" href="html/programmers/client/Doc04_WorkingWithViews.html#ClearAdapterPolicy" icon="chapter" />
+          <topic label="Lock Notification Enabled" href="html/programmers/client/Doc04_WorkingWithViews.html#LockNotificationEnabled" icon="chapter" />
+        </topic>
         <topic label="View Properties" href="html/programmers/client/Doc04_WorkingWithViews.html#ViewProperties" icon="chapter" />
       </topic>
       <topic label="Working with Transactions" href="html/programmers/client/Doc05_WorkingWithTransactions.html" icon="article">

@@ -151,10 +151,11 @@ final class CentralVerificationTool
     }
 
     Set<String> approved = new LinkedHashSet<>(CDOAggregationTool.approvedBundles());
-    if (artifacts.size() != 12 || !artifacts.keySet().equals(approved) || !properties.containsKey("drop.id") || !properties.containsKey("drop.location")
-        || !properties.containsKey("project.release") || !properties.containsKey("bom.version"))
+    if (artifacts.size() != approved.size() || !artifacts.keySet().equals(new LinkedHashSet<>(approved)) || !properties.containsKey("drop.id")
+        || !properties.containsKey("drop.location") || !properties.containsKey("project.release") || !properties.containsKey("bom.version"))
     {
-      throw new IllegalArgumentException("Derived release inventory must identify its source drop, project release, BOM, and exactly 12 artifacts");
+      throw new IllegalArgumentException(
+          "Derived release inventory must identify its source drop, project release, BOM, and exactly " + approved.size() + " artifacts");
     }
 
     return artifacts;

@@ -38,7 +38,7 @@ public class ConsumerSmokeTest
     
     try
     {
-      assertTrue(container.isEmpty());
+      assertTrue(container.isEmpty()); 
     }
     finally
     {
@@ -60,5 +60,18 @@ public class ConsumerSmokeTest
     DataSource dataSource = h2;
     assertNotNull(dataSource);
     assertNotNull(dataSource.getClass().getName());
+  }
+
+  @Test
+  public void postgresDriverIsConsumerOwned()
+  {
+    try
+    {
+      assertNotNull(Class.forName("org.postgresql.Driver"));
+    }
+    catch (ClassNotFoundException ex)
+    {
+      throw new AssertionError("The explicitly declared PostgreSQL driver is unavailable", ex);
+    }
   }
 }

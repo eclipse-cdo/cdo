@@ -137,8 +137,8 @@ the plugin can use an explicitly configured Jenkins secret-text credential
 through `MAVEN_GPG_PASSPHRASE` or an already-cached GnuPG agent passphrase; the
 pipeline does not require or guess a passphrase credential.
 
-The package stage signs the twelve approved POMs and their main, sources, and
-Javadoc JARs into a local `file:` repository. It verifies all 48 detached
+The package stage signs the twenty approved POMs and their main, sources, and
+Javadoc JARs into a local `file:` repository. It verifies all 80 detached
 signatures with GnuPG against the independently configured primary
 fingerprint, including signing subkeys, compares artifacts and checksums with
 the original staging tree, then checks the exact Sonatype ZIP inventory and
@@ -263,7 +263,7 @@ publication are not performed by this technical target.
 
 ## Consumer compatibility test
 
-After a successful aggregation, run `consumer-test` to resolve the twelve
+After a successful aggregation, run `consumer-test` to resolve the twenty
 CDO/Net4j versions from `repository/final`, write them to
 `<work.dir>/consumer-test/cdo-consumer-versions.properties`, and execute the
 Plain-Java Maven test. `consumer-dependency-tree` performs the same setup and
@@ -285,11 +285,17 @@ not use the agent's Maven cache or Eclipse repositories.
 their matching `.source` IUs. CBI's Maven result creates the sources and
 Javadoc classifiers from those inputs. Structural changes to this list require
 a deliberate edit to `CDO.aggr`.
-The sole Maven mapping fixes their groupId to `org.eclipse.cdo` and retains the
-exact Bundle-SymbolicName as artifactId. No features, UI, tests, examples,
-documentation, JDBC drivers, or database dialects other than H2 are selected.
-The root `includedIUPattern` is an additional guard: it prevents p2's greedy
-optional H2-driver requirement from being copied as `com.h2database`.
+The bundle Maven mapping fixes their groupId to `org.eclipse.cdo` and retains
+the exact Bundle-SymbolicName as artifactId. Requirement mappings separately
+map internal CDO/Net4j bundle requirements and Jetty 12.1 bundle names to their
+actual Maven coordinates. No features, UI, tests, examples, documentation, or
+JDBC drivers are selected. The H2 and PostgreSQL adapters are included; their
+optional JDBC driver requirements remain optional in generated Maven metadata,
+so consumers add the driver explicitly. The root `includedIUPattern` excludes
+provider IUs outside the approved CDO/Net4j set. For the Jetty server adapter,
+the Maven POMs for `jetty-server` and `jetty-websocket-jetty-server` already
+bring `jetty-http`, `jetty-util`, and `jetty-websocket-jetty-api` transitively;
+the model suppresses those three redundant direct requirements.
 EMF dependencies retain their published `org.eclipse.emf` coordinates.
 Eclipse Core requirements use the same `org.eclipse.platform` Maven mapping as
 the EMF publication model.
@@ -305,10 +311,12 @@ dependencies. Import-Package requirements remain represented by the provider
 bundles selected by the CBI model; an external provider is not silently
 re-published under a CDO coordinate.
 
-The H2 adapter is published without the H2 driver. The consumer declares
-`com.h2database:h2` explicitly because the adapter's driver import is optional
-in the selected OSGi configuration. This keeps the driver available from its
-normal Maven Central coordinate without redistributing it here.
+The H2 and PostgreSQL adapters are published without their JDBC drivers. A
+consumer declares `com.h2database:h2` or `org.postgresql:postgresql` explicitly
+when using the corresponding adapter because those drivers are optional OSGi
+imports. The PostgreSQL adapter accepts driver versions in `[42.7.0,43.0.0)`;
+the consumer fixture uses 42.7.13 as a tested example. The Jetty WebSocket
+server bundle requires Java 17, matching Jetty 12.1's runtime baseline.
 
 The preparation step extracts the promoted drop's `tp-macro.setup` and derives
 exactly two runtime properties: `org.eclipse.cbi.p2repo.cdo-location` (the
@@ -324,7 +332,7 @@ location; diagnose failures against the resolved URL and its repository
 contents, not against that wording alone.
 
 The CDO and SimRel location properties are CBI runtime inputs only. The POM
-overlay removes them from all twelve publication POMs, and publication
+overlay removes them from all twenty publication POMs, and publication
 validation rejects either property if it reappears. This prevents workspace
 paths and validation-repository locations from being published as Maven
 metadata.
@@ -357,7 +365,7 @@ drop identity:
 * `cdo.build.type`
 
 The Ant `overlay` target adds these values to every generated POM with an
-XML-aware DOM transformation. The `verify` target checks all twelve coordinates,
+XML-aware DOM transformation. The `verify` target checks all twenty coordinates,
 properties, commit identity, and excluded-artifact guards.
 
 The native classifier validation and `checksums` targets are included in
@@ -406,8 +414,8 @@ the BOM coordinate and any possible partial artifacts all return HTTP 404 from c
 Central. It skips CBI bundle aggregation, bundle Central checks, and the bundle audit/sign/package
 stages. A network error or any non-404 result fails closed.
 
-The runtime inventory uses the permanent approved bundle list and the CBI `MavenRelease`
-transformation. The project release (`web.label`) and drop identity (`build-info.xml`) are checked
+The historical BOM-only inventory uses its original 12-bundle release list and the CBI
+`MavenRelease` transformation. The project release (`web.label`) and drop identity (`build-info.xml`) are checked
 against the prepared metadata. No release-specific inventory is committed. Since the 4.36.0 BOM is
 already published, rerunning the Central-absence check now fails closed on its existing coordinate;
 it cannot overwrite or republish it. The historical packaging, signature, checksum, and
@@ -487,13 +495,13 @@ The job downloads the published BOM directly from
 `https://repo.maven.apache.org/maven2/`, checks its coordinates, project
 release, drop identity, and exact managed inventory against the generated
 data, then generates a minimal consumer that imports the BOM and declares all
-twelve managed CDO/Net4j artifacts without versions. It does not maintain a
+twenty managed CDO/Net4j artifacts without versions. It does not maintain a
 second approved-bundle list.
 
 Maven receives a fresh local repository and settings that mirror every remote
 repository to canonical Maven Central. The job checks Maven's resolved
 dependency tree and verifies non-empty artifact JARs were downloaded for all
-twelve expected coordinates. `verification-report.json` records the drop,
+twenty expected coordinates. `verification-report.json` records the drop,
 BOM coordinates, verified artifacts, and result; the report, downloaded BOM,
 and dependency tree are archived. Failed runs also archive a machine-readable
 FAIL report. The verification is read-only against Maven Central and

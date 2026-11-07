@@ -97,6 +97,14 @@
 				<arg value="-Dcdo.version.org.eclipse.emf.cdo.server=${cdo.version.org.eclipse.emf.cdo.server}" />
 				<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.net4j=${cdo.version.org.eclipse.emf.cdo.server.net4j}" />
 				<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.db=${cdo.version.org.eclipse.emf.cdo.server.db}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.jvm=${cdo.version.org.eclipse.net4j.jvm}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.ws=${cdo.version.org.eclipse.net4j.ws}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.ws.jetty.server=${cdo.version.org.eclipse.net4j.ws.jetty.server}" />
+				<arg value="-Dcdo.version.org.eclipse.net4j.db.postgresql=${cdo.version.org.eclipse.net4j.db.postgresql}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.embedded=${cdo.version.org.eclipse.emf.cdo.server.embedded}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.expressions=${cdo.version.org.eclipse.emf.cdo.expressions}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.security=${cdo.version.org.eclipse.emf.cdo.security}" />
+				<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.security=${cdo.version.org.eclipse.emf.cdo.server.security}" />
 				<arg line="@{goals}" />
 			</exec>
 		</sequential>
@@ -571,6 +579,14 @@
 			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server=${cdo.version.org.eclipse.emf.cdo.server}" />
 			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.net4j=${cdo.version.org.eclipse.emf.cdo.server.net4j}" />
 			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.db=${cdo.version.org.eclipse.emf.cdo.server.db}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.jvm=${cdo.version.org.eclipse.net4j.jvm}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.ws=${cdo.version.org.eclipse.net4j.ws}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.ws.jetty.server=${cdo.version.org.eclipse.net4j.ws.jetty.server}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.db.postgresql=${cdo.version.org.eclipse.net4j.db.postgresql}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.embedded=${cdo.version.org.eclipse.emf.cdo.server.embedded}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.expressions=${cdo.version.org.eclipse.emf.cdo.expressions}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.security=${cdo.version.org.eclipse.emf.cdo.security}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.security=${cdo.version.org.eclipse.emf.cdo.server.security}" />
 			<arg value="-B" />
 			<arg value="-ntp" />
 			<arg value="clean" />
@@ -595,6 +611,14 @@
 			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server=${cdo.version.org.eclipse.emf.cdo.server}" />
 			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.net4j=${cdo.version.org.eclipse.emf.cdo.server.net4j}" />
 			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.db=${cdo.version.org.eclipse.emf.cdo.server.db}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.jvm=${cdo.version.org.eclipse.net4j.jvm}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.ws=${cdo.version.org.eclipse.net4j.ws}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.ws.jetty.server=${cdo.version.org.eclipse.net4j.ws.jetty.server}" />
+			<arg value="-Dcdo.version.org.eclipse.net4j.db.postgresql=${cdo.version.org.eclipse.net4j.db.postgresql}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.embedded=${cdo.version.org.eclipse.emf.cdo.server.embedded}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.expressions=${cdo.version.org.eclipse.emf.cdo.expressions}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.security=${cdo.version.org.eclipse.emf.cdo.security}" />
+			<arg value="-Dcdo.version.org.eclipse.emf.cdo.server.security=${cdo.version.org.eclipse.emf.cdo.server.security}" />
 			<arg value="-DoutputFile=${consumer.central.only.tree.file}" />
 			<arg value="-B" />
 			<arg value="-ntp" />

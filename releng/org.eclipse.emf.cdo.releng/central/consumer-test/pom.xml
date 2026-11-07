@@ -19,11 +19,12 @@
   <version>1.0.0-SNAPSHOT</version>
 
   <properties>
-    <maven.compiler.release>11</maven.compiler.release>
+    <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cdo.maven.repository>${project.basedir}/../work/repository/final</cdo.maven.repository>
     <junit.version>4.13.2</junit.version>
     <h2.version>2.4.240</h2.version>
+    <postgresql.version>42.7.13</postgresql.version>
   </properties>
 
   <repositories>
@@ -98,12 +99,58 @@
       <artifactId>org.eclipse.emf.cdo.server.db</artifactId>
       <version>${cdo.version.org.eclipse.emf.cdo.server.db}</version>
     </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.jvm</artifactId>
+      <version>${cdo.version.org.eclipse.net4j.jvm}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.ws</artifactId>
+      <version>${cdo.version.org.eclipse.net4j.ws}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.ws.jetty.server</artifactId>
+      <version>${cdo.version.org.eclipse.net4j.ws.jetty.server}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.db.postgresql</artifactId>
+      <version>${cdo.version.org.eclipse.net4j.db.postgresql}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.server.embedded</artifactId>
+      <version>${cdo.version.org.eclipse.emf.cdo.server.embedded}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.expressions</artifactId>
+      <version>${cdo.version.org.eclipse.emf.cdo.expressions}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.security</artifactId>
+      <version>${cdo.version.org.eclipse.emf.cdo.security}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.server.security</artifactId>
+      <version>${cdo.version.org.eclipse.emf.cdo.server.security}</version>
+    </dependency>
 
     <!-- Deliberately explicit: the aggregator does not publish JDBC drivers. -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>${h2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
+      <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>junit</groupId>

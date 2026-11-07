@@ -95,7 +95,19 @@ public final class CDOAggregationTool
       "org.eclipse.emf.cdo.net4j", //
       "org.eclipse.emf.cdo.server", //
       "org.eclipse.emf.cdo.server.net4j", //
-      "org.eclipse.emf.cdo.server.db");
+      "org.eclipse.emf.cdo.server.db", //
+      "org.eclipse.net4j.jvm", //
+      "org.eclipse.net4j.ws", //
+      "org.eclipse.net4j.ws.jetty.server", //
+      "org.eclipse.net4j.db.postgresql", //
+      "org.eclipse.emf.cdo.server.embedded", //
+      "org.eclipse.emf.cdo.expressions", //
+      "org.eclipse.emf.cdo.security", //
+      "org.eclipse.emf.cdo.server.security");
+
+  private static final List<String> BUNDLES_436 = List.of("org.eclipse.net4j.util", "org.eclipse.net4j", "org.eclipse.net4j.tcp", "org.eclipse.net4j.db",
+      "org.eclipse.net4j.db.jdbc", "org.eclipse.net4j.db.h2", "org.eclipse.emf.cdo.common", "org.eclipse.emf.cdo", "org.eclipse.emf.cdo.net4j",
+      "org.eclipse.emf.cdo.server", "org.eclipse.emf.cdo.server.net4j", "org.eclipse.emf.cdo.server.db");
 
   private static final List<String> CLASSIFIERS = Arrays.asList("sources", "javadoc");
 
@@ -107,40 +119,12 @@ public final class CDOAggregationTool
 
   private static final Pattern R_DROP_ID = Pattern.compile("R[0-9]{8}-[0-9]{4}");
 
+  private static final Pattern OSGI_VERSION = Pattern.compile("([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:\\.([A-Za-z0-9_-]+))?");
+
+  private static final Pattern MAVEN_RELEASE_TRICK = Pattern.compile("[0-9]+\\.[0-9]+\\.[0-9]+(?:\\.[0-9]+-[a-zA-Z][a-zA-Z0-9_]*)?");
+
   private CDOAggregationTool()
   {
-  }
-
-  private static File singleVersionDirectory(File repository, String bundle)
-  {
-    File artifact = new File(repository, "org/eclipse/cdo/" + bundle);
-    File[] versions = artifact.listFiles(File::isDirectory);
-    if (versions == null || versions.length != 1)
-    {
-      throw new IllegalArgumentException("Expected one Maven version directory for " + bundle + " in " + artifact);
-    }
-
-    return versions[0];
-  }
-
-  private static void delete(File file) throws IOException
-  {
-    if (file.exists())
-    {
-      try (Stream<Path> stream = Files.walk(file.toPath()))
-      {
-        stream.sorted(Comparator.reverseOrder()).forEach(path -> {
-          try
-          {
-            Files.delete(path);
-          }
-          catch (IOException e)
-          {
-            throw new RuntimeException(e);
-          }
-        });
-      }
-    }
   }
 
   public static void main(String[] args) throws Exception
@@ -303,160 +287,9 @@ public final class CDOAggregationTool
     return List.copyOf(BUNDLES);
   }
 
-  private static void publicationScopeCheck(String[] args) throws Exception
+  static Document parse(File file) throws Exception
   {
-    if (args.length != 2)
-    {
-      throw new IllegalArgumentException("publication-scope-check requires a staging directory");
-    }
-
-    File staging = requireDirectory(args[1], "staging directory");
-    requireWorkspaceOutput(staging, "staging directory");
-    rejectSymbolicLinks(staging.toPath(), "staging directory");
-    int artifacts = AuditCommand.validatePublicationScope(staging, false);
-    System.out.println("Validated publication scope for " + artifacts + " approved CDO artifacts.");
-  }
-
-  private static Map<String, String> publicationMetadata(Map<String, String> metadata)
-  {
-    Map<String, String> result = new LinkedHashMap<>();
-    for (Map.Entry<String, String> entry : metadata.entrySet())
-    {
-      if (!INTERNAL_CBI_PROPERTIES.contains(entry.getKey()))
-      {
-        result.put(entry.getKey(), entry.getValue());
-      }
-    }
-
-    return result;
-  }
-
-  private static void removeInternalCbiProperties(Element project)
-  {
-    NodeList projectChildren = project.getChildNodes();
-    for (int i = 0; i < projectChildren.getLength(); i++)
-    {
-      Node projectChild = projectChildren.item(i);
-      String name = projectChild.getLocalName();
-      if (name == null)
-      {
-        name = projectChild.getNodeName();
-      }
-
-      if (projectChild instanceof Element && "properties".equals(name))
-      {
-        Element properties = (Element)projectChild;
-        for (String property : INTERNAL_CBI_PROPERTIES)
-        {
-          Element child = child(properties, property);
-          while (child != null)
-          {
-            properties.removeChild(child);
-            child = child(properties, property);
-          }
-        }
-      }
-    }
-  }
-
-  private static void rejectInternalCbiProperties(Element project, File pom)
-  {
-    NodeList projectChildren = project.getChildNodes();
-    for (int i = 0; i < projectChildren.getLength(); i++)
-    {
-      Node projectChild = projectChildren.item(i);
-      String name = projectChild.getLocalName();
-      if (name == null)
-      {
-        name = projectChild.getNodeName();
-      }
-
-      if (projectChild instanceof Element && "properties".equals(name))
-      {
-        Element properties = (Element)projectChild;
-        for (String property : INTERNAL_CBI_PROPERTIES)
-        {
-          if (child(properties, property) != null)
-          {
-            throw new IllegalArgumentException("Internal CBI property must not be published in " + pom + ": " + property);
-          }
-        }
-      }
-    }
-  }
-
-  private static int countChildren(Element parent, String name)
-  {
-    int count = 0;
-    NodeList children = parent.getChildNodes();
-    for (int i = 0; i < children.getLength(); i++)
-    {
-      Node node = children.item(i);
-      if (node instanceof Element && name.equals(node.getLocalName() == null ? node.getNodeName() : node.getLocalName()))
-      {
-        count++;
-      }
-    }
-
-    return count;
-  }
-
-  private static void consumerDependencyTreeCheck(String[] args) throws Exception
-  {
-    if (args.length != 2)
-    {
-      throw new IllegalArgumentException("consumer-dependency-tree-check requires a Maven dependency-tree file");
-    }
-
-    File dependencyTree = requireFile(new File(args[1]), "Maven consumer dependency tree");
-    requireWorkspaceOutput(dependencyTree, "Maven consumer dependency tree");
-    String tree = Files.readString(dependencyTree.toPath(), StandardCharsets.UTF_8);
-    verifyNoSnapshotDependencies(tree);
-    System.out.println("Verified that the Central-only consumer dependency tree contains no SNAPSHOT dependencies.");
-  }
-
-  private static void consumerDependencyTreeTest(String[] args)
-  {
-    if (args.length != 1)
-    {
-      throw new IllegalArgumentException("consumer-dependency-tree-test takes no arguments");
-    }
-
-    verifyNoSnapshotDependencies(
-        "org.eclipse.cdo.releng:cdo-maven-consumer-test:jar:1.0.0-SNAPSHOT\n+- org.eclipse.cdo:org.eclipse.net4j:jar:4.23.0:compile\n");
-
-    try
-    {
-      verifyNoSnapshotDependencies(
-          "org.eclipse.cdo.releng:cdo-maven-consumer-test:jar:1.0.0-SNAPSHOT\n+- org.eclipse.platform:org.eclipse.osgi:jar:3.24.300-SNAPSHOT:compile\n");
-      throw new AssertionError("Expected a SNAPSHOT dependency to be rejected");
-    }
-    catch (IllegalArgumentException expected)
-    {
-      if (!expected.getMessage().contains("SNAPSHOT dependency"))
-      {
-        throw expected;
-      }
-    }
-
-    System.out.println("Central-only dependency-tree checks passed: consumer project SNAPSHOT accepted; SNAPSHOT dependency rejected.");
-  }
-
-  private static void verifyNoSnapshotDependencies(String tree)
-  {
-    String[] lines = tree.split("\\R");
-    if (lines.length < 2 || lines[0].isBlank())
-    {
-      throw new IllegalArgumentException("Maven consumer dependency tree is empty or malformed");
-    }
-
-    for (int i = 1; i < lines.length; i++)
-    {
-      if (lines[i].toUpperCase(Locale.ROOT).contains("SNAPSHOT"))
-      {
-        throw new IllegalArgumentException("Maven consumer dependency tree contains a SNAPSHOT dependency: " + lines[i].trim());
-      }
-    }
+    return parse(new FileInputStream(file), file.getPath());
   }
 
   /**
@@ -777,8 +610,14 @@ public final class CDOAggregationTool
 
     private static File generate(File bundles, File output, Map<String, String> metadata, Map<String, String> publishing, String version) throws Exception
     {
+      return generate(bundles, output, metadata, publishing, version, BUNDLES);
+    }
+
+    private static File generate(File bundles, File output, Map<String, String> metadata, Map<String, String> publishing, String version, List<String> approved)
+        throws Exception
+    {
       Map<String, String> bundleVersions = new LinkedHashMap<>();
-      for (String bundle : BUNDLES)
+      for (String bundle : approved)
       {
         File artifactDirectory = new File(bundles, "org/eclipse/cdo/" + bundle);
         File[] versions = artifactDirectory.listFiles(File::isDirectory);
@@ -807,15 +646,15 @@ public final class CDOAggregationTool
         bundleVersions.put(bundle, bundleVersion);
       }
 
-      return generate(output, metadata, publishing, version, bundleVersions);
+      return generate(output, metadata, publishing, version, bundleVersions, approved);
     }
 
-    private static File generate(File output, Map<String, String> metadata, Map<String, String> publishing, String version, Map<String, String> bundleVersions)
-        throws Exception
+    private static File generate(File output, Map<String, String> metadata, Map<String, String> publishing, String version, Map<String, String> bundleVersions,
+        List<String> approved) throws Exception
     {
       String release = requiredMetadata(metadata, "cdo.project.release");
       String dropID = requiredMetadata(metadata, "cdo.drop.id");
-      if (!bundleVersions.keySet().equals(new LinkedHashSet<>(BUNDLES)))
+      if (!bundleVersions.keySet().equals(new LinkedHashSet<>(approved)))
       {
         throw new IllegalArgumentException("BOM source inventory does not contain exactly the approved bundle coordinates: " + bundleVersions.keySet());
       }
@@ -851,12 +690,12 @@ public final class CDOAggregationTool
       append(document, properties, "cdo.drop.id", dropID);
       Element management = append(document, project, "dependencyManagement", null);
       Element dependencies = append(document, management, "dependencies", null);
-      for (Map.Entry<String, String> bundle : bundleVersions.entrySet())
+      for (String bundle : approved)
       {
         Element dependency = append(document, dependencies, "dependency", null);
         append(document, dependency, "groupId", "org.eclipse.cdo");
-        append(document, dependency, "artifactId", bundle.getKey());
-        append(document, dependency, "version", bundle.getValue());
+        append(document, dependency, "artifactId", bundle);
+        append(document, dependency, "version", bundleVersions.get(bundle));
       }
 
       Files.createDirectories(pom.toPath().getParent());
@@ -958,7 +797,7 @@ public final class CDOAggregationTool
       Map<String, String> metadata = readProperties(requireFile(new File(args[1]), "build metadata"));
       Map<String, String> publishing = readProperties(requireFile(new File(args[2]), "publishing metadata"));
       Map<String, String> inventory = verifySelectedDrop(metadata, args[4]);
-      Map<String, String> versions = releaseInventoryVersions(inventory);
+      Map<String, String> versions = releaseInventoryVersions(inventory, BUNDLES_436);
       File output = new File(args[3]);
       requireWorkspaceOutput(output, "CDO 4.36 BOM repository");
       if (output.exists())
@@ -966,8 +805,8 @@ public final class CDOAggregationTool
         rejectSymbolicLinks(output.toPath(), "CDO 4.36 BOM repository");
       }
 
-      File pom = BomCommand.generate(output, metadata, publishing, inventory.get("bom.version"), versions);
-      validatePom(pom, metadata, publishing, versions);
+      File pom = BomCommand.generate(output, metadata, publishing, inventory.get("bom.version"), versions, BUNDLES_436);
+      validatePom(pom, metadata, publishing, versions, BUNDLES_436);
       System.out.println("Generated the isolated CDO 4.36 BOM from release-drop metadata: " + pom);
     }
 
@@ -984,9 +823,9 @@ public final class CDOAggregationTool
       Map<String, String> metadata = readProperties(requireFile(new File(args[2]), "build metadata"));
       Map<String, String> publishing = readProperties(requireFile(new File(args[3]), "publishing metadata"));
       Map<String, String> inventory = verifySelectedDrop(metadata, args[4]);
-      Map<String, String> versions = releaseInventoryVersions(inventory);
+      Map<String, String> versions = releaseInventoryVersions(inventory, BUNDLES_436);
       File source = bomPom(repository);
-      validatePom(source, metadata, publishing, versions);
+      validatePom(source, metadata, publishing, versions, BUNDLES_436);
       File staging = new File(args[5]);
       requireWorkspaceOutput(staging, "CDO 4.36 BOM staging");
       if (staging.exists())
@@ -1006,7 +845,7 @@ public final class CDOAggregationTool
       Files.createDirectories(target.toPath().getParent());
       Files.copy(source.toPath(), target.toPath());
       ChecksumsCommand.writeChecksums(target);
-      validateStaging(staging, metadata, publishing, versions, false);
+      validateStaging(staging, metadata, publishing, versions, false, BUNDLES_436);
       System.out.println("Prepared POM-only CDO 4.36 BOM staging with four verified checksum sidecars.");
     }
 
@@ -1052,7 +891,7 @@ public final class CDOAggregationTool
 
     private static Map<String, String> verifySelectedDrop(Map<String, String> metadata, String selectedDrop) throws Exception
     {
-      Map<String, String> inventory = readReleaseInventory(selectedDrop);
+      Map<String, String> inventory = readReleaseInventory(selectedDrop, BUNDLES_436);
       verifyMetadata(metadata, inventory);
       if (!RELEASE.equals(inventory.get("project.release")) || !DROP_ID.equals(inventory.get("drop.id")))
       {
@@ -1065,7 +904,7 @@ public final class CDOAggregationTool
     private static void verifyMetadata(Map<String, String> metadata, Map<String, String> inventory)
     {
       if (!inventory.get("project.release").equals(metadata.get("cdo.project.release")) || !inventory.get("drop.id").equals(metadata.get("cdo.drop.id"))
-          || releaseInventoryVersions(inventory).size() != BUNDLES.size())
+          || releaseInventoryVersions(inventory, BUNDLES_436).size() != BUNDLES_436.size())
       {
         throw new IllegalArgumentException("BOM-only retrofit metadata does not match the selected CDO 4.36 release drop " + DROP_ID);
       }
@@ -1081,7 +920,8 @@ public final class CDOAggregationTool
       return "org/eclipse/cdo/" + BOM_ARTIFACT + "/4.36.0/" + BOM_ARTIFACT + "-4.36.0.pom";
     }
 
-    private static void validatePom(File pom, Map<String, String> metadata, Map<String, String> publishing, Map<String, String> versions) throws Exception
+    private static void validatePom(File pom, Map<String, String> metadata, Map<String, String> publishing, Map<String, String> versions, List<String> approved)
+        throws Exception
     {
       Element project = parse(pom).getDocumentElement();
       if (!"org.eclipse.cdo".equals(text(project, "groupId")) || !BOM_ARTIFACT.equals(text(project, "artifactId")) || !"4.36.0".equals(text(project, "version"))
@@ -1124,16 +964,16 @@ public final class CDOAggregationTool
       List<Element> managed = directChildren(dependencies, "dependency");
       NodeList allDependencies = project.getElementsByTagNameNS("*", "dependency");
       NodeList allDependencySections = project.getElementsByTagNameNS("*", "dependencies");
-      if (managed.size() != BUNDLES.size() || elementChildren(dependencies).size() != BUNDLES.size() || allDependencies.getLength() != BUNDLES.size()
+      if (managed.size() != approved.size() || elementChildren(dependencies).size() != approved.size() || allDependencies.getLength() != approved.size()
           || allDependencySections.getLength() != 1)
       {
-        throw new IllegalArgumentException("Generated BOM must manage exactly the twelve published CDO bundle coordinates");
+        throw new IllegalArgumentException("Generated BOM must manage exactly " + approved.size() + " published CDO bundle coordinates");
       }
 
-      for (int i = 0; i < BUNDLES.size(); i++)
+      for (int i = 0; i < approved.size(); i++)
       {
         Element dependency = managed.get(i);
-        String bundle = BUNDLES.get(i);
+        String bundle = approved.get(i);
         if (!"org.eclipse.cdo".equals(text(dependency, "groupId")) || !bundle.equals(text(dependency, "artifactId"))
             || !versions.get(bundle).equals(text(dependency, "version")) || directChildren(dependency, "groupId").size() != 1
             || directChildren(dependency, "artifactId").size() != 1 || directChildren(dependency, "version").size() != 1)
@@ -1178,11 +1018,11 @@ public final class CDOAggregationTool
     }
 
     private static void validateStaging(File staging, Map<String, String> metadata, Map<String, String> publishing, Map<String, String> versions,
-        boolean signed) throws Exception
+        boolean signed, List<String> approved) throws Exception
     {
       rejectSymbolicLinks(staging.toPath(), "CDO 4.36 BOM staging");
       File pom = new File(staging, bomRelativePom().replace('/', File.separatorChar));
-      validatePom(pom, metadata, publishing, versions);
+      validatePom(pom, metadata, publishing, versions, approved);
       Set<String> expected = new LinkedHashSet<>();
       expected.add(bomRelativePom());
       for (String checksum : CHECKSUMS)
@@ -2073,7 +1913,8 @@ public final class CDOAggregationTool
         }
       }
 
-      System.out.println("Verified twelve CDO coordinates, traceability properties, external aggregation artifacts, and excluded-artifact guard.");
+      System.out
+          .println("Verified " + BUNDLES.size() + " CDO coordinates, traceability properties, external aggregation artifacts, and excluded-artifact guard.");
     }
   }
 
@@ -2663,7 +2504,8 @@ public final class CDOAggregationTool
 
       if (!versions.keySet().equals(new LinkedHashSet<>(BUNDLES)))
       {
-        throw new IllegalArgumentException("Staging must contain exactly the twelve approved CDO/Net4j coordinates; found " + versions.keySet());
+        throw new IllegalArgumentException(
+            "Staging must contain exactly the " + BUNDLES.size() + " approved CDO/Net4j coordinates; found " + versions.keySet());
       }
 
       Set<String> allowedFiles = new LinkedHashSet<>();
@@ -2881,9 +2723,10 @@ public final class CDOAggregationTool
     private static int validateStaging(File staging, boolean signaturesRequired) throws Exception
     {
       int artifacts = AuditCommand.validatePublicationScope(staging, signaturesRequired);
-      if (artifacts != 48)
+      int expectedArtifacts = BUNDLES.size() * 4;
+      if (artifacts != expectedArtifacts)
       {
-        throw new IllegalArgumentException("Expected exactly 48 approved Maven artifacts in staging; found " + artifacts);
+        throw new IllegalArgumentException("Expected exactly " + expectedArtifacts + " approved Maven artifacts in staging; found " + artifacts);
       }
 
       return artifacts;
@@ -2895,6 +2738,194 @@ public final class CDOAggregationTool
       return value == null ? "" : value;
     }
 
+  }
+
+  private static File singleVersionDirectory(File repository, String bundle)
+  {
+    File artifact = new File(repository, "org/eclipse/cdo/" + bundle);
+    File[] versions = artifact.listFiles(File::isDirectory);
+    if (versions == null || versions.length != 1)
+    {
+      throw new IllegalArgumentException("Expected one Maven version directory for " + bundle + " in " + artifact);
+    }
+
+    return versions[0];
+  }
+
+  private static void delete(File file) throws IOException
+  {
+    if (file.exists())
+    {
+      try (Stream<Path> stream = Files.walk(file.toPath()))
+      {
+        stream.sorted(Comparator.reverseOrder()).forEach(path -> {
+          try
+          {
+            Files.delete(path);
+          }
+          catch (IOException e)
+          {
+            throw new RuntimeException(e);
+          }
+        });
+      }
+    }
+  }
+
+  private static void publicationScopeCheck(String[] args) throws Exception
+  {
+    if (args.length != 2)
+    {
+      throw new IllegalArgumentException("publication-scope-check requires a staging directory");
+    }
+
+    File staging = requireDirectory(args[1], "staging directory");
+    requireWorkspaceOutput(staging, "staging directory");
+    rejectSymbolicLinks(staging.toPath(), "staging directory");
+    int artifacts = AuditCommand.validatePublicationScope(staging, false);
+    System.out.println("Validated publication scope for " + artifacts + " approved CDO artifacts.");
+  }
+
+  private static Map<String, String> publicationMetadata(Map<String, String> metadata)
+  {
+    Map<String, String> result = new LinkedHashMap<>();
+    for (Map.Entry<String, String> entry : metadata.entrySet())
+    {
+      if (!INTERNAL_CBI_PROPERTIES.contains(entry.getKey()))
+      {
+        result.put(entry.getKey(), entry.getValue());
+      }
+    }
+
+    return result;
+  }
+
+  private static void removeInternalCbiProperties(Element project)
+  {
+    NodeList projectChildren = project.getChildNodes();
+    for (int i = 0; i < projectChildren.getLength(); i++)
+    {
+      Node projectChild = projectChildren.item(i);
+      String name = projectChild.getLocalName();
+      if (name == null)
+      {
+        name = projectChild.getNodeName();
+      }
+
+      if (projectChild instanceof Element && "properties".equals(name))
+      {
+        Element properties = (Element)projectChild;
+        for (String property : INTERNAL_CBI_PROPERTIES)
+        {
+          Element child = child(properties, property);
+          while (child != null)
+          {
+            properties.removeChild(child);
+            child = child(properties, property);
+          }
+        }
+      }
+    }
+  }
+
+  private static void rejectInternalCbiProperties(Element project, File pom)
+  {
+    NodeList projectChildren = project.getChildNodes();
+    for (int i = 0; i < projectChildren.getLength(); i++)
+    {
+      Node projectChild = projectChildren.item(i);
+      String name = projectChild.getLocalName();
+      if (name == null)
+      {
+        name = projectChild.getNodeName();
+      }
+
+      if (projectChild instanceof Element && "properties".equals(name))
+      {
+        Element properties = (Element)projectChild;
+        for (String property : INTERNAL_CBI_PROPERTIES)
+        {
+          if (child(properties, property) != null)
+          {
+            throw new IllegalArgumentException("Internal CBI property must not be published in " + pom + ": " + property);
+          }
+        }
+      }
+    }
+  }
+
+  private static int countChildren(Element parent, String name)
+  {
+    int count = 0;
+    NodeList children = parent.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
+    {
+      Node node = children.item(i);
+      if (node instanceof Element && name.equals(node.getLocalName() == null ? node.getNodeName() : node.getLocalName()))
+      {
+        count++;
+      }
+    }
+
+    return count;
+  }
+
+  private static void consumerDependencyTreeCheck(String[] args) throws Exception
+  {
+    if (args.length != 2)
+    {
+      throw new IllegalArgumentException("consumer-dependency-tree-check requires a Maven dependency-tree file");
+    }
+
+    File dependencyTree = requireFile(new File(args[1]), "Maven consumer dependency tree");
+    requireWorkspaceOutput(dependencyTree, "Maven consumer dependency tree");
+    String tree = Files.readString(dependencyTree.toPath(), StandardCharsets.UTF_8);
+    verifyNoSnapshotDependencies(tree);
+    System.out.println("Verified that the Central-only consumer dependency tree contains no SNAPSHOT dependencies.");
+  }
+
+  private static void consumerDependencyTreeTest(String[] args)
+  {
+    if (args.length != 1)
+    {
+      throw new IllegalArgumentException("consumer-dependency-tree-test takes no arguments");
+    }
+
+    verifyNoSnapshotDependencies(
+        "org.eclipse.cdo.releng:cdo-maven-consumer-test:jar:1.0.0-SNAPSHOT\n+- org.eclipse.cdo:org.eclipse.net4j:jar:4.23.0:compile\n");
+
+    try
+    {
+      verifyNoSnapshotDependencies(
+          "org.eclipse.cdo.releng:cdo-maven-consumer-test:jar:1.0.0-SNAPSHOT\n+- org.eclipse.platform:org.eclipse.osgi:jar:3.24.300-SNAPSHOT:compile\n");
+      throw new AssertionError("Expected a SNAPSHOT dependency to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      if (!expected.getMessage().contains("SNAPSHOT dependency"))
+      {
+        throw expected;
+      }
+    }
+
+    System.out.println("Central-only dependency-tree checks passed: consumer project SNAPSHOT accepted; SNAPSHOT dependency rejected.");
+  }
+
+  private static void verifyNoSnapshotDependencies(String tree)
+  {
+    String[] lines = tree.split("\\R");
+    if (lines.length < 2 || lines[0].isBlank())
+    {
+      throw new IllegalArgumentException("Maven consumer dependency tree is empty or malformed");
+    }
+
+    for (int i = 1; i < lines.length; i++)
+    {
+      if (lines[i].toUpperCase(Locale.ROOT).contains("SNAPSHOT"))
+      {
+        throw new IllegalArgumentException("Maven consumer dependency tree contains a SNAPSHOT dependency: " + lines[i].trim());
+      }
+    }
   }
 
   private static void verifyDropInfo(String[] args) throws Exception
@@ -2975,9 +3006,10 @@ public final class CDOAggregationTool
       }
     }
 
-    if (artifacts.size() != 48)
+    int expectedArtifacts = BUNDLES.size() * 4;
+    if (artifacts.size() != expectedArtifacts)
     {
-      throw new IllegalArgumentException("Expected 48 main, POM, sources, and Javadoc artifacts; found " + artifacts.size());
+      throw new IllegalArgumentException("Expected " + expectedArtifacts + " main, POM, sources, and Javadoc artifacts; found " + artifacts.size());
     }
 
     Set<String> bundles = new LinkedHashSet<>();
@@ -3053,9 +3085,10 @@ public final class CDOAggregationTool
       }
     }
 
-    if (bundles.size() != BUNDLES.size() || !bundles.equals(new LinkedHashSet<>(BUNDLES)) || coordinates.size() != 12)
+    if (bundles.size() != BUNDLES.size() || !bundles.equals(new LinkedHashSet<>(BUNDLES)) || coordinates.size() != BUNDLES.size())
     {
-      throw new IllegalArgumentException("Maven repository does not contain exactly one version of each of the twelve approved bundles: " + coordinates);
+      throw new IllegalArgumentException(
+          "Maven repository does not contain exactly one version of each of the " + BUNDLES.size() + " approved bundles: " + coordinates);
     }
 
     for (String bundle : BUNDLES)
@@ -3102,9 +3135,9 @@ public final class CDOAggregationTool
       }
     }
 
-    if (!expectedSignatures.equals(actualSignatures) || actualSignatures.size() != 48)
+    if (!expectedSignatures.equals(actualSignatures) || actualSignatures.size() != expectedArtifacts)
     {
-      throw new IllegalArgumentException("Deployment repository must contain exactly the 48 expected detached signatures");
+      throw new IllegalArgumentException("Deployment repository must contain exactly the " + expectedArtifacts + " expected detached signatures");
     }
 
     verifySignatures(args[7], publicKey, expectedFingerprint, artifacts, staging);
@@ -3114,7 +3147,7 @@ public final class CDOAggregationTool
 
     try (PrintWriter out = new PrintWriter(new FileOutputStream(args[8], true), true, StandardCharsets.UTF_8))
     {
-      out.println("signatures.verified=48");
+      out.println("signatures.verified=" + expectedArtifacts);
       out.println("signature.verification=VALIDATED");
       out.println("signing.primary.fingerprint=" + expectedFingerprint);
       out.println("deployment.zip=" + zip.getName());
@@ -3122,7 +3155,8 @@ public final class CDOAggregationTool
       out.println("central.publication.performed=false");
     }
 
-    System.out.println("Verified 48 OpenPGP signatures, staged repository bytes, checksums, and exact ZIP inventory. Publication performed=false.");
+    System.out.println(
+        "Verified " + expectedArtifacts + " OpenPGP signatures, staged repository bytes, checksums, and exact ZIP inventory. Publication performed=false.");
   }
 
   private static void verifyBomPackage(String[] args) throws Exception
@@ -3141,7 +3175,7 @@ public final class CDOAggregationTool
     Map<String, String> metadata = readProperties(metadataFile);
     Map<String, String> publishing = readProperties(publishingFile);
     Map<String, String> inventory = Bom436Command.verifySelectedDrop(metadata, args[6]);
-    Map<String, String> versions = releaseInventoryVersions(inventory);
+    Map<String, String> versions = releaseInventoryVersions(inventory, BUNDLES_436);
     PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_FOR_CENTRAL");
     requireWorkspaceOutput(staging, "CDO 4.36 BOM staging");
     requireWorkspaceOutput(signedRepository, "signed CDO 4.36 BOM repository");
@@ -3156,7 +3190,7 @@ public final class CDOAggregationTool
       throw new IllegalArgumentException("GnuPG public verification key must not be a symbolic link");
     }
 
-    Bom436Command.validateStaging(staging, metadata, publishing, versions, true);
+    Bom436Command.validateStaging(staging, metadata, publishing, versions, true, BUNDLES_436);
     String expectedFingerprint = args[7].replace(" ", "").toUpperCase();
     if (!expectedFingerprint.matches("(?:[0-9A-F]{40}|[0-9A-F]{64})"))
     {
@@ -4130,21 +4164,21 @@ public final class CDOAggregationTool
     Map<String, String> publishingMetadata = readProperties(publishing.toFile());
     Map<String, String> versions = new LinkedHashMap<>();
     String[] publishedVersions = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0", "4.15.0" };
-    for (int i = 0; i < BUNDLES.size(); i++)
+    for (int i = 0; i < BUNDLES_436.size(); i++)
     {
-      versions.put(BUNDLES.get(i), publishedVersions[i]);
+      versions.put(BUNDLES_436.get(i), publishedVersions[i]);
     }
 
     StringBuilder index = new StringBuilder("<index>\n");
-    for (int i = 0; i < BUNDLES.size(); i++)
+    for (int i = 0; i < BUNDLES_436.size(); i++)
     {
-      index.append("<element name=\"").append(BUNDLES.get(i)).append("\" type=\"osgi.bundle\" version=\"").append(publishedVersions[i])
+      index.append("<element name=\"").append(BUNDLES_436.get(i)).append("\" type=\"osgi.bundle\" version=\"").append(publishedVersions[i])
           .append(".v20260901-1311\"/>\n");
     }
 
     index.append("</index>\n");
     Files.writeString(drop.resolve("index.xml"), index, StandardCharsets.UTF_8);
-    File bomPom = BomCommand.generate(bomRepository.toFile(), buildMetadata, publishingMetadata, "4.36.0", versions);
+    File bomPom = BomCommand.generate(bomRepository.toFile(), buildMetadata, publishingMetadata, "4.36.0", versions, BUNDLES_436);
     Bom436Command
         .stage(new String[] { "stage-bom-436", bomRepository.toString(), metadata.toString(), publishing.toString(), drop.toString(), staging.toString() });
 
@@ -4997,15 +5031,16 @@ public final class CDOAggregationTool
   private static void assertPublicationStaging(Path staging, boolean signaturesPresent) throws Exception
   {
     List<File> artifacts = publicationArtifacts(staging.toFile());
-    if (artifacts.size() != 48 || Files.exists(staging.resolve("com/h2database")))
+    int expectedArtifacts = BUNDLES.size() * 4;
+    if (artifacts.size() != expectedArtifacts || Files.exists(staging.resolve("com/h2database")))
     {
-      throw new AssertionError("Publication staging must contain exactly 48 CDO Maven artifacts and no H2 files");
+      throw new AssertionError("Publication staging must contain exactly " + expectedArtifacts + " CDO Maven artifacts and no H2 files");
     }
 
     try (Stream<Path> paths = Files.walk(staging.resolve("org")))
     {
       List<Path> files = paths.filter(Files::isRegularFile).collect(Collectors.toList());
-      int expectedFiles = 240 + (signaturesPresent ? 48 : 0);
+      int expectedFiles = expectedArtifacts * 5 + (signaturesPresent ? expectedArtifacts : 0);
       if (files.size() != expectedFiles)
       {
         throw new AssertionError("Expected " + expectedFiles + " CDO Maven artifacts, checksums, and signatures under org; found " + files.size());
@@ -5195,11 +5230,6 @@ public final class CDOAggregationTool
     return file;
   }
 
-  static Document parse(File file) throws Exception
-  {
-    return parse(new FileInputStream(file), file.getPath());
-  }
-
   private static Document newDocument() throws Exception
   {
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -5338,10 +5368,6 @@ public final class CDOAggregationTool
     return result;
   }
 
-  private static final Pattern OSGI_VERSION = Pattern.compile("([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:\\.([A-Za-z0-9_-]+))?");
-
-  private static final Pattern MAVEN_RELEASE_TRICK = Pattern.compile("[0-9]+\\.[0-9]+\\.[0-9]+(?:\\.[0-9]+-[a-zA-Z][a-zA-Z0-9_]*)?");
-
   private static void deriveReleaseInventory(String[] args) throws Exception
   {
     if (args.length != 4)
@@ -5361,6 +5387,11 @@ public final class CDOAggregationTool
   }
 
   private static Map<String, String> readReleaseInventory(String location) throws Exception
+  {
+    return readReleaseInventory(location, BUNDLES);
+  }
+
+  private static Map<String, String> readReleaseInventory(String location, List<String> approved) throws Exception
   {
     DropLocation drop = DropLocation.parse(location);
     Properties web = new Properties();
@@ -5401,7 +5432,7 @@ public final class CDOAggregationTool
     inventory.put("bom.artifactId", "org.eclipse.cdo.bom");
     inventory.put("bom.version", bomVersion);
     NodeList elements = index.getElementsByTagNameNS("*", "element");
-    for (String bundle : BUNDLES)
+    for (String bundle : approved)
     {
       List<Element> matches = new ArrayList<>();
       for (int i = 0; i < elements.getLength(); i++)
@@ -5430,10 +5461,10 @@ public final class CDOAggregationTool
     return inventory;
   }
 
-  private static Map<String, String> releaseInventoryVersions(Map<String, String> inventory)
+  private static Map<String, String> releaseInventoryVersions(Map<String, String> inventory, List<String> approved)
   {
     Map<String, String> versions = new LinkedHashMap<>();
-    for (String bundle : BUNDLES)
+    for (String bundle : approved)
     {
       String version = inventory.get("artifact." + bundle);
       if (version == null)

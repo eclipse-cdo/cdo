@@ -37,10 +37,12 @@ public class CentralVerificationToolTest
 {
   private static final String[] BUNDLES = { "org.eclipse.net4j.util", "org.eclipse.net4j", "org.eclipse.net4j.tcp", "org.eclipse.net4j.db",
       "org.eclipse.net4j.db.jdbc", "org.eclipse.net4j.db.h2", "org.eclipse.emf.cdo.common", "org.eclipse.emf.cdo", "org.eclipse.emf.cdo.net4j",
-      "org.eclipse.emf.cdo.server", "org.eclipse.emf.cdo.server.net4j", "org.eclipse.emf.cdo.server.db" };
+      "org.eclipse.emf.cdo.server", "org.eclipse.emf.cdo.server.net4j", "org.eclipse.emf.cdo.server.db", "org.eclipse.net4j.jvm", "org.eclipse.net4j.ws",
+      "org.eclipse.net4j.ws.jetty.server", "org.eclipse.net4j.db.postgresql", "org.eclipse.emf.cdo.server.embedded", "org.eclipse.emf.cdo.expressions",
+      "org.eclipse.emf.cdo.security", "org.eclipse.emf.cdo.server.security" };
 
-  private static final String[] VERSIONS = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0",
-      "4.15.0" };
+  private static final String[] VERSIONS = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0", "4.15.0",
+      "4.4.1", "2.0.0", "1.0.0", "4.5.1", "4.11.1", "4.5.0", "4.8.0", "4.13.0" };
 
   @Rule
   public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -100,7 +102,7 @@ public class CentralVerificationToolTest
   }
 
   @Test
-  public void verifiesOnlyTheTwelveRootDependenciesInMavenTree() throws Exception
+  public void verifiesOnlyTheTwentyRootDependenciesInMavenTree() throws Exception
   {
     Fixture fixture = new Fixture();
     fixture.deriveInventory();
@@ -130,7 +132,7 @@ public class CentralVerificationToolTest
     fixture.verifyAndWriteMarker();
 
     List<String> lines = Files.readAllLines(fixture.marker, StandardCharsets.UTF_8);
-    assertEquals(13, lines.size());
+    assertEquals(21, lines.size());
     Set<String> coordinates = new LinkedHashSet<>();
     for (int i = 0; i < BUNDLES.length; i++)
     {
@@ -140,7 +142,7 @@ public class CentralVerificationToolTest
 
     assertEquals("org.eclipse.cdo.bom=4.36.0", lines.get(lines.size() - 1));
     coordinates.add("org.eclipse.cdo.bom");
-    assertEquals(13, coordinates.size());
+    assertEquals(21, coordinates.size());
   }
 
   @Test

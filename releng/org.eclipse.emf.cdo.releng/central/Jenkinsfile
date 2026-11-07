@@ -372,7 +372,7 @@ pipeline {
               exit 2
             fi
             pom_count=$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)
-            test "$pom_count" -eq 12
+            test "$pom_count" -eq 20
             find "$STAGING_DIR/org" -name '*.pom' -type f -print | while IFS= read -r pom; do
               version_dir=$(dirname "$pom")
               artifact_dir=$(dirname "$version_dir")
@@ -497,9 +497,9 @@ pipeline {
                 echo "Staging contains a symlink" >&2
                 exit 2
               fi
-              test "$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)" -eq 12
-              test "$(find "$STAGING_DIR/org" -name '*.jar' -type f | wc -l)" -eq 36
-              test "$(find "$STAGING_DIR/org" -name '*.asc' -type f | wc -l)" -eq 48
+              test "$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)" -eq 20
+              test "$(find "$STAGING_DIR/org" -name '*.jar' -type f | wc -l)" -eq 60
+              test "$(find "$STAGING_DIR/org" -name '*.asc' -type f | wc -l)" -eq 80
               mkdir -p "$(dirname "$BUNDLE_PATH")"
               rm -f "$BUNDLE_PATH"
               (cd "$STAGING_DIR" && zip -q -r "$BUNDLE_PATH" org)

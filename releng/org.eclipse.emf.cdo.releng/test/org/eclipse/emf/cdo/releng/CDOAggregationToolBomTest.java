@@ -59,10 +59,15 @@ public class CDOAggregationToolBomTest
 {
   private static final String[] BUNDLES = { "org.eclipse.net4j.util", "org.eclipse.net4j", "org.eclipse.net4j.tcp", "org.eclipse.net4j.db",
       "org.eclipse.net4j.db.jdbc", "org.eclipse.net4j.db.h2", "org.eclipse.emf.cdo.common", "org.eclipse.emf.cdo", "org.eclipse.emf.cdo.net4j",
-      "org.eclipse.emf.cdo.server", "org.eclipse.emf.cdo.server.net4j", "org.eclipse.emf.cdo.server.db" };
+      "org.eclipse.emf.cdo.server", "org.eclipse.emf.cdo.server.net4j", "org.eclipse.emf.cdo.server.db", "org.eclipse.net4j.jvm", "org.eclipse.net4j.ws",
+      "org.eclipse.net4j.ws.jetty.server", "org.eclipse.net4j.db.postgresql", "org.eclipse.emf.cdo.server.embedded", "org.eclipse.emf.cdo.expressions",
+      "org.eclipse.emf.cdo.security", "org.eclipse.emf.cdo.server.security" };
 
   private static final String[] BOM_436_VERSIONS = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0",
       "4.15.0" };
+
+  private static final String[] FIXTURE_VERSIONS = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0",
+      "4.15.0", "4.4.1", "2.0.0", "1.0.0", "4.5.1", "4.11.1", "4.5.0", "4.8.0", "4.13.0" };
 
   private static final String PUBLISHING_METADATA = "project.url=https://eclipse.dev/cdo/\n" + "organization.name=Eclipse Foundation\n"
       + "organization.url=https://www.eclipse.org\n" + "license.name=EPL-2.0\n" + "license.url=https://www.eclipse.org/legal/epl-2.0/\n"
@@ -72,6 +77,40 @@ public class CDOAggregationToolBomTest
 
   @Rule
   public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
+  @Test
+  public void checkedInAggregationModelMapsInternalAndJettyBundleRequirements() throws Exception
+  {
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    File model = new File(new File(classes.getParentFile(), "central"), "CDO.aggr");
+    assertTrue("Missing aggregation model: " + model, model.isFile());
+
+    Document document = parse(model);
+    NodeList mappings = document.getElementsByTagName("mavenDependencyMapping");
+    Set<String> mappingKeys = new LinkedHashSet<>();
+    String packagePattern = null;
+    for (int i = 0; i < mappings.getLength(); i++)
+    {
+      Element mapping = (Element)mappings.item(i);
+      String namespace = mapping.getAttribute("namespacePattern");
+      String name = mapping.getAttribute("namePattern");
+      String groupId = mapping.getAttribute("groupId");
+      String artifactId = mapping.getAttribute("artifactId");
+      mappingKeys.add(namespace + "|" + name + "|" + groupId + "|" + artifactId);
+      if ("java\\.package".equals(namespace))
+      {
+        packagePattern = name;
+      }
+    }
+
+    assertTrue(mappingKeys.contains("osgi\\.bundle|(org\\.eclipse\\.(emf\\.cdo|net4j).*)|org.eclipse.cdo|$1"));
+    assertTrue(mappingKeys.contains("osgi\\.bundle|org\\.eclipse\\.jetty\\.server|org.eclipse.jetty|jetty-server"));
+    assertTrue(mappingKeys.contains("osgi\\.bundle|org\\.eclipse\\.jetty\\.http|org\\.eclipse\\.jetty\\.util|org\\.eclipse\\.jetty\\.websocket\\.api|!|!"));
+    assertTrue(mappingKeys.contains("osgi\\.bundle|org\\.eclipse\\.jetty\\.websocket\\.server|org.eclipse.jetty.websocket|jetty-websocket-jetty-server"));
+    assertTrue(mappingKeys.contains("java\\.package|org\\.postgresql(\\..*)?|org.postgresql|postgresql"));
+    assertNotNull(packagePattern);
+    assertTrue("The package mapping must retain PostgreSQL's optional OSGi requirements", "org.postgresql".matches(packagePattern));
+  }
 
   @Test
   public void generatesTwoSegmentReleaseBomWithExactlyApprovedManagedBundlesAndMetadata() throws Exception
@@ -95,7 +134,7 @@ public class CDOAggregationToolBomTest
 
     Element management = child(project, "dependencyManagement");
     assertNotNull(management);
-    assertEquals(12, elements(child(management, "dependencies"), "dependency").getLength());
+    assertEquals(BUNDLES.length, elements(child(management, "dependencies"), "dependency").getLength());
     assertEquals(0, directElements(project, "dependencies"));
     for (int i = 0; i < BUNDLES.length; i++)
     {
@@ -110,6 +149,13 @@ public class CDOAggregationToolBomTest
     {
       assertEquals(5, files.count());
     }
+  }
+
+  @Test
+  public void approvedPublicationInventoryContainsExactlyTwentyBundles()
+  {
+    assertEquals(20, BUNDLES.length);
+    assertEquals(Arrays.asList(BUNDLES), CDOAggregationTool.approvedBundles());
   }
 
   @Test
@@ -156,8 +202,8 @@ public class CDOAggregationToolBomTest
     assertEquals("R20260901-1311", childText(child(project, "properties"), "cdo.drop.id"));
     assertEquals(0, directElements(project, "dependencies"));
     NodeList managed = elements(child(child(project, "dependencyManagement"), "dependencies"), "dependency");
-    assertEquals(12, managed.getLength());
-    for (int i = 0; i < BUNDLES.length; i++)
+    assertEquals(BOM_436_VERSIONS.length, managed.getLength());
+    for (int i = 0; i < BOM_436_VERSIONS.length; i++)
     {
       Element dependency = (Element)managed.item(i);
       assertEquals("org.eclipse.cdo", childText(dependency, "groupId"));
@@ -178,7 +224,7 @@ public class CDOAggregationToolBomTest
     assertEquals(BOM_436_VERSIONS[0], inventoryProperties.getProperty("artifact." + BUNDLES[0]));
     assertEquals(BOM_436_VERSIONS[0] + ".v20260901-1311", inventoryProperties.getProperty("osgi." + BUNDLES[0]));
     assertEquals("0123456789abcdef0123456789abcdef01234567", inventoryProperties.getProperty("cdo.git.commit"));
-    assertEquals(44, inventoryProperties.size());
+    assertEquals(20 + BUNDLES.length * 2, inventoryProperties.size());
     Set<String> unsignedFiles = new LinkedHashSet<>();
     try (Stream<Path> paths = Files.walk(staging))
     {
@@ -525,9 +571,9 @@ public class CDOAggregationToolBomTest
     try (CentralFixture central = new CentralFixture())
     {
       Map<String, String> report = classify(root, central, false);
-      assertEquals("13", report.get("release.component.count"));
-      assertEquals("13", report.get("publication.coordinate.count"));
-      for (int i = 1; i <= 13; i++)
+      assertEquals("21", report.get("release.component.count"));
+      assertEquals("21", report.get("publication.coordinate.count"));
+      for (int i = 1; i <= BUNDLES.length + 1; i++)
       {
         assertEquals("NEW", report.get("release.component." + i + ".classification"));
       }
@@ -543,13 +589,13 @@ public class CDOAggregationToolBomTest
       central.loadProposedArtifacts(root);
       Map<String, String> report = classify(root, central, false);
       assertEquals("0", report.get("publication.coordinate.count"));
-      for (int i = 1; i <= 12; i++)
+      for (int i = 1; i <= BUNDLES.length; i++)
       {
         assertEquals("REUSABLE", report.get("release.component." + i + ".classification"));
       }
 
-      assertEquals("REUSABLE", report.get("release.component.13.classification"));
-      assertTrue(report.get("release.component.13.reason").contains("not a new deployment candidate"));
+      assertEquals("REUSABLE", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
+      assertTrue(report.get("release.component." + (BUNDLES.length + 1) + ".reason").contains("not a new deployment candidate"));
       assertEquals("0", report.get("publication.coordinate.count"));
     }
   }
@@ -772,7 +818,7 @@ public class CDOAggregationToolBomTest
       central.loadProposedArtifacts(root);
       central.replaceBomWithIncompatibleVersion();
       Map<String, String> report = classify(root, central, true);
-      assertEquals("CONFLICT", report.get("release.component.13.classification"));
+      assertEquals("CONFLICT", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
       assertEquals("0", report.get("publication.coordinate.count"));
     }
   }
@@ -802,7 +848,7 @@ public class CDOAggregationToolBomTest
     StringBuilder index = new StringBuilder("<index>\n");
     for (int i = 0; i < BUNDLES.length; i++)
     {
-      index.append("  <element name=\"").append(BUNDLES[i]).append("\" type=\"osgi.bundle\" version=\"").append(BOM_436_VERSIONS[i])
+      index.append("  <element name=\"").append(BUNDLES[i]).append("\" type=\"osgi.bundle\" version=\"").append(FIXTURE_VERSIONS[i])
           .append(".v20260901-1311\"/>\n");
       index.append("  <element name=\"").append(BUNDLES[i]).append("\" type=\"org.eclipse.update.feature\" version=\"99.0.0\"/>\n");
     }

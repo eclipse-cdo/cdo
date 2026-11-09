@@ -217,6 +217,65 @@ Before adding a new test, determine whether it needs repository/session/model sc
 - Always report the executed suite, effective scenario, test counts, failures, errors, and whether execution completed normally.
 - Use ordinary JUnit with `pluginTest=false`, as specified above.
 
+## CDO Test Access, Reflection, and Dynamic Proxies
+
+### Public Visibility in Internal Packages
+
+Java `public` visibility must not be confused with a supported public API.
+
+Classes and methods in `internal` packages may be `public` when direct access from tests or collaborating implementation classes is appropriate.
+
+- Prefer a direct, compile-time-checked call to an existing `public` method over reflective access to a package-private or private method.
+- Do not introduce or retain package-private visibility merely to keep an implementation method hidden from tests.
+- Do not create artificial production methods or test-only accessors solely to expose implementation details.
+- Do not make fields public merely to let tests manipulate private state.
+- Respect OSGi package exports and Eclipse API Tools restrictions.
+
+### Reflection in Tests
+
+**Do not use Java reflection to access production methods, constructors, or fields.**
+
+This includes:
+
+- `Class.getDeclaredMethod()`, `getDeclaredField()`, and `getDeclaredConstructor()`
+- `AccessibleObject.setAccessible()`
+- Reflective invocation of methods or constructors
+- Reflective mutation of private or final fields
+- String-based discovery of implementation classes or members
+
+Prefer direct method calls, existing APIs, suitable test subclasses, and behavioral verification.
+
+### Dynamic Proxies and Test Doubles
+
+**Do not use `java.lang.reflect.Proxy` or `Proxy.newProxyInstance()` as a shortcut for implementing test doubles.**
+
+Prefer, in order:
+
+1. Existing concrete implementations or test fixtures.
+2. Small, explicitly named fake or stub implementations.
+3. Anonymous implementations or subclasses with explicitly defined behavior.
+
+Avoid generic invocation handlers that dispatch by method name and return default values for unrecognized methods.
+
+Use dynamic proxies only when a concrete technical requirement makes them necessary, not merely to avoid implementing interface methods.
+
+If reflection or a dynamic proxy appears unavoidable, explain the specific technical constraint and obtain approval before introducing it. Existing occurrences are not precedent; audit them when touching the surrounding code and remove them when ordinary Java mechanisms are practical.
+
+### Mandatory Pre-Completion Audit
+
+Before reporting a coding task as complete:
+
+1. Inspect all newly added and modified Java files, including untracked files.
+2. Search for reflection, dynamic proxies, and method-name-based dispatch.
+3. Review every introduced or changed member visibility.
+4. Verify that no production test seam was introduced merely for test convenience.
+5. Remove accidental reflection imports and obsolete helpers.
+6. Report any remaining exceptions explicitly, with file paths and justification.
+
+Passing JDT, JUnit, or `git diff --check` does not replace this audit.
+
+**Do not report the task as complete while an unapproved violation remains.**
+
 ## CDO Installer example mirrors
 
 Never modify files under these repository-relative paths unless the user explicitly instructs otherwise:

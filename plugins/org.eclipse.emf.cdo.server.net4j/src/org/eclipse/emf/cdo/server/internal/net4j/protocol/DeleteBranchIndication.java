@@ -12,14 +12,11 @@
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
-import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
-import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -53,10 +50,6 @@ public class DeleteBranchIndication extends CDOServerReadIndicationWithMonitorin
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
     InternalCDOBranch branch = branchManager.getBranch(branchID);
     CDOBranch[] branches = branch.delete(monitor);
-
-    InternalSession session = getSession();
-    InternalSessionManager sessionManager = getRepository().getSessionManager();
-    sessionManager.sendBranchNotification(session, ChangeKind.DELETED, branches);
 
     out.writeXInt(branches.length);
 

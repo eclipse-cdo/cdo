@@ -242,6 +242,23 @@ public class ModelEvolutionTest extends AbstractCDOTest
     assertEquals("first instance", verifiedB.eGet(v2Bname));
   }
 
+  public void testResourcePersistsAcrossRepositoryRestart() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("test"));
+    resource.getContents().add(create(V1, "A"));
+    transaction.commit();
+
+    restartRepository();
+
+    CDOSession restartedSession = openSession();
+    CDOTransaction restartedTransaction = restartedSession.openTransaction();
+    CDOResource restartedResource = restartedTransaction.getResource(getResourcePath("test"));
+    assertNotNull(restartedResource);
+    assertEquals(1, restartedResource.getContents().size());
+  }
+
   public void testEnumEvolutionAfterBlob() throws Exception
   {
     CDOBlob persistedBlob;

@@ -433,11 +433,35 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
       {
         doAfterActivate();
       }
-      catch (Exception ex)
+      catch (ReactivationTrigger trigger)
       {
+        throw trigger;
+      }
+      catch (Exception | Error ex)
+      {
+        unlock();
+
+        try
+        {
+          Exception deactivationException = deactivate();
+          if (deactivationException != null)
+          {
+            ex.addSuppressed(deactivationException);
+          }
+        }
+        catch (Error deactivationError)
+        {
+          ex.addSuppressed(deactivationError);
+        }
+
         OM.LOG.error(ex);
-        deactivate();
-        return;
+
+        if (ex instanceof Exception)
+        {
+          throw new LifecycleException(ex);
+        }
+
+        throw (Error)ex;
       }
 
       unlock();

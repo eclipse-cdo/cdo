@@ -51,8 +51,8 @@ import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.internal.embedded.ServerBranchLoader;
-import org.eclipse.emf.cdo.server.internal.embedded.ServerRevisionLoader;
+import org.eclipse.emf.cdo.server.internal.embedded.EmbeddedBranchLoader;
+import org.eclipse.emf.cdo.server.internal.embedded.EmbeddedRevisionLoader;
 import org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory;
 import org.eclipse.emf.cdo.server.mem.MEMStoreUtil;
 import org.eclipse.emf.cdo.server.security.ISecurityManager;
@@ -1450,6 +1450,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     /**
+     * MEMStore Under Test.
+     *
      * @author Eike Stepper
      */
     public static class MEMStore_UT extends MEMStore
@@ -1497,6 +1499,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     }
 
     /**
+     * MEMStoreAccessor Under Test.
+     *
      * @author Eike Stepper
      */
     public static class MEMStoreAccessor_UT extends MEMStoreAccessor
@@ -1717,10 +1721,10 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
         InternalRepository repository = super.createRepository(name);
 
         InternalCDORevisionManager revisionManager = repository.getRevisionManager();
-        revisionManager.setRevisionLoader(new ServerRevisionLoader(repository));
+        revisionManager.setRevisionLoader(new EmbeddedRevisionLoader(repository));
 
         InternalCDOBranchManager branchManager = CDOBranchUtil.createBranchManager();
-        branchManager.setBranchLoader(new ServerBranchLoader(repository));
+        branchManager.setBranchLoader(new EmbeddedBranchLoader(repository));
         repository.setBranchManager(branchManager);
 
         return repository;

@@ -82,7 +82,6 @@ import org.eclipse.emf.cdo.server.IStoreChunkReader.Chunk;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
-import org.eclipse.emf.cdo.server.StoreThreadLocal.NoSessionRegisteredException;
 import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
@@ -802,23 +801,6 @@ public class Repository extends Container<Object> implements InternalRepository
           }
 
           ((BranchLoader4)accessor).changeTag(modCount, oldName, newName, branchPoint);
-
-          InternalSession sender = null;
-
-          try
-          {
-            sender = StoreThreadLocal.getSession();
-          }
-          catch (NoSessionRegisteredException ignore)
-          {
-            //$FALL-THROUGH$
-          }
-
-          // The branch manager's modCount will be bumped later by the caller of this method.
-          int newModCount = modCount.get() + 1;
-
-          sessionManager.sendTagNotification(sender, newModCount, oldName, newName, branchPoint);
-
           return branchPoint;
         }
         finally
@@ -3482,7 +3464,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     protected InternalCDOBranchManager createBranchManager()
     {
-      return CDOBranchUtil.createBranchManager();
+      return new ServerBranchManager(this);
     }
 
     protected InternalCDORevisionManager createRevisionManager()

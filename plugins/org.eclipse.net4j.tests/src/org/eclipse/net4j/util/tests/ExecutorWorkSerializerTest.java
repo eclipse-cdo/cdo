@@ -15,12 +15,22 @@ package org.eclipse.net4j.util.tests;
 import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.io.IOUtil;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Queue;
 import java.util.Random;
+import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * A test for {@link SerializingExecutor}.
@@ -141,6 +151,312 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
     assertEquals(NUM_WORK, workProduced.get());
   }
 
+  public void testSubmitOverloadsPreserveFIFOAndCaptureFailures() throws Exception
+  {
+    ManualExecutor delegate = new ManualExecutor();
+    SerializingExecutor executor = new SerializingExecutor(delegate);
+    executor.activate();
+
+    try
+    {
+      List<Integer> order = new ArrayList<>();
+      AtomicInteger active = new AtomicInteger();
+      AtomicInteger maximumActive = new AtomicInteger();
+      Future<?> runnableFuture = executor.submit(() -> runSerialTask(1, order, active, maximumActive));
+      Future<String> resultFuture = executor.submit(() -> runSerialTask(2, order, active, maximumActive), "result"); //$NON-NLS-1$
+      Future<Integer> callableFuture = executor.submit(() -> {
+        runSerialTask(3, order, active, maximumActive);
+        return 42;
+      });
+
+      Future<?> failedFuture = executor.submit(() -> {
+        throw new IllegalArgumentException("expected task failure"); //$NON-NLS-1$
+      });
+
+      assertEquals("Only one serial worker should be submitted", 1, delegate.size()); //$NON-NLS-1$
+      delegate.runNext();
+      runnableFuture.get(1, TimeUnit.SECONDS);
+      assertEquals("result", resultFuture.get(1, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertEquals(Integer.valueOf(42), callableFuture.get(1, TimeUnit.SECONDS));
+      assertEquals(Arrays.asList(1, 2, 3), order);
+      assertEquals(1, maximumActive.get());
+      try
+      {
+        failedFuture.get(1, TimeUnit.SECONDS);
+        fail("A failed task must complete exceptionally"); //$NON-NLS-1$
+      }
+      catch (ExecutionException expected)
+      {
+        assertTrue(expected.getCause() instanceof IllegalArgumentException);
+      }
+    }
+    finally
+    {
+      executor.deactivate();
+    }
+  }
+
+  public void testExecuteRejectsNullImmediately()
+  {
+    SerializingExecutor executor = new SerializingExecutor(new ManualExecutor());
+
+    try
+    {
+      executor.execute(null);
+      fail("Executing a null task must fail immediately"); //$NON-NLS-1$
+    }
+    catch (NullPointerException expected)
+    {
+      // The null task is rejected before it can be queued.
+    }
+  }
+
+  public void testTasksSubmittedWhileWorkerIsRunningDoNotOverlap() throws Exception
+  {
+    ManualExecutor delegate = new ManualExecutor();
+    SerializingExecutor executor = new SerializingExecutor(delegate);
+    executor.activate();
+    CountDownLatch firstStarted = new CountDownLatch(1);
+    CountDownLatch releaseFirst = new CountDownLatch(1);
+    CountDownLatch secondFinished = new CountDownLatch(1);
+    AtomicInteger active = new AtomicInteger();
+    AtomicInteger maximumActive = new AtomicInteger();
+    Future<?> first = executor.submit(() -> {
+      int concurrent = active.incrementAndGet();
+      maximumActive.accumulateAndGet(concurrent, Math::max);
+      firstStarted.countDown();
+      try
+      {
+        if (!releaseFirst.await(1, TimeUnit.SECONDS))
+        {
+          throw new AssertionError("First task was not released"); //$NON-NLS-1$
+        }
+      }
+      catch (InterruptedException ex)
+      {
+        Thread.currentThread().interrupt();
+        throw new AssertionError(ex);
+      }
+      finally
+      {
+        active.decrementAndGet();
+      }
+    });
+
+    Thread worker = new Thread(delegate::runNext, "SerializingExecutor worker test"); //$NON-NLS-1$
+    worker.setDaemon(true);
+    worker.start();
+
+    try
+    {
+      assertTrue("First task did not start", firstStarted.await(1, TimeUnit.SECONDS)); //$NON-NLS-1$
+      Future<?> second = executor.submit(() -> {
+        int concurrent = active.incrementAndGet();
+        maximumActive.accumulateAndGet(concurrent, Math::max);
+        active.decrementAndGet();
+        secondFinished.countDown();
+      });
+      assertEquals("A second delegate worker must not be scheduled concurrently", 0, delegate.size()); //$NON-NLS-1$
+      releaseFirst.countDown();
+      worker.join(1000);
+      assertFalse("Serial worker did not finish", worker.isAlive()); //$NON-NLS-1$
+      first.get(1, TimeUnit.SECONDS);
+      assertTrue("Second task did not finish", secondFinished.await(1, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertTrue(second.isDone());
+      assertEquals(1, maximumActive.get());
+    }
+    finally
+    {
+      releaseFirst.countDown();
+      executor.deactivate();
+      delegate.shutdownNow();
+    }
+  }
+
+  public void testReactivationWhileWorkerExecutesDoesNotScheduleConcurrentWorker() throws Exception
+  {
+    ManualExecutor delegate = new ManualExecutor();
+    SerializingExecutor executor = new SerializingExecutor(delegate);
+    executor.activate();
+    CountDownLatch firstStarted = new CountDownLatch(1);
+    CountDownLatch releaseFirst = new CountDownLatch(1);
+    CountDownLatch secondFinished = new CountDownLatch(1);
+    AtomicInteger active = new AtomicInteger();
+    AtomicInteger maximumActive = new AtomicInteger();
+    Future<?> first = executor.submit(() -> {
+      int concurrent = active.incrementAndGet();
+      maximumActive.accumulateAndGet(concurrent, Math::max);
+      firstStarted.countDown();
+      try
+      {
+        if (!releaseFirst.await(5, TimeUnit.SECONDS))
+        {
+          throw new AssertionError("First task was not released"); //$NON-NLS-1$
+        }
+      }
+      catch (InterruptedException ex)
+      {
+        Thread.currentThread().interrupt();
+        throw new AssertionError(ex);
+      }
+      finally
+      {
+        active.decrementAndGet();
+      }
+    });
+
+    Thread previousWorker = new Thread(delegate::runNext, "SerializingExecutor reactivation worker test"); //$NON-NLS-1$
+    previousWorker.setDaemon(true);
+    previousWorker.start();
+
+    try
+    {
+      assertTrue("First task did not start", firstStarted.await(1, TimeUnit.SECONDS)); //$NON-NLS-1$
+      executor.deactivate();
+      executor.activate();
+
+      Future<?> second = executor.submit(() -> {
+        int concurrent = active.incrementAndGet();
+        maximumActive.accumulateAndGet(concurrent, Math::max);
+        active.decrementAndGet();
+        secondFinished.countDown();
+      });
+
+      assertEquals("Reactivation must not submit another worker while the previous worker is executing", 0, delegate.size()); //$NON-NLS-1$
+      releaseFirst.countDown();
+      previousWorker.join(1000);
+      assertFalse("Previous worker did not finish", previousWorker.isAlive()); //$NON-NLS-1$
+      first.get(1, TimeUnit.SECONDS);
+      second.get(1, TimeUnit.SECONDS);
+      assertTrue("Second task did not finish", secondFinished.await(1, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertEquals(1, maximumActive.get());
+    }
+    finally
+    {
+      releaseFirst.countDown();
+      executor.deactivate();
+      delegate.shutdownNow();
+    }
+  }
+
+  public void testCancelledFutureAndDeactivationCancelQueuedWork() throws Exception
+  {
+    ManualExecutor delegate = new ManualExecutor();
+    SerializingExecutor executor = new SerializingExecutor(delegate);
+    executor.activate();
+
+    try
+    {
+      AtomicInteger executions = new AtomicInteger();
+      Future<?> cancelled = executor.submit(executions::incrementAndGet);
+      Future<Integer> pending = executor.submit(() -> {
+        executions.incrementAndGet();
+        return 7;
+      });
+      assertTrue(cancelled.cancel(false));
+      executor.deactivate();
+      assertTrue(pending.isCancelled());
+      delegate.runNext();
+      assertEquals(0, executions.get());
+
+      executor.activate();
+      Future<Integer> recovered = executor.submit(() -> 9);
+      delegate.runNext();
+      assertEquals(Integer.valueOf(9), recovered.get(1, TimeUnit.SECONDS));
+    }
+    finally
+    {
+      executor.deactivate();
+    }
+  }
+
+  public void testSchedulingRejectionCancelsAcceptedFuturesAndRecovers() throws Exception
+  {
+    ManualExecutor delegate = new ManualExecutor();
+    SerializingExecutor executor = new SerializingExecutor(delegate);
+    Future<Integer> first = executor.submit(() -> 1);
+    Future<Integer> second = executor.submit(() -> 2);
+    delegate.rejectNext = true;
+    executor.activate();
+
+    try
+    {
+      assertTrue(first.isCancelled());
+      assertTrue(second.isCancelled());
+
+      delegate.rejectNext = true;
+      try
+      {
+        executor.submit(() -> 3);
+        fail("A new submission must report delegate rejection"); //$NON-NLS-1$
+      }
+      catch (RejectedExecutionException expected)
+      {
+        // The failed submission is reported to its caller.
+      }
+
+      Future<Integer> recovered = executor.submit(() -> 4);
+      delegate.runNext();
+      assertEquals(Integer.valueOf(4), recovered.get(1, TimeUnit.SECONDS));
+    }
+    finally
+    {
+      executor.deactivate();
+    }
+  }
+
+  public void testConcurrentSubmitAndDeactivationTerminatesFuture() throws Exception
+  {
+    BlockingExecutor delegate = new BlockingExecutor();
+    SerializingExecutor executor = new SerializingExecutor(delegate);
+    executor.activate();
+    AtomicReference<Future<Integer>> future = new AtomicReference<>();
+    AtomicReference<Throwable> failure = new AtomicReference<>();
+    Thread submitter = new Thread(() -> {
+      try
+      {
+        future.set(executor.submit(() -> 1));
+      }
+      catch (Throwable ex)
+      {
+        failure.set(ex);
+      }
+    }, "SerializingExecutor submit/deactivate test"); //$NON-NLS-1$
+    submitter.setDaemon(true);
+    submitter.start();
+
+    try
+    {
+      assertTrue("Delegate submission did not reach its gate", delegate.entered.await(1, TimeUnit.SECONDS)); //$NON-NLS-1$
+      executor.deactivate();
+      delegate.release.countDown();
+      submitter.join(1000);
+      assertFalse("Submitter did not finish", submitter.isAlive()); //$NON-NLS-1$
+      if (failure.get() != null)
+      {
+        throw new AssertionError(failure.get());
+      }
+
+      assertNotNull(future.get());
+      assertTrue("Accepted future was not cancelled by deactivation", future.get().isCancelled()); //$NON-NLS-1$
+      delegate.runNext();
+    }
+    finally
+    {
+      delegate.release.countDown();
+      executor.deactivate();
+      delegate.shutdownNow();
+    }
+  }
+
+  private void runSerialTask(int value, List<Integer> order, AtomicInteger active, AtomicInteger maximumActive)
+  {
+    int concurrent = active.incrementAndGet();
+    maximumActive.accumulateAndGet(concurrent, Math::max);
+    order.add(value);
+    active.decrementAndGet();
+  }
+
   private void waitForAllWorkExecuted() throws InterruptedException
   {
     if (!workConsumedLatch.await(WORK_COMPLETION_TIMEOUT, TimeUnit.MILLISECONDS))
@@ -159,6 +475,8 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
 
   /**
    * A factory that creates work units.
+   *
+   * @author Eike Stepper
    */
   private static interface WorkProducerFactory
   {
@@ -167,10 +485,15 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
 
   /**
    * A Runnable that creates work units
+   * @author Eike Stepper
    */
   private abstract class WorkProducer implements Runnable
   {
     private Random random = new Random();
+
+    public WorkProducer()
+    {
+    }
 
     /**
      * Produce work: add work units to the queue worker
@@ -181,6 +504,7 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
       try
       {
         int currentWorkProduced;
+
         while ((currentWorkProduced = workProduced.getAndIncrement()) < NUM_WORK)
         {
           serializer.execute(createWork(currentWorkProduced));
@@ -212,11 +536,11 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
    *
    * @author Andre Dietisheim
    */
-  class Work implements Runnable
+  private class Work implements Runnable
   {
     private final int id;
 
-    private Work(int id)
+    public Work(int id)
     {
       this.id = id;
       IOUtil.OUT().println("work unit " + id + " created");
@@ -227,6 +551,133 @@ public class ExecutorWorkSerializerTest extends AbstractOMTest
     {
       workConsumedLatch.countDown();
       IOUtil.OUT().println("work unit " + id + " consumed");
+    }
+  }
+
+  /**
+   * Holds delegate work until a test explicitly runs it.
+   *
+   * @author Eike Stepper
+   */
+  private static class ManualExecutor extends AbstractExecutorService
+  {
+    private final Queue<Runnable> tasks = new ArrayDeque<>();
+
+    private boolean shutdown;
+
+    private boolean rejectNext;
+
+    public ManualExecutor()
+    {
+    }
+
+    @Override
+    public synchronized void execute(Runnable command)
+    {
+      if (rejectNext)
+      {
+        rejectNext = false;
+        throw new RejectedExecutionException("controlled rejection"); //$NON-NLS-1$
+      }
+
+      if (shutdown)
+      {
+        throw new RejectedExecutionException("executor is shut down"); //$NON-NLS-1$
+      }
+
+      tasks.add(command);
+    }
+
+    public synchronized int size()
+    {
+      return tasks.size();
+    }
+
+    public void runNext()
+    {
+      Runnable task;
+
+      synchronized (this)
+      {
+        task = tasks.poll();
+      }
+
+      if (task == null)
+      {
+        throw new AssertionError("No delegate work is queued"); //$NON-NLS-1$
+      }
+
+      task.run();
+    }
+
+    @Override
+    public synchronized void shutdown()
+    {
+      shutdown = true;
+    }
+
+    @Override
+    public synchronized List<Runnable> shutdownNow()
+    {
+      shutdown = true;
+      List<Runnable> pending = new ArrayList<>(tasks);
+      tasks.clear();
+      return pending;
+    }
+
+    @Override
+    public synchronized boolean isShutdown()
+    {
+      return shutdown;
+    }
+
+    @Override
+    public synchronized boolean isTerminated()
+    {
+      return shutdown && tasks.isEmpty();
+    }
+
+    @Override
+    public boolean awaitTermination(long timeout, TimeUnit unit)
+    {
+      return isTerminated();
+    }
+  }
+
+  /**
+   * Blocks one delegate submission to force the submit/deactivate race.
+   *
+   * @author Eike Stepper
+   */
+  private static final class BlockingExecutor extends ManualExecutor
+  {
+    private final CountDownLatch entered = new CountDownLatch(1);
+
+    private final CountDownLatch release = new CountDownLatch(1);
+
+    public BlockingExecutor()
+    {
+    }
+
+    @Override
+    public synchronized void execute(Runnable command)
+    {
+      entered.countDown();
+
+      try
+      {
+        if (!release.await(1, TimeUnit.SECONDS))
+        {
+          throw new RejectedExecutionException("controlled submission timed out"); //$NON-NLS-1$
+        }
+      }
+      catch (InterruptedException ex)
+      {
+        Thread.currentThread().interrupt();
+        throw new RejectedExecutionException(ex);
+      }
+
+      super.execute(command);
     }
   }
 }

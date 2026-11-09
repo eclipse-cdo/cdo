@@ -90,37 +90,85 @@ public class ClientBranchManager extends AbstractClientManager<InternalCDOBranch
   @Override
   public InternalCDOBranch getBranch(int branchID)
   {
-    return delegate.getBranch(branchID);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.getBranch(branchID);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public InternalCDOBranch getBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
-    return delegate.getBranch(id, name, baseBranch, baseTimeStamp);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.getBranch(id, name, baseBranch, baseTimeStamp);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public InternalCDOBranch getBranch(int id, BranchInfo branchInfo)
   {
-    return delegate.getBranch(id, branchInfo);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.getBranch(id, branchInfo);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public InternalCDOBranch getBranch(String path)
   {
-    return delegate.getBranch(path);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.getBranch(path);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public InternalCDOBranch createBranch(int id, String name, InternalCDOBranch baseBranch, long baseTimeStamp)
   {
-    return delegate.createBranch(id, name, baseBranch, baseTimeStamp);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.createBranch(id, name, baseBranch, baseTimeStamp);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public CDOBranch[] deleteBranches(int id, OMMonitor monitor)
   {
-    return delegate.deleteBranches(id, monitor);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.deleteBranches(id, monitor);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
@@ -132,13 +180,29 @@ public class ClientBranchManager extends AbstractClientManager<InternalCDOBranch
   @Override
   public int getBranches(int startID, int endID, CDOBranchHandler handler)
   {
-    return delegate.getBranches(startID, endID, handler);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.getBranches(startID, endID, handler);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public LinkedHashSet<CDOBranch> getBranches(int rootID)
   {
-    return delegate.getBranches(rootID);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.getBranches(rootID);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
@@ -162,43 +226,99 @@ public class ClientBranchManager extends AbstractClientManager<InternalCDOBranch
   @Override
   public CDOBranchPoint changeTagWithModCount(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
   {
-    return delegate.changeTagWithModCount(modCount, oldName, newName, branchPoint);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.changeTagWithModCount(modCount, oldName, newName, branchPoint);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public CDOBranchTag createTag(String name, CDOBranchPoint branchPoint)
   {
-    return delegate.createTag(name, branchPoint);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.createTag(name, branchPoint);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public void renameTag(String oldName, String newName)
   {
-    delegate.renameTag(oldName, newName);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.renameTag(oldName, newName);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public void moveTag(CDOBranchTag tag, CDOBranchPoint branchPoint)
   {
-    delegate.moveTag(tag, branchPoint);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.moveTag(tag, branchPoint);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public void deleteTag(CDOBranchTag tag)
   {
-    delegate.deleteTag(tag);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.deleteTag(tag);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public CDOBranchTag getTag(String name)
   {
-    return delegate.getTag(name);
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.getTag(name);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override
   public CDOTagList getTagList()
   {
-    return delegate.getTagList();
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      return delegate.getTagList();
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
   }
 
   @Override

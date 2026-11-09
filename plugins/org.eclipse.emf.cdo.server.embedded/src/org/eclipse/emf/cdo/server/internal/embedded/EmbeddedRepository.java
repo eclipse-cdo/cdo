@@ -17,18 +17,15 @@ import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.server.embedded.CDOEmbeddedRepositoryConfig;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
-import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EPackage;
@@ -82,24 +79,41 @@ public class EmbeddedRepository extends Repository.Default
   }
 
   @Override
-  @SuppressWarnings("deprecation")
   protected void doBeforeActivate() throws Exception
   {
-    IManagedContainer container = getContainer();
-    if (!(container instanceof IPluginContainer))
+    if (getProtector() != null)
     {
-      Net4jUtil.prepareContainer(container);
-      JVMUtil.prepareContainer(container);
-      CDONet4jServerUtil.prepareContainer(container);
+      throw new IllegalStateException("Repository protectors are unsupported in Embedded CDO; configure an IAuthenticator directly without authorization."); //$NON-NLS-1$
+    }
+
+    if (getSessionManager() != null && !(getSessionManager() instanceof EmbeddedSessionManager))
+    {
+      throw new IllegalStateException("Custom session managers are unsupported in Embedded CDO because they can bypass the embedded security contract."); //$NON-NLS-1$
+    }
+
+    if (isAuthorizingOperations())
+    {
+      throw new IllegalStateException("Operation authorizers are unsupported in Embedded CDO; all authenticated sessions have unrestricted repository access."); //$NON-NLS-1$
     }
 
     super.doBeforeActivate();
 
+    if (!(getSessionManager() instanceof EmbeddedSessionManager))
+    {
+      throw new IllegalStateException("Embedded CDO requires its embedded session manager to enforce the supported security contract."); //$NON-NLS-1$
+    }
+
     InternalCDOBranchManager branchManager = getBranchManager();
-    branchManager.setBranchLoader(new ServerBranchLoader(this));
+    branchManager.setBranchLoader(new EmbeddedBranchLoader(this));
 
     InternalCDORevisionManager revisionManager = getRevisionManager();
-    revisionManager.setRevisionLoader(new ServerRevisionLoader(this));
+    revisionManager.setRevisionLoader(new EmbeddedRevisionLoader(this));
+  }
+
+  @Override
+  protected InternalSessionManager createSessionManager()
+  {
+    return new EmbeddedSessionManager();
   }
 
   @Override

@@ -16,29 +16,17 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/internal/embedded/ServerRevisionLoader.java" type="org.eclipse.emf.cdo.server.internal.embedded.ServerRevisionLoader">
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="RevisionLoader"/>
-                <message_argument value="ServerRevisionLoader"/>
-            </message_arguments>
-        </filter>
-        <filter id="574619656">
-            <message_arguments>
-                <message_argument value="RevisionLoader2"/>
-                <message_argument value="ServerRevisionLoader"/>
-            </message_arguments>
-        </filter>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/embedded/EmbeddedRevisionLoader.java" type="org.eclipse.emf.cdo.server.internal.embedded.EmbeddedRevisionLoader">
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="RevisionLoader3"/>
-                <message_argument value="ServerRevisionLoader"/>
+                <message_argument value="EmbeddedRevisionLoader"/>
             </message_arguments>
         </filter>
         <filter id="574619656">
             <message_arguments>
                 <message_argument value="RevisionLoader4"/>
-                <message_argument value="ServerRevisionLoader"/>
+                <message_argument value="EmbeddedRevisionLoader"/>
             </message_arguments>
         </filter>
     </resource>

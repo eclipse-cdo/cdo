@@ -19,12 +19,11 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader4;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 import org.eclipse.emf.ecore.EClass;
 
@@ -33,11 +32,11 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public final class ServerRevisionLoader implements RevisionLoader3, RevisionLoader4
+public final class EmbeddedRevisionLoader implements RevisionLoader3, RevisionLoader4
 {
   private final RevisionLoader3 delegate;
 
-  public ServerRevisionLoader(RevisionLoader3 delegate)
+  public EmbeddedRevisionLoader(RevisionLoader3 delegate)
   {
     this.delegate = delegate;
   }
@@ -51,41 +50,19 @@ public final class ServerRevisionLoader implements RevisionLoader3, RevisionLoad
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean prefetchLockStates)
   {
-    InternalSession serverSession = ServerSession.get();
-    if (serverSession != null)
+    try (EmbeddedStoreContext ignored = getStoreContext())
     {
-      try
-      {
-        StoreThreadLocal.setSession(serverSession);
-        return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates);
-      }
-      finally
-      {
-        StoreThreadLocal.release();
-      }
+      return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates);
     }
-
-    return delegate.loadRevisions(infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates);
   }
 
   @Override
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, Request.Config config)
   {
-    InternalSession serverSession = ServerSession.get();
-    if (serverSession != null)
+    try (EmbeddedStoreContext ignored = getStoreContext())
     {
-      try
-      {
-        StoreThreadLocal.setSession(serverSession);
-        return loadRevisionsFromDelegate(infos, branchPoint, config);
-      }
-      finally
-      {
-        StoreThreadLocal.release();
-      }
+      return loadRevisionsFromDelegate(infos, branchPoint, config);
     }
-
-    return loadRevisionsFromDelegate(infos, branchPoint, config);
   }
 
   private List<RevisionInfo> loadRevisionsFromDelegate(List<RevisionInfo> infos, CDOBranchPoint branchPoint, Request.Config config)
@@ -101,41 +78,19 @@ public final class ServerRevisionLoader implements RevisionLoader3, RevisionLoad
   @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk)
   {
-    InternalSession serverSession = ServerSession.get();
-    if (serverSession != null)
+    try (EmbeddedStoreContext ignored = getStoreContext())
     {
-      try
-      {
-        StoreThreadLocal.setSession(serverSession);
-        return delegate.loadRevisionByVersion(id, branchVersion, referenceChunk);
-      }
-      finally
-      {
-        StoreThreadLocal.release();
-      }
+      return delegate.loadRevisionByVersion(id, branchVersion, referenceChunk);
     }
-
-    return delegate.loadRevisionByVersion(id, branchVersion, referenceChunk);
   }
 
   @Override
   public InternalCDORevision loadRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
   {
-    InternalSession serverSession = ServerSession.get();
-    if (serverSession != null)
+    try (EmbeddedStoreContext ignored = getStoreContext())
     {
-      try
-      {
-        StoreThreadLocal.setSession(serverSession);
-        return loadRevisionByVersionFromDelegate(id, branchVersion, config);
-      }
-      finally
-      {
-        StoreThreadLocal.release();
-      }
+      return loadRevisionByVersionFromDelegate(id, branchVersion, config);
     }
-
-    return loadRevisionByVersionFromDelegate(id, branchVersion, config);
   }
 
   private InternalCDORevision loadRevisionByVersionFromDelegate(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
@@ -151,20 +106,7 @@ public final class ServerRevisionLoader implements RevisionLoader3, RevisionLoad
   @Override
   public void handleRevisions(EClass eClass, CDOBranch branch, boolean exactBranch, long timeStamp, boolean exactTime, CDORevisionHandler handler)
   {
-    InternalSession serverSession = ServerSession.get();
-    if (serverSession != null)
-    {
-      try
-      {
-        StoreThreadLocal.setSession(serverSession);
-        delegate.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
-      }
-      finally
-      {
-        StoreThreadLocal.release();
-      }
-    }
-    else
+    try (EmbeddedStoreContext ignored = getStoreContext())
     {
       delegate.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
     }
@@ -173,21 +115,15 @@ public final class ServerRevisionLoader implements RevisionLoader3, RevisionLoad
   @Override
   public CDOBranchPointRange loadObjectLifetime(CDOID id, CDOBranchPoint branchPoint)
   {
-    InternalSession serverSession = ServerSession.get();
-    if (serverSession != null)
+    try (EmbeddedStoreContext ignored = getStoreContext())
     {
-      try
-      {
-        StoreThreadLocal.setSession(serverSession);
-        return delegate.loadObjectLifetime(id, branchPoint);
-      }
-      finally
-      {
-        StoreThreadLocal.release();
-      }
+      return delegate.loadObjectLifetime(id, branchPoint);
     }
+  }
 
-    return delegate.loadObjectLifetime(id, branchPoint);
+  private EmbeddedStoreContext getStoreContext()
+  {
+    return EmbeddedStoreContext.install(EmbeddedSession.get(), ((IRepository)delegate).getStore());
   }
 
   @Override

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -39,6 +40,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Configures and manages an embedded CDO repository. Embedded repositories support optional authentication and multiple
+ * concurrent sessions, but do not support authorization: every successfully opened session has unrestricted access.
+ * The caller must supply a properly initialized, configured, and active container through {@link #getContainer()}.
+ * Embedded CDO consumes this container but does not initialize, prepare, or configure it. For Plain Java applications,
+ * use {@link ContainerUtil#createInitializedContainer()} by default or {@link IManagedContainer#INSTANCE} for the
+ * global container. Applications with custom container configurations are responsible for registering all factories
+ * and services required by Embedded CDO. Permission managers, operation authorizers, and repository protectors that
+ * install authorization mechanisms are not supported. Authentication identifies a session; it does not restrict that
+ * session's repository access.
+ *
  * @author Eike Stepper
  * @since 4.6
  */
@@ -194,7 +205,28 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle implements I
     repository.setStore((InternalStore)store);
     repository.setProperties(properties);
 
-    activateRepository(repository);
+    try
+    {
+      activateRepository(repository);
+    }
+    catch (RuntimeException | Error ex)
+    {
+      try
+      {
+        Exception deactivationException = LifecycleUtil.deactivate(repository);
+        if (deactivationException != null)
+        {
+          ex.addSuppressed(deactivationException);
+        }
+      }
+      catch (Error deactivationError)
+      {
+        ex.addSuppressed(deactivationError);
+      }
+
+      repository = null;
+      throw ex;
+    }
 
     repository.addListener(new LifecycleEventAdapter()
     {

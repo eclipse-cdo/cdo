@@ -11,15 +11,12 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader.BranchInfo;
-import org.eclipse.emf.cdo.spi.server.InternalSession;
-import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
 import java.io.IOException;
 
@@ -50,10 +47,6 @@ public class CreateBranchIndication extends CDOServerWriteIndication
     InternalCDOBranchManager branchManager = getRepository().getBranchManager();
     InternalCDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
     InternalCDOBranch branch = branchManager.createBranch(branchID, branchInfo.getName(), baseBranch, branchInfo.getBaseTimeStamp());
-
-    InternalSession session = getSession();
-    InternalSessionManager sessionManager = getRepository().getSessionManager();
-    sessionManager.sendBranchNotification(session, ChangeKind.CREATED, branch);
 
     out.writeXInt(branch.getID());
     out.writeXLong(branch.getBase().getTimeStamp());

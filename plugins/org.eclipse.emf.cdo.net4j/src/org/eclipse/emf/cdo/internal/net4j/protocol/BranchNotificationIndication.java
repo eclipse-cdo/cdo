@@ -13,21 +13,30 @@
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+
+import org.eclipse.net4j.util.concurrent.OrderedExecution;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class BranchNotificationIndication extends CDOClientIndication
+public class BranchNotificationIndication extends CDOClientIndication implements OrderedExecution
 {
   public BranchNotificationIndication(CDOClientProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_BRANCH_NOTIFICATION);
+  }
+
+  @Override
+  public Object getExecutionOrderKey()
+  {
+    return CDOBranchManager.class;
   }
 
   @Override
@@ -38,6 +47,11 @@ public class BranchNotificationIndication extends CDOClientIndication
 
     ChangeKind changeKind = in.readEnum(ChangeKind.class);
     int size = in.readXInt();
+    if (changeKind == ChangeKind.RENAMED && size != 1)
+    {
+      throw new IOException("A branch rename notification must contain exactly one branch");
+    }
+
     int[] branchIDs = new int[size];
 
     for (int i = 0; i < size; i++)
@@ -54,7 +68,9 @@ public class BranchNotificationIndication extends CDOClientIndication
       {
         String name = in.readString();
         firstBranch.basicSetName(name);
-        break;
+
+        // basicSetName() has already fired the branch-changed event through the branch manager.
+        return;
       }
     }
 

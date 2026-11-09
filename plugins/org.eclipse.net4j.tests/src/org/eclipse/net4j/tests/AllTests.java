@@ -23,6 +23,7 @@ import org.eclipse.net4j.tests.config.TestConfig.WSS;
 import org.eclipse.net4j.util.tests.ExecutorWorkSerializerTest;
 import org.eclipse.net4j.util.tests.ExpectedIOTest;
 import org.eclipse.net4j.util.tests.ExtendedIOTest;
+import org.eclipse.net4j.util.tests.LifecycleTest;
 import org.eclipse.net4j.util.tests.MultiMapTest;
 import org.eclipse.net4j.util.tests.OMPlatformBootstrapTest;
 import org.eclipse.net4j.util.tests.RWOLockManagerTest;
@@ -56,6 +57,7 @@ public class AllTests
   {
     // Normal tests
     suite.addTestSuite(UUIDGeneratorTest.class);
+    suite.addTestSuite(LifecycleTest.class);
     suite.addTestSuite(OMPlatformBootstrapTest.class);
     suite.addTestSuite(MultiMapTest.class);
     suite.addTestSuite(SortedFileMapTest.class);

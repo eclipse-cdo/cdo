@@ -11,21 +11,30 @@
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
+
+import org.eclipse.net4j.util.concurrent.OrderedExecution;
 
 import java.io.IOException;
 
 /**
  * @author Eike Stepper
  */
-public class TagNotificationIndication extends CDOClientIndication
+public class TagNotificationIndication extends CDOClientIndication implements OrderedExecution
 {
   public TagNotificationIndication(CDOClientProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_TAG_NOTIFICATION);
+  }
+
+  @Override
+  public Object getExecutionOrderKey()
+  {
+    return CDOBranchManager.class;
   }
 
   @Override

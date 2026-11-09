@@ -39,6 +39,11 @@ public class BranchNotificationRequest extends CDOServerRequest
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
+    if (changeKind == ChangeKind.RENAMED && branches.length != 1)
+    {
+      throw new IOException("A branch rename notification must contain exactly one branch");
+    }
+
     out.writeEnum(changeKind);
     out.writeXInt(branches.length);
 

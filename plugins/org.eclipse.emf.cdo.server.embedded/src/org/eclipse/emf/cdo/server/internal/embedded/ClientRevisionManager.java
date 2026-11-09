@@ -124,12 +124,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getObjectType(id);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -138,12 +138,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getObjectType(id, branchManagerForLoadOnDemand);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -152,12 +152,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getObjectLifetime(id, branchPoint);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -166,12 +166,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.containsRevision(id, branchPoint);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -180,12 +180,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.containsRevisionByVersion(id, branchVersion);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -194,12 +194,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getBaseRevision(revision, getRequestConfig(config));
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -208,12 +208,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevision(id, branchPoint, getRequestConfig(config));
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -222,12 +222,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevision(id, branchPoint, getRequestConfig(config), synthetics);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -236,12 +236,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisionByVersion(id, branchVersion, getRequestConfig(config));
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -250,12 +250,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, getRequestConfig(config));
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -264,12 +264,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, getRequestConfig(config), synthetics);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -278,12 +278,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, getRequestConfig(config), additionalRevisions);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -293,12 +293,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, getRequestConfig(config), synthetics, additionalRevisions);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -307,12 +307,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       delegate.prefetchRevisions(id, branchPoint, prefetchDepth, prefetchLockStates, consumer);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -321,12 +321,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       delegate.handleRevisions(eClass, branch, exactBranch, timeStamp, exactTime, handler);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -335,12 +335,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.internRevision(revision);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -349,12 +349,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       delegate.reviseLatest(id, branch);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -363,19 +363,19 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       delegate.reviseVersion(id, branchVersion, timeStamp);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
   @Override
   protected InternalRepository getRepository(InternalCDORevisionManager delegate)
   {
-    ServerRevisionLoader revisionLoader = (ServerRevisionLoader)delegate.getRevisionLoader();
+    EmbeddedRevisionLoader revisionLoader = (EmbeddedRevisionLoader)delegate.getRevisionLoader();
     return (InternalRepository)revisionLoader.getDelegate();
   }
 
@@ -396,12 +396,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getBaseRevision(revision, getRequestConfig(legacyConfig(referenceChunk, CDORevision.DEPTH_NONE, false, loadOnDemand)));
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -412,12 +412,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevision(id, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand)), synthetics);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -428,12 +428,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand)), synthetics);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -444,13 +444,13 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, prefetchLockStates, loadOnDemand)),
           synthetics);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -460,12 +460,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevision(id, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand)));
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -475,12 +475,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisionByVersion(id, branchVersion, getRequestConfig(legacyConfig(referenceChunk, CDORevision.DEPTH_NONE, false, loadOnDemand)));
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -490,12 +490,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, getRequestConfig(legacyConfig(referenceChunk, prefetchDepth, false, loadOnDemand)));
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -506,12 +506,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       return delegate.getRevisions(ids, branchPoint, referenceChunk, prefetchDepth, loadOnDemand, additionalRevisions);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 
@@ -521,12 +521,12 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     try
     {
-      ServerSession.set(serverSession);
+      EmbeddedSession.set(serverSession);
       delegate.addRevision(revision);
     }
     finally
     {
-      ServerSession.unset();
+      EmbeddedSession.unset();
     }
   }
 }

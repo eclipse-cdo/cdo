@@ -42,16 +42,24 @@ public class BranchNotificationIndication extends CDOClientIndication implements
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    InternalCDOBranchManager branchManager = getSession().getBranchManager();
-    InternalCDOBranch firstBranch = null;
-
     ChangeKind changeKind = in.readEnum(ChangeKind.class);
     int size = in.readXInt();
-    if (changeKind == ChangeKind.RENAMED && size != 1)
+
+    if (size != 1)
     {
-      throw new IOException("A branch rename notification must contain exactly one branch");
+      if (changeKind == ChangeKind.RENAMED)
+      {
+        throw new IOException("A branch rename notification must contain exactly one branch");
+      }
+
+      if (changeKind == ChangeKind.CREATED)
+      {
+        throw new IOException("A branch creation notification must contain exactly one branch");
+      }
     }
 
+    InternalCDOBranchManager branchManager = getSession().getBranchManager();
+    InternalCDOBranch firstBranch = null;
     int[] branchIDs = new int[size];
 
     for (int i = 0; i < size; i++)
@@ -59,7 +67,17 @@ public class BranchNotificationIndication extends CDOClientIndication implements
       int branchID = in.readXInt();
       branchIDs[i] = branchID;
 
-      if (firstBranch == null)
+      if (changeKind == ChangeKind.CREATED)
+      {
+        String name = in.readString();
+        int baseBranchID = in.readXInt();
+        long baseTimeStamp = in.readXLong();
+
+        InternalCDOBranch baseBranch = branchManager.getBranch(baseBranchID);
+        firstBranch = branchManager.getBranch(branchID);
+        firstBranch.setBranchInfo(name, baseBranch, baseTimeStamp);
+      }
+      else if (firstBranch == null)
       {
         firstBranch = branchManager.getBranch(branchID);
       }

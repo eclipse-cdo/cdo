@@ -64,20 +64,13 @@ public class ServerBranchManager extends CDOBranchManagerImpl
     {
       InternalSession sender = getSender();
       int branchID = branch.getID();
-      String branchName = changeKind == ChangeKind.RENAMED ? branch.getName() : null;
-      CDOBranch notificationBranch = changeKind == ChangeKind.RENAMED ? new CDOBranchImpl(this, branchID, branchName, branch.getBase()) : branch;
+      String branchName = branch.getName();
+      CDOBranchPoint base = branch.getBase();
+      CDOBranch notificationBranch = new CDOBranchImpl(this, branchID, branchName, base);
 
       notification = enqueueNotification(() -> {
         InternalSessionManager sessionManager = repository.getSessionManager();
-
-        if (changeKind == ChangeKind.RENAMED)
-        {
-          sessionManager.sendBranchNotification(sender, changeKind, notificationBranch);
-        }
-        else
-        {
-          sessionManager.sendBranchNotification(sender, changeKind, branch);
-        }
+        sessionManager.sendBranchNotification(sender, changeKind, notificationBranch);
       });
     }
 

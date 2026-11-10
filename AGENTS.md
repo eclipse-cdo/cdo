@@ -276,6 +276,12 @@ Passing JDT, JUnit, or `git diff --check` does not replace this audit.
 
 **Do not report the task as complete while an unapproved violation remains.**
 
+## CDO Wire Protocol
+
+- Review every CDO wire-format change for its effect on `CDOProtocolVersion.VALUE` and increment the protocol version when appropriate.
+- Maintain the version history in `CDOProtocolVersion.java`; each new version comment must contain the exact GitHub issue title followed by its issue number, in the established format.
+- CDO client and server protocol versions must match exactly. Do not add mixed-version compatibility machinery unless explicitly requested.
+
 ## CDO Installer example mirrors
 
 Never modify files under these repository-relative paths unless the user explicitly instructs otherwise:

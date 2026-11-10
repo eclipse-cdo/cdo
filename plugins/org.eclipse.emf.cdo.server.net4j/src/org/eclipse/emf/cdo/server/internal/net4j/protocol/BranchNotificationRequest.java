@@ -39,9 +39,17 @@ public class BranchNotificationRequest extends CDOServerRequest
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    if (changeKind == ChangeKind.RENAMED && branches.length != 1)
+    if (branches.length != 1)
     {
-      throw new IOException("A branch rename notification must contain exactly one branch");
+      if (changeKind == ChangeKind.RENAMED)
+      {
+        throw new IOException("A branch rename notification must contain exactly one branch");
+      }
+
+      if (changeKind == ChangeKind.CREATED)
+      {
+        throw new IOException("A branch creation notification must contain exactly one branch");
+      }
     }
 
     out.writeEnum(changeKind);
@@ -52,7 +60,13 @@ public class BranchNotificationRequest extends CDOServerRequest
       CDOBranch branch = branches[i];
       out.writeXInt(branch.getID());
 
-      if (changeKind == ChangeKind.RENAMED)
+      if (changeKind == ChangeKind.CREATED)
+      {
+        out.writeString(branch.getName());
+        out.writeXInt(branch.getBase().getBranch().getID());
+        out.writeXLong(branch.getBase().getTimeStamp());
+      }
+      else if (changeKind == ChangeKind.RENAMED)
       {
         out.writeString(branch.getName());
         break;

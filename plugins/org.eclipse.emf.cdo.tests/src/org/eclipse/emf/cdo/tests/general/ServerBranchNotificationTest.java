@@ -213,6 +213,126 @@ public class ServerBranchNotificationTest extends AbstractCDOTest
     }
   }
 
+  public void testCreatedNotificationSurvivesRenameAndDeleteBeforeProcessing() throws Exception
+  {
+    CDOSession sender = openSession();
+    CDOSession recipient = openSession();
+    EventRecorder senderEvents = new EventRecorder(sender);
+    sender.getBranchManager().addListener(senderEvents);
+
+    CountDownLatch earlierNotificationEntered = new CountDownLatch(1);
+    CountDownLatch releaseEarlierNotification = new CountDownLatch(1);
+    CountDownLatch targetEventsReceived = new CountDownLatch(3);
+    AtomicBoolean delayed = new AtomicBoolean();
+    AtomicInteger targetBranchID = new AtomicInteger(-1);
+    List<String> receivedEvents = new CopyOnWriteArrayList<>();
+    List<CDOBranch> eventBranches = new CopyOnWriteArrayList<>();
+    AtomicReference<CDOBranch> canonicalBranch = new AtomicReference<>();
+
+    IListener recipientListener = event -> {
+      if (event instanceof CDOBranchChangedEvent)
+      {
+        CDOBranchChangedEvent branchEvent = (CDOBranchChangedEvent)event;
+        if (branchEvent.getChangeKind() == ChangeKind.CREATED && delayed.compareAndSet(false, true))
+        {
+          earlierNotificationEntered.countDown();
+          awaitTestGate(releaseEarlierNotification);
+        }
+
+        if (branchEvent.getBranch().getID() == targetBranchID.get())
+        {
+          CDOBranch branch = branchEvent.getBranch();
+          eventBranches.add(branch);
+
+          if (branchEvent.getChangeKind() == ChangeKind.CREATED)
+          {
+            canonicalBranch.set(branch);
+          }
+
+          if (branchEvent.getChangeKind() == ChangeKind.CREATED)
+          {
+            CDOBranchPoint base = branch.getBase();
+            receivedEvents.add("CREATED:" + branch.getID() + ":" + branch.getName() + ":" + base.getBranch().getID() + "@" + base.getTimeStamp());
+          }
+          else if (branchEvent.getChangeKind() == ChangeKind.RENAMED)
+          {
+            receivedEvents.add("RENAMED:" + branch.getID() + ":" + branch.getName());
+          }
+          else
+          {
+            receivedEvents.add("DELETED:" + branch.getID());
+          }
+
+          targetEventsReceived.countDown();
+        }
+      }
+    };
+    recipient.getBranchManager().addListener(recipientListener);
+
+    try
+    {
+      sender.getBranchManager().getMainBranch().createBranch(getBranchName("notification-delay"));
+      assertTrue("Recipient did not enter the earlier notification", earlierNotificationEntered.await(15, TimeUnit.SECONDS));
+      senderEvents.clear();
+
+      String originalName = getBranchName("create-rename-delete");
+      String renamedName = getBranchName("create-rename-delete-renamed");
+      AtomicReference<CDOBranch> serverBranch = new AtomicReference<>();
+      AtomicReference<CDOBranchPoint> originalBase = new AtomicReference<>();
+      runAttributed(sender, () -> {
+        CDOBranch created = getRepository().getBranchManager().getMainBranch().createBranch(originalName);
+        targetBranchID.set(created.getID());
+        serverBranch.set(created);
+        originalBase.set(created.getBase());
+        created.setName(renamedName);
+        created.delete(new Monitor());
+        return null;
+      });
+
+      releaseEarlierNotification.countDown();
+      assertTrue("Recipient did not process all branch notifications", targetEventsReceived.await(15, TimeUnit.SECONDS));
+      CDOBranch deletedServerBranch = serverBranch.get();
+      assertNotNull(deletedServerBranch);
+      assertTrue("Server branch was not deleted", deletedServerBranch.isDeleted());
+
+      boolean branchMetadataMissing;
+      try
+      {
+        branchMetadataMissing = runAttributed(sender, () -> getRepository().getBranchManager().getBranchLoader().loadBranch(targetBranchID.get())) == null;
+      }
+      catch (RuntimeException ex)
+      {
+        String message = ex.getMessage();
+        branchMetadataMissing = message != null && message.contains("Branch with ID " + targetBranchID.get() + " does not exist");
+      }
+
+      assertTrue("Branch metadata remained in the server store after deletion", branchMetadataMissing);
+      assertEquals(0, senderEvents.size());
+
+      CDOBranchPoint base = originalBase.get();
+      List<String> expectedEvents = Arrays.asList(
+          "CREATED:" + targetBranchID.get() + ":" + originalName + ":" + base.getBranch().getID() + "@" + base.getTimeStamp(),
+          "RENAMED:" + targetBranchID.get() + ":" + renamedName, "DELETED:" + targetBranchID.get());
+      assertEquals(expectedEvents, receivedEvents);
+      assertEquals(3, eventBranches.size());
+
+      CDOBranch receivedCanonicalBranch = canonicalBranch.get();
+      assertNotNull(receivedCanonicalBranch);
+      for (CDOBranch eventBranch : eventBranches)
+      {
+        assertSame("Notification did not use the recipient's canonical branch", receivedCanonicalBranch, eventBranch);
+      }
+    }
+    finally
+    {
+      releaseEarlierNotification.countDown();
+      recipient.getBranchManager().removeListener(recipientListener);
+      sender.getBranchManager().removeListener(senderEvents);
+      sender.close();
+      recipient.close();
+    }
+  }
+
   public void testRemoteBranchRenameNotificationIsDeliveredExactlyOnce() throws Exception
   {
     CDOSession sender = openSession();

@@ -102,13 +102,13 @@ public final class StoreThreadLocal
    * Returns the session associated with the current thread.
    *
    * @return Never <code>null</code>.
-   * @throws IllegalStateException
+   * @throws NoSessionRegisteredException
    *           if no session is associated with the current thread.
    * @since 3.0
    */
   public static InternalSession getSession() throws NoSessionRegisteredException
   {
-    InternalSession session = SESSION.get();
+    InternalSession session = getSessionOrNull();
     if (session == null)
     {
       throw new NoSessionRegisteredException();
@@ -118,11 +118,22 @@ public final class StoreThreadLocal
   }
 
   /**
+   * Returns the session associated with the current thread,
+   * or <code>null</code> if no session is registered.
+   *
+   * @since 4.27
+   */
+  public static InternalSession getSessionOrNull()
+  {
+    return SESSION.get();
+  }
+
+  /**
    * @since 4.2
    */
   public static boolean hasSession()
   {
-    return SESSION.get() != null;
+    return getSessionOrNull() != null;
   }
 
   public static void setAccessor(IStoreAccessor accessor)
@@ -224,7 +235,7 @@ public final class StoreThreadLocal
     {
       if (DEBUG_SESSION)
       {
-        InternalSession oldSession = SESSION.get();
+        InternalSession oldSession = getSessionOrNull();
         if (oldSession != null)
         {
           throw new IllegalStateException("Session already registered: " + oldSession);
@@ -241,7 +252,7 @@ public final class StoreThreadLocal
   {
     if (DEBUG_SESSION)
     {
-      InternalSession session = SESSION.get();
+      InternalSession session = getSessionOrNull();
       if (session != null)
       {
         IOUtil.OUT().println("    Remove " + session + " --> " + Thread.currentThread().getName());

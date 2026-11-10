@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchTag;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchImpl;
 import org.eclipse.emf.cdo.internal.common.branch.CDOBranchManagerImpl;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
@@ -366,7 +367,7 @@ public class ServerBranchManager extends CDOBranchManagerImpl
 
   private static InternalSession getSender()
   {
-    return ServerOperationContext.getSession();
+    return StoreThreadLocal.getSessionOrNull();
   }
 
   /**

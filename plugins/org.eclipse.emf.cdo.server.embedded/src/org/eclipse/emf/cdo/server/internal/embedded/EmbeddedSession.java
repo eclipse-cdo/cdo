@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.embedded;
 
-import org.eclipse.emf.cdo.internal.server.ServerOperationContext;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
 /**
@@ -34,13 +33,10 @@ public final class EmbeddedSession
   public static void set(InternalSession serverSession)
   {
     THREAD_LOCAL.set(new Context(serverSession, THREAD_LOCAL.get()));
-    ServerOperationContext.setSession(serverSession);
   }
 
   public static void unset()
   {
-    ServerOperationContext.unsetSession();
-
     Context context = THREAD_LOCAL.get();
     if (context == null || context.previous == null)
     {

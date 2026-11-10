@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.internal.server.ServerOperationContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
@@ -30,8 +29,6 @@ public abstract class CDOServerWriteIndication extends CDOServerIndication
   @Override
   protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
-    ServerOperationContext.setSession(getSession());
-
     try
     {
       prepareStoreThreadLocal();
@@ -39,14 +36,7 @@ public abstract class CDOServerWriteIndication extends CDOServerIndication
     }
     finally
     {
-      try
-      {
-        StoreThreadLocal.release();
-      }
-      finally
-      {
-        ServerOperationContext.unsetSession();
-      }
+      StoreThreadLocal.release();
     }
   }
 

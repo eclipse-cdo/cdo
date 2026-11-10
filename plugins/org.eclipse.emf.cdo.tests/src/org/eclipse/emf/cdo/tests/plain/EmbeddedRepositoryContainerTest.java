@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.Loo
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector;
-import org.eclipse.emf.cdo.internal.server.ServerOperationContext;
 import org.eclipse.emf.cdo.internal.server.SessionManager;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
@@ -370,7 +369,7 @@ public class EmbeddedRepositoryContainerTest extends PlainTest
         IListener nestedBranchListener = event -> {
           if (event instanceof CDOBranchChangedEvent && "nested-session-B-branch".equals(((CDOBranchChangedEvent)event).getBranch().getName())) //$NON-NLS-1$
           {
-            nestedOperationSession.set(ServerOperationContext.getSession());
+            nestedOperationSession.set(EmbeddedSession.get());
           }
         };
         sessionA.getBranchManager().addListener(nestedBranchListener);

@@ -11,7 +11,6 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
-import org.eclipse.emf.cdo.internal.server.ServerOperationContext;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
@@ -32,7 +31,6 @@ public abstract class CDOServerReadIndicationWithMonitoring extends CDOServerInd
   protected void execute(BufferInputStream in, BufferOutputStream out) throws Exception
   {
     InternalSession session = getSession();
-    ServerOperationContext.setSession(session);
 
     try
     {
@@ -41,14 +39,7 @@ public abstract class CDOServerReadIndicationWithMonitoring extends CDOServerInd
     }
     finally
     {
-      try
-      {
-        StoreThreadLocal.release();
-      }
-      finally
-      {
-        ServerOperationContext.unsetSession();
-      }
+      StoreThreadLocal.release();
     }
   }
 }

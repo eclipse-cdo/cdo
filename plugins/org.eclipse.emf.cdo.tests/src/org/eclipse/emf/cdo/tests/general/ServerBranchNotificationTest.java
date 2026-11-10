@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchManager.CDOTagList.TagRenamedE
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchTag;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.internal.server.ServerOperationContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -1409,15 +1408,7 @@ public class ServerBranchNotificationTest extends AbstractCDOTest
     InternalSession serverSession = serverSession(sender);
     AtomicReference<T> result = new AtomicReference<>();
     StoreThreadLocal.wrap(serverSession, () -> {
-      ServerOperationContext.setSession(serverSession);
-      try
-      {
-        result.set(operation.run());
-      }
-      finally
-      {
-        ServerOperationContext.unsetSession();
-      }
+      result.set(operation.run());
     }).run();
     return result.get();
   }

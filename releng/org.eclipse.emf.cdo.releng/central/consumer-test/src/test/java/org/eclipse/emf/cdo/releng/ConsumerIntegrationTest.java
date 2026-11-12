@@ -13,10 +13,10 @@ package org.eclipse.emf.cdo.releng;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertThrows;
 
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.expressions.ExpressionsFactory;
 import org.eclipse.emf.cdo.expressions.IntValue;
@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.embedded.CDOEmbeddedRepositoryConfig;
@@ -38,7 +39,6 @@ import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.connector.IConnector;
@@ -70,6 +70,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
 import org.junit.Test;
 
 import java.net.URI;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -232,34 +233,46 @@ public class ConsumerIntegrationTest
     assertNotNull(realm.getRole("consumer-reader"));
     assertEquals("consumer-reader", user.getId());
   }
-
+ 
   @Test
-  public void serverSecurityAuthenticatesAUserAndRejectsAnUnauthorizedCommit() throws Exception
+  public void serverSecurityAuthenticatesAUserAndRejectsUnauthorizedWrites() throws Exception
   {
     String repositoryName = "central-consumer-secure";
-    String acceptorName = "cdo_embedded_repo_" + repositoryName;
+    String acceptorName = "cdo_server_repo_" + repositoryName;
     String resourcePath = "/central-consumer/forbidden";
     PasswordCredentials credentials = new PasswordCredentials("read-only", "secret");
     IManagedContainer container = ContainerUtil.createInitializedContainer();
-    EmbeddedConfig config = new EmbeddedConfig(repositoryName, container);
+    IJVMAcceptor acceptor = null;
+    IRepository repository = null;
     ISecurityManager securityManager = null;
+    IConnector connector = null;
     CDOSession session = null;
 
     try
     {
-      LifecycleUtil.activate(config);
+      acceptor = JVMUtil.getAcceptor(container, acceptorName);
+      LifecycleUtil.activate(acceptor);
+
+      IStore store = MEMStoreUtil.createMEMStore();
+      Map<String, String> properties = new HashMap<>();
+      properties.put(IRepository.Props.SUPPORTING_BRANCHES, "false");
+      properties.put(IRepository.Props.SUPPORTING_AUDITS, "false");
+      repository = CDOServerUtil.createRepository(repositoryName, store, properties);
+      CDOServerUtil.addRepository(container, repository);
 
       InternalSecurityManager manager = (InternalSecurityManager)SecurityManagerUtil.createSecurityManager("security", container);
-      manager.setRepository((InternalRepository)config.getRepository());
+      manager.setRepository((InternalRepository)repository);
       securityManager = manager;
       LifecycleUtil.activate(manager);
       manager.modify(realm -> {
         realm.setDefaultAccess(Access.READ);
         realm.addUser(credentials);
-      });
+      }, true);
 
       CDONet4jSessionConfiguration sessionConfiguration = CDONet4jUtil.createNet4jSessionConfiguration();
-      sessionConfiguration.setConnector(JVMUtil.getConnector(container, acceptorName));
+      connector = JVMUtil.getConnector(container, acceptorName);
+      LifecycleUtil.activate(connector);
+      sessionConfiguration.setConnector(connector);
       sessionConfiguration.setRepositoryName(repositoryName);
       sessionConfiguration.setCredentialsProvider(new PasswordCredentialsProvider(credentials));
       session = sessionConfiguration.openNet4jSession();
@@ -268,16 +281,7 @@ public class ConsumerIntegrationTest
       CDOTransaction transaction = session.openTransaction();
       try
       {
-        transaction.createResource(resourcePath);
-        try
-        {
-          transaction.commit();
-          fail("A read-only user must not be able to create a resource");
-        }
-        catch (CommitException expected)
-        {
-          assertTrue("The commit must be rejected by the security manager", hasCause(expected, SecurityException.class));
-        }
+        assertThrows(NoPermissionException.class, () -> transaction.createResource(resourcePath));
       }
       finally
       {
@@ -286,24 +290,43 @@ public class ConsumerIntegrationTest
     }
     finally
     {
-      LifecycleUtil.deactivate(session);
-      LifecycleUtil.deactivate(securityManager);
-      LifecycleUtil.deactivate(config);
-      LifecycleUtil.deactivate(container);
-    }
-  }
-
-  private static boolean hasCause(Throwable failure, Class<? extends Throwable> type)
-  {
-    for (Throwable cause = failure; cause != null; cause = cause.getCause())
-    {
-      if (type.isInstance(cause))
+      try
       {
-        return true;
+        LifecycleUtil.deactivate(session);
+      }
+      finally
+      {
+        try
+        {
+          LifecycleUtil.deactivate(connector);
+        }
+        finally
+        {
+          try
+          {
+            LifecycleUtil.deactivate(securityManager);
+          }
+          finally
+          {
+            try
+            {
+              LifecycleUtil.deactivate(repository);
+            }
+            finally
+            {
+              try
+              {
+                LifecycleUtil.deactivate(acceptor);
+              }
+              finally
+              {
+                LifecycleUtil.deactivate(container);
+              }
+            }
+          }
+        }
       }
     }
-
-    return false;
   }
 
   /**

@@ -440,6 +440,11 @@ pipeline {
                     mvn -N --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file -Dgpg.bestPractices="$gpg_best_practices" -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" -Dgpg.keyFingerprint="$signing_fingerprint" -Dfile="$zipfile" -DpomFile="$pom" -Dclassifier=examples -Dpackaging=zip -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
                     continue
                   fi
+                  if [ "$artifact" = org.eclipse.cdo.bom ]; then
+                    test ! -e "$main" && test ! -e "$sources" && test ! -e "$javadoc"
+                    mvn -N --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file -Dgpg.bestPractices="$gpg_best_practices" -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" -Dgpg.keyFingerprint="$signing_fingerprint" -Dfile="$pom" -DpomFile="$pom" -Dpackaging=pom -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
+                    continue
+                  fi
                   test -s "$main" && test -s "$sources" && test -s "$javadoc"
                   mvn -N --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file -Dgpg.bestPractices="$gpg_best_practices" -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" -Dgpg.keyFingerprint="$signing_fingerprint" -Dfile="$main" -DpomFile="$pom" -Dsources="$sources" -Djavadoc="$javadoc" -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
                 done
@@ -476,10 +481,10 @@ pipeline {
                 echo "Staging contains a symlink" >&2
                 exit 2
               fi
-              test "$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)" -eq 22
+              test "$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)" -eq 23
               test "$(find "$STAGING_DIR/org" -name '*.jar' -type f | wc -l)" -eq 63
               test "$(find "$STAGING_DIR/org" -name '*.zip' -type f | wc -l)" -eq 1
-              test "$(find "$STAGING_DIR/org" -name '*.asc' -type f | wc -l)" -eq 86
+              test "$(find "$STAGING_DIR/org" -name '*.asc' -type f | wc -l)" -eq 87
               mkdir -p "$(dirname "$BUNDLE_PATH")"
               rm -f "$BUNDLE_PATH"
               (cd "$STAGING_DIR" && zip -q -r "$BUNDLE_PATH" org)

@@ -47,6 +47,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -400,8 +401,10 @@ public class CDOAggregationToolBomTest
     Path root = temporaryFolder.newFolder().toPath();
     Path staging = root.resolve("staging");
     Path metadata = root.resolve("metadata.properties");
-    Files.writeString(metadata, "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=4.37\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
-    createPublicationStaging(staging);
+    Files.writeString(metadata,
+        "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=4.37\ncdo.project.release.source=DROP\ncdo.drop.id=R20260901-1311\n",
+        StandardCharsets.UTF_8);
+    createPublicationStaging(staging, true);
 
     String[] validArguments = { "publish-check", staging.toString(), metadata.toString(), "PACKAGE", "SIGNED" };
     CDOAggregationTool.main(validArguments);
@@ -423,13 +426,263 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
+  public void regularPackageRequiresAndValidatesTheProjectReleaseBom() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path staging = root.resolve("staging");
+    Path metadata = root.resolve("metadata.properties");
+    Files.writeString(metadata,
+        "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=4.37\ncdo.project.release.source=OVERRIDE\ncdo.drop.id=R20260901-1311\n",
+        StandardCharsets.UTF_8);
+    createPublicationStaging(staging, false);
+    String[] arguments = { "publish-check", staging.toString(), metadata.toString(), "PACKAGE", "" };
+    expectPublicationScopeFailure(arguments, "PACKAGE staging must contain the project-release BOM");
+
+    createRegularBomFixture(staging, "4.37", "OVERRIDE", "R20260901-1311");
+    CDOAggregationTool.main(arguments);
+    Properties summary = new Properties();
+    try (InputStream input = Files.newInputStream(staging.resolve("maven-publishing-summary.properties")))
+    {
+      summary.load(input);
+    }
+
+    assertEquals(Integer.toString(BUNDLES.length * 4 + 3), summary.getProperty("staging.artifacts"));
+
+    Path bom = staging.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.37.0/org.eclipse.cdo.bom-4.37.0.pom");
+    String validPom = Files.readString(bom);
+    Files.writeString(bom, validPom.replace("<version>1.0.0</version>", "<version>1.0.1</version>"), StandardCharsets.UTF_8);
+    writeChecksums(bom);
+    expectPublicationScopeFailure(arguments, "Generated BOM member mismatch");
+
+    Files.writeString(bom, validPom.replace("<cdo.drop.id>R20260901-1311</cdo.drop.id>", "<cdo.drop.id>S20260901-1311</cdo.drop.id>"), StandardCharsets.UTF_8);
+    writeChecksums(bom);
+    expectPublicationScopeFailure(arguments, "Staged project-release BOM has inconsistent coordinate, release, or drop provenance");
+  }
+
+  @Test
+  public void regularBomGenerationUsesNormalizedProjectReleaseAndAllSelectedBundleVersions() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path bundles = Files.createDirectory(root.resolve("bundles"));
+    Path output = root.resolve("bom-repository");
+    Path metadata = root.resolve("metadata.properties");
+    Path publishing = root.resolve("publishing.properties");
+    Path drop = Files.createDirectory(root.resolve("drop"));
+    Files.writeString(metadata,
+        "cdo.build.type=R\ncdo.project.release=4.37\ncdo.project.release.source=DROP\ncdo.drop.id=R20260901-1311\ncdo.git.commit=0123456789abcdef0123456789abcdef01234567\n",
+        StandardCharsets.UTF_8);
+    Files.writeString(publishing, PUBLISHING_METADATA, StandardCharsets.UTF_8);
+    Files.writeString(drop.resolve("web.properties"), "web.label=4.37\n", StandardCharsets.UTF_8);
+    Files.writeString(drop.resolve("build-info.xml"), "<build qualifier=\"R20260901-1311\" type=\"R\"/>", StandardCharsets.UTF_8);
+
+    for (int i = 0; i < BUNDLES.length; i++)
+    {
+      String bundle = BUNDLES[i];
+      String version = FIXTURE_VERSIONS[i];
+      Path versionDirectory = bundles.resolve("org/eclipse/cdo/" + bundle + "/" + version);
+      Files.createDirectories(versionDirectory);
+      Files.writeString(versionDirectory.resolve(bundle + "-" + version + ".pom"),
+          "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + bundle + "</artifactId><version>" + version + "</version></project>",
+          StandardCharsets.UTF_8);
+    }
+
+    CDOAggregationTool
+        .main(new String[] { "generate-bom", bundles.toString(), metadata.toString(), publishing.toString(), output.toString(), drop.toString() });
+
+    Path bomPom = output.resolve("org/eclipse/cdo/org.eclipse.cdo.bom/4.37.0/org.eclipse.cdo.bom-4.37.0.pom");
+    Document document = parse(bomPom.toFile());
+    Element project = document.getDocumentElement();
+    assertEquals("4.37.0", childText(project, "version"));
+    assertEquals("4.37", childText(child(project, "properties"), "cdo.project.release"));
+    assertEquals("DROP", childText(child(project, "properties"), "cdo.project.release.source"));
+    assertEquals("R20260901-1311", childText(child(project, "properties"), "cdo.drop.id"));
+    NodeList dependencies = document.getElementsByTagNameNS("*", "dependency");
+    assertEquals(BUNDLES.length, dependencies.getLength());
+    for (int i = 0; i < BUNDLES.length; i++)
+    {
+      Element dependency = (Element)dependencies.item(i);
+      assertEquals(BUNDLES[i], childText(dependency, "artifactId"));
+      assertEquals(FIXTURE_VERSIONS[i], childText(dependency, "version"));
+    }
+  }
+
+  @Test
+  public void standaloneExamplesPreparationRejectsDeploymentWithoutReleaseBom() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path staging = root.resolve("staging");
+    Path metadata = root.resolve("metadata.properties");
+    Path deploymentZip = root.resolve("deployment.zip");
+    Path testDirectory = root.resolve("standalone-test");
+    Files.writeString(metadata,
+        "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=4.37\ncdo.project.release.source=DROP\ncdo.drop.id=R20260901-1311\n",
+        StandardCharsets.UTF_8);
+    createPublicationStaging(staging, false);
+    createDeploymentZip(staging, deploymentZip);
+
+    try
+    {
+      CDOAggregationTool.main(new String[] { "prepare-standalone-examples", deploymentZip.toString(), testDirectory.toString(), metadata.toString() });
+      fail("Expected standalone examples preparation to reject a deployment without its exact release BOM");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("project-release BOM in final deployment ZIP"));
+    }
+  }
+
+  @Test
+  public void standaloneExamplesPreparationAcceptsPortableBomPropertyReference() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path staging = root.resolve("staging");
+    Path metadata = root.resolve("metadata.properties");
+    Path deploymentZip = root.resolve("deployment.zip");
+    Path testDirectory = root.resolve("standalone-test");
+    Files.writeString(metadata,
+        "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=4.37\ncdo.project.release.source=DROP\ncdo.drop.id=R20260901-1311\n",
+        StandardCharsets.UTF_8);
+    createPublicationStaging(staging, true);
+
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path central = new File(classes.getParentFile(), "central").toPath();
+    Path distribution = central.resolve("examples/distribution").toAbsolutePath();
+    Path workspace = distribution.resolve("../../../../..").normalize();
+    Path examplesZip = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip");
+    createExamplesZip(workspace, distribution, examplesZip, null, false, false, "4.37.0");
+    createDeploymentZip(staging, deploymentZip);
+
+    CDOAggregationTool.main(new String[] { "prepare-standalone-examples", deploymentZip.toString(), testDirectory.toString(), metadata.toString() });
+
+    String packagedPom = Files.readString(testDirectory.resolve("examples/pom.xml"), StandardCharsets.UTF_8);
+    assertTrue(packagedPom.contains("<version>${cdo.project.release}</version>"));
+    assertTrue(packagedPom.contains("<cdo.project.release>4.37.0</cdo.project.release>"));
+  }
+
+  @Test
+  public void standaloneExamplesArtifactProvenanceMustComeFromDeploymentBundle() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path validRepository = createStandaloneProvenanceFixture(root.resolve("valid"), "cdo-deployment-bundle", "cdo-deployment-bundle", "cdo-deployment-bundle",
+        true, true);
+    CDOAggregationTool.main(provenanceArguments(validRepository, root.resolve("valid/examples")));
+
+    Path centralRepository = createStandaloneProvenanceFixture(root.resolve("central"), "central", "central", "cdo-deployment-bundle", true, true);
+    expectProvenanceFailure(centralRepository, root.resolve("central/examples"), "central", "cdo-deployment-bundle");
+
+    Path mixedRepository = createStandaloneProvenanceFixture(root.resolve("mixed"), "cdo-deployment-bundle", "central", "cdo-deployment-bundle", true, true);
+    expectProvenanceFailure(mixedRepository, root.resolve("mixed/examples"), "central", "cdo-deployment-bundle");
+
+    Path missingTrackingRepository = createStandaloneProvenanceFixture(root.resolve("missing-tracking"), "cdo-deployment-bundle", "cdo-deployment-bundle",
+        "cdo-deployment-bundle", true, true);
+    Files.delete(missingTrackingRepository.resolve("org/eclipse/cdo/org.eclipse.emf.cdo.server.db/4.37.0/_remote.repositories"));
+    expectProvenanceFailure(missingTrackingRepository, root.resolve("missing-tracking/examples"), "origin", "missing");
+
+    Path locallyInstalledRepository = createStandaloneProvenanceFixture(root.resolve("locally-installed"), "", "", "cdo-deployment-bundle", true, true);
+    expectProvenanceFailure(locallyInstalledRepository, root.resolve("locally-installed/examples"), "locally installed", "cdo-deployment-bundle");
+
+    Path missingBomRepository = createStandaloneProvenanceFixture(root.resolve("missing-bom"), "cdo-deployment-bundle", "cdo-deployment-bundle",
+        "cdo-deployment-bundle", true, false);
+    expectProvenanceFailure(missingBomRepository, root.resolve("missing-bom/examples"), "org.eclipse.cdo.bom:4.37.0", "cdo-deployment-bundle");
+
+    Path incompleteRepository = createStandaloneProvenanceFixture(root.resolve("incomplete"), "cdo-deployment-bundle", "cdo-deployment-bundle",
+        "cdo-deployment-bundle", false, true);
+    expectProvenanceFailure(incompleteRepository, root.resolve("incomplete/examples"), "org.eclipse.emf.cdo.server.db", "cdo-deployment-bundle");
+
+    Path emptyRepository = Files.createDirectories(root.resolve("empty/repository"));
+    createStandaloneModulePoms(root.resolve("empty/examples"));
+    expectProvenanceFailure(emptyRepository, root.resolve("empty/examples"), "No CDO artifacts", "cdo-deployment-bundle");
+  }
+
+  private String[] provenanceArguments(Path repository, Path examples) throws Exception
+  {
+    Path metadata = temporaryFolder.newFile().toPath();
+    Files.writeString(metadata, "cdo.project.release=4.37\n", StandardCharsets.UTF_8);
+    return new String[] { "verify-standalone-provenance", repository.toString(), examples.toString(), metadata.toString() };
+  }
+
+  private void expectProvenanceFailure(Path repository, Path examples, String messagePart, String expectedRepository) throws Exception
+  {
+    try
+    {
+      CDOAggregationTool.main(provenanceArguments(repository, examples));
+      fail("Expected standalone artifact provenance verification to fail");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage(), expected.getMessage().contains(messagePart));
+      assertTrue(expected.getMessage(), expected.getMessage().contains(expectedRepository));
+    }
+  }
+
+  private Path createStandaloneProvenanceFixture(Path root, String artifactPomOrigin, String artifactJarOrigin, String bomOrigin, boolean includeArtifact,
+      boolean includeBom) throws Exception
+  {
+    Path repository = Files.createDirectories(root.resolve("repository"));
+    createStandaloneModulePoms(root.resolve("examples"));
+    if (includeArtifact)
+    {
+      writeResolverArtifact(repository, "org.eclipse.emf.cdo.server.db", "4.37.0", "jar", artifactPomOrigin, artifactJarOrigin, true);
+    }
+
+    if (includeBom)
+    {
+      writeResolverArtifact(repository, "org.eclipse.cdo.bom", "4.37.0", "pom", bomOrigin, null, false);
+    }
+
+    Path thirdParty = repository.resolve("com/example/unrelated/1.0/unrelated-1.0.jar");
+    Files.createDirectories(thirdParty.getParent());
+    Files.writeString(thirdParty, "unrelated", StandardCharsets.UTF_8);
+    return repository;
+  }
+
+  private static void createStandaloneModulePoms(Path examples) throws Exception
+  {
+    for (String module : new String[] { "embedded-h2", "remote-server", "remote-client" })
+    {
+      Path pom = examples.resolve(module + "/pom.xml");
+      Files.createDirectories(pom.getParent());
+      String dependencies = "embedded-h2".equals(module)
+          ? "<dependencies><dependency><groupId>org.eclipse.cdo</groupId><artifactId>org.eclipse.emf.cdo.server.db</artifactId></dependency></dependencies>"
+          : "";
+      Files.writeString(pom, "<project><groupId>org.eclipse.cdo.examples</groupId><artifactId>" + module + "</artifactId>" + dependencies + "</project>",
+          StandardCharsets.UTF_8);
+    }
+  }
+
+  private static void writeResolverArtifact(Path repository, String artifact, String version, String packaging, String pomOrigin, String jarOrigin,
+      boolean includeJar) throws Exception
+  {
+    Path directory = repository.resolve("org/eclipse/cdo/" + artifact + "/" + version);
+    Files.createDirectories(directory);
+    Path pom = directory.resolve(artifact + "-" + version + ".pom");
+    Files.writeString(pom, "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version><packaging>"
+        + packaging + "</packaging></project>", StandardCharsets.UTF_8);
+    Properties tracking = new Properties();
+    tracking.setProperty(pom.getFileName() + ">" + pomOrigin, "");
+    if (includeJar)
+    {
+      Path jar = directory.resolve(artifact + "-" + version + ".jar");
+      Files.writeString(jar, "resolved jar", StandardCharsets.UTF_8);
+      tracking.setProperty(jar.getFileName() + ">" + jarOrigin, "");
+    }
+
+    try (var output = Files.newOutputStream(directory.resolve("_remote.repositories")))
+    {
+      tracking.store(output, "Maven Resolver fixture");
+    }
+  }
+
+  @Test
   public void rejectsMissingModifiedAndConflictingExamplesDistributionArtifacts() throws Exception
   {
     Path root = temporaryFolder.newFolder().toPath();
     Path staging = root.resolve("staging");
     Path metadata = root.resolve("metadata.properties");
-    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
-    createPublicationStaging(staging);
+    Files.writeString(metadata,
+        "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=4.37\ncdo.project.release.source=DROP\ncdo.drop.id=R20260901-1311\ncdo.git.commit=deadbeef\n",
+        StandardCharsets.UTF_8);
+    createPublicationStaging(staging, false);
     String[] arguments = { "publish-check", staging.toString(), metadata.toString(), "VALIDATE", "" };
     CDOAggregationTool.main(arguments);
 
@@ -521,6 +774,8 @@ public class CDOAggregationToolBomTest
     assertEquals(examplesSourceCommit, childText(properties, "cdo.examples.source.git.commit"));
     assertEquals(dropCommit, childText(properties, "cdo.git.commit"));
     assertEquals("R20260901-1311", childText(properties, "cdo.drop.id"));
+    assertEquals("4.36.0", childText(properties, "cdo.project.release"));
+    assertTrue(child(properties, "examples.cdo.project.release") == null);
   }
 
   private static void createCandidate(Path repository, String artifact, String version) throws Exception
@@ -541,6 +796,12 @@ public class CDOAggregationToolBomTest
   private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
       boolean modifyJavaSource) throws Exception
   {
+    createExamplesZip(workspace, distribution, zip, companyVersion, includeUnexpectedFile, modifyJavaSource, "4.36.0");
+  }
+
+  private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
+      boolean modifyJavaSource, String projectRelease) throws Exception
+  {
     String[][] entries = { { "pom.xml", distribution.resolve("portable-pom.xml").toString() }, { "README.md", distribution.resolve("README.md").toString() },
         { "LICENSE", workspace.resolve("LICENSE").toString() }, { "embedded-h2/pom.xml", distribution.getParent().resolve("embedded-h2/pom.xml").toString() },
         { "remote-server/pom.xml", distribution.getParent().resolve("remote-server/pom.xml").toString() },
@@ -559,7 +820,7 @@ public class CDOAggregationToolBomTest
         output.putNextEntry(new ZipEntry(entry[0]));
         if ("pom.xml".equals(entry[0]))
         {
-          String portablePom = Files.readString(Path.of(entry[1]), StandardCharsets.UTF_8).replace("@examples.cdo.project.release@", "4.36.0");
+          String portablePom = Files.readString(Path.of(entry[1]), StandardCharsets.UTF_8).replace("@examples.cdo.project.release@", projectRelease);
           if (companyVersion != null)
           {
             portablePom = portablePom.replace("<cdo.company.version>4.1.4</cdo.company.version>",
@@ -1097,7 +1358,21 @@ public class CDOAggregationToolBomTest
     return inventory;
   }
 
-  private void createPublicationStaging(Path staging) throws Exception
+  private void createDeploymentZip(Path staging, Path deploymentZip) throws Exception
+  {
+    try (ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(deploymentZip)); Stream<Path> paths = Files.walk(staging.resolve("org")))
+    {
+      for (Path path : paths.filter(Files::isRegularFile).sorted().collect(Collectors.toList()))
+      {
+        String relative = staging.relativize(path).toString().replace(File.separatorChar, '/');
+        output.putNextEntry(new ZipEntry(relative));
+        Files.copy(path, output);
+        output.closeEntry();
+      }
+    }
+  }
+
+  private void createPublicationStaging(Path staging, boolean includeBom) throws Exception
   {
     String[][] algorithms = { { "md5", "MD5" }, { "sha1", "SHA-1" }, { "sha256", "SHA-256" }, { "sha512", "SHA-512" } };
     for (String bundle : BUNDLES)
@@ -1140,8 +1415,8 @@ public class CDOAggregationToolBomTest
               + "<url>https://github.com/eclipse-cdo/cdo/graphs/contributors</url></developer></developers><scm><connection>scm:git:https://github.com/eclipse-cdo/cdo.git</connection>"
               + "<developerConnection>scm:git:https://github.com/eclipse-cdo/cdo.git</developerConnection><url>https://eclipse.dev/cdo/</url><tag>abcdef0123456789abcdef0123456789abcdef01</tag></scm>"
               + "<issueManagement><system>GitHub</system><url>https://github.com/eclipse-cdo/cdo/issues</url></issueManagement><properties><cdo.git.commit>deadbeef</cdo.git.commit>"
-              + "<cdo.drop.id>R20260901-1311</cdo.drop.id><cdo.examples.source.git.commit>abcdef0123456789abcdef0123456789abcdef01</cdo.examples.source.git.commit>"
-              + "</properties></project>\n"
+              + "<cdo.drop.id>R20260901-1311</cdo.drop.id><cdo.project.release>4.37</cdo.project.release>"
+              + "<cdo.examples.source.git.commit>abcdef0123456789abcdef0123456789abcdef01</cdo.examples.source.git.commit>" + "</properties></project>\n"
           : "fixture examples zip\n";
       Files.writeString(file, content, StandardCharsets.UTF_8);
       for (String[] algorithm : algorithms)
@@ -1157,6 +1432,67 @@ public class CDOAggregationToolBomTest
       }
 
       Files.writeString(Path.of(file + ".asc"), "-----BEGIN PGP SIGNATURE-----\nfixture\n", StandardCharsets.US_ASCII);
+    }
+
+    if (includeBom)
+    {
+      createRegularBomFixture(staging);
+    }
+  }
+
+  private void createRegularBomFixture(Path staging) throws Exception
+  {
+    createRegularBomFixture(staging, "4.37", "DROP", "R20260901-1311");
+  }
+
+  private void createRegularBomFixture(Path staging, String release, String releaseSource, String dropID) throws Exception
+  {
+    String version = release.split("\\.").length == 2 ? release + ".0" : release;
+    String artifact = "org.eclipse.cdo.bom";
+    Path directory = staging.resolve("org/eclipse/cdo/" + artifact + "/" + version);
+    Files.createDirectories(directory);
+    StringBuilder pom = new StringBuilder("<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>").append(artifact)
+        .append("</artifactId><version>").append(version).append("</version><packaging>pom</packaging><properties><cdo.project.release>").append(release)
+        .append("</cdo.project.release><cdo.project.release.source>").append(releaseSource).append("</cdo.project.release.source><cdo.drop.id>").append(dropID)
+        .append("</cdo.drop.id></properties>").append("<dependencyManagement><dependencies>");
+    for (String bundle : BUNDLES)
+    {
+      pom.append("<dependency><groupId>org.eclipse.cdo</groupId><artifactId>").append(bundle).append("</artifactId><version>1.0.0</version></dependency>");
+    }
+
+    pom.append("</dependencies></dependencyManagement></project>\n");
+    Path bomPom = directory.resolve(artifact + "-" + version + ".pom");
+    Files.writeString(bomPom, pom.toString(), StandardCharsets.UTF_8);
+    String[][] algorithms = { { "md5", "MD5" }, { "sha1", "SHA-1" }, { "sha256", "SHA-256" }, { "sha512", "SHA-512" } };
+    for (String[] algorithm : algorithms)
+    {
+      byte[] digest = MessageDigest.getInstance(algorithm[1]).digest(Files.readAllBytes(bomPom));
+      StringBuilder hexadecimal = new StringBuilder();
+      for (byte value : digest)
+      {
+        hexadecimal.append(String.format("%02x", value & 0xff));
+      }
+
+      Files.writeString(Path.of(bomPom + "." + algorithm[0]), hexadecimal.toString(), StandardCharsets.US_ASCII);
+    }
+
+    Files.writeString(Path.of(bomPom + ".asc"), "-----BEGIN PGP SIGNATURE-----\nfixture\n", StandardCharsets.US_ASCII);
+  }
+
+  private void writeChecksums(Path artifact) throws Exception
+  {
+    String[][] algorithms = { { "md5", "MD5" }, { "sha1", "SHA-1" }, { "sha256", "SHA-256" }, { "sha512", "SHA-512" } };
+    byte[] contents = Files.readAllBytes(artifact);
+    for (String[] algorithm : algorithms)
+    {
+      byte[] digest = MessageDigest.getInstance(algorithm[1]).digest(contents);
+      StringBuilder hexadecimal = new StringBuilder();
+      for (byte value : digest)
+      {
+        hexadecimal.append(String.format("%02x", value & 0xff));
+      }
+
+      Files.writeString(Path.of(artifact + "." + algorithm[0]), hexadecimal.toString(), StandardCharsets.US_ASCII);
     }
   }
 

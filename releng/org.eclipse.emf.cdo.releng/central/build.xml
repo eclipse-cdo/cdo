@@ -67,6 +67,9 @@
 	<property name="consumer.central.only.maven.repository" location="${consumer.central.only.dir}/maven-local" />
 	<property name="consumer.central.only.versions.file" location="${consumer.central.only.dir}/cdo-consumer-versions.properties" />
 	<property name="consumer.central.only.tree.file" location="${consumer.central.only.dir}/dependency-tree.txt" />
+	<property name="consumer.examples.dir" location="${work.dir}/consumer-standalone-examples" />
+	<property name="consumer.examples.maven.repository" location="${consumer.examples.dir}/maven-local" />
+	<property name="consumer.examples.root" location="${consumer.examples.dir}/examples" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
 	<property name="bom436.repository" location="${work.dir}/bom-repository" />
@@ -305,7 +308,7 @@
 		</java>
 	</target>
 
-	<!-- Generates a separate, unsigned BOM repository; this is not part of bundle staging yet. -->
+	<!-- Generates the regular project-release BOM from the selected drop's approved bundle artifacts. -->
 	<target name="generate-bom" depends="verify,compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="generate-bom" />
@@ -314,6 +317,16 @@
 			<arg value="${publishing.metadata.file}" />
 			<arg value="${work.dir}/bom-repository" />
 			<arg value="${cdo.drop.location}" />
+		</java>
+	</target>
+
+	<target name="stage-release-bom" if="package.release.bom">
+		<antcall target="generate-bom" />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="stage-release-bom" />
+			<arg value="${work.dir}/bom-repository" />
+			<arg value="${metadata.file}" />
+			<arg value="${staging.dir}" />
 		</java>
 	</target>
 
@@ -419,7 +432,11 @@
 		<condition property="package.examples.distribution">
 			<equals arg1="${publishing.mode}" arg2="PACKAGE" />
 		</condition>
+		<condition property="package.release.bom">
+			<equals arg1="${publishing.mode}" arg2="PACKAGE" />
+		</condition>
 		<antcall target="stage-examples-distribution" />
+		<antcall target="stage-release-bom" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="publish-check" />
 			<arg value="${staging.dir}" />
@@ -592,7 +609,41 @@
 		<run-consumer-maven goals="dependency:tree" />
 	</target>
 
-	<target name="consumer-central-only" depends="verify-package,compile-helper">
+	<target name="verify-standalone-examples" depends="verify-package,compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="safe-delete-work" />
+			<arg value="${consumer.examples.dir}" />
+			<arg value="${workspace.root}" />
+		</java>
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="prepare-standalone-examples" />
+			<arg value="${deployment.zip}" />
+			<arg value="${consumer.examples.dir}" />
+			<arg value="${metadata.file}" />
+		</java>
+		<loadfile property="consumer.examples.repository.url" srcFile="${consumer.examples.dir}/deployment-repository-url.txt" />
+		<exec executable="${maven.executable}" dir="${consumer.examples.root}" failifexecutionfails="true" failonerror="true">
+			<arg value="-gs" />
+			<arg value="${basedir}/central-only-settings.xml" />
+			<arg value="-s" />
+			<arg value="${basedir}/central-only-settings.xml" />
+			<arg value="-Dmaven.repo.local=${consumer.examples.maven.repository}" />
+			<arg value="-Dcdo.deployment.repository=${consumer.examples.repository.url}" />
+			<arg value="-B" />
+			<arg value="-ntp" />
+			<arg value="clean" />
+			<arg value="verify" />
+		</exec>
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="verify-standalone-provenance" />
+			<arg value="${consumer.examples.maven.repository}" />
+			<arg value="${consumer.examples.root}" />
+			<arg value="${metadata.file}" />
+		</java>
+		<echo message="Standalone examples built and verified from the final signed deployment ZIP with an isolated Maven repository." />
+	</target>
+
+	<target name="consumer-central-only" depends="verify-package,compile-helper,verify-standalone-examples">
 		<fail unless="deployment.zip" message="Set -Ddeployment.zip to the verified Maven Central deployment bundle." />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="consumer-dependency-tree-test" />

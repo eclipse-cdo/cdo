@@ -44,4 +44,27 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <profiles>
+    <profile>
+      <id>cdo-deployment-repository</id>
+      <activation>
+        <property>
+          <name>cdo.deployment.repository</name>
+        </property>
+      </activation>
+      <repositories>
+        <repository>
+          <id>cdo-deployment-bundle</id>
+          <url>${cdo.deployment.repository}</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
 </project>

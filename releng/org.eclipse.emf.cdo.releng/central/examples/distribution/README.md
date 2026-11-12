@@ -1,6 +1,6 @@
 # CDO Plain Java Examples
 
-Requires JDK 17 and Maven 3.9+. Build all examples from this directory with `mvn clean package`.
+Requires JDK 17 and Maven 3.9+. Build all examples from this directory with `mvn clean verify`. The `verify` phase compiles all three modules and runs the embedded H2 persistence check in two separate JVMs. The remote server and client are compiled; the PostgreSQL-backed server is not started.
 
 ## Embedded H2 Example
  
@@ -22,4 +22,29 @@ RemoteClient connects to `localhost:2036` by default; its optional argument is a
 
 ## Dependencies
 
-CDO and Net4j core dependencies use the CDO 4.36.0 BOM in the root POM, which keeps the independently versioned Maven artifacts aligned. The examples also use the company model, embedded-server, PostgreSQL-adapter, and Net4j utility artifacts at the versions declared in the POMs. Those artifacts must be available from Maven Central alongside the ZIP. Maven downloads dependencies into its normal local cache; the ZIP does not include dependency JARs.
+CDO and Net4j core dependencies use the project-release BOM imported by the packaged root POM. The BOM version is normalized from the selected CDO project release and keeps independently versioned Maven artifacts aligned. The examples also use the company model, embedded-server, PostgreSQL-adapter, and Net4j utility artifacts at the versions declared in the POMs.
+
+The normal `PACKAGE` deployment ZIP contains the CDO/Net4j Maven artifacts, the project-release BOM, and this standalone examples distribution. Before those coordinates are published to Maven Central, you can build directly against the deployment ZIP as a local Maven repository. Extract the deployment ZIP, then extract the examples ZIP at `org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip`. Run Maven from the extracted examples root and set `cdo.deployment.repository` to a `file:` URI for the extracted deployment repository. Use a fresh `maven.repo.local` to verify that the build resolves CDO artifacts from the package rather than a pre-existing local cache. Maven plugins and third-party dependencies continue to resolve from Maven Central.
+
+In Windows PowerShell:
+
+```powershell
+$repository = Join-Path $PWD 'deployment-repository'
+Expand-Archive -LiteralPath .\cdo-maven-central-deployment.zip -DestinationPath $repository
+$examplesZip = Get-ChildItem (Join-Path $repository 'org\eclipse\cdo\cdo-examples-distribution\1.0.0\*-examples.zip')
+$examples = Join-Path $PWD 'standalone-examples'
+Expand-Archive -LiteralPath $examplesZip.FullName -DestinationPath $examples
+$repositoryUri = ([System.Uri]::new((Resolve-Path $repository).Path)).AbsoluteUri
+mvn "-Dmaven.repo.local=$(Join-Path $PWD 'maven-local')" "-Dcdo.deployment.repository=$repositoryUri" -B -ntp -f (Join-Path $examples 'pom.xml') clean verify
+```
+
+On a Unix-like Maven environment:
+
+```sh
+unzip -q cdo-maven-central-deployment.zip -d deployment-repository
+unzip -q deployment-repository/org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip -d standalone-examples
+mvn -Dmaven.repo.local="$PWD/maven-local" -Dcdo.deployment.repository="file://$(realpath deployment-repository)" \
+  -B -ntp -f standalone-examples/pom.xml clean verify
+```
+
+The BOM must be present at the exact release coordinate inside `deployment-repository`. The build does not rely on a matching or older BOM published to Maven Central.

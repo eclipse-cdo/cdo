@@ -157,7 +157,14 @@ public final class CDOAggregationTool
       }
 
       Map<String, String> releaseMetadata = readProperties(requireFile(new File(args[1]), "build metadata"));
-      String normalizedRelease = BomCommand.normalizeProjectReleaseVersion(BomCommand.requiredMetadata(releaseMetadata, "cdo.project.release"));
+      String projectRelease = releaseMetadata.get("cdo.project.release");
+      if (projectRelease == null || projectRelease.isBlank())
+      {
+        throw new IllegalArgumentException(
+            "PACKAGE examples distribution requires cdo.project.release; supply OVERRIDE_VERSION when the selected drop has no web.label");
+      }
+
+      String normalizedRelease = BomCommand.normalizeProjectReleaseVersion(projectRelease);
       Files.writeString(Path.of(args[2]), normalizedRelease, StandardCharsets.UTF_8);
       System.out.println("Resolved examples CDO project release " + normalizedRelease + " from " + releaseMetadata.get("cdo.project.release.source"));
       break;
@@ -435,12 +442,7 @@ public final class CDOAggregationTool
 
       if (!override.isEmpty() && !override.matches("[0-9]+(?:\\.[0-9]+){1,2}"))
       {
-        throw new IllegalArgumentException("OVERRIDE_RELEASE_VERSION must be a numeric major.minor or major.minor.patch version");
-      }
-
-      if ("I".equals(buildType) && !override.isEmpty())
-      {
-        throw new IllegalArgumentException("OVERRIDE_RELEASE_VERSION is only valid for R or S builds");
+        throw new IllegalArgumentException("OVERRIDE_VERSION must be a numeric major.minor or major.minor.patch version");
       }
 
       if ("R".equals(buildType) || !override.isEmpty())
@@ -464,7 +466,7 @@ public final class CDOAggregationTool
         {
           if ("R".equals(buildType) && override.isEmpty())
           {
-            throw new IllegalArgumentException("R build has no web.label; supply OVERRIDE_RELEASE_VERSION for an invisible release drop");
+            throw new IllegalArgumentException("Build has no web.label; supply OVERRIDE_VERSION for a release package");
           }
 
           projectRelease = override;
@@ -477,7 +479,7 @@ public final class CDOAggregationTool
         {
           if (!override.isEmpty() && !BomCommand.normalizeProjectReleaseVersion(projectRelease).equals(BomCommand.normalizeProjectReleaseVersion(override)))
           {
-            throw new IllegalArgumentException("OVERRIDE_RELEASE_VERSION conflicts with the selected drop web.label");
+            throw new IllegalArgumentException("OVERRIDE_VERSION conflicts with the selected drop web.label");
           }
 
           values.put("cdo.project.release.source", "DROP");
@@ -2330,7 +2332,7 @@ public final class CDOAggregationTool
       requireWorkspaceOutput(staging, "Central staging");
       rejectSymbolicLinks(zip.toPath(), "examples distribution ZIP");
       rejectSymbolicLinks(staging.toPath(), "Central staging");
-      PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_FOR_CENTRAL");
+      PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE");
 
       String commit = BomCommand.requiredMetadata(metadata, "cdo.git.commit");
       if (!commit.matches("[0-9a-fA-F]{40}") || !commit.equalsIgnoreCase(sourceRevision))
@@ -2986,7 +2988,7 @@ public final class CDOAggregationTool
           allowedFiles.add(signaturePath);
           if (signaturesRequired && (!signature.isFile() || signature.length() == 0))
           {
-            throw new IllegalArgumentException("PACKAGE_FOR_CENTRAL requires a non-empty signature: " + signaturePath);
+            throw new IllegalArgumentException("PACKAGE requires a non-empty signature: " + signaturePath);
           }
         }
 
@@ -3038,7 +3040,7 @@ public final class CDOAggregationTool
           allowedFiles.add(signaturePath);
           if (signaturesRequired && (!signature.isFile() || signature.length() == 0))
           {
-            throw new IllegalArgumentException("PACKAGE_FOR_CENTRAL requires a non-empty signature: " + signaturePath);
+            throw new IllegalArgumentException("PACKAGE requires a non-empty signature: " + signaturePath);
           }
         }
       }
@@ -3103,17 +3105,17 @@ public final class CDOAggregationTool
    */
   private static final class PublishPolicyCommand
   {
-    private static final String VALIDATE_ONLY = "VALIDATE_ONLY";
+    private static final String VALIDATE = "VALIDATE";
 
-    private static final String DRY_RUN = "DRY_RUN";
+    private static final String PACKAGE = "PACKAGE";
 
-    private static final String PACKAGE_FOR_CENTRAL = "PACKAGE_FOR_CENTRAL";
+    private static final String PACKAGE_BOM_436_FOR_CENTRAL = "PACKAGE_BOM_436_FOR_CENTRAL";
 
     public static void execute(String[] args) throws Exception
     {
       if (args.length != 3)
       {
-        throw new IllegalArgumentException("publish-policy requires build metadata properties and mode (VALIDATE_ONLY, DRY_RUN, or PACKAGE_FOR_CENTRAL)");
+        throw new IllegalArgumentException("publish-policy requires build metadata properties and mode (VALIDATE or PACKAGE)");
       }
 
       Map<String, String> metadata = readProperties(requireFile(new File(args[1]), "metadata properties"));
@@ -3126,28 +3128,31 @@ public final class CDOAggregationTool
     {
       for (String buildType : new String[] { "R", "S", "I" })
       {
-        enforce(buildType, VALIDATE_ONLY);
+        enforce(buildType, VALIDATE);
+        enforce(buildType, PACKAGE);
       }
 
-      for (String buildType : new String[] { "R", "S", "I" })
+      for (String buildType : new String[] { "", null })
       {
-        enforce(buildType, DRY_RUN);
+        expectFailure(buildType, VALIDATE);
+        expectFailure(buildType, PACKAGE);
       }
 
-      for (String buildType : new String[] { "S", "I", "", null })
-      {
-        expectFailure(buildType, PACKAGE_FOR_CENTRAL);
-      }
-
-      expectFailure("X", VALIDATE_ONLY);
-      expectFailure(null, PACKAGE_FOR_CENTRAL);
+      expectFailure("X", VALIDATE);
+      expectFailure("X", PACKAGE);
       expectFailure("R", "PUBLISH");
-      System.out.println("Maven publishing policy tests passed for R, S, I, unknown, and missing build types.");
+      enforce("R", PACKAGE_BOM_436_FOR_CENTRAL);
+      for (String buildType : new String[] { "S", "I" })
+      {
+        expectFailure(buildType, PACKAGE_BOM_436_FOR_CENTRAL);
+      }
+
+      System.out.println("Maven publishing policy tests passed for VALIDATE and PACKAGE with R, S, I, unknown, and missing build types.");
     }
 
     private static void enforce(String buildType, String mode)
     {
-      if (!VALIDATE_ONLY.equals(mode) && !DRY_RUN.equals(mode) && !PACKAGE_FOR_CENTRAL.equals(mode))
+      if (!VALIDATE.equals(mode) && !PACKAGE.equals(mode) && !PACKAGE_BOM_436_FOR_CENTRAL.equals(mode))
       {
         throw new IllegalArgumentException("Unknown Maven publishing mode: " + mode);
       }
@@ -3162,9 +3167,9 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("Unsupported build-info.xml build type: " + buildType);
       }
 
-      if (PACKAGE_FOR_CENTRAL.equals(mode) && !"R".equals(buildType))
+      if (PACKAGE_BOM_436_FOR_CENTRAL.equals(mode) && !"R".equals(buildType))
       {
-        throw new IllegalArgumentException("Maven Central packaging is restricted to type=R; build type is " + buildType);
+        throw new IllegalArgumentException("Historical BOM packaging is restricted to type=R; build type is " + buildType);
       }
     }
 
@@ -3207,7 +3212,7 @@ public final class CDOAggregationTool
       PublishPolicyCommand.enforce(buildType, mode);
 
       boolean signaturesRequired = "SIGNED".equals(args[4]);
-      int artifacts = validateStaging(staging, signaturesRequired, "PACKAGE_FOR_CENTRAL".equals(mode));
+      int artifacts = validateStaging(staging, signaturesRequired, "PACKAGE".equals(mode));
       File summary = new File(staging, "maven-publishing-summary.properties");
 
       try (PrintWriter out = new PrintWriter(summary, StandardCharsets.UTF_8.name()))
@@ -3540,7 +3545,7 @@ public final class CDOAggregationTool
     rejectSymbolicLinks(signedRepository.toPath(), "signed local Maven repository");
 
     Map<String, String> metadata = readProperties(requireFile(new File(args[4]), "build metadata"));
-    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_FOR_CENTRAL");
+    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE");
 
     String expectedFingerprint = args[5].replace(" ", "").toUpperCase();
     if (!expectedFingerprint.matches("(?:[0-9A-F]{40}|[0-9A-F]{64})"))
@@ -3747,7 +3752,7 @@ public final class CDOAggregationTool
     Map<String, String> publishing = readProperties(publishingFile);
     Map<String, String> inventory = Bom436Command.verifySelectedDrop(metadata, args[6]);
     Map<String, String> versions = releaseInventoryVersions(inventory, BUNDLES_436);
-    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_FOR_CENTRAL");
+    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_BOM_436_FOR_CENTRAL");
     requireWorkspaceOutput(staging, "CDO 4.36 BOM staging");
     requireWorkspaceOutput(signedRepository, "signed CDO 4.36 BOM repository");
     requireWorkspaceOutput(zip, "CDO 4.36 BOM deployment ZIP");
@@ -3980,7 +3985,7 @@ public final class CDOAggregationTool
     }
     catch (IOException e)
     {
-      throw new IllegalArgumentException("GnuPG is required for PACKAGE_FOR_CENTRAL signature verification", e);
+      throw new IllegalArgumentException("GnuPG is required for PACKAGE signature verification", e);
     }
 
     process.getOutputStream().close();
@@ -4444,6 +4449,20 @@ public final class CDOAggregationTool
         throw new AssertionError("I-build metadata must retain its stream and omit project-release metadata");
       }
 
+      Map<String, String> iBuildOverride = PrepareCommand.readBuildMetadata(DropLocation.parse(iBuild.toString()), "4.37");
+      if (!"4.37".equals(iBuildOverride.get("cdo.project.release")) || !"OVERRIDE".equals(iBuildOverride.get("cdo.project.release.source")))
+      {
+        throw new AssertionError("I-build metadata must accept an explicit project-release override");
+      }
+
+      Path sBuild = Files.createDirectory(testRoot.resolve("s-build"));
+      writeBuildInfoFixture(sBuild, "S", "S20261110-1357");
+      Map<String, String> sBuildOverride = PrepareCommand.readBuildMetadata(DropLocation.parse(sBuild.toString()), "4.37");
+      if (!"4.37".equals(sBuildOverride.get("cdo.project.release")) || !"OVERRIDE".equals(sBuildOverride.get("cdo.project.release.source")))
+      {
+        throw new AssertionError("S-build metadata must accept an explicit project-release override");
+      }
+
       Path rBuild = Files.createDirectory(testRoot.resolve("r-build"));
       writeBuildInfoFixture(rBuild, "R", "R20261110-1356");
       Files.writeString(rBuild.resolve("web.properties"), "web.label=4.36\n", StandardCharsets.UTF_8);
@@ -4487,14 +4506,12 @@ public final class CDOAggregationTool
       }
       catch (IllegalArgumentException expected)
       {
-        if (!expected.getMessage().contains("supply OVERRIDE_RELEASE_VERSION"))
+        if (!expected.getMessage().contains("supply OVERRIDE_VERSION"))
         {
           throw expected;
         }
       }
 
-      Path sBuild = Files.createDirectory(testRoot.resolve("s-build"));
-      writeBuildInfoFixture(sBuild, "S", "S20261110-1359");
       if (!"S".equals(PrepareCommand.readBuildMetadata(DropLocation.parse(sBuild.toString())).get("cdo.build.type")))
       {
         throw new AssertionError("S-build must be accepted for technical validation");
@@ -4702,7 +4719,7 @@ public final class CDOAggregationTool
       Files.createDirectories(staging.toPath());
       Files.createDirectories(signedRepository.toPath());
       Files.writeString(metadata.toPath(), "cdo.build.type=R\ncdo.drop.id=R20990101-0000\ncdo.git.commit=deadbeef\n", StandardCharsets.UTF_8);
-      Files.writeString(summary.toPath(), "publishing.mode=PACKAGE_FOR_CENTRAL\n", StandardCharsets.UTF_8);
+      Files.writeString(summary.toPath(), "publishing.mode=PACKAGE\n", StandardCharsets.UTF_8);
 
       createSignedFixture(gpgExecutable, firstHome, firstSigningFingerprint, staging, signedRepository);
       createDeploymentZip(staging, zip, "");
@@ -4777,7 +4794,7 @@ public final class CDOAggregationTool
       Files.delete(missingSignature.toPath());
       createDeploymentZip(staging, zip, "");
       expectPackageFailure(packageArguments(staging, signedRepository, zip, metadata, firstFingerprint, firstPublicKey, gpgExecutable, summary),
-          "PACKAGE_FOR_CENTRAL requires a non-empty signature", "missing signature");
+          "PACKAGE requires a non-empty signature", "missing signature");
       Files.write(missingSignature.toPath(), originalSignature);
 
       Files.delete(artifact.toPath());
@@ -5686,7 +5703,7 @@ public final class CDOAggregationTool
 
       AuditCommand.execute(new String[] { "audit", repository.toString(), metadata.toString(), report.toString(), staging.toString() });
       stageExamplesFixture(staging);
-      PublishCheckCommand.execute(new String[] { "publish-check", staging.toString(), metadata.toString(), "VALIDATE_ONLY", "" });
+      PublishCheckCommand.execute(new String[] { "publish-check", staging.toString(), metadata.toString(), "VALIDATE", "" });
       assertPublicationStaging(staging, false);
 
       byte[] cleanStagedPom = Files.readAllBytes(staging.resolve("org/eclipse/cdo/" + BUNDLES.get(7) + "/1.0.0/" + BUNDLES.get(7) + "-1.0.0.pom"));
@@ -5695,7 +5712,7 @@ public final class CDOAggregationTool
           cleanCdoPom.replace("</properties>", "<" + CDO_LOCATION_PROPERTY + ">file:/workspace/private-drop/</" + CDO_LOCATION_PROPERTY + "></properties>"));
       ChecksumsCommand.writeChecksums(stagedPom.toFile());
       expectPublicationScopeFailure(staging.toFile(), "Internal CBI property must not be published");
-      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "VALIDATE_ONLY", "", "Internal CBI property must not be published");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "VALIDATE", "", "Internal CBI property must not be published");
       Files.write(stagedPom, cleanStagedPom);
       ChecksumsCommand.writeChecksums(stagedPom.toFile());
 
@@ -5704,13 +5721,13 @@ public final class CDOAggregationTool
         Files.writeString(Path.of(artifact.getPath() + ".asc"), "test signature");
       }
 
-      PublishCheckCommand.execute(new String[] { "publish-check", staging.toString(), metadata.toString(), "PACKAGE_FOR_CENTRAL", "SIGNED" });
+      PublishCheckCommand.execute(new String[] { "publish-check", staging.toString(), metadata.toString(), "PACKAGE", "SIGNED" });
       assertPublicationStaging(staging, true);
 
       Files.writeString(stagedPom,
           cleanCdoPom.replace("</properties>", "<" + CDO_LOCATION_PROPERTY + ">file:/workspace/private-drop/</" + CDO_LOCATION_PROPERTY + "></properties>"));
       ChecksumsCommand.writeChecksums(stagedPom.toFile());
-      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "PACKAGE_FOR_CENTRAL", "SIGNED", "Internal CBI property must not be published");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "PACKAGE", "SIGNED", "Internal CBI property must not be published");
       Files.write(stagedPom, cleanStagedPom);
       ChecksumsCommand.writeChecksums(stagedPom.toFile());
 
@@ -5718,8 +5735,8 @@ public final class CDOAggregationTool
       Files.createDirectories(stagedH2.getParent());
       Files.writeString(stagedH2, Files.readString(h2Pom));
       expectPublicationScopeFailure(staging.toFile(), "Unapproved Maven publication coordinate");
-      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "VALIDATE_ONLY", "", "Unapproved Maven publication coordinate");
-      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "PACKAGE_FOR_CENTRAL", "SIGNED", "Unapproved Maven publication coordinate");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "VALIDATE", "", "Unapproved Maven publication coordinate");
+      expectPublishCheckFailure(staging.toFile(), metadata.toFile(), "PACKAGE", "SIGNED", "Unapproved Maven publication coordinate");
       Files.delete(stagedH2);
 
       Path stagedH2Module = staging.resolve("com/h2database/h2/2.0.0/h2-2.0.0.module");

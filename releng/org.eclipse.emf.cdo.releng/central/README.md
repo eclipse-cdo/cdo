@@ -61,26 +61,24 @@ CBI validation/CLEAN_BUILD, native classifier validation, consumer tests,
 audits, and local staging accept all three types. The drop name or filesystem
 path is not used to decide whether a build may be published.
 
-`publishing.mode` selects the explicit policy gate (default:
-`VALIDATE_ONLY`):
+For package mode, `OVERRIDE_VERSION` supplies the project release for R, S, or I drops that do not define `web.label`. I/S validation does not require it.
 
-* `VALIDATE_ONLY` runs the normal technical checks and accepts R, S, and I.
-* `DRY_RUN` is an upload-free staging mode and accepts R, S, and I.
-* `PACKAGE_FOR_CENTRAL` prepares a signed bundle but does not upload or publish
-  it. It is accepted only for an R build. S and I builds fail immediately with
-  a clear diagnostic; missing or unknown build types fail closed. There is no
-  generic force flag.
+`publishing.mode` selects the explicit policy gate (default:
+`VALIDATE`):
+
+* `VALIDATE` runs the normal technical checks and accepts R, S, and I.
+* `PACKAGE` runs those checks, validates the examples distribution, signs artifacts, creates and independently verifies the deployment ZIP, and runs isolated Maven consumer tests. It accepts R, S, and I.
 
 Run the policy tests with `ant -f build.xml policy-test`. The `publish-policy`
 target performs the staging checks before applying the gate. The separate
-`verify-package` target applies the same R-only rule directly to build metadata
+`verify-package` target applies the same policy directly to build metadata
 and then validates an already signed staging tree without rebuilding it. No
 target uploads to Sonatype or publishes to Maven Central.
 
 ## Jenkins and Central packaging
 
 `Jenkinsfile` is a separate declarative entry point for the same Ant workflow.
-It accepts only `PUBLISHING_MODE` and `CDO_DROP_ID`. Jenkins constructs
+It accepts `PUBLISHING_MODE`, `CDO_DROP_ID`, and the optional `OVERRIDE_VERSION`. The mode dropdown contains only `VALIDATE` and `PACKAGE`; the historical BOM mode remains available only to explicit legacy invocations. Jenkins constructs
 `https://download.eclipse.org/modeling/emf/cdo/drops/<CDO_DROP_ID>/`, discovers
 the single `*-Site.zip` in its `zips/` directory, and extracts that archive as
 the local p2 repository. It downloads only the small root metadata files needed
@@ -96,7 +94,7 @@ generated metadata and reports, but is not part of the path because Eclipse CI
 deletes the workspace after each build and concurrent builds are disabled. The
 drop must contain
 `build-info.xml`, `tp-macro.setup`, and the P2 metadata/artifacts.
-`VALIDATE_ONLY` and `DRY_RUN` require no signing credentials. The job runs
+`VALIDATE` requires no signing credentials. `PACKAGE` uses the configured signing credentials. The job runs
 aggregation, CBI validation/CLEAN_BUILD, native classifier validation,
 checksums, the readiness audit, staging validation, the consumer test, and the
 dependency tree.
@@ -120,7 +118,7 @@ artifact together with its `.md5`, `.sha1`, `.sha256`, and `.sha512` sidecars.
 `maven-publishing-summary.properties` with the drop, commit, build type,
 artifact count, selected mode, and `central.publication.performed=false`.
 
-For `PACKAGE_FOR_CENTRAL`, the Jenkinsfile binds the Jenkins Secret file
+For `PACKAGE`, the Jenkinsfile binds the Jenkins Secret file
 credential `secret-subkeys.asc` and pins the expected primary-key fingerprint
 to `439BB94FD1FEF2D2615941A35604EF4E098FFAAE`. It imports the key into a
 temporary workspace-local GnuPG home, verifies that primary identity, and
@@ -137,13 +135,13 @@ the plugin can use an explicitly configured Jenkins secret-text credential
 through `MAVEN_GPG_PASSPHRASE` or an already-cached GnuPG agent passphrase; the
 pipeline does not require or guess a passphrase credential.
 
-The package stage signs the 21 approved POMs and their main, sources, and
+For `PACKAGE`, the package stage signs the 21 approved POMs and their main, sources, and
 Javadoc JARs into a local `file:` repository. It verifies all 84 detached
 signatures with GnuPG against the independently configured primary
 fingerprint, including signing subkeys, compares artifacts and checksums with
 the original staging tree, then checks the exact Sonatype ZIP inventory and
 entry bytes. Verification does not rebuild or rewrite staging. Only a
-successful `PACKAGE_FOR_CENTRAL` build archives the deployment ZIP. There is
+successful `PACKAGE` build archives the deployment ZIP. There is
 no Sonatype uploader or automatic publication step.
 
 Every generated path is rooted under the canonical Jenkins `$WORKSPACE`. The
@@ -271,7 +269,7 @@ prints the resulting dependency tree. Both targets pass the generated values
 to Maven as individual `-D` properties; no generated files are written into
 the versioned consumer source tree.
 
-For `PACKAGE_FOR_CENTRAL`, `consumer-central-only` runs after package
+For `PACKAGE`, `consumer-central-only` runs after package
 verification. It extracts the verified deployment ZIP into a clean workspace
 repository, starts with a fresh Maven local repository, and runs the same
 consumer compilation/tests with Maven settings that mirror every repository
@@ -405,7 +403,7 @@ incompatible existing BOM is `CONFLICT`; it is never treated as an unpublished c
 The classification target is a separate pre-deployment check. Signing and ZIP packaging do not
 consume its report yet.
 
-## One-time CDO 4.36 BOM-only package
+## Historical CDO 4.36 BOM-only package
 
 Select `PACKAGE_BOM_436_FOR_CENTRAL` in Jenkins and set `CDO_DROP_ID=R20260901-1311`.
 This isolated mode prepares the selected drop metadata, derives the approved bundle versions

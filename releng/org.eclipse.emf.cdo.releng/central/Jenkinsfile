@@ -20,18 +20,22 @@ pipeline {
   }
 
   parameters {
-    choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE_ONLY', 'DRY_RUN', 'PACKAGE_FOR_CENTRAL', 'PACKAGE_BOM_436_FOR_CENTRAL'],
-      description: 'PACKAGE_FOR_CENTRAL prepares the normal signed bundle; PACKAGE_BOM_436_FOR_CENTRAL prepares only the one-time 4.36 BOM. Publication is manual.')
+    choice(name: 'PUBLISHING_MODE', choices: ['VALIDATE', 'PACKAGE'],
+      description: 'VALIDATE runs technical checks; PACKAGE also creates and verifies a signed deployment ZIP. Neither mode publishes.')
     string(name: 'CDO_DROP_ID', defaultValue: 'default', description: 'Use default for the latest R-drop, or enter an explicit CDO drop ID')
-    string(name: 'OVERRIDE_RELEASE_VERSION', defaultValue: '', description: 'Optional numeric CDO project release (for example 4.37) for invisible R-drops; used only by PACKAGE_FOR_CENTRAL')
+    string(name: 'OVERRIDE_VERSION', defaultValue: '', description: 'Optional numeric CDO project release (for example 4.37) for R, S, or I drops with no web.label; used only by PACKAGE')
   }
 
   stages {
     stage('Workspace safety preflight') {
       steps {
         script {
-          if (params.OVERRIDE_RELEASE_VERSION?.trim() && params.PUBLISHING_MODE != 'PACKAGE_FOR_CENTRAL') {
-            error('OVERRIDE_RELEASE_VERSION is only supported with PACKAGE_FOR_CENTRAL')
+          if (!(params.PUBLISHING_MODE in ['VALIDATE', 'PACKAGE', 'PACKAGE_BOM_436_FOR_CENTRAL'])) {
+            error("Unknown Maven publishing mode: ${params.PUBLISHING_MODE}")
+          }
+
+          if (params.OVERRIDE_VERSION?.trim() && params.PUBLISHING_MODE != 'PACKAGE') {
+            error('OVERRIDE_VERSION is only supported with PACKAGE')
           }
 
           def workspaceRoot = sh(returnStdout: true, script: '''
@@ -125,7 +129,7 @@ pipeline {
               error("Invalid CDO_DROP_ID: ${dropId}")
             }
           }
-          def modeAbbreviation = [VALIDATE_ONLY: 'VAL', DRY_RUN: 'DRY', PACKAGE_FOR_CENTRAL: 'PACK', PACKAGE_BOM_436_FOR_CENTRAL: 'BOM436'][params.PUBLISHING_MODE]
+          def modeAbbreviation = [VALIDATE: 'VAL', PACKAGE: 'PACK', PACKAGE_BOM_436_FOR_CENTRAL: 'BOM436'][params.PUBLISHING_MODE]
           currentBuild.description = "${modeAbbreviation} ${dropId}"
           def dropUrl = "https://download.eclipse.org/modeling/emf/cdo/drops/${dropId}/"
           echo "Resolved CDO drop ID: ${dropId}; download URL: ${dropUrl}"
@@ -200,7 +204,7 @@ pipeline {
               for metadata in $metadata_files; do
                 curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --fail --location --retry 3 --silent --show-error "${DROP_URL}${metadata}" -o "$DROP_PARENT/drop/$metadata"
               done
-              if [ -n "${OVERRIDE_RELEASE_VERSION:-}" ]; then
+              if [ -n "${OVERRIDE_VERSION:-}" ]; then
                 status=$(curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --silent --show-error --location --retry 3 --output "$DROP_PARENT/drop/web.properties" --write-out '%{http_code}' "${DROP_URL}web.properties")
                 if [ "$status" != 200 ] && [ "$status" != 404 ]; then echo "Unable to retrieve optional web.properties: HTTP $status" >&2; exit 5; fi
                 if [ "$status" = 404 ]; then rm -f "$DROP_PARENT/drop/web.properties"; fi
@@ -306,7 +310,7 @@ pipeline {
               printf '%s\\n' "$candidate"
             ''').trim()
           }
-          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}", "OVERRIDE_RELEASE_VERSION=${params.OVERRIDE_RELEASE_VERSION}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}", "OVERRIDE_VERSION=${params.OVERRIDE_VERSION}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
             withAnt(installation: 'apache-ant-latest') {
               sh '''
                 set -eu
@@ -320,7 +324,7 @@ pipeline {
                   echo "Downloaded drop contains a symlink" >&2
                   exit 2
                 fi
-                ant -Dcdo.drop.location="$LOCAL_DROP_DIR" -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dcbi.aggregator="$CBI_AGGREGATOR" -Dpublishing.mode="$PUBLISHING_MODE" -Doverride.release.version="$OVERRIDE_RELEASE_VERSION" -f releng/org.eclipse.emf.cdo.releng/central/build.xml clean-build consumer-dependency-tree
+                ant -Dcdo.drop.location="$LOCAL_DROP_DIR" -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dcbi.aggregator="$CBI_AGGREGATOR" -Dpublishing.mode="$PUBLISHING_MODE" -Doverride.release.version="$OVERRIDE_VERSION" -f releng/org.eclipse.emf.cdo.releng/central/build.xml clean-build consumer-dependency-tree
               '''
             }
           }
@@ -368,48 +372,9 @@ pipeline {
       }
     }
 
-    stage('Check Maven Central coordinates') {
-      when {
-        expression { params.PUBLISHING_MODE == 'PACKAGE_FOR_CENTRAL' }
-      }
-      steps {
-        withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
-          sh '''
-            set -eu
-            workspace_root=$(cd "$CDO_WORKSPACE_ROOT" && pwd -P)
-            case "$STAGING_DIR" in "$workspace_root"/*) ;; *) echo "Unsafe staging path" >&2; exit 2 ;; esac
-            test "$(realpath -m -- "$STAGING_DIR")" = "$STAGING_DIR"
-            if find "$STAGING_DIR" -type l -print -quit | grep -q .; then
-              echo "Staging contains a symlink" >&2
-              exit 2
-            fi
-            pom_count=$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)
-            test "$pom_count" -eq 22
-            find "$STAGING_DIR/org" -name '*.pom' -type f -print | while IFS= read -r pom; do
-              version_dir=$(dirname "$pom")
-              artifact_dir=$(dirname "$version_dir")
-              artifact=$(basename "$artifact_dir")
-              version=$(basename "$version_dir")
-              relative=${pom#"$STAGING_DIR"/}
-              group_path=$(dirname "$(dirname "$(dirname "$relative")")")
-              group=$(printf '%s' "$group_path" | tr '/' '.')
-              coordinate="$group:$artifact:$version"
-              url="https://repo.maven.apache.org/maven2/$group_path/$artifact/$version/$artifact-$version.pom"
-              status=$(curl --disable --request GET --proto '=http,https' --proto-redir '=http,https' --silent --show-error --output /dev/null --write-out '%{http_code}' "$url") || { echo "Central version check failed for $coordinate" >&2; exit 2; }
-              case "$status" in
-                404) ;;
-                200) echo "Maven Central coordinate already exists: $coordinate" >&2; exit 3 ;;
-                *) echo "Maven Central returned HTTP $status for $coordinate; refusing to infer absence" >&2; exit 4 ;;
-              esac
-            done
-          '''
-        }
-      }
-    }
-
     stage('Sign and package for Central') {
       when {
-        expression { params.PUBLISHING_MODE == 'PACKAGE_FOR_CENTRAL' }
+        expression { params.PUBLISHING_MODE == 'PACKAGE' }
       }
       steps {
         script {
@@ -549,7 +514,7 @@ pipeline {
                     echo "Package inputs contain a symlink" >&2
                     exit 2
                   fi
-                  ant -Dpublishing.mode=PACKAGE_FOR_CENTRAL -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml consumer-central-only
+                  ant -Dpublishing.mode=PACKAGE -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml consumer-central-only
                 '''
               }
           }
@@ -654,7 +619,7 @@ pipeline {
 
     success {
       script {
-        if (params.PUBLISHING_MODE == 'PACKAGE_FOR_CENTRAL') {
+        if (params.PUBLISHING_MODE == 'PACKAGE') {
           archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-deployment.zip', allowEmptyArchive: false
         }
         if (params.PUBLISHING_MODE == 'PACKAGE_BOM_436_FOR_CENTRAL') {

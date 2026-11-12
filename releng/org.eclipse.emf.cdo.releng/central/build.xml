@@ -18,8 +18,8 @@
 	<property name="maven.executable" value="mvn" />
 	<property environment="env" />
 	
-	<!-- Only PACKAGE_FOR_CENTRAL is restricted to R builds. -->
-	<property name="publishing.mode" value="VALIDATE_ONLY" />
+	<!-- Regular package mode supports R, S, and I builds. -->
+	<property name="publishing.mode" value="VALIDATE" />
 	<property name="override.release.version" value="" />
 	<property name="central.repository.url" value="https://repo.maven.apache.org/maven2/" />
 	
@@ -417,7 +417,7 @@
 
 	<target name="staging-validate" depends="audit,compile-helper">
 		<condition property="package.examples.distribution">
-			<equals arg1="${publishing.mode}" arg2="PACKAGE_FOR_CENTRAL" />
+			<equals arg1="${publishing.mode}" arg2="PACKAGE" />
 		</condition>
 		<antcall target="stage-examples-distribution" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">

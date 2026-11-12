@@ -403,13 +403,13 @@ public class CDOAggregationToolBomTest
     Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
     createPublicationStaging(staging);
 
-    String[] validArguments = { "publish-check", staging.toString(), metadata.toString(), "PACKAGE_FOR_CENTRAL", "SIGNED" };
+    String[] validArguments = { "publish-check", staging.toString(), metadata.toString(), "PACKAGE", "SIGNED" };
     CDOAggregationTool.main(validArguments);
 
     Path missingSignature = staging.resolve(path(BUNDLES[0], "1.0.0", ".pom") + ".asc");
     byte[] signature = Files.readAllBytes(missingSignature);
     Files.delete(missingSignature);
-    expectPublicationScopeFailure(validArguments, "PACKAGE_FOR_CENTRAL requires a non-empty signature");
+    expectPublicationScopeFailure(validArguments, "PACKAGE requires a non-empty signature");
     Files.write(missingSignature, signature);
 
     Path unexpectedSignature = staging.resolve(path(BUNDLES[0], "1.0.0", ".pom") + ".unexpected.asc");
@@ -430,7 +430,7 @@ public class CDOAggregationToolBomTest
     Path metadata = root.resolve("metadata.properties");
     Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
     createPublicationStaging(staging);
-    String[] arguments = { "publish-check", staging.toString(), metadata.toString(), "VALIDATE_ONLY", "" };
+    String[] arguments = { "publish-check", staging.toString(), metadata.toString(), "VALIDATE", "" };
     CDOAggregationTool.main(arguments);
 
     Path zip = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip");

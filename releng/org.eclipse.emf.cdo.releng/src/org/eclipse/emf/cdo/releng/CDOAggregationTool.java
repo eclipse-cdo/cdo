@@ -445,56 +445,48 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("OVERRIDE_VERSION must be a numeric major.minor or major.minor.patch version");
       }
 
-      if ("R".equals(buildType) || !override.isEmpty())
+      Properties webProperties = new Properties();
+      try (InputStream input = drop.openOptional("web.properties"))
       {
-        Properties webProperties = new Properties();
-        try (InputStream input = drop.openOptional("web.properties"))
+        if (input != null)
         {
-          if (input != null)
-          {
-            webProperties.load(input);
-          }
+          webProperties.load(input);
         }
+      }
 
-        String projectRelease = webProperties.getProperty("web.label");
-        if (projectRelease != null && !projectRelease.isBlank() && !projectRelease.matches("[0-9]+(?:\\.[0-9]+){1,2}"))
-        {
-          throw new IllegalArgumentException("web.properties defines a malformed numeric web.label project-release version");
-        }
+      String projectRelease = webProperties.getProperty("web.label");
+      if (projectRelease != null && !projectRelease.matches("[0-9]+(?:\\.[0-9]+){1,2}"))
+      {
+        throw new IllegalArgumentException("web.properties defines a malformed numeric web.label project-release version");
+      }
 
-        if (projectRelease == null || projectRelease.isBlank())
-        {
-          if ("R".equals(buildType) && override.isEmpty())
-          {
-            throw new IllegalArgumentException("Build has no web.label; supply OVERRIDE_VERSION for a release package");
-          }
-
-          projectRelease = override;
-          if (!projectRelease.isEmpty())
-          {
-            values.put("cdo.project.release.source", "OVERRIDE");
-          }
-        }
-        else
-        {
-          if (!override.isEmpty() && !BomCommand.normalizeProjectReleaseVersion(projectRelease).equals(BomCommand.normalizeProjectReleaseVersion(override)))
-          {
-            throw new IllegalArgumentException("OVERRIDE_VERSION conflicts with the selected drop web.label");
-          }
-
-          values.put("cdo.project.release.source", "DROP");
-        }
-
+      if (projectRelease == null)
+      {
+        projectRelease = override;
         if (!projectRelease.isEmpty())
         {
-          String stream = values.get("cdo.build.stream");
-          if (stream.matches("[0-9]+\\.x") && !projectRelease.split("\\.")[0].equals(stream.substring(0, stream.indexOf('.'))))
-          {
-            throw new IllegalArgumentException("Project release major does not match build-info.xml stream " + stream);
-          }
-
-          values.put("cdo.project.release", projectRelease);
+          values.put("cdo.project.release.source", "OVERRIDE");
         }
+      }
+      else
+      {
+        if (!override.isEmpty() && !BomCommand.normalizeProjectReleaseVersion(projectRelease).equals(BomCommand.normalizeProjectReleaseVersion(override)))
+        {
+          throw new IllegalArgumentException("OVERRIDE_VERSION conflicts with the selected drop web.label");
+        }
+
+        values.put("cdo.project.release.source", "DROP");
+      }
+
+      if (!projectRelease.isEmpty())
+      {
+        String stream = values.get("cdo.build.stream");
+        if (stream.matches("[0-9]+\\.x") && !projectRelease.split("\\.")[0].equals(stream.substring(0, stream.indexOf('.'))))
+        {
+          throw new IllegalArgumentException("Project release major does not match build-info.xml stream " + stream);
+        }
+
+        values.put("cdo.project.release", projectRelease);
       }
 
       return values;
@@ -2314,17 +2306,17 @@ public final class CDOAggregationTool
       if (args.length != 9)
       {
         throw new IllegalArgumentException(
-            "stage-examples-distribution requires workspace, candidate repository, ZIP, source POM, build metadata, publishing metadata, staging, and source revision");
+            "stage-examples-distribution requires examples checkout, candidate repository, ZIP, source POM, build metadata, publishing metadata, staging, and examples source revision");
       }
 
-      File workspace = requireReadOnlyCheckout(args[1], "release checkout");
+      File workspace = requireReadOnlyCheckout(args[1], "examples source checkout");
       File candidateRepository = requireDirectory(args[2], "selected-drop Maven repository");
       File zip = requireFile(new File(args[3]), "examples distribution ZIP");
       File sourcePom = requireFile(new File(args[4]), "distribution POM");
       Map<String, String> metadata = readProperties(requireFile(new File(args[5]), "build metadata"));
       Map<String, String> publishing = readProperties(requireFile(new File(args[6]), "publishing metadata"));
       File staging = requireDirectory(args[7], "Central staging");
-      String sourceRevision = args[8].trim();
+      String examplesSourceRevision = args[8].trim();
 
       requireWorkspaceOutput(candidateRepository, "selected-drop Maven repository");
       requireWorkspaceOutput(zip, "examples distribution ZIP");
@@ -2332,15 +2324,18 @@ public final class CDOAggregationTool
       requireWorkspaceOutput(staging, "Central staging");
       rejectSymbolicLinks(zip.toPath(), "examples distribution ZIP");
       rejectSymbolicLinks(staging.toPath(), "Central staging");
-      PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE");
+      PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE", metadata.get("cdo.project.release"), metadata.get("cdo.build.stream"));
 
       String commit = BomCommand.requiredMetadata(metadata, "cdo.git.commit");
-      if (!commit.matches("[0-9a-fA-F]{40}") || !commit.equalsIgnoreCase(sourceRevision))
+      if (!commit.matches("[0-9a-fA-F]{40}"))
       {
-        throw new IllegalArgumentException("Examples sources are not from selected CDO drop commit " + commit + "; checkout is " + sourceRevision);
+        throw new IllegalArgumentException("Selected CDO drop has an invalid cdo.git.commit: " + commit);
       }
 
-      requireCleanPackagingInputs(workspace, sourceRevision);
+      if (!examplesSourceRevision.matches("[0-9a-fA-F]{40}"))
+      {
+        throw new IllegalArgumentException("Examples source checkout has an invalid Git revision: " + examplesSourceRevision);
+      }
 
       validateDistributionZip(workspace, candidateRepository, zip, metadata);
       Map<String, String> packageProperties = readProperties(
@@ -2380,11 +2375,11 @@ public final class CDOAggregationTool
       }
 
       Element scm = child(project, "scm");
-      setChildText(scm, "tag", commit);
+      setChildText(scm, "tag", examplesSourceRevision);
       setChildText(scm, "url", publishing.get("project.url"));
-      addTraceabilityProperties(pomDocument, project, metadata);
+      addTraceabilityProperties(pomDocument, project, metadata, examplesSourceRevision);
       write(pomDocument, publishedPom);
-      validateDistributionPom(publishedPom, metadata, publishing, releaseVersion);
+      validateDistributionPom(publishedPom, metadata, publishing, releaseVersion, examplesSourceRevision);
       ChecksumsCommand.writeChecksums(publishedPom);
       ChecksumsCommand.writeChecksums(publishedZip);
       System.out.println("Staged release-matched examples distribution " + EXAMPLES_DISTRIBUTION + ":" + releaseVersion + " with ZIP classifier examples.");
@@ -2468,7 +2463,8 @@ public final class CDOAggregationTool
       }
     }
 
-    private static void validateDistributionPom(File pom, Map<String, String> metadata, Map<String, String> publishing, String version) throws Exception
+    private static void validateDistributionPom(File pom, Map<String, String> metadata, Map<String, String> publishing, String version,
+        String examplesSourceRevision) throws Exception
     {
       Element project = parse(pom).getDocumentElement();
       if (!"org.eclipse.cdo".equals(text(project, "groupId")) || !EXAMPLES_DISTRIBUTION.equals(text(project, "artifactId"))
@@ -2486,9 +2482,9 @@ public final class CDOAggregationTool
       }
 
       if (!publishing.get("project.url").equals(text(project, "url")) || !publishing.get("scm.connection").equals(text(child(project, "scm"), "connection"))
-          || !metadata.get("cdo.git.commit").equals(text(child(project, "scm"), "tag")))
+          || !examplesSourceRevision.equals(text(child(project, "scm"), "tag")))
       {
-        throw new IllegalArgumentException("Distribution POM SCM or project URL does not match release metadata");
+        throw new IllegalArgumentException("Distribution POM SCM or project URL does not match the examples source checkout");
       }
 
       Element properties = child(project, "properties");
@@ -2500,9 +2496,14 @@ public final class CDOAggregationTool
           throw new IllegalArgumentException("Distribution POM traceability mismatch for " + entry.getKey());
         }
       }
+
+      if (!examplesSourceRevision.equals(text(child(properties, "cdo.examples.source.git.commit"))))
+      {
+        throw new IllegalArgumentException("Distribution POM examples source revision does not match the examples source checkout");
+      }
     }
 
-    private static void addTraceabilityProperties(Document document, Element project, Map<String, String> metadata)
+    private static void addTraceabilityProperties(Document document, Element project, Map<String, String> metadata, String examplesSourceRevision)
     {
       Element properties = child(project, "properties");
       if (properties == null)
@@ -2522,6 +2523,15 @@ public final class CDOAggregationTool
 
         property.setTextContent(entry.getValue());
       }
+
+      Element examplesSourceCommit = child(properties, "cdo.examples.source.git.commit");
+      if (examplesSourceCommit == null)
+      {
+        examplesSourceCommit = document.createElementNS(project.getNamespaceURI(), "cdo.examples.source.git.commit");
+        properties.appendChild(examplesSourceCommit);
+      }
+
+      examplesSourceCommit.setTextContent(examplesSourceRevision);
     }
 
     private static void setChildText(Element parent, String name, String value)
@@ -3089,10 +3099,13 @@ public final class CDOAggregationTool
       }
 
       Element properties = child(project, "properties");
-      String commit = text(properties, "cdo.git.commit");
-      if (properties == null || commit.isBlank() || !commit.equals(text(child(project, "scm"), "tag")))
+      String dropCommit = text(properties, "cdo.git.commit");
+      String examplesSourceCommit = text(properties, "cdo.examples.source.git.commit");
+      String dropID = text(properties, "cdo.drop.id");
+      if (properties == null || dropCommit.isBlank() || dropID.isBlank() || !examplesSourceCommit.matches("[0-9a-fA-F]{40}")
+          || !examplesSourceCommit.equals(text(child(project, "scm"), "tag")))
       {
-        throw new IllegalArgumentException("Examples distribution POM is missing matching release provenance: " + pom);
+        throw new IllegalArgumentException("Examples distribution POM is missing distinct CDO drop and examples source provenance: " + pom);
       }
     }
   }
@@ -3120,7 +3133,7 @@ public final class CDOAggregationTool
 
       Map<String, String> metadata = readProperties(requireFile(new File(args[1]), "metadata properties"));
       String buildType = metadata.get("cdo.build.type");
-      enforce(buildType, args[2]);
+      enforce(buildType, args[2], metadata.get("cdo.project.release"), metadata.get("cdo.build.stream"));
       System.out.println("Maven publishing policy " + args[2] + " accepted for build type " + buildType + ".");
     }
 
@@ -3128,29 +3141,32 @@ public final class CDOAggregationTool
     {
       for (String buildType : new String[] { "R", "S", "I" })
       {
-        enforce(buildType, VALIDATE);
-        enforce(buildType, PACKAGE);
+        enforce(buildType, VALIDATE, null, "4.x");
+        expectFailure(buildType, PACKAGE, null, "4.x");
+        enforce(buildType, PACKAGE, "4.37", "4.x");
       }
 
       for (String buildType : new String[] { "", null })
       {
-        expectFailure(buildType, VALIDATE);
-        expectFailure(buildType, PACKAGE);
+        expectFailure(buildType, VALIDATE, null, "4.x");
+        expectFailure(buildType, PACKAGE, null, "4.x");
       }
 
-      expectFailure("X", VALIDATE);
-      expectFailure("X", PACKAGE);
-      expectFailure("R", "PUBLISH");
-      enforce("R", PACKAGE_BOM_436_FOR_CENTRAL);
+      expectFailure("X", VALIDATE, null, "4.x");
+      expectFailure("X", PACKAGE, "4.37", "4.x");
+      expectFailure("R", "PUBLISH", "4.37", "4.x");
+      expectFailure("R", PACKAGE, "4.x", "4.x");
+      expectFailure("R", PACKAGE, "5.0", "4.x");
+      enforce("R", PACKAGE_BOM_436_FOR_CENTRAL, null, "4.x");
       for (String buildType : new String[] { "S", "I" })
       {
-        expectFailure(buildType, PACKAGE_BOM_436_FOR_CENTRAL);
+        expectFailure(buildType, PACKAGE_BOM_436_FOR_CENTRAL, null, "4.x");
       }
 
       System.out.println("Maven publishing policy tests passed for VALIDATE and PACKAGE with R, S, I, unknown, and missing build types.");
     }
 
-    private static void enforce(String buildType, String mode)
+    private static void enforce(String buildType, String mode, String projectRelease, String buildStream)
     {
       if (!VALIDATE.equals(mode) && !PACKAGE.equals(mode) && !PACKAGE_BOM_436_FOR_CENTRAL.equals(mode))
       {
@@ -3171,13 +3187,29 @@ public final class CDOAggregationTool
       {
         throw new IllegalArgumentException("Historical BOM packaging is restricted to type=R; build type is " + buildType);
       }
+
+      if (PACKAGE.equals(mode))
+      {
+        if (projectRelease == null || projectRelease.isBlank())
+        {
+          throw new IllegalArgumentException(
+              "PACKAGE requires a valid project-release version; supply OVERRIDE_VERSION when the selected drop has no web.label");
+        }
+
+        BomCommand.normalizeProjectReleaseVersion(projectRelease);
+        if (buildStream != null && buildStream.matches("[0-9]+\\.x")
+            && !projectRelease.split("\\.")[0].equals(buildStream.substring(0, buildStream.indexOf('.'))))
+        {
+          throw new IllegalArgumentException("Project release major does not match build-info.xml stream " + buildStream);
+        }
+      }
     }
 
-    private static void expectFailure(String buildType, String mode)
+    private static void expectFailure(String buildType, String mode, String projectRelease, String buildStream)
     {
       try
       {
-        enforce(buildType, mode);
+        enforce(buildType, mode, projectRelease, buildStream);
         throw new AssertionError("Expected publishing policy failure for build type " + buildType + " and mode " + mode);
       }
       catch (IllegalArgumentException expected)
@@ -3209,7 +3241,7 @@ public final class CDOAggregationTool
       Map<String, String> metadata = readProperties(requireFile(new File(args[2]), "metadata properties"));
       String mode = args[3];
       String buildType = metadata.get("cdo.build.type");
-      PublishPolicyCommand.enforce(buildType, mode);
+      PublishPolicyCommand.enforce(buildType, mode, metadata.get("cdo.project.release"), metadata.get("cdo.build.stream"));
 
       boolean signaturesRequired = "SIGNED".equals(args[4]);
       int artifacts = validateStaging(staging, signaturesRequired, "PACKAGE".equals(mode));
@@ -3545,7 +3577,7 @@ public final class CDOAggregationTool
     rejectSymbolicLinks(signedRepository.toPath(), "signed local Maven repository");
 
     Map<String, String> metadata = readProperties(requireFile(new File(args[4]), "build metadata"));
-    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE");
+    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE", metadata.get("cdo.project.release"), metadata.get("cdo.build.stream"));
 
     String expectedFingerprint = args[5].replace(" ", "").toUpperCase();
     if (!expectedFingerprint.matches("(?:[0-9A-F]{40}|[0-9A-F]{64})"))
@@ -3621,6 +3653,15 @@ public final class CDOAggregationTool
         }
 
         coordinates.add(group + ":" + artifactID + ":" + pomVersion);
+        if (distribution)
+        {
+          Element properties = child(project, "properties");
+          if (!metadata.get("cdo.git.commit").equals(text(properties, "cdo.git.commit"))
+              || !metadata.get("cdo.drop.id").equals(text(properties, "cdo.drop.id")))
+          {
+            throw new IllegalArgumentException("Examples distribution POM CDO binary provenance does not match the selected drop: " + relative);
+          }
+        }
       }
 
       expectedFiles.add(relative);
@@ -3752,7 +3793,8 @@ public final class CDOAggregationTool
     Map<String, String> publishing = readProperties(publishingFile);
     Map<String, String> inventory = Bom436Command.verifySelectedDrop(metadata, args[6]);
     Map<String, String> versions = releaseInventoryVersions(inventory, BUNDLES_436);
-    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_BOM_436_FOR_CENTRAL");
+    PublishPolicyCommand.enforce(metadata.get("cdo.build.type"), "PACKAGE_BOM_436_FOR_CENTRAL", metadata.get("cdo.project.release"),
+        metadata.get("cdo.build.stream"));
     requireWorkspaceOutput(staging, "CDO 4.36 BOM staging");
     requireWorkspaceOutput(signedRepository, "signed CDO 4.36 BOM repository");
     requireWorkspaceOutput(zip, "CDO 4.36 BOM deployment ZIP");
@@ -4499,17 +4541,47 @@ public final class CDOAggregationTool
         throw new AssertionError("Invisible R-drop must use the explicit release override");
       }
 
-      try
+      Map<String, String> invisibleBuildMetadata = PrepareCommand.readBuildMetadata(DropLocation.parse(invisibleBuild.toString()));
+      if (invisibleBuildMetadata.containsKey("cdo.project.release") || invisibleBuildMetadata.containsKey("cdo.project.release.source"))
       {
-        PrepareCommand.readBuildMetadata(DropLocation.parse(invisibleBuild.toString()));
-        throw new AssertionError("Invisible R-drop without override was accepted");
+        throw new AssertionError("A drop without web.label must leave project-release metadata undefined");
       }
-      catch (IllegalArgumentException expected)
+
+      PublishPolicyCommand.enforce("R", "VALIDATE", invisibleBuildMetadata.get("cdo.project.release"), invisibleBuildMetadata.get("cdo.build.stream"));
+      expectPackageReleaseFailure("R", invisibleBuildMetadata.get("cdo.project.release"), invisibleBuildMetadata.get("cdo.build.stream"));
+
+      for (String buildType : new String[] { "R", "S", "I" })
       {
-        if (!expected.getMessage().contains("supply OVERRIDE_VERSION"))
-        {
-          throw expected;
-        }
+        Path matrixBuild = Files.createDirectory(testRoot.resolve("release-matrix-" + buildType));
+        writeBuildInfoFixture(matrixBuild, buildType, buildType + "20261110-1358");
+        DropLocation matrixDrop = DropLocation.parse(matrixBuild.toString());
+
+        Map<String, String> absentRelease = PrepareCommand.readBuildMetadata(matrixDrop);
+        PublishPolicyCommand.enforce(buildType, "VALIDATE", absentRelease.get("cdo.project.release"), absentRelease.get("cdo.build.stream"));
+        expectPackageReleaseFailure(buildType, absentRelease.get("cdo.project.release"), absentRelease.get("cdo.build.stream"));
+
+        Files.writeString(matrixBuild.resolve("web.properties"), "web.label=4.37\n", StandardCharsets.UTF_8);
+        Map<String, String> dropRelease = PrepareCommand.readBuildMetadata(matrixDrop);
+        assertProjectRelease(dropRelease, "4.37", "DROP", buildType);
+        PublishPolicyCommand.enforce(buildType, "PACKAGE", dropRelease.get("cdo.project.release"), dropRelease.get("cdo.build.stream"));
+
+        Map<String, String> matrixMatchingOverride = PrepareCommand.readBuildMetadata(matrixDrop, "4.37.0");
+        assertProjectRelease(matrixMatchingOverride, "4.37", "DROP", buildType);
+        PublishPolicyCommand.enforce(buildType, "PACKAGE", matrixMatchingOverride.get("cdo.project.release"), matrixMatchingOverride.get("cdo.build.stream"));
+
+        expectMetadataFailure(matrixDrop, "4.38", "conflicts");
+
+        Files.writeString(matrixBuild.resolve("web.properties"), "web.label=invalid\n", StandardCharsets.UTF_8);
+        expectMetadataFailure(matrixDrop, "", "malformed numeric web.label");
+        expectMetadataFailure(matrixDrop, "4.37", "malformed numeric web.label");
+
+        Files.writeString(matrixBuild.resolve("web.properties"), "web.label=5.0\n", StandardCharsets.UTF_8);
+        expectMetadataFailure(matrixDrop, "", "does not match build-info.xml stream");
+
+        Files.delete(matrixBuild.resolve("web.properties"));
+        Map<String, String> overrideRelease = PrepareCommand.readBuildMetadata(matrixDrop, "4.37");
+        assertProjectRelease(overrideRelease, "4.37", "OVERRIDE", buildType);
+        PublishPolicyCommand.enforce(buildType, "PACKAGE", overrideRelease.get("cdo.project.release"), overrideRelease.get("cdo.build.stream"));
       }
 
       if (!"S".equals(PrepareCommand.readBuildMetadata(DropLocation.parse(sBuild.toString())).get("cdo.build.type")))
@@ -4566,6 +4638,47 @@ public final class CDOAggregationTool
     finally
     {
       delete(testRoot.toFile());
+    }
+  }
+
+  private static void assertProjectRelease(Map<String, String> metadata, String release, String source, String buildType)
+  {
+    if (!buildType.equals(metadata.get("cdo.build.type")) || !release.equals(metadata.get("cdo.project.release"))
+        || !source.equals(metadata.get("cdo.project.release.source")))
+    {
+      throw new AssertionError("Unexpected project-release metadata for " + buildType + ": " + metadata);
+    }
+  }
+
+  private static void expectMetadataFailure(DropLocation drop, String override, String diagnostic) throws Exception
+  {
+    try
+    {
+      PrepareCommand.readBuildMetadata(drop, override);
+      throw new AssertionError("Expected project-release metadata failure containing " + diagnostic);
+    }
+    catch (IllegalArgumentException expected)
+    {
+      if (!expected.getMessage().contains(diagnostic))
+      {
+        throw expected;
+      }
+    }
+  }
+
+  private static void expectPackageReleaseFailure(String buildType, String projectRelease, String buildStream)
+  {
+    try
+    {
+      PublishPolicyCommand.enforce(buildType, "PACKAGE", projectRelease, buildStream);
+      throw new AssertionError("PACKAGE accepted missing project-release metadata for build type " + buildType);
+    }
+    catch (IllegalArgumentException expected)
+    {
+      if (!expected.getMessage().contains("OVERRIDE_VERSION"))
+      {
+        throw expected;
+      }
     }
   }
 
@@ -4718,7 +4831,8 @@ public final class CDOAggregationTool
 
       Files.createDirectories(staging.toPath());
       Files.createDirectories(signedRepository.toPath());
-      Files.writeString(metadata.toPath(), "cdo.build.type=R\ncdo.drop.id=R20990101-0000\ncdo.git.commit=deadbeef\n", StandardCharsets.UTF_8);
+      Files.writeString(metadata.toPath(),
+          "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=4.37\ncdo.drop.id=R20990101-0000\ncdo.git.commit=deadbeef\n", StandardCharsets.UTF_8);
       Files.writeString(summary.toPath(), "publishing.mode=PACKAGE\n", StandardCharsets.UTF_8);
 
       createSignedFixture(gpgExecutable, firstHome, firstSigningFingerprint, staging, signedRepository);
@@ -5252,41 +5366,6 @@ public final class CDOAggregationTool
     return path.toFile();
   }
 
-  private static void requireCleanPackagingInputs(File workspace, String expectedRevision) throws Exception
-  {
-    List<String> paths = List.of("LICENSE", "plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java",
-        "plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java",
-        "plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java",
-        "releng/org.eclipse.emf.cdo.releng/central/examples/distribution/README.md",
-        "releng/org.eclipse.emf.cdo.releng/central/examples/distribution/portable-pom.xml",
-        "releng/org.eclipse.emf.cdo.releng/central/examples/distribution/assembly.xml",
-        "releng/org.eclipse.emf.cdo.releng/central/examples/distribution/pom.xml",
-        "releng/org.eclipse.emf.cdo.releng/central/examples/distribution/package.properties",
-        "releng/org.eclipse.emf.cdo.releng/central/examples/embedded-h2/pom.xml", "releng/org.eclipse.emf.cdo.releng/central/examples/remote-server/pom.xml",
-        "releng/org.eclipse.emf.cdo.releng/central/examples/remote-client/pom.xml");
-    ProcessBuilder headBuilder = new ProcessBuilder("git", "-C", workspace.getAbsolutePath(), "rev-parse", "HEAD");
-    Process headProcess = headBuilder.redirectErrorStream(true).start();
-    String head = new String(headProcess.getInputStream().readAllBytes(), StandardCharsets.UTF_8).trim();
-    if (headProcess.waitFor() != 0 || !head.equalsIgnoreCase(expectedRevision))
-    {
-      throw new IllegalArgumentException("Git HEAD does not match selected CDO drop commit " + expectedRevision + "; checkout is " + head);
-    }
-
-    ProcessBuilder builder = new ProcessBuilder("git", "-C", workspace.getAbsolutePath(), "status", "--porcelain", "--untracked-files=all", "--");
-    builder.command().addAll(paths);
-    Process process = builder.redirectErrorStream(true).start();
-    String status = new String(process.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-    if (process.waitFor() != 0)
-    {
-      throw new IllegalArgumentException("Unable to inspect Git status for examples packaging inputs");
-    }
-
-    if (!status.isBlank())
-    {
-      throw new IllegalArgumentException("Examples packaging inputs have uncommitted or staged changes:\n" + status);
-    }
-  }
-
   private static void safeDeleteWork(String[] args) throws Exception
   {
     if (args.length != 3)
@@ -5666,6 +5745,8 @@ public final class CDOAggregationTool
     {
       Map<String, String> metadataValues = new LinkedHashMap<>();
       metadataValues.put("cdo.build.type", "R");
+      metadataValues.put("cdo.build.stream", "4.x");
+      metadataValues.put("cdo.project.release", "4.37");
       metadataValues.put("cdo.drop.id", "R20990101-0000");
       metadataValues.put("cdo.git.commit", "deadbeef");
       metadataValues.put(CDO_LOCATION_PROPERTY, "file:/workspace/private-drop/");
@@ -5824,6 +5905,10 @@ public final class CDOAggregationTool
     pom = pom.replace("<artifactId>" + bundle + "</artifactId>", "<artifactId>" + EXAMPLES_DISTRIBUTION + "</artifactId>");
     pom = pom.replace("<version>1.0.0</version>", "<version>" + EXAMPLES_DISTRIBUTION_VERSION + "</version>");
     pom = pom.replace("</modelVersion>", "</modelVersion><packaging>pom</packaging>");
+    String examplesSourceRevision = "abcdef0123456789abcdef0123456789abcdef01";
+    pom = pom.replace("<tag>deadbeef</tag>", "<tag>" + examplesSourceRevision + "</tag>");
+    pom = pom.replace("</properties>", "<cdo.git.commit>deadbeef</cdo.git.commit><cdo.drop.id>R20990101-0000</cdo.drop.id><cdo.examples.source.git.commit>"
+        + examplesSourceRevision + "</cdo.examples.source.git.commit></properties>");
     Path versionDirectory = staging.resolve("org/eclipse/cdo/" + EXAMPLES_DISTRIBUTION + "/" + EXAMPLES_DISTRIBUTION_VERSION);
     Files.createDirectories(versionDirectory);
     Path distributionPom = versionDirectory.resolve(EXAMPLES_DISTRIBUTION + "-" + EXAMPLES_DISTRIBUTION_VERSION + ".pom");

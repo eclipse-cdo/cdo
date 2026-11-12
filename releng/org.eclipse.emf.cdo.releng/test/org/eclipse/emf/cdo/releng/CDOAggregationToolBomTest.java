@@ -400,7 +400,7 @@ public class CDOAggregationToolBomTest
     Path root = temporaryFolder.newFolder().toPath();
     Path staging = root.resolve("staging");
     Path metadata = root.resolve("metadata.properties");
-    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
+    Files.writeString(metadata, "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=4.37\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
     createPublicationStaging(staging);
 
     String[] validArguments = { "publish-check", staging.toString(), metadata.toString(), "PACKAGE", "SIGNED" };
@@ -460,8 +460,10 @@ public class CDOAggregationToolBomTest
     Path candidates = Files.createDirectory(root.resolve("candidates"));
     Path staging = Files.createDirectory(root.resolve("staging"));
     Path metadata = root.resolve("metadata.properties");
-    String commit = "0123456789abcdef0123456789abcdef01234567";
-    Files.writeString(metadata, "cdo.build.type=R\ncdo.git.commit=" + commit + "\ncdo.project.release=4.36.0\n", StandardCharsets.UTF_8);
+    String dropCommit = "0123456789abcdef0123456789abcdef01234567";
+    String examplesSourceCommit = "fedcba9876543210fedcba9876543210fedcba98";
+    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\ncdo.git.commit=" + dropCommit + "\ncdo.project.release=4.36.0\n",
+        StandardCharsets.UTF_8);
 
     createCandidate(candidates, "org.eclipse.emf.cdo.server.embedded", "4.11.1");
     createCandidate(candidates, "org.eclipse.emf.cdo.examples.company", "4.1.4");
@@ -473,19 +475,52 @@ public class CDOAggregationToolBomTest
     Path distribution = central.resolve("examples/distribution").toAbsolutePath();
     Path workspace = distribution.resolve("../../../../..").normalize();
     Path zip = root.resolve("examples.zip");
-    createExamplesZip(workspace, distribution, zip);
-
     String[] args = { "stage-examples-distribution", workspace.toString(), candidates.toString(), zip.toString(), distribution.resolve("pom.xml").toString(),
-        metadata.toString(), central.resolve("publishing.properties").toString(), staging.toString(), commit };
+        metadata.toString(), central.resolve("publishing.properties").toString(), staging.toString(), examplesSourceCommit };
+
+    createExamplesZip(workspace, distribution, zip, "4.1.5", false, false);
     try
     {
       CDOAggregationTool.main(args);
-      fail("Expected the packaging checkout to be rejected because its HEAD differs from the selected release commit");
+      fail("Expected an examples dependency version that differs from the selected drop to be rejected");
     }
     catch (IllegalArgumentException expected)
     {
-      assertTrue(expected.getMessage().contains("checkout is"));
+      assertTrue(expected.getMessage().contains("Examples dependency version for org.eclipse.emf.cdo.examples.company"));
     }
+
+    createExamplesZip(workspace, distribution, zip, null, true, false);
+    try
+    {
+      CDOAggregationTool.main(args);
+      fail("Expected an examples ZIP with an unexpected file to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("Examples ZIP file inventory differs"));
+    }
+
+    createExamplesZip(workspace, distribution, zip, null, false, true);
+    try
+    {
+      CDOAggregationTool.main(args);
+      fail("Expected an examples ZIP with modified canonical Java source to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("Packaged example source differs from its canonical JDT source"));
+    }
+
+    createExamplesZip(workspace, distribution, zip);
+    CDOAggregationTool.main(args);
+
+    Path publishedPom = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom");
+    Element project = parse(publishedPom.toFile()).getDocumentElement();
+    Element properties = child(project, "properties");
+    assertEquals(examplesSourceCommit, childText(child(project, "scm"), "tag"));
+    assertEquals(examplesSourceCommit, childText(properties, "cdo.examples.source.git.commit"));
+    assertEquals(dropCommit, childText(properties, "cdo.git.commit"));
+    assertEquals("R20260901-1311", childText(properties, "cdo.drop.id"));
   }
 
   private static void createCandidate(Path repository, String artifact, String version) throws Exception
@@ -499,6 +534,12 @@ public class CDOAggregationToolBomTest
   }
 
   private static void createExamplesZip(Path workspace, Path distribution, Path zip) throws Exception
+  {
+    createExamplesZip(workspace, distribution, zip, null, false, false);
+  }
+
+  private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
+      boolean modifyJavaSource) throws Exception
   {
     String[][] entries = { { "pom.xml", distribution.resolve("portable-pom.xml").toString() }, { "README.md", distribution.resolve("README.md").toString() },
         { "LICENSE", workspace.resolve("LICENSE").toString() }, { "embedded-h2/pom.xml", distribution.getParent().resolve("embedded-h2/pom.xml").toString() },
@@ -519,13 +560,33 @@ public class CDOAggregationToolBomTest
         if ("pom.xml".equals(entry[0]))
         {
           String portablePom = Files.readString(Path.of(entry[1]), StandardCharsets.UTF_8).replace("@examples.cdo.project.release@", "4.36.0");
+          if (companyVersion != null)
+          {
+            portablePom = portablePom.replace("<cdo.company.version>4.1.4</cdo.company.version>",
+                "<cdo.company.version>" + companyVersion + "</cdo.company.version>");
+          }
+
           output.write(portablePom.getBytes(StandardCharsets.UTF_8));
+        }
+        else if (modifyJavaSource && entry[0].equals("remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java"))
+        {
+          byte[] source = Files.readAllBytes(Path.of(entry[1]));
+          byte[] modifiedSource = Arrays.copyOf(source, source.length + 1);
+          modifiedSource[modifiedSource.length - 1] = '\n';
+          output.write(modifiedSource);
         }
         else
         {
           Files.copy(Path.of(entry[1]), output);
         }
 
+        output.closeEntry();
+      }
+
+      if (includeUnexpectedFile)
+      {
+        output.putNextEntry(new ZipEntry("unexpected.txt"));
+        output.write("unexpected file".getBytes(StandardCharsets.UTF_8));
         output.closeEntry();
       }
     }
@@ -1077,8 +1138,9 @@ public class CDOAggregationToolBomTest
               + "<organization><name>Eclipse Foundation</name><url>https://www.eclipse.org</url></organization><licenses><license><name>EPL-2.0</name>"
               + "<url>https://www.eclipse.org/legal/epl-2.0/</url><distribution>repo</distribution></license></licenses><developers><developer><name>CDO</name>"
               + "<url>https://github.com/eclipse-cdo/cdo/graphs/contributors</url></developer></developers><scm><connection>scm:git:https://github.com/eclipse-cdo/cdo.git</connection>"
-              + "<developerConnection>scm:git:https://github.com/eclipse-cdo/cdo.git</developerConnection><url>https://eclipse.dev/cdo/</url><tag>deadbeef</tag></scm>"
+              + "<developerConnection>scm:git:https://github.com/eclipse-cdo/cdo.git</developerConnection><url>https://eclipse.dev/cdo/</url><tag>abcdef0123456789abcdef0123456789abcdef01</tag></scm>"
               + "<issueManagement><system>GitHub</system><url>https://github.com/eclipse-cdo/cdo/issues</url></issueManagement><properties><cdo.git.commit>deadbeef</cdo.git.commit>"
+              + "<cdo.drop.id>R20260901-1311</cdo.drop.id><cdo.examples.source.git.commit>abcdef0123456789abcdef0123456789abcdef01</cdo.examples.source.git.commit>"
               + "</properties></project>\n"
           : "fixture examples zip\n";
       Files.writeString(file, content, StandardCharsets.UTF_8);

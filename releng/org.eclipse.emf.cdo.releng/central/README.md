@@ -405,7 +405,7 @@ consume its report yet.
 
 ## Historical CDO 4.36 BOM-only package
 
-Select `PACKAGE_BOM_436_FOR_CENTRAL` in Jenkins and set `CDO_DROP_ID=R20260901-1311`.
+The historical `PACKAGE_BOM_436_FOR_CENTRAL` mode is no longer offered in the Jenkins dropdown. Its legacy implementation remains available for explicit invocations; set `CDO_DROP_ID=R20260901-1311` when using it.
 This isolated mode prepares the selected drop metadata, derives the approved bundle versions
 from the drop's `index.xml`, generates the BOM, and checks that
 the BOM coordinate and any possible partial artifacts all return HTTP 404 from canonical Maven

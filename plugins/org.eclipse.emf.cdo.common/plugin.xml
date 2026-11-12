@@ -19,10 +19,12 @@
      <productGroup id="org.eclipse.emf.cdo.common.ResourceSetConfigurers" name="%productGroup.name.0"/>
      <productGroup id="org.eclipse.emf.cdo.common.model.typeHandlers" name="%productGroup.name.1"/>
      <productGroup id="org.eclipse.emf.cdo.common.util.fingerPrinters" name="%productGroup.name.2"/>
+     <productGroup id="org.eclipse.emf.cdo.common.packageRegistryInitializers" name="%productGroup.name.3"/>
   </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
       <factory productGroup="org.eclipse.emf.cdo.common.util.fingerPrinters" type="digest" class="org.eclipse.emf.cdo.internal.common.util.DigestFingerPrinter$Factory"/>
+      <factory productGroup="org.eclipse.emf.cdo.common.packageRegistryInitializers" type="default" class="org.eclipse.emf.cdo.internal.common.model.DefaultEMFPackageRegistryInitializer$Factory"/>
    </extension>
    
   <extension point="org.eclipse.core.expressions.propertyTesters">

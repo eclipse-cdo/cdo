@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse.cdo.examples</groupId>
+    <artifactId>cdo-examples</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>embedded-h2</artifactId>
+  <packaging>jar</packaging>
+
+  <properties>
+    <cdo.verification.database>${project.build.directory}/verification-db</cdo.verification.database>
+    <plain.java.source.file>org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java</plain.java.source.file>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>checkout-central-repository</id>
+      <activation>
+        <file>
+          <exists>../../../../../plugins/org.eclipse.emf.cdo.examples/src</exists>
+        </file>
+      </activation>
+      <properties>
+        <cdo.maven.repository>${project.basedir}/../../../target/central/final</cdo.maven.repository>
+      </properties>
+      <repositories>
+        <repository>
+          <id>cdo-prepared-repository</id>
+          <url>file:///${cdo.maven.repository}</url>
+        </repository>
+      </repositories>
+    </profile>
+    <profile>
+      <id>checkout-source-copy</id>
+      <activation>
+        <file>
+          <exists>../../../../../plugins/org.eclipse.emf.cdo.examples/src</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.server.embedded</artifactId>
+      <version>${cdo.embedded.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.server.db</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.db.h2</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.examples.company</artifactId>
+      <version>${cdo.company.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.db</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <version>${h2.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <directory>${project.basedir}/target/build</directory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>${maven-antrun-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>verify-persistence-across-two-jvms</id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <delete dir="${cdo.verification.database}" quiet="true" />
+                <java classname="org.eclipse.emf.cdo.examples.plain.embedded.EmbeddedH2Example" fork="true" failonerror="false"
+                    timeout="60000"
+                    resultproperty="created.exitCode" outputproperty="created.output">
+                  <classpath refid="maven.runtime.classpath" />
+                  <arg value="${cdo.verification.database}" />
+                </java>
+                <echo message="${created.output}" />
+                <condition property="created.verification.passed">
+                  <and>
+                    <equals arg1="${created.exitCode}" arg2="0" />
+                    <contains string="${created.output}" substring="CREATED" />
+                    <contains string="${created.output}" substring="Company: Example Company" />
+                    <contains string="${created.output}" substring="Category: Hardware" />
+                    <contains string="${created.output}" substring="Keyboard" />
+                    <contains string="${created.output}" substring="Mouse" />
+                  </and>
+                </condition>
+                <fail unless="created.verification.passed" message="First JVM did not create and print the expected Company model." />
+
+                <java classname="org.eclipse.emf.cdo.examples.plain.embedded.EmbeddedH2Example" fork="true" failonerror="false"
+                    timeout="60000"
+                    resultproperty="loaded.exitCode" outputproperty="loaded.output">
+                  <classpath refid="maven.runtime.classpath" />
+                  <arg value="${cdo.verification.database}" />
+                </java>
+                <echo message="${loaded.output}" />
+                <condition property="loaded.verification.passed">
+                  <and>
+                    <equals arg1="${loaded.exitCode}" arg2="0" />
+                    <contains string="${loaded.output}" substring="LOADED" />
+                    <contains string="${loaded.output}" substring="Company: Example Company" />
+                    <contains string="${loaded.output}" substring="Category: Hardware" />
+                    <contains string="${loaded.output}" substring="Keyboard" />
+                    <contains string="${loaded.output}" substring="Mouse" />
+                  </and>
+                </condition>
+                <fail unless="loaded.verification.passed" message="Second JVM did not reload and print the expected Company model." />
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>${exec-maven-plugin.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

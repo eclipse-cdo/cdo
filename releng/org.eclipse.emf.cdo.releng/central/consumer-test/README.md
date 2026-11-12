@@ -1,7 +1,7 @@
 # Plain-Java CDO Maven consumer test
 
 This is a standalone Maven project that consumes the locally generated
-`repository/final` repository. The twenty CDO/Net4j artifact IDs are stable,
+`repository/final` repository. The 21 CDO/Net4j artifact IDs are stable,
 but their versions are resolved from the selected repository after each
 aggregation. `com.h2database:h2` remains an explicit, consumer-owned JDBC
 driver dependencies. The PostgreSQL adapter keeps its driver imports optional;
@@ -63,10 +63,11 @@ bundle. These tests resolve CDO/Net4j from the selected consumer repository;
 they can be run against Maven Central after the expanded release is published.
 
 The CBI aggregation produces the `-sources.jar` and README-based
-`-javadoc.jar` classifiers for all twenty CDO/Net4j artifacts. The publishing
+`-javadoc.jar` classifiers for all 21 CDO/Net4j artifacts. The publishing
 workflow validates these native classifiers and preserves correct existing
 `.md5`, `.sha1`, `.sha256`, and `.sha512` sidecars, filling only missing values.
-The readiness audit validates all 96 classifier checksums. PGP signatures and
+The readiness audit validates all 168 classifier checksums (42 classifier JARs
+with four checksum sidecars each). PGP signatures and
 Maven Central publication remain separate release steps. The dependency
 tree should show EMF artifacts under their published Maven coordinates and H2 and
 PostgreSQL only through this POM's explicit driver dependencies; no CDO/Net4j

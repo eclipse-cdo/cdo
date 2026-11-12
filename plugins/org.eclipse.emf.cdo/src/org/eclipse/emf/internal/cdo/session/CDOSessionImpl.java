@@ -65,8 +65,6 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOPackageNotFoundException;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
-import org.eclipse.emf.cdo.eresource.EresourcePackage;
-import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOMoveFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
@@ -104,6 +102,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.AbstractLocksChangedEvent;
+import org.eclipse.emf.internal.cdo.util.EMFPackageRegistryBootstrap;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
@@ -142,7 +141,6 @@ import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOOperationAuthorizer;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
@@ -307,10 +305,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   static
   {
-    // Ensure that these 3 packages are registered with the global package registry in stand-alone
-    EcorePackage.eINSTANCE.getClass();
-    EtypesPackage.eINSTANCE.getClass();
-    EresourcePackage.eINSTANCE.getClass();
+    EMFPackageRegistryBootstrap.init();
   }
 
   public CDOSessionImpl()
@@ -815,20 +810,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     this.fetchRuleManager = fetchRuleManager;
-  }
-
-  @Override
-  @Deprecated
-  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator)
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -1620,27 +1601,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
-  @Deprecated
-  public void handleBranchNotification(InternalCDOBranch branch)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void handleCommitNotification(CDOCommitInfo commitInfo)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void handleCommitNotification(CommitNotificationInfo info)
   {
     try
@@ -1680,13 +1640,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
       view.inverseClose();
     }
-  }
-
-  @Deprecated
-  @Override
-  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
-  {
-    throw new UnsupportedOperationException();
   }
 
   @Override
@@ -2084,28 +2037,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
-  @Deprecated
-  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
-      Map<CDOID, CDOPermission> newPermissions)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void invalidate(InvalidationData invalidationData)
   {
     invalidate(invalidationData, null);
@@ -2282,13 +2213,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         result.getSourceIDs(), sourceChanges, result.getResultBase());
   }
 
-  @Override
-  @Deprecated
-  public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
-  {
-    throw new UnsupportedOperationException();
-  }
-
   private CDORevisionAvailabilityInfo createRevisionAvailabilityInfo2(CDOBranchPoint branchPoint)
   {
     InternalCDORevisionManager revisionManager = getRevisionManager();
@@ -2323,13 +2247,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     return info;
-  }
-
-  @Override
-  @Deprecated
-  public void cacheRevisions(CDORevisionAvailabilityInfo info)
-  {
-    throw new UnsupportedOperationException();
   }
 
   private void cacheRevisions2(CDORevisionAvailabilityInfo info)
@@ -3920,5 +3837,83 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         positionDeltas.add(delta);
       }
     }
+  }
+
+  @Override
+  @Deprecated
+  public org.eclipse.emf.cdo.common.protocol.CDOAuthenticator getAuthenticator()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator authenticator)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void handleBranchNotification(InternalCDOBranch branch)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void handleCommitNotification(CDOCommitInfo commitInfo)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void handleCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Deprecated
+  @Override
+  public void handleLockNotification(CDOLockChangeInfo lockChangeInfo, InternalCDOView sender)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void invalidate(CDOCommitInfo commitInfo, InternalCDOTransaction sender, boolean clearResourcePathCache, byte securityImpact,
+      Map<CDOID, CDOPermission> newPermissions)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public CDORevisionAvailabilityInfo createRevisionAvailabilityInfo(CDOBranchPoint branchPoint)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void cacheRevisions(CDORevisionAvailabilityInfo info)
+  {
+    throw new UnsupportedOperationException();
   }
 }

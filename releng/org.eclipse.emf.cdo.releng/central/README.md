@@ -137,8 +137,8 @@ the plugin can use an explicitly configured Jenkins secret-text credential
 through `MAVEN_GPG_PASSPHRASE` or an already-cached GnuPG agent passphrase; the
 pipeline does not require or guess a passphrase credential.
 
-The package stage signs the twenty approved POMs and their main, sources, and
-Javadoc JARs into a local `file:` repository. It verifies all 80 detached
+The package stage signs the 21 approved POMs and their main, sources, and
+Javadoc JARs into a local `file:` repository. It verifies all 84 detached
 signatures with GnuPG against the independently configured primary
 fingerprint, including signing subkeys, compares artifacts and checksums with
 the original staging tree, then checks the exact Sonatype ZIP inventory and
@@ -263,7 +263,7 @@ publication are not performed by this technical target.
 
 ## Consumer compatibility test
 
-After a successful aggregation, run `consumer-test` to resolve the twenty
+After a successful aggregation, run `consumer-test` to resolve the 21
 CDO/Net4j versions from `repository/final`, write them to
 `<work.dir>/consumer-test/cdo-consumer-versions.properties`, and execute the
 Plain-Java Maven test. `consumer-dependency-tree` performs the same setup and
@@ -332,7 +332,7 @@ location; diagnose failures against the resolved URL and its repository
 contents, not against that wording alone.
 
 The CDO and SimRel location properties are CBI runtime inputs only. The POM
-overlay removes them from all twenty publication POMs, and publication
+overlay removes them from all 21 publication POMs, and publication
 validation rejects either property if it reappears. This prevents workspace
 paths and validation-repository locations from being published as Maven
 metadata.
@@ -365,7 +365,7 @@ drop identity:
 * `cdo.build.type`
 
 The Ant `overlay` target adds these values to every generated POM with an
-XML-aware DOM transformation. The `verify` target checks all twenty coordinates,
+XML-aware DOM transformation. The `verify` target checks all 21 coordinates,
 properties, commit identity, and excluded-artifact guards.
 
 The native classifier validation and `checksums` targets are included in
@@ -495,13 +495,13 @@ The job downloads the published BOM directly from
 `https://repo.maven.apache.org/maven2/`, checks its coordinates, project
 release, drop identity, and exact managed inventory against the generated
 data, then generates a minimal consumer that imports the BOM and declares all
-twenty managed CDO/Net4j artifacts without versions. It does not maintain a
+21 managed CDO/Net4j artifacts without versions. It does not maintain a
 second approved-bundle list.
 
 Maven receives a fresh local repository and settings that mirror every remote
 repository to canonical Maven Central. The job checks Maven's resolved
 dependency tree and verifies non-empty artifact JARs were downloaded for all
-twenty expected coordinates. `verification-report.json` records the drop,
+21 expected coordinates. `verification-report.json` records the drop,
 BOM coordinates, verified artifacts, and result; the report, downloaded BOM,
 and dependency tree are archived. Failed runs also archive a machine-readable
 FAIL report. The verification is read-only against Maven Central and

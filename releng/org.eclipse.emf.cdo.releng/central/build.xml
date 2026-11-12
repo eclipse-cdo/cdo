@@ -20,6 +20,7 @@
 	
 	<!-- Only PACKAGE_FOR_CENTRAL is restricted to R builds. -->
 	<property name="publishing.mode" value="VALIDATE_ONLY" />
+	<property name="override.release.version" value="" />
 	<property name="central.repository.url" value="https://repo.maven.apache.org/maven2/" />
 	
 	
@@ -151,6 +152,7 @@
 			<arg value="${central.verify.drop}" />
 			<arg value="${central.verify.drop.id}" />
 			<arg value="${central.verify.inventory}" />
+			<arg value="${metadata.file}" />
 		</java>
 	</target>
 
@@ -214,6 +216,7 @@
 			<arg value="${cdo.drop.location}" />
 			<arg value="${metadata.file}" />
 			<arg value="${repositories.file}" />
+			<arg value="${override.release.version}" />
 		</java>
 		<echo message="CDO drop location: ${cdo.drop.location}" />
 		<echo message="Generated metadata: ${metadata.file}" />
@@ -378,6 +381,12 @@
 		</java>
 	</target>
 
+	<target name="platform-version-range-test" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="platform-version-range-test" />
+		</java>
+	</target>
+
 	<target name="checksums" depends="verify">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="checksums" />
@@ -407,6 +416,10 @@
 	</target>
 
 	<target name="staging-validate" depends="audit,compile-helper">
+		<condition property="package.examples.distribution">
+			<equals arg1="${publishing.mode}" arg2="PACKAGE_FOR_CENTRAL" />
+		</condition>
+		<antcall target="stage-examples-distribution" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="publish-check" />
 			<arg value="${staging.dir}" />
@@ -415,6 +428,36 @@
 			<arg value="" />
 		</java>
 		<echo message="Validated Maven Central staging package: ${staging.dir}" />
+	</target>
+
+	<target name="stage-examples-distribution" if="package.examples.distribution">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="normalize-release" />
+			<arg value="${metadata.file}" />
+			<arg value="${work.dir}/examples-project-release.txt" />
+		</java>
+		<loadfile property="examples.cdo.project.release" srcFile="${work.dir}/examples-project-release.txt" />
+		<exec executable="${maven.executable}" dir="${basedir}/examples/distribution" failifexecutionfails="true" failonerror="true">
+			<arg value="-B" />
+			<arg value="-DskipTests" />
+			<arg value="-Dexamples.cdo.project.release=${examples.cdo.project.release}" />
+			<arg value="package" />
+		</exec>
+		<exec executable="git" dir="${workspace.root}" failifexecutionfails="true" failonerror="true" outputproperty="examples.source.revision">
+			<arg value="rev-parse" />
+			<arg value="HEAD" />
+		</exec>
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="stage-examples-distribution" />
+			<arg value="${workspace.root}" />
+			<arg value="${cdo.maven.repository}" />
+			<arg value="${basedir}/examples/distribution/target/cdo-examples-distribution-1.0.0-SNAPSHOT-examples.zip" />
+			<arg value="${basedir}/examples/distribution/pom.xml" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.metadata.file}" />
+			<arg value="${staging.dir}" />
+			<arg value="${examples.source.revision}" />
+		</java>
 	</target>
 
 	<target name="drop-info" depends="compile-helper">
@@ -493,6 +536,13 @@
 	<target name="stream-test" depends="compile-helper">
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="stream-test" />
+		</java>
+	</target>
+
+	<target name="prepare-metadata-test" depends="compile-helper">
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="prepare-metadata-test" />
+			<arg value="${workspace.root}" />
 		</java>
 	</target>
 

@@ -5,24 +5,25 @@
       <repositories location="https://download.eclipse.org/modeling/emf/cdo/updates/releases/latest" description="cdo-location">
         <bundles name="org.eclipse.net4j.util"/>
         <bundles name="org.eclipse.net4j"/>
+        <bundles name="org.eclipse.net4j.jvm"/>
         <bundles name="org.eclipse.net4j.tcp"/>
+        <bundles name="org.eclipse.net4j.ws"/>
+        <bundles name="org.eclipse.net4j.ws.jetty.server"/>
         <bundles name="org.eclipse.net4j.db"/>
         <bundles name="org.eclipse.net4j.db.jdbc"/>
         <bundles name="org.eclipse.net4j.db.h2"/>
+        <bundles name="org.eclipse.net4j.db.postgresql"/>
         <bundles name="org.eclipse.emf.cdo.common"/>
+        <bundles name="org.eclipse.emf.cdo.expressions"/>
+        <bundles name="org.eclipse.emf.cdo.security"/>
         <bundles name="org.eclipse.emf.cdo"/>
         <bundles name="org.eclipse.emf.cdo.net4j"/>
         <bundles name="org.eclipse.emf.cdo.server"/>
         <bundles name="org.eclipse.emf.cdo.server.net4j"/>
         <bundles name="org.eclipse.emf.cdo.server.db"/>
-        <bundles name="org.eclipse.net4j.jvm"/>
-        <bundles name="org.eclipse.net4j.ws"/>
-        <bundles name="org.eclipse.net4j.ws.jetty.server"/>
-        <bundles name="org.eclipse.net4j.db.postgresql"/>
-        <bundles name="org.eclipse.emf.cdo.server.embedded"/>
-        <bundles name="org.eclipse.emf.cdo.expressions"/>
-        <bundles name="org.eclipse.emf.cdo.security"/>
         <bundles name="org.eclipse.emf.cdo.server.security"/>
+        <bundles name="org.eclipse.emf.cdo.server.embedded"/>
+        <bundles name="org.eclipse.emf.cdo.examples.company"/>
       </repositories>
       <mavenMappings namePattern="(org\.eclipse\.(emf\.cdo|net4j).*)" groupId="org.eclipse.cdo" artifactId="$1"/>
       <mavenMappings namePattern=".*" groupId="\$maven-groupId\$" artifactId="\$maven-artifactId\$" versionPattern=".*" versionTemplate="\$maven-version\$"/>
@@ -31,6 +32,8 @@
       <mavenDependencyMapping namespacePattern="osgi\.bundle" namePattern="org\.eclipse\.jetty\.http|org\.eclipse\.jetty\.util|org\.eclipse\.jetty\.websocket\.api" groupId="!" artifactId="!"/>
       <mavenDependencyMapping namespacePattern="osgi\.bundle" namePattern="org\.eclipse\.jetty\.websocket\.server" groupId="org.eclipse.jetty.websocket" artifactId="jetty-websocket-jetty-server" versionRangePattern=".*" versionRangeTemplate="major.minor.micro-qualifier"/>
       <mavenDependencyMapping namespacePattern="java\.package" namePattern="org\.postgresql(\..*)?" groupId="org.postgresql" artifactId="postgresql" versionRangePattern=".*" versionRangeTemplate="major.minor.micro-qualifier"/>
+      <mavenDependencyMapping namespacePattern="osgi\.bundle" namePattern="org\.eclipse\.(?!emf(?:\.|$)|net4j(?:\.|$)|jetty(?:\.|$)).*|org\.osgi(?:\..*)?" groupId="*" artifactId="*" versionRangePattern=".*" versionRangeTemplate="[major.0.0,major+1.0.0)"/>
+      <mavenDependencyMapping namespacePattern="java\.package" namePattern="org\.eclipse\.(?!emf(?:\.|$)|net4j(?:\.|$)|jetty(?:\.|$)).*|org\.osgi(?:\..*)?" groupId="*" artifactId="*" versionRangePattern=".*" versionRangeTemplate="[major.0.0,major+1.0.0)"/>
       <mavenDependencyMapping namespacePattern="java\.package" namePattern=".*" groupId="*" artifactId="*" versionRangePattern=".*" versionRangeTemplate="major.minor.micro-qualifier"/>
     </contributions>
     <validationRepositories location="${org.eclipse.cbi.p2repo.simrel-location}"/>

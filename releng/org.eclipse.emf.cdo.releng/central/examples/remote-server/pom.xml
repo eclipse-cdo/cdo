@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.eclipse.cdo.examples</groupId>
+    <artifactId>cdo-examples</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <artifactId>remote-server</artifactId>
+
+  <properties>
+    <plain.java.source.file>org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java</plain.java.source.file>
+  </properties>
+
+  <profiles>
+    <profile>
+      <id>checkout-central-repository</id>
+      <activation>
+        <file>
+          <exists>../../../../../plugins/org.eclipse.emf.cdo.examples/src</exists>
+        </file>
+      </activation>
+      <properties>
+        <cdo.maven.repository>${project.basedir}/../../../target/central/final</cdo.maven.repository>
+      </properties>
+      <repositories>
+        <repository>
+          <id>cdo-prepared-repository</id>
+          <url>file:///${cdo.maven.repository}</url>
+        </repository>
+      </repositories>
+    </profile>
+    <profile>
+      <id>checkout-source-copy</id>
+      <activation>
+        <file>
+          <exists>../../../../../plugins/org.eclipse.emf.cdo.examples/src</exists>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+          </plugin>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>build-helper-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.server.db</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.server.net4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.emf.cdo.examples.company</artifactId>
+      <version>${cdo.company.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.db.postgresql</artifactId>
+      <version>${cdo.net4j.postgresql.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.tcp</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.eclipse.cdo</groupId>
+      <artifactId>org.eclipse.net4j.util</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>${postgresql.version}</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.13.0</version>
+        <configuration>
+          <release>17</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>${exec-maven-plugin.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

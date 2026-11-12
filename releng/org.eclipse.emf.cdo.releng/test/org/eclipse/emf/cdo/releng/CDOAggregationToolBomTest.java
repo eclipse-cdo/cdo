@@ -35,7 +35,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Method;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -49,6 +48,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Verifies deterministic generation of the standalone CDO project-release BOM.
@@ -61,13 +62,13 @@ public class CDOAggregationToolBomTest
       "org.eclipse.net4j.db.jdbc", "org.eclipse.net4j.db.h2", "org.eclipse.emf.cdo.common", "org.eclipse.emf.cdo", "org.eclipse.emf.cdo.net4j",
       "org.eclipse.emf.cdo.server", "org.eclipse.emf.cdo.server.net4j", "org.eclipse.emf.cdo.server.db", "org.eclipse.net4j.jvm", "org.eclipse.net4j.ws",
       "org.eclipse.net4j.ws.jetty.server", "org.eclipse.net4j.db.postgresql", "org.eclipse.emf.cdo.server.embedded", "org.eclipse.emf.cdo.expressions",
-      "org.eclipse.emf.cdo.security", "org.eclipse.emf.cdo.server.security" };
+      "org.eclipse.emf.cdo.security", "org.eclipse.emf.cdo.server.security", "org.eclipse.emf.cdo.examples.company" };
 
   private static final String[] BOM_436_VERSIONS = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0",
       "4.15.0" };
 
   private static final String[] FIXTURE_VERSIONS = { "3.30.0", "4.22.0", "4.5.0", "4.14.0", "4.5.0", "4.6.0", "4.28.0", "4.30.0", "4.9.0", "4.26.0", "4.9.0",
-      "4.15.0", "4.4.1", "2.0.0", "1.0.0", "4.5.1", "4.11.1", "4.5.0", "4.8.0", "4.13.0" };
+      "4.15.0", "4.4.1", "2.0.0", "1.0.0", "4.5.1", "4.11.1", "4.5.0", "4.8.0", "4.13.0", "4.1.4" };
 
   private static final String PUBLISHING_METADATA = "project.url=https://eclipse.dev/cdo/\n" + "organization.name=Eclipse Foundation\n"
       + "organization.url=https://www.eclipse.org\n" + "license.name=EPL-2.0\n" + "license.url=https://www.eclipse.org/legal/epl-2.0/\n"
@@ -152,9 +153,9 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
-  public void approvedPublicationInventoryContainsExactlyTwentyBundles()
+  public void approvedPublicationInventoryContainsExactlyTwentyOneBundles()
   {
-    assertEquals(20, BUNDLES.length);
+    assertEquals(21, BUNDLES.length);
     assertEquals(Arrays.asList(BUNDLES), CDOAggregationTool.approvedBundles());
   }
 
@@ -220,11 +221,12 @@ public class CDOAggregationToolBomTest
 
     assertEquals("4.36", inventoryProperties.getProperty("project.release"));
     assertEquals("4.36.0", inventoryProperties.getProperty("bom.version"));
+    assertEquals("DROP", inventoryProperties.getProperty("cdo.project.release.source"));
     assertEquals("R20260901-1311", inventoryProperties.getProperty("drop.id"));
     assertEquals(BOM_436_VERSIONS[0], inventoryProperties.getProperty("artifact." + BUNDLES[0]));
     assertEquals(BOM_436_VERSIONS[0] + ".v20260901-1311", inventoryProperties.getProperty("osgi." + BUNDLES[0]));
     assertEquals("0123456789abcdef0123456789abcdef01234567", inventoryProperties.getProperty("cdo.git.commit"));
-    assertEquals(20 + BUNDLES.length * 2, inventoryProperties.size());
+    assertEquals(21 + BUNDLES.length * 2, inventoryProperties.size());
     Set<String> unsignedFiles = new LinkedHashSet<>();
     try (Stream<Path> paths = Files.walk(staging))
     {
@@ -421,20 +423,112 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
-  public void bomSignedRepositoryAllowsMavenMetadataOnlyAtTheBomArtifactRoot() throws Exception
+  public void rejectsMissingModifiedAndConflictingExamplesDistributionArtifacts() throws Exception
   {
-    Set<String> signedFilesAllowed = new LinkedHashSet<>();
-    String metadata = "org/eclipse/cdo/org.eclipse.cdo.bom/maven-metadata.xml";
-    assertTrue(isAllowedSignedBomRepositoryPath(metadata, signedFilesAllowed));
-    for (String checksum : new String[] { ".md5", ".sha1", ".sha256", ".sha512" })
-    {
-      assertTrue(isAllowedSignedBomRepositoryPath(metadata + checksum, signedFilesAllowed));
-    }
+    Path root = temporaryFolder.newFolder().toPath();
+    Path staging = root.resolve("staging");
+    Path metadata = root.resolve("metadata.properties");
+    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
+    createPublicationStaging(staging);
+    String[] arguments = { "publish-check", staging.toString(), metadata.toString(), "VALIDATE_ONLY", "" };
+    CDOAggregationTool.main(arguments);
 
-    assertFalse(isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.emf.cdo/maven-metadata.xml", signedFilesAllowed));
-    assertFalse(isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/maven-metadata.xml", signedFilesAllowed));
-    assertFalse(isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.cdo.bom/other.txt", signedFilesAllowed));
-    assertFalse(isAllowedSignedBomRepositoryPath(metadata + ".asc", signedFilesAllowed));
+    Path zip = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip");
+    byte[] originalZip = Files.readAllBytes(zip);
+    Path checksum = Path.of(zip + ".sha256");
+    byte[] originalChecksum = Files.readAllBytes(checksum);
+    Files.delete(zip);
+    expectPublicationScopeFailure(arguments, "Missing or empty staged examples distribution artifact");
+    Files.write(zip, originalZip);
+    Files.write(zip, new byte[] { 'X' }, StandardOpenOption.APPEND);
+    expectPublicationScopeFailure(arguments, "Missing or invalid checksum for staged examples distribution artifact");
+    Files.write(zip, originalZip);
+    Files.write(checksum, originalChecksum);
+
+    Path conflictingPom = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.1/cdo-examples-distribution-1.0.1.pom");
+    Files.createDirectories(conflictingPom.getParent());
+    Files.writeString(conflictingPom,
+        "<project><groupId>org.eclipse.cdo</groupId><artifactId>cdo-examples-distribution</artifactId><version>1.0.1</version></project>",
+        StandardCharsets.UTF_8);
+    expectPublicationScopeFailure(arguments, "Unapproved Maven publication coordinate");
+  }
+
+  @Test
+  public void stagesStandaloneExamplesPomAndZipAgainstSelectedDropCandidates() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path candidates = Files.createDirectory(root.resolve("candidates"));
+    Path staging = Files.createDirectory(root.resolve("staging"));
+    Path metadata = root.resolve("metadata.properties");
+    String commit = "0123456789abcdef0123456789abcdef01234567";
+    Files.writeString(metadata, "cdo.build.type=R\ncdo.git.commit=" + commit + "\ncdo.project.release=4.36.0\n", StandardCharsets.UTF_8);
+
+    createCandidate(candidates, "org.eclipse.emf.cdo.server.embedded", "4.11.1");
+    createCandidate(candidates, "org.eclipse.emf.cdo.examples.company", "4.1.4");
+    createCandidate(candidates, "org.eclipse.net4j.util", "3.31.0");
+    createCandidate(candidates, "org.eclipse.net4j.db.postgresql", "4.5.1");
+
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path central = new File(classes.getParentFile(), "central").toPath();
+    Path distribution = central.resolve("examples/distribution").toAbsolutePath();
+    Path workspace = distribution.resolve("../../../../..").normalize();
+    Path zip = root.resolve("examples.zip");
+    createExamplesZip(workspace, distribution, zip);
+
+    String[] args = { "stage-examples-distribution", workspace.toString(), candidates.toString(), zip.toString(), distribution.resolve("pom.xml").toString(),
+        metadata.toString(), central.resolve("publishing.properties").toString(), staging.toString(), commit };
+    try
+    {
+      CDOAggregationTool.main(args);
+      fail("Expected the packaging checkout to be rejected because its HEAD differs from the selected release commit");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("checkout is"));
+    }
+  }
+
+  private static void createCandidate(Path repository, String artifact, String version) throws Exception
+  {
+    Path versionDirectory = repository.resolve("org/eclipse/cdo/" + artifact + "/" + version);
+    Files.createDirectories(versionDirectory);
+    Files.writeString(versionDirectory.resolve(artifact + "-" + version + ".pom"),
+        "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version></project>",
+        StandardCharsets.UTF_8);
+    Files.writeString(versionDirectory.resolve(artifact + "-" + version + ".jar"), "verified candidate fixture", StandardCharsets.UTF_8);
+  }
+
+  private static void createExamplesZip(Path workspace, Path distribution, Path zip) throws Exception
+  {
+    String[][] entries = { { "pom.xml", distribution.resolve("portable-pom.xml").toString() }, { "README.md", distribution.resolve("README.md").toString() },
+        { "LICENSE", workspace.resolve("LICENSE").toString() }, { "embedded-h2/pom.xml", distribution.getParent().resolve("embedded-h2/pom.xml").toString() },
+        { "remote-server/pom.xml", distribution.getParent().resolve("remote-server/pom.xml").toString() },
+        { "remote-client/pom.xml", distribution.getParent().resolve("remote-client/pom.xml").toString() },
+        { "embedded-h2/src/main/java/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java",
+            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java").toString() },
+        { "remote-server/src/main/java/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java",
+            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java").toString() },
+        { "remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java",
+            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java").toString() } };
+
+    try (ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(zip)))
+    {
+      for (String[] entry : entries)
+      {
+        output.putNextEntry(new ZipEntry(entry[0]));
+        if ("pom.xml".equals(entry[0]))
+        {
+          String portablePom = Files.readString(Path.of(entry[1]), StandardCharsets.UTF_8).replace("@examples.cdo.project.release@", "4.36.0");
+          output.write(portablePom.getBytes(StandardCharsets.UTF_8));
+        }
+        else
+        {
+          Files.copy(Path.of(entry[1]), output);
+        }
+
+        output.closeEntry();
+      }
+    }
   }
 
   @Test
@@ -453,6 +547,23 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
+  public void bomSignedRepositoryAllowsMavenMetadataOnlyAtTheBomArtifactRoot() throws Exception
+  {
+    Set<String> signedFilesAllowed = new LinkedHashSet<>();
+    String metadata = "org/eclipse/cdo/org.eclipse.cdo.bom/maven-metadata.xml";
+    assertTrue(CDOAggregationTool.isAllowedSignedBomRepositoryPath(metadata, signedFilesAllowed));
+    for (String checksum : new String[] { ".md5", ".sha1", ".sha256", ".sha512" })
+    {
+      assertTrue(CDOAggregationTool.isAllowedSignedBomRepositoryPath(metadata + checksum, signedFilesAllowed));
+    }
+
+    assertFalse(CDOAggregationTool.isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.emf.cdo/maven-metadata.xml", signedFilesAllowed));
+    assertFalse(CDOAggregationTool.isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.cdo.bom/4.36.0/maven-metadata.xml", signedFilesAllowed));
+    assertFalse(CDOAggregationTool.isAllowedSignedBomRepositoryPath("org/eclipse/cdo/org.eclipse.cdo.bom/other.txt", signedFilesAllowed));
+    assertFalse(CDOAggregationTool.isAllowedSignedBomRepositoryPath(metadata + ".asc", signedFilesAllowed));
+  }
+
+  @Test
   public void prepareCopiesProjectReleaseFromSelectedDropWebLabel() throws Exception
   {
     Path drop = temporaryFolder.newFolder().toPath();
@@ -467,6 +578,55 @@ public class CDOAggregationToolBomTest
 
     assertTrue(Files.readString(metadata, StandardCharsets.UTF_8).contains("cdo.project.release=4.36.1"));
     assertTrue(Files.readString(metadata, StandardCharsets.UTF_8).contains("cdo.drop.id=R20260901-1311"));
+  }
+
+  @Test
+  public void releaseInventoryUsesPreparedOverrideWhenDropHasNoWebProperties() throws Exception
+  {
+    Path root = classificationFixture("4.37", "R20260901-1311");
+    Path drop = root.resolve("drop");
+    Files.delete(drop.resolve("web.properties"));
+    Path metadata = root.resolve("prepared-metadata.properties");
+    Files.writeString(metadata, "cdo.project.release=4.37\ncdo.project.release.source=OVERRIDE\ncdo.drop.id=R20260901-1311\n", StandardCharsets.UTF_8);
+    Path inventory = root.resolve("release-inventory.properties");
+
+    CDOAggregationTool.main(new String[] { "derive-release-inventory", drop.toString(), "R20260901-1311", inventory.toString(), metadata.toString() });
+
+    Properties values = new Properties();
+    try (InputStream input = Files.newInputStream(inventory))
+    {
+      values.load(input);
+    }
+
+    assertEquals("4.37", values.getProperty("cdo.project.release"));
+    assertEquals("OVERRIDE", values.getProperty("cdo.project.release.source"));
+    assertEquals("4.37.0", values.getProperty("bom.version"));
+
+    Files.writeString(drop.resolve("web.properties"), "web.label=4.36\n", StandardCharsets.UTF_8);
+    try
+    {
+      CDOAggregationTool.main(
+          new String[] { "derive-release-inventory", drop.toString(), "R20260901-1311", root.resolve("conflict.properties").toString(), metadata.toString() });
+      fail("Expected a present conflicting drop label to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("does not match selected drop web.label"));
+    }
+  }
+
+  @Test
+  public void bomGenerationUsesPreparedOverrideWhenDropHasNoWebProperties() throws Exception
+  {
+    Path root = fixture("4.37", "R20260901-1311");
+    Files.delete(root.resolve("drop/web.properties"));
+    Files.writeString(root.resolve("metadata.properties"), "cdo.project.release.source=OVERRIDE\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+
+    File bom = generate(root, "override-output");
+
+    Element properties = child(parse(bom).getDocumentElement(), "properties");
+    assertEquals("4.37", childText(properties, "cdo.project.release"));
+    assertEquals("OVERRIDE", childText(properties, "cdo.project.release.source"));
   }
 
   @Test
@@ -571,8 +731,8 @@ public class CDOAggregationToolBomTest
     try (CentralFixture central = new CentralFixture())
     {
       Map<String, String> report = classify(root, central, false);
-      assertEquals("21", report.get("release.component.count"));
-      assertEquals("21", report.get("publication.coordinate.count"));
+      assertEquals("22", report.get("release.component.count"));
+      assertEquals("22", report.get("publication.coordinate.count"));
       for (int i = 1; i <= BUNDLES.length + 1; i++)
       {
         assertEquals("NEW", report.get("release.component." + i + ".classification"));
@@ -905,6 +1065,37 @@ public class CDOAggregationToolBomTest
         Files.writeString(Path.of(artifact + ".asc"), "-----BEGIN PGP SIGNATURE-----\nfixture\n", StandardCharsets.US_ASCII);
       }
     }
+
+    for (String suffix : new String[] { ".pom", "-examples.zip" })
+    {
+      String artifact = "cdo-examples-distribution-1.0.0" + suffix;
+      Path file = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/" + artifact);
+      Files.createDirectories(file.getParent());
+      String content = suffix.equals(".pom")
+          ? "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>cdo-examples-distribution</artifactId>"
+              + "<version>1.0.0</version><packaging>pom</packaging><name>CDO Examples</name><description>Examples ZIP</description><url>https://eclipse.dev/cdo/</url>"
+              + "<organization><name>Eclipse Foundation</name><url>https://www.eclipse.org</url></organization><licenses><license><name>EPL-2.0</name>"
+              + "<url>https://www.eclipse.org/legal/epl-2.0/</url><distribution>repo</distribution></license></licenses><developers><developer><name>CDO</name>"
+              + "<url>https://github.com/eclipse-cdo/cdo/graphs/contributors</url></developer></developers><scm><connection>scm:git:https://github.com/eclipse-cdo/cdo.git</connection>"
+              + "<developerConnection>scm:git:https://github.com/eclipse-cdo/cdo.git</developerConnection><url>https://eclipse.dev/cdo/</url><tag>deadbeef</tag></scm>"
+              + "<issueManagement><system>GitHub</system><url>https://github.com/eclipse-cdo/cdo/issues</url></issueManagement><properties><cdo.git.commit>deadbeef</cdo.git.commit>"
+              + "</properties></project>\n"
+          : "fixture examples zip\n";
+      Files.writeString(file, content, StandardCharsets.UTF_8);
+      for (String[] algorithm : algorithms)
+      {
+        byte[] digest = MessageDigest.getInstance(algorithm[1]).digest(Files.readAllBytes(file));
+        StringBuilder hexadecimal = new StringBuilder();
+        for (byte value : digest)
+        {
+          hexadecimal.append(String.format("%02x", value & 0xff));
+        }
+
+        Files.writeString(Path.of(file + "." + algorithm[0]), hexadecimal.toString(), StandardCharsets.US_ASCII);
+      }
+
+      Files.writeString(Path.of(file + ".asc"), "-----BEGIN PGP SIGNATURE-----\nfixture\n", StandardCharsets.US_ASCII);
+    }
   }
 
   private void expectPublicationScopeFailure(String[] arguments, String message) throws Exception
@@ -918,13 +1109,6 @@ public class CDOAggregationToolBomTest
     {
       assertTrue(expected.getMessage().startsWith(message));
     }
-  }
-
-  private boolean isAllowedSignedBomRepositoryPath(String path, Set<String> allowedPaths) throws Exception
-  {
-    Method method = CDOAggregationTool.class.getDeclaredMethod("isAllowedSignedBomRepositoryPath", String.class, Set.class);
-    method.setAccessible(true);
-    return (Boolean)method.invoke(null, path, allowedPaths);
   }
 
   private void expectBomCentralFailure(Path root, CentralFixture central, String message) throws Exception
@@ -1084,6 +1268,9 @@ public class CDOAggregationToolBomTest
     return count;
   }
 
+  /**
+   * @author Eike Stepper
+   */
   private static final class CentralFixture implements AutoCloseable
   {
     private final Map<String, byte[]> artifacts = new LinkedHashMap<>();

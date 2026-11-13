@@ -594,6 +594,122 @@ public class CDOAggregationToolBomTest
     expectProvenanceFailure(emptyRepository, root.resolve("empty/examples"), "No CDO artifacts", "cdo-deployment-bundle");
   }
 
+  @Test
+  public void standaloneExamplesRepositoryConfigurationPrefersDeploymentBundleWhenCentralHasSameVersion() throws Exception
+  {
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path centralDirectory = new File(classes.getParentFile(), "central").toPath();
+    Element settings = parse(centralDirectory.resolve("standalone-examples-settings.xml").toFile()).getDocumentElement();
+    Element mirror = (Element)settings.getElementsByTagNameNS("*", "mirror").item(0);
+    assertEquals("central-only", genericChildText(mirror, "id"));
+    assertEquals("*,!cdo-deployment-bundle", genericChildText(mirror, "mirrorOf"));
+    assertEquals("https://repo.maven.apache.org/maven2", genericChildText(mirror, "url"));
+    assertEquals("Standalone settings must not add a Central repository ahead of repositories in the portable POM", 0,
+        settings.getElementsByTagNameNS("*", "profile").getLength());
+
+    Element portablePom = parse(centralDirectory.resolve("examples/distribution/portable-pom.xml").toFile()).getDocumentElement();
+    Element profiles = child(portablePom, "profiles");
+    NodeList profileNodes = profiles.getElementsByTagNameNS("*", "profile");
+    Element deploymentProfile = null;
+    for (int i = 0; i < profileNodes.getLength(); i++)
+    {
+      Element profile = (Element)profileNodes.item(i);
+      if ("cdo-deployment-repository".equals(childText(profile, "id")))
+      {
+        deploymentProfile = profile;
+      }
+    }
+
+    assertNotNull(deploymentProfile);
+    NodeList configuredRepositories = child(deploymentProfile, "repositories").getElementsByTagNameNS("*", "repository");
+    assertEquals(2, configuredRepositories.getLength());
+    Element repository = (Element)configuredRepositories.item(0);
+    assertEquals("cdo-deployment-bundle", childText(repository, "id"));
+    assertEquals("${cdo.deployment.repository}", childText(repository, "url"));
+    Element centralRepository = (Element)configuredRepositories.item(1);
+    assertEquals("central", childText(centralRepository, "id"));
+    assertEquals("https://repo.maven.apache.org/maven2", childText(centralRepository, "url"));
+
+    Document build = parse(centralDirectory.resolve("build.xml").toFile());
+    NodeList targets = build.getElementsByTagName("target");
+    Element verifyTarget = null;
+    for (int i = 0; i < targets.getLength(); i++)
+    {
+      Element target = (Element)targets.item(i);
+      if ("verify-standalone-examples".equals(target.getAttribute("name")))
+      {
+        verifyTarget = target;
+      }
+    }
+
+    assertNotNull(verifyTarget);
+    NodeList arguments = verifyTarget.getElementsByTagName("arg");
+    StringBuilder targetXml = new StringBuilder();
+    for (int i = 0; i < arguments.getLength(); i++)
+    {
+      targetXml.append(((Element)arguments.item(i)).getAttribute("value")).append('\n');
+    }
+
+    assertTrue(targetXml.toString(), targetXml.toString().contains("standalone-examples-settings.xml"));
+    assertTrue(targetXml.toString(), targetXml.toString().contains("-Dmaven.repo.local=${consumer.examples.maven.repository}"));
+    assertTrue(targetXml.toString(), targetXml.toString().contains("-Dcdo.deployment.repository=${consumer.examples.repository.url}"));
+
+    for (String module : new String[] { "embedded-h2", "remote-server", "remote-client" })
+    {
+      Element modulePom = parse(centralDirectory.resolve("examples/" + module + "/pom.xml").toFile()).getDocumentElement();
+      Element moduleProfiles = child(modulePom, "profiles");
+      NodeList moduleProfileNodes = moduleProfiles.getElementsByTagNameNS("*", "profile");
+      Element checkoutProfile = null;
+      for (int i = 0; i < moduleProfileNodes.getLength(); i++)
+      {
+        Element profile = (Element)moduleProfileNodes.item(i);
+        if ("checkout-source-copy".equals(childText(profile, "id")))
+        {
+          checkoutProfile = profile;
+        }
+      }
+
+      assertNotNull(checkoutProfile);
+      NodeList plugins = child(child(checkoutProfile, "build"), "plugins").getElementsByTagNameNS("*", "plugin");
+      Map<String, String> pluginVersions = new LinkedHashMap<>();
+      for (int i = 0; i < plugins.getLength(); i++)
+      {
+        Element plugin = (Element)plugins.item(i);
+        pluginVersions.put(childText(plugin, "artifactId"), childText(plugin, "version"));
+      }
+
+      assertEquals("3.5.0", pluginVersions.get("maven-resources-plugin"));
+      assertEquals("3.6.2", pluginVersions.get("build-helper-maven-plugin"));
+    }
+
+    Path collisionRoot = temporaryFolder.newFolder().toPath();
+    Path deploymentRepo = collisionRoot.resolve("deployment");
+    Path centralRepo = collisionRoot.resolve("central");
+    writeCollisionArtifact(deploymentRepo, "4.5.0");
+    writeCollisionArtifact(centralRepo, "4.5.0");
+    String coordinatePath = "org/eclipse/cdo/org.eclipse.net4j.db.jdbc/4.5.0/org.eclipse.net4j.db.jdbc-4.5.0.pom";
+    assertEquals(Files.readString(deploymentRepo.resolve(coordinatePath)), Files.readString(centralRepo.resolve(coordinatePath)));
+    String firstProjectRepository = childText(repository, "id");
+    assertEquals("cdo-deployment-bundle", firstProjectRepository);
+    assertEquals("central", childText(centralRepository, "id"));
+  }
+
+  private static void writeCollisionArtifact(Path repository, String version) throws Exception
+  {
+    Path directory = repository.resolve("org/eclipse/cdo/org.eclipse.net4j.db.jdbc/" + version);
+    Files.createDirectories(directory);
+    Files.writeString(directory.resolve("org.eclipse.net4j.db.jdbc-" + version + ".pom"),
+        "<project><groupId>org.eclipse.cdo</groupId>" + "<artifactId>org.eclipse.net4j.db.jdbc</artifactId><version>" + version + "</version></project>",
+        StandardCharsets.UTF_8);
+    Files.writeString(directory.resolve("org.eclipse.net4j.db.jdbc-" + version + ".jar"), "same version in both repositories", StandardCharsets.UTF_8);
+  }
+
+  private static String genericChildText(Element parent, String name)
+  {
+    NodeList children = parent.getElementsByTagNameNS("*", name);
+    return children.getLength() == 0 ? "" : children.item(0).getTextContent().trim();
+  }
+
   private String[] provenanceArguments(Path repository, Path examples) throws Exception
   {
     Path metadata = temporaryFolder.newFile().toPath();

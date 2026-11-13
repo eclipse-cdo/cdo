@@ -624,9 +624,9 @@
 		<loadfile property="consumer.examples.repository.url" srcFile="${consumer.examples.dir}/deployment-repository-url.txt" />
 		<exec executable="${maven.executable}" dir="${consumer.examples.root}" failifexecutionfails="true" failonerror="true">
 			<arg value="-gs" />
-			<arg value="${basedir}/central-only-settings.xml" />
+			<arg value="${basedir}/standalone-examples-settings.xml" />
 			<arg value="-s" />
-			<arg value="${basedir}/central-only-settings.xml" />
+			<arg value="${basedir}/standalone-examples-settings.xml" />
 			<arg value="-Dmaven.repo.local=${consumer.examples.maven.repository}" />
 			<arg value="-Dcdo.deployment.repository=${consumer.examples.repository.url}" />
 			<arg value="-B" />

@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
-import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
 import org.eclipse.emf.cdo.tests.model1.Product1;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -275,10 +274,5 @@ public class UnitManagerMain
     long stop = System.currentTimeMillis();
     System.out.println(stop - start);
     start = stop;
-  }
-
-  static
-  {
-    Model1Package.eINSTANCE.getClass();
   }
 }

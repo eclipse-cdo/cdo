@@ -14,7 +14,6 @@ package org.eclipse.emf.cdo.examples.server.offline;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
-import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
@@ -66,8 +65,6 @@ public abstract class AbstractOfflineExampleServer
     // OMPlatform.INSTANCE.setDebugging(true);
     // OMPlatform.INSTANCE.addTraceHandler(PrintTraceHandler.CONSOLE);
     OMPlatform.INSTANCE.addLogHandler(PrintLogHandler.CONSOLE);
-
-    CompanyPackage.eINSTANCE.getClass(); // Register EPackage in standalone
   }
 
   public AbstractOfflineExampleServer(String name, int port, int dbBrowserPort)

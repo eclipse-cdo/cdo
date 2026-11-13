@@ -33,10 +33,12 @@ import javax.tools.ToolProvider;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -107,6 +109,12 @@ public class CDOAggregationToolBomTest
       String groupId = mapping.getAttribute("groupId");
       String artifactId = mapping.getAttribute("artifactId");
       mappingKeys.add(namespace + "|" + name + "|" + groupId + "|" + artifactId);
+      if ("(org\\.eclipse\\.(emf\\.cdo|net4j).*)".equals(name))
+      {
+        assertEquals("(.*)", mapping.getAttribute("versionRangePattern"));
+        assertEquals("$1", mapping.getAttribute("versionRangeTemplate"));
+      }
+
       if ("java\\.package".equals(namespace))
       {
         packagePattern = name;
@@ -1152,6 +1160,36 @@ public class CDOAggregationToolBomTest
       assertEquals("REUSABLE", report.get("release.component." + (BUNDLES.length + 2) + ".classification"));
       assertTrue(report.get("release.component." + (BUNDLES.length + 2) + ".reason").contains("not a new deployment candidate"));
       assertEquals("0", report.get("publication.coordinate.count"));
+    }
+  }
+
+  @Test
+  public void printsEveryClassificationConflictAndLookupErrorWithItsReason() throws Exception
+  {
+    Path root = classificationFixture("4.37", "R20261001-0900");
+    try (CentralFixture central = new CentralFixture())
+    {
+      central.loadProposedArtifacts(root);
+      central.replaceBundlePom(0, bundlePom(BUNDLES[0], "1.0.0", "4.37", "R20261001-0900").replace("<version>1.0</version>", "<version>2.0</version>"));
+      central.setStatus(path(BUNDLES[1], "1.0.1", ".pom"), 503);
+
+      PrintStream originalOut = System.out;
+      ByteArrayOutputStream output = new ByteArrayOutputStream();
+      try (PrintStream capturedOut = new PrintStream(output, true, StandardCharsets.UTF_8))
+      {
+        System.setOut(capturedOut);
+        classify(root, central, true);
+      }
+      finally
+      {
+        System.setOut(originalOut);
+      }
+
+      String console = output.toString(StandardCharsets.UTF_8);
+      assertTrue(console.contains("CONFLICT org.eclipse.cdo:" + BUNDLES[0] + ":1.0.0:"));
+      assertTrue(console.contains("POM metadata differs"));
+      assertTrue(console.contains("LOOKUP_ERROR org.eclipse.cdo:" + BUNDLES[1] + ":1.0.1:"));
+      assertTrue(console.contains("HTTP 503"));
     }
   }
 

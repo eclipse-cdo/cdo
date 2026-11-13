@@ -1346,6 +1346,15 @@ public final class CDOAggregationTool
       System.out.println("Central coordinate classification report: " + report + "; total=" + inventory.size() + "; NEW=" + count(results, Classification.NEW)
           + "; REUSABLE=" + count(results, Classification.REUSABLE) + "; CONFLICT=" + count(results, Classification.CONFLICT) + "; LOOKUP_ERROR="
           + count(results, Classification.LOOKUP_ERROR) + ".");
+
+      for (CoordinateResult result : results)
+      {
+        if (result.classification == Classification.CONFLICT || result.classification == Classification.LOOKUP_ERROR)
+        {
+          System.out.println(result.classification + " " + result.coordinate.coordinate() + ": " + result.reason);
+        }
+      }
+
       if (failures != 0)
       {
         throw new IllegalStateException("Central classification found " + failures + " conflict(s) or lookup error(s); see " + report);

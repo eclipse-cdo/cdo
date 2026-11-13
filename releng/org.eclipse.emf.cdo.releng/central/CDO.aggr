@@ -27,7 +27,7 @@
       </repositories>
       <mavenMappings namePattern="(org\.eclipse\.(emf\.cdo|net4j).*)" groupId="org.eclipse.cdo" artifactId="$1"/>
       <mavenMappings namePattern=".*" groupId="\$maven-groupId\$" artifactId="\$maven-artifactId\$" versionPattern=".*" versionTemplate="\$maven-version\$"/>
-      <mavenDependencyMapping namespacePattern="osgi\.bundle" namePattern="(org\.eclipse\.(emf\.cdo|net4j).*)" groupId="org.eclipse.cdo" artifactId="$1" versionRangePattern=".*" versionRangeTemplate="major.minor.micro-qualifier"/>
+      <mavenDependencyMapping namespacePattern="osgi\.bundle" namePattern="(org\.eclipse\.(emf\.cdo|net4j).*)" groupId="org.eclipse.cdo" artifactId="$1" versionRangePattern="(.*)" versionRangeTemplate="$1"/>
       <mavenDependencyMapping namespacePattern="osgi\.bundle" namePattern="org\.eclipse\.jetty\.server" groupId="org.eclipse.jetty" artifactId="jetty-server" versionRangePattern=".*" versionRangeTemplate="major.minor.micro-qualifier"/>
       <mavenDependencyMapping namespacePattern="osgi\.bundle" namePattern="org\.eclipse\.jetty\.http|org\.eclipse\.jetty\.util|org\.eclipse\.jetty\.websocket\.api" groupId="!" artifactId="!"/>
       <mavenDependencyMapping namespacePattern="osgi\.bundle" namePattern="org\.eclipse\.jetty\.websocket\.server" groupId="org.eclipse.jetty.websocket" artifactId="jetty-websocket-jetty-server" versionRangePattern=".*" versionRangeTemplate="major.minor.micro-qualifier"/>

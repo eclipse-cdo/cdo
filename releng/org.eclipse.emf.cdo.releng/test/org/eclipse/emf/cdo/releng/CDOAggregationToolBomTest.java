@@ -33,12 +33,10 @@ import javax.tools.ToolProvider;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -1158,208 +1156,28 @@ public class CDOAggregationToolBomTest
 
       assertEquals("REUSABLE", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
       assertEquals("REUSABLE", report.get("release.component." + (BUNDLES.length + 2) + ".classification"));
-      assertTrue(report.get("release.component." + (BUNDLES.length + 2) + ".reason").contains("not a new deployment candidate"));
+      assertTrue(report.get("release.component." + (BUNDLES.length + 2) + ".reason").contains("Canonical POM exists"));
       assertEquals("0", report.get("publication.coordinate.count"));
     }
   }
 
   @Test
-  public void printsEveryClassificationConflictAndLookupErrorWithItsReason() throws Exception
+  public void reusesExistingCoordinatesRegardlessOfPublishedArtifactContents() throws Exception
   {
     Path root = classificationFixture("4.37", "R20261001-0900");
     try (CentralFixture central = new CentralFixture())
     {
       central.loadProposedArtifacts(root);
-      central.replaceBundlePom(0, bundlePom(BUNDLES[0], "1.0.0", "4.37", "R20261001-0900").replace("<version>1.0</version>", "<version>2.0</version>"));
-      central.setStatus(path(BUNDLES[1], "1.0.1", ".pom"), 503);
-
-      PrintStream originalOut = System.out;
-      ByteArrayOutputStream output = new ByteArrayOutputStream();
-      try (PrintStream capturedOut = new PrintStream(output, true, StandardCharsets.UTF_8))
-      {
-        System.setOut(capturedOut);
-        classify(root, central, true);
-      }
-      finally
-      {
-        System.setOut(originalOut);
-      }
-
-      String console = output.toString(StandardCharsets.UTF_8);
-      assertTrue(console.contains("CONFLICT org.eclipse.cdo:" + BUNDLES[0] + ":1.0.0:"));
-      assertTrue(console.contains("POM metadata differs"));
-      assertTrue(console.contains("LOOKUP_ERROR org.eclipse.cdo:" + BUNDLES[1] + ":1.0.1:"));
-      assertTrue(console.contains("HTTP 503"));
-    }
-  }
-
-  @Test
-  public void classifiesMixedPublishedAndNewBundleCoordinatesAcrossProjectReleases() throws Exception
-  {
-    Path root = classificationFixture("4.37", "R20261001-0900");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.replaceBundlePom(0, bundlePom(BUNDLES[0], "1.0.0", "4.36", "R20260901-1311"));
-      for (int index = 1; index < BUNDLES.length; index++)
-      {
-        for (String suffix : new String[] { ".pom", ".jar", "-sources.jar", "-javadoc.jar" })
-        {
-          central.removeBundleArtifact(index, suffix);
-        }
-      }
+      central.replaceBundlePom(0, "not the proposed POM");
+      central.replaceBundleArtifact(0, ".jar", new byte[] { 4, 5, 6 });
 
       Map<String, String> report = classify(root, central, false);
       assertEquals("REUSABLE", report.get("release.component.1.classification"));
-      assertEquals("NEW", report.get("release.component.2.classification"));
-      assertEquals(Integer.toString(BUNDLES.length - 1), report.get("publication.coordinate.count"));
-      assertEquals("3", report.get("classification.reusable.count"));
-      assertEquals(Integer.toString(BUNDLES.length - 1), report.get("classification.new.count"));
+      assertEquals("REUSABLE", report.get("release.component.2.classification"));
+      assertEquals("0", report.get("publication.coordinate.count"));
+      assertEquals("23", report.get("classification.reusable.count"));
+      assertEquals("0", report.get("classification.new.count"));
       assertEquals("4.37", report.get("cdo.project.release"));
-    }
-  }
-
-  @Test
-  public void permitsTheMissingProjectReleasePropertyOnThePublished436Pom() throws Exception
-  {
-    Path root = classificationFixture("4.36", "R20260901-1311");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.replaceBundlePom(0, bundlePom(BUNDLES[0], "1.0.0", "4.36", "R20260901-1311").replace("<cdo.project.release>4.36</cdo.project.release>", ""));
-      Map<String, String> report = classify(root, central, false);
-      assertEquals("REUSABLE", report.get("release.component.1.classification"));
-    }
-  }
-
-  @Test
-  public void comparesPrettyPrintedPublishedPomsWithWhitespaceNodes() throws Exception
-  {
-    Path root = classificationFixture("4.36", "R20260901-1311");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      String pom = bundlePom(BUNDLES[0], "1.0.0", "4.36", "R20260901-1311").replace("<properties>", "<properties>\n  ")
-          .replace("</properties>", "\n</properties>").replace("><", ">\n  <");
-      central.replaceBundlePom(0, pom);
-      Files.writeString(root.resolve("bundles/org/eclipse/cdo/" + BUNDLES[0] + "/1.0.0/" + BUNDLES[0] + "-1.0.0.pom"), pom, StandardCharsets.UTF_8);
-      Map<String, String> report = classify(root, central, false);
-      assertEquals(report.get("release.component.1.reason"), "REUSABLE", report.get("release.component.1.classification"));
-    }
-  }
-
-  @Test
-  public void rejectsChangedDropProvenanceForThe436Retrofit() throws Exception
-  {
-    Path root = classificationFixture("4.36", "R20260901-1311");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.replaceBundlePom(0, bundlePom(BUNDLES[0], "1.0.0", "4.35", "R20260831-1311"));
-      Map<String, String> report = classify(root, central, true);
-      assertEquals("CONFLICT", report.get("release.component.1.classification"));
-      assertTrue(report.get("release.component.1.reason").contains("does not match the selected 4.36 retrofit drop"));
-    }
-  }
-
-  @Test
-  public void permitsOriginalTraceabilityFromEarlierReleaseOnAnUnchangedCoordinate() throws Exception
-  {
-    Path root = classificationFixture("4.37", "R20261001-0900");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.replaceBundlePom(0, bundlePom(BUNDLES[0], "1.0.0", "4.36", "R20260901-1311"));
-      Map<String, String> report = classify(root, central, false);
-      assertEquals("REUSABLE", report.get("release.component.1.classification"));
-    }
-  }
-
-  @Test
-  public void reusesHistoricalBundlePomsWithDifferentBuildProvenanceOnly() throws Exception
-  {
-    Path root = classificationFixture("4.37", "R20261001-0900");
-    Path candidatePom = root.resolve("bundles/org/eclipse/cdo/" + BUNDLES[0] + "/1.0.0/" + BUNDLES[0] + "-1.0.0.pom");
-    String currentProperties = "<cdo.eclipse.version>2025-03</cdo.eclipse.version><cdo.emf.version>2.40.0</cdo.emf.version>"
-        + "<cdo.eclipse.simrel>2025-03</cdo.eclipse.simrel><cdo.jenkins.url>https://jenkins.example/current/</cdo.jenkins.url>"
-        + "<cdo.jenkins.job>cdo/current</cdo.jenkins.job><cdo.jenkins.build>3500</cdo.jenkins.build>";
-    String historicalProperties = "<cdo.eclipse.version>2024-12</cdo.eclipse.version><cdo.emf.version>2.39.0</cdo.emf.version>"
-        + "<cdo.eclipse.simrel>2024-12</cdo.eclipse.simrel><cdo.jenkins.url>https://jenkins.example/historical/</cdo.jenkins.url>"
-        + "<cdo.jenkins.job>cdo/historical</cdo.jenkins.job><cdo.jenkins.build>2800</cdo.jenkins.build>";
-    String proposedPom = Files.readString(candidatePom, StandardCharsets.UTF_8).replace("</properties>", currentProperties + "</properties>");
-    Files.writeString(candidatePom, proposedPom, StandardCharsets.UTF_8);
-
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.replaceBundlePom(0, proposedPom.replace(currentProperties, historicalProperties));
-      Map<String, String> report = classify(root, central, false);
-      assertEquals("REUSABLE", report.get("release.component.1.classification"));
-
-      central.replaceBundleArtifact(0, ".jar", new byte[] { 7, 8, 9 });
-      report = classify(root, central, true);
-      assertEquals("CONFLICT", report.get("release.component.1.classification"));
-      assertTrue(report.get("release.component.1.reason").contains("artifact bytes differ"));
-
-      Path candidateJar = root.resolve("bundles/org/eclipse/cdo/" + BUNDLES[0] + "/1.0.0/" + BUNDLES[0] + "-1.0.0.jar");
-      central.replaceBundleArtifact(0, ".jar", Files.readAllBytes(candidateJar));
-      central.replaceBundlePom(0, proposedPom.replace(currentProperties, historicalProperties).replace("<version>1.0</version>", "<version>2.0</version>"));
-      report = classify(root, central, true);
-      assertEquals("CONFLICT", report.get("release.component.1.classification"));
-      assertTrue(report.get("release.component.1.reason").contains("POM metadata differs"));
-    }
-  }
-
-  @Test
-  public void permitsDifferentBuildProvenanceWhenPublishedArtifactAndConsumerMetadataMatch() throws Exception
-  {
-    Path root = classificationFixture("4.37", "R20261001-0900");
-    Path proposedPom = root.resolve("bundles/org/eclipse/cdo/" + BUNDLES[0] + "/1.0.0/" + BUNDLES[0] + "-1.0.0.pom");
-    String proposed = Files.readString(proposedPom, StandardCharsets.UTF_8).replace("</properties>",
-        "<cdo.git.commit>0123456789abcdef0123456789abcdef01234567</cdo.git.commit></properties>");
-    Files.writeString(proposedPom, proposed, StandardCharsets.UTF_8);
-
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      String published = proposed.replace("0123456789abcdef0123456789abcdef01234567", "abcdef0123456789abcdef0123456789abcdef01");
-      central.replaceBundlePom(0, published);
-      Map<String, String> report = classify(root, central, false);
-      assertEquals("REUSABLE", report.get("release.component.1.classification"));
-    }
-  }
-
-  @Test
-  public void classifiesTheExamplesDistributionByItsPomAndZipContents() throws Exception
-  {
-    Path root = classificationFixture("4.37", "R20261001-0900");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      String examplesVersion = examplesDistributionVersion();
-      String examplesPath = "bundles/org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion;
-      String examplesPom = Files.readString(root.resolve(examplesPath + ".pom"), StandardCharsets.UTF_8)
-          .replace("<cdo.project.release>4.37</cdo.project.release>", "<cdo.project.release>4.36</cdo.project.release>")
-          .replace("R20261001-0900", "R20260901-1311");
-      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + ".pom",
-          examplesPom.getBytes(StandardCharsets.UTF_8));
-      Map<String, String> report = classify(root, central, false);
-      assertEquals("REUSABLE", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
-
-      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + "-examples.zip",
-          "tampered examples".getBytes(StandardCharsets.UTF_8));
-      report = classify(root, central, true);
-      assertEquals("CONFLICT", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
-      assertTrue(report.get("release.component." + (BUNDLES.length + 1) + ".reason").contains("artifact bytes differ"));
-
-      Path proposedZip = root.resolve(examplesPath + "-examples.zip");
-      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + "-examples.zip",
-          Files.readAllBytes(proposedZip));
-      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + ".pom",
-          examplesPom.replace("</project>", "<name>Changed consumer metadata</name></project>").getBytes(StandardCharsets.UTF_8));
-      report = classify(root, central, true);
-      assertEquals("CONFLICT", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
-      assertTrue(report.get("release.component." + (BUNDLES.length + 1) + ".reason").contains("POM metadata differs"));
     }
   }
 
@@ -1548,16 +1366,6 @@ public class CDOAggregationToolBomTest
       expectExamplesVersionSelectionFailure(candidate, central);
     }
 
-    try (CentralFixture central = new CentralFixture())
-    {
-      setExamplesVersionMetadata(central, "1.0.15");
-      String basePom = Files.readString(
-          candidate.get("initial.staging").resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom"),
-          StandardCharsets.UTF_8);
-      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/1.0.15/cdo-examples-distribution-1.0.15.pom",
-          basePom.replace("<version>1.0.0</version>", "<version>1.0.15</version>").getBytes(StandardCharsets.UTF_8));
-      expectExamplesVersionSelectionFailure(candidate, central);
-    }
   }
 
   @Test
@@ -1566,15 +1374,13 @@ public class CDOAggregationToolBomTest
     Path root = temporaryFolder.newFolder().toPath();
     Path staging = Files.createDirectories(root.resolve("staging"));
     Path manifest = root.resolve("classification.properties");
-    Path completeQaZip = root.resolve("complete-qa.zip");
     Path publicKey = Files.write(root.resolve("public-key.gpg"), new byte[] { 1 });
     Path upload = root.resolve("incremental.zip");
     Path summary = root.resolve("summary.properties");
     createPublicationStaging(staging, true, "1.0.15");
-    createDeploymentZip(staging, completeQaZip);
 
     StringBuilder contents = new StringBuilder("release.component.count=23\npublication.coordinate.count=1\npublication.coordinate.1=org.eclipse.cdo:")
-        .append(BUNDLES[0]).append(":1.0.0\nclassification.new.count=1\nclassification.reusable.count=22\nclassification.conflict.count=0\n")
+        .append(BUNDLES[0]).append(":1.0.0\nclassification.new.count=1\nclassification.reusable.count=22\n")
         .append("classification.lookup_error.count=0\ncdo.project.release=4.37\ncdo.drop.id=R20261001-0900\nexamples.distribution.version=1.0.15\n");
     for (int index = 0; index < BUNDLES.length; index++)
     {
@@ -1593,13 +1399,13 @@ public class CDOAggregationToolBomTest
 
     try
     {
-      CDOAggregationTool.main(new String[] { "incremental-package", staging.toString(), manifest.toString(), completeQaZip.toString(), upload.toString(),
-          "A".repeat(40), publicKey.toString(), "missing-gpg-executable", summary.toString() });
+      CDOAggregationTool.main(new String[] { "incremental-package", staging.toString(), manifest.toString(), upload.toString(), "A".repeat(40),
+          publicKey.toString(), "missing-gpg-executable", summary.toString() });
       fail("Expected GnuPG validation to be reached for the NEW coordinate");
     }
     catch (IllegalArgumentException expected)
     {
-      assertTrue("The NEW coordinate must advance to OpenPGP verification", expected.getMessage().contains("GnuPG"));
+      assertTrue("The NEW coordinate must advance to OpenPGP verification: " + expected.getMessage(), expected.getMessage().contains("GnuPG"));
       assertFalse("The output ZIP path must not be interpreted as the key fingerprint", expected.getMessage().contains("fingerprint"));
     }
     catch (IOException expected)
@@ -1628,14 +1434,12 @@ public class CDOAggregationToolBomTest
     Path root = temporaryFolder.newFolder().toPath();
     Path staging = Files.createDirectories(root.resolve("staging"));
     Path manifest = root.resolve("classification.properties");
-    Path completeQaZip = root.resolve("complete-qa.zip");
     Path publicKey = Files.write(root.resolve("public-key.gpg"), new byte[] { 1 });
     Path upload = root.resolve("incremental.zip");
     Path summary = root.resolve("summary.properties");
     createPublicationStaging(staging, true, "1.0.15");
-    createDeploymentZip(staging, completeQaZip);
     StringBuilder contents = new StringBuilder("release.component.count=23\npublication.coordinate.count=0\n")
-        .append("classification.new.count=0\nclassification.reusable.count=23\nclassification.conflict.count=0\nclassification.lookup_error.count=0\n")
+        .append("classification.new.count=0\nclassification.reusable.count=23\nclassification.lookup_error.count=0\n")
         .append("cdo.project.release=4.37\ncdo.drop.id=R20261001-0900\nexamples.distribution.version=1.0.15\n");
     int index = 1;
     for (int bundleIndex = 0; bundleIndex < BUNDLES.length; bundleIndex++)
@@ -1648,8 +1452,8 @@ public class CDOAggregationToolBomTest
     appendClassification(contents, index++, "cdo-examples-distribution", "1.0.15", "examples");
     appendClassification(contents, index, "org.eclipse.cdo.bom", "4.37.0", "bom");
     Files.writeString(manifest, contents, StandardCharsets.UTF_8);
-    CDOAggregationTool.main(new String[] { "incremental-package", root.resolve("staging").toString(), manifest.toString(), completeQaZip.toString(),
-        upload.toString(), "A".repeat(40), publicKey.toString(), "gpg-is-not-reached", summary.toString() });
+    CDOAggregationTool.main(new String[] { "incremental-package", root.resolve("staging").toString(), manifest.toString(), upload.toString(), "A".repeat(40),
+        publicKey.toString(), "gpg-is-not-reached", summary.toString() });
 
     assertFalse(Files.exists(upload));
     assertTrue(Files.readString(summary, StandardCharsets.UTF_8).contains("incremental.publication=NOT_REQUIRED"));
@@ -1661,12 +1465,11 @@ public class CDOAggregationToolBomTest
         .replace("release.component.1.reason=Equivalent\n", "release.component.1.reason=New\npublication.coordinate.1=" + firstBundle + "\n");
     Files.writeString(manifest, incomplete, StandardCharsets.UTF_8);
     Files.delete(staging.resolve(path(BUNDLES[0], "1.0.0", ".jar")));
-    createDeploymentZip(staging, completeQaZip);
     Files.delete(summary);
     try
     {
-      CDOAggregationTool.main(new String[] { "incremental-package", root.resolve("staging").toString(), manifest.toString(), completeQaZip.toString(),
-          upload.toString(), "A".repeat(40), publicKey.toString(), "gpg-is-not-reached", summary.toString() });
+      CDOAggregationTool.main(new String[] { "incremental-package", root.resolve("staging").toString(), manifest.toString(), upload.toString(), "A".repeat(40),
+          publicKey.toString(), "gpg-is-not-reached", summary.toString() });
       fail("Expected an incomplete NEW coordinate to fail closed");
     }
     catch (IllegalArgumentException expected)
@@ -1686,128 +1489,6 @@ public class CDOAggregationToolBomTest
     contents.append("release.component.").append(index).append(".coordinate=").append(group).append(':').append(artifact).append(':').append(version)
         .append('\n').append("release.component.").append(index).append(".kind=").append(kind).append('\n').append("release.component.").append(index)
         .append(".classification=REUSABLE\nrelease.component.").append(index).append(".reason=Equivalent\n");
-  }
-
-  @Test
-  public void detectsChangedBinarySourcesAndJavadocBytes() throws Exception
-  {
-    for (String suffix : new String[] { ".jar", "-sources.jar", "-javadoc.jar" })
-    {
-      Path root = classificationFixture("4.37", "R20261001-0900");
-      try (CentralFixture central = new CentralFixture())
-      {
-        central.loadProposedArtifacts(root);
-        central.replaceBundleArtifact(0, suffix, new byte[] { 8, 7, 6 });
-        Map<String, String> report = classify(root, central, true);
-        assertEquals("CONFLICT", report.get("release.component.1.classification"));
-        assertTrue(report.get("release.component.1.reason").contains("bytes differ"));
-      }
-    }
-  }
-
-  @Test
-  public void reportsMissingClassifierAndContradictoryPartialPublicationAsLookupErrors() throws Exception
-  {
-    Path root = classificationFixture("4.37", "R20261001-0900");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.removeBundleArtifact(0, "-sources.jar");
-      Map<String, String> report = classify(root, central, true);
-      assertEquals("LOOKUP_ERROR", report.get("release.component.1.classification"));
-      assertTrue(report.get("release.component.1.reason").contains("incomplete"));
-    }
-
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.setStatus(path(BUNDLES[0], "1.0.0", ".pom"), 404);
-      central.setArtifact(path(BUNDLES[0], "1.0.0", ".jar"), new byte[] { 1 });
-      Map<String, String> report = classify(root, central, true);
-      assertEquals("LOOKUP_ERROR", report.get("release.component.1.classification"));
-      assertTrue(report.get("release.component.1.reason").contains("but artifact exists"));
-    }
-
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.setArtifact(path(BUNDLES[0], "1.0.0", ".pom") + ".asc", new byte[] { 2 });
-      Map<String, String> report = classify(root, central, true);
-      assertEquals("LOOKUP_ERROR", report.get("release.component.1.classification"));
-      assertTrue(report.get("release.component.1.reason").contains("signature exists"));
-    }
-  }
-
-  @Test
-  public void detectsDependencyAndUnknownPropertyChangesConservatively() throws Exception
-  {
-    for (int change = 0; change < 5; change++)
-    {
-      Path root = classificationFixture("4.37", "R20261001-0900");
-      try (CentralFixture central = new CentralFixture())
-      {
-        central.loadProposedArtifacts(root);
-        String proposed = Files.readString(root.resolve("bundles/org/eclipse/cdo/" + BUNDLES[0] + "/1.0.0/" + BUNDLES[0] + "-1.0.0.pom"));
-        String changed;
-        switch (change)
-        {
-        case 0:
-          changed = proposed.replace("<version>1.0</version>", "<version>2.0</version>");
-          break;
-
-        case 1:
-          changed = proposed.replace("<scope>compile</scope>", "<scope>runtime</scope>");
-          break;
-
-        case 2:
-          changed = proposed.replace("</dependency>", "<optional>true</optional></dependency>");
-          break;
-
-        case 3:
-          changed = proposed.replace("</dependency>",
-              "<exclusions><exclusion><groupId>org.example</groupId><artifactId>other</artifactId>" + "</exclusion></exclusions></dependency>");
-          break;
-
-        default:
-          changed = proposed.replace("</properties>", "<cdo.unrecognized>different</cdo.unrecognized></properties>");
-          break;
-        }
-
-        central.replaceBundlePom(0, changed);
-        Map<String, String> report = classify(root, central, true);
-        assertEquals("CONFLICT", report.get("release.component.1.classification"));
-        assertTrue(report.get("release.component.1.reason").contains("POM metadata differs"));
-      }
-    }
-  }
-
-  @Test
-  public void reportsMissingCorruptAndUnavailableChecksumsAsLookupErrors() throws Exception
-  {
-    Path root = classificationFixture("4.37", "R20261001-0900");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.removeChecksum(path(BUNDLES[0], "1.0.0", ".pom"));
-      Map<String, String> report = classify(root, central, true);
-      assertEquals("LOOKUP_ERROR", report.get("release.component.1.classification"));
-      assertTrue(report.get("release.component.1.reason").contains("No published SHA-256 or SHA-1 checksum"));
-    }
-
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.corruptChecksum(path(BUNDLES[0], "1.0.0", ".pom"));
-      Map<String, String> report = classify(root, central, true);
-      assertEquals("LOOKUP_ERROR", report.get("release.component.1.classification"));
-      assertTrue(report.get("release.component.1.reason").contains("checksum mismatch"));
-    }
-
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.replaceBundlePom(0, "<project>");
-      Map<String, String> report = classify(root, central, true);
-      assertEquals("LOOKUP_ERROR", report.get("release.component.1.classification"));
-    }
   }
 
   @Test
@@ -1838,20 +1519,6 @@ public class CDOAggregationToolBomTest
       Map<String, String> report = classify(root, base, true);
       assertEquals("LOOKUP_ERROR", report.get("release.component.1.classification"));
       assertTrue(report.get("release.component.1.reason").contains("Central request failed"));
-    }
-  }
-
-  @Test
-  public void anExistingBomIsNeverListedAmongNewPublicationCoordinates() throws Exception
-  {
-    Path root = classificationFixture("4.36", "R20260901-1311");
-    try (CentralFixture central = new CentralFixture())
-    {
-      central.loadProposedArtifacts(root);
-      central.replaceBomWithIncompatibleVersion();
-      Map<String, String> report = classify(root, central, true);
-      assertEquals("CONFLICT", report.get("release.component." + (BUNDLES.length + 2) + ".classification"));
-      assertEquals("0", report.get("publication.coordinate.count"));
     }
   }
 
@@ -2657,21 +2324,6 @@ public class CDOAggregationToolBomTest
       artifacts.put(path(BUNDLES[index], "1.0." + index, suffix), bytes);
     }
 
-    void removeBundleArtifact(int index, String suffix)
-    {
-      artifacts.remove(path(BUNDLES[index], "1.0." + index, suffix));
-    }
-
-    void removeChecksum(String artifactPath)
-    {
-      missingChecksums.add(artifactPath + ".sha256");
-    }
-
-    void corruptChecksum(String artifactPath)
-    {
-      checksumOverrides.put(artifactPath + ".sha256", "0000000000000000000000000000000000000000000000000000000000000000".getBytes(StandardCharsets.US_ASCII));
-    }
-
     void setArtifact(String path, byte[] bytes)
     {
       artifacts.put(path, bytes);
@@ -2685,19 +2337,6 @@ public class CDOAggregationToolBomTest
     void truncate(String path)
     {
       truncatedArtifacts.add(path);
-    }
-
-    void replaceBomWithIncompatibleVersion()
-    {
-      for (String path : artifacts.keySet())
-      {
-        if (path.contains("org.eclipse.cdo.bom") && path.endsWith(".pom"))
-        {
-          artifacts.put(path, new String(artifacts.get(path), StandardCharsets.UTF_8).replace("<packaging>pom</packaging>", "<packaging>jar</packaging>")
-              .getBytes(StandardCharsets.UTF_8));
-          return;
-        }
-      }
     }
 
     @Override

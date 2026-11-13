@@ -306,7 +306,10 @@ pipeline {
               printf '%s\\n' "$candidate"
             ''').trim()
           }
-          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}", "OVERRIDE_VERSION=${params.OVERRIDE_VERSION}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+          def aggregationTargets = params.PUBLISHING_MODE == 'PACKAGE'
+            ? 'clean execute-validate execute-clean-build verify checksums audit staging-validate'
+            : 'clean-build consumer-dependency-tree'
+          withEnv(["LOCAL_DROP_DIR=${env.CDO_DOWNLOADED_DROP}", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "CBI_AGGREGATOR=${aggregator}", "PUBLISHING_MODE=${params.PUBLISHING_MODE}", "OVERRIDE_VERSION=${params.OVERRIDE_VERSION}", "AGGREGATION_TARGETS=${aggregationTargets}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
             withAnt(installation: 'apache-ant-latest') {
               sh '''
                 set -eu
@@ -320,7 +323,7 @@ pipeline {
                   echo "Downloaded drop contains a symlink" >&2
                   exit 2
                 fi
-                ant -Dcdo.drop.location="$LOCAL_DROP_DIR" -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dcbi.aggregator="$CBI_AGGREGATOR" -Dpublishing.mode="$PUBLISHING_MODE" -Doverride.release.version="$OVERRIDE_VERSION" -f releng/org.eclipse.emf.cdo.releng/central/build.xml clean-build consumer-dependency-tree
+                ant -Dcdo.drop.location="$LOCAL_DROP_DIR" -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dcbi.aggregator="$CBI_AGGREGATOR" -Dpublishing.mode="$PUBLISHING_MODE" -Doverride.release.version="$OVERRIDE_VERSION" -f releng/org.eclipse.emf.cdo.releng/central/build.xml $AGGREGATION_TARGETS
               '''
             }
           }
@@ -407,6 +410,7 @@ pipeline {
                   exit 2
                 fi
                 ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$CDO_WORKSPACE_ROOT/maven-publishing/work" -Dstaging.dir="$STAGING_DIR" -f releng/org.eclipse.emf.cdo.releng/central/build.xml publication-scope-check
+                ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dstaging.dir="$STAGING_DIR" -Dcdo.maven.repository="$STAGING_DIR" -Dcentral.repository.url=https://repo.maven.apache.org/maven2/ -f releng/org.eclipse.emf.cdo.releng/central/build.xml classify-central
                 ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dgpg.executable="$GPG_EXECUTABLE" -Dgpg.key.file="$MAVEN_GPG_KEY_FILE" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.signing.fingerprint.file="$GPG_SIGNING_FINGERPRINT_FILE" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml signing-subkey-test resolve-signing-subkey-fingerprint
                 test "$(wc -l < "$GPG_SIGNING_FINGERPRINT_FILE")" -eq 1 || { echo "Expected exactly one signing-subkey fingerprint" >&2; exit 7; }
                 signing_fingerprint=$(cat "$GPG_SIGNING_FINGERPRINT_FILE")
@@ -431,6 +435,10 @@ pipeline {
                   artifact_dir=$(dirname "$version_dir")
                   artifact=$(basename "$artifact_dir")
                   version=$(basename "$version_dir")
+                  coordinate="org.eclipse.cdo:$artifact:$version"
+                  if ! awk -F= -v coordinate="$coordinate" '$1 ~ /^publication.coordinate[.][0-9]+$/ && $2 == coordinate { found = 1 } END { exit !found }' "$AGGR_WORK_DIR/central-coordinate-classification.properties"; then
+                    continue
+                  fi
                   main="$version_dir/$artifact-$version.jar"
                   sources="$version_dir/$artifact-$version-sources.jar"
                   javadoc="$version_dir/$artifact-$version-javadoc.jar"
@@ -481,22 +489,7 @@ pipeline {
                 echo "Staging contains a symlink" >&2
                 exit 2
               fi
-              test "$(find "$STAGING_DIR/org" -name '*.pom' -type f | wc -l)" -eq 23
-              test "$(find "$STAGING_DIR/org" -name '*.jar' -type f | wc -l)" -eq 63
-              test "$(find "$STAGING_DIR/org" -name '*.zip' -type f | wc -l)" -eq 1
-              test "$(find "$STAGING_DIR/org" -name '*.asc' -type f | wc -l)" -eq 87
-              mkdir -p "$(dirname "$BUNDLE_PATH")"
-              rm -f "$BUNDLE_PATH"
-              (cd "$STAGING_DIR" && zip -q -r "$BUNDLE_PATH" org)
-              unzip -Z1 "$BUNDLE_PATH" | while IFS= read -r entry; do
-                case "$entry" in
-                  org/|org/eclipse/|org/eclipse/cdo/|org/eclipse/cdo/*|org/eclipse/net4j/|org/eclipse/net4j/*) ;;
-                  *) echo "Unexpected deployment ZIP entry: $entry" >&2; exit 5 ;;
-                esac
-              done
-              zip_sha256=$(sha256sum "$BUNDLE_PATH" | awk '{print $1}')
-              printf 'deployment.zip=%s\\ndeployment.zip.sha256=%s\\ncentral.publication.performed=false\\n' "$(basename "$BUNDLE_PATH")" "$zip_sha256" >> "$STAGING_DIR/maven-publishing-summary.properties"
-              echo "Deployment bundle SHA-256: $zip_sha256"
+              test -f "$AGGR_WORK_DIR/central-coordinate-classification.properties"
             '''
           }
           withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "CENTRAL_REPO=${env.CDO_AGGR_WORK_DIR}/signed-repository", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "BUNDLE_PATH=${env.CDO_WORKSPACE_ROOT}/maven-publishing/cdo-maven-central-deployment.zip", "GPG_PUBLIC_KEY_FILE=${env.CDO_AGGR_WORK_DIR}/gpg-verification-public-key.gpg", "GPG_FINGERPRINT=${GPG_EXPECTED_PRIMARY_FINGERPRINT.trim()}", "GPG_EXECUTABLE=${GPG_EXECUTABLE}", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
@@ -516,13 +509,6 @@ pipeline {
                     exit 2
                   fi
                   ant -Dpublishing.mode=PACKAGE -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml consumer-central-only
-                  ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dstaging.dir="$STAGING_DIR" \
-                    -Dcdo.maven.repository="$CENTRAL_REPO" -Dcentral.repository.url=https://repo.maven.apache.org/maven2/ \
-                    -f releng/org.eclipse.emf.cdo.releng/central/build.xml classify-central
-                  ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dstaging.dir="$STAGING_DIR" \
-                    -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" \
-                    -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" \
-                    -f releng/org.eclipse.emf.cdo.releng/central/build.xml incremental-package
                 '''
               }
           }
@@ -632,9 +618,6 @@ pipeline {
 
     success {
       script {
-        if (params.PUBLISHING_MODE == 'PACKAGE') {
-          archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-incremental-upload.zip', allowEmptyArchive: true
-        }
         if (params.PUBLISHING_MODE == 'PACKAGE_BOM_436_FOR_CENTRAL') {
           archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-bom-4.36-deployment.zip', allowEmptyArchive: false
         }

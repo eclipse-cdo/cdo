@@ -423,50 +423,31 @@ later signing/release steps.
 
 ## Read-only Central coordinate classification
 
-After preparing the normal bundle repository, separate temporary BOM repository, and signed
-examples distribution staging, run `ant -Dcdo.drop.location=<selected-drop>
--Dwork.dir=<workspace-local-work> -Dstaging.dir=<complete-signed-staging> -f build.xml
-classify-central`. The target compares all 21 approved bundles, the project-release BOM, and the
-independently versioned examples distribution against canonical Maven Central. It writes
+After preparing the normal bundle repository, separate temporary BOM repository, and examples
+distribution staging, run `ant -Dcdo.drop.location=<selected-drop>
+-Dwork.dir=<workspace-local-work> -Dstaging.dir=<staging> -f build.xml classify-central`. The target
+checks the canonical POM for each of the 21 approved bundles, the project-release BOM, and the
+independently versioned examples distribution against Maven Central. It writes
 `<work.dir>/central-coordinate-classification.properties` in deterministic release-inventory
 order. `release.component.*` records the complete BOM-managed release inventory and each
-`NEW`, `REUSABLE`, `CONFLICT`, or `LOOKUP_ERROR` result. `publication.coordinate.*` lists only
-coordinates classified `NEW`. It also reports counts for all four statuses. Any conflict or
-lookup error fails the Ant target after writing the report. This command is read-only with respect
-to Central and does not change signed staging.
+`NEW`, `REUSABLE`, or `LOOKUP_ERROR` result. HTTP 200 means `REUSABLE`, HTTP 404 means `NEW`, and
+any other status or connection failure means `LOOKUP_ERROR`. `publication.coordinate.*` lists only
+`NEW` coordinates. A lookup error fails the Ant target after writing the concise report. Existing
+coordinates are trusted; their historical artifacts are not downloaded or compared.
 
-POM comparison ignores only the explicit build-provenance properties `cdo.drop.id`,
-`cdo.project.release`, `cdo.project.release.source`, `cdo.git.commit`, `cdo.build.branch`,
-`cdo.build.stream`, `cdo.build.timestamp`, `cdo.build.trigger`, `cdo.build.type`, and
-`cdo.examples.source.git.commit`; for bundle coordinates it also ignores the SCM tag, which
-identifies the original source build. For an existing 4.36 bundle coordinate, a missing published
-`cdo.project.release` is allowed, while a present value must identify 4.36 and the published
-`cdo.drop.id` must match the selected 4.36 drop. For later releases, those two properties may
-retain valid original-publication values; other listed provenance may also identify that build.
-All other POM metadata, including unknown properties, must remain semantically equivalent.
-Bundle JARs, sources JARs, and Javadoc JARs must match
-byte-for-byte and validate against available published checksums. Existing bundle POMs are never
-rewritten.
-
-An existing BOM is reported as `REUSABLE` only if its POM and checksum are valid and its consumer
-metadata matches. Its report reason explicitly excludes it from new publication candidates. An
-incompatible existing BOM is `CONFLICT`; it is never treated as an unpublished coordinate.
-
-`PACKAGE` first verifies the complete signed QA repository and deployment ZIP, then classifies
-Central coordinates. The complete deployment ZIP remains the artifact used for consumer and
-standalone examples verification. The `incremental-package` target consumes the resulting manifest
-and signed staging to create a separate `cdo-maven-central-incremental-upload.zip` containing only
-`NEW` coordinates. It verifies the manifest counts and inventory, required artifact checksums,
-OpenPGP signatures, exact ZIP entries, and byte identity with QA staging. If every coordinate is
-`REUSABLE`, it records `incremental.publication=NOT_REQUIRED` and creates no upload ZIP. Neither
-package workflow uploads or publishes artifacts.
+In `PACKAGE`, classification runs before signing. Only `NEW` coordinates are signed and packaged.
+`incremental-package` verifies their required files, checksums, OpenPGP signatures, and the exact
+upload ZIP once. The Maven consumer test then resolves the effective mix of that ZIP and Maven
+Central, so reusable coordinates come from Central. If every coordinate is `REUSABLE`, no upload
+ZIP is created and the consumer test resolves from Central. Jenkins archives the upload ZIP when
+one exists and the concise summary. The pipeline does not publish artifacts.
 
 The examples distribution patch line is controlled in
 `examples/distribution/package.properties` with `release.version.line`. Before final staging, the
-PACKAGE workflow reads Central metadata and validates the latest published coordinate. It reuses
-that patch version when its ZIP bytes and consumer-relevant POM semantics match; otherwise, it
-selects the next numeric patch. The selector fails closed on incomplete coordinates, invalid
-checksums, unreliable metadata, or a collision at the next patch. The embedded portable POM carries
+PACKAGE workflow reads Central metadata and checks the latest published POM and examples ZIP. It
+reuses that patch version when its ZIP bytes and consumer-relevant POM semantics match; otherwise,
+it selects the next numeric patch. The selector fails closed on unreliable metadata or a collision
+at the next patch. The embedded portable POM carries
 the selected CDO release BOM, so a BOM change naturally changes ZIP content and advances the
 examples patch version. The configured major/minor line never changes automatically.
 

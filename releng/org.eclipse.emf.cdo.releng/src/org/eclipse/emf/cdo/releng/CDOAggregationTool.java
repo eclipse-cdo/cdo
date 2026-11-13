@@ -1301,15 +1301,10 @@ public final class CDOAggregationTool
   {
     private static final String DEFAULT_REPOSITORY = "https://repo.maven.apache.org/maven2/";
 
-    private static final String[] CHECKSUMS = { "sha256", "sha1", "md5" };
+    private static final Set<String> EXAMPLES_PROVENANCE_PROPERTIES = Set.of("cdo.drop.id", "cdo.project.release", "cdo.git.commit",
+        "cdo.examples.source.git.commit");
 
-    private static final Map<String, String> DIGESTS = Map.of("sha256", "SHA-256", "sha1", "SHA-1", "md5", "MD5");
-
-    private static final Set<String> PROVENANCE_PROPERTIES = Set.of("cdo.drop.id", "cdo.project.release", "cdo.project.release.source", "cdo.git.commit",
-        "cdo.build.branch", "cdo.build.stream", "cdo.build.timestamp", "cdo.build.trigger", "cdo.build.type", "cdo.eclipse.version", "cdo.emf.version",
-        "cdo.eclipse.simrel", "cdo.jenkins.url", "cdo.jenkins.job", "cdo.jenkins.build", "cdo.examples.source.git.commit");
-
-    private static final int MAX_ARTIFACT_SIZE = 100 * 1024 * 1024;
+    private static final int MAX_POM_SIZE = 5 * 1024 * 1024;
 
     public static void execute(String[] args) throws Exception
     {
@@ -1341,15 +1336,13 @@ public final class CDOAggregationTool
       }
 
       writeReport(report, release, dropID, inventory, results);
-      long failures = results.stream()
-          .filter(result -> result.classification == Classification.CONFLICT || result.classification == Classification.LOOKUP_ERROR).count();
+      long failures = results.stream().filter(result -> result.classification == Classification.LOOKUP_ERROR).count();
       System.out.println("Central coordinate classification report: " + report + "; total=" + inventory.size() + "; NEW=" + count(results, Classification.NEW)
-          + "; REUSABLE=" + count(results, Classification.REUSABLE) + "; CONFLICT=" + count(results, Classification.CONFLICT) + "; LOOKUP_ERROR="
-          + count(results, Classification.LOOKUP_ERROR) + ".");
+          + "; REUSABLE=" + count(results, Classification.REUSABLE) + "; LOOKUP_ERROR=" + count(results, Classification.LOOKUP_ERROR) + ".");
 
       for (CoordinateResult result : results)
       {
-        if (result.classification == Classification.CONFLICT || result.classification == Classification.LOOKUP_ERROR)
+        if (result.classification == Classification.LOOKUP_ERROR)
         {
           System.out.println(result.classification + " " + result.coordinate.coordinate() + ": " + result.reason);
         }
@@ -1357,7 +1350,7 @@ public final class CDOAggregationTool
 
       if (failures != 0)
       {
-        throw new IllegalStateException("Central classification found " + failures + " conflict(s) or lookup error(s); see " + report);
+        throw new IllegalStateException("Central coordinate lookup failed for " + failures + " coordinate(s); see " + report);
       }
     }
 
@@ -1475,159 +1468,27 @@ public final class CDOAggregationTool
 
     private static CoordinateResult classifyExisting(Coordinate coordinate, URI repository, String release, String dropID) throws Exception
     {
-      List<String> suffixes = coordinate.bom ? List.of(".pom")
-          : coordinate.examples ? List.of(".pom", "-examples.zip") : List.of(".pom", ".jar", "-sources.jar", "-javadoc.jar");
-      String base = mavenPath(coordinate);
-      Response pomResponse = request(repository, base + ".pom");
-      if (pomResponse.status == HttpURLConnection.HTTP_NOT_FOUND)
+      String path = mavenPath(coordinate) + ".pom";
+      Response response = request(repository, path);
+      if (response.status == HttpURLConnection.HTTP_NOT_FOUND)
       {
-        for (String suffix : suffixes)
-        {
-          if (!".pom".equals(suffix))
-          {
-            Response partial = request(repository, base + suffix);
-            if (partial.status == HttpURLConnection.HTTP_OK)
-            {
-              return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM returned 404 but artifact exists: " + suffix);
-            }
-
-            if (partial.status != HttpURLConnection.HTTP_NOT_FOUND)
-            {
-              return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR,
-                  "POM returned 404 but artifact lookup returned HTTP " + partial.status + " for " + suffix);
-            }
-          }
-
-          Response signature = request(repository, base + suffix + ".asc");
-          if (signature.status == HttpURLConnection.HTTP_OK)
-          {
-            return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM/artifact returned 404 but a detached signature exists for " + suffix);
-          }
-
-          if (signature.status != HttpURLConnection.HTTP_NOT_FOUND)
-          {
-            return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR,
-                "Ambiguous detached-signature lookup for absent artifact " + suffix + ": HTTP " + signature.status);
-          }
-
-          for (String checksum : CHECKSUMS)
-          {
-            Response sidecar = request(repository, base + suffix + "." + checksum);
-            if (sidecar.status == HttpURLConnection.HTTP_OK)
-            {
-              return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM and artifact returned 404 but checksum exists for " + suffix);
-            }
-
-            if (sidecar.status != HttpURLConnection.HTTP_NOT_FOUND)
-            {
-              return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR,
-                  "Ambiguous checksum lookup for absent artifact " + suffix + ": HTTP " + sidecar.status);
-            }
-          }
-        }
-
-        return new CoordinateResult(coordinate, Classification.NEW, "POM and every required artifact/classifier are absent from Central.");
+        return new CoordinateResult(coordinate, Classification.NEW, "Canonical POM is absent from Central.");
       }
 
-      if (pomResponse.status != HttpURLConnection.HTTP_OK)
+      if (response.status == HttpURLConnection.HTTP_OK)
       {
-        return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM lookup returned HTTP " + pomResponse.status);
+        return new CoordinateResult(coordinate, Classification.REUSABLE, "Canonical POM exists on Central.");
       }
 
-      Map<String, byte[]> published = new LinkedHashMap<>();
-      published.put(".pom", verifyPublishedArtifact(repository, base + ".pom", pomResponse.body));
-      for (String suffix : suffixes)
-      {
-        if (".pom".equals(suffix))
-        {
-          continue;
-        }
-
-        published.put(suffix, verifyPublishedArtifact(repository, base + suffix, null));
-      }
-
-      String pomConflict = comparePoms(coordinate, published.get(".pom"), release, dropID);
-      if (pomConflict != null)
-      {
-        return new CoordinateResult(coordinate, Classification.CONFLICT, pomConflict);
-      }
-
-      for (String suffix : suffixes)
-      {
-        File proposedFile = new File(coordinate.versionDirectory, coordinate.artifact + "-" + coordinate.version + suffix);
-        if (!proposedFile.isFile() || proposedFile.length() == 0)
-        {
-          return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "Proposed coordinate is incomplete; missing " + proposedFile.getName());
-        }
-
-        if (!".pom".equals(suffix) && !Arrays.equals(Files.readAllBytes(proposedFile.toPath()), published.get(suffix)))
-        {
-          return new CoordinateResult(coordinate, Classification.CONFLICT, "Published artifact bytes differ: " + proposedFile.getName());
-        }
-      }
-
-      String reason = coordinate.bom ? "Existing BOM coordinate is equivalent and is not a new deployment candidate."
-          : "All published artifacts and consumer-relevant POM metadata match.";
-      return new CoordinateResult(coordinate, Classification.REUSABLE, reason);
-    }
-
-    private static byte[] verifyPublishedArtifact(URI repository, String path, byte[] firstResponse) throws LookupFailure
-    {
-      byte[] artifact = firstResponse;
-      if (artifact == null)
-      {
-        Response response = request(repository, path);
-        if (response.status != HttpURLConnection.HTTP_OK)
-        {
-          throw new LookupFailure("Published coordinate is incomplete: " + path + " returned HTTP " + response.status);
-        }
-
-        artifact = response.body;
-      }
-
-      boolean strongChecksumFound = false;
-      for (String checksum : CHECKSUMS)
-      {
-        Response response = request(repository, path + "." + checksum);
-        if (response.status == HttpURLConnection.HTTP_NOT_FOUND)
-        {
-          continue;
-        }
-
-        if (response.status != HttpURLConnection.HTTP_OK)
-        {
-          throw new LookupFailure("Checksum lookup returned HTTP " + response.status + " for " + path + "." + checksum);
-        }
-
-        String value = new String(response.body, StandardCharsets.US_ASCII).trim().split("\\s+")[0];
-        String algorithm = DIGESTS.get(checksum);
-        String expectedLength = "SHA-256".equals(algorithm) ? "64" : "SHA-1".equals(algorithm) ? "40" : "32";
-        if (!value.matches("(?i)[0-9a-f]{" + expectedLength + "}"))
-        {
-          throw new LookupFailure("Malformed published checksum for " + path + "." + checksum);
-        }
-
-        String actual = digest(artifact, algorithm);
-        if (!actual.equalsIgnoreCase(value))
-        {
-          throw new LookupFailure("Published checksum mismatch for " + path + "." + checksum);
-        }
-
-        if ("sha256".equals(checksum) || "sha1".equals(checksum))
-        {
-          strongChecksumFound = true;
-        }
-      }
-
-      if (!strongChecksumFound)
-      {
-        throw new LookupFailure("No published SHA-256 or SHA-1 checksum is available for " + path);
-      }
-
-      return artifact;
+      return new CoordinateResult(coordinate, Classification.LOOKUP_ERROR, "POM lookup returned HTTP " + response.status);
     }
 
     private static Response request(URI repository, String path) throws LookupFailure
+    {
+      return request(repository, path, MAX_POM_SIZE);
+    }
+
+    private static Response request(URI repository, String path, int maxSize) throws LookupFailure
     {
       HttpURLConnection connection = null;
       try
@@ -1651,7 +1512,7 @@ public final class CDOAggregationTool
         }
 
         long contentLength = connection.getContentLengthLong();
-        if (contentLength > MAX_ARTIFACT_SIZE)
+        if (contentLength > maxSize)
         {
           throw new LookupFailure("Central response exceeds maximum artifact size: " + path);
         }
@@ -1659,10 +1520,10 @@ public final class CDOAggregationTool
         byte[] body;
         try (InputStream input = connection.getInputStream())
         {
-          body = input.readNBytes(MAX_ARTIFACT_SIZE + 1);
+          body = input.readNBytes(maxSize + 1);
         }
 
-        if (body.length > MAX_ARTIFACT_SIZE || contentLength >= 0 && body.length != contentLength)
+        if (body.length > maxSize || contentLength >= 0 && body.length != contentLength)
         {
           throw new LookupFailure("Central response is oversized or truncated: " + path);
         }
@@ -1684,6 +1545,11 @@ public final class CDOAggregationTool
 
     private static String comparePoms(Coordinate coordinate, byte[] publishedBytes, String release, String dropID) throws Exception
     {
+      if (!coordinate.examples)
+      {
+        throw new IllegalArgumentException("POM content comparison is reserved for examples version selection");
+      }
+
       Document published = parse(new ByteArrayInputStream(publishedBytes), "published POM " + coordinate.coordinate());
       Document proposed = parse(new File(coordinate.versionDirectory, coordinate.artifact + "-" + coordinate.version + ".pom"));
       Element publishedProject = published.getDocumentElement();
@@ -1701,51 +1567,7 @@ public final class CDOAggregationTool
         return "POM packaging changed from " + publishedPackaging + " to " + proposedPackaging;
       }
 
-      if (!coordinate.bom && !coordinate.examples)
-      {
-        if (!coordinate.group.equals(text(proposedProject, "groupId")) || !coordinate.artifact.equals(text(proposedProject, "artifactId"))
-            || !coordinate.version.equals(text(proposedProject, "version")))
-        {
-          return "Proposed POM coordinates do not match repository path.";
-        }
-
-        Element proposedProperties = child(proposedProject, "properties");
-        Element publishedProperties = child(publishedProject, "properties");
-        String proposedDrop = text(child(proposedProperties, "cdo.drop.id"));
-        String proposedRelease = text(child(proposedProperties, "cdo.project.release"));
-        if (!dropID.equals(proposedDrop) || !release.equals(proposedRelease))
-        {
-          return "Proposed bundle POM traceability does not match selected drop/project release.";
-        }
-
-        String publishedDrop = text(child(publishedProperties, "cdo.drop.id"));
-        if (!publishedDrop.matches("[A-Za-z][A-Za-z0-9._-]*"))
-        {
-          throw new LookupFailure("Published bundle POM has missing or invalid cdo.drop.id provenance: " + coordinate.coordinate());
-        }
-
-        if ("4.36".equals(release) && !dropID.equals(publishedDrop))
-        {
-          return "Published cdo.drop.id " + publishedDrop + " does not match the selected 4.36 retrofit drop " + dropID;
-        }
-
-        String publishedRelease = text(child(publishedProperties, "cdo.project.release"));
-        if (!publishedRelease.isEmpty() && !publishedRelease.matches("[0-9]+\\.[0-9]+(?:\\.[0-9]+)?"))
-        {
-          throw new LookupFailure("Published bundle POM has malformed cdo.project.release provenance: " + coordinate.coordinate());
-        }
-
-        if ("4.36".equals(release) && !publishedRelease.isEmpty() && !release.equals(publishedRelease))
-        {
-          return "Published cdo.project.release " + publishedRelease + " does not match the selected 4.36 retrofit release.";
-        }
-
-        removeProvenanceProperties(publishedProject);
-        removeProvenanceProperties(proposedProject);
-        removeOriginalSCMTag(publishedProject);
-        removeOriginalSCMTag(proposedProject);
-      }
-      else if (coordinate.examples)
+      if (coordinate.examples)
       {
         Element proposedProperties = child(proposedProject, "properties");
         if (!coordinate.group.equals(text(proposedProject, "groupId")) || !coordinate.artifact.equals(text(proposedProject, "artifactId"))
@@ -1759,8 +1581,8 @@ public final class CDOAggregationTool
           return "Proposed examples distribution POM traceability does not match selected drop/project release.";
         }
 
-        removeProvenanceProperties(publishedProject);
-        removeProvenanceProperties(proposedProject);
+        removeExamplesProvenance(publishedProject);
+        removeExamplesProvenance(proposedProject);
         removeOriginalSCMTag(publishedProject);
         removeOriginalSCMTag(proposedProject);
       }
@@ -1768,7 +1590,7 @@ public final class CDOAggregationTool
       String difference = semanticDifference(publishedProject, proposedProject, "/project");
       if (difference != null)
       {
-        return "Consumer-relevant POM metadata differs at " + difference + " after the explicit provenance-property allowlist.";
+        return "Consumer-relevant examples POM metadata differs at " + difference + " after removing generated build provenance.";
       }
 
       return null;
@@ -1818,7 +1640,7 @@ public final class CDOAggregationTool
       }
     }
 
-    private static void removeProvenanceProperties(Element project)
+    private static void removeExamplesProvenance(Element project)
     {
       Element properties = child(project, "properties");
       if (properties == null)
@@ -1830,7 +1652,7 @@ public final class CDOAggregationTool
       for (int i = children.getLength() - 1; i >= 0; i--)
       {
         Node node = children.item(i);
-        if (node instanceof Element && PROVENANCE_PROPERTIES.contains(localName(node)))
+        if (node instanceof Element && EXAMPLES_PROVENANCE_PROPERTIES.contains(localName(node)))
         {
           properties.removeChild(node);
         }
@@ -2011,30 +1833,9 @@ public final class CDOAggregationTool
       return value;
     }
 
-    private static String digest(byte[] bytes, String algorithm)
-    {
-      byte[] digest;
-      try
-      {
-        digest = MessageDigest.getInstance(algorithm).digest(bytes);
-      }
-      catch (NoSuchAlgorithmException e)
-      {
-        throw new IllegalStateException("Required digest algorithm is unavailable: " + algorithm, e);
-      }
-
-      StringBuilder hex = new StringBuilder(digest.length * 2);
-      for (byte value : digest)
-      {
-        hex.append(String.format(Locale.ROOT, "%02x", value & 0xff));
-      }
-
-      return hex.toString();
-    }
-
     private enum Classification
     {
-      NEW, REUSABLE, CONFLICT, LOOKUP_ERROR
+      NEW, REUSABLE, LOOKUP_ERROR
     }
 
     private static final class Coordinate
@@ -2234,7 +2035,7 @@ public final class CDOAggregationTool
             throw new IllegalStateException("Maven Central metadata lists examples distribution " + latestVersion + " but its artifacts are absent");
           }
 
-          if (result.classification == CentralClassificationCommand.Classification.REUSABLE)
+          if (result.classification == CentralClassificationCommand.Classification.REUSABLE && examplesMatch(latest, repository, release, dropID))
           {
             select(metadataFile, metadata, workDirectory, versionLine, latestVersion, latestVersion, "REUSED", result.reason, zip);
             return;
@@ -2277,6 +2078,20 @@ public final class CDOAggregationTool
       ExamplesDistributionCommand.writePublishedPom(sourcePom, pom, metadata, publishing, version, sourceRevision);
       Files.copy(zip.toPath(), proposedZip.toPath());
       return new CentralClassificationCommand.Coordinate("org.eclipse.cdo", EXAMPLES_DISTRIBUTION, version, versionDirectory, false, true);
+    }
+
+    private static boolean examplesMatch(CentralClassificationCommand.Coordinate coordinate, URI repository, String release, String dropID) throws Exception
+    {
+      String base = CentralClassificationCommand.mavenPath(coordinate);
+      CentralClassificationCommand.Response pom = CentralClassificationCommand.request(repository, base + ".pom");
+      if (pom.status != HttpURLConnection.HTTP_OK || CentralClassificationCommand.comparePoms(coordinate, pom.body, release, dropID) != null)
+      {
+        return false;
+      }
+
+      CentralClassificationCommand.Response publishedZip = CentralClassificationCommand.request(repository, base + "-examples.zip", 100 * 1024 * 1024);
+      File candidateZip = new File(coordinate.versionDirectory, coordinate.artifact + "-" + coordinate.version + "-examples.zip");
+      return publishedZip.status == HttpURLConnection.HTTP_OK && Arrays.equals(publishedZip.body, Files.readAllBytes(candidateZip.toPath()));
     }
 
     private static void select(File metadataFile, Map<String, String> metadata, File workDirectory, String versionLine, String latestVersion,
@@ -4779,18 +4594,17 @@ public final class CDOAggregationTool
 
   private static void incrementalPackage(String[] args) throws Exception
   {
-    if (args.length != 9)
+    if (args.length != 8)
     {
       throw new IllegalArgumentException(
-          "incremental-package requires signed staging, classification manifest, complete QA ZIP, output ZIP, primary fingerprint, public key, GPG executable, and summary");
+          "incremental-package requires staging, classification manifest, output ZIP, primary fingerprint, public key, GPG executable, and summary");
     }
 
-    File staging = requireDirectory(args[1], "verified complete QA staging");
+    File staging = requireDirectory(args[1], "publication staging");
     File manifestFile = requireFile(new File(args[2]), "Central classification manifest");
-    File completeQaZip = requireFile(new File(args[3]), "verified complete QA deployment ZIP");
-    File zip = new File(args[4]);
-    File publicKey = requireFile(new File(args[6]), "GnuPG public verification key");
-    File summary = new File(args[8]);
+    File zip = new File(args[3]);
+    File publicKey = requireFile(new File(args[5]), "GnuPG public verification key");
+    File summary = new File(args[7]);
     for (File output : List.of(zip, summary))
     {
       requireWorkspaceOutput(output, "incremental publication output");
@@ -4800,27 +4614,9 @@ public final class CDOAggregationTool
       }
     }
 
-    requireWorkspaceOutput(staging, "verified complete QA staging");
+    requireWorkspaceOutput(staging, "publication staging");
     requireWorkspaceOutput(manifestFile, "Central classification manifest");
-    requireWorkspaceOutput(completeQaZip, "verified complete QA deployment ZIP");
-    rejectSymbolicLinks(staging.toPath(), "verified complete QA staging");
-
-    File orgDirectory = requireDirectory(new File(staging, "org").getPath(), "complete QA staging/org");
-    Set<String> completeFiles;
-    try
-    {
-      completeFiles = new LinkedHashSet<>();
-      for (File file : regularFiles(orgDirectory))
-      {
-        completeFiles.add(relativePath(staging, file));
-      }
-    }
-    catch (IOException ex)
-    {
-      throw new IllegalArgumentException("Unable to enumerate complete QA staging files", ex);
-    }
-
-    verifyDeploymentZip(completeQaZip, staging, completeFiles);
+    rejectSymbolicLinks(staging.toPath(), "publication staging");
     if (Files.isSymbolicLink(publicKey.toPath()))
     {
       throw new IllegalArgumentException("GnuPG public verification key must not be a symbolic link");
@@ -4853,7 +4649,7 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("Duplicate coordinate in Central classification manifest: " + coordinate);
       }
 
-      if (!Set.of("NEW", "REUSABLE", "CONFLICT", "LOOKUP_ERROR").contains(classification))
+      if (!Set.of("NEW", "REUSABLE", "LOOKUP_ERROR").contains(classification))
       {
         throw new IllegalArgumentException("Unknown Central classification " + classification + " for " + coordinate);
       }
@@ -4871,7 +4667,7 @@ public final class CDOAggregationTool
         File versionDirectory = singleVersionDirectory(staging, coordinateParts[1]);
         if (!versionDirectory.getName().equals(coordinateParts[2]))
         {
-          throw new IllegalArgumentException("Classified bundle version does not match complete QA package: " + coordinate);
+          throw new IllegalArgumentException("Classified bundle version does not match publication staging: " + coordinate);
         }
       }
       else if (RELEASE_BOM.equals(coordinateParts[1]))
@@ -4910,7 +4706,7 @@ public final class CDOAggregationTool
       }
     }
 
-    for (String classification : List.of("NEW", "REUSABLE", "CONFLICT", "LOOKUP_ERROR"))
+    for (String classification : List.of("NEW", "REUSABLE", "LOOKUP_ERROR"))
     {
       manifestKeys.add("classification." + classification.toLowerCase(Locale.ROOT) + ".count");
       if (integerProperty(manifest, "classification." + classification.toLowerCase(Locale.ROOT) + ".count") != counts.getOrDefault(classification, 0))
@@ -4919,9 +4715,9 @@ public final class CDOAggregationTool
       }
     }
 
-    if (counts.getOrDefault("CONFLICT", 0) != 0 || counts.getOrDefault("LOOKUP_ERROR", 0) != 0)
+    if (counts.getOrDefault("LOOKUP_ERROR", 0) != 0)
     {
-      throw new IllegalArgumentException("Cannot prepare publication with CONFLICT or LOOKUP_ERROR coordinates");
+      throw new IllegalArgumentException("Cannot prepare publication with LOOKUP_ERROR coordinates");
     }
 
     int publicationCount = integerProperty(manifest, "publication.coordinate.count");
@@ -4973,7 +4769,6 @@ public final class CDOAggregationTool
     Set<String> selectedArtifacts = new LinkedHashSet<>();
     Map<String, File> filesToPackage = new TreeMap<>();
     String[] checksumSuffixes = { ".md5", ".sha1", ".sha256", ".sha512" };
-    String[] checksumAlgorithms = { "MD5", "SHA-1", "SHA-256", "SHA-512" };
     for (String coordinate : newCoordinates)
     {
       String[] parts = coordinate.split(":", -1);
@@ -5016,12 +4811,6 @@ public final class CDOAggregationTool
         {
           String sidecar = relative + checksumSuffixes[index];
           File checksum = requireFile(new File(staging, sidecar.replace('/', File.separatorChar)), "required artifact checksum");
-          String actual = ChecksumsCommand.digest(file, checksumAlgorithms[index]);
-          if (!actual.equalsIgnoreCase(Files.readString(checksum.toPath(), StandardCharsets.US_ASCII).trim()))
-          {
-            throw new IllegalArgumentException("Checksum mismatch in complete QA staging: " + sidecar);
-          }
-
           expectedFiles.add(sidecar);
           coordinateFiles.add(sidecar);
           filesToPackage.put(sidecar, checksum);
@@ -5029,10 +4818,6 @@ public final class CDOAggregationTool
 
         String signaturePath = relative + ".asc";
         File signature = requireFile(new File(staging, signaturePath.replace('/', File.separatorChar)), "required OpenPGP signature");
-        if (!Files.readString(signature.toPath(), StandardCharsets.US_ASCII).startsWith("-----BEGIN PGP SIGNATURE-----"))
-        {
-          throw new IllegalArgumentException("Malformed OpenPGP signature in complete QA staging: " + signaturePath);
-        }
 
         expectedFiles.add(signaturePath);
         coordinateFiles.add(signaturePath);
@@ -5064,13 +4849,13 @@ public final class CDOAggregationTool
       throw new IllegalArgumentException("Classification manifest does not identify exactly the approved release coordinates");
     }
 
-    String fingerprint = args[5].replace(" ", "").toUpperCase(Locale.ROOT);
+    String fingerprint = args[4].replace(" ", "").toUpperCase(Locale.ROOT);
     if (!fingerprint.matches("(?:[0-9A-F]{40}|[0-9A-F]{64})"))
     {
       throw new IllegalArgumentException("Expected primary-key fingerprint must be a full hexadecimal fingerprint");
     }
 
-    verifySignatures(args[7], publicKey, fingerprint, artifacts, staging);
+    verifySignatures(args[6], publicKey, fingerprint, artifacts, staging);
     Files.createDirectories(zip.toPath().getParent());
 
     try

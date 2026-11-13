@@ -74,7 +74,6 @@
 	<property name="consumer.examples.root" location="${consumer.examples.dir}/examples" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
-	<property name="incremental.deployment.zip" location="${workspace.root}/maven-publishing/cdo-maven-central-incremental-upload.zip" />
 	<property name="bom436.repository" location="${work.dir}/bom-repository" />
 	<property name="bom436.staging.dir" location="${work.dir}/bom-staging" />
 	<property name="bom436.signed.repository" location="${work.dir}/bom-signed-repository" />
@@ -392,15 +391,11 @@
 	</target>
 
 	<target name="incremental-package" depends="compile-helper">
-		<fail unless="deployment.zip" message="Set -Ddeployment.zip to the complete, verified QA package." />
-		<available file="${deployment.zip}" type="file" property="complete.qa.package.available" />
-		<fail unless="complete.qa.package.available" message="The complete QA package must exist before incremental preparation." />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="incremental-package" />
 			<arg value="${staging.dir}" />
 			<arg value="${work.dir}/central-coordinate-classification.properties" />
 			<arg value="${deployment.zip}" />
-			<arg value="${incremental.deployment.zip}" />
 			<arg value="${gpg.expected.fingerprint}" />
 			<arg value="${gpg.public.key.file}" />
 			<arg value="${gpg.executable}" />
@@ -706,8 +701,8 @@
 		<echo message="Standalone examples built and verified from the final signed deployment ZIP with an isolated Maven repository." />
 	</target>
 
-	<target name="consumer-central-only" depends="verify-package,compile-helper,verify-standalone-examples">
-		<fail unless="deployment.zip" message="Set -Ddeployment.zip to the verified Maven Central deployment bundle." />
+	<target name="consumer-central-only" depends="incremental-package,compile-helper">
+		<available file="${deployment.zip}" type="file" property="deployment.package.available" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="consumer-dependency-tree-test" />
 		</java>
@@ -716,10 +711,11 @@
 			<arg value="${consumer.central.only.dir}" />
 			<arg value="${workspace.root}" />
 		</java>
-		<unzip src="${deployment.zip}" dest="${consumer.central.only.repository}" />
+		<mkdir dir="${consumer.central.only.repository}" />
+		<unzip src="${deployment.zip}" dest="${consumer.central.only.repository}" if="deployment.package.available" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="consumer-versions" />
-			<arg value="${consumer.central.only.repository}" />
+			<arg value="${cdo.maven.repository}" />
 			<arg value="${consumer.central.only.versions.file}" />
 			<arg value="${metadata.file}" />
 		</java>

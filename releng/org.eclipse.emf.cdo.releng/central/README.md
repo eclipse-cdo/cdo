@@ -301,7 +301,12 @@ spaces):
 ```powershell
 $repository = Join-Path $PWD 'deployment-repository'
 Expand-Archive -LiteralPath .\cdo-maven-central-deployment.zip -DestinationPath $repository
-$examplesZip = Get-ChildItem (Join-Path $repository 'org\eclipse\cdo\cdo-examples-distribution\1.0.0\*-examples.zip')
+$examplesArtifact = 'cdo-examples-distribution'
+$examplesVersionDirectories = @(Get-ChildItem (Join-Path $repository "org\eclipse\cdo\$examplesArtifact") -Directory)
+if ($examplesVersionDirectories.Count -ne 1) { throw 'Expected exactly one examples distribution version directory.' }
+$examplesVersionDirectory = $examplesVersionDirectories[0]
+$examplesVersion = $examplesVersionDirectory.Name
+$examplesZip = Get-ChildItem (Join-Path $examplesVersionDirectory.FullName "$examplesArtifact-$examplesVersion-examples.zip")
 $examples = Join-Path $PWD 'standalone-examples'
 Expand-Archive -LiteralPath $examplesZip.FullName -DestinationPath $examples
 $repositoryUri = ([System.Uri]::new((Resolve-Path $repository).Path)).AbsoluteUri
@@ -312,7 +317,8 @@ On a Unix-like Maven environment, use the corresponding `file:` URI:
 
 ```sh
 unzip -q cdo-maven-central-deployment.zip -d deployment-repository
-unzip -q deployment-repository/org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip -d standalone-examples
+examples_version=$(find deployment-repository/org/eclipse/cdo/cdo-examples-distribution -mindepth 1 -maxdepth 1 -type d -printf '%f\n')
+unzip -q "deployment-repository/org/eclipse/cdo/cdo-examples-distribution/$examples_version/cdo-examples-distribution-$examples_version-examples.zip" -d standalone-examples
 mvn -Dmaven.repo.local="$PWD/maven-local" -Dcdo.deployment.repository="file://$(realpath deployment-repository)" \
   -B -ntp -f standalone-examples/pom.xml clean verify
 ```
@@ -417,22 +423,28 @@ later signing/release steps.
 
 ## Read-only Central coordinate classification
 
-After preparing the normal bundle repository and the separate temporary BOM repository, run
-`ant -Dcdo.drop.location=<selected-drop> -Dwork.dir=<workspace-local-work> -f build.xml classify-central`.
-The target compares every approved bundle coordinate and the project-release BOM against the
-canonical Maven Central repository. It writes
+After preparing the normal bundle repository, separate temporary BOM repository, and signed
+examples distribution staging, run `ant -Dcdo.drop.location=<selected-drop>
+-Dwork.dir=<workspace-local-work> -Dstaging.dir=<complete-signed-staging> -f build.xml
+classify-central`. The target compares all 21 approved bundles, the project-release BOM, and the
+independently versioned examples distribution against canonical Maven Central. It writes
 `<work.dir>/central-coordinate-classification.properties` in deterministic release-inventory
 order. `release.component.*` records the complete BOM-managed release inventory and each
 `NEW`, `REUSABLE`, `CONFLICT`, or `LOOKUP_ERROR` result. `publication.coordinate.*` lists only
-coordinates classified `NEW`. Any conflict or lookup error fails the Ant target after writing
-the report. This command is read-only with respect to Central and does not change signed staging.
+coordinates classified `NEW`. It also reports counts for all four statuses. Any conflict or
+lookup error fails the Ant target after writing the report. This command is read-only with respect
+to Central and does not change signed staging.
 
-The only POM properties treated as publication provenance are `cdo.drop.id` and
-`cdo.project.release`. For an existing 4.36 bundle coordinate, a missing published
+POM comparison ignores only the explicit build-provenance properties `cdo.drop.id`,
+`cdo.project.release`, `cdo.project.release.source`, `cdo.git.commit`, `cdo.build.branch`,
+`cdo.build.stream`, `cdo.build.timestamp`, `cdo.build.trigger`, `cdo.build.type`, and
+`cdo.examples.source.git.commit`; for bundle coordinates it also ignores the SCM tag, which
+identifies the original source build. For an existing 4.36 bundle coordinate, a missing published
 `cdo.project.release` is allowed, while a present value must identify 4.36 and the published
 `cdo.drop.id` must match the selected 4.36 drop. For later releases, those two properties may
-retain valid original-publication values; all other POM metadata, including unknown properties,
-must remain semantically equivalent. Bundle JARs, sources JARs, and Javadoc JARs must match
+retain valid original-publication values; other listed provenance may also identify that build.
+All other POM metadata, including unknown properties, must remain semantically equivalent.
+Bundle JARs, sources JARs, and Javadoc JARs must match
 byte-for-byte and validate against available published checksums. Existing bundle POMs are never
 rewritten.
 
@@ -440,8 +452,23 @@ An existing BOM is reported as `REUSABLE` only if its POM and checksum are valid
 metadata matches. Its report reason explicitly excludes it from new publication candidates. An
 incompatible existing BOM is `CONFLICT`; it is never treated as an unpublished coordinate.
 
-The classification target is a separate pre-deployment check. Signing and ZIP packaging do not
-consume its report yet.
+`PACKAGE` first verifies the complete signed QA repository and deployment ZIP, then classifies
+Central coordinates. The complete deployment ZIP remains the artifact used for consumer and
+standalone examples verification. The `incremental-package` target consumes the resulting manifest
+and signed staging to create a separate `cdo-maven-central-incremental-upload.zip` containing only
+`NEW` coordinates. It verifies the manifest counts and inventory, required artifact checksums,
+OpenPGP signatures, exact ZIP entries, and byte identity with QA staging. If every coordinate is
+`REUSABLE`, it records `incremental.publication=NOT_REQUIRED` and creates no upload ZIP. Neither
+package workflow uploads or publishes artifacts.
+
+The examples distribution patch line is controlled in
+`examples/distribution/package.properties` with `release.version.line`. Before final staging, the
+PACKAGE workflow reads Central metadata and validates the latest published coordinate. It reuses
+that patch version when its ZIP bytes and consumer-relevant POM semantics match; otherwise, it
+selects the next numeric patch. The selector fails closed on incomplete coordinates, invalid
+checksums, unreliable metadata, or a collision at the next patch. The embedded portable POM carries
+the selected CDO release BOM, so a BOM change naturally changes ZIP content and advances the
+examples patch version. The configured major/minor line never changes automatically.
 
 ## Historical CDO 4.36 BOM-only package
 

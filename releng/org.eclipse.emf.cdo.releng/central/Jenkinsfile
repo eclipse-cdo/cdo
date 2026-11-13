@@ -436,7 +436,7 @@ pipeline {
                   javadoc="$version_dir/$artifact-$version-javadoc.jar"
                   if [ "$artifact" = cdo-examples-distribution ]; then
                     zipfile="$version_dir/$artifact-$version-examples.zip"
-                    test "$version" = 1.0.0 && test -s "$zipfile"
+                    test -s "$zipfile"
                     mvn -N --batch-mode --no-transfer-progress -Dmaven.repo.local="$MAVEN_SIGNER_REPO" org.apache.maven.plugins:maven-gpg-plugin:3.2.8:sign-and-deploy-file -Dgpg.bestPractices="$gpg_best_practices" -Dgpg.signer=bc -Dgpg.keyFilePath="$MAVEN_GPG_KEY_FILE" -Dgpg.keyFingerprint="$signing_fingerprint" -Dfile="$zipfile" -DpomFile="$pom" -Dclassifier=examples -Dpackaging=zip -DrepositoryId=cdo-local-central-bundle -Durl="file://$CENTRAL_REPO"
                     continue
                   fi
@@ -516,6 +516,13 @@ pipeline {
                     exit 2
                   fi
                   ant -Dpublishing.mode=PACKAGE -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" -f releng/org.eclipse.emf.cdo.releng/central/build.xml consumer-central-only
+                  ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dstaging.dir="$STAGING_DIR" \
+                    -Dcdo.maven.repository="$CENTRAL_REPO" -Dcentral.repository.url=https://repo.maven.apache.org/maven2/ \
+                    -f releng/org.eclipse.emf.cdo.releng/central/build.xml classify-central
+                  ant -Dworkspace.root="$CDO_WORKSPACE_ROOT" -Dwork.dir="$AGGR_WORK_DIR" -Dstaging.dir="$STAGING_DIR" \
+                    -Ddeployment.zip="$BUNDLE_PATH" -Dgpg.expected.fingerprint="$GPG_FINGERPRINT" \
+                    -Dgpg.public.key.file="$GPG_PUBLIC_KEY_FILE" -Dgpg.executable="$GPG_EXECUTABLE" \
+                    -f releng/org.eclipse.emf.cdo.releng/central/build.xml incremental-package
                 '''
               }
           }
@@ -614,14 +621,19 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts artifacts: 'maven-publishing/work/staging/maven-publishing-summary.properties,maven-publishing/work/maven-publishing-package-summary.properties,maven-publishing/work/bom-436-package-summary.properties,maven-publishing/work/maven-central-readiness-audit.txt',
+      archiveArtifacts artifacts: 'maven-publishing/work/cdo-build-metadata.properties,maven-publishing/work/examples-version-selection.properties,maven-publishing/work/staging/maven-publishing-summary.properties,maven-publishing/work/maven-publishing-package-summary.properties,maven-publishing/work/incremental-publication-summary.properties,maven-publishing/work/central-coordinate-classification.properties,maven-publishing/work/maven-central-readiness-audit.txt',
         allowEmptyArchive: true
+      script {
+        if (params.PUBLISHING_MODE == 'PACKAGE') {
+          archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-deployment.zip', allowEmptyArchive: true
+        }
+      }
     }
 
     success {
       script {
         if (params.PUBLISHING_MODE == 'PACKAGE') {
-          archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-deployment.zip', allowEmptyArchive: false
+          archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-incremental-upload.zip', allowEmptyArchive: true
         }
         if (params.PUBLISHING_MODE == 'PACKAGE_BOM_436_FOR_CENTRAL') {
           archiveArtifacts artifacts: 'maven-publishing/cdo-maven-central-bom-4.36-deployment.zip', allowEmptyArchive: false

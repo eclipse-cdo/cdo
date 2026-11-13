@@ -6,12 +6,13 @@
 
   <groupId>org.eclipse.cdo</groupId>
   <artifactId>cdo-examples-distribution</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>${revision}</version>
   <packaging>pom</packaging>
 
   <properties>
     <examples.cdo.project.release>4.36.0</examples.cdo.project.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.outputTimestamp>2000-01-01T00:00:00Z</project.build.outputTimestamp>
   </properties>
 
   <name>CDO Plain Java Examples Distribution</name>

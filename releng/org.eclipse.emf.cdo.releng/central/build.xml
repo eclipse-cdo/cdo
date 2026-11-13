@@ -22,6 +22,7 @@
 	<property name="publishing.mode" value="VALIDATE" />
 	<property name="override.release.version" value="" />
 	<property name="central.repository.url" value="https://repo.maven.apache.org/maven2/" />
+	<property file="${basedir}/examples/distribution/package.properties" />
 	
 	
 	<!-- Source cache used only to isolate and populate the consumer-test Maven repository. -->
@@ -67,11 +68,13 @@
 	<property name="consumer.central.only.maven.repository" location="${consumer.central.only.dir}/maven-local" />
 	<property name="consumer.central.only.versions.file" location="${consumer.central.only.dir}/cdo-consumer-versions.properties" />
 	<property name="consumer.central.only.tree.file" location="${consumer.central.only.dir}/dependency-tree.txt" />
-	<property name="consumer.examples.dir" location="${work.dir}/consumer-standalone-examples" />
+	<!-- Extra path depth keeps checkout-relative example profiles away from the source checkout. -->
+	<property name="consumer.examples.dir" location="${work.dir}/consumer-standalone-examples/portable-check" />
 	<property name="consumer.examples.maven.repository" location="${consumer.examples.dir}/maven-local" />
 	<property name="consumer.examples.root" location="${consumer.examples.dir}/examples" />
 	<property name="audit.report" location="${work.dir}/maven-central-readiness-audit.txt" />
 	<property name="staging.dir" location="${work.dir}/staging" />
+	<property name="incremental.deployment.zip" location="${workspace.root}/maven-publishing/cdo-maven-central-incremental-upload.zip" />
 	<property name="bom436.repository" location="${work.dir}/bom-repository" />
 	<property name="bom436.staging.dir" location="${work.dir}/bom-staging" />
 	<property name="bom436.signed.repository" location="${work.dir}/bom-signed-repository" />
@@ -208,6 +211,7 @@
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="publication-scope-check" />
 			<arg value="${staging.dir}" />
+			<arg value="${metadata.file}" />
 		</java>
 	</target>
 
@@ -383,6 +387,24 @@
 			<arg value="${metadata.file}" />
 			<arg value="${work.dir}/central-coordinate-classification.properties" />
 			<arg value="${central.repository.url}" />
+			<arg value="${staging.dir}" />
+		</java>
+	</target>
+
+	<target name="incremental-package" depends="compile-helper">
+		<fail unless="deployment.zip" message="Set -Ddeployment.zip to the complete, verified QA package." />
+		<available file="${deployment.zip}" type="file" property="complete.qa.package.available" />
+		<fail unless="complete.qa.package.available" message="The complete QA package must exist before incremental preparation." />
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="incremental-package" />
+			<arg value="${staging.dir}" />
+			<arg value="${work.dir}/central-coordinate-classification.properties" />
+			<arg value="${deployment.zip}" />
+			<arg value="${incremental.deployment.zip}" />
+			<arg value="${gpg.expected.fingerprint}" />
+			<arg value="${gpg.public.key.file}" />
+			<arg value="${gpg.executable}" />
+			<arg value="${work.dir}/incremental-publication-summary.properties" />
 		</java>
 	</target>
 
@@ -457,6 +479,7 @@
 		<exec executable="${maven.executable}" dir="${basedir}/examples/distribution" failifexecutionfails="true" failonerror="true">
 			<arg value="-B" />
 			<arg value="-DskipTests" />
+			<arg value="-Drevision=${release.version.line}-SNAPSHOT" />
 			<arg value="-Dexamples.cdo.project.release=${examples.cdo.project.release}" />
 			<arg value="package" />
 		</exec>
@@ -465,10 +488,21 @@
 			<arg value="HEAD" />
 		</exec>
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="select-examples-version" />
+			<arg value="${basedir}/examples/distribution/target/cdo-examples-distribution-${release.version.line}-SNAPSHOT-examples.zip" />
+			<arg value="${basedir}/examples/distribution/pom.xml" />
+			<arg value="${metadata.file}" />
+			<arg value="${publishing.metadata.file}" />
+			<arg value="${examples.source.revision}" />
+			<arg value="${central.repository.url}" />
+			<arg value="${work.dir}" />
+			<arg value="${basedir}/examples/distribution/package.properties" />
+		</java>
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="stage-examples-distribution" />
 			<arg value="${workspace.root}" />
 			<arg value="${cdo.maven.repository}" />
-			<arg value="${basedir}/examples/distribution/target/cdo-examples-distribution-1.0.0-SNAPSHOT-examples.zip" />
+			<arg value="${basedir}/examples/distribution/target/cdo-examples-distribution-${release.version.line}-SNAPSHOT-examples.zip" />
 			<arg value="${basedir}/examples/distribution/pom.xml" />
 			<arg value="${metadata.file}" />
 			<arg value="${publishing.metadata.file}" />
@@ -622,6 +656,33 @@
 			<arg value="${metadata.file}" />
 		</java>
 		<loadfile property="consumer.examples.repository.url" srcFile="${consumer.examples.dir}/deployment-repository-url.txt" />
+		<macrodef name="check-portable-example-profiles">
+			<attribute name="module" />
+			<sequential>
+				<exec executable="${maven.executable}" dir="${consumer.examples.root}/@{module}" failifexecutionfails="true" failonerror="true" output="${consumer.examples.dir}/active-profiles-@{module}.txt">
+					<arg value="-gs" />
+					<arg value="${basedir}/standalone-examples-settings.xml" />
+					<arg value="-s" />
+					<arg value="${basedir}/standalone-examples-settings.xml" />
+					<arg value="-Dmaven.repo.local=${consumer.examples.maven.repository}" />
+					<arg value="-Dcdo.deployment.repository=${consumer.examples.repository.url}" />
+					<arg value="help:active-profiles" />
+					<env key="CDO_DEPLOYMENT_REPOSITORY" value="${consumer.examples.repository.url}" />
+					<env key="CDO_CENTRAL_REPOSITORY" value="${central.repository.url}" />
+				</exec>
+				<loadfile property="active.profiles.@{module}" srcFile="${consumer.examples.dir}/active-profiles-@{module}.txt" />
+				<condition property="checkout.profile.active.@{module}">
+					<or>
+						<contains string="${active.profiles.@{module}}" substring="checkout-central-repository" />
+						<contains string="${active.profiles.@{module}}" substring="checkout-source-copy" />
+					</or>
+				</condition>
+				<fail if="checkout.profile.active.@{module}" message="A checkout-specific profile is active for packaged module @{module}" />
+			</sequential>
+		</macrodef>
+		<check-portable-example-profiles module="embedded-h2" />
+		<check-portable-example-profiles module="remote-server" />
+		<check-portable-example-profiles module="remote-client" />
 		<exec executable="${maven.executable}" dir="${consumer.examples.root}" failifexecutionfails="true" failonerror="true">
 			<arg value="-gs" />
 			<arg value="${basedir}/standalone-examples-settings.xml" />

@@ -114,7 +114,9 @@ public final class CDOAggregationTool
 
   private static final String EXAMPLES_DISTRIBUTION = "cdo-examples-distribution";
 
-  private static final String EXAMPLES_DISTRIBUTION_VERSION = "1.0.0";
+  private static final String EXAMPLES_DISTRIBUTION_VERSION_LINE = loadExamplesDistributionVersionLine();
+
+  private static String EXAMPLES_DISTRIBUTION_VERSION = EXAMPLES_DISTRIBUTION_VERSION_LINE + ".0";
 
   private static final String RELEASE_BOM = "org.eclipse.cdo.bom";
 
@@ -138,12 +140,82 @@ public final class CDOAggregationTool
   {
   }
 
+  private static String loadExamplesDistributionVersionLine()
+  {
+    List<Path> candidates = List.of(Paths.get("examples/distribution/package.properties"), Paths.get("central/examples/distribution/package.properties"),
+        Paths.get("releng/org.eclipse.emf.cdo.releng/central/examples/distribution/package.properties"));
+    for (Path candidate : candidates)
+    {
+      if (Files.isRegularFile(candidate))
+      {
+        Properties properties = new Properties();
+        try (InputStream input = Files.newInputStream(candidate))
+        {
+          properties.load(input);
+        }
+        catch (IOException ex)
+        {
+          throw new ExceptionInInitializerError(ex);
+        }
+
+        String versionLine = properties.getProperty("release.version.line");
+        if (versionLine == null || !versionLine.matches("[0-9]+\\.[0-9]+"))
+        {
+          throw new ExceptionInInitializerError("Invalid release.version.line in " + candidate);
+        }
+
+        return versionLine;
+      }
+    }
+
+    throw new ExceptionInInitializerError("Unable to locate examples/distribution/package.properties");
+  }
+
+  private static void loadSelectedExamplesDistributionVersion(String[] args) throws IOException
+  {
+    EXAMPLES_DISTRIBUTION_VERSION = EXAMPLES_DISTRIBUTION_VERSION_LINE + ".0";
+    String selectedVersion = System.getProperty("cdo.examples.distribution.version");
+    if (selectedVersion == null)
+    {
+      for (String argument : args)
+      {
+        if (argument.endsWith(".properties") && Files.isRegularFile(Paths.get(argument)))
+        {
+          Properties properties = new Properties();
+          try (InputStream input = Files.newInputStream(Paths.get(argument)))
+          {
+            properties.load(input);
+          }
+
+          selectedVersion = properties.getProperty("examples.distribution.version");
+          if (selectedVersion != null)
+          {
+            break;
+          }
+        }
+      }
+    }
+
+    if (selectedVersion != null)
+    {
+      if (!selectedVersion.matches(Pattern.quote(EXAMPLES_DISTRIBUTION_VERSION_LINE) + "\\.[0-9]+"))
+      {
+        throw new IllegalArgumentException(
+            "Selected examples distribution version is outside configured line " + EXAMPLES_DISTRIBUTION_VERSION_LINE + ": " + selectedVersion);
+      }
+
+      EXAMPLES_DISTRIBUTION_VERSION = selectedVersion;
+    }
+  }
+
   public static void main(String[] args) throws Exception
   {
+    loadSelectedExamplesDistributionVersion(args);
+
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|prepare-metadata-test|overlay|generate-bom|stage-release-bom|prepare-standalone-examples|verify-standalone-provenance|generate-bom-436|stage-bom-436|check-bom-central|verify-bom-package|classify-central|verify|platform-version-range-test|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|derive-release-inventory|central-verify-prepare|central-verify-report|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|stage-examples-distribution|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|prepare-metadata-test|overlay|generate-bom|stage-release-bom|prepare-standalone-examples|verify-standalone-provenance|generate-bom-436|stage-bom-436|check-bom-central|verify-bom-package|classify-central|verify|platform-version-range-test|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|derive-release-inventory|central-verify-prepare|central-verify-report|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|select-examples-version|stage-examples-distribution|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -279,6 +351,10 @@ public final class CDOAggregationTool
       ExamplesDistributionCommand.execute(args);
       break;
 
+    case "select-examples-version":
+      ExamplesDistributionVersionCommand.execute(args);
+      break;
+
     case "publish-check":
       PublishCheckCommand.execute(args);
       break;
@@ -293,6 +369,10 @@ public final class CDOAggregationTool
 
     case "verify-package":
       verifyPackage(args);
+      break;
+
+    case "incremental-package":
+      incrementalPackage(args);
       break;
 
     case "resolve-signing-subkey-fingerprint":
@@ -1225,16 +1305,17 @@ public final class CDOAggregationTool
 
     private static final Map<String, String> DIGESTS = Map.of("sha256", "SHA-256", "sha1", "SHA-1", "md5", "MD5");
 
-    private static final Set<String> PROVENANCE_PROPERTIES = Set.of("cdo.drop.id", "cdo.project.release", "cdo.project.release.source");
+    private static final Set<String> PROVENANCE_PROPERTIES = Set.of("cdo.drop.id", "cdo.project.release", "cdo.project.release.source", "cdo.git.commit",
+        "cdo.build.branch", "cdo.build.stream", "cdo.build.timestamp", "cdo.build.trigger", "cdo.build.type", "cdo.examples.source.git.commit");
 
     private static final int MAX_ARTIFACT_SIZE = 100 * 1024 * 1024;
 
     public static void execute(String[] args) throws Exception
     {
-      if (args.length != 6)
+      if (args.length != 6 && args.length != 7)
       {
         throw new IllegalArgumentException(
-            "classify-central requires bundle repository, BOM repository, build metadata, report file, and Central repository URL");
+            "classify-central requires bundle repository, BOM repository, build metadata, report, Central URL, and optional signed examples staging");
       }
 
       File bundles = requireDirectory(args[1], "approved bundle repository");
@@ -1250,7 +1331,8 @@ public final class CDOAggregationTool
       String dropID = metadataValue(metadata, "cdo.drop.id");
       String bomVersion = BomCommand.normalizeProjectReleaseVersion(release);
       URI repository = repositoryURI(args[5]);
-      List<Coordinate> inventory = collectInventory(bundles, bomRepository, release, dropID, bomVersion);
+      File examplesRepository = args.length == 7 ? requireDirectory(args[6], "signed examples distribution repository") : bundles;
+      List<Coordinate> inventory = collectInventory(bundles, bomRepository, examplesRepository, release, dropID, bomVersion);
       List<CoordinateResult> results = new ArrayList<>();
       for (Coordinate coordinate : inventory)
       {
@@ -1260,12 +1342,18 @@ public final class CDOAggregationTool
       writeReport(report, release, dropID, inventory, results);
       long failures = results.stream()
           .filter(result -> result.classification == Classification.CONFLICT || result.classification == Classification.LOOKUP_ERROR).count();
-      System.out.println("Central coordinate classification report: " + report + "; components=" + inventory.size() + "; new="
-          + results.stream().filter(result -> result.classification == Classification.NEW).count() + "; conflicts/errors=" + failures + ".");
+      System.out.println("Central coordinate classification report: " + report + "; total=" + inventory.size() + "; NEW=" + count(results, Classification.NEW)
+          + "; REUSABLE=" + count(results, Classification.REUSABLE) + "; CONFLICT=" + count(results, Classification.CONFLICT) + "; LOOKUP_ERROR="
+          + count(results, Classification.LOOKUP_ERROR) + ".");
       if (failures != 0)
       {
         throw new IllegalStateException("Central classification found " + failures + " conflict(s) or lookup error(s); see " + report);
       }
+    }
+
+    private static long count(List<CoordinateResult> results, Classification classification)
+    {
+      return results.stream().filter(result -> result.classification == classification).count();
     }
 
     private static URI repositoryURI(String value)
@@ -1284,7 +1372,8 @@ public final class CDOAggregationTool
       return uri;
     }
 
-    private static List<Coordinate> collectInventory(File bundles, File bomRepository, String release, String dropID, String bomVersion) throws Exception
+    private static List<Coordinate> collectInventory(File bundles, File bomRepository, File examplesRepository, String release, String dropID,
+        String bomVersion) throws Exception
     {
       List<Coordinate> inventory = new ArrayList<>();
       Map<String, String> versions = new LinkedHashMap<>();
@@ -1313,6 +1402,13 @@ public final class CDOAggregationTool
         versions.put(bundle, version);
         inventory.add(new Coordinate("org.eclipse.cdo", bundle, version, versionDirectory, false));
       }
+
+      File examplesDirectory = new File(examplesRepository, "org/eclipse/cdo/" + EXAMPLES_DISTRIBUTION + "/" + EXAMPLES_DISTRIBUTION_VERSION);
+      File examplesPom = requireFile(new File(examplesDirectory, EXAMPLES_DISTRIBUTION + "-" + EXAMPLES_DISTRIBUTION_VERSION + ".pom"),
+          "examples distribution POM");
+      validateCoordinatePom(examplesPom, "org.eclipse.cdo", EXAMPLES_DISTRIBUTION, EXAMPLES_DISTRIBUTION_VERSION, true, release, dropID);
+      requireFile(new File(examplesDirectory, EXAMPLES_DISTRIBUTION + "-" + EXAMPLES_DISTRIBUTION_VERSION + "-examples.zip"), "examples distribution ZIP");
+      inventory.add(new Coordinate("org.eclipse.cdo", EXAMPLES_DISTRIBUTION, EXAMPLES_DISTRIBUTION_VERSION, examplesDirectory, false, true));
 
       File bomVersionDirectory = new File(bomRepository, "org/eclipse/cdo/org.eclipse.cdo.bom/" + bomVersion);
       File bomPom = requireFile(new File(bomVersionDirectory, "org.eclipse.cdo.bom-" + bomVersion + ".pom"), "generated BOM POM");
@@ -1369,7 +1465,8 @@ public final class CDOAggregationTool
 
     private static CoordinateResult classifyExisting(Coordinate coordinate, URI repository, String release, String dropID) throws Exception
     {
-      List<String> suffixes = coordinate.bom ? List.of(".pom") : List.of(".pom", ".jar", "-sources.jar", "-javadoc.jar");
+      List<String> suffixes = coordinate.bom ? List.of(".pom")
+          : coordinate.examples ? List.of(".pom", "-examples.zip") : List.of(".pom", ".jar", "-sources.jar", "-javadoc.jar");
       String base = mavenPath(coordinate);
       Response pomResponse = request(repository, base + ".pom");
       if (pomResponse.status == HttpURLConnection.HTTP_NOT_FOUND)
@@ -1594,7 +1691,7 @@ public final class CDOAggregationTool
         return "POM packaging changed from " + publishedPackaging + " to " + proposedPackaging;
       }
 
-      if (!coordinate.bom)
+      if (!coordinate.bom && !coordinate.examples)
       {
         if (!coordinate.group.equals(text(proposedProject, "groupId")) || !coordinate.artifact.equals(text(proposedProject, "artifactId"))
             || !coordinate.version.equals(text(proposedProject, "version")))
@@ -1635,6 +1732,27 @@ public final class CDOAggregationTool
 
         removeProvenanceProperties(publishedProject);
         removeProvenanceProperties(proposedProject);
+        removeOriginalSCMTag(publishedProject);
+        removeOriginalSCMTag(proposedProject);
+      }
+      else if (coordinate.examples)
+      {
+        Element proposedProperties = child(proposedProject, "properties");
+        if (!coordinate.group.equals(text(proposedProject, "groupId")) || !coordinate.artifact.equals(text(proposedProject, "artifactId"))
+            || !coordinate.version.equals(text(proposedProject, "version")))
+        {
+          return "Proposed examples distribution POM coordinates do not match repository path.";
+        }
+
+        if (!dropID.equals(text(child(proposedProperties, "cdo.drop.id"))) || !release.equals(text(child(proposedProperties, "cdo.project.release"))))
+        {
+          return "Proposed examples distribution POM traceability does not match selected drop/project release.";
+        }
+
+        removeProvenanceProperties(publishedProject);
+        removeProvenanceProperties(proposedProject);
+        removeOriginalSCMTag(publishedProject);
+        removeOriginalSCMTag(proposedProject);
       }
 
       String difference = semanticDifference(publishedProject, proposedProject, "/project");
@@ -1663,13 +1781,21 @@ public final class CDOAggregationTool
         throw new IllegalArgumentException("Proposed POM has unexpected packaging for " + expected + ": " + packaging(project));
       }
 
-      if (!bom)
+      if (!bom && !EXAMPLES_DISTRIBUTION.equals(artifact))
       {
         Element properties = child(project, "properties");
         if (!dropID.equals(text(child(properties, "cdo.drop.id"))) || !release.equals(text(child(properties, "cdo.project.release")))
             || !"org.eclipse.cdo".equals(group))
         {
           throw new IllegalArgumentException("Proposed bundle POM has incorrect drop/project-release traceability: " + pom);
+        }
+      }
+      else if (EXAMPLES_DISTRIBUTION.equals(artifact))
+      {
+        Element properties = child(project, "properties");
+        if (!dropID.equals(text(child(properties, "cdo.drop.id"))) || !release.equals(text(child(properties, "cdo.project.release"))))
+        {
+          throw new IllegalArgumentException("Proposed examples distribution POM has incorrect drop/project-release traceability: " + pom);
         }
       }
       else
@@ -1703,6 +1829,16 @@ public final class CDOAggregationTool
       if (!properties.hasChildNodes())
       {
         project.removeChild(properties);
+      }
+    }
+
+    private static void removeOriginalSCMTag(Element project)
+    {
+      Element scm = child(project, "scm");
+      Element tag = child(scm, "tag");
+      if (tag != null)
+      {
+        scm.removeChild(tag);
       }
     }
 
@@ -1821,7 +1957,14 @@ public final class CDOAggregationTool
       {
         out.println("cdo.project.release=" + release);
         out.println("cdo.drop.id=" + dropID);
+        out.println("examples.distribution.version=" + EXAMPLES_DISTRIBUTION_VERSION);
         out.println("release.component.count=" + inventory.size());
+        for (Classification classification : Classification.values())
+        {
+          long count = results.stream().filter(result -> result.classification == classification).count();
+          out.println("classification." + classification.name().toLowerCase(Locale.ROOT) + ".count=" + count);
+        }
+
         List<CoordinateResult> newCoordinates = results.stream().filter(result -> result.classification == Classification.NEW).collect(Collectors.toList());
         out.println("publication.coordinate.count=" + newCoordinates.size());
         for (int i = 0; i < results.size(); i++)
@@ -1829,7 +1972,7 @@ public final class CDOAggregationTool
           CoordinateResult result = results.get(i);
           int index = i + 1;
           out.println("release.component." + index + ".coordinate=" + result.coordinate.coordinate());
-          out.println("release.component." + index + ".kind=" + (result.coordinate.bom ? "bom" : "bundle"));
+          out.println("release.component." + index + ".kind=" + (result.coordinate.bom ? "bom" : result.coordinate.examples ? "examples" : "bundle"));
           out.println("release.component." + index + ".classification=" + result.classification);
           out.println("release.component." + index + ".reason=" + result.reason.replace("\r", " ").replace("\n", " "));
         }
@@ -1896,13 +2039,21 @@ public final class CDOAggregationTool
 
       private final boolean bom;
 
+      private final boolean examples;
+
       Coordinate(String group, String artifact, String version, File versionDirectory, boolean bom)
+      {
+        this(group, artifact, version, versionDirectory, bom, false);
+      }
+
+      Coordinate(String group, String artifact, String version, File versionDirectory, boolean bom, boolean examples)
       {
         this.group = group;
         this.artifact = artifact;
         this.version = version;
         this.versionDirectory = versionDirectory;
         this.bom = bom;
+        this.examples = examples;
       }
 
       String coordinate()
@@ -1953,6 +2104,186 @@ public final class CDOAggregationTool
       {
         super(message, cause);
       }
+    }
+  }
+
+  /**
+   * Selects the examples distribution patch version by comparing its candidate contents with Maven Central.
+   *
+   * @author Eike Stepper
+   */
+  private static final class ExamplesDistributionVersionCommand
+  {
+    public static void execute(String[] args) throws Exception
+    {
+      if (args.length != 9)
+      {
+        throw new IllegalArgumentException(
+            "select-examples-version requires candidate ZIP, source POM, build metadata, publishing metadata, source revision, Central URL, work directory, and package properties");
+      }
+
+      File zip = requireFile(new File(args[1]), "candidate examples distribution ZIP");
+      File sourcePom = requireFile(new File(args[2]), "examples distribution source POM");
+      File metadataFile = requireFile(new File(args[3]), "build metadata");
+      File publishingFile = requireFile(new File(args[4]), "publishing metadata");
+      String sourceRevision = args[5].trim();
+      URI repository = CentralClassificationCommand.repositoryURI(args[6]);
+      File workDirectory = requireDirectory(args[7], "examples version selection work directory");
+      File packagePropertiesFile = requireFile(new File(args[8]), "examples distribution package properties");
+      Map<String, String> metadata = readProperties(metadataFile);
+      Map<String, String> publishing = readProperties(publishingFile);
+      Map<String, String> packageProperties = readProperties(packagePropertiesFile);
+      String versionLine = BomCommand.requiredMetadata(packageProperties, "release.version.line");
+      if (!versionLine.matches("[0-9]+\\.[0-9]+"))
+      {
+        throw new IllegalArgumentException("Invalid examples distribution release.version.line: " + versionLine);
+      }
+
+      if (!sourceRevision.matches("[0-9a-fA-F]{40}"))
+      {
+        throw new IllegalArgumentException("Examples source checkout has an invalid Git revision: " + sourceRevision);
+      }
+
+      String release = BomCommand.requiredMetadata(metadata, "cdo.project.release");
+      String dropID = BomCommand.requiredMetadata(metadata, "cdo.drop.id");
+      String examplesMetadataPath = "org/eclipse/cdo/" + EXAMPLES_DISTRIBUTION + "/maven-metadata.xml";
+      CentralClassificationCommand.Response response = CentralClassificationCommand.request(repository, examplesMetadataPath);
+      List<Integer> patches = new ArrayList<>();
+      if (response.status == HttpURLConnection.HTTP_OK)
+      {
+        Document document = parse(new ByteArrayInputStream(response.body), "Maven Central examples distribution metadata");
+        Element metadataElement = document.getDocumentElement();
+        if (!EXAMPLES_DISTRIBUTION.equals(text(metadataElement, "artifactId")) || !"org.eclipse.cdo".equals(text(metadataElement, "groupId")))
+        {
+          throw new IllegalArgumentException("Maven Central metadata identifies a different examples distribution coordinate");
+        }
+
+        Element versionsElement = child(child(metadataElement, "versioning"), "versions");
+        NodeList versionNodes = versionsElement == null ? null : versionsElement.getElementsByTagNameNS("*", "version");
+        if (versionNodes == null || versionNodes.getLength() == 0)
+        {
+          throw new IllegalArgumentException("Maven Central examples distribution metadata has no version inventory");
+        }
+
+        Set<String> seenVersions = new LinkedHashSet<>();
+        Pattern linePattern = Pattern.compile(Pattern.quote(versionLine) + "\\.([0-9]+)");
+        for (int i = 0; i < versionNodes.getLength(); i++)
+        {
+          String version = versionNodes.item(i).getTextContent().trim();
+          if (version.isEmpty() || !seenVersions.add(version))
+          {
+            throw new IllegalArgumentException("Maven Central examples distribution metadata contains an empty or duplicate version");
+          }
+
+          Matcher matcher = linePattern.matcher(version);
+          if (matcher.matches())
+          {
+            try
+            {
+              patches.add(Integer.valueOf(matcher.group(1)));
+            }
+            catch (NumberFormatException ex)
+            {
+              throw new IllegalArgumentException("Invalid examples distribution patch version in Maven Central metadata: " + version, ex);
+            }
+          }
+          else if (version.startsWith(versionLine + ".") && !version.matches(Pattern.quote(versionLine) + "\\.[0-9]+-[A-Za-z][A-Za-z0-9.-]*"))
+          {
+            throw new IllegalArgumentException("Malformed examples distribution version in Maven Central metadata: " + version);
+          }
+        }
+      }
+      else if (response.status != HttpURLConnection.HTTP_NOT_FOUND)
+      {
+        throw new IllegalArgumentException("Maven Central examples distribution metadata lookup returned HTTP " + response.status);
+      }
+
+      patches.sort(Comparator.naturalOrder());
+      int latestPatch = patches.isEmpty() ? -1 : patches.get(patches.size() - 1);
+      if (patches.stream().distinct().count() != patches.size())
+      {
+        throw new IllegalArgumentException("Maven Central examples distribution metadata contains duplicate numeric patch versions");
+      }
+
+      File candidateDirectory = Files.createTempDirectory(workDirectory.toPath(), "examples-version-candidate-").toFile();
+      try
+      {
+        if (latestPatch >= 0)
+        {
+          String latestVersion = versionLine + "." + latestPatch;
+          CentralClassificationCommand.Coordinate latest = candidateCoordinate(candidateDirectory, zip, sourcePom, metadata, publishing, sourceRevision,
+              latestVersion);
+          CentralClassificationCommand.CoordinateResult result = CentralClassificationCommand.classifyExisting(latest, repository, release, dropID);
+          if (result.classification == CentralClassificationCommand.Classification.LOOKUP_ERROR)
+          {
+            throw new IllegalStateException("Unable to validate latest published examples distribution " + latestVersion + ": " + result.reason);
+          }
+
+          if (result.classification == CentralClassificationCommand.Classification.NEW)
+          {
+            throw new IllegalStateException("Maven Central metadata lists examples distribution " + latestVersion + " but its artifacts are absent");
+          }
+
+          if (result.classification == CentralClassificationCommand.Classification.REUSABLE)
+          {
+            select(metadataFile, metadata, workDirectory, versionLine, latestVersion, latestVersion, "REUSED", result.reason, zip);
+            return;
+          }
+        }
+
+        int nextPatch = latestPatch + 1;
+        if (nextPatch < 0)
+        {
+          throw new IllegalArgumentException("Examples distribution patch version is exhausted for line " + versionLine);
+        }
+
+        String nextVersion = versionLine + "." + nextPatch;
+        CentralClassificationCommand.Coordinate next = candidateCoordinate(candidateDirectory, zip, sourcePom, metadata, publishing, sourceRevision,
+            nextVersion);
+        CentralClassificationCommand.CoordinateResult collision = CentralClassificationCommand.classifyExisting(next, repository, release, dropID);
+        if (collision.classification != CentralClassificationCommand.Classification.NEW)
+        {
+          throw new IllegalStateException("Selected next examples distribution coordinate is not absent from Central: " + nextVersion + " ("
+              + collision.classification + ": " + collision.reason + ")");
+        }
+
+        String latestVersion = latestPatch < 0 ? "" : versionLine + "." + latestPatch;
+        select(metadataFile, metadata, workDirectory, versionLine, latestVersion, nextVersion, "NEW", "Candidate differs from the latest published patch.",
+            zip);
+      }
+      finally
+      {
+        delete(candidateDirectory);
+      }
+    }
+
+    private static CentralClassificationCommand.Coordinate candidateCoordinate(File parent, File zip, File sourcePom, Map<String, String> metadata,
+        Map<String, String> publishing, String sourceRevision, String version) throws Exception
+    {
+      File versionDirectory = new File(parent, version);
+      Files.createDirectories(versionDirectory.toPath());
+      File pom = new File(versionDirectory, EXAMPLES_DISTRIBUTION + "-" + version + ".pom");
+      File proposedZip = new File(versionDirectory, EXAMPLES_DISTRIBUTION + "-" + version + "-examples.zip");
+      ExamplesDistributionCommand.writePublishedPom(sourcePom, pom, metadata, publishing, version, sourceRevision);
+      Files.copy(zip.toPath(), proposedZip.toPath());
+      return new CentralClassificationCommand.Coordinate("org.eclipse.cdo", EXAMPLES_DISTRIBUTION, version, versionDirectory, false, true);
+    }
+
+    private static void select(File metadataFile, Map<String, String> metadata, File workDirectory, String versionLine, String latestVersion,
+        String selectedVersion, String selection, String reason, File zip) throws Exception
+    {
+      metadata.put("examples.distribution.version", selectedVersion);
+      writeProperties(metadataFile.toPath(), metadata);
+      Map<String, String> report = new TreeMap<>();
+      report.put("examples.distribution.version.line", versionLine);
+      report.put("examples.distribution.latest.central.version", latestVersion);
+      report.put("examples.distribution.version", selectedVersion);
+      report.put("examples.distribution.selection", selection);
+      report.put("examples.distribution.reason", reason);
+      report.put("examples.distribution.candidate.zip.sha256", ChecksumsCommand.digest(zip, "SHA-256"));
+      writeProperties(new File(workDirectory, "examples-version-selection.properties").toPath(), report);
+      EXAMPLES_DISTRIBUTION_VERSION = selectedVersion;
+      System.out.println("Selected examples distribution " + EXAMPLES_DISTRIBUTION + ":" + selectedVersion + " (" + selection + ").");
     }
   }
 
@@ -2309,8 +2640,6 @@ public final class CDOAggregationTool
    */
   private static final class ExamplesDistributionCommand
   {
-    private static final String DEVELOPMENT_VERSION = "1.0.0-SNAPSHOT";
-
     private static final String[] SOURCES = { "embedded-h2/src/main/java/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java",
         "remote-server/src/main/java/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java",
         "remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java" };
@@ -2354,10 +2683,11 @@ public final class CDOAggregationTool
       validateDistributionZip(workspace, candidateRepository, zip, metadata);
       Map<String, String> packageProperties = readProperties(
           requireFile(new File(sourcePom.getParentFile(), "package.properties"), "distribution package properties"));
-      String releaseVersion = BomCommand.requiredMetadata(packageProperties, "release.version");
-      if (!EXAMPLES_DISTRIBUTION_VERSION.equals(releaseVersion))
+      String releaseVersion = BomCommand.requiredMetadata(metadata, "examples.distribution.version");
+      String versionLine = BomCommand.requiredMetadata(packageProperties, "release.version.line");
+      if (!releaseVersion.matches(Pattern.quote(versionLine) + "\\.[0-9]+"))
       {
-        throw new IllegalArgumentException("The controlled examples distribution release version must be " + EXAMPLES_DISTRIBUTION_VERSION);
+        throw new IllegalArgumentException("Selected examples distribution version is outside configured line " + versionLine + ": " + releaseVersion);
       }
 
       String directory = "org/eclipse/cdo/" + EXAMPLES_DISTRIBUTION + "/" + releaseVersion;
@@ -2372,13 +2702,23 @@ public final class CDOAggregationTool
 
       Files.createDirectories(versionDirectory.toPath());
       Files.copy(zip.toPath(), publishedZip.toPath());
+      writePublishedPom(sourcePom, publishedPom, metadata, publishing, releaseVersion, examplesSourceRevision);
+      ChecksumsCommand.writeChecksums(publishedPom);
+      ChecksumsCommand.writeChecksums(publishedZip);
+      System.out.println("Staged selected examples distribution " + EXAMPLES_DISTRIBUTION + ":" + releaseVersion + " with ZIP classifier examples.");
+    }
+
+    private static void writePublishedPom(File sourcePom, File publishedPom, Map<String, String> metadata, Map<String, String> publishing,
+        String releaseVersion, String examplesSourceRevision) throws Exception
+    {
       Document pomDocument = parse(sourcePom);
       Element project = pomDocument.getDocumentElement();
+      String sourceVersion = text(project, "version");
       if (!"org.eclipse.cdo".equals(text(project, "groupId")) || !EXAMPLES_DISTRIBUTION.equals(text(project, "artifactId"))
-          || !DEVELOPMENT_VERSION.equals(text(project, "version")) || !"pom".equals(text(project, "packaging")) || child(project, "parent") != null)
+          || !(sourceVersion.matches(Pattern.quote(EXAMPLES_DISTRIBUTION_VERSION_LINE) + "-SNAPSHOT") || "${revision}".equals(sourceVersion))
+          || !"pom".equals(text(project, "packaging")) || child(project, "parent") != null)
       {
-        throw new IllegalArgumentException(
-            "Development distribution POM must be the standalone org.eclipse.cdo:" + EXAMPLES_DISTRIBUTION + ":" + DEVELOPMENT_VERSION + ":pom project");
+        throw new IllegalArgumentException("Development distribution POM must be the standalone org.eclipse.cdo:" + EXAMPLES_DISTRIBUTION + " project");
       }
 
       setChildText(project, "version", releaseVersion);
@@ -2404,9 +2744,6 @@ public final class CDOAggregationTool
       addTraceabilityProperties(pomDocument, project, metadata, examplesSourceRevision);
       write(pomDocument, publishedPom);
       validateDistributionPom(publishedPom, metadata, publishing, releaseVersion, examplesSourceRevision);
-      ChecksumsCommand.writeChecksums(publishedPom);
-      ChecksumsCommand.writeChecksums(publishedZip);
-      System.out.println("Staged release-matched examples distribution " + EXAMPLES_DISTRIBUTION + ":" + releaseVersion + " with ZIP classifier examples.");
     }
 
     private static void validateDistributionZip(File workspace, File candidateRepository, File zip, Map<String, String> metadata) throws Exception
@@ -3497,15 +3834,17 @@ public final class CDOAggregationTool
 
   private static void publicationScopeCheck(String[] args) throws Exception
   {
-    if (args.length != 2)
+    if (args.length != 2 && args.length != 3)
     {
-      throw new IllegalArgumentException("publication-scope-check requires a staging directory");
+      throw new IllegalArgumentException("publication-scope-check requires a staging directory and optional build metadata");
     }
 
     File staging = requireDirectory(args[1], "staging directory");
     requireWorkspaceOutput(staging, "staging directory");
     rejectSymbolicLinks(staging.toPath(), "staging directory");
-    int artifacts = AuditCommand.validatePublicationScope(staging, false);
+    Map<String, String> metadata = args.length == 3 ? readProperties(requireFile(new File(args[2]), "build metadata")) : null;
+    int artifacts = metadata == null ? AuditCommand.validatePublicationScope(staging, false)
+        : AuditCommand.validatePublicationScope(staging, false, true, false, metadata);
     System.out.println("Validated publication scope for " + artifacts + " approved CDO artifacts.");
   }
 
@@ -3514,7 +3853,7 @@ public final class CDOAggregationTool
     Map<String, String> result = new LinkedHashMap<>();
     for (Map.Entry<String, String> entry : metadata.entrySet())
     {
-      if (!INTERNAL_CBI_PROPERTIES.contains(entry.getKey()))
+      if (!INTERNAL_CBI_PROPERTIES.contains(entry.getKey()) && !"examples.distribution.version".equals(entry.getKey()))
       {
         result.put(entry.getKey(), entry.getValue());
       }
@@ -4426,6 +4765,398 @@ public final class CDOAggregationTool
 
     System.out.println(
         "Verified " + expectedArtifacts + " OpenPGP signatures, staged repository bytes, checksums, and exact ZIP inventory. Publication performed=false.");
+  }
+
+  private static void incrementalPackage(String[] args) throws Exception
+  {
+    if (args.length != 9)
+    {
+      throw new IllegalArgumentException(
+          "incremental-package requires signed staging, classification manifest, complete QA ZIP, output ZIP, primary fingerprint, public key, GPG executable, and summary");
+    }
+
+    File staging = requireDirectory(args[1], "verified complete QA staging");
+    File manifestFile = requireFile(new File(args[2]), "Central classification manifest");
+    File completeQaZip = requireFile(new File(args[3]), "verified complete QA deployment ZIP");
+    File zip = new File(args[4]);
+    File publicKey = requireFile(new File(args[6]), "GnuPG public verification key");
+    File summary = new File(args[8]);
+    for (File output : List.of(zip, summary))
+    {
+      requireWorkspaceOutput(output, "incremental publication output");
+      if (Files.exists(output.toPath(), LinkOption.NOFOLLOW_LINKS))
+      {
+        throw new IllegalArgumentException("Incremental output already exists: " + output);
+      }
+    }
+
+    requireWorkspaceOutput(staging, "verified complete QA staging");
+    requireWorkspaceOutput(manifestFile, "Central classification manifest");
+    requireWorkspaceOutput(completeQaZip, "verified complete QA deployment ZIP");
+    rejectSymbolicLinks(staging.toPath(), "verified complete QA staging");
+
+    File orgDirectory = requireDirectory(new File(staging, "org").getPath(), "complete QA staging/org");
+    Set<String> completeFiles;
+    try
+    {
+      completeFiles = new LinkedHashSet<>();
+      for (File file : regularFiles(orgDirectory))
+      {
+        completeFiles.add(relativePath(staging, file));
+      }
+    }
+    catch (IOException ex)
+    {
+      throw new IllegalArgumentException("Unable to enumerate complete QA staging files", ex);
+    }
+
+    verifyDeploymentZip(completeQaZip, staging, completeFiles);
+    if (Files.isSymbolicLink(publicKey.toPath()))
+    {
+      throw new IllegalArgumentException("GnuPG public verification key must not be a symbolic link");
+    }
+
+    Map<String, String> manifest = readProperties(manifestFile);
+    int componentCount = integerProperty(manifest, "release.component.count");
+    if (componentCount != BUNDLES.size() + 2)
+    {
+      throw new IllegalArgumentException("Classification manifest must identify exactly " + (BUNDLES.size() + 2) + " release coordinates");
+    }
+
+    Map<String, String> classifications = new LinkedHashMap<>();
+    Map<String, Integer> counts = new LinkedHashMap<>();
+    List<String> newCoordinates = new ArrayList<>();
+    Set<String> manifestKeys = new LinkedHashSet<>();
+    for (int index = 1; index <= componentCount; index++)
+    {
+      String prefix = "release.component." + index + ".";
+      String coordinate = requiredProperty(manifest, prefix + "coordinate");
+      String classification = requiredProperty(manifest, prefix + "classification");
+      String kind = requiredProperty(manifest, prefix + "kind");
+      requiredProperty(manifest, prefix + "reason");
+      manifestKeys.add(prefix + "coordinate");
+      manifestKeys.add(prefix + "kind");
+      manifestKeys.add(prefix + "classification");
+      manifestKeys.add(prefix + "reason");
+      if (classifications.putIfAbsent(coordinate, classification) != null)
+      {
+        throw new IllegalArgumentException("Duplicate coordinate in Central classification manifest: " + coordinate);
+      }
+
+      if (!Set.of("NEW", "REUSABLE", "CONFLICT", "LOOKUP_ERROR").contains(classification))
+      {
+        throw new IllegalArgumentException("Unknown Central classification " + classification + " for " + coordinate);
+      }
+
+      String[] coordinateParts = coordinate.split(":", -1);
+      if (coordinateParts.length != 3 || !"org.eclipse.cdo".equals(coordinateParts[0]))
+      {
+        throw new IllegalArgumentException("Invalid coordinate in Central classification manifest: " + coordinate);
+      }
+
+      String expectedKind;
+      if (BUNDLES.contains(coordinateParts[1]))
+      {
+        expectedKind = "bundle";
+        File versionDirectory = singleVersionDirectory(staging, coordinateParts[1]);
+        if (!versionDirectory.getName().equals(coordinateParts[2]))
+        {
+          throw new IllegalArgumentException("Classified bundle version does not match complete QA package: " + coordinate);
+        }
+      }
+      else if (RELEASE_BOM.equals(coordinateParts[1]))
+      {
+        expectedKind = "bom";
+        String releaseVersion = BomCommand.normalizeProjectReleaseVersion(requiredProperty(manifest, "cdo.project.release"));
+        if (!releaseVersion.equals(coordinateParts[2]))
+        {
+          throw new IllegalArgumentException("Classified BOM version does not match normalized project release: " + coordinate);
+        }
+      }
+      else if (EXAMPLES_DISTRIBUTION.equals(coordinateParts[1]))
+      {
+        expectedKind = "examples";
+        String selectedExamplesVersion = requiredProperty(manifest, "examples.distribution.version");
+        if (!selectedExamplesVersion.matches(Pattern.quote(EXAMPLES_DISTRIBUTION_VERSION_LINE) + "\\.[0-9]+")
+            || !selectedExamplesVersion.equals(coordinateParts[2]))
+        {
+          throw new IllegalArgumentException("Classified examples version does not match the selected package version: " + coordinate);
+        }
+      }
+      else
+      {
+        throw new IllegalArgumentException("Unapproved coordinate in Central classification manifest: " + coordinate);
+      }
+
+      if (!expectedKind.equals(kind))
+      {
+        throw new IllegalArgumentException("Classification kind mismatch for " + coordinate + ": " + kind);
+      }
+
+      counts.merge(classification, 1, Integer::sum);
+      if ("NEW".equals(classification))
+      {
+        newCoordinates.add(coordinate);
+      }
+    }
+
+    for (String classification : List.of("NEW", "REUSABLE", "CONFLICT", "LOOKUP_ERROR"))
+    {
+      manifestKeys.add("classification." + classification.toLowerCase(Locale.ROOT) + ".count");
+      if (integerProperty(manifest, "classification." + classification.toLowerCase(Locale.ROOT) + ".count") != counts.getOrDefault(classification, 0))
+      {
+        throw new IllegalArgumentException("Classification count is inconsistent for " + classification);
+      }
+    }
+
+    if (counts.getOrDefault("CONFLICT", 0) != 0 || counts.getOrDefault("LOOKUP_ERROR", 0) != 0)
+    {
+      throw new IllegalArgumentException("Cannot prepare publication with CONFLICT or LOOKUP_ERROR coordinates");
+    }
+
+    int publicationCount = integerProperty(manifest, "publication.coordinate.count");
+    manifestKeys.add("publication.coordinate.count");
+    if (publicationCount != newCoordinates.size())
+    {
+      throw new IllegalArgumentException("Publication coordinate count does not match NEW classifications");
+    }
+
+    for (int index = 0; index < newCoordinates.size(); index++)
+    {
+      if (!newCoordinates.get(index).equals(requiredProperty(manifest, "publication.coordinate." + (index + 1))))
+      {
+        throw new IllegalArgumentException("Publication coordinate inventory does not match NEW classifications");
+      }
+
+      manifestKeys.add("publication.coordinate." + (index + 1));
+    }
+
+    for (String key : manifest.keySet())
+    {
+      if (!manifestKeys.contains(key)
+          && !Set.of("cdo.project.release", "cdo.drop.id", "examples.distribution.version", "release.component.count").contains(key))
+      {
+        throw new IllegalArgumentException("Unexpected property in Central classification manifest: " + key);
+      }
+
+      if (key.startsWith("publication.coordinate.") && !"publication.coordinate.count".equals(key))
+      {
+        int ordinal = parseOrdinal(key, "publication.coordinate.");
+        if (ordinal < 1 || ordinal > publicationCount)
+        {
+          throw new IllegalArgumentException("Unexpected publication coordinate entry: " + key);
+        }
+      }
+    }
+
+    if (newCoordinates.isEmpty())
+    {
+      Files.createDirectories(summary.toPath().getParent());
+      Files.writeString(summary.toPath(), "incremental.publication=NOT_REQUIRED\nnew.coordinates=0\ncentral.publication.performed=false\n",
+          StandardCharsets.UTF_8);
+      System.out.println("No NEW Central coordinates; Sonatype upload package is not required. Publication performed=false.");
+      return;
+    }
+
+    List<File> artifacts = new ArrayList<>();
+    Set<String> expectedFiles = new LinkedHashSet<>();
+    Set<String> selectedArtifacts = new LinkedHashSet<>();
+    Map<String, File> filesToPackage = new TreeMap<>();
+    String[] checksumSuffixes = { ".md5", ".sha1", ".sha256", ".sha512" };
+    String[] checksumAlgorithms = { "MD5", "SHA-1", "SHA-256", "SHA-512" };
+    for (String coordinate : newCoordinates)
+    {
+      String[] parts = coordinate.split(":", -1);
+      if (parts.length != 3 || !"org.eclipse.cdo".equals(parts[0]))
+      {
+        throw new IllegalArgumentException("Invalid or unapproved publication coordinate: " + coordinate);
+      }
+
+      String artifact = parts[1];
+      String version = parts[2];
+      if (!BUNDLES.contains(artifact) && !RELEASE_BOM.equals(artifact) && !EXAMPLES_DISTRIBUTION.equals(artifact))
+      {
+        throw new IllegalArgumentException("Unapproved publication coordinate: " + coordinate);
+      }
+
+      if (EXAMPLES_DISTRIBUTION.equals(artifact) && !EXAMPLES_DISTRIBUTION_VERSION.equals(version))
+      {
+        throw new IllegalArgumentException("Examples distribution coordinate does not match package.properties: " + coordinate);
+      }
+
+      if (!selectedArtifacts.add(artifact))
+      {
+        throw new IllegalArgumentException("Duplicate artifact in NEW coordinate inventory: " + artifact);
+      }
+
+      String base = "org/eclipse/cdo/" + artifact + "/" + version + "/" + artifact + "-" + version;
+      List<String> artifactSuffixes = RELEASE_BOM.equals(artifact) ? List.of(".pom")
+          : EXAMPLES_DISTRIBUTION.equals(artifact) ? List.of(".pom", "-examples.zip") : List.of(".pom", ".jar", "-sources.jar", "-javadoc.jar");
+      Set<String> coordinateFiles = new LinkedHashSet<>();
+      for (String suffix : artifactSuffixes)
+      {
+        String relative = base + suffix;
+        File file = requireFile(new File(staging, relative.replace('/', File.separatorChar)), "required incremental publication artifact");
+        artifacts.add(file);
+        expectedFiles.add(relative);
+        coordinateFiles.add(relative);
+        filesToPackage.put(relative, file);
+
+        for (int index = 0; index < checksumSuffixes.length; index++)
+        {
+          String sidecar = relative + checksumSuffixes[index];
+          File checksum = requireFile(new File(staging, sidecar.replace('/', File.separatorChar)), "required artifact checksum");
+          String actual = ChecksumsCommand.digest(file, checksumAlgorithms[index]);
+          if (!actual.equalsIgnoreCase(Files.readString(checksum.toPath(), StandardCharsets.US_ASCII).trim()))
+          {
+            throw new IllegalArgumentException("Checksum mismatch in complete QA staging: " + sidecar);
+          }
+
+          expectedFiles.add(sidecar);
+          coordinateFiles.add(sidecar);
+          filesToPackage.put(sidecar, checksum);
+        }
+
+        String signaturePath = relative + ".asc";
+        File signature = requireFile(new File(staging, signaturePath.replace('/', File.separatorChar)), "required OpenPGP signature");
+        if (!Files.readString(signature.toPath(), StandardCharsets.US_ASCII).startsWith("-----BEGIN PGP SIGNATURE-----"))
+        {
+          throw new IllegalArgumentException("Malformed OpenPGP signature in complete QA staging: " + signaturePath);
+        }
+
+        expectedFiles.add(signaturePath);
+        coordinateFiles.add(signaturePath);
+        filesToPackage.put(signaturePath, signature);
+      }
+
+      validateNoUnexpectedCoordinateFiles(staging, artifact, version, coordinateFiles);
+    }
+
+    String bomCoordinate = "org.eclipse.cdo:" + RELEASE_BOM + ":"
+        + BomCommand.normalizeProjectReleaseVersion(requiredProperty(manifest, "cdo.project.release"));
+    String examplesCoordinate = "org.eclipse.cdo:" + EXAMPLES_DISTRIBUTION + ":" + EXAMPLES_DISTRIBUTION_VERSION;
+    if (!classifications.containsKey(bomCoordinate) || !classifications.containsKey(examplesCoordinate))
+    {
+      throw new IllegalArgumentException("Classification manifest omits or misidentifies the release BOM or examples coordinate");
+    }
+
+    for (String bundle : BUNDLES)
+    {
+      if (!classifications.containsKey("org.eclipse.cdo:" + bundle + ":" + singleVersionDirectory(staging, bundle).getName()))
+      {
+        throw new IllegalArgumentException("Classification manifest omits an approved bundle coordinate: " + bundle);
+      }
+    }
+
+    if (classifications.size() != BUNDLES.size() + 2 || !new LinkedHashSet<>(BUNDLES).equals(classifications.keySet().stream()
+        .map(coordinate -> coordinate.split(":", -1)[1]).filter(BUNDLES::contains).collect(Collectors.toCollection(LinkedHashSet::new))))
+    {
+      throw new IllegalArgumentException("Classification manifest does not identify exactly the approved release coordinates");
+    }
+
+    String fingerprint = args[5].replace(" ", "").toUpperCase(Locale.ROOT);
+    if (!fingerprint.matches("(?:[0-9A-F]{40}|[0-9A-F]{64})"))
+    {
+      throw new IllegalArgumentException("Expected primary-key fingerprint must be a full hexadecimal fingerprint");
+    }
+
+    verifySignatures(args[7], publicKey, fingerprint, artifacts, staging);
+    Files.createDirectories(zip.toPath().getParent());
+
+    try
+    {
+      try (ZipOutputStream output = new ZipOutputStream(new BufferedOutputStream(Files.newOutputStream(zip.toPath()))))
+      {
+        Set<String> directories = new LinkedHashSet<>();
+        for (String path : expectedFiles)
+        {
+          int slash = path.lastIndexOf('/');
+          while (slash > 0)
+          {
+            directories.add(path.substring(0, slash + 1));
+            slash = path.lastIndexOf('/', slash - 1);
+          }
+        }
+
+        for (String directory : directories.stream().sorted().collect(Collectors.toList()))
+        {
+          output.putNextEntry(new ZipEntry(directory));
+          output.closeEntry();
+        }
+
+        for (Map.Entry<String, File> entry : filesToPackage.entrySet())
+        {
+          output.putNextEntry(new ZipEntry(entry.getKey()));
+          Files.copy(entry.getValue().toPath(), output);
+          output.closeEntry();
+        }
+      }
+
+      verifyDeploymentZip(zip, staging, expectedFiles);
+    }
+    catch (Exception | Error ex)
+    {
+      Files.deleteIfExists(zip.toPath());
+      throw ex;
+    }
+    Files.createDirectories(summary.toPath().getParent());
+    StringBuilder report = new StringBuilder("incremental.publication=READY\nnew.coordinates=").append(newCoordinates.size()).append("\nupload.zip=")
+        .append(zip.getName()).append("\nupload.zip.sha256=").append(ChecksumsCommand.digest(zip, "SHA-256")).append("\nsignatures.verified=")
+        .append(artifacts.size()).append("\nfiles.verified=").append(expectedFiles.size()).append("\ncentral.publication.performed=false\n");
+    Files.writeString(summary.toPath(), report.toString(), StandardCharsets.UTF_8);
+    System.out.println("Verified incremental upload ZIP with " + newCoordinates.size() + " NEW coordinates, " + expectedFiles.size() + " files, and "
+        + artifacts.size() + " signatures. Publication performed=false.");
+  }
+
+  private static void validateNoUnexpectedCoordinateFiles(File staging, String artifact, String version, Set<String> expectedFiles) throws IOException
+  {
+    File directory = new File(staging, "org/eclipse/cdo/" + artifact + "/" + version);
+    try (Stream<Path> paths = Files.list(directory.toPath()))
+    {
+      for (Path path : paths.filter(Files::isRegularFile).collect(Collectors.toList()))
+      {
+        String relative = relativePath(staging, path.toFile());
+        if (!expectedFiles.contains(relative))
+        {
+          throw new IllegalArgumentException("Unexpected file in NEW coordinate directory: " + relative);
+        }
+      }
+    }
+  }
+
+  private static String requiredProperty(Map<String, String> properties, String key)
+  {
+    String value = properties.get(key);
+    if (value == null || value.isBlank())
+    {
+      throw new IllegalArgumentException("Missing required manifest property: " + key);
+    }
+
+    return value;
+  }
+
+  private static int integerProperty(Map<String, String> properties, String key)
+  {
+    try
+    {
+      return Integer.parseInt(requiredProperty(properties, key));
+    }
+    catch (NumberFormatException ex)
+    {
+      throw new IllegalArgumentException("Invalid integer manifest property: " + key, ex);
+    }
+  }
+
+  private static int parseOrdinal(String key, String prefix)
+  {
+    try
+    {
+      return Integer.parseInt(key.substring(prefix.length()));
+    }
+    catch (NumberFormatException ex)
+    {
+      throw new IllegalArgumentException("Invalid ordinal manifest property: " + key, ex);
+    }
   }
 
   private static void verifyBomPackage(String[] args) throws Exception

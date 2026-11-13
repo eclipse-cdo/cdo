@@ -28,7 +28,6 @@ import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 /**
  * Connects to a remote CDO repository and demonstrates first-write and read-first model loading.
@@ -79,7 +78,7 @@ public final class RemoteClient
     }
     finally
     {
-      LifecycleUtil.deactivateNoisy(container);
+      container.deactivate();
     }
   }
 

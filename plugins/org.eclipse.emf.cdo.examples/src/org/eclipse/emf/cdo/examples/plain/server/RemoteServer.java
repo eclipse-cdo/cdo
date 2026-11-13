@@ -36,7 +36,7 @@ import java.util.Map;
 /**
  * Runs a standalone CDO repository backed by PostgreSQL and exposed over Net4j TCP. The optional
  * address argument can be a bind address, a port, or a {@code bind-address:port} pair. The default
- * is {@code 0.0.0.0:2036}; for example, use {@code 2036}, {@code 127.0.0.1}, or
+ * is {@code 127.0.0.1:2036}; for example, use {@code 2036}, {@code 0.0.0.0}, or
  * {@code 192.168.1.50:2036}. The bind address {@code 0.0.0.0} listens on all local IPv4
  * interfaces; clients must connect to an actual reachable hostname or IP address.
  *
@@ -56,9 +56,9 @@ public final class RemoteServer
    * system properties or the corresponding {@code CDO_DB_URL}, {@code CDO_DB_USER}, and
    * {@code CDO_DB_PASSWORD} environment variables. The optional argument may be a port (for
    * example, {@code 2036}), a bind address (for example, {@code 127.0.0.1}), or a
-   * {@code bind-address:port} pair (for example, {@code 192.168.1.50:2036}). With no argument,
-   * the server binds to {@code 0.0.0.0:2036}, listening on all local IPv4 interfaces. This is a
-   * local bind address; clients should connect using a reachable hostname or IP address.
+   * {@code bind-address:port} pair (for example, {@code 0.0.0.0:2036}). With no argument,
+   * the server binds to {@code 127.0.0.1:2036}, limiting access to the local machine. Supply an
+   * explicit external bind address such as {@code 0.0.0.0:2036} to accept remote connections.
    *
    * @param args zero or one bind address, port, or {@code bind-address:port} argument
    * @throws Exception if repository startup fails
@@ -104,18 +104,15 @@ public final class RemoteServer
       ITCPAcceptor acceptor = TCPUtil.getAcceptor(container, address);
       System.out.println("CDO repository " + REPOSITORY_NAME + " listening on TCP port " + acceptor.getPort()); //$NON-NLS-1$
 
-      Runtime.getRuntime().addShutdownHook(new Thread(container::deactivate, "cdo-server-shutdown")); //$NON-NLS-1$
-
       System.out.println("Press Enter to stop the server."); //$NON-NLS-1$
       try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in)))
       {
         reader.readLine();
       }
     }
-    catch (Exception | Error ex)
+    finally
     {
       container.deactivate();
-      throw ex;
     }
   }
 
@@ -123,7 +120,7 @@ public final class RemoteServer
    * Parses the optional server bind argument.
    *
    * @param args zero or one bind address, port, or {@code bind-address:port} argument
-   * @return the Net4j acceptor address, defaulting to {@code 0.0.0.0:2036}
+   * @return the Net4j acceptor address, defaulting to {@code 127.0.0.1:2036}
    */
   private static String parseAddress(String[] args)
   {
@@ -134,7 +131,7 @@ public final class RemoteServer
 
     if (args.length == 0)
     {
-      return "0.0.0.0:" + ITCPAcceptor.DEFAULT_PORT; //$NON-NLS-1$
+      return "127.0.0.1:" + ITCPAcceptor.DEFAULT_PORT; //$NON-NLS-1$
     }
 
     String argument = args[0];
@@ -145,7 +142,7 @@ public final class RemoteServer
 
     if (argument.chars().allMatch(Character::isDigit))
     {
-      return "0.0.0.0:" + argument; //$NON-NLS-1$
+      return "127.0.0.1:" + argument; //$NON-NLS-1$
     }
 
     return argument + ":" + ITCPAcceptor.DEFAULT_PORT; //$NON-NLS-1$

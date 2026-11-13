@@ -434,6 +434,19 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
+  public void publicationScopeCheckUsesSelectedExamplesVersionFromBuildMetadata() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path staging = Files.createDirectories(root.resolve("staging"));
+    Path metadata = root.resolve("metadata.properties");
+    Files.writeString(metadata, "cdo.project.release=4.37\ncdo.drop.id=R20260901-1311\ncdo.git.commit=deadbeef\nexamples.distribution.version=1.0.16\n",
+        StandardCharsets.UTF_8);
+    createPublicationStaging(staging, true, "1.0.16");
+
+    CDOAggregationTool.main(new String[] { "publication-scope-check", staging.toString(), metadata.toString() });
+  }
+
+  @Test
   public void regularPackageRequiresAndValidatesTheProjectReleaseBom() throws Exception
   {
     Path root = temporaryFolder.newFolder().toPath();
@@ -556,7 +569,9 @@ public class CDOAggregationToolBomTest
     Path central = new File(classes.getParentFile(), "central").toPath();
     Path distribution = central.resolve("examples/distribution").toAbsolutePath();
     Path workspace = distribution.resolve("../../../../..").normalize();
-    Path examplesZip = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip");
+    String examplesVersion = examplesDistributionVersion();
+    Path examplesZip = staging
+        .resolve("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + "-examples.zip");
     createExamplesZip(workspace, distribution, examplesZip, null, false, false, "4.37.0");
     createDeploymentZip(staging, deploymentZip);
 
@@ -811,7 +826,9 @@ public class CDOAggregationToolBomTest
     String[] arguments = { "publish-check", staging.toString(), metadata.toString(), "VALIDATE", "" };
     CDOAggregationTool.main(arguments);
 
-    Path zip = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip");
+    String examplesVersion = examplesDistributionVersion();
+    Path zip = staging
+        .resolve("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + "-examples.zip");
     byte[] originalZip = Files.readAllBytes(zip);
     Path checksum = Path.of(zip + ".sha256");
     byte[] originalChecksum = Files.readAllBytes(checksum);
@@ -823,10 +840,12 @@ public class CDOAggregationToolBomTest
     Files.write(zip, originalZip);
     Files.write(checksum, originalChecksum);
 
-    Path conflictingPom = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.1/cdo-examples-distribution-1.0.1.pom");
+    String conflictingVersion = examplesVersion + ".1";
+    Path conflictingPom = staging
+        .resolve("org/eclipse/cdo/cdo-examples-distribution/" + conflictingVersion + "/cdo-examples-distribution-" + conflictingVersion + ".pom");
     Files.createDirectories(conflictingPom.getParent());
     Files.writeString(conflictingPom,
-        "<project><groupId>org.eclipse.cdo</groupId><artifactId>cdo-examples-distribution</artifactId><version>1.0.1</version></project>",
+        "<project><groupId>org.eclipse.cdo</groupId><artifactId>cdo-examples-distribution</artifactId><version>" + conflictingVersion + "</version></project>",
         StandardCharsets.UTF_8);
     expectPublicationScopeFailure(arguments, "Unapproved Maven publication coordinate");
   }
@@ -840,8 +859,8 @@ public class CDOAggregationToolBomTest
     Path metadata = root.resolve("metadata.properties");
     String dropCommit = "0123456789abcdef0123456789abcdef01234567";
     String examplesSourceCommit = "fedcba9876543210fedcba9876543210fedcba98";
-    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\ncdo.git.commit=" + dropCommit + "\ncdo.project.release=4.36.0\n",
-        StandardCharsets.UTF_8);
+    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\ncdo.git.commit=" + dropCommit + "\ncdo.project.release=4.36.0\n"
+        + "examples.distribution.version=" + examplesDistributionVersion() + "\n", StandardCharsets.UTF_8);
 
     createCandidate(candidates, "org.eclipse.emf.cdo.server.embedded", "4.11.1");
     createCandidate(candidates, "org.eclipse.emf.cdo.examples.company", "4.1.4");
@@ -892,7 +911,9 @@ public class CDOAggregationToolBomTest
     createExamplesZip(workspace, distribution, zip);
     CDOAggregationTool.main(args);
 
-    Path publishedPom = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom");
+    String examplesVersion = examplesDistributionVersion();
+    Path publishedPom = staging
+        .resolve("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + ".pom");
     Element project = parse(publishedPom.toFile()).getDocumentElement();
     Element properties = child(project, "properties");
     assertEquals(examplesSourceCommit, childText(child(project, "scm"), "tag"));
@@ -1103,9 +1124,9 @@ public class CDOAggregationToolBomTest
     try (CentralFixture central = new CentralFixture())
     {
       Map<String, String> report = classify(root, central, false);
-      assertEquals("22", report.get("release.component.count"));
-      assertEquals("22", report.get("publication.coordinate.count"));
-      for (int i = 1; i <= BUNDLES.length + 1; i++)
+      assertEquals("23", report.get("release.component.count"));
+      assertEquals("23", report.get("publication.coordinate.count"));
+      for (int i = 1; i <= BUNDLES.length + 2; i++)
       {
         assertEquals("NEW", report.get("release.component." + i + ".classification"));
       }
@@ -1119,6 +1140,7 @@ public class CDOAggregationToolBomTest
     try (CentralFixture central = new CentralFixture())
     {
       central.loadProposedArtifacts(root);
+      central.replaceBundlePom(0, bundlePom(BUNDLES[0], "1.0.0", "4.36", "R20260901-1311"));
       Map<String, String> report = classify(root, central, false);
       assertEquals("0", report.get("publication.coordinate.count"));
       for (int i = 1; i <= BUNDLES.length; i++)
@@ -1127,8 +1149,35 @@ public class CDOAggregationToolBomTest
       }
 
       assertEquals("REUSABLE", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
-      assertTrue(report.get("release.component." + (BUNDLES.length + 1) + ".reason").contains("not a new deployment candidate"));
+      assertEquals("REUSABLE", report.get("release.component." + (BUNDLES.length + 2) + ".classification"));
+      assertTrue(report.get("release.component." + (BUNDLES.length + 2) + ".reason").contains("not a new deployment candidate"));
       assertEquals("0", report.get("publication.coordinate.count"));
+    }
+  }
+
+  @Test
+  public void classifiesMixedPublishedAndNewBundleCoordinatesAcrossProjectReleases() throws Exception
+  {
+    Path root = classificationFixture("4.37", "R20261001-0900");
+    try (CentralFixture central = new CentralFixture())
+    {
+      central.loadProposedArtifacts(root);
+      central.replaceBundlePom(0, bundlePom(BUNDLES[0], "1.0.0", "4.36", "R20260901-1311"));
+      for (int index = 1; index < BUNDLES.length; index++)
+      {
+        for (String suffix : new String[] { ".pom", ".jar", "-sources.jar", "-javadoc.jar" })
+        {
+          central.removeBundleArtifact(index, suffix);
+        }
+      }
+
+      Map<String, String> report = classify(root, central, false);
+      assertEquals("REUSABLE", report.get("release.component.1.classification"));
+      assertEquals("NEW", report.get("release.component.2.classification"));
+      assertEquals(Integer.toString(BUNDLES.length - 1), report.get("publication.coordinate.count"));
+      assertEquals("3", report.get("classification.reusable.count"));
+      assertEquals(Integer.toString(BUNDLES.length - 1), report.get("classification.new.count"));
+      assertEquals("4.37", report.get("cdo.project.release"));
     }
   }
 
@@ -1186,6 +1235,384 @@ public class CDOAggregationToolBomTest
       Map<String, String> report = classify(root, central, false);
       assertEquals("REUSABLE", report.get("release.component.1.classification"));
     }
+  }
+
+  @Test
+  public void permitsDifferentBuildProvenanceWhenPublishedArtifactAndConsumerMetadataMatch() throws Exception
+  {
+    Path root = classificationFixture("4.37", "R20261001-0900");
+    Path proposedPom = root.resolve("bundles/org/eclipse/cdo/" + BUNDLES[0] + "/1.0.0/" + BUNDLES[0] + "-1.0.0.pom");
+    String proposed = Files.readString(proposedPom, StandardCharsets.UTF_8).replace("</properties>",
+        "<cdo.git.commit>0123456789abcdef0123456789abcdef01234567</cdo.git.commit></properties>");
+    Files.writeString(proposedPom, proposed, StandardCharsets.UTF_8);
+
+    try (CentralFixture central = new CentralFixture())
+    {
+      central.loadProposedArtifacts(root);
+      String published = proposed.replace("0123456789abcdef0123456789abcdef01234567", "abcdef0123456789abcdef0123456789abcdef01");
+      central.replaceBundlePom(0, published);
+      Map<String, String> report = classify(root, central, false);
+      assertEquals("REUSABLE", report.get("release.component.1.classification"));
+    }
+  }
+
+  @Test
+  public void classifiesTheExamplesDistributionByItsPomAndZipContents() throws Exception
+  {
+    Path root = classificationFixture("4.37", "R20261001-0900");
+    try (CentralFixture central = new CentralFixture())
+    {
+      central.loadProposedArtifacts(root);
+      String examplesVersion = examplesDistributionVersion();
+      String examplesPath = "bundles/org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion;
+      String examplesPom = Files.readString(root.resolve(examplesPath + ".pom"), StandardCharsets.UTF_8)
+          .replace("<cdo.project.release>4.37</cdo.project.release>", "<cdo.project.release>4.36</cdo.project.release>")
+          .replace("R20261001-0900", "R20260901-1311");
+      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + ".pom",
+          examplesPom.getBytes(StandardCharsets.UTF_8));
+      Map<String, String> report = classify(root, central, false);
+      assertEquals("REUSABLE", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
+
+      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + "-examples.zip",
+          "tampered examples".getBytes(StandardCharsets.UTF_8));
+      report = classify(root, central, true);
+      assertEquals("CONFLICT", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
+      assertTrue(report.get("release.component." + (BUNDLES.length + 1) + ".reason").contains("artifact bytes differ"));
+
+      Path proposedZip = root.resolve(examplesPath + "-examples.zip");
+      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + "-examples.zip",
+          Files.readAllBytes(proposedZip));
+      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion + ".pom",
+          examplesPom.replace("</project>", "<name>Changed consumer metadata</name></project>").getBytes(StandardCharsets.UTF_8));
+      report = classify(root, central, true);
+      assertEquals("CONFLICT", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
+      assertTrue(report.get("release.component." + (BUNDLES.length + 1) + ".reason").contains("POM metadata differs"));
+    }
+  }
+
+  @Test
+  public void selectsFirstExamplesPatchAndPropagatesItIntoFinalStaging() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Map<String, Path> candidate = prepareExamplesVersionCandidate(root, "4.37.0");
+    try (CentralFixture central = new CentralFixture())
+    {
+      selectExamplesVersion(candidate, central);
+      Properties metadata = readProperties(candidate.get("metadata"));
+      assertEquals("1.0.0", metadata.getProperty("examples.distribution.version"));
+      assertEquals("NEW", readProperties(root.resolve("examples-version-selection.properties")).getProperty("examples.distribution.selection"));
+
+      Path finalStaging = Files.createDirectories(root.resolve("final-staging"));
+      String sourceRevision = Files.readString(candidate.get("source.revision"), StandardCharsets.US_ASCII);
+      CDOAggregationTool.main(new String[] { "stage-examples-distribution", candidate.get("workspace").toString(), candidate.get("candidates").toString(),
+          candidate.get("zip").toString(), candidate.get("pom").toString(), candidate.get("metadata").toString(), candidate.get("publishing").toString(),
+          finalStaging.toString(), sourceRevision });
+      Path finalPom = finalStaging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom");
+      Path candidatePom = candidate.get("initial.staging").resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom");
+      assertEquals(Files.readString(candidatePom, StandardCharsets.UTF_8), Files.readString(finalPom, StandardCharsets.UTF_8));
+      assertTrue(Files.isRegularFile(finalStaging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0-examples.zip")));
+    }
+  }
+
+  @Test
+  public void selectedExamplesVersionStagesWithPreviouslyGeneratedBundlesAndBom() throws Exception
+  {
+    Path root = fixture("4.37", "R20261001-0900");
+    Path metadataFile = root.resolve("metadata.properties");
+    Files.writeString(metadataFile,
+        Files.readString(metadataFile, StandardCharsets.UTF_8) + "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release.source=DROP\n",
+        StandardCharsets.UTF_8);
+    for (int index = 0; index < BUNDLES.length; index++)
+    {
+      String bundle = BUNDLES[index];
+      String version = "1.0." + index;
+      Path directory = root.resolve("bundles/org/eclipse/cdo/" + bundle + "/" + version);
+      writeChecksums(directory.resolve(bundle + "-" + version + ".pom"));
+      for (String suffix : new String[] { ".jar", "-sources.jar", "-javadoc.jar" })
+      {
+        Path artifact = directory.resolve(bundle + "-" + version + suffix);
+        Files.writeString(artifact, "fixture " + bundle + suffix, StandardCharsets.UTF_8);
+        writeChecksums(artifact);
+      }
+    }
+
+    File generatedBom = generate(root, "generated-bom");
+    Path candidateRoot = Files.createDirectories(root.resolve("examples-candidate"));
+    Map<String, Path> candidate = prepareExamplesVersionCandidate(candidateRoot, "4.37.0");
+    candidate.put("metadata", metadataFile);
+    Path staging = Files.createDirectories(root.resolve("complete-staging"));
+    try (Stream<Path> files = Files.walk(root.resolve("bundles")))
+    {
+      for (Path file : files.filter(Files::isRegularFile).collect(Collectors.toList()))
+      {
+        Path destination = staging.resolve(root.resolve("bundles").relativize(file));
+        Files.createDirectories(destination.getParent());
+        Files.copy(file, destination);
+      }
+    }
+
+    try (CentralFixture central = new CentralFixture())
+    {
+      setExamplesVersionMetadata(central, "1.0.15");
+      String candidatePom = Files.readString(
+          candidate.get("initial.staging").resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom"),
+          StandardCharsets.UTF_8);
+      String oldPom = candidatePom.replace("<version>1.0.0</version>", "<version>1.0.15</version>").replace("<cdo.project.release>4.37.0</cdo.project.release>",
+          "<cdo.project.release>4.37</cdo.project.release>");
+      byte[] originalZip = Files.readAllBytes(candidate.get("zip"));
+      byte[] oldZip = Arrays.copyOf(originalZip, originalZip.length + 1);
+      oldZip[oldZip.length - 1] = 1;
+      publishExamplesVersion(central, "1.0.15", oldPom.getBytes(StandardCharsets.UTF_8), oldZip);
+      selectExamplesVersion(candidate, central);
+      assertEquals("1.0.16", readProperties(metadataFile).getProperty("examples.distribution.version"));
+    }
+
+    CDOAggregationTool.main(new String[] { "stage-release-bom", root.resolve("generated-bom").toString(), metadataFile.toString(), staging.toString() });
+    CDOAggregationTool.main(new String[] { "stage-examples-distribution", candidate.get("workspace").toString(), candidate.get("candidates").toString(),
+        candidate.get("zip").toString(), candidate.get("pom").toString(), metadataFile.toString(), candidate.get("publishing").toString(), staging.toString(),
+        Files.readString(candidate.get("source.revision"), StandardCharsets.US_ASCII) });
+    Path stagedExamplesPom = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.16/cdo-examples-distribution-1.0.16.pom");
+    Element stagedPomProperties = child(parse(stagedExamplesPom.toFile()).getDocumentElement(), "properties");
+    assertTrue("Packaging control metadata must not become publication provenance", child(stagedPomProperties, "examples.distribution.version") == null);
+    try (Stream<Path> files = Files.walk(staging))
+    {
+      for (Path artifact : files.filter(Files::isRegularFile)
+          .filter(file -> file.toString().endsWith(".pom") || file.toString().endsWith(".jar") || file.toString().endsWith(".zip"))
+          .collect(Collectors.toList()))
+      {
+        Files.writeString(Path.of(artifact + ".asc"), "-----BEGIN PGP SIGNATURE-----\nfixture\n", StandardCharsets.US_ASCII);
+      }
+    }
+
+    assertTrue(generatedBom.isFile());
+    CDOAggregationTool.main(new String[] { "publish-check", staging.toString(), metadataFile.toString(), "PACKAGE", "SIGNED" });
+  }
+
+  @Test
+  public void selectsTheHighestNumericEquivalentExamplesPatchAndIgnoresPermittedProvenance() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Map<String, Path> candidate = prepareExamplesVersionCandidate(root, "4.37.0");
+    String basePom = Files.readString(
+        candidate.get("initial.staging").resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom"),
+        StandardCharsets.UTF_8);
+    byte[] zip = Files.readAllBytes(candidate.get("zip"));
+    try (CentralFixture central = new CentralFixture())
+    {
+      setExamplesVersionMetadata(central, "1.0.9", "1.0.15");
+      String historicalPom = basePom.replace("<version>1.0.0</version>", "<version>1.0.9</version>")
+          .replace("<cdo.drop.id>R20261001-0900</cdo.drop.id>", "<cdo.drop.id>R20260901-1311</cdo.drop.id>")
+          .replace("<cdo.project.release>4.37.0</cdo.project.release>", "<cdo.project.release>4.36.0</cdo.project.release>")
+          .replace("<cdo.git.commit>0123456789abcdef0123456789abcdef01234567</cdo.git.commit>",
+              "<cdo.git.commit>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</cdo.git.commit>")
+          .replace("<cdo.examples.source.git.commit>fedcba9876543210fedcba9876543210fedcba98</cdo.examples.source.git.commit>",
+              "<cdo.examples.source.git.commit>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</cdo.examples.source.git.commit>")
+          .replace("<tag>fedcba9876543210fedcba9876543210fedcba98</tag>", "<tag>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</tag>");
+      publishExamplesVersion(central, "1.0.9", historicalPom.getBytes(StandardCharsets.UTF_8), zip);
+      String newestPom = basePom.replace("<version>1.0.0</version>", "<version>1.0.15</version>");
+      publishExamplesVersion(central, "1.0.15", newestPom.getBytes(StandardCharsets.UTF_8), zip);
+
+      selectExamplesVersion(candidate, central);
+
+      assertEquals("1.0.15", readProperties(candidate.get("metadata")).getProperty("examples.distribution.version"));
+    }
+  }
+
+  @Test
+  public void advancesExamplesPatchForChangedZipAndEmbeddedBom() throws Exception
+  {
+    for (String release : new String[] { "4.36.0", "4.37.0" })
+    {
+      Path root = temporaryFolder.newFolder().toPath();
+      Map<String, Path> candidate = prepareExamplesVersionCandidate(root, release);
+      String basePom = Files.readString(
+          candidate.get("initial.staging").resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom"),
+          StandardCharsets.UTF_8);
+      byte[] publishedZip = Files.readAllBytes(candidate.get("zip"));
+      if ("4.37.0".equals(release))
+      {
+        Path oldZip = root.resolve("old-bom-examples.zip");
+        createExamplesZip(candidate.get("workspace"), candidate.get("distribution"), oldZip, null, false, false, "4.36.0");
+        publishedZip = Files.readAllBytes(oldZip);
+      }
+      else
+      {
+        publishedZip = Arrays.copyOf(publishedZip, publishedZip.length + 1);
+        publishedZip[publishedZip.length - 1] = 0;
+      }
+
+      try (CentralFixture central = new CentralFixture())
+      {
+        setExamplesVersionMetadata(central, "1.0.15");
+        publishExamplesVersion(central, "1.0.15", basePom.replace("<version>1.0.0</version>", "<version>1.0.15</version>").getBytes(StandardCharsets.UTF_8),
+            publishedZip);
+        selectExamplesVersion(candidate, central);
+        assertEquals("1.0.16", readProperties(candidate.get("metadata")).getProperty("examples.distribution.version"));
+      }
+    }
+  }
+
+  @Test
+  public void failsClosedOnMalformedCentralExamplesHistoryAndIncompletePublishedCoordinates() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Map<String, Path> candidate = prepareExamplesVersionCandidate(root, "4.37.0");
+    try (CentralFixture central = new CentralFixture())
+    {
+      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/maven-metadata.xml", "not-xml".getBytes(StandardCharsets.UTF_8));
+      expectExamplesVersionSelectionFailure(candidate, central);
+    }
+
+    try (CentralFixture central = new CentralFixture())
+    {
+      central.setStatus("org/eclipse/cdo/cdo-examples-distribution/maven-metadata.xml", 503);
+      expectExamplesVersionSelectionFailure(candidate, central);
+    }
+
+    try (CentralFixture central = new CentralFixture())
+    {
+      setExamplesVersionMetadata(central, "1.0.15");
+      expectExamplesVersionSelectionFailure(candidate, central);
+    }
+
+    try (CentralFixture central = new CentralFixture())
+    {
+      setExamplesVersionMetadata(central, "1.0.15");
+      String basePom = Files.readString(
+          candidate.get("initial.staging").resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/cdo-examples-distribution-1.0.0.pom"),
+          StandardCharsets.UTF_8);
+      central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/1.0.15/cdo-examples-distribution-1.0.15.pom",
+          basePom.replace("<version>1.0.0</version>", "<version>1.0.15</version>").getBytes(StandardCharsets.UTF_8));
+      expectExamplesVersionSelectionFailure(candidate, central);
+    }
+  }
+
+  @Test
+  public void incrementalPackageAcceptsFingerprintArgumentAfterPreparingANewCoordinate() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path staging = Files.createDirectories(root.resolve("staging"));
+    Path manifest = root.resolve("classification.properties");
+    Path completeQaZip = root.resolve("complete-qa.zip");
+    Path publicKey = Files.write(root.resolve("public-key.gpg"), new byte[] { 1 });
+    Path upload = root.resolve("incremental.zip");
+    Path summary = root.resolve("summary.properties");
+    createPublicationStaging(staging, true, "1.0.15");
+    createDeploymentZip(staging, completeQaZip);
+
+    StringBuilder contents = new StringBuilder("release.component.count=23\npublication.coordinate.count=1\npublication.coordinate.1=org.eclipse.cdo:")
+        .append(BUNDLES[0]).append(":1.0.0\nclassification.new.count=1\nclassification.reusable.count=22\nclassification.conflict.count=0\n")
+        .append("classification.lookup_error.count=0\ncdo.project.release=4.37\ncdo.drop.id=R20261001-0900\nexamples.distribution.version=1.0.15\n");
+    for (int index = 0; index < BUNDLES.length; index++)
+    {
+      appendClassification(contents, index + 1, BUNDLES[index], "1.0.0", "bundle");
+      int start = contents.indexOf("release.component." + (index + 1) + ".classification=REUSABLE");
+      if (index == 0)
+      {
+        int end = contents.indexOf("\n", start);
+        contents.replace(start, end, "release.component." + (index + 1) + ".classification=NEW");
+      }
+    }
+
+    appendClassification(contents, BUNDLES.length + 1, "cdo-examples-distribution", "1.0.15", "examples");
+    appendClassification(contents, BUNDLES.length + 2, "org.eclipse.cdo.bom", "4.37.0", "bom");
+    Files.writeString(manifest, contents, StandardCharsets.UTF_8);
+
+    try
+    {
+      CDOAggregationTool.main(new String[] { "incremental-package", staging.toString(), manifest.toString(), completeQaZip.toString(), upload.toString(),
+          "A".repeat(40), publicKey.toString(), "missing-gpg-executable", summary.toString() });
+      fail("Expected GnuPG validation to be reached for the NEW coordinate");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue("The NEW coordinate must advance to OpenPGP verification", expected.getMessage().contains("GnuPG"));
+      assertFalse("The output ZIP path must not be interpreted as the key fingerprint", expected.getMessage().contains("fingerprint"));
+    }
+    catch (IOException expected)
+    {
+      assertTrue("The NEW coordinate must advance to isolated GnuPG cleanup", expected.getMessage().contains("gpgconf.exe"));
+      assertFalse("The output ZIP path must not be interpreted as the key fingerprint", expected.getMessage().contains("fingerprint"));
+    }
+  }
+
+  private void expectExamplesVersionSelectionFailure(Map<String, Path> candidate, CentralFixture central) throws Exception
+  {
+    try
+    {
+      selectExamplesVersion(candidate, central);
+      fail("Expected Central examples version selection to fail closed");
+    }
+    catch (Exception expected)
+    {
+      assertFalse("Failure must explain the Central/version validation problem", expected.getMessage() == null || expected.getMessage().isBlank());
+    }
+  }
+
+  @Test
+  public void incrementalPreparationReportsANoopForAnEmptyNewCoordinateSet() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path staging = Files.createDirectories(root.resolve("staging"));
+    Path manifest = root.resolve("classification.properties");
+    Path completeQaZip = root.resolve("complete-qa.zip");
+    Path publicKey = Files.write(root.resolve("public-key.gpg"), new byte[] { 1 });
+    Path upload = root.resolve("incremental.zip");
+    Path summary = root.resolve("summary.properties");
+    createPublicationStaging(staging, true, "1.0.15");
+    createDeploymentZip(staging, completeQaZip);
+    StringBuilder contents = new StringBuilder("release.component.count=23\npublication.coordinate.count=0\n")
+        .append("classification.new.count=0\nclassification.reusable.count=23\nclassification.conflict.count=0\nclassification.lookup_error.count=0\n")
+        .append("cdo.project.release=4.37\ncdo.drop.id=R20261001-0900\nexamples.distribution.version=1.0.15\n");
+    int index = 1;
+    for (int bundleIndex = 0; bundleIndex < BUNDLES.length; bundleIndex++)
+    {
+      String bundle = BUNDLES[bundleIndex];
+      String version = "1.0.0";
+      appendClassification(contents, index++, bundle, version, "bundle");
+    }
+
+    appendClassification(contents, index++, "cdo-examples-distribution", "1.0.15", "examples");
+    appendClassification(contents, index, "org.eclipse.cdo.bom", "4.37.0", "bom");
+    Files.writeString(manifest, contents, StandardCharsets.UTF_8);
+    CDOAggregationTool.main(new String[] { "incremental-package", root.resolve("staging").toString(), manifest.toString(), completeQaZip.toString(),
+        upload.toString(), "A".repeat(40), publicKey.toString(), "gpg-is-not-reached", summary.toString() });
+
+    assertFalse(Files.exists(upload));
+    assertTrue(Files.readString(summary, StandardCharsets.UTF_8).contains("incremental.publication=NOT_REQUIRED"));
+
+    String firstBundle = "org.eclipse.cdo:" + BUNDLES[0] + ":1.0.0";
+    String incomplete = contents.toString().replace("publication.coordinate.count=0", "publication.coordinate.count=1")
+        .replace("classification.new.count=0", "classification.new.count=1").replace("classification.reusable.count=23", "classification.reusable.count=22")
+        .replace("release.component.1.classification=REUSABLE", "release.component.1.classification=NEW")
+        .replace("release.component.1.reason=Equivalent\n", "release.component.1.reason=New\npublication.coordinate.1=" + firstBundle + "\n");
+    Files.writeString(manifest, incomplete, StandardCharsets.UTF_8);
+    Files.delete(staging.resolve(path(BUNDLES[0], "1.0.0", ".jar")));
+    createDeploymentZip(staging, completeQaZip);
+    Files.delete(summary);
+    try
+    {
+      CDOAggregationTool.main(new String[] { "incremental-package", root.resolve("staging").toString(), manifest.toString(), completeQaZip.toString(),
+          upload.toString(), "A".repeat(40), publicKey.toString(), "gpg-is-not-reached", summary.toString() });
+      fail("Expected an incomplete NEW coordinate to fail closed");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("required incremental publication artifact"));
+    }
+  }
+
+  private static void appendClassification(StringBuilder contents, int index, String artifact, String version, String kind)
+  {
+    String group = "org.eclipse.cdo";
+    if ("bom".equals(kind))
+    {
+      artifact = "org.eclipse.cdo.bom";
+    }
+
+    contents.append("release.component.").append(index).append(".coordinate=").append(group).append(':').append(artifact).append(':').append(version)
+        .append('\n').append("release.component.").append(index).append(".kind=").append(kind).append('\n').append("release.component.").append(index)
+        .append(".classification=REUSABLE\nrelease.component.").append(index).append(".reason=Equivalent\n");
   }
 
   @Test
@@ -1350,7 +1777,7 @@ public class CDOAggregationToolBomTest
       central.loadProposedArtifacts(root);
       central.replaceBomWithIncompatibleVersion();
       Map<String, String> report = classify(root, central, true);
-      assertEquals("CONFLICT", report.get("release.component." + (BUNDLES.length + 1) + ".classification"));
+      assertEquals("CONFLICT", report.get("release.component." + (BUNDLES.length + 2) + ".classification"));
       assertEquals("0", report.get("publication.coordinate.count"));
     }
   }
@@ -1390,6 +1817,97 @@ public class CDOAggregationToolBomTest
     return root;
   }
 
+  private static String examplesDistributionVersion() throws Exception
+  {
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path propertiesFile = new File(classes.getParentFile(), "central/examples/distribution/package.properties").toPath();
+    Properties properties = new Properties();
+    try (InputStream input = Files.newInputStream(propertiesFile))
+    {
+      properties.load(input);
+    }
+
+    String versionLine = properties.getProperty("release.version.line");
+    if (versionLine == null || !versionLine.matches("[0-9]+\\.[0-9]+"))
+    {
+      throw new IOException("Invalid examples distribution release.version.line in " + propertiesFile);
+    }
+
+    return versionLine + ".0";
+  }
+
+  private Map<String, Path> prepareExamplesVersionCandidate(Path root, String projectRelease) throws Exception
+  {
+    Path metadata = root.resolve("build-metadata.properties");
+    String sourceCommit = "0123456789abcdef0123456789abcdef01234567";
+    String sourceRevision = "fedcba9876543210fedcba9876543210fedcba98";
+    Files.writeString(metadata,
+        "cdo.build.type=R\ncdo.build.stream=4.x\ncdo.project.release=" + projectRelease
+            + "\ncdo.project.release.source=DROP\ncdo.drop.id=R20261001-0900\ncdo.git.commit=" + sourceCommit + "\nexamples.distribution.version="
+            + examplesDistributionVersion() + "\n",
+        StandardCharsets.UTF_8);
+
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path central = new File(classes.getParentFile(), "central").toPath();
+    Path distribution = central.resolve("examples/distribution").toAbsolutePath();
+    Path workspace = distribution.resolve("../../../../..").normalize();
+    Path candidates = Files.createDirectories(root.resolve("candidate-repository"));
+    createCandidate(candidates, "org.eclipse.emf.cdo.server.embedded", "4.11.1");
+    createCandidate(candidates, "org.eclipse.emf.cdo.examples.company", "4.1.4");
+    createCandidate(candidates, "org.eclipse.net4j.util", "3.31.0");
+    createCandidate(candidates, "org.eclipse.net4j.db.postgresql", "4.5.1");
+    Path zip = root.resolve("candidate-examples.zip");
+    createExamplesZip(workspace, distribution, zip, null, false, false, projectRelease);
+    Path initialStaging = Files.createDirectories(root.resolve("initial-staging"));
+    String[] stageArguments = { "stage-examples-distribution", workspace.toString(), candidates.toString(), zip.toString(),
+        distribution.resolve("pom.xml").toString(), metadata.toString(), central.resolve("publishing.properties").toString(), initialStaging.toString(),
+        sourceRevision };
+    CDOAggregationTool.main(stageArguments);
+
+    Map<String, Path> result = new LinkedHashMap<>();
+    result.put("metadata", metadata);
+    result.put("zip", zip);
+    result.put("pom", distribution.resolve("pom.xml"));
+    result.put("publishing", central.resolve("publishing.properties"));
+    result.put("source.revision", root.resolve("source-revision.txt"));
+    Files.writeString(result.get("source.revision"), sourceRevision, StandardCharsets.US_ASCII);
+    result.put("package.properties", distribution.resolve("package.properties"));
+    result.put("initial.staging", initialStaging);
+    result.put("distribution", distribution);
+    result.put("workspace", workspace);
+    result.put("selection.work", root);
+    result.put("candidates", candidates);
+    return result;
+  }
+
+  private void selectExamplesVersion(Map<String, Path> candidate, CentralFixture central) throws Exception
+  {
+    Path sourceRevision = candidate.get("source.revision");
+    CDOAggregationTool.main(new String[] { "select-examples-version", candidate.get("zip").toString(), candidate.get("pom").toString(),
+        candidate.get("metadata").toString(), candidate.get("publishing").toString(), Files.readString(sourceRevision, StandardCharsets.US_ASCII),
+        central.baseUrl(), candidate.get("selection.work").toString(), candidate.get("package.properties").toString() });
+  }
+
+  private void publishExamplesVersion(CentralFixture central, String version, byte[] pom, byte[] zip)
+  {
+    String prefix = "org/eclipse/cdo/cdo-examples-distribution/" + version + "/cdo-examples-distribution-" + version;
+    central.setArtifact(prefix + ".pom", pom);
+    central.setArtifact(prefix + "-examples.zip", zip);
+  }
+
+  private void setExamplesVersionMetadata(CentralFixture central, String... versions)
+  {
+    StringBuilder xml = new StringBuilder(
+        "<metadata><groupId>org.eclipse.cdo</groupId><artifactId>cdo-examples-distribution</artifactId><versioning><versions>");
+    for (String version : versions)
+    {
+      xml.append("<version>").append(version).append("</version>");
+    }
+
+    xml.append("</versions></versioning></metadata>");
+    central.setArtifact("org/eclipse/cdo/cdo-examples-distribution/maven-metadata.xml", xml.toString().getBytes(StandardCharsets.UTF_8));
+  }
+
   private Properties readProperties(Path file) throws IOException
   {
     Properties properties = new Properties();
@@ -1412,9 +1930,17 @@ public class CDOAggregationToolBomTest
   {
     try (ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(deploymentZip)); Stream<Path> paths = Files.walk(staging.resolve("org")))
     {
-      for (Path path : paths.filter(Files::isRegularFile).sorted().collect(Collectors.toList()))
+      List<Path> entries = paths.sorted().collect(Collectors.toList());
+      for (Path path : entries)
       {
         String relative = staging.relativize(path).toString().replace(File.separatorChar, '/');
+        if (Files.isDirectory(path))
+        {
+          output.putNextEntry(new ZipEntry(relative + "/"));
+          output.closeEntry();
+          continue;
+        }
+
         output.putNextEntry(new ZipEntry(relative));
         Files.copy(path, output);
         output.closeEntry();
@@ -1423,6 +1949,11 @@ public class CDOAggregationToolBomTest
   }
 
   private void createPublicationStaging(Path staging, boolean includeBom) throws Exception
+  {
+    createPublicationStaging(staging, includeBom, examplesDistributionVersion());
+  }
+
+  private void createPublicationStaging(Path staging, boolean includeBom, String examplesVersion) throws Exception
   {
     String[][] algorithms = { { "md5", "MD5" }, { "sha1", "SHA-1" }, { "sha256", "SHA-256" }, { "sha512", "SHA-512" } };
     for (String bundle : BUNDLES)
@@ -1454,12 +1985,13 @@ public class CDOAggregationToolBomTest
 
     for (String suffix : new String[] { ".pom", "-examples.zip" })
     {
-      String artifact = "cdo-examples-distribution-1.0.0" + suffix;
-      Path file = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/1.0.0/" + artifact);
+      String artifact = "cdo-examples-distribution-" + examplesVersion + suffix;
+      Path file = staging.resolve("org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/" + artifact);
       Files.createDirectories(file.getParent());
       String content = suffix.equals(".pom")
-          ? "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>cdo-examples-distribution</artifactId>"
-              + "<version>1.0.0</version><packaging>pom</packaging><name>CDO Examples</name><description>Examples ZIP</description><url>https://eclipse.dev/cdo/</url>"
+          ? "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>cdo-examples-distribution</artifactId>" + "<version>"
+              + examplesVersion
+              + "</version><packaging>pom</packaging><name>CDO Examples</name><description>Examples ZIP</description><url>https://eclipse.dev/cdo/</url>"
               + "<organization><name>Eclipse Foundation</name><url>https://www.eclipse.org</url></organization><licenses><license><name>EPL-2.0</name>"
               + "<url>https://www.eclipse.org/legal/epl-2.0/</url><distribution>repo</distribution></license></licenses><developers><developer><name>CDO</name>"
               + "<url>https://github.com/eclipse-cdo/cdo/graphs/contributors</url></developer></developers><scm><connection>scm:git:https://github.com/eclipse-cdo/cdo.git</connection>"
@@ -1601,6 +2133,15 @@ public class CDOAggregationToolBomTest
     }
 
     generate(root, "bom-output");
+    String examplesVersion = examplesDistributionVersion();
+    Path examplesDirectory = root.resolve("bundles/org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion);
+    Files.createDirectories(examplesDirectory);
+    Files.writeString(examplesDirectory.resolve("cdo-examples-distribution-" + examplesVersion + ".pom"),
+        "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>cdo-examples-distribution</artifactId><version>"
+            + examplesVersion + "</version>" + "<packaging>pom</packaging><properties><cdo.drop.id>" + dropID + "</cdo.drop.id><cdo.project.release>" + release
+            + "</cdo.project.release></properties></project>",
+        StandardCharsets.UTF_8);
+    Files.writeString(examplesDirectory.resolve("cdo-examples-distribution-" + examplesVersion + "-examples.zip"), "examples", StandardCharsets.UTF_8);
     return root;
   }
 
@@ -1674,12 +2215,12 @@ public class CDOAggregationToolBomTest
     {
       writeResolverArtifact(repository, "org.eclipse.emf.cdo.server.db", "4.37.0", "jar", artifactPomOrigin, artifactJarOrigin, true);
     }
-  
+
     if (includeBom)
     {
       writeResolverArtifact(repository, "org.eclipse.cdo.bom", "4.37.0", "pom", bomOrigin, null, false);
     }
-  
+
     Path thirdParty = repository.resolve("com/example/unrelated/1.0/unrelated-1.0.jar");
     Files.createDirectories(thirdParty.getParent());
     Files.writeString(thirdParty, "unrelated", StandardCharsets.UTF_8);
@@ -1696,6 +2237,49 @@ public class CDOAggregationToolBomTest
     return output.toPath().resolve("org/eclipse/cdo/org.eclipse.cdo.bom/" + normalized + "/org.eclipse.cdo.bom-" + normalized + ".pom").toFile();
   }
 
+  @Test
+  public void mavenExamplesDistributionBuildProducesReproducibleZipBytes() throws Exception
+  {
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path central = new File(classes.getParentFile(), "central").toPath();
+    Path project = central.resolve("examples/distribution");
+    Path settings = central.resolve("standalone-examples-settings.xml");
+    Path output = temporaryFolder.newFolder().toPath().resolve("examples-maven-output.txt");
+    List<String> baseCommand = standaloneMavenCommand();
+    baseCommand.addAll(Arrays.asList("-gs", settings.toString(), "-s", settings.toString(), "-B", "-ntp", "-DskipTests", "-Drevision=1.0-SNAPSHOT",
+        "-Dexamples.cdo.project.release=4.37.0", "-f", project.resolve("pom.xml").toString(), "package"));
+
+    byte[][] archives = new byte[2][];
+    for (int build = 0; build < archives.length; build++)
+    {
+      ProcessBuilder processBuilder = new ProcessBuilder(baseCommand).directory(project.toFile()).redirectErrorStream(true).redirectOutput(output.toFile());
+      Process process;
+      try
+      {
+        process = processBuilder.start();
+      }
+      catch (IOException ex)
+      {
+        assumeNoException("Maven executable is unavailable for examples reproducibility integration test", ex);
+        return;
+      }
+
+      if (!process.waitFor(5, TimeUnit.MINUTES))
+      {
+        process.destroyForcibly();
+        fail("Maven examples distribution build timed out: " + Files.readString(output, StandardCharsets.UTF_8));
+      }
+
+      String log = Files.readString(output, StandardCharsets.UTF_8);
+      assertEquals(log, 0, process.exitValue());
+      Path archive = project.resolve("target/cdo-examples-distribution-1.0-SNAPSHOT-examples.zip");
+      assertTrue("Maven did not create the examples distribution ZIP", Files.isRegularFile(archive));
+      archives[build] = MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(archive));
+    }
+
+    assertTrue("Unchanged examples inputs must produce byte-identical release ZIP files", Arrays.equals(archives[0], archives[1]));
+  }
+
   private static List<String> standaloneMavenCommand()
   {
     String userProfile = System.getenv("USERPROFILE");
@@ -1707,12 +2291,12 @@ public class CDOAggregationToolBomTest
         return new ArrayList<>(Arrays.asList("powershell.exe", "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", wrapper.toString()));
       }
     }
-  
+
     if (File.separatorChar == '\\')
     {
       return new ArrayList<>(Arrays.asList("cmd.exe", "/c", "mvn.cmd"));
     }
-  
+
     return new ArrayList<>(List.of("mvn"));
   }
 
@@ -1722,7 +2306,7 @@ public class CDOAggregationToolBomTest
     Files.createDirectories(directory);
     Files.writeString(directory.resolve(artifact + "-" + version + ".pom"), "<project><modelVersion>4.0.0</modelVersion>"
         + "<groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version></project>", StandardCharsets.UTF_8);
-  
+
     Path source = repository.resolve("fixture-src/fixture/" + className + ".java");
     Path classes = repository.resolve("fixture-classes");
     Files.createDirectories(source.getParent());
@@ -1730,7 +2314,7 @@ public class CDOAggregationToolBomTest
     Files.writeString(source, "package fixture; public final class " + className + " {}", StandardCharsets.UTF_8);
     assertNotNull("A JDK is required to build deterministic repository fixture artifacts", ToolProvider.getSystemJavaCompiler());
     assertEquals(0, ToolProvider.getSystemJavaCompiler().run(null, null, null, "-d", classes.toString(), source.toString()));
-  
+
     Path jar = directory.resolve(artifact + "-" + version + ".jar");
     try (JarOutputStream output = new JarOutputStream(Files.newOutputStream(jar)))
     {
@@ -1786,7 +2370,7 @@ public class CDOAggregationToolBomTest
       Files.writeString(jar, "resolved jar", StandardCharsets.UTF_8);
       tracking.setProperty(jar.getFileName() + ">" + jarOrigin, "");
     }
-  
+
     try (var output = Files.newOutputStream(directory.resolve("_remote.repositories")))
     {
       tracking.store(output, "Maven Resolver fixture");
@@ -1827,7 +2411,7 @@ public class CDOAggregationToolBomTest
             workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java").toString() },
         { "remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java",
             workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java").toString() } };
-  
+
     try (ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(zip)))
     {
       for (String[] entry : entries)
@@ -1841,7 +2425,7 @@ public class CDOAggregationToolBomTest
             portablePom = portablePom.replace("<cdo.company.version>4.1.4</cdo.company.version>",
                 "<cdo.company.version>" + companyVersion + "</cdo.company.version>");
           }
-  
+
           output.write(portablePom.getBytes(StandardCharsets.UTF_8));
         }
         else if (modifyJavaSource && entry[0].equals("remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java"))
@@ -1855,10 +2439,10 @@ public class CDOAggregationToolBomTest
         {
           Files.copy(Path.of(entry[1]), output);
         }
-  
+
         output.closeEntry();
       }
-  
+
       if (includeUnexpectedFile)
       {
         output.putNextEntry(new ZipEntry("unexpected.txt"));
@@ -1959,7 +2543,7 @@ public class CDOAggregationToolBomTest
       return "http://127.0.0.1:" + server.getAddress().getPort() + "/";
     }
 
-    void loadProposedArtifacts(Path root) throws IOException
+    void loadProposedArtifacts(Path root) throws Exception
     {
       for (int i = 0; i < BUNDLES.length; i++)
       {
@@ -1972,6 +2556,13 @@ public class CDOAggregationToolBomTest
           artifacts.put(prefix + suffix, Files.readAllBytes(directory.resolve(bundle + "-" + version + suffix)));
         }
       }
+
+      String examplesVersion = examplesDistributionVersion();
+      Path examplesDirectory = root.resolve("bundles/org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion);
+      String examplesPrefix = "org/eclipse/cdo/cdo-examples-distribution/" + examplesVersion + "/cdo-examples-distribution-" + examplesVersion;
+      artifacts.put(examplesPrefix + ".pom", Files.readAllBytes(examplesDirectory.resolve("cdo-examples-distribution-" + examplesVersion + ".pom")));
+      artifacts.put(examplesPrefix + "-examples.zip",
+          Files.readAllBytes(examplesDirectory.resolve("cdo-examples-distribution-" + examplesVersion + "-examples.zip")));
 
       String metadata = Files.readString(root.resolve("metadata.properties"), StandardCharsets.UTF_8);
       String release = Arrays.stream(metadata.split("\\R")).filter(line -> line.startsWith("cdo.project.release=")).findFirst().get()

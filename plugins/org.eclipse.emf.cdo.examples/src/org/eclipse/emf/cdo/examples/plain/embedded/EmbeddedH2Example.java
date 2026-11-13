@@ -33,7 +33,6 @@ import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.EPackage;
 
@@ -89,12 +88,12 @@ public final class EmbeddedH2Example
       }
       finally
       {
-        LifecycleUtil.deactivateNoisy(repositoryConfig);
+        repositoryConfig.deactivate();
       }
     }
     finally
     {
-      LifecycleUtil.deactivateNoisy(container);
+      container.deactivate();
     }
   }
 

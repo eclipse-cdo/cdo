@@ -475,7 +475,7 @@ pipeline {
               '''
             }
           }
-          withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "BUNDLE_PATH=${env.CDO_WORKSPACE_ROOT}/maven-publishing/cdo-maven-central-deployment.zip", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
+          withEnv(["STAGING_DIR=${env.CDO_AGGR_WORK_DIR}/staging", "AGGR_WORK_DIR=${env.CDO_AGGR_WORK_DIR}", "BUNDLE_PATH=${env.CDO_WORKSPACE_ROOT}/maven-publishing/cdo-maven-central-deployment.zip", "CDO_WORKSPACE_ROOT=${env.CDO_WORKSPACE_ROOT}"]) {
             sh '''
               set -eu
               set +x

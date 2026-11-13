@@ -10,7 +10,7 @@
   Contributors:
     Eike Stepper - initial API and implementation
 -->
-<project name="cdo-maven-aggregation" default="validate" basedir=".">
+<project name="cdo-maven-aggregation" default="validate" basedir="." xmlns:if="ant:if">
 	<description>Portable local CDO p2repo-aggregator workflow.</description>
 
 	<!-- Override with -Dcbi.aggregator=<path-to-cbiAggrc.exe>. -->
@@ -712,7 +712,7 @@
 			<arg value="${workspace.root}" />
 		</java>
 		<mkdir dir="${consumer.central.only.repository}" />
-		<unzip src="${deployment.zip}" dest="${consumer.central.only.repository}" if="deployment.package.available" />
+		<unzip src="${deployment.zip}" dest="${consumer.central.only.repository}" if:set="deployment.package.available" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="consumer-versions" />
 			<arg value="${cdo.maven.repository}" />

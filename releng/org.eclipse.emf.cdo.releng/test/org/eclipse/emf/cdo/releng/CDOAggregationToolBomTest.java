@@ -16,6 +16,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeNoException;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
@@ -28,6 +29,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.tools.ToolProvider;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilderFactory;
 
@@ -41,12 +43,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
+import java.util.jar.JarOutputStream;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.zip.ZipEntry;
@@ -602,10 +610,22 @@ public class CDOAggregationToolBomTest
     Element settings = parse(centralDirectory.resolve("standalone-examples-settings.xml").toFile()).getDocumentElement();
     Element mirror = (Element)settings.getElementsByTagNameNS("*", "mirror").item(0);
     assertEquals("central-only", genericChildText(mirror, "id"));
-    assertEquals("*,!cdo-deployment-bundle", genericChildText(mirror, "mirrorOf"));
-    assertEquals("https://repo.maven.apache.org/maven2", genericChildText(mirror, "url"));
-    assertEquals("Standalone settings must not add a Central repository ahead of repositories in the portable POM", 0,
-        settings.getElementsByTagNameNS("*", "profile").getLength());
+    assertEquals("*,!cdo-deployment-bundle,!central-only", genericChildText(mirror, "mirrorOf"));
+    assertEquals("${env.CDO_CENTRAL_REPOSITORY}", genericChildText(mirror, "url"));
+    NodeList settingsProfiles = settings.getElementsByTagNameNS("*", "profile");
+    assertEquals(1, settingsProfiles.getLength());
+    Element settingsProfile = (Element)settingsProfiles.item(0);
+    assertEquals("standalone-examples-repositories", genericChildText(settingsProfile, "id"));
+    NodeList settingsRepositories = settingsProfile.getElementsByTagNameNS("*", "repository");
+    assertEquals("cdo-deployment-bundle", genericChildText((Element)settingsRepositories.item(0), "id"));
+    assertEquals("${env.CDO_DEPLOYMENT_REPOSITORY}", genericChildText((Element)settingsRepositories.item(0), "url"));
+    assertEquals("central", genericChildText((Element)settingsRepositories.item(1), "id"));
+    assertEquals("${env.CDO_CENTRAL_REPOSITORY}", genericChildText((Element)settingsRepositories.item(1), "url"));
+    Element pluginRepository = (Element)settingsProfile.getElementsByTagNameNS("*", "pluginRepository").item(0);
+    assertEquals("central-only", genericChildText(pluginRepository, "id"));
+    assertEquals("https://repo.maven.apache.org/maven2", genericChildText(pluginRepository, "url"));
+    assertEquals(1, settings.getElementsByTagNameNS("*", "activeProfile").getLength());
+    assertEquals("standalone-examples-repositories", settings.getElementsByTagNameNS("*", "activeProfile").item(0).getTextContent().trim());
 
     Element portablePom = parse(centralDirectory.resolve("examples/distribution/portable-pom.xml").toFile()).getDocumentElement();
     Element profiles = child(portablePom, "profiles");
@@ -653,6 +673,16 @@ public class CDOAggregationToolBomTest
     assertTrue(targetXml.toString(), targetXml.toString().contains("standalone-examples-settings.xml"));
     assertTrue(targetXml.toString(), targetXml.toString().contains("-Dmaven.repo.local=${consumer.examples.maven.repository}"));
     assertTrue(targetXml.toString(), targetXml.toString().contains("-Dcdo.deployment.repository=${consumer.examples.repository.url}"));
+    NodeList environment = verifyTarget.getElementsByTagName("env");
+    Map<String, String> environmentValues = new LinkedHashMap<>();
+    for (int i = 0; i < environment.getLength(); i++)
+    {
+      Element variable = (Element)environment.item(i);
+      environmentValues.put(variable.getAttribute("key"), variable.getAttribute("value"));
+    }
+
+    assertEquals("${consumer.examples.repository.url}", environmentValues.get("CDO_DEPLOYMENT_REPOSITORY"));
+    assertEquals("${central.repository.url}", environmentValues.get("CDO_CENTRAL_REPOSITORY"));
 
     for (String module : new String[] { "embedded-h2", "remote-server", "remote-client" })
     {
@@ -694,99 +724,78 @@ public class CDOAggregationToolBomTest
     assertEquals("central", childText(centralRepository, "id"));
   }
 
-  private static void writeCollisionArtifact(Path repository, String version) throws Exception
+  @Test
+  public void mavenSelectsDeploymentRepositoryWhenCentralHasTheSameCdoGav() throws Exception
   {
-    Path directory = repository.resolve("org/eclipse/cdo/org.eclipse.net4j.db.jdbc/" + version);
-    Files.createDirectories(directory);
-    Files.writeString(directory.resolve("org.eclipse.net4j.db.jdbc-" + version + ".pom"),
-        "<project><groupId>org.eclipse.cdo</groupId>" + "<artifactId>org.eclipse.net4j.db.jdbc</artifactId><version>" + version + "</version></project>",
-        StandardCharsets.UTF_8);
-    Files.writeString(directory.resolve("org.eclipse.net4j.db.jdbc-" + version + ".jar"), "same version in both repositories", StandardCharsets.UTF_8);
-  }
+    Path root = temporaryFolder.newFolder().toPath();
+    Path deploymentRepository = root.resolve("deployment-repository");
+    Path centralRepository = root.resolve("central-repository");
+    String artifact = "org.eclipse.net4j.db.jdbc";
+    String version = "4.5.0";
+    writeMavenSelectionArtifact(deploymentRepository, artifact, version, "DeploymentOnly");
+    writeMavenSelectionArtifact(centralRepository, artifact, version, "CentralOnly");
 
-  private static String genericChildText(Element parent, String name)
-  {
-    NodeList children = parent.getElementsByTagNameNS("*", name);
-    return children.getLength() == 0 ? "" : children.item(0).getTextContent().trim();
-  }
+    Path project = Files.createDirectory(root.resolve("consumer"));
+    Path source = project.resolve("src/main/java/consumer/Consumer.java");
+    Files.createDirectories(source.getParent());
+    Files.writeString(source, "package consumer; import fixture.DeploymentOnly; public final class Consumer { DeploymentOnly value; }", StandardCharsets.UTF_8);
+    Files.writeString(project.resolve("pom.xml"), "<project><modelVersion>4.0.0</modelVersion><groupId>example</groupId>"
+        + "<artifactId>repository-precedence-test</artifactId><version>1.0.0</version><properties><maven.compiler.release>17</maven.compiler.release>"
+        + "</properties><dependencies><dependency><groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version
+        + "</version></dependency></dependencies><profiles><profile><id>portable-pom-repository</id><activation><activeByDefault>true</activeByDefault></activation>"
+        + "<repositories><repository><id>cdo-deployment-bundle</id><url>${cdo.deployment.repository}</url></repository></repositories></profile></profiles>"
+        + "<build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-resources-plugin</artifactId>"
+        + "<version>3.5.0</version></plugin><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-compiler-plugin</artifactId>"
+        + "<version>3.13.0</version></plugin></plugins></build></project>", StandardCharsets.UTF_8);
 
-  private String[] provenanceArguments(Path repository, Path examples) throws Exception
-  {
-    Path metadata = temporaryFolder.newFile().toPath();
-    Files.writeString(metadata, "cdo.project.release=4.37\n", StandardCharsets.UTF_8);
-    return new String[] { "verify-standalone-provenance", repository.toString(), examples.toString(), metadata.toString() };
-  }
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path settings = new File(classes.getParentFile(), "central/standalone-examples-settings.xml").toPath();
+    Path localRepository = root.resolve("maven-local");
+    Path output = root.resolve("maven-output.txt");
+    List<String> command = standaloneMavenCommand();
+    command.addAll(Arrays.asList("-gs", settings.toString(), "-s", settings.toString(), "-Dmaven.repo.local=" + localRepository,
+        "-Dcdo.deployment.repository=" + centralRepository.toUri().toASCIIString(), "-B", "-ntp", "-f", project.resolve("pom.xml").toString(), "compile"));
+    ProcessBuilder processBuilder = new ProcessBuilder(command).directory(project.toFile()).redirectErrorStream(true).redirectOutput(output.toFile());
+    processBuilder.environment().put("CDO_DEPLOYMENT_REPOSITORY", deploymentRepository.toUri().toASCIIString());
+    processBuilder.environment().put("CDO_CENTRAL_REPOSITORY", centralRepository.toUri().toASCIIString());
 
-  private void expectProvenanceFailure(Path repository, Path examples, String messagePart, String expectedRepository) throws Exception
-  {
+    Process process;
     try
     {
-      CDOAggregationTool.main(provenanceArguments(repository, examples));
-      fail("Expected standalone artifact provenance verification to fail");
+      process = processBuilder.start();
     }
-    catch (IllegalArgumentException expected)
+    catch (IOException ex)
     {
-      assertTrue(expected.getMessage(), expected.getMessage().contains(messagePart));
-      assertTrue(expected.getMessage(), expected.getMessage().contains(expectedRepository));
+      assumeNoException("Maven executable is unavailable for repository precedence integration test", ex);
+      return;
     }
-  }
 
-  private Path createStandaloneProvenanceFixture(Path root, String artifactPomOrigin, String artifactJarOrigin, String bomOrigin, boolean includeArtifact,
-      boolean includeBom) throws Exception
-  {
-    Path repository = Files.createDirectories(root.resolve("repository"));
-    createStandaloneModulePoms(root.resolve("examples"));
-    if (includeArtifact)
+    if (!process.waitFor(5, TimeUnit.MINUTES))
     {
-      writeResolverArtifact(repository, "org.eclipse.emf.cdo.server.db", "4.37.0", "jar", artifactPomOrigin, artifactJarOrigin, true);
+      process.destroyForcibly();
+      fail("Maven repository precedence integration timed out: " + Files.readString(output, StandardCharsets.UTF_8));
     }
 
-    if (includeBom)
+    String log = Files.readString(output, StandardCharsets.UTF_8);
+    assertEquals(log, 0, process.exitValue());
+
+    Path resolvedArtifact = localRepository.resolve("org/eclipse/cdo/" + artifact + "/" + version);
+    try (JarFile jar = new JarFile(resolvedArtifact.resolve(artifact + "-" + version + ".jar").toFile()))
     {
-      writeResolverArtifact(repository, "org.eclipse.cdo.bom", "4.37.0", "pom", bomOrigin, null, false);
+      assertNotNull("Maven selected Central's duplicate artifact", jar.getEntry("fixture/DeploymentOnly.class"));
+      assertTrue(jar.getEntry("fixture/CentralOnly.class") == null);
     }
 
-    Path thirdParty = repository.resolve("com/example/unrelated/1.0/unrelated-1.0.jar");
-    Files.createDirectories(thirdParty.getParent());
-    Files.writeString(thirdParty, "unrelated", StandardCharsets.UTF_8);
-    return repository;
-  }
-
-  private static void createStandaloneModulePoms(Path examples) throws Exception
-  {
-    for (String module : new String[] { "embedded-h2", "remote-server", "remote-client" })
-    {
-      Path pom = examples.resolve(module + "/pom.xml");
-      Files.createDirectories(pom.getParent());
-      String dependencies = "embedded-h2".equals(module)
-          ? "<dependencies><dependency><groupId>org.eclipse.cdo</groupId><artifactId>org.eclipse.emf.cdo.server.db</artifactId></dependency></dependencies>"
-          : "";
-      Files.writeString(pom, "<project><groupId>org.eclipse.cdo.examples</groupId><artifactId>" + module + "</artifactId>" + dependencies + "</project>",
-          StandardCharsets.UTF_8);
-    }
-  }
-
-  private static void writeResolverArtifact(Path repository, String artifact, String version, String packaging, String pomOrigin, String jarOrigin,
-      boolean includeJar) throws Exception
-  {
-    Path directory = repository.resolve("org/eclipse/cdo/" + artifact + "/" + version);
-    Files.createDirectories(directory);
-    Path pom = directory.resolve(artifact + "-" + version + ".pom");
-    Files.writeString(pom, "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version><packaging>"
-        + packaging + "</packaging></project>", StandardCharsets.UTF_8);
     Properties tracking = new Properties();
-    tracking.setProperty(pom.getFileName() + ">" + pomOrigin, "");
-    if (includeJar)
+    try (InputStream input = Files.newInputStream(resolvedArtifact.resolve("_remote.repositories")))
     {
-      Path jar = directory.resolve(artifact + "-" + version + ".jar");
-      Files.writeString(jar, "resolved jar", StandardCharsets.UTF_8);
-      tracking.setProperty(jar.getFileName() + ">" + jarOrigin, "");
+      tracking.load(input);
     }
 
-    try (var output = Files.newOutputStream(directory.resolve("_remote.repositories")))
-    {
-      tracking.store(output, "Maven Resolver fixture");
-    }
+    assertTrue(tracking.containsKey(artifact + "-" + version + ".pom>cdo-deployment-bundle"));
+    assertTrue(tracking.containsKey(artifact + "-" + version + ".jar>cdo-deployment-bundle"));
+    assertFalse(tracking.containsKey(artifact + "-" + version + ".pom>central-only"));
+    assertFalse(tracking.containsKey(artifact + "-" + version + ".jar>central-only"));
   }
 
   @Test
@@ -892,81 +901,6 @@ public class CDOAggregationToolBomTest
     assertEquals("R20260901-1311", childText(properties, "cdo.drop.id"));
     assertEquals("4.36.0", childText(properties, "cdo.project.release"));
     assertTrue(child(properties, "examples.cdo.project.release") == null);
-  }
-
-  private static void createCandidate(Path repository, String artifact, String version) throws Exception
-  {
-    Path versionDirectory = repository.resolve("org/eclipse/cdo/" + artifact + "/" + version);
-    Files.createDirectories(versionDirectory);
-    Files.writeString(versionDirectory.resolve(artifact + "-" + version + ".pom"),
-        "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version></project>",
-        StandardCharsets.UTF_8);
-    Files.writeString(versionDirectory.resolve(artifact + "-" + version + ".jar"), "verified candidate fixture", StandardCharsets.UTF_8);
-  }
-
-  private static void createExamplesZip(Path workspace, Path distribution, Path zip) throws Exception
-  {
-    createExamplesZip(workspace, distribution, zip, null, false, false);
-  }
-
-  private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
-      boolean modifyJavaSource) throws Exception
-  {
-    createExamplesZip(workspace, distribution, zip, companyVersion, includeUnexpectedFile, modifyJavaSource, "4.36.0");
-  }
-
-  private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
-      boolean modifyJavaSource, String projectRelease) throws Exception
-  {
-    String[][] entries = { { "pom.xml", distribution.resolve("portable-pom.xml").toString() }, { "README.md", distribution.resolve("README.md").toString() },
-        { "LICENSE", workspace.resolve("LICENSE").toString() }, { "embedded-h2/pom.xml", distribution.getParent().resolve("embedded-h2/pom.xml").toString() },
-        { "remote-server/pom.xml", distribution.getParent().resolve("remote-server/pom.xml").toString() },
-        { "remote-client/pom.xml", distribution.getParent().resolve("remote-client/pom.xml").toString() },
-        { "embedded-h2/src/main/java/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java",
-            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java").toString() },
-        { "remote-server/src/main/java/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java",
-            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java").toString() },
-        { "remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java",
-            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java").toString() } };
-
-    try (ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(zip)))
-    {
-      for (String[] entry : entries)
-      {
-        output.putNextEntry(new ZipEntry(entry[0]));
-        if ("pom.xml".equals(entry[0]))
-        {
-          String portablePom = Files.readString(Path.of(entry[1]), StandardCharsets.UTF_8).replace("@examples.cdo.project.release@", projectRelease);
-          if (companyVersion != null)
-          {
-            portablePom = portablePom.replace("<cdo.company.version>4.1.4</cdo.company.version>",
-                "<cdo.company.version>" + companyVersion + "</cdo.company.version>");
-          }
-
-          output.write(portablePom.getBytes(StandardCharsets.UTF_8));
-        }
-        else if (modifyJavaSource && entry[0].equals("remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java"))
-        {
-          byte[] source = Files.readAllBytes(Path.of(entry[1]));
-          byte[] modifiedSource = Arrays.copyOf(source, source.length + 1);
-          modifiedSource[modifiedSource.length - 1] = '\n';
-          output.write(modifiedSource);
-        }
-        else
-        {
-          Files.copy(Path.of(entry[1]), output);
-        }
-
-        output.closeEntry();
-      }
-
-      if (includeUnexpectedFile)
-      {
-        output.putNextEntry(new ZipEntry("unexpected.txt"));
-        output.write("unexpected file".getBytes(StandardCharsets.UTF_8));
-        output.closeEntry();
-      }
-    }
   }
 
   @Test
@@ -1710,16 +1644,46 @@ public class CDOAggregationToolBomTest
     return result;
   }
 
-  private static String path(String artifact, String version, String suffix)
+  private String[] provenanceArguments(Path repository, Path examples) throws Exception
   {
-    return "org/eclipse/cdo/" + artifact + "/" + version + "/" + artifact + "-" + version + suffix;
+    Path metadata = temporaryFolder.newFile().toPath();
+    Files.writeString(metadata, "cdo.project.release=4.37\n", StandardCharsets.UTF_8);
+    return new String[] { "verify-standalone-provenance", repository.toString(), examples.toString(), metadata.toString() };
   }
 
-  private static String buildInfo(String dropID)
+  private void expectProvenanceFailure(Path repository, Path examples, String messagePart, String expectedRepository) throws Exception
   {
-    return "<build qualifier=\"" + dropID + "\" revision=\"0123456789abcdef0123456789abcdef01234567\" branch=\"main\" eclipse=\"2026-09\""
-        + " emf=\"2.42\" hudson=\"https://ci.eclipse.org/cdo/\" job=\"cdo\" number=\"1\" stream=\"4.36\" timestamp=\"2026-09-01T13:11:00Z\""
-        + " train=\"2026-09\" trigger=\"test\" type=\"R\"/>\n";
+    try
+    {
+      CDOAggregationTool.main(provenanceArguments(repository, examples));
+      fail("Expected standalone artifact provenance verification to fail");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage(), expected.getMessage().contains(messagePart));
+      assertTrue(expected.getMessage(), expected.getMessage().contains(expectedRepository));
+    }
+  }
+
+  private Path createStandaloneProvenanceFixture(Path root, String artifactPomOrigin, String artifactJarOrigin, String bomOrigin, boolean includeArtifact,
+      boolean includeBom) throws Exception
+  {
+    Path repository = Files.createDirectories(root.resolve("repository"));
+    createStandaloneModulePoms(root.resolve("examples"));
+    if (includeArtifact)
+    {
+      writeResolverArtifact(repository, "org.eclipse.emf.cdo.server.db", "4.37.0", "jar", artifactPomOrigin, artifactJarOrigin, true);
+    }
+  
+    if (includeBom)
+    {
+      writeResolverArtifact(repository, "org.eclipse.cdo.bom", "4.37.0", "pom", bomOrigin, null, false);
+    }
+  
+    Path thirdParty = repository.resolve("com/example/unrelated/1.0/unrelated-1.0.jar");
+    Files.createDirectories(thirdParty.getParent());
+    Files.writeString(thirdParty, "unrelated", StandardCharsets.UTF_8);
+    return repository;
   }
 
   private File generate(Path root, String outputName) throws Exception
@@ -1730,6 +1694,190 @@ public class CDOAggregationToolBomTest
     String release = Files.readAllLines(root.resolve("metadata.properties"), StandardCharsets.UTF_8).get(0).substring("cdo.project.release=".length());
     String normalized = release.split("\\.").length == 2 ? release + ".0" : release;
     return output.toPath().resolve("org/eclipse/cdo/org.eclipse.cdo.bom/" + normalized + "/org.eclipse.cdo.bom-" + normalized + ".pom").toFile();
+  }
+
+  private static List<String> standaloneMavenCommand()
+  {
+    String userProfile = System.getenv("USERPROFILE");
+    if (userProfile != null)
+    {
+      Path wrapper = Path.of(userProfile, "Programs", "codex-mvn.ps1");
+      if (Files.isRegularFile(wrapper))
+      {
+        return new ArrayList<>(Arrays.asList("powershell.exe", "-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", wrapper.toString()));
+      }
+    }
+  
+    if (File.separatorChar == '\\')
+    {
+      return new ArrayList<>(Arrays.asList("cmd.exe", "/c", "mvn.cmd"));
+    }
+  
+    return new ArrayList<>(List.of("mvn"));
+  }
+
+  private static void writeMavenSelectionArtifact(Path repository, String artifact, String version, String className) throws Exception
+  {
+    Path directory = repository.resolve("org/eclipse/cdo/" + artifact + "/" + version);
+    Files.createDirectories(directory);
+    Files.writeString(directory.resolve(artifact + "-" + version + ".pom"), "<project><modelVersion>4.0.0</modelVersion>"
+        + "<groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version></project>", StandardCharsets.UTF_8);
+  
+    Path source = repository.resolve("fixture-src/fixture/" + className + ".java");
+    Path classes = repository.resolve("fixture-classes");
+    Files.createDirectories(source.getParent());
+    Files.createDirectories(classes);
+    Files.writeString(source, "package fixture; public final class " + className + " {}", StandardCharsets.UTF_8);
+    assertNotNull("A JDK is required to build deterministic repository fixture artifacts", ToolProvider.getSystemJavaCompiler());
+    assertEquals(0, ToolProvider.getSystemJavaCompiler().run(null, null, null, "-d", classes.toString(), source.toString()));
+  
+    Path jar = directory.resolve(artifact + "-" + version + ".jar");
+    try (JarOutputStream output = new JarOutputStream(Files.newOutputStream(jar)))
+    {
+      output.putNextEntry(new JarEntry("fixture/" + className + ".class"));
+      Files.copy(classes.resolve("fixture/" + className + ".class"), output);
+      output.closeEntry();
+    }
+  }
+
+  private static void writeCollisionArtifact(Path repository, String version) throws Exception
+  {
+    Path directory = repository.resolve("org/eclipse/cdo/org.eclipse.net4j.db.jdbc/" + version);
+    Files.createDirectories(directory);
+    Files.writeString(directory.resolve("org.eclipse.net4j.db.jdbc-" + version + ".pom"),
+        "<project><groupId>org.eclipse.cdo</groupId>" + "<artifactId>org.eclipse.net4j.db.jdbc</artifactId><version>" + version + "</version></project>",
+        StandardCharsets.UTF_8);
+    Files.writeString(directory.resolve("org.eclipse.net4j.db.jdbc-" + version + ".jar"), "same version in both repositories", StandardCharsets.UTF_8);
+  }
+
+  private static String genericChildText(Element parent, String name)
+  {
+    NodeList children = parent.getElementsByTagNameNS("*", name);
+    return children.getLength() == 0 ? "" : children.item(0).getTextContent().trim();
+  }
+
+  private static void createStandaloneModulePoms(Path examples) throws Exception
+  {
+    for (String module : new String[] { "embedded-h2", "remote-server", "remote-client" })
+    {
+      Path pom = examples.resolve(module + "/pom.xml");
+      Files.createDirectories(pom.getParent());
+      String dependencies = "embedded-h2".equals(module)
+          ? "<dependencies><dependency><groupId>org.eclipse.cdo</groupId><artifactId>org.eclipse.emf.cdo.server.db</artifactId></dependency></dependencies>"
+          : "";
+      Files.writeString(pom, "<project><groupId>org.eclipse.cdo.examples</groupId><artifactId>" + module + "</artifactId>" + dependencies + "</project>",
+          StandardCharsets.UTF_8);
+    }
+  }
+
+  private static void writeResolverArtifact(Path repository, String artifact, String version, String packaging, String pomOrigin, String jarOrigin,
+      boolean includeJar) throws Exception
+  {
+    Path directory = repository.resolve("org/eclipse/cdo/" + artifact + "/" + version);
+    Files.createDirectories(directory);
+    Path pom = directory.resolve(artifact + "-" + version + ".pom");
+    Files.writeString(pom, "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version><packaging>"
+        + packaging + "</packaging></project>", StandardCharsets.UTF_8);
+    Properties tracking = new Properties();
+    tracking.setProperty(pom.getFileName() + ">" + pomOrigin, "");
+    if (includeJar)
+    {
+      Path jar = directory.resolve(artifact + "-" + version + ".jar");
+      Files.writeString(jar, "resolved jar", StandardCharsets.UTF_8);
+      tracking.setProperty(jar.getFileName() + ">" + jarOrigin, "");
+    }
+  
+    try (var output = Files.newOutputStream(directory.resolve("_remote.repositories")))
+    {
+      tracking.store(output, "Maven Resolver fixture");
+    }
+  }
+
+  private static void createCandidate(Path repository, String artifact, String version) throws Exception
+  {
+    Path versionDirectory = repository.resolve("org/eclipse/cdo/" + artifact + "/" + version);
+    Files.createDirectories(versionDirectory);
+    Files.writeString(versionDirectory.resolve(artifact + "-" + version + ".pom"),
+        "<project><groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version></project>",
+        StandardCharsets.UTF_8);
+    Files.writeString(versionDirectory.resolve(artifact + "-" + version + ".jar"), "verified candidate fixture", StandardCharsets.UTF_8);
+  }
+
+  private static void createExamplesZip(Path workspace, Path distribution, Path zip) throws Exception
+  {
+    createExamplesZip(workspace, distribution, zip, null, false, false);
+  }
+
+  private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
+      boolean modifyJavaSource) throws Exception
+  {
+    createExamplesZip(workspace, distribution, zip, companyVersion, includeUnexpectedFile, modifyJavaSource, "4.36.0");
+  }
+
+  private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
+      boolean modifyJavaSource, String projectRelease) throws Exception
+  {
+    String[][] entries = { { "pom.xml", distribution.resolve("portable-pom.xml").toString() }, { "README.md", distribution.resolve("README.md").toString() },
+        { "LICENSE", workspace.resolve("LICENSE").toString() }, { "embedded-h2/pom.xml", distribution.getParent().resolve("embedded-h2/pom.xml").toString() },
+        { "remote-server/pom.xml", distribution.getParent().resolve("remote-server/pom.xml").toString() },
+        { "remote-client/pom.xml", distribution.getParent().resolve("remote-client/pom.xml").toString() },
+        { "embedded-h2/src/main/java/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java",
+            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/embedded/EmbeddedH2Example.java").toString() },
+        { "remote-server/src/main/java/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java",
+            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/server/RemoteServer.java").toString() },
+        { "remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java",
+            workspace.resolve("plugins/org.eclipse.emf.cdo.examples/src/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java").toString() } };
+  
+    try (ZipOutputStream output = new ZipOutputStream(Files.newOutputStream(zip)))
+    {
+      for (String[] entry : entries)
+      {
+        output.putNextEntry(new ZipEntry(entry[0]));
+        if ("pom.xml".equals(entry[0]))
+        {
+          String portablePom = Files.readString(Path.of(entry[1]), StandardCharsets.UTF_8).replace("@examples.cdo.project.release@", projectRelease);
+          if (companyVersion != null)
+          {
+            portablePom = portablePom.replace("<cdo.company.version>4.1.4</cdo.company.version>",
+                "<cdo.company.version>" + companyVersion + "</cdo.company.version>");
+          }
+  
+          output.write(portablePom.getBytes(StandardCharsets.UTF_8));
+        }
+        else if (modifyJavaSource && entry[0].equals("remote-client/src/main/java/org/eclipse/emf/cdo/examples/plain/client/RemoteClient.java"))
+        {
+          byte[] source = Files.readAllBytes(Path.of(entry[1]));
+          byte[] modifiedSource = Arrays.copyOf(source, source.length + 1);
+          modifiedSource[modifiedSource.length - 1] = '\n';
+          output.write(modifiedSource);
+        }
+        else
+        {
+          Files.copy(Path.of(entry[1]), output);
+        }
+  
+        output.closeEntry();
+      }
+  
+      if (includeUnexpectedFile)
+      {
+        output.putNextEntry(new ZipEntry("unexpected.txt"));
+        output.write("unexpected file".getBytes(StandardCharsets.UTF_8));
+        output.closeEntry();
+      }
+    }
+  }
+
+  private static String path(String artifact, String version, String suffix)
+  {
+    return "org/eclipse/cdo/" + artifact + "/" + version + "/" + artifact + "-" + version + suffix;
+  }
+
+  private static String buildInfo(String dropID)
+  {
+    return "<build qualifier=\"" + dropID + "\" revision=\"0123456789abcdef0123456789abcdef01234567\" branch=\"main\" eclipse=\"2026-09\""
+        + " emf=\"2.42\" hudson=\"https://ci.eclipse.org/cdo/\" job=\"cdo\" number=\"1\" stream=\"4.36\" timestamp=\"2026-09-01T13:11:00Z\""
+        + " train=\"2026-09\" trigger=\"test\" type=\"R\"/>\n";
   }
 
   private static String bundlePom(String artifact, String version, String release, String dropID)

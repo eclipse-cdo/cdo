@@ -16,8 +16,50 @@
   <mirrors>
     <mirror>
       <id>central-only</id>
-      <mirrorOf>*,!cdo-deployment-bundle</mirrorOf>
-      <url>https://repo.maven.apache.org/maven2</url>
+      <mirrorOf>*,!cdo-deployment-bundle,!central-only</mirrorOf>
+      <url>${env.CDO_CENTRAL_REPOSITORY}</url>
     </mirror>
   </mirrors>
+  <profiles>
+    <profile>
+      <id>standalone-examples-repositories</id>
+      <repositories>
+        <repository>
+          <id>cdo-deployment-bundle</id>
+          <url>${env.CDO_DEPLOYMENT_REPOSITORY}</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+        <repository>
+          <id>central</id>
+          <url>${env.CDO_CENTRAL_REPOSITORY}</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>central-only</id>
+          <url>https://repo.maven.apache.org/maven2</url>
+          <releases>
+            <enabled>true</enabled>
+          </releases>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>standalone-examples-repositories</activeProfile>
+  </activeProfiles>
 </settings>

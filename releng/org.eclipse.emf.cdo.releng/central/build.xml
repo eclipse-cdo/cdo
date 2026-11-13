@@ -633,6 +633,8 @@
 			<arg value="-ntp" />
 			<arg value="clean" />
 			<arg value="verify" />
+			<env key="CDO_DEPLOYMENT_REPOSITORY" value="${consumer.examples.repository.url}" />
+			<env key="CDO_CENTRAL_REPOSITORY" value="${central.repository.url}" />
 		</exec>
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="verify-standalone-provenance" />

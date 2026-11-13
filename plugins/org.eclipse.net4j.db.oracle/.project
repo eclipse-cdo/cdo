@@ -28,10 +28,6 @@
 					<value>true</value>
 				</dictionary>
 				<dictionary>
-					<key>ignore.lower.bound.dependency.ranges</key>
-					<value>true</value>
-				</dictionary>
-				<dictionary>
 					<key>ignore.missing.dependency.ranges</key>
 					<value>true</value>
 				</dictionary>

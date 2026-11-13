@@ -6,18 +6,18 @@ Bundle-Version: 2.3.4.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.dawn.graphiti.DawnGraphitiUIPlugin
 Require-Bundle: org.eclipse.ui;bundle-version="[3.6.0,4.0.0)",
  org.eclipse.core.runtime;bundle-version="[3.6.0,4.0.0)",
- org.eclipse.emf.cdo.dawn;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.cdo.dawn;bundle-version="[2.3.0,3.0.0)",
  org.eclipse.emf.common.ui;bundle-version="[2.6.0,3.0.0)",
  org.eclipse.graphiti;bundle-version="[0.9.0,1.0.0)",
  org.eclipse.graphiti.ui;bundle-version="[0.9.0,1.0.0)",
- org.eclipse.emf.cdo.dawn.ui;bundle-version="[2.0.0,3.0.0)",
- org.eclipse.emf.cdo.dawn.util;bundle-version="[2.0.0,3.0.0)",
+ org.eclipse.emf.cdo.dawn.ui;bundle-version="[2.3.0,3.0.0)",
+ org.eclipse.emf.cdo.dawn.util;bundle-version="[2.2.0,3.0.0)",
  org.eclipse.emf.transaction;bundle-version="[1.4.0,2.0.0)";visibility:=reexport,
  org.eclipse.ui.views.properties.tabbed;bundle-version="[3.5.200,4.0.0)",
  org.eclipse.gef;bundle-version="[3.7.1,4.0.0)";visibility:=reexport,
  org.eclipse.emf.workspace;bundle-version="[1.4.0,2.0.0)",
- org.eclipse.emf.cdo.ui;bundle-version="[4.0.100,5.0.0)",
- org.eclipse.emf.cdo.dawn.gmf;bundle-version="[2.0.0,3.0.0)"
+ org.eclipse.emf.cdo.ui;bundle-version="[4.19.0,5.0.0)",
+ org.eclipse.emf.cdo.dawn.gmf;bundle-version="[2.3.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-Vendor: %providerName

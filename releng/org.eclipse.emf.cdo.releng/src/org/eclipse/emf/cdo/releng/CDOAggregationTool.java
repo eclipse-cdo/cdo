@@ -1306,7 +1306,8 @@ public final class CDOAggregationTool
     private static final Map<String, String> DIGESTS = Map.of("sha256", "SHA-256", "sha1", "SHA-1", "md5", "MD5");
 
     private static final Set<String> PROVENANCE_PROPERTIES = Set.of("cdo.drop.id", "cdo.project.release", "cdo.project.release.source", "cdo.git.commit",
-        "cdo.build.branch", "cdo.build.stream", "cdo.build.timestamp", "cdo.build.trigger", "cdo.build.type", "cdo.examples.source.git.commit");
+        "cdo.build.branch", "cdo.build.stream", "cdo.build.timestamp", "cdo.build.trigger", "cdo.build.type", "cdo.eclipse.version", "cdo.emf.version",
+        "cdo.eclipse.simrel", "cdo.jenkins.url", "cdo.jenkins.job", "cdo.jenkins.build", "cdo.examples.source.git.commit");
 
     private static final int MAX_ARTIFACT_SIZE = 100 * 1024 * 1024;
 

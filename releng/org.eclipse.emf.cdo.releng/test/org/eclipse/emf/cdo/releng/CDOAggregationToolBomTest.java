@@ -1238,6 +1238,41 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
+  public void reusesHistoricalBundlePomsWithDifferentBuildProvenanceOnly() throws Exception
+  {
+    Path root = classificationFixture("4.37", "R20261001-0900");
+    Path candidatePom = root.resolve("bundles/org/eclipse/cdo/" + BUNDLES[0] + "/1.0.0/" + BUNDLES[0] + "-1.0.0.pom");
+    String currentProperties = "<cdo.eclipse.version>2025-03</cdo.eclipse.version><cdo.emf.version>2.40.0</cdo.emf.version>"
+        + "<cdo.eclipse.simrel>2025-03</cdo.eclipse.simrel><cdo.jenkins.url>https://jenkins.example/current/</cdo.jenkins.url>"
+        + "<cdo.jenkins.job>cdo/current</cdo.jenkins.job><cdo.jenkins.build>3500</cdo.jenkins.build>";
+    String historicalProperties = "<cdo.eclipse.version>2024-12</cdo.eclipse.version><cdo.emf.version>2.39.0</cdo.emf.version>"
+        + "<cdo.eclipse.simrel>2024-12</cdo.eclipse.simrel><cdo.jenkins.url>https://jenkins.example/historical/</cdo.jenkins.url>"
+        + "<cdo.jenkins.job>cdo/historical</cdo.jenkins.job><cdo.jenkins.build>2800</cdo.jenkins.build>";
+    String proposedPom = Files.readString(candidatePom, StandardCharsets.UTF_8).replace("</properties>", currentProperties + "</properties>");
+    Files.writeString(candidatePom, proposedPom, StandardCharsets.UTF_8);
+
+    try (CentralFixture central = new CentralFixture())
+    {
+      central.loadProposedArtifacts(root);
+      central.replaceBundlePom(0, proposedPom.replace(currentProperties, historicalProperties));
+      Map<String, String> report = classify(root, central, false);
+      assertEquals("REUSABLE", report.get("release.component.1.classification"));
+
+      central.replaceBundleArtifact(0, ".jar", new byte[] { 7, 8, 9 });
+      report = classify(root, central, true);
+      assertEquals("CONFLICT", report.get("release.component.1.classification"));
+      assertTrue(report.get("release.component.1.reason").contains("artifact bytes differ"));
+
+      Path candidateJar = root.resolve("bundles/org/eclipse/cdo/" + BUNDLES[0] + "/1.0.0/" + BUNDLES[0] + "-1.0.0.jar");
+      central.replaceBundleArtifact(0, ".jar", Files.readAllBytes(candidateJar));
+      central.replaceBundlePom(0, proposedPom.replace(currentProperties, historicalProperties).replace("<version>1.0</version>", "<version>2.0</version>"));
+      report = classify(root, central, true);
+      assertEquals("CONFLICT", report.get("release.component.1.classification"));
+      assertTrue(report.get("release.component.1.reason").contains("POM metadata differs"));
+    }
+  }
+
+  @Test
   public void permitsDifferentBuildProvenanceWhenPublishedArtifactAndConsumerMetadataMatch() throws Exception
   {
     Path root = classificationFixture("4.37", "R20261001-0900");

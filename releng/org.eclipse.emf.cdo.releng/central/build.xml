@@ -714,6 +714,10 @@
 		<mkdir dir="${consumer.central.only.repository}" />
 		<unzip src="${deployment.zip}" dest="${consumer.central.only.repository}" if:set="deployment.package.available" />
 		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
+			<arg value="consumer-repository-metadata" />
+			<arg value="${consumer.central.only.repository}" />
+		</java>
+		<java classname="org.eclipse.emf.cdo.releng.CDOAggregationTool" fork="true" failonerror="true" classpathref="helper.classpath">
 			<arg value="consumer-versions" />
 			<arg value="${cdo.maven.repository}" />
 			<arg value="${consumer.central.only.versions.file}" />

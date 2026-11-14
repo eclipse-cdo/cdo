@@ -820,6 +820,83 @@ public class CDOAggregationToolBomTest
   }
 
   @Test
+  public void mavenResolvesTransitiveVersionRangeFromConsumerDeploymentMetadata() throws Exception
+  {
+    Path root = temporaryFolder.newFolder().toPath();
+    Path deploymentRepository = root.resolve("deployment-repository");
+    String rangedArtifact = "org.eclipse.emf.cdo.range-target";
+    String consumerArtifact = "org.eclipse.emf.cdo.range-consumer";
+    writeMavenSelectionArtifact(deploymentRepository, rangedArtifact, "4.2.1", "RangeTarget");
+    writeMavenSelectionArtifact(deploymentRepository, rangedArtifact, "4.3.0", "RangeTarget");
+    writeMavenSelectionArtifact(deploymentRepository, consumerArtifact, "1.0.0", "RangeConsumer");
+    Path consumerPom = deploymentRepository.resolve("org/eclipse/cdo/" + consumerArtifact + "/1.0.0/" + consumerArtifact + "-1.0.0.pom");
+    Files.writeString(consumerPom,
+        "<project><modelVersion>4.0.0</modelVersion><groupId>org.eclipse.cdo</groupId><artifactId>" + consumerArtifact
+            + "</artifactId><version>1.0.0</version><dependencies><dependency><groupId>org.eclipse.cdo</groupId><artifactId>" + rangedArtifact
+            + "</artifactId><version>[4.0.0,5.0.0)</version></dependency></dependencies></project>",
+        StandardCharsets.UTF_8);
+
+    CDOAggregationTool.main(new String[] { "consumer-repository-metadata", deploymentRepository.toString() });
+    Path metadata = deploymentRepository.resolve("org/eclipse/cdo/" + rangedArtifact + "/maven-metadata.xml");
+    String metadataText = Files.readString(metadata, StandardCharsets.UTF_8);
+    assertTrue(metadataText.contains("<version>4.2.1</version>"));
+    assertTrue(metadataText.contains("<version>4.3.0</version>"));
+    assertFalse(metadataText.contains("<version>4.4.0</version>"));
+
+    Path project = Files.createDirectory(root.resolve("consumer-project"));
+    Path source = project.resolve("src/main/java/consumer/Consumer.java");
+    Files.createDirectories(source.getParent());
+    Files.writeString(source, "package consumer; import fixture.RangeTarget; public final class Consumer { RangeTarget value; }", StandardCharsets.UTF_8);
+    Files.writeString(project.resolve("pom.xml"),
+        "<project><modelVersion>4.0.0</modelVersion><groupId>example</groupId>"
+            + "<artifactId>transitive-range-test</artifactId><version>1.0.0</version><properties><maven.compiler.release>17</maven.compiler.release>"
+            + "</properties><dependencies><dependency><groupId>org.eclipse.cdo</groupId><artifactId>" + consumerArtifact
+            + "</artifactId><version>1.0.0</version></dependency></dependencies><repositories><repository><id>cdo-deployment-bundle</id>"
+            + "<url>${cdo.deployment.repository}</url></repository></repositories><build><plugins><plugin><groupId>org.apache.maven.plugins</groupId>"
+            + "<artifactId>maven-compiler-plugin</artifactId><version>3.13.0</version></plugin></plugins></build></project>",
+        StandardCharsets.UTF_8);
+
+    File classes = new File(CDOAggregationTool.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+    Path settings = new File(classes.getParentFile(), "central/central-only-settings.xml").toPath();
+    Path localRepository = root.resolve("maven-local");
+    Path output = root.resolve("maven-output.txt");
+    List<String> command = standaloneMavenCommand();
+    command.addAll(Arrays.asList("-gs", settings.toString(), "-s", settings.toString(), "-Dmaven.repo.local=" + localRepository,
+        "-Dcdo.deployment.repository=" + deploymentRepository.toUri().toASCIIString(), "-B", "-ntp", "-f", project.resolve("pom.xml").toString(), "compile"));
+    ProcessBuilder processBuilder = new ProcessBuilder(command).directory(project.toFile()).redirectErrorStream(true).redirectOutput(output.toFile());
+
+    Process process;
+    try
+    {
+      process = processBuilder.start();
+    }
+    catch (IOException ex)
+    {
+      assumeNoException("Maven executable is unavailable for transitive version-range integration test", ex);
+      return;
+    }
+
+    if (!process.waitFor(5, TimeUnit.MINUTES))
+    {
+      process.destroyForcibly();
+      fail("Maven transitive version-range integration timed out: " + Files.readString(output, StandardCharsets.UTF_8));
+    }
+
+    String log = Files.readString(output, StandardCharsets.UTF_8);
+    assertEquals(log, 0, process.exitValue());
+    Path resolvedArtifact = localRepository.resolve("org/eclipse/cdo/" + rangedArtifact + "/4.3.0");
+    assertTrue("Maven did not resolve the highest available deployment version", Files.isRegularFile(resolvedArtifact.resolve(rangedArtifact + "-4.3.0.jar")));
+    Properties tracking = new Properties();
+    try (InputStream input = Files.newInputStream(resolvedArtifact.resolve("_remote.repositories")))
+    {
+      tracking.load(input);
+    }
+
+    assertTrue(tracking.containsKey(rangedArtifact + "-4.3.0.pom>cdo-deployment-bundle"));
+    assertTrue(tracking.containsKey(rangedArtifact + "-4.3.0.jar>cdo-deployment-bundle"));
+  }
+
+  @Test
   public void rejectsMissingModifiedAndConflictingExamplesDistributionArtifacts() throws Exception
   {
     Path root = temporaryFolder.newFolder().toPath();

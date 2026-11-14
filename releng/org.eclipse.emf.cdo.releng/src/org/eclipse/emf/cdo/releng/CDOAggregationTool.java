@@ -65,6 +65,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 import java.util.concurrent.TimeUnit;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -215,7 +216,7 @@ public final class CDOAggregationTool
     if (args.length == 0)
     {
       throw new IllegalArgumentException(
-          "Usage: prepare|prepare-metadata-test|overlay|generate-bom|stage-release-bom|prepare-standalone-examples|verify-standalone-provenance|generate-bom-436|stage-bom-436|check-bom-central|verify-bom-package|classify-central|verify|platform-version-range-test|consumer-versions|consumer-dependency-tree-check|consumer-dependency-tree-test|derive-release-inventory|central-verify-prepare|central-verify-report|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|select-examples-version|stage-examples-distribution|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
+          "Usage: prepare|prepare-metadata-test|overlay|generate-bom|stage-release-bom|prepare-standalone-examples|verify-standalone-provenance|generate-bom-436|stage-bom-436|check-bom-central|verify-bom-package|classify-central|verify|platform-version-range-test|consumer-versions|consumer-repository-metadata|consumer-dependency-tree-check|consumer-dependency-tree-test|derive-release-inventory|central-verify-prepare|central-verify-report|resolve-drop|drop-selection-test|native-classifier-validation|checksums|audit|select-examples-version|stage-examples-distribution|publish-check|publication-scope-check|verify-package|resolve-signing-subkey-fingerprint|signing-subkey-test|publish-policy|policy-test|stream-test|signature-test|workspace-safety-test|publication-scope-test|native-classifier-test|safe-delete-work|validate-workspace-path ...");
     }
 
     switch (args[0])
@@ -305,6 +306,10 @@ public final class CDOAggregationTool
 
     case "consumer-versions":
       ConsumerVersionsCommand.execute(args);
+      break;
+
+    case "consumer-repository-metadata":
+      consumerRepositoryMetadata(args);
       break;
 
     case "consumer-dependency-tree-check":
@@ -2295,6 +2300,75 @@ public final class CDOAggregationTool
       Files.write(output.toPath(), lines, StandardCharsets.UTF_8);
       System.out.println("Resolved " + BUNDLES.size() + " consumer artifact versions from " + repository);
     }
+  }
+
+  private static void consumerRepositoryMetadata(String[] args) throws Exception
+  {
+    if (args.length != 2)
+    {
+      throw new IllegalArgumentException("consumer-repository-metadata requires a repository");
+    }
+
+    Path repository = requireDirectory(args[1], "consumer deployment repository").toPath();
+    requireWorkspaceOutput(repository.toFile(), "consumer deployment repository");
+    rejectSymbolicLinks(repository, "consumer deployment repository");
+    Map<Path, Set<String>> artifactVersions = new TreeMap<>();
+
+    try (Stream<Path> files = Files.walk(repository))
+    {
+      for (Path pom : files.filter(path -> Files.isRegularFile(path) && path.getFileName().toString().endsWith(".pom")).collect(Collectors.toList()))
+      {
+        Document document = parse(pom.toFile());
+        Element project = document.getDocumentElement();
+        String groupId = text(project, "groupId");
+        if (groupId.isBlank())
+        {
+          groupId = text(child(project, "parent"), "groupId");
+        }
+
+        String artifactId = text(project, "artifactId");
+        String version = text(project, "version");
+        if (version.isBlank())
+        {
+          version = text(child(project, "parent"), "version");
+        }
+
+        if (groupId.isBlank() || artifactId.isBlank() || version.isBlank())
+        {
+          throw new IllegalArgumentException("Deployment POM has incomplete coordinates: " + pom);
+        }
+        if (version.endsWith("-SNAPSHOT"))
+        {
+          throw new IllegalArgumentException("Snapshot artifact is not allowed in the consumer deployment repository: " + pom);
+        }
+
+        Path artifactDirectory = repository.resolve(groupId.replace('.', File.separatorChar)).resolve(artifactId);
+        Path versionDirectory = artifactDirectory.resolve(version);
+        if (!pom.toAbsolutePath().normalize().startsWith(versionDirectory.toAbsolutePath().normalize()))
+        {
+          throw new IllegalArgumentException("Deployment POM location does not match its coordinates: " + pom);
+        }
+
+        artifactVersions.computeIfAbsent(artifactDirectory, key -> new TreeSet<>()).add(version);
+      }
+    }
+
+    for (Map.Entry<Path, Set<String>> entry : artifactVersions.entrySet())
+    {
+      Path artifactDirectory = entry.getKey();
+      String groupId = repository.relativize(artifactDirectory.getParent()).toString().replace(File.separatorChar, '.');
+      String artifactId = artifactDirectory.getFileName().toString();
+      StringBuilder metadata = new StringBuilder("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<metadata>\n  <groupId>").append(groupId)
+          .append("</groupId>\n  <artifactId>").append(artifactId).append("</artifactId>\n  <versioning>\n    <versions>\n");
+      for (String version : entry.getValue())
+      {
+        metadata.append("      <version>").append(version).append("</version>\n");
+      }
+      metadata.append("    </versions>\n  </versioning>\n</metadata>\n");
+      Files.writeString(artifactDirectory.resolve("maven-metadata.xml"), metadata, StandardCharsets.UTF_8);
+    }
+
+    System.out.println("Generated Maven version metadata for " + artifactVersions.size() + " artifacts in " + repository);
   }
 
   /**

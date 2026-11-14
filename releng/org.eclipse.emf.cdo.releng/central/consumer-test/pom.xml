@@ -23,7 +23,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <cdo.maven.repository>${project.basedir}/../work/repository/final</cdo.maven.repository>
     <junit.version>4.13.2</junit.version>
-    <h2.version>2.4.240</h2.version>
+    <h2.version>2.5.252</h2.version>
     <postgresql.version>42.7.13</postgresql.version>
   </properties>
 

@@ -835,6 +835,7 @@ public class CDOAggregationToolBomTest
             + "</artifactId><version>1.0.0</version><dependencies><dependency><groupId>org.eclipse.cdo</groupId><artifactId>" + rangedArtifact
             + "</artifactId><version>[4.0.0,5.0.0)</version></dependency></dependencies></project>",
         StandardCharsets.UTF_8);
+    writeSha1AndSha256(consumerPom);
 
     CDOAggregationTool.main(new String[] { "consumer-repository-metadata", deploymentRepository.toString() });
     Path metadata = deploymentRepository.resolve("org/eclipse/cdo/" + rangedArtifact + "/maven-metadata.xml");
@@ -842,6 +843,19 @@ public class CDOAggregationToolBomTest
     assertTrue(metadataText.contains("<version>4.2.1</version>"));
     assertTrue(metadataText.contains("<version>4.3.0</version>"));
     assertFalse(metadataText.contains("<version>4.4.0</version>"));
+    List<Path> metadataFiles;
+    try (Stream<Path> paths = Files.walk(deploymentRepository))
+    {
+      metadataFiles = paths.filter(path -> path.getFileName().toString().equals("maven-metadata.xml")).collect(Collectors.toList());
+    }
+
+    assertEquals(2, metadataFiles.size());
+    for (Path metadataFile : metadataFiles)
+    {
+      byte[] metadataBytes = Files.readAllBytes(metadataFile);
+      assertEquals(digestHex(metadataBytes, "SHA-1"), Files.readString(Path.of(metadataFile + ".sha1"), StandardCharsets.UTF_8));
+      assertEquals(digestHex(metadataBytes, "SHA-256"), Files.readString(Path.of(metadataFile + ".sha256"), StandardCharsets.UTF_8));
+    }
 
     Path project = Files.createDirectory(root.resolve("consumer-project"));
     Path source = project.resolve("src/main/java/consumer/Consumer.java");
@@ -884,6 +898,8 @@ public class CDOAggregationToolBomTest
 
     String log = Files.readString(output, StandardCharsets.UTF_8);
     assertEquals(log, 0, process.exitValue());
+    assertFalse("Maven reported missing metadata checksums: " + log,
+        log.contains("ChecksumFailureException") || log.toLowerCase().contains("no checksums available"));
     Path resolvedArtifact = localRepository.resolve("org/eclipse/cdo/" + rangedArtifact + "/4.3.0");
     assertTrue("Maven did not resolve the highest available deployment version", Files.isRegularFile(resolvedArtifact.resolve(rangedArtifact + "-4.3.0.jar")));
     Properties tracking = new Properties();
@@ -2123,6 +2139,7 @@ public class CDOAggregationToolBomTest
     Files.createDirectories(directory);
     Files.writeString(directory.resolve(artifact + "-" + version + ".pom"), "<project><modelVersion>4.0.0</modelVersion>"
         + "<groupId>org.eclipse.cdo</groupId><artifactId>" + artifact + "</artifactId><version>" + version + "</version></project>", StandardCharsets.UTF_8);
+    writeSha1AndSha256(directory.resolve(artifact + "-" + version + ".pom"));
 
     Path source = repository.resolve("fixture-src/fixture/" + className + ".java");
     Path classes = repository.resolve("fixture-classes");
@@ -2139,6 +2156,32 @@ public class CDOAggregationToolBomTest
       Files.copy(classes.resolve("fixture/" + className + ".class"), output);
       output.closeEntry();
     }
+
+    writeSha1AndSha256(jar);
+  }
+
+  private static void writeSha1AndSha256(Path file) throws Exception
+  {
+    byte[] contents = Files.readAllBytes(file);
+    for (String algorithm : new String[] { "SHA-1", "SHA-256" })
+    {
+      String suffix = "SHA-1".equals(algorithm) ? ".sha1" : ".sha256";
+      Files.writeString(Path.of(file + suffix), digestHex(contents, algorithm), StandardCharsets.UTF_8);
+    }
+  }
+
+  private static String digestHex(byte[] bytes, String algorithm) throws Exception
+  {
+    char[] digits = "0123456789abcdef".toCharArray();
+    byte[] digest = MessageDigest.getInstance(algorithm).digest(bytes);
+    StringBuilder result = new StringBuilder(digest.length * 2);
+    for (byte value : digest)
+    {
+      result.append(digits[(value & 0xff) >>> 4]);
+      result.append(digits[value & 0x0f]);
+    }
+
+    return result.toString();
   }
 
   private static void writeCollisionArtifact(Path repository, String version) throws Exception

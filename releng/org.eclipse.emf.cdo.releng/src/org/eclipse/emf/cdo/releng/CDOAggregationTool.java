@@ -2365,7 +2365,10 @@ public final class CDOAggregationTool
         metadata.append("      <version>").append(version).append("</version>\n");
       }
       metadata.append("    </versions>\n  </versioning>\n</metadata>\n");
-      Files.writeString(artifactDirectory.resolve("maven-metadata.xml"), metadata, StandardCharsets.UTF_8);
+      File metadataFile = artifactDirectory.resolve("maven-metadata.xml").toFile();
+      Files.writeString(metadataFile.toPath(), metadata, StandardCharsets.UTF_8);
+      Files.writeString(Path.of(metadataFile + ".sha1"), ChecksumsCommand.digest(metadataFile, "SHA-1"), StandardCharsets.UTF_8);
+      Files.writeString(Path.of(metadataFile + ".sha256"), ChecksumsCommand.digest(metadataFile, "SHA-256"), StandardCharsets.UTF_8);
     }
 
     System.out.println("Generated Maven version metadata for " + artifactVersions.size() + " artifacts in " + repository);

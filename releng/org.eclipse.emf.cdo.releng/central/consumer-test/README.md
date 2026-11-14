@@ -72,5 +72,5 @@ Maven Central publication remain separate release steps. The dependency
 tree should show EMF artifacts under their published Maven coordinates and H2 and
 PostgreSQL only through this POM's explicit driver dependencies; no CDO/Net4j
 dependency should introduce either JDBC driver transitively. The fixed test
-prerequisites are H2 `2.4.240`, PostgreSQL `42.7.13`, and JUnit `4.13.2`;
+prerequisites are H2 `2.5.252`, PostgreSQL `42.7.13`, and JUnit `4.13.2`;
 CDO/Net4j versions are never fixed in the POM.

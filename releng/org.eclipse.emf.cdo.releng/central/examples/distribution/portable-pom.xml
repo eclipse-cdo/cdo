@@ -20,21 +20,15 @@
     <exec-maven-plugin.version>3.7.0</exec-maven-plugin.version>
     <maven-antrun-plugin.version>3.2.0</maven-antrun-plugin.version>
     <cdo.project.release>@examples.cdo.project.release@</cdo.project.release>
-    <h2.version>2.4.240</h2.version>
+    <h2.version>2.5.252</h2.version>
     <postgresql.version>42.7.13</postgresql.version>
     <cdo.embedded.version>4.11.1</cdo.embedded.version>
-    <cdo.net4j.util.version>3.31.0</cdo.net4j.util.version>
     <cdo.net4j.postgresql.version>4.5.1</cdo.net4j.postgresql.version>
     <cdo.company.version>4.1.4</cdo.company.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.eclipse.cdo</groupId>
-        <artifactId>org.eclipse.net4j.util</artifactId>
-        <version>${cdo.net4j.util.version}</version>
-      </dependency>
       <dependency>
         <groupId>org.eclipse.cdo</groupId>
         <artifactId>org.eclipse.cdo.bom</artifactId>

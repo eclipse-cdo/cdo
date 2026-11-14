@@ -10,7 +10,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <examples.cdo.project.release>4.36.0</examples.cdo.project.release>
+    <examples.cdo.project.release>4.37.0</examples.cdo.project.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.outputTimestamp>2000-01-01T00:00:00Z</project.build.outputTimestamp>
   </properties>

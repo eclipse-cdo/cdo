@@ -958,7 +958,7 @@ public class CDOAggregationToolBomTest
     Path metadata = root.resolve("metadata.properties");
     String dropCommit = "0123456789abcdef0123456789abcdef01234567";
     String examplesSourceCommit = "fedcba9876543210fedcba9876543210fedcba98";
-    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\ncdo.git.commit=" + dropCommit + "\ncdo.project.release=4.36.0\n"
+    Files.writeString(metadata, "cdo.build.type=R\ncdo.drop.id=R20260901-1311\ncdo.git.commit=" + dropCommit + "\ncdo.project.release=4.37.0\n"
         + "examples.distribution.version=" + examplesDistributionVersion() + "\n", StandardCharsets.UTF_8);
 
     createCandidate(candidates, "org.eclipse.emf.cdo.server.embedded", "4.11.1");
@@ -974,7 +974,7 @@ public class CDOAggregationToolBomTest
     String[] args = { "stage-examples-distribution", workspace.toString(), candidates.toString(), zip.toString(), distribution.resolve("pom.xml").toString(),
         metadata.toString(), central.resolve("publishing.properties").toString(), staging.toString(), examplesSourceCommit };
 
-    createExamplesZip(workspace, distribution, zip, "4.1.5", false, false);
+    createExamplesZip(workspace, distribution, zip, "4.1.5", false, false, "4.37.0");
     try
     {
       CDOAggregationTool.main(args);
@@ -985,7 +985,7 @@ public class CDOAggregationToolBomTest
       assertTrue(expected.getMessage().contains("Examples dependency version for org.eclipse.emf.cdo.examples.company"));
     }
 
-    createExamplesZip(workspace, distribution, zip, null, true, false);
+    createExamplesZip(workspace, distribution, zip, null, true, false, "4.37.0");
     try
     {
       CDOAggregationTool.main(args);
@@ -996,7 +996,7 @@ public class CDOAggregationToolBomTest
       assertTrue(expected.getMessage().contains("Examples ZIP file inventory differs"));
     }
 
-    createExamplesZip(workspace, distribution, zip, null, false, true);
+    createExamplesZip(workspace, distribution, zip, null, false, true, "4.37.0");
     try
     {
       CDOAggregationTool.main(args);
@@ -1007,7 +1007,24 @@ public class CDOAggregationToolBomTest
       assertTrue(expected.getMessage().contains("Packaged example source differs from its canonical JDT source"));
     }
 
-    createExamplesZip(workspace, distribution, zip);
+    Path explicitVersionStaging = Files.createDirectory(root.resolve("explicit-version-staging"));
+    args[7] = explicitVersionStaging.toString();
+    createExamplesZip(workspace, distribution, zip, null, false, false, "4.37.0", "3.31.0");
+    CDOAggregationTool.main(args);
+
+    createExamplesZip(workspace, distribution, zip, null, false, false, "4.37.0", "3.30.0");
+    try
+    {
+      CDOAggregationTool.main(args);
+      fail("Expected an explicitly versioned examples dependency that differs from the selected drop to be rejected");
+    }
+    catch (IllegalArgumentException expected)
+    {
+      assertTrue(expected.getMessage().contains("Examples dependency version for org.eclipse.net4j.util"));
+    }
+
+    args[7] = staging.toString();
+    createExamplesZip(workspace, distribution, zip, null, false, false, "4.37.0");
     CDOAggregationTool.main(args);
 
     String examplesVersion = examplesDistributionVersion();
@@ -1019,7 +1036,7 @@ public class CDOAggregationToolBomTest
     assertEquals(examplesSourceCommit, childText(properties, "cdo.examples.source.git.commit"));
     assertEquals(dropCommit, childText(properties, "cdo.git.commit"));
     assertEquals("R20260901-1311", childText(properties, "cdo.drop.id"));
-    assertEquals("4.36.0", childText(properties, "cdo.project.release"));
+    assertEquals("4.37.0", childText(properties, "cdo.project.release"));
     assertTrue(child(properties, "examples.cdo.project.release") == null);
   }
 
@@ -2247,19 +2264,14 @@ public class CDOAggregationToolBomTest
     Files.writeString(versionDirectory.resolve(artifact + "-" + version + ".jar"), "verified candidate fixture", StandardCharsets.UTF_8);
   }
 
-  private static void createExamplesZip(Path workspace, Path distribution, Path zip) throws Exception
-  {
-    createExamplesZip(workspace, distribution, zip, null, false, false);
-  }
-
-  private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
-      boolean modifyJavaSource) throws Exception
-  {
-    createExamplesZip(workspace, distribution, zip, companyVersion, includeUnexpectedFile, modifyJavaSource, "4.36.0");
-  }
-
   private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
       boolean modifyJavaSource, String projectRelease) throws Exception
+  {
+    createExamplesZip(workspace, distribution, zip, companyVersion, includeUnexpectedFile, modifyJavaSource, projectRelease, null);
+  }
+
+  private static void createExamplesZip(Path workspace, Path distribution, Path zip, String companyVersion, boolean includeUnexpectedFile,
+      boolean modifyJavaSource, String projectRelease, String net4jUtilVersion) throws Exception
   {
     String[][] entries = { { "pom.xml", distribution.resolve("portable-pom.xml").toString() }, { "README.md", distribution.resolve("README.md").toString() },
         { "LICENSE", workspace.resolve("LICENSE").toString() }, { "embedded-h2/pom.xml", distribution.getParent().resolve("embedded-h2/pom.xml").toString() },
@@ -2284,6 +2296,12 @@ public class CDOAggregationToolBomTest
           {
             portablePom = portablePom.replace("<cdo.company.version>4.1.4</cdo.company.version>",
                 "<cdo.company.version>" + companyVersion + "</cdo.company.version>");
+          }
+
+          if (net4jUtilVersion != null)
+          {
+            portablePom = portablePom.replace("<cdo.company.version>",
+                "<cdo.net4j.util.version>" + net4jUtilVersion + "</cdo.net4j.util.version>\n    <cdo.company.version>");
           }
 
           output.write(portablePom.getBytes(StandardCharsets.UTF_8));

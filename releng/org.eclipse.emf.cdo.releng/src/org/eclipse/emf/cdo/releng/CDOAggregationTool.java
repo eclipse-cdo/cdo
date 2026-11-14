@@ -2680,17 +2680,121 @@ public final class CDOAggregationTool
 
         Document portablePom = parse(archive.getInputStream(archive.getEntry("pom.xml")), "portable examples POM");
         String projectRelease = BomCommand.normalizeProjectReleaseVersion(BomCommand.requiredMetadata(metadata, "cdo.project.release"));
-        if (!projectRelease.equals(text(child(portablePom.getDocumentElement(), "properties"), "cdo.project.release")))
+        Element portableProject = portablePom.getDocumentElement();
+        if (!projectRelease.equals(text(child(portableProject, "properties"), "cdo.project.release")))
         {
           throw new IllegalArgumentException("Portable POM CDO BOM version does not match the selected release " + projectRelease);
         }
 
-        Element rootProperties = child(portablePom.getDocumentElement(), "properties");
+        Element rootProperties = child(portableProject, "properties");
         verifyCandidateVersion(candidateRepository, "org.eclipse.emf.cdo.server.embedded", text(rootProperties, "cdo.embedded.version"));
         verifyCandidateVersion(candidateRepository, "org.eclipse.emf.cdo.examples.company", text(rootProperties, "cdo.company.version"));
-        verifyCandidateVersion(candidateRepository, "org.eclipse.net4j.util", text(rootProperties, "cdo.net4j.util.version"));
+        String net4jUtilVersion = text(rootProperties, "cdo.net4j.util.version");
+        if (net4jUtilVersion.isBlank())
+        {
+          verifyBomImport(portableProject, projectRelease);
+          verifyBomManagedDependency(archive, "embedded-h2/pom.xml", "org.eclipse.net4j.util");
+          verifyManagedCandidateVersion(candidateRepository, "org.eclipse.net4j.util");
+        }
+        else
+        {
+          verifyCandidateVersion(candidateRepository, "org.eclipse.net4j.util", net4jUtilVersion);
+        }
         verifyCandidateVersion(candidateRepository, "org.eclipse.net4j.db.postgresql", text(rootProperties, "cdo.net4j.postgresql.version"));
       }
+    }
+
+    private static void verifyBomImport(Element project, String expectedRelease)
+    {
+      Element dependencies = child(child(project, "dependencyManagement"), "dependencies");
+      NodeList entries = dependencies == null ? null : dependencies.getChildNodes();
+      int matches = 0;
+      if (entries != null)
+      {
+        for (int i = 0; i < entries.getLength(); i++)
+        {
+          Node entry = entries.item(i);
+          if (entry instanceof Element && "dependency".equals(entry.getLocalName() == null ? entry.getNodeName() : entry.getLocalName()))
+          {
+            Element dependency = (Element)entry;
+            if ("org.eclipse.cdo".equals(text(dependency, "groupId")) && RELEASE_BOM.equals(text(dependency, "artifactId")))
+            {
+              matches++;
+              String version = text(dependency, "version");
+              if (!"pom".equals(text(dependency, "type")) || !"import".equals(text(dependency, "scope"))
+                  || !(expectedRelease.equals(version) || "${cdo.project.release}".equals(version)))
+              {
+                throw new IllegalArgumentException("Portable POM must import the selected CDO BOM " + expectedRelease);
+              }
+            }
+          }
+        }
+      }
+
+      if (matches != 1)
+      {
+        throw new IllegalArgumentException("Portable POM must import exactly one selected CDO BOM " + expectedRelease);
+      }
+    }
+
+    private static void verifyBomManagedDependency(ZipFile archive, String modulePomPath, String artifact) throws Exception
+    {
+      if (!BUNDLES.contains(artifact))
+      {
+        throw new IllegalArgumentException("CDO release BOM does not manage the approved artifact " + artifact);
+      }
+
+      ZipEntry modulePomEntry = archive.getEntry(modulePomPath);
+      if (modulePomEntry == null)
+      {
+        throw new IllegalArgumentException("Missing portable examples module POM " + modulePomPath);
+      }
+
+      Element dependencies;
+      try (InputStream input = archive.getInputStream(modulePomEntry))
+      {
+        dependencies = child(parse(input, modulePomPath).getDocumentElement(), "dependencies");
+      }
+
+      NodeList entries = dependencies == null ? null : dependencies.getChildNodes();
+      int matches = 0;
+      if (entries != null)
+      {
+        for (int i = 0; i < entries.getLength(); i++)
+        {
+          Node entry = entries.item(i);
+          if (entry instanceof Element && "dependency".equals(entry.getLocalName() == null ? entry.getNodeName() : entry.getLocalName()))
+          {
+            Element dependency = (Element)entry;
+            if ("org.eclipse.cdo".equals(text(dependency, "groupId")) && artifact.equals(text(dependency, "artifactId")))
+            {
+              matches++;
+              if (!text(dependency, "version").isBlank())
+              {
+                throw new IllegalArgumentException("BOM-managed examples dependency must not declare a version: " + artifact);
+              }
+            }
+          }
+        }
+      }
+
+      if (matches != 1)
+      {
+        throw new IllegalArgumentException("Expected one versionless BOM-managed examples dependency for " + artifact + " in " + modulePomPath);
+      }
+    }
+
+    private static void verifyManagedCandidateVersion(File repository, String artifact)
+    {
+      File artifactDirectory = new File(repository, "org/eclipse/cdo/" + artifact);
+      File[] versions = artifactDirectory.listFiles(File::isDirectory);
+      if (versions == null || versions.length != 1)
+      {
+        throw new IllegalArgumentException("BOM-managed dependency version for " + artifact + " is not unique in the selected CDO drop: candidate="
+            + (versions == null ? "missing" : Arrays.toString(versions)));
+      }
+
+      verifyCandidateVersion(repository, artifact, versions[0].getName());
     }
 
     private static void verifyCandidateVersion(File repository, String artifact, String expectedVersion)

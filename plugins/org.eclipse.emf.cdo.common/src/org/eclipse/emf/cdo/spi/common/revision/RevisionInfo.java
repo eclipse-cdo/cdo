@@ -202,7 +202,11 @@ public abstract class RevisionInfo
   {
     if (result != null)
     {
-      result = (InternalCDORevision)revisionManager.internRevision(result);
+      boolean alreadyAvailable = this instanceof Available && !isLoadNeeded();
+      if (!alreadyAvailable)
+      {
+        result = (InternalCDORevision)revisionManager.internRevision(result);
+      }
     }
 
     if (results != null)

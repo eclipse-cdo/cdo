@@ -293,7 +293,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       revisionManager.setSupportingAudits(repository.isSupportingAudits());
       revisionManager.setSupportingBranches(repository.isSupportingBranches());
       revisionManager.setRevisionLoader(sessionProtocol);
-      revisionManager.setRevisionLocker(this);
       revisionManager.activate();
     }
 

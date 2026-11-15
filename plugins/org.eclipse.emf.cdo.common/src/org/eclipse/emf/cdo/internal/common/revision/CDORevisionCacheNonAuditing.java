@@ -202,6 +202,20 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   @Override
   public CDORevision internRevision(CDORevision revision)
   {
+    InternResult result = internRevisionDeferredEvents(revision);
+
+    Runnable eventDispatcher = result.getEventDispatcher();
+    if (eventDispatcher != null)
+    {
+      eventDispatcher.run();
+    }
+
+    return result.getRevision();
+  }
+
+  @Override
+  public InternResult internRevisionDeferredEvents(CDORevision revision)
+  {
     CheckUtil.checkArg(revision, "revision"); //$NON-NLS-1$
     checkBranch(revision.getBranch());
 
@@ -254,10 +268,11 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
         }
       }
 
-      fireEvent(event[0], listeners);
+      Runnable eventDispatcher = event[0] == null ? null : () -> fireEvent(event[0], listeners);
+      return new InternResult(revision, eventDispatcher);
     }
 
-    return revision;
+    return new InternResult(revision, null);
   }
 
   @Override

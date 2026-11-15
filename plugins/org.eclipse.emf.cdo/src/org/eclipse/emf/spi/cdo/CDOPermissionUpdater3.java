@@ -22,6 +22,7 @@ import java.util.Set;
 
 /**
  * A {@link CDOPermissionUpdater permission updater} that takes the {@link CDOBranchPoint security context} into account.
+ * Implementations are subject to the revision-loading restriction documented by {@link CDOPermissionUpdater}.
  *
  * @author Eike Stepper
  * @since 4.22

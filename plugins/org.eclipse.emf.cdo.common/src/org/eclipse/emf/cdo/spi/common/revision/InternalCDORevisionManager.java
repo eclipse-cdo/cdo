@@ -60,8 +60,16 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
 
   public void setRevisionLoader(RevisionLoader revisionLoader);
 
+  /**
+   * @deprecated As of 4.29 no longer supported or used. Returns <code>null</code>.
+   */
+  @Deprecated
   public RevisionLocker getRevisionLocker();
 
+  /**
+   * @deprecated As of 4.29 no longer supported or used. Does noting.
+   */
+  @Deprecated
   public void setRevisionLocker(RevisionLocker revisionLocker);
 
   public CDORevisionFactory getFactory();
@@ -80,7 +88,91 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    */
   public void reviseLatest(CDOID id, CDOBranch branch);
 
+  /**
+   * Revises the exact predecessor affected by a detach notification and prevents an overlapping load from restoring
+   * it as the current revision.
+   *
+   * @param id the detached object's ID
+   * @param branchVersion the exact predecessor version, or the unspecified version when unavailable
+   * @param timeStamp the detach commit timestamp, or the unspecified date when unavailable
+   * @since 4.29
+   */
+  public void reviseDetached(CDOID id, CDOBranchVersion branchVersion, long timeStamp);
+
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp);
+
+  /**
+   * Removes one revision from the cache without changing its validity interval. An overlapping load of the same
+   * revision key must not immediately republish the evicted entry.
+   *
+   * @param revision the revision to remove from the cache
+   * @since 4.29
+   */
+  public void evictRevision(CDORevision revision);
+
+  /**
+   * Removes cached revisions from the specified branches and prevents overlapping loads from republishing revisions
+   * from those branches.
+   *
+   * @param branches the branches whose cached revisions are removed
+   * @since 4.29
+   */
+  public void removeRevisions(CDOBranch... branches);
+
+  /**
+   * Clears the cache and prevents active loads from immediately republishing their in-flight results.
+   *
+   * @since 4.29
+   */
+  public void clearCache();
+
+  /**
+   * Defers cache listener notifications until the matching {@link #endCacheEventDeferral()} call. Revision changes
+   * remain visible through the cache while notifications are deferred. The deferral is manager-wide and may be
+   * completed by a different thread from the one that began it.
+   *
+   * @since 4.29
+   */
+  public void beginCacheEventDeferral();
+
+  /**
+   * Completes a cache event deferral and dispatches queued notifications when no other deferral or permission update
+   * is active. Listener callbacks are dispatched outside the manager's mutation synchronization.
+   *
+   * @since 4.29
+   */
+  public void endCacheEventDeferral();
+
+  /**
+   * Marks the beginning of a security-permission update. Revision loads that overlap the update must validate their
+   * response against the permission generation before publishing or returning it.
+   *
+   * @since 4.29
+   */
+  public void beginPermissionUpdate();
+
+  /**
+   * Marks the current thread as executing a permission updater callback. Revision loads invoked from this thread fail
+   * promptly instead of waiting for the update that is calling them.
+   *
+   * @since 4.29
+   */
+  public void enterPermissionUpdater();
+
+  /**
+   * Clears the current thread's permission updater callback marker.
+   *
+   * @since 4.29
+   */
+  public void exitPermissionUpdater();
+
+  /**
+   * Marks completion of a previously begun security-permission update and releases loads waiting for a stable
+   * permission generation. Completion may occur on a different thread from the one that began the update.
+   *
+   * @since 4.29
+   */
+  public void endPermissionUpdate();
 
   /**
    * @since 4.15
@@ -299,11 +391,15 @@ public interface InternalCDORevisionManager extends CDORevisionManager, CDORevis
    *
    * @author Eike Stepper
    * @since 3.0
+   * @deprecated As of 4.29 no longer supported or used.
    */
+  @Deprecated
   public interface RevisionLocker
   {
+    @Deprecated
     public void acquireAtomicRequestLock(Object key);
 
+    @Deprecated
     public void releaseAtomicRequestLock(Object key);
   }
 }

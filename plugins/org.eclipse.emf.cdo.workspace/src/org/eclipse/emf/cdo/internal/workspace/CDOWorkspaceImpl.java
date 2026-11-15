@@ -1034,7 +1034,7 @@ public class CDOWorkspaceImpl extends Notifier implements InternalCDOWorkspace
       accessor.rawCommit(1, new Monitor());
       StoreThreadLocal.release();
 
-      localRepository.getRevisionManager().getCache().clear();
+      localRepository.getRevisionManager().clearCache();
     }
   }
 

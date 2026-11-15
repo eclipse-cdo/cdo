@@ -1318,7 +1318,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
           newRevision.setBranchPoint(target);
           newRevision.setVersion(target.getVersion());
           newRevision.setRevised(target.getRevised());
-          cache.internRevision(newRevision);
+          newRevision = (InternalCDORevision)session.getRevisionManager().internRevision(newRevision);
         }
 
         object.cdoInternalSetRevision(newRevision);

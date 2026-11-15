@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server.internal.embedded;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
-import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.internal.server.Repository;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
@@ -52,11 +51,11 @@ public class EmbeddedRepository extends Repository.Default
   public CDONet4jSession openClientSession()
   {
     CDOBranchManager branchManager = new ClientBranchManager(getBranchManager());
-    CDORevisionManager revisionManager = new ClientRevisionManager(getRevisionManager());
-
+    ClientRevisionManager revisionManager = new ClientRevisionManager(getRevisionManager());
     CDONet4jSessionConfiguration configuration = config.createSessionConfiguration(connector, branchManager, revisionManager);
 
     CDONet4jSession session = configuration.openNet4jSession();
+    revisionManager.setClientSession(session);
     config.modifySession(this, session);
     return session;
   }

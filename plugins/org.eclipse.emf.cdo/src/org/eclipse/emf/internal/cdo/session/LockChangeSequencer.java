@@ -20,7 +20,7 @@ import java.util.function.Consumer;
  *
  * @author Eike Stepper
  */
-final class LockChangeSequencer
+public final class LockChangeSequencer
 {
   private final TreeMap<Long, Entry> pending = new TreeMap<>();
 
@@ -288,12 +288,12 @@ final class LockChangeSequencer
     return actions != null && !actions.isEmpty() || pending.containsKey(currentLockModCount + 1L);
   }
 
-  public synchronized Completion enqueue(long lockModCount, Runnable action)
+  public Completion enqueue(long lockModCount, Runnable action)
   {
     return enqueue(lockModCount, action, null);
   }
 
-  public synchronized Completion enqueue(long lockModCount, Runnable action, Runnable snapshotCoveredAction)
+  public Completion enqueue(long lockModCount, Runnable action, Runnable snapshotCoveredAction)
   {
     if (lockModCount <= 0L)
     {
@@ -301,47 +301,72 @@ final class LockChangeSequencer
     }
 
     Completion completion = new Completion();
-    if (closed)
-    {
-      completion.complete(failure == null ? new IllegalStateException("Lock change sequencer is closed") : failure); //$NON-NLS-1$
-      return completion;
-    }
+    Runnable fallbackAction = null;
+    IllegalStateException conflict = null;
 
-    if (failure != null)
+    synchronized (this)
     {
-      completion.complete(failure);
-    }
-
-    if (lockModCount <= Math.max(currentLockModCount, staleCutoff))
-    {
-      if (suspended && snapshotCoveredAction != null)
+      if (closed)
       {
-        pendingSnapshotCoveredActions.add(snapshotCoveredAction);
+        completion.complete(failure == null ? new IllegalStateException("Lock change sequencer is closed") : failure); //$NON-NLS-1$
+        return completion;
       }
 
-      completion.complete(null);
-      return completion;
-    }
-
-    if (executing != null && executing.lockModCount == lockModCount)
-    {
-      return executing.completion;
-    }
-
-    Entry entry = pending.get(lockModCount);
-    if (entry != null)
-    {
-      if (entry.action != action)
+      if (failure != null)
       {
-        throw new IllegalStateException("Different lock changes claim lock modification count " + lockModCount); //$NON-NLS-1$
+        completion.complete(failure);
+        fallbackAction = snapshotCoveredAction;
       }
+      else if (lockModCount <= Math.max(currentLockModCount, staleCutoff))
+      {
+        if (suspended && snapshotCoveredAction != null)
+        {
+          pendingSnapshotCoveredActions.add(snapshotCoveredAction);
+        }
+        else
+        {
+          fallbackAction = snapshotCoveredAction;
+        }
 
-      return entry.completion;
+        completion.complete(null);
+      }
+      else if (executing != null && executing.lockModCount == lockModCount)
+      {
+        fallbackAction = snapshotCoveredAction;
+        completion = executing.completion;
+      }
+      else
+      {
+        Entry entry = pending.get(lockModCount);
+        if (entry != null)
+        {
+          if (entry.action != action)
+          {
+            fallbackAction = snapshotCoveredAction;
+            conflict = new IllegalStateException("Different lock changes claim lock modification count " + lockModCount); //$NON-NLS-1$
+          }
+
+          completion = entry.completion;
+        }
+        else
+        {
+          entry = new Entry(lockModCount, action, snapshotCoveredAction, completion);
+          pending.put(lockModCount, entry);
+          notifyAll();
+        }
+      }
     }
 
-    entry = new Entry(lockModCount, action, snapshotCoveredAction, completion);
-    pending.put(lockModCount, entry);
-    notifyAll();
+    if (fallbackAction != null)
+    {
+      fallbackAction.run();
+    }
+
+    if (conflict != null)
+    {
+      throw conflict;
+    }
+
     return completion;
   }
 
@@ -480,7 +505,8 @@ final class LockChangeSequencer
       catch (Throwable ex)
       {
         entry.completion.complete(ex);
-        failAndRequestResync(ex);
+        failAndRequestResync(ex, entry);
+
         if (ex instanceof Error)
         {
           throw (Error)ex;
@@ -557,57 +583,84 @@ final class LockChangeSequencer
     completion.awaitUninterruptibly();
   }
 
-  public synchronized void close(Throwable cause)
+  public void close(Throwable cause)
   {
-    closed = true;
-    suspended = true;
+    List<Completion> completions = new ArrayList<>();
+    List<BaselineAction> baselineActions = new ArrayList<>();
+    Throwable closeFailure;
 
-    if (failure == null)
+    synchronized (this)
     {
-      failure = cause == null ? new IllegalStateException("Lock change sequencer is closed") : cause; //$NON-NLS-1$
+      closed = true;
+      suspended = true;
+
+      if (failure == null)
+      {
+        failure = cause == null ? new IllegalStateException("Lock change sequencer is closed") : cause; //$NON-NLS-1$
+      }
+
+      closeFailure = failure;
+
+      for (Map.Entry<Long, Entry> entry : pending.entrySet())
+      {
+        completions.add(entry.getValue().completion);
+      }
+
+      pending.clear();
+
+      for (List<BaselineAction> actions : pendingBaselineActions.values())
+      {
+        baselineActions.addAll(actions);
+      }
+
+      pendingBaselineActions.clear();
+
+      // Selection and admission are separate so closure can cancel an action in that interval.
+      if (selectedBaselineAction != null)
+      {
+        baselineActions.add(selectedBaselineAction);
+        selectedBaselineAction = null;
+      }
+
+      if (executingBaselineAction != null)
+      {
+        // Release its waiter now; the close call below still waits for cache mutation to finish.
+        baselineActions.add(executingBaselineAction);
+      }
+
+      pendingSnapshotCoveredActions.clear();
+      if (executing != null)
+      {
+        completions.add(executing.completion);
+      }
+
+      notifyAll();
     }
 
-    for (Map.Entry<Long, Entry> entry : pending.entrySet())
+    for (Completion completion : completions)
     {
-      entry.getValue().completion.complete(failure);
+      completion.complete(closeFailure);
     }
 
-    pending.clear();
-    completePendingBaselineActions(failure);
-    pendingBaselineActions.clear();
-
-    // Selection and admission are separate so closure can cancel an action in that interval.
-    if (selectedBaselineAction != null)
+    for (BaselineAction action : baselineActions)
     {
-      selectedBaselineAction.completeExceptionally(failure);
-      selectedBaselineAction = null;
-    }
-
-    if (executingBaselineAction != null)
-    {
-      // Release its waiter now; the close call below still waits for cache mutation to finish.
-      executingBaselineAction.completeExceptionally(failure);
-    }
-
-    pendingSnapshotCoveredActions.clear();
-    notifyAll();
-
-    if (executing != null)
-    {
-      executing.completion.complete(failure);
+      action.completeExceptionally(closeFailure);
     }
 
     boolean interrupted = false;
 
-    while (executingBaselineAction != null && executingBaselineThread != Thread.currentThread())
+    synchronized (this)
     {
-      try
+      while (executingBaselineAction != null && executingBaselineThread != Thread.currentThread())
       {
-        wait();
-      }
-      catch (InterruptedException ex)
-      {
-        interrupted = true;
+        try
+        {
+          wait();
+        }
+        catch (InterruptedException ex)
+        {
+          interrupted = true;
+        }
       }
     }
 
@@ -619,7 +672,14 @@ final class LockChangeSequencer
 
   private void failAndRequestResync(Throwable cause)
   {
+    failAndRequestResync(cause, null);
+  }
+
+  private void failAndRequestResync(Throwable cause, Entry failedEntry)
+  {
     Consumer<Throwable> handler;
+    List<Completion> completions = new ArrayList<>();
+    List<BaselineAction> baselineActions = new ArrayList<>();
 
     synchronized (this)
     {
@@ -629,31 +689,56 @@ final class LockChangeSequencer
       failure = cause;
       suspended = true;
 
-      for (Entry entry : pending.values())
+      if (failedEntry != null && failedEntry.snapshotCoveredAction != null)
       {
-        entry.completion.complete(cause);
+        pendingSnapshotCoveredActions.add(failedEntry.snapshotCoveredAction);
       }
 
-      completePendingBaselineActions(cause);
+      for (Entry entry : pending.values())
+      {
+        completions.add(entry.completion);
+
+        if (entry.snapshotCoveredAction != null)
+        {
+          pendingSnapshotCoveredActions.add(entry.snapshotCoveredAction);
+        }
+      }
+
+      pending.clear();
+
+      for (List<BaselineAction> actions : pendingBaselineActions.values())
+      {
+        baselineActions.addAll(actions);
+      }
+
       pendingBaselineActions.clear();
       handler = failureHandler;
 
       notifyAll();
     }
 
+    for (Completion completion : completions)
+    {
+      completion.complete(cause);
+    }
+
+    for (BaselineAction action : baselineActions)
+    {
+      action.completeExceptionally(cause);
+    }
+
     if (handler != null)
     {
-      handler.accept(cause);
-    }
-  }
-
-  private void completePendingBaselineActions(Throwable cause)
-  {
-    for (List<BaselineAction> actions : pendingBaselineActions.values())
-    {
-      for (BaselineAction action : actions)
+      try
       {
-        action.completeExceptionally(cause);
+        handler.accept(cause);
+      }
+      catch (Throwable handlerFailure)
+      {
+        if (handlerFailure != cause)
+        {
+          cause.addSuppressed(handlerFailure);
+        }
       }
     }
   }
@@ -661,7 +746,7 @@ final class LockChangeSequencer
   /**
    * @author Eike Stepper
    */
-  static final class Completion
+  public static final class Completion
   {
     private boolean done;
 
@@ -684,6 +769,7 @@ final class LockChangeSequencer
     public void awaitUninterruptibly()
     {
       boolean interrupted = false;
+
       synchronized (this)
       {
         while (!done)

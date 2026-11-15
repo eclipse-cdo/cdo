@@ -350,6 +350,12 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       viewAndState = viewAndState.getViewAndState(state);
       if (viewAndState.view != null)
       {
+        if (oldState.isTracked() != state.isTracked())
+        {
+          // Crossing this boundary adds or removes the retained revision from permission tracking.
+          updateTrackedViewedRevision(viewAndState.view);
+        }
+
         viewAndState.view.handleObjectStateChanged(this, oldState, state);
       }
 
@@ -365,7 +371,13 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   @Override
   public final void cdoInternalSetView(CDOView view)
   {
+    InternalCDOView oldView = viewAndState.view;
     InternalCDOView newView = (InternalCDOView)view;
+    if (oldView == newView)
+    {
+      return;
+    }
+
     if (newView != null)
     {
       viewAndState = newView.getViewAndState(viewAndState.state);
@@ -374,6 +386,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       viewAndState = ViewAndState.TRANSIENT.getViewAndState(viewAndState.state);
     }
+
+    if (oldView != null && oldView != newView)
+    {
+      // Remove the mapping owned by the previous view before registering in the new view.
+      oldView.updateViewedRevision(cdoID(), null);
+    }
+
+    // The new view needs its own mapping for this retained revision after the old view mapping is removed.
+    updateTrackedViewedRevision(newView);
   }
 
   @Override
@@ -386,7 +407,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
     // A materialized revision already carries this ID. In particular, rollback may restore an object with its current
     // ID; do not turn this harmless idempotent operation into a request for a new revision stub.
-    if (id != null && id.equals(revision.getID()))
+    CDOID oldID = revision.getID();
+    if (id != null && id.equals(oldID))
     {
       return;
     }
@@ -398,6 +420,16 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     else
     {
       revision = revision.getRevisionForID(id);
+    }
+
+    InternalCDOView view = viewAndState.view;
+    if (view != null && oldID != null && !oldID.equals(id))
+    {
+      // Remove the old key; register the retained revision under its new ID only when tracking is enabled.
+      if (view.updateViewedRevision(oldID, null))
+      {
+        updateTrackedViewedRevision(view);
+      }
     }
   }
 
@@ -412,6 +444,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       TRACER.format("Setting revision: {0}", revision); //$NON-NLS-1$
     }
 
+    InternalCDORevision oldRevision = this.revision;
     if (revision == null)
     {
       InternalCDOClassInfo classInfo = cdoClassInfo();
@@ -430,6 +463,21 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       }
 
       this.revision = (InternalCDORevision)revision;
+    }
+
+    if (oldRevision != this.revision && viewAndState.state.isTracked())
+    {
+      // Permission updates may race this replacement, so reconcile the new revision immediately.
+      updateTrackedViewedRevision(viewAndState.view);
+    }
+  }
+
+  private void updateTrackedViewedRevision(InternalCDOView view)
+  {
+    if (view != null)
+    {
+      InternalCDORevision viewedRevision = viewAndState.state.isTracked() ? revision : null;
+      view.updateViewedRevision(cdoID(), viewedRevision);
     }
   }
 

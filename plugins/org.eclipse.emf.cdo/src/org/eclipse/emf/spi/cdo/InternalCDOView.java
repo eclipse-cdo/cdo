@@ -65,6 +65,13 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, I
    */
   public Access access();
 
+  /**
+   * Returns whether the current thread holds this view's access lock.
+   *
+   * @since 4.31
+   */
+  public boolean isAccessHeldByCurrentThread();
+
   public void setViewID(int viewId);
 
   /**
@@ -137,6 +144,35 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, I
    * @since 3.0
    */
   public void collectViewedRevisions(Map<CDOID, InternalCDORevision> revisions);
+
+  /**
+   * Collects viewed revisions without waiting for this view's access lock.
+   *
+   * @param revisions the map to populate with viewed revisions
+   * @return whether the lock was acquired and the view's revisions were collected
+   * @since 4.31
+   */
+  public boolean tryCollectViewedRevisions(Map<CDOID, InternalCDORevision> revisions);
+
+  /**
+   * Records the revision currently retained by an object in this view so that security updates can find it even when
+   * the view access lock is contended and the revision is no longer present in the revision cache.
+   *
+   * @param id the ID of the viewed object
+   * @param revision the currently retained revision, or <code>null</code> if the object no longer retains a revision
+   * @return <code>true</code> if this view maintains viewed-revision tracking
+   * @since 4.31
+   */
+  public boolean updateViewedRevision(CDOID id, InternalCDORevision revision);
+
+  /**
+   * Propagates permissions from revisions included in a completed permission update to same-key revisions that were
+   * installed in this view while the update was running.
+   *
+   * @param sourceRevisions the revisions whose permissions were included in the completed update, keyed by object ID
+   * @since 4.31
+   */
+  public Map<CDORevision, CDOPermission> synchronizeTrackedViewedRevisions(Map<CDOID, InternalCDORevision> sourceRevisions);
 
   public void remapObject(CDOID oldID);
 

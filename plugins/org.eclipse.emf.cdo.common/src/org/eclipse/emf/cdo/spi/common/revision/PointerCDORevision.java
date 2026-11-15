@@ -28,9 +28,9 @@ import org.eclipse.emf.ecore.EClass;
  */
 public class PointerCDORevision extends SyntheticCDORevision
 {
-  private long revised = UNSPECIFIED_DATE;
+  private volatile long revised = UNSPECIFIED_DATE;
 
-  private CDOBranchVersion target;
+  private final CDOBranchVersion target;
 
   public PointerCDORevision(EClass eClass, CDOID id, CDOBranch branch, long revised, CDOBranchVersion target)
   {

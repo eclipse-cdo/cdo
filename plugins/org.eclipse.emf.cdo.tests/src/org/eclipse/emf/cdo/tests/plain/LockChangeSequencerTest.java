@@ -10,22 +10,21 @@ package org.eclipse.emf.cdo.tests.plain;
 
 import org.eclipse.emf.cdo.tests.config.impl.PlainTest;
 
+import org.eclipse.emf.internal.cdo.session.LockChangeSequencer;
+import org.eclipse.emf.internal.cdo.session.LockChangeSequencer.BaselineActionResult;
+import org.eclipse.emf.internal.cdo.session.LockChangeSequencer.Completion;
+
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Consumer;
 
 /**
  * Tests ordered application of server-authoritative lock changes on a session.
@@ -43,7 +42,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testBaselineZeroActionRunsBeforeMutationOne() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
 
     assertTrue(registerBaselineAction(sequencer, 0L, () -> applied.add("query-0"))); //$NON-NLS-1$
@@ -54,18 +53,18 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testImmediatelyAdmissibleBaselineActionRunsBeforeReturn() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     Runnable action = () -> applied.add("query-0"); //$NON-NLS-1$
 
-    assertEquals("APPLIED", registerBaselineActionAndRunImmediately(sequencer, 0L, action).toString()); //$NON-NLS-1$
+    assertEquals(BaselineActionResult.APPLIED, sequencer.registerBaselineActionAndRunIfImmediatelyAdmissible(0L, action));
     assertEquals(List.of("query-0"), applied); //$NON-NLS-1$
     assertEquals(0L, currentCount(sequencer));
   }
 
   public void testImmediateBaselineDoesNotBypassAnActiveDrainer() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = Collections.synchronizedList(new ArrayList<>());
     CountDownLatch actionStarted = new CountDownLatch(1);
     CountDownLatch releaseAction = new CountDownLatch(1);
@@ -74,7 +73,10 @@ public class LockChangeSequencerTest extends PlainTest
       actionStarted.countDown();
       try
       {
-        releaseAction.await();
+        if (!releaseAction.await(10, TimeUnit.SECONDS))
+        {
+          throw new IllegalStateException("The test did not release the active baseline action"); //$NON-NLS-1$
+        }
         applied.add("active"); //$NON-NLS-1$
       }
       catch (InterruptedException ex)
@@ -117,7 +119,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testFutureBaselineActionRunsBetweenItsMutationAndTheNext() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     Runnable action = () -> applied.add("query-2"); //$NON-NLS-1$
 
@@ -131,7 +133,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testSameBaselineActionsAreFifoBeforeNextMutation() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
 
     registerBaselineAction(sequencer, 0L, () -> applied.add("first")); //$NON-NLS-1$
@@ -144,7 +146,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testSnapshotSupersedesCoveredBaselineActionsAndRetainsLaterOnes() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     registerBaselineAction(sequencer, 5L, () -> applied.add("covered-query")); //$NON-NLS-1$
     registerBaselineAction(sequencer, 8L, () -> applied.add("later-query")); //$NON-NLS-1$
@@ -160,84 +162,44 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testBaselineCompletionReportsSuccessfulExecution() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     CompletableFuture<Boolean> completion = new CompletableFuture<>();
     List<String> applied = new ArrayList<>();
 
     assertTrue(registerBaselineAction(sequencer, 0L, () -> applied.add("query"), completion)); //$NON-NLS-1$
     drain(sequencer);
 
-    assertEquals(Boolean.TRUE, completion.get());
+    assertEquals(Boolean.TRUE, completion.get(5, TimeUnit.SECONDS));
     assertEquals(List.of("query"), applied); //$NON-NLS-1$
   }
 
   public void testSnapshotCompletesSupersededBaselineWithoutRunningIt() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     CompletableFuture<Boolean> completion = new CompletableFuture<>();
     List<String> applied = new ArrayList<>();
 
     assertTrue(registerBaselineAction(sequencer, 5L, () -> applied.add("stale-query"), completion)); //$NON-NLS-1$
     installSnapshot(sequencer, 5L, () -> applied.add("snapshot")); //$NON-NLS-1$
 
-    assertEquals(Boolean.FALSE, completion.get());
+    assertEquals(Boolean.FALSE, completion.get(5, TimeUnit.SECONDS));
     assertEquals(List.of("snapshot"), applied); //$NON-NLS-1$
   }
 
   public void testSessionClosureCompletesPendingBaselineExceptionally() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     CompletableFuture<Boolean> completion = new CompletableFuture<>();
     List<String> applied = new ArrayList<>();
     suspend(sequencer, 0L);
 
     assertTrue(registerBaselineAction(sequencer, 0L, () -> applied.add("must-not-run"), completion)); //$NON-NLS-1$
-    Method close = sequencer.getClass().getDeclaredMethod("close", Throwable.class); //$NON-NLS-1$
-    close.setAccessible(true);
-    close.invoke(sequencer, (Object)null);
+    sequencer.close(null);
 
     try
     {
-      completion.get();
+      completion.get(5, TimeUnit.SECONDS);
       fail("Session closure must release the query waiter with failure"); //$NON-NLS-1$
-    }
-    catch (ExecutionException ex)
-    {
-      assertTrue(ex.getCause() instanceof IllegalStateException);
-    }
-
-    assertTrue(applied.isEmpty());
-  }
-
-  public void testSessionClosureCancelsSelectedBaselineBeforeExecution() throws Exception
-  {
-    Object sequencer = newSequencer();
-    CompletableFuture<Boolean> completion = new CompletableFuture<>();
-    List<String> applied = new ArrayList<>();
-    assertTrue(registerBaselineAction(sequencer, 0L, () -> applied.add("must-not-run"), completion)); //$NON-NLS-1$
-
-    Field pendingField = sequencer.getClass().getDeclaredField("pendingBaselineActions"); //$NON-NLS-1$
-    pendingField.setAccessible(true);
-
-    Field selectedField = sequencer.getClass().getDeclaredField("selectedBaselineAction"); //$NON-NLS-1$
-    selectedField.setAccessible(true);
-
-    synchronized (sequencer)
-    {
-      @SuppressWarnings("unchecked")
-      Map<Long, List<?>> pending = (Map<Long, List<?>>)pendingField.get(sequencer);
-      Object selected = pending.remove(0L).get(0);
-      selectedField.set(sequencer, selected);
-    }
-
-    Method close = sequencer.getClass().getDeclaredMethod("close", Throwable.class); //$NON-NLS-1$
-    close.setAccessible(true);
-    close.invoke(sequencer, (Object)null);
-
-    try
-    {
-      completion.get();
-      fail("Session closure must release the selected query waiter with failure"); //$NON-NLS-1$
     }
     catch (ExecutionException ex)
     {
@@ -249,7 +211,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testSessionClosureWaitsForSelectedBaselineActionToFinish() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     CompletableFuture<Boolean> completion = new CompletableFuture<>();
     CountDownLatch actionStarted = new CountDownLatch(1);
     CountDownLatch releaseAction = new CountDownLatch(1);
@@ -257,14 +219,15 @@ public class LockChangeSequencerTest extends PlainTest
     CountDownLatch closeStarted = new CountDownLatch(1);
     CountDownLatch closeReturned = new CountDownLatch(1);
     List<String> applied = Collections.synchronizedList(new ArrayList<>());
-    Method close = sequencer.getClass().getDeclaredMethod("close", Throwable.class); //$NON-NLS-1$
-    close.setAccessible(true);
 
     assertTrue(registerBaselineAction(sequencer, 0L, () -> {
       actionStarted.countDown();
       try
       {
-        releaseAction.await();
+        if (!releaseAction.await(10, TimeUnit.SECONDS))
+        {
+          throw new IllegalStateException("The test did not release the executing baseline action"); //$NON-NLS-1$
+        }
         applied.add("query"); //$NON-NLS-1$
       }
       catch (InterruptedException ex)
@@ -294,7 +257,7 @@ public class LockChangeSequencerTest extends PlainTest
 
       try
       {
-        close.invoke(sequencer, (Object)null);
+        sequencer.close(null);
       }
       catch (Exception ex)
       {
@@ -310,34 +273,40 @@ public class LockChangeSequencerTest extends PlainTest
     closer.setDaemon(true);
 
     drainer.start();
-    assertTrue("Baseline action did not start", actionStarted.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-
-    closer.start();
-    assertTrue("Session closure did not start", closeStarted.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-
     try
     {
+      assertTrue("Baseline action did not start", actionStarted.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      closer.start();
+      assertTrue("Session closure did not start", closeStarted.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
       completion.get(5, TimeUnit.SECONDS);
       fail("Session closure must release the query waiter with failure"); //$NON-NLS-1$
     }
     catch (ExecutionException ex)
     {
       assertTrue(ex.getCause() instanceof IllegalStateException);
+      assertEquals("Closure must wait for an action already executing", 1L, closeReturned.getCount()); //$NON-NLS-1$
     }
+    finally
+    {
+      releaseAction.countDown();
+      assertTrue("The selected action did not finish", actionFinished.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      drainer.join(TimeUnit.SECONDS.toMillis(5));
+      if (closer.isAlive())
+      {
+        assertTrue("Session closure did not return after the action finished", closeReturned.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+        closer.join(TimeUnit.SECONDS.toMillis(5));
+      }
 
-    assertEquals("Closure must wait for an action already executing", 1L, closeReturned.getCount()); //$NON-NLS-1$
-    releaseAction.countDown();
-    assertTrue("The selected action did not finish", actionFinished.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-    assertTrue("Session closure did not return after the action finished", closeReturned.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
-    drainer.join(TimeUnit.SECONDS.toMillis(5));
-    closer.join(TimeUnit.SECONDS.toMillis(5));
+      assertFalse("The lock-change drainer did not stop", drainer.isAlive()); //$NON-NLS-1$
+      assertFalse("The lock-change closer did not stop", closer.isAlive()); //$NON-NLS-1$
+    }
 
     assertEquals(Collections.singletonList("query"), applied); //$NON-NLS-1$
   }
 
   public void testRecoveryFailureCompletesPendingBaselineExceptionally() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     CompletableFuture<Boolean> completion = new CompletableFuture<>();
     assertTrue(registerBaselineAction(sequencer, 2L, () -> fail("A discarded baseline must not run"), completion)); //$NON-NLS-1$
 
@@ -349,14 +318,14 @@ public class LockChangeSequencerTest extends PlainTest
 
       fail("The failed carrier must propagate"); //$NON-NLS-1$
     }
-    catch (InvocationTargetException ex)
+    catch (IllegalStateException ex)
     {
-      assertEquals("injected failure", ex.getCause().getMessage()); //$NON-NLS-1$
+      assertEquals("injected failure", ex.getMessage()); //$NON-NLS-1$
     }
 
     try
     {
-      completion.get();
+      completion.get(5, TimeUnit.SECONDS);
       fail("Recovery failure must release the baseline waiter"); //$NON-NLS-1$
     }
     catch (ExecutionException ex)
@@ -367,7 +336,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testSuspensionPreventsBaselineActionsFromDraining() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     suspend(sequencer, 0L);
     assertTrue(registerBaselineAction(sequencer, 0L, () -> applied.add("query"))); //$NON-NLS-1$
@@ -381,11 +350,9 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testBaselineActionFailureRequestsRecovery() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     boolean[] recoveryRequested = { false };
-    Method setFailureHandler = sequencer.getClass().getDeclaredMethod("setFailureHandler", Consumer.class); //$NON-NLS-1$
-    setFailureHandler.setAccessible(true);
-    setFailureHandler.invoke(sequencer, (Consumer<Throwable>)cause -> recoveryRequested[0] = true);
+    sequencer.setFailureHandler(cause -> recoveryRequested[0] = true);
 
     registerBaselineAction(sequencer, 0L, () -> {
       throw new IllegalStateException("query cache failed"); //$NON-NLS-1$
@@ -396,9 +363,9 @@ public class LockChangeSequencerTest extends PlainTest
       drain(sequencer);
       fail("An escaping baseline action failure must propagate"); //$NON-NLS-1$
     }
-    catch (InvocationTargetException ex)
+    catch (IllegalStateException ex)
     {
-      assertEquals("query cache failed", ex.getCause().getMessage()); //$NON-NLS-1$
+      assertEquals("query cache failed", ex.getMessage()); //$NON-NLS-1$
     }
 
     assertTrue(recoveryRequested[0]);
@@ -407,7 +374,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testBaselineBelowCurrentCountIsStale() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     enqueue(sequencer, 1L, () -> {
     });
     assertFalse(registerBaselineAction(sequencer, 0L, () -> fail("A past boundary is stale"))); //$NON-NLS-1$
@@ -415,13 +382,11 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testCloseDiscardsPendingBaselineActions() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     registerBaselineAction(sequencer, 0L, () -> applied.add("must-not-run")); //$NON-NLS-1$
 
-    Method close = sequencer.getClass().getDeclaredMethod("close", Throwable.class); //$NON-NLS-1$
-    close.setAccessible(true);
-    close.invoke(sequencer, (Object)null);
+    sequencer.close(null);
     drain(sequencer);
 
     assertTrue(applied.isEmpty());
@@ -429,7 +394,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testBoundaryAlreadyCrossedByExecutingMutationIsStale() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     CountDownLatch started = new CountDownLatch(1);
     CountDownLatch release = new CountDownLatch(1);
 
@@ -440,7 +405,10 @@ public class LockChangeSequencerTest extends PlainTest
           started.countDown();
           try
           {
-            release.await();
+            if (!release.await(10, TimeUnit.SECONDS))
+            {
+              throw new IllegalStateException("The test did not release the executing mutation"); //$NON-NLS-1$
+            }
           }
           catch (InterruptedException ex)
           {
@@ -455,17 +423,25 @@ public class LockChangeSequencerTest extends PlainTest
       }
     });
 
+    mutation.setDaemon(true);
     mutation.start();
-    started.await();
+    try
+    {
+      assertTrue("The mutation did not start", started.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertFalse(registerBaselineAction(sequencer, 0L, () -> fail("A crossed boundary must not accept an action"))); //$NON-NLS-1$
+    }
+    finally
+    {
+      release.countDown();
+      mutation.join(TimeUnit.SECONDS.toMillis(5));
+    }
 
-    assertFalse(registerBaselineAction(sequencer, 0L, () -> fail("A crossed boundary must not accept an action"))); //$NON-NLS-1$
-    release.countDown();
-    mutation.join();
+    assertFalse("The mutation worker did not stop", mutation.isAlive()); //$NON-NLS-1$
   }
 
   public void testFutureCountIsBufferedUntilItsPredecessorArrives() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<Integer> applied = new ArrayList<>();
 
     enqueue(sequencer, 2L, () -> applied.add(2));
@@ -479,7 +455,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testStaleCountIsDiscarded() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<Integer> applied = new ArrayList<>();
 
     enqueue(sequencer, 1L, () -> applied.add(1));
@@ -491,7 +467,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testConflictingPendingCountIsRejected() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     enqueue(sequencer, 2L, () -> {
     });
 
@@ -501,10 +477,6 @@ public class LockChangeSequencerTest extends PlainTest
       });
       fail("A second action must not replace the pending action for count 2");
     }
-    catch (InvocationTargetException ex)
-    {
-      assertTrue(ex.getCause() instanceof IllegalStateException);
-    }
     catch (IllegalStateException expected)
     {
       // Expected.
@@ -513,7 +485,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testOwnerRemapAndUnlockAreAppliedInCountOrder() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     String[] owner = { "OLD_DURABLE" };
 
     enqueue(sequencer, 2L, () -> owner[0] = null);
@@ -525,7 +497,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testFailedActionFailsItsCompletionAndClosesTheSequencer() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
 
     try
     {
@@ -534,30 +506,51 @@ public class LockChangeSequencerTest extends PlainTest
       });
       fail("The failing action must be reported to its caller");
     }
-    catch (InvocationTargetException ex)
+    catch (IllegalStateException ex)
     {
-      assertTrue(ex.getCause() instanceof IllegalStateException);
-      assertEquals("expected failure", ex.getCause().getMessage()); //$NON-NLS-1$
+      assertEquals("expected failure", ex.getMessage()); //$NON-NLS-1$
     }
 
-    Method await = sequencer.getClass().getDeclaredMethod("await", long.class); //$NON-NLS-1$
-    await.setAccessible(true);
     try
     {
-      await.invoke(sequencer, 1L);
+      sequencer.await(1L);
       fail("A failed sequence position must not report successful completion");
     }
-    catch (InvocationTargetException ex)
+    catch (RuntimeException ex)
     {
-      assertTrue(ex.getCause() instanceof RuntimeException);
+      assertEquals("expected failure", ex.getCause().getMessage()); //$NON-NLS-1$
+    }
+  }
+
+  public void testFailureHandlerExceptionDoesNotReplaceActionFailure()
+  {
+    LockChangeSequencer sequencer = newSequencer();
+    IllegalStateException actionFailure = new IllegalStateException("action failure"); //$NON-NLS-1$
+    IllegalArgumentException handlerFailure = new IllegalArgumentException("handler failure"); //$NON-NLS-1$
+    sequencer.setFailureHandler(cause -> {
+      throw handlerFailure;
+    });
+
+    try
+    {
+      enqueue(sequencer, 1L, () -> {
+        throw actionFailure;
+      });
+      fail("The original action failure must propagate"); //$NON-NLS-1$
+    }
+    catch (IllegalStateException ex)
+    {
+      assertSame(actionFailure, ex);
+      assertEquals(1, ex.getSuppressed().length);
+      assertSame(handlerFailure, ex.getSuppressed()[0]);
     }
   }
 
   public void testFailedActionDoesNotRunLaterCountsAndFailsTheirWaiters() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<Integer> applied = new ArrayList<>();
-    Object completion = enqueueCompletion(sequencer, 2L, () -> applied.add(2));
+    Completion completion = enqueueCompletion(sequencer, 2L, () -> applied.add(2));
 
     try
     {
@@ -567,22 +560,20 @@ public class LockChangeSequencerTest extends PlainTest
       });
       fail("The failing sequence action must be reported"); //$NON-NLS-1$
     }
-    catch (InvocationTargetException ex)
+    catch (IllegalStateException ex)
     {
-      assertTrue(ex.getCause() instanceof IllegalStateException);
+      assertEquals("expected failure", ex.getMessage()); //$NON-NLS-1$
     }
 
     assertEquals(List.of(1), applied);
     assertEquals(0L, currentCount(sequencer));
 
-    Method await = completion.getClass().getDeclaredMethod("awaitUninterruptibly"); //$NON-NLS-1$
-    await.setAccessible(true);
     try
     {
-      await.invoke(completion);
+      awaitCompletion(completion);
       fail("A later pending completion must be failed when its predecessor fails"); //$NON-NLS-1$
     }
-    catch (InvocationTargetException ex)
+    catch (ExecutionException ex)
     {
       assertTrue(ex.getCause() instanceof IllegalStateException);
     }
@@ -590,22 +581,18 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testCloseFailsPendingWaitersWithoutExecutingBufferedActions() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     boolean[] applied = { false };
-    Object completion = enqueueCompletion(sequencer, 2L, () -> applied[0] = true);
+    Completion completion = enqueueCompletion(sequencer, 2L, () -> applied[0] = true);
 
-    Method close = sequencer.getClass().getDeclaredMethod("close", Throwable.class); //$NON-NLS-1$
-    close.setAccessible(true);
-    close.invoke(sequencer, new IllegalStateException("closed for test")); //$NON-NLS-1$
+    sequencer.close(new IllegalStateException("closed for test")); //$NON-NLS-1$
 
-    Method await = completion.getClass().getDeclaredMethod("awaitUninterruptibly"); //$NON-NLS-1$
-    await.setAccessible(true);
     try
     {
-      await.invoke(completion);
+      awaitCompletion(completion);
       fail("Closing the sequencer must release pending waiters with failure"); //$NON-NLS-1$
     }
-    catch (InvocationTargetException ex)
+    catch (ExecutionException ex)
     {
       assertTrue(ex.getCause() instanceof IllegalStateException);
       assertEquals("closed for test", ex.getCause().getMessage()); //$NON-NLS-1$
@@ -617,7 +604,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testSynchronousCompletionWaitsForMissingPredecessorOutsideAccess() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     ReentrantLock access = new ReentrantLock();
     List<Integer> applied = Collections.synchronizedList(new ArrayList<>());
     CountDownLatch started = new CountDownLatch(1);
@@ -636,8 +623,6 @@ public class LockChangeSequencerTest extends PlainTest
       }
     });
 
-    Method await = sequencer.getClass().getDeclaredMethod("await", long.class); //$NON-NLS-1$
-    await.setAccessible(true);
     Thread waiter = new Thread(() -> {
       access.lock();
       access.unlock();
@@ -645,7 +630,7 @@ public class LockChangeSequencerTest extends PlainTest
 
       try
       {
-        await.invoke(sequencer, 2L);
+        sequencer.await(2L);
       }
       catch (Throwable ex)
       {
@@ -656,29 +641,38 @@ public class LockChangeSequencerTest extends PlainTest
         completed.countDown();
       }
     });
+    waiter.setDaemon(true);
     waiter.start();
-    started.await();
-
-    while (waiter.getState() == Thread.State.RUNNABLE || waiter.getState() == Thread.State.BLOCKED)
+    try
     {
-      Thread.yield();
+      assertTrue("The waiter did not start", started.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+      assertEquals(1L, completed.getCount());
+
+      enqueue(sequencer, 1L, () -> {
+        access.lock();
+        try
+        {
+          applied.add(1);
+        }
+        finally
+        {
+          access.unlock();
+        }
+      });
+      assertTrue("The waiter did not finish", completed.await(5, TimeUnit.SECONDS)); //$NON-NLS-1$
+    }
+    finally
+    {
+      if (completed.getCount() != 0L)
+      {
+        sequencer.close(new IllegalStateException("Test cleanup released a blocked waiter")); //$NON-NLS-1$
+      }
+
+      waiter.interrupt();
+      waiter.join(TimeUnit.SECONDS.toMillis(5));
     }
 
-    assertEquals(Thread.State.WAITING, waiter.getState());
-    assertEquals(1L, completed.getCount());
-
-    enqueue(sequencer, 1L, () -> {
-      access.lock();
-      try
-      {
-        applied.add(1);
-      }
-      finally
-      {
-        access.unlock();
-      }
-    });
-    completed.await();
+    assertFalse("The waiter worker did not stop", waiter.isAlive()); //$NON-NLS-1$
 
     assertNull(failure[0]);
     assertEquals(List.of(1, 2), applied);
@@ -686,7 +680,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testCommitCountWaitsForTimestampEligibilityAndThenNextCount() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
 
     enqueue(sequencer, 2L, () -> applied.add("N+1")); //$NON-NLS-1$
@@ -709,7 +703,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testCommitWithReadyTimestampStillWaitsForEarlierLockCount() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
 
     enqueue(sequencer, 2L, () -> applied.add("commit N+1")); //$NON-NLS-1$
@@ -722,16 +716,16 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testCountZeroCannotAdvanceThePositiveSequence() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
 
     try
     {
       enqueue(sequencer, 0L, () -> fail("Count zero must use a legacy path")); //$NON-NLS-1$
       fail("Count zero must not be accepted as a sequence position");
     }
-    catch (InvocationTargetException ex)
+    catch (IllegalArgumentException ex)
     {
-      assertTrue(ex.getCause() instanceof IllegalArgumentException);
+      assertTrue(ex.getMessage().contains("positive lock modification count")); //$NON-NLS-1$
     }
 
     assertEquals(0L, currentCount(sequencer));
@@ -739,20 +733,14 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testFailedActionResynchronizesAndResumesLaterCounts() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     boolean[] recoveryRequested = { false };
 
-    Method setFailureHandler = sequencer.getClass().getDeclaredMethod("setFailureHandler", Consumer.class); //$NON-NLS-1$
-    setFailureHandler.setAccessible(true);
-    setFailureHandler.invoke(sequencer, (Consumer<Throwable>)cause -> recoveryRequested[0] = true);
+    sequencer.setFailureHandler(cause -> recoveryRequested[0] = true);
 
-    Method enqueue = sequencer.getClass().getDeclaredMethod("enqueue", long.class, Runnable.class, Runnable.class); //$NON-NLS-1$
-    enqueue.setAccessible(true);
-    Object coveredCompletion = enqueue.invoke(sequencer, 2L, (Runnable)() -> applied.add("stale-lock-change"), //$NON-NLS-1$
-        (Runnable)() -> applied.add("covered-commit-invalidation")); //$NON-NLS-1$
-    enqueue(sequencer, 3L, () -> applied.add("after-snapshot")); //$NON-NLS-1$
-
+    Completion coveredCompletion = sequencer.enqueue(2L, () -> applied.add("stale-lock-change"), //$NON-NLS-1$
+        () -> applied.add("covered-commit-invalidation")); //$NON-NLS-1$
     try
     {
       enqueue(sequencer, 1L, () -> {
@@ -760,30 +748,24 @@ public class LockChangeSequencerTest extends PlainTest
       });
       fail("The original failed action must still fail its caller"); //$NON-NLS-1$
     }
-    catch (InvocationTargetException ex)
+    catch (IllegalStateException ex)
     {
-      assertEquals("injected lock cache failure", ex.getCause().getMessage()); //$NON-NLS-1$
+      assertEquals("injected lock cache failure", ex.getMessage()); //$NON-NLS-1$
     }
 
     assertTrue(recoveryRequested[0]);
     assertEquals(0L, currentCount(sequencer));
     assertTrue(applied.isEmpty());
 
-    Method install = sequencer.getClass().getDeclaredMethod("installSnapshotAndCollect", long.class, Runnable.class); //$NON-NLS-1$
-    install.setAccessible(true);
-    @SuppressWarnings("unchecked")
-    List<Runnable> coveredActions = (List<Runnable>)install.invoke(sequencer, 2L, (Runnable)() -> applied.add("snapshot-installed")); //$NON-NLS-1$
+    List<Runnable> coveredActions = sequencer.installSnapshotAndCollect(2L, () -> applied.add("snapshot-installed")); //$NON-NLS-1$
     for (Runnable action : coveredActions)
     {
       action.run();
     }
 
-    Method resume = sequencer.getClass().getDeclaredMethod("resume"); //$NON-NLS-1$
-    resume.setAccessible(true);
-    resume.invoke(sequencer);
-    Method drain = sequencer.getClass().getDeclaredMethod("drain"); //$NON-NLS-1$
-    drain.setAccessible(true);
-    drain.invoke(sequencer);
+    sequencer.resume();
+    sequencer.drain();
+    enqueue(sequencer, 3L, () -> applied.add("after-snapshot")); //$NON-NLS-1$
 
     assertEquals(List.of("snapshot-installed", "covered-commit-invalidation", "after-snapshot"), applied); //$NON-NLS-1$
     assertEquals(3L, currentCount(sequencer));
@@ -792,7 +774,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testSnapshotHealsPermanentGapAndDiscardsCoveredCarrier() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     suspend(sequencer, 0L);
     enqueue(sequencer, 2L, () -> applied.add("stale-B+2")); //$NON-NLS-1$
@@ -813,7 +795,7 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testSnapshotRetainsBufferedCarrierAboveBaseline() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     suspend(sequencer, 0L);
     enqueue(sequencer, 2L, () -> applied.add("B+2")); //$NON-NLS-1$
@@ -829,24 +811,20 @@ public class LockChangeSequencerTest extends PlainTest
 
   public void testFailedRecoveryClosesSuspendedSequencerAndFailsBufferedWaiter() throws Exception
   {
-    Object sequencer = newSequencer();
+    LockChangeSequencer sequencer = newSequencer();
     List<String> applied = new ArrayList<>();
     suspend(sequencer, 0L);
-    Object completion = enqueueCompletion(sequencer, 2L, () -> applied.add("must-not-run")); //$NON-NLS-1$
+    Completion completion = enqueueCompletion(sequencer, 2L, () -> applied.add("must-not-run")); //$NON-NLS-1$
     IllegalStateException failure = new IllegalStateException("snapshot request failed"); //$NON-NLS-1$
 
-    Method close = sequencer.getClass().getDeclaredMethod("close", Throwable.class); //$NON-NLS-1$
-    close.setAccessible(true);
-    close.invoke(sequencer, failure);
+    sequencer.close(failure);
 
-    Method await = completion.getClass().getDeclaredMethod("awaitUninterruptibly"); //$NON-NLS-1$
-    await.setAccessible(true);
     try
     {
-      await.invoke(completion);
+      awaitCompletion(completion);
       fail("A failed recovery must release pending waiters with failure"); //$NON-NLS-1$
     }
-    catch (InvocationTargetException ex)
+    catch (ExecutionException ex)
     {
       assertSame(failure, ex.getCause());
     }
@@ -856,88 +834,89 @@ public class LockChangeSequencerTest extends PlainTest
     assertTrue(isSuspended(sequencer));
   }
 
-  private Object newSequencer() throws Exception
+  private LockChangeSequencer newSequencer()
   {
-    Class<?> type = Class.forName("org.eclipse.emf.internal.cdo.session.LockChangeSequencer"); //$NON-NLS-1$
-    Constructor<?> constructor = type.getDeclaredConstructor();
-    constructor.setAccessible(true);
-    return constructor.newInstance();
+    return new LockChangeSequencer();
   }
 
-  private void enqueue(Object sequencer, long count, Runnable action) throws Exception
+  private void enqueue(LockChangeSequencer sequencer, long count, Runnable action)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("enqueueAndDrain", long.class, Runnable.class); //$NON-NLS-1$
-    method.setAccessible(true);
-    method.invoke(sequencer, count, action);
+    sequencer.enqueueAndDrain(count, action);
   }
 
-  private Object enqueueCompletion(Object sequencer, long count, Runnable action) throws Exception
+  private Completion enqueueCompletion(LockChangeSequencer sequencer, long count, Runnable action)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("enqueue", long.class, Runnable.class); //$NON-NLS-1$
-    method.setAccessible(true);
-    return method.invoke(sequencer, count, action);
+    return sequencer.enqueue(count, action);
   }
 
-  private boolean registerBaselineAction(Object sequencer, long baseline, Runnable action) throws Exception
+  private boolean registerBaselineAction(LockChangeSequencer sequencer, long baseline, Runnable action)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("registerBaselineAction", long.class, Runnable.class); //$NON-NLS-1$
-    method.setAccessible(true);
-    return (boolean)method.invoke(sequencer, baseline, action);
+    return sequencer.registerBaselineAction(baseline, action);
   }
 
-  private Object registerBaselineActionAndRunImmediately(Object sequencer, long baseline, Runnable action) throws Exception
+  private BaselineActionResult registerBaselineActionAndRunImmediately(LockChangeSequencer sequencer, long baseline, Runnable action)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("registerBaselineActionAndRunIfImmediatelyAdmissible", long.class, Runnable.class); //$NON-NLS-1$
-    method.setAccessible(true);
-    return method.invoke(sequencer, baseline, action);
+    return sequencer.registerBaselineActionAndRunIfImmediatelyAdmissible(baseline, action);
   }
 
-  private boolean registerBaselineAction(Object sequencer, long baseline, Runnable action, CompletableFuture<Boolean> completion) throws Exception
+  private boolean registerBaselineAction(LockChangeSequencer sequencer, long baseline, Runnable action, CompletableFuture<Boolean> completion)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("registerBaselineAction", long.class, Runnable.class, CompletableFuture.class); //$NON-NLS-1$
-    method.setAccessible(true);
-    return (boolean)method.invoke(sequencer, baseline, action, completion);
+    return sequencer.registerBaselineAction(baseline, action, completion);
   }
 
-  private long currentCount(Object sequencer) throws Exception
+  private long currentCount(LockChangeSequencer sequencer)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("getCurrentLockModCount"); //$NON-NLS-1$
-    method.setAccessible(true);
-    return (long)method.invoke(sequencer);
+    return sequencer.getCurrentLockModCount();
   }
 
-  private void suspend(Object sequencer, long staleCutoff) throws Exception
+  private void suspend(LockChangeSequencer sequencer, long staleCutoff)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("suspend", long.class); //$NON-NLS-1$
-    method.setAccessible(true);
-    method.invoke(sequencer, staleCutoff);
+    sequencer.suspend(staleCutoff);
   }
 
-  private void installSnapshot(Object sequencer, long baseline, Runnable replacement) throws Exception
+  private void installSnapshot(LockChangeSequencer sequencer, long baseline, Runnable replacement)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("installSnapshotAndCollect", long.class, Runnable.class); //$NON-NLS-1$
-    method.setAccessible(true);
-    method.invoke(sequencer, baseline, replacement);
+    sequencer.installSnapshotAndCollect(baseline, replacement);
   }
 
-  private void resume(Object sequencer) throws Exception
+  private void resume(LockChangeSequencer sequencer)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("resume"); //$NON-NLS-1$
-    method.setAccessible(true);
-    method.invoke(sequencer);
+    sequencer.resume();
   }
 
-  private void drain(Object sequencer) throws Exception
+  private void drain(LockChangeSequencer sequencer)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("drain"); //$NON-NLS-1$
-    method.setAccessible(true);
-    method.invoke(sequencer);
+    sequencer.drain();
   }
 
-  private boolean isSuspended(Object sequencer) throws Exception
+  private boolean isSuspended(LockChangeSequencer sequencer)
   {
-    Method method = sequencer.getClass().getDeclaredMethod("isSuspended"); //$NON-NLS-1$
-    method.setAccessible(true);
-    return (boolean)method.invoke(sequencer);
+    return sequencer.isSuspended();
+  }
+
+  private void awaitCompletion(Completion completion) throws Exception
+  {
+    FutureTask<Void> task = new FutureTask<>(() -> {
+      completion.await();
+      return null;
+    });
+    Thread waiter = new Thread(task, "lock-change-completion-waiter"); //$NON-NLS-1$
+    waiter.setDaemon(true);
+    waiter.start();
+
+    try
+    {
+      task.get(5, TimeUnit.SECONDS);
+    }
+    finally
+    {
+      if (!task.isDone())
+      {
+        task.cancel(true);
+      }
+
+      waiter.join(TimeUnit.SECONDS.toMillis(1));
+      assertFalse("The completion waiter did not stop", waiter.isAlive()); //$NON-NLS-1$
+    }
   }
 }

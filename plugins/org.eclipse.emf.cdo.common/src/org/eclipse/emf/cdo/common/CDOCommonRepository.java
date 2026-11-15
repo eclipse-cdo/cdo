@@ -111,6 +111,13 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public boolean isAuthenticating();
 
   /**
+   * Returns <code>true</code> if this repository has a permission manager installed, <code>false</code> otherwise.
+   *
+   * @since 4.29
+   */
+  public boolean isAuthorizing();
+
+  /**
    * Returns <code>true</code> if this repository supports login peeking, <code>false</code> otherwise.
    * @since 4.22
    */

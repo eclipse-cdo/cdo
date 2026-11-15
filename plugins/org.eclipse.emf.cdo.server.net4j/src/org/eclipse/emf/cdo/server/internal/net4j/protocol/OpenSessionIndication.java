@@ -205,6 +205,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       Set<CDOID.ObjectType> objectIDTypes = repository.getObjectIDTypes();
       int types = objectIDTypes.size();
       out.writeXInt(types);
+
       for (CDOID.ObjectType objectIDType : objectIDTypes)
       {
         out.writeEnum(objectIDType);
@@ -216,6 +217,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       out.writeXInt(repository.getBranchManager().getTagModCount());
       out.writeCDOID(repository.getRootResourceID());
       out.writeBoolean(repository.isAuthenticating());
+      out.writeBoolean(repository.isAuthorizing());
       out.writeBoolean(supportingLoginPeeks);
       out.writeBoolean(repository.isSupportingAudits());
       out.writeBoolean(repository.isSupportingBranches());

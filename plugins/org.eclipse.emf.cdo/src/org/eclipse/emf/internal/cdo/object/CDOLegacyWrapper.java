@@ -142,9 +142,21 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       TRACER.format("Setting ID: {0} for {1}", id, instance); //$NON-NLS-1$
     }
 
+    CDOID oldID = cdoID();
     if (idOrRevision == null || id == null)
     {
       idOrRevision = id;
+    }
+
+    CDOID newID = cdoID();
+    InternalCDOView view = viewAndState.view;
+    if (view != null && oldID != null && !oldID.equals(newID))
+    {
+      // Remove the previous ID mapping, then register the retained revision under the new ID if enabled.
+      if (view.updateViewedRevision(oldID, null))
+      {
+        updateTrackedViewedRevision(view);
+      }
     }
   }
 
@@ -156,7 +168,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       TRACER.format("Setting view: {0} for {1}", view, instance); //$NON-NLS-1$
     }
 
+    InternalCDOView oldView = viewAndState.view;
     InternalCDOView newView = (InternalCDOView)view;
+    if (oldView == newView)
+    {
+      return;
+    }
+
     if (newView != null)
     {
       viewAndState = newView.getViewAndState(viewAndState.state);
@@ -165,6 +183,15 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     {
       viewAndState = ViewAndState.TRANSIENT.getViewAndState(viewAndState.state);
     }
+
+    if (oldView != null && oldView != newView)
+    {
+      // Remove the mapping owned by the previous view before registering in the new view.
+      oldView.updateViewedRevision(cdoID(), null);
+    }
+
+    // The new view needs its own mapping for this retained revision after the old view mapping is removed.
+    updateTrackedViewedRevision(newView);
   }
 
   @Override
@@ -243,6 +270,12 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
 
       if (viewAndState.view != null)
       {
+        if (oldState.isTracked() != state.isTracked())
+        {
+          // Crossing this boundary adds or removes the retained revision from permission tracking.
+          updateTrackedViewedRevision(viewAndState.view);
+        }
+
         viewAndState.view.handleObjectStateChanged(this, oldState, state);
       }
 
@@ -260,6 +293,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       TRACER.trace("Setting revision: " + revision); //$NON-NLS-1$
     }
 
+    InternalCDORevision oldRevision = cdoRevision();
     if (revision == null)
     {
       idOrRevision = cdoID();
@@ -267,6 +301,22 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     else
     {
       idOrRevision = revision;
+    }
+
+    ViewAndState viewAndState2 = viewAndState;
+    if (oldRevision != cdoRevision() && viewAndState2.state.isTracked())
+    {
+      // Permission updates may race this replacement, so reconcile the new revision immediately.
+      updateTrackedViewedRevision(viewAndState2.view);
+    }
+  }
+
+  private void updateTrackedViewedRevision(InternalCDOView view)
+  {
+    if (view != null)
+    {
+      InternalCDORevision viewedRevision = viewAndState.state.isTracked() ? cdoRevision() : null;
+      view.updateViewedRevision(cdoID(), viewedRevision);
     }
   }
 

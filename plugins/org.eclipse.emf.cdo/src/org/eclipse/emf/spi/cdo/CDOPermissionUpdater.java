@@ -23,6 +23,13 @@ import java.util.Set;
 /**
  * A {@link org.eclipse.emf.cdo.session.CDOSession.Options#setPermissionUpdater(CDOPermissionUpdater) pluggable}
  * strategy for updating the permissions of a set of {@link CDORevision revisions}.
+ * <p>
+ * Permission updates may temporarily suspend revision loading. An implementation must not synchronously or indirectly
+ * wait for a revision load through the supplied session while its update is executing. This restriction includes
+ * waiting for another thread that performs such a load. Accessing an already cached revision is not categorically
+ * prohibited, but an operation that may trigger loading must not be relied upon to complete during the update. The
+ * permission-protocol operations used by the built-in server updaters are not revision loads and are permitted. This is
+ * a restriction on updater implementations, not a general requirement that they be non-reentrant.
  *
  * @author Eike Stepper
  * @since 4.3

@@ -127,6 +127,9 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
   {
     try (CDOSession session = openSession(CREDENTIALS))
     {
+      assertTrue("The server repository must report its installed permission manager", getRepository().isAuthorizing());
+      assertTrue("The session repository snapshot must include authorization", session.getRepositoryInfo().isAuthorizing());
+
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(resourcePath);
       Category root = getModel1Factory().createCategory();
@@ -495,8 +498,6 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
       }
     });
 
-    CDOID firstResourceID;
-
     try (CDOSession session = openSession(CREDENTIALS))
     {
       CDOTransaction transaction = session.openTransaction();
@@ -515,6 +516,10 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
       transaction.commit();
       transaction.close();
 
+      CDOID resourceAKey = resourceA.cdoID();
+      CDOID resourceBKey = resourceB.cdoID();
+      assertFalse("The two distinguishable resources must use different cache keys", resourceAKey.equals(resourceBKey));
+
       securityManager.modify(realm -> realm.setDefaultAccess(null));
 
       try (CDOTransaction reader = session.openTransaction())
@@ -530,19 +535,17 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
       assertTrue("The permission cache must finish creation before its contents are inspected", creator.cacheCreated.await(10, TimeUnit.SECONDS));
       CountingCache cache = creator.lastCache;
       assertNotNull(cache);
-      firstResourceID = cache.lastGetID;
-      assertNotNull("The cache lookup must resolve resource A", firstResourceID);
-      CDOID resourceAKey = firstResourceID;
+      assertTrue("Loading Product1 in Resource A must query Resource A's object cache key", cache.getCount(resourceAKey, false) > 0);
       assertEquals(CDOPermission.READ, cache.values.get(CountingCache.key(resourceAKey, false)));
 
+      int resourceBLookupsBeforeLoad = cache.getCount(resourceBKey, false);
       try (CDOTransaction reader = session.openTransaction())
       {
         Product1 loadedProductB = ((Category)reader.getResource(resourceBPath).getContents().get(0)).getProducts().get(0);
         assertEquals("Resource B supplies the WRITE baseline", CDOPermission.WRITE, CDOUtil.getCDOObject(loadedProductB).cdoRevision().getPermission());
       }
 
-      CDOID resourceBKey = cache.lastGetID;
-      assertFalse("The two distinguishable resources must use different cache keys", resourceAKey.equals(resourceBKey));
+      assertTrue("Loading Product1 in Resource B must query Resource B's object cache key", cache.getCount(resourceBKey, false) > resourceBLookupsBeforeLoad);
       assertEquals(CDOPermission.WRITE, cache.values.get(CountingCache.key(resourceBKey, false)));
 
       try (CDOTransaction moveInside = session.openTransaction())
@@ -554,11 +557,15 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
         moveInside.commit();
       }
 
-      try (CDOTransaction reader = session.openTransaction())
+      int resourceALookupsBeforeMove = cache.getCount(resourceAKey, false);
+      try (CDOSession readerSession = openSession(CREDENTIALS); CDOTransaction reader = readerSession.openTransaction())
       {
         Product1 movedProduct = (Product1)CDOUtil.getEObject(reader.getObject(productAID));
         assertEquals(CDOPermission.WRITE, CDOUtil.getCDOObject(movedProduct).cdoRevision().getPermission());
       }
+
+      assertTrue("Authorization after an in-resource move must query Resource A's object cache key",
+          cache.getCount(resourceAKey, false) > resourceALookupsBeforeMove);
 
       assertEquals("Moving an object within one resource must retain the generation", 1, creator.generations.get());
 
@@ -570,15 +577,18 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
         moveAcross.commit();
       }
 
-      try (CDOTransaction reader = session.openTransaction())
+      int resourceBLookupsBeforeMove = cache.getCount(resourceBKey, false);
+      try (CDOSession readerSession = openSession(CREDENTIALS); CDOTransaction reader = readerSession.openTransaction())
       {
         Product1 movedProduct = (Product1)CDOUtil.getEObject(reader.getObject(productAID));
         assertEquals("After the move, resource B's baseline determines authorization", CDOPermission.WRITE,
             CDOUtil.getCDOObject(movedProduct).cdoRevision().getPermission());
       }
 
+      assertTrue("Authorization after a cross-resource move must query Resource B's object cache key",
+          cache.getCount(resourceBKey, false) > resourceBLookupsBeforeMove);
+
       assertEquals("Moving an ordinary model object across resources must not purge the branch generation", 1, creator.generations.get());
-      assertEquals("Authorization after the move must query resource B's established key", resourceBKey, cache.lastGetID);
     }
   }
 
@@ -829,6 +839,8 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
 
     private final AtomicInteger puts = new AtomicInteger();
 
+    private final Map<String, AtomicInteger> lookupsByKey = new ConcurrentHashMap<>();
+
     private volatile CDOID lastGetID;
 
     private volatile boolean lastGetResourceNode;
@@ -841,6 +853,7 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
     public CDOPermission get(CDOID resourceNodeID, boolean resourceNode)
     {
       gets.incrementAndGet();
+      lookupsByKey.computeIfAbsent(key(resourceNodeID, resourceNode), key -> new AtomicInteger()).incrementAndGet();
       lastGetID = resourceNodeID;
       lastGetResourceNode = resourceNode;
       CDOPermission result = values.get(key(resourceNodeID, resourceNode));
@@ -849,6 +862,12 @@ public class PermissionCacheAuthorizationTest extends AbstractCDOTest
         hits.incrementAndGet();
       }
       return result;
+    }
+
+    private int getCount(CDOID resourceNodeID, boolean resourceNode)
+    {
+      AtomicInteger count = lookupsByKey.get(key(resourceNodeID, resourceNode));
+      return count == null ? 0 : count.get();
     }
 
     @Override

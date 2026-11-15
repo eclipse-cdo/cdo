@@ -44,19 +44,9 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     super(delegate);
   }
 
-  @Override
-  public RevisionLocker getRevisionLocker()
+  public void setClientSession(CDONet4jSession clientSession)
   {
-    return delegate.getRevisionLocker();
-  }
-
-  @Override
-  public void setRevisionLocker(RevisionLocker revisionLocker)
-  {
-    if (revisionLocker instanceof CDONet4jSession)
-    {
-      initServerSession((CDONet4jSession)revisionLocker);
-    }
+    initServerSession(clientSession);
   }
 
   @Override
@@ -359,6 +349,20 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   }
 
   @Override
+  public void reviseDetached(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
+  {
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.reviseDetached(id, branchVersion, timeStamp);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
+  }
+
+  @Override
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
   {
     try
@@ -370,6 +374,100 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
     {
       EmbeddedSession.unset();
     }
+  }
+
+  @Override
+  public void evictRevision(CDORevision revision)
+  {
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.evictRevision(revision);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
+  }
+
+  @Override
+  public void removeRevisions(CDOBranch... branches)
+  {
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.removeRevisions(branches);
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
+  }
+
+  @Override
+  public void clearCache()
+  {
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.clearCache();
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
+  }
+
+  @Override
+  public void beginCacheEventDeferral()
+  {
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.beginCacheEventDeferral();
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
+  }
+
+  @Override
+  public void endCacheEventDeferral()
+  {
+    try
+    {
+      EmbeddedSession.set(serverSession);
+      delegate.endCacheEventDeferral();
+    }
+    finally
+    {
+      EmbeddedSession.unset();
+    }
+  }
+
+  @Override
+  public void beginPermissionUpdate()
+  {
+    delegate.beginPermissionUpdate();
+  }
+
+  @Override
+  public void enterPermissionUpdater()
+  {
+    delegate.enterPermissionUpdater();
+  }
+
+  @Override
+  public void exitPermissionUpdater()
+  {
+    delegate.exitPermissionUpdater();
+  }
+
+  @Override
+  public void endPermissionUpdate()
+  {
+    delegate.endPermissionUpdate();
   }
 
   @Override
@@ -388,6 +486,20 @@ public final class ClientRevisionManager extends AbstractClientManager<InternalC
   {
     LookupMode lookupMode = loadOnDemand ? LookupMode.CACHE_THEN_LOADER : LookupMode.CACHE_ONLY;
     return new Request.Config(lookupMode, prefetchDepth, prefetchLockStates, referenceChunk);
+  }
+
+  @Override
+  @Deprecated
+  public RevisionLocker getRevisionLocker()
+  {
+    return null;
+  }
+
+  @Override
+  @Deprecated
+  public void setRevisionLocker(RevisionLocker revisionLocker)
+  {
+    // Does nothing.
   }
 
   @Deprecated

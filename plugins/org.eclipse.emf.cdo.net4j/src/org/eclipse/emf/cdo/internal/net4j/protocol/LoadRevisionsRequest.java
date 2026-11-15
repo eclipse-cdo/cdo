@@ -265,5 +265,11 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
     {
       return null;
     }
+
+    @Override
+    public boolean isLoadNeeded()
+    {
+      return false;
+    }
   }
 }

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.general;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
@@ -28,20 +29,28 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager.Request.Config.LookupMode;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionsLoadedEvent;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.commit.CDOCommitDataImpl;
+import org.eclipse.emf.cdo.internal.common.revision.CDORevisionImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LockStateRequest;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LockStateSnapshotRequest;
 import org.eclipse.emf.cdo.internal.server.Session;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
+import org.eclipse.emf.cdo.server.IPermissionManager;
+import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.tests.AbstractLockingTest;
 import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -57,6 +66,7 @@ import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
+import org.eclipse.emf.internal.cdo.object.CDOObjectMerger;
 import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 import org.eclipse.emf.internal.cdo.session.DelegatingSessionProtocol;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
@@ -72,15 +82,19 @@ import org.eclipse.net4j.util.tests.TestListener2;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater3;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.ChangeLockAreaResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateQueryResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockStateSnapshotResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult;
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 import org.eclipse.emf.spi.cdo.InternalCDOSessionInvalidationEvent;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -93,12 +107,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Predicate;
 
@@ -107,6 +129,8 @@ import java.util.function.Predicate;
  */
 public class LockingNotificationsTest extends AbstractLockingTest
 {
+  private static final AtomicLong TEST_LONG_ID = new AtomicLong(Long.MAX_VALUE);
+
   private volatile CountDownLatch lockNotificationSubmitted;
 
   private volatile CountDownLatch lockNotificationBlocked;
@@ -1637,6 +1661,550 @@ public class LockingNotificationsTest extends AbstractLockingTest
     session.close();
   }
 
+  private static CDOID createMissingID()
+  {
+    return CDOIDUtil.createLong(TEST_LONG_ID.getAndDecrement());
+  }
+
+  public void testRepositoryWithoutPermissionManagerIsNotAuthorizing() throws Exception
+  {
+    skipTest(getRepository().isAuthorizing());
+
+    CDOSession session = openSession();
+    try
+    {
+      assertFalse("The repository has no server-side permission manager", getRepository().isAuthorizing());
+      assertFalse("The session snapshot must report no server-side authorization", session.getRepositoryInfo().isAuthorizing());
+    }
+    finally
+    {
+      session.close();
+    }
+  }
+
+  public void testContendedPermissionUpdateIncludesUncachedRevisionRetainedByView() throws Exception
+  {
+    InternalSessionManager sessionManager = getRepository().getSessionManager();
+    IPermissionManager oldPermissionManager = sessionManager.getPermissionManager();
+
+    sessionManager.setPermissionManager(new IPermissionManager()
+    {
+      @Override
+      public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, ISession session)
+      {
+        return CDOPermission.WRITE;
+      }
+
+      @Override
+      @Deprecated
+      public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public boolean hasAnyRule(ISession session, Set<? extends Object> rules)
+      {
+        return false;
+      }
+    });
+
+    try
+    {
+      assertTrue("The repository must report its installed permission manager", getRepository().isAuthorizing());
+
+      CDOSession session = openSession();
+      assertTrue("The session opening snapshot must include authorization", session.getRepositoryInfo().isAuthorizing());
+      CDOTransaction writer = session.openTransaction();
+      CDOResource created = writer.createResource(getResourcePath("lockedPermissionRevision"));
+      created.getContents().add(getModel1Factory().createCompany());
+      writer.commit();
+      writer.close();
+
+      CDOTransaction view = session.openTransaction();
+      CDOResource resource = view.getResource(getResourcePath("lockedPermissionRevision"));
+      InternalCDOObject object = (InternalCDOObject)CDOUtil.getCDOObject(resource);
+      InternalCDORevision retainedRevision = object.cdoRevision(true);
+      CDOPermission originalPermission = retainedRevision.getPermission();
+      CDOPermission newPermission = originalPermission == CDOPermission.WRITE ? CDOPermission.READ : CDOPermission.WRITE;
+      ((InternalCDOSession)session).getRevisionManager().evictRevision(retainedRevision);
+      assertNull("The retained revision must be absent from the manager cache",
+          ((InternalCDOSession)session).getRevisionManager().getCache().getRevision(retainedRevision.getID(), view));
+
+      AtomicBoolean retainedRevisionUpdated = new AtomicBoolean();
+      CountDownLatch revisionsCollected = new CountDownLatch(1);
+      CountDownLatch replaceRevision = new CountDownLatch(1);
+      CountDownLatch replacementCompleted = new CountDownLatch(1);
+      CountDownLatch allowPermissionMutation = new CountDownLatch(1);
+      CDOPermissionUpdater originalUpdater = session.options().getPermissionUpdater();
+      session.options().setPermissionUpdater(new CDOPermissionUpdater3()
+      {
+        @Override
+        public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession updaterSession, Map<CDOBranchPoint, Set<InternalCDORevision>> revisions,
+            CDOCommitInfo commitInfo)
+        {
+          Map<CDORevision, CDOPermission> oldPermissions = new HashMap<>();
+          for (Set<InternalCDORevision> contextRevisions : revisions.values())
+          {
+            for (InternalCDORevision revision : contextRevisions)
+            {
+              if (revision == retainedRevision)
+              {
+                oldPermissions.put(revision, revision.getPermission());
+              }
+            }
+          }
+
+          revisionsCollected.countDown();
+          try
+          {
+            if (!allowPermissionMutation.await(10, TimeUnit.SECONDS))
+            {
+              throw new IllegalStateException("The test did not release the permission updater"); //$NON-NLS-1$
+            }
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException(ex);
+          }
+
+          for (Set<InternalCDORevision> contextRevisions : revisions.values())
+          {
+            for (InternalCDORevision revision : contextRevisions)
+            {
+              if (revision == retainedRevision)
+              {
+                revision.setPermission(newPermission);
+                retainedRevisionUpdated.set(true);
+              }
+            }
+          }
+
+          return oldPermissions;
+        }
+      });
+
+      ExecutorService executor = Executors.newFixedThreadPool(2);
+      CountDownLatch viewLockHeld = new CountDownLatch(1);
+      AtomicReference<Future<Map<CDORevision, CDOPermission>>> updateReference = new AtomicReference<>();
+      AtomicReference<InternalCDORevision> replacementRevision = new AtomicReference<>();
+      Future<?> lockHolder = null;
+      Future<Map<CDORevision, CDOPermission>> update = null;
+      try
+      {
+        lockHolder = executor.submit(() -> {
+          try (Access access = ((AbstractCDOView)view).access())
+          {
+            viewLockHeld.countDown();
+            if (!revisionsCollected.await(10, TimeUnit.SECONDS))
+            {
+              throw new AssertionError("The permission update did not collect the retained revision"); //$NON-NLS-1$
+            }
+
+            if (!replaceRevision.await(10, TimeUnit.SECONDS))
+            {
+              throw new AssertionError("The test did not start the concurrent revision replacement"); //$NON-NLS-1$
+            }
+
+            new CDOObjectMerger().merge(object, new CDORevisionDeltaImpl(retainedRevision));
+            replacementRevision.set(object.cdoRevision());
+            replacementCompleted.countDown();
+            updateReference.get().get(10, TimeUnit.SECONDS);
+          }
+          catch (InterruptedException ex)
+          {
+            Thread.currentThread().interrupt();
+            throw new IllegalStateException("The lock-holding worker was interrupted", ex); //$NON-NLS-1$
+          }
+          catch (Exception ex)
+          {
+            throw new IllegalStateException("The permission update did not complete", ex); //$NON-NLS-1$
+          }
+        });
+
+        assertTrue("The lock-holding worker did not acquire the view lock", viewLockHeld.await(10, TimeUnit.SECONDS));
+        update = executor.submit(() -> ((InternalCDOSession)session).updatePermissions());
+        updateReference.set(update);
+        assertTrue("The updater did not collect the retained revision", revisionsCollected.await(10, TimeUnit.SECONDS));
+        replaceRevision.countDown();
+        assertTrue("The view worker did not replace the retained revision", replacementCompleted.await(10, TimeUnit.SECONDS));
+        assertNotSame("The merger must install a private successor revision", retainedRevision, replacementRevision.get());
+        assertEquals("The copied revision starts with the previous permission", originalPermission, replacementRevision.get().getPermission());
+        allowPermissionMutation.countDown();
+        lockHolder.get(10, TimeUnit.SECONDS);
+        update.get(10, TimeUnit.SECONDS);
+        assertTrue("A contended view omitted its uncached retained revision", retainedRevisionUpdated.get());
+        assertEquals("The retained revision must receive the new permission", newPermission, retainedRevision.getPermission());
+        assertEquals("A concurrently installed revision must receive the new permission", newPermission, replacementRevision.get().getPermission());
+      }
+      finally
+      {
+        allowPermissionMutation.countDown();
+        replaceRevision.countDown();
+        session.options().setPermissionUpdater(originalUpdater);
+        if (lockHolder != null)
+        {
+          lockHolder.cancel(true);
+        }
+
+        if (update != null)
+        {
+          update.cancel(true);
+        }
+
+        executor.shutdownNow();
+        assertTrue("Permission update worker did not terminate", executor.awaitTermination(10, TimeUnit.SECONDS));
+        view.close();
+        session.close();
+      }
+
+      assertNotSame("The fixture must exercise a real permission change", originalPermission, retainedRevision.getPermission());
+    }
+    finally
+    {
+      sessionManager.setPermissionManager(oldPermissionManager);
+    }
+  }
+
+  public void testSecurityInvalidationWithObsoleteLockCountStillUpdatesPermissions() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOSessionImpl implementation = (CDOSessionImpl)session;
+    session.options().setPassiveUpdateEnabled(true);
+    CDOPermissionUpdater originalUpdater = session.options().getPermissionUpdater();
+    AtomicInteger permissionUpdates = new AtomicInteger();
+    session.options().setPermissionUpdater(new CDOPermissionUpdater()
+    {
+      @Override
+      public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession updaterSession, Set<InternalCDORevision> revisions)
+      {
+        permissionUpdates.incrementAndGet();
+        return Collections.emptyMap();
+      }
+    });
+
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    Future<CDORevision> load = null;
+    try
+    {
+      implementation.enqueueLockChangeAsync(1L, () -> {
+      });
+      implementation.awaitLockChange(1L);
+
+      CDOBranch branch = transaction.getBranch();
+      long previousTimeStamp = implementation.getLastUpdateTime();
+      CommitNotificationInfo notification = createCommitNotificationInfo((InternalCDOSession)session, branch, previousTimeStamp + 10L, previousTimeStamp, 1L);
+      notification.setSecurityImpact(CommitNotificationInfo.IMPACT_PERMISSIONS);
+      implementation.handleCommitNotification(notification);
+
+      assertEquals("An obsolete sequenced action must still run its permission update", 1, permissionUpdates.get());
+      CDOID missingID = createMissingID();
+      load = executor.submit(() -> implementation.getRevisionManager().request().lookupLoaderOnly().getRevision(missingID, branch.getHead()));
+      assertNull("A revision load must complete after the discarded action's marker closes", load.get(10, TimeUnit.SECONDS));
+    }
+    finally
+    {
+      session.options().setPermissionUpdater(originalUpdater);
+      if (load != null)
+      {
+        load.cancel(true);
+      }
+
+      executor.shutdownNow();
+      assertTrue("The revision-load worker did not terminate", executor.awaitTermination(10, TimeUnit.SECONDS));
+      transaction.close();
+      session.close();
+    }
+  }
+
+  public void testSnapshotCompletesMultipleQueuedSecurityInvalidations() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOSessionImpl implementation = (CDOSessionImpl)session;
+    session.options().setPassiveUpdateEnabled(true);
+    CDOPermissionUpdater originalUpdater = session.options().getPermissionUpdater();
+    AtomicInteger permissionUpdates = new AtomicInteger();
+    session.options().setPermissionUpdater(new CDOPermissionUpdater()
+    {
+      @Override
+      public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession updaterSession, Set<InternalCDORevision> revisions)
+      {
+        permissionUpdates.incrementAndGet();
+        return Collections.emptyMap();
+      }
+    });
+
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    Future<CDORevision> load = null;
+    try
+    {
+      CDOBranch branch = transaction.getBranch();
+      long baseTimeStamp = implementation.getLastUpdateTime();
+      long firstTimeStamp = baseTimeStamp + 10L;
+      long secondTimeStamp = firstTimeStamp + 10L;
+      CommitNotificationInfo first = createCommitNotificationInfo((InternalCDOSession)session, branch, firstTimeStamp, baseTimeStamp, 2L);
+      first.setSecurityImpact(CommitNotificationInfo.IMPACT_PERMISSIONS);
+      implementation.handleCommitNotification(first);
+
+      CommitNotificationInfo second = createCommitNotificationInfo((InternalCDOSession)session, branch, secondTimeStamp, firstTimeStamp, 3L);
+      second.setSecurityImpact(CommitNotificationInfo.IMPACT_PERMISSIONS);
+      implementation.handleCommitNotification(second);
+
+      assertEquals("Both invalidations must retain independent permission markers", 0, permissionUpdates.get());
+      implementation.installLockStateSnapshot(new LockStateSnapshotResult(3L, Collections.emptyList()));
+      assertEquals("Snapshot-covered actions must perform both permission updates", 2, permissionUpdates.get());
+
+      CDOID missingID = createMissingID();
+      load = executor.submit(() -> implementation.getRevisionManager().request().lookupLoaderOnly().getRevision(missingID, branch.getHead()));
+      assertNull("Revision loading must resume after every snapshot-covered marker closes", load.get(10, TimeUnit.SECONDS));
+    }
+    finally
+    {
+      session.options().setPermissionUpdater(originalUpdater);
+      if (load != null)
+      {
+        load.cancel(true);
+      }
+
+      executor.shutdownNow();
+      assertTrue("The revision-load worker did not terminate", executor.awaitTermination(10, TimeUnit.SECONDS));
+      transaction.close();
+      session.close();
+    }
+  }
+
+  public void testFailedLockSequenceCompletesQueuedSecurityInvalidation() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOSessionImpl implementation = (CDOSessionImpl)session;
+    session.options().setPassiveUpdateEnabled(true);
+    CDOPermissionUpdater originalUpdater = session.options().getPermissionUpdater();
+    CountDownLatch permissionUpdateCompleted = new CountDownLatch(1);
+    session.options().setPermissionUpdater(new CDOPermissionUpdater()
+    {
+      @Override
+      public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession updaterSession, Set<InternalCDORevision> revisions)
+      {
+        permissionUpdateCompleted.countDown();
+        return Collections.emptyMap();
+      }
+    });
+
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    Future<CDORevision> load = null;
+    try
+    {
+      CDOBranch branch = transaction.getBranch();
+      long previousTimeStamp = implementation.getLastUpdateTime();
+      CommitNotificationInfo notification = createCommitNotificationInfo((InternalCDOSession)session, branch, previousTimeStamp + 10L, previousTimeStamp, 2L);
+      notification.setSecurityImpact(CommitNotificationInfo.IMPACT_PERMISSIONS);
+      implementation.handleCommitNotification(notification);
+
+      implementation.enqueueLockChangeAsync(1L, () -> {
+        throw new IllegalStateException("Injected lock-change failure"); //$NON-NLS-1$
+      });
+
+      assertEquals("A failed sequence must wait for its recovery snapshot", 1L, permissionUpdateCompleted.getCount()); //$NON-NLS-1$
+      implementation.installLockStateSnapshot(new LockStateSnapshotResult(2L, Collections.emptyList()));
+      assertTrue("A failed sequence must complete the queued security update", permissionUpdateCompleted.await(10, TimeUnit.SECONDS));
+
+      CDOID missingID = createMissingID();
+      load = executor.submit(() -> implementation.getRevisionManager().request().lookupLoaderOnly().getRevision(missingID, branch.getHead()));
+      assertNull("Revision loading must continue after failure fallback closes its marker", load.get(10, TimeUnit.SECONDS));
+    }
+    finally
+    {
+      session.options().setPermissionUpdater(originalUpdater);
+      if (load != null)
+      {
+        load.cancel(true);
+      }
+
+      executor.shutdownNow();
+      assertTrue("The revision-load worker did not terminate", executor.awaitTermination(10, TimeUnit.SECONDS));
+      transaction.close();
+      session.close();
+    }
+  }
+
+  public void testSessionClosureReleasesLoadWaitingOnQueuedSecurityUpdate() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOSessionImpl implementation = (CDOSessionImpl)session;
+    session.options().setPassiveUpdateEnabled(true);
+    CDOBranch branch = transaction.getBranch();
+    long previousTimeStamp = implementation.getLastUpdateTime();
+    CommitNotificationInfo notification = createCommitNotificationInfo((InternalCDOSession)session, branch, previousTimeStamp + 10L, previousTimeStamp, 2L);
+    notification.setSecurityImpact(CommitNotificationInfo.IMPACT_PERMISSIONS);
+    implementation.handleCommitNotification(notification);
+
+    ExecutorService executor = Executors.newSingleThreadExecutor();
+    CountDownLatch loadStarted = new CountDownLatch(1);
+    Future<CDORevision> load = null;
+    try
+    {
+      CDOID missingID = createMissingID();
+      load = executor.submit(() -> {
+        loadStarted.countDown();
+        return implementation.getRevisionManager().request().lookupLoaderOnly().getRevision(missingID, branch.getHead());
+      });
+      assertTrue("The load worker did not start", loadStarted.await(10, TimeUnit.SECONDS));
+      session.close();
+      try
+      {
+        load.get(10, TimeUnit.SECONDS);
+      }
+      catch (ExecutionException expected)
+      {
+        // Closing the session releases a request waiting on its permission marker by deactivating the protocol.
+      }
+    }
+    finally
+    {
+      if (load != null)
+      {
+        load.cancel(true);
+      }
+
+      executor.shutdownNow();
+      assertTrue("The revision-load worker did not terminate", executor.awaitTermination(10, TimeUnit.SECONDS));
+      transaction.close();
+      session.close();
+    }
+  }
+
+  public void testInvalidationRevisionMutationSerializesWithSessionSyncExecAndLocalCommit() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOSessionImpl implementation = (CDOSessionImpl)session;
+    InternalCDOSession internalSession = (InternalCDOSession)session;
+    session.options().setPassiveUpdateEnabled(true);
+
+    CDOBranch branch = transaction.getBranch();
+    long previousTimeStamp = implementation.getLastUpdateTime();
+    CountDownLatch revisionMutationEntered = new CountDownLatch(1);
+    CountDownLatch releaseRevisionMutation = new CountDownLatch(1);
+    BlockingRevision revision = new BlockingRevision(getModel1Package().getCompany(), revisionMutationEntered, releaseRevisionMutation);
+    revision.setID(createMissingID());
+    revision.setBranchPoint(branch.getPoint(previousTimeStamp));
+    revision.setVersion(1);
+    internalSession.getRevisionManager().internRevision(revision);
+    revision.blockNextRevised();
+
+    InternalCDORevision newRevision = new CDORevisionImpl(getModel1Package().getCompany());
+    newRevision.setID(createMissingID());
+    newRevision.setBranchPoint(branch.getPoint(previousTimeStamp + 10L));
+    newRevision.setVersion(1);
+
+    CDORevisionKey key = CDORevisionUtil.createRevisionKey(revision.getID(), branch, revision.getVersion());
+    CDOCommitInfo commitInfo = internalSession.getCommitInfoManager().createCommitInfo(branch, previousTimeStamp + 10L, previousTimeStamp, "test", "test",
+        new CDOCommitDataImpl(Collections.emptyList(), Collections.singletonList(newRevision), Collections.singletonList(key), Collections.emptyList()));
+    InternalCDOSession.InvalidationData invalidationData = new InternalCDOSession.InvalidationData();
+    invalidationData.setCommitInfo(commitInfo);
+
+    ExecutorService executor = Executors.newFixedThreadPool(3);
+    ExecutorService listenerExecutor = Executors.newSingleThreadExecutor();
+    InternalCDORevisionCache cache = internalSession.getRevisionManager().getCache();
+    CountDownLatch listenerSyncExecCompleted = new CountDownLatch(1);
+    AtomicReference<Throwable> listenerFailure = new AtomicReference<>();
+    IListener cacheListener = new IListener()
+    {
+      @Override
+      public void notifyEvent(IEvent event)
+      {
+        Future<?> syncExec = listenerExecutor.submit(() -> {
+          internalSession.syncExec(listenerSyncExecCompleted::countDown);
+          return null;
+        });
+
+        try
+        {
+          syncExec.get(10, TimeUnit.SECONDS);
+        }
+        catch (Exception ex)
+        {
+          listenerFailure.set(ex);
+          throw new IllegalStateException("The cache listener could not synchronize with the session", ex); //$NON-NLS-1$
+        }
+      }
+    };
+    cache.addListener(cacheListener);
+
+    CountDownLatch syncExecAttempted = new CountDownLatch(1);
+    CountDownLatch syncExecEntered = new CountDownLatch(1);
+    CountDownLatch localCommitAttempted = new CountDownLatch(1);
+    CountDownLatch localCommitStarted = new CountDownLatch(1);
+    AtomicBoolean syncExecOverlappedRevisionMutation = new AtomicBoolean();
+    AtomicReference<Object> localCommitToken = new AtomicReference<>();
+    Future<?> invalidation = null;
+    Future<?> syncExec = null;
+    Future<Object> localCommit = null;
+    try
+    {
+      invalidation = executor.submit(() -> internalSession.invalidate(invalidationData));
+      assertTrue("The invalidation did not enter revision mutation", revisionMutationEntered.await(10, TimeUnit.SECONDS));
+
+      syncExec = executor.submit(() -> {
+        syncExecAttempted.countDown();
+        internalSession.syncExec(() -> {
+          syncExecOverlappedRevisionMutation.set(revision.isRevising());
+          syncExecEntered.countDown();
+          revision.setPermission(CDOPermission.READ);
+        });
+        return null;
+      });
+
+      localCommit = executor.submit(() -> {
+        localCommitAttempted.countDown();
+        Object token = internalSession.startLocalCommit();
+        localCommitToken.set(token);
+        localCommitStarted.countDown();
+        return token;
+      });
+
+      assertTrue("The session sync operation did not start", syncExecAttempted.await(10, TimeUnit.SECONDS));
+      assertTrue("The local commit operation did not start", localCommitAttempted.await(10, TimeUnit.SECONDS));
+      assertFalse("syncExec must wait until revision mutation is complete", syncExecEntered.await(200, TimeUnit.MILLISECONDS));
+      assertFalse("A local commit must not start during invalidation revision mutation", localCommitStarted.await(200, TimeUnit.MILLISECONDS));
+
+      releaseRevisionMutation.countDown();
+      invalidation.get(10, TimeUnit.SECONDS);
+      syncExec.get(10, TimeUnit.SECONDS);
+      Object token = localCommit.get(10, TimeUnit.SECONDS);
+      internalSession.endLocalCommit(token);
+      localCommitToken.set(null);
+
+      assertFalse("Permission mutation overlapped revision mutation", syncExecOverlappedRevisionMutation.get());
+      assertEquals(previousTimeStamp + 9L, revision.getRevised());
+      assertEquals(CDOPermission.READ, revision.getPermission());
+      assertTrue("The cache listener's sync operation did not complete", listenerSyncExecCompleted.await(10, TimeUnit.SECONDS));
+      assertNull("The cache listener must run outside revision synchronization", listenerFailure.get());
+    }
+    finally
+    {
+      releaseRevisionMutation.countDown();
+      cache.removeListener(cacheListener);
+      executor.shutdownNow();
+      assertTrue("The invalidation/synchronization workers did not terminate", executor.awaitTermination(10, TimeUnit.SECONDS));
+      listenerExecutor.shutdownNow();
+      assertTrue("The cache-listener worker did not terminate", listenerExecutor.awaitTermination(10, TimeUnit.SECONDS));
+      Object token = localCommitToken.getAndSet(null);
+      if (token != null)
+      {
+        internalSession.endLocalCommit(token);
+      }
+
+      transaction.close();
+      session.close();
+    }
+  }
+
   public void testCommitRunnableWaitsAfterItsOuterAccessIsReleased() throws Exception
   {
     CDOSession session1 = openSession();
@@ -2367,6 +2935,71 @@ public class LockingNotificationsTest extends AbstractLockingTest
       this.ids = ids;
       this.branchID = branchID;
       this.result = result;
+    }
+  }
+
+  /**
+   * A revision that pauses one validity-boundary update for synchronization tests.
+   *
+   * @author Eike Stepper
+   */
+  private static final class BlockingRevision extends CDORevisionImpl
+  {
+    private final CountDownLatch entered;
+
+    private final CountDownLatch release;
+
+    private final AtomicBoolean blockNextRevised = new AtomicBoolean();
+
+    private volatile boolean revising;
+
+    public BlockingRevision(EClass eClass, CountDownLatch entered, CountDownLatch release)
+    {
+      super(eClass);
+      this.entered = entered;
+      this.release = release;
+    }
+
+    public void blockNextRevised()
+    {
+      blockNextRevised.set(true);
+    }
+
+    public boolean isRevising()
+    {
+      return revising;
+    }
+
+    @Override
+    public void setRevised(long revised)
+    {
+      if (blockNextRevised.compareAndSet(true, false))
+      {
+        revising = true;
+        entered.countDown();
+        try
+        {
+          if (!release.await(10, TimeUnit.SECONDS))
+          {
+            throw new IllegalStateException("Revision mutation was not released"); //$NON-NLS-1$
+          }
+
+          super.setRevised(revised);
+        }
+        catch (InterruptedException ex)
+        {
+          Thread.currentThread().interrupt();
+          throw new IllegalStateException(ex);
+        }
+        finally
+        {
+          revising = false;
+        }
+
+        return;
+      }
+
+      super.setRevised(revised);
     }
   }
 }

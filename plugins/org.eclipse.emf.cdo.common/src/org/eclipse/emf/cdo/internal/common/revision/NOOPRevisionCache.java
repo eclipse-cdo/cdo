@@ -113,6 +113,12 @@ public class NOOPRevisionCache extends Lifecycle implements InternalCDORevisionC
   }
 
   @Override
+  public InternResult internRevisionDeferredEvents(CDORevision revision)
+  {
+    return new InternResult(revision, null);
+  }
+
+  @Override
   public InternalCDORevision removeRevision(CDOID id, CDOBranchVersion branchVersion)
   {
     return null;

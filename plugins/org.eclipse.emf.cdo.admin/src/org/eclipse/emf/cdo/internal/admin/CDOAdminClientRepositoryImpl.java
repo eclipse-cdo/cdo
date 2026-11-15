@@ -61,6 +61,8 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private boolean authenticating;
 
+  private boolean authorizing;
+
   private boolean supportingLoginPeeks;
 
   private boolean supportingAudits;
@@ -112,6 +114,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     }
 
     authenticating = in.readBoolean();
+    authorizing = in.readBoolean();
     supportingLoginPeeks = in.readBoolean();
     supportingAudits = in.readBoolean();
     supportingBranches = in.readBoolean();
@@ -182,6 +185,12 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
   public boolean isAuthenticating()
   {
     return authenticating;
+  }
+
+  @Override
+  public boolean isAuthorizing()
+  {
+    return authorizing;
   }
 
   @Override

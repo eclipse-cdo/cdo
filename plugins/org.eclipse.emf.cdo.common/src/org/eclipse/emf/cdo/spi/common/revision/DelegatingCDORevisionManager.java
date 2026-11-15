@@ -83,18 +83,6 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     getDelegate().setRevisionLoader(revisionLoader);
   }
 
-  @Override
-  public RevisionLocker getRevisionLocker()
-  {
-    return getDelegate().getRevisionLocker();
-  }
-
-  @Override
-  public void setRevisionLocker(RevisionLocker revisionLocker)
-  {
-    getDelegate().setRevisionLocker(revisionLocker);
-  }
-
   /**
    * @since 4.0
    */
@@ -239,9 +227,69 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
   }
 
   @Override
+  public void reviseDetached(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
+  {
+    getDelegate().reviseDetached(id, branchVersion, timeStamp);
+  }
+
+  @Override
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
   {
     getDelegate().reviseVersion(id, branchVersion, timeStamp);
+  }
+
+  @Override
+  public void evictRevision(CDORevision revision)
+  {
+    getDelegate().evictRevision(revision);
+  }
+
+  @Override
+  public void removeRevisions(CDOBranch... branches)
+  {
+    getDelegate().removeRevisions(branches);
+  }
+
+  @Override
+  public void clearCache()
+  {
+    getDelegate().clearCache();
+  }
+
+  @Override
+  public void beginCacheEventDeferral()
+  {
+    getDelegate().beginCacheEventDeferral();
+  }
+
+  @Override
+  public void endCacheEventDeferral()
+  {
+    getDelegate().endCacheEventDeferral();
+  }
+
+  @Override
+  public void beginPermissionUpdate()
+  {
+    getDelegate().beginPermissionUpdate();
+  }
+
+  @Override
+  public void enterPermissionUpdater()
+  {
+    getDelegate().enterPermissionUpdater();
+  }
+
+  @Override
+  public void exitPermissionUpdater()
+  {
+    getDelegate().exitPermissionUpdater();
+  }
+
+  @Override
+  public void endPermissionUpdate()
+  {
+    getDelegate().endPermissionUpdate();
   }
 
   @Override
@@ -286,6 +334,20 @@ public abstract class DelegatingCDORevisionManager extends Lifecycle implements 
     {
       return null;
     }
+  }
+
+  @Override
+  @Deprecated
+  public RevisionLocker getRevisionLocker()
+  {
+    return null;
+  }
+
+  @Override
+  @Deprecated
+  public void setRevisionLocker(RevisionLocker revisionLocker)
+  {
+    // Does nothing.
   }
 
   @Deprecated

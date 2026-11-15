@@ -52,7 +52,6 @@ import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
@@ -199,10 +198,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
   {
     CDOBranch[] branches = send(new DeleteBranchRequest(this, branchID), monitor);
-
-    InternalCDORevisionCache cache = getSession().getRevisionManager().getCache();
-    cache.removeRevisions(branches);
-
+    getSession().getRevisionManager().removeRevisions(branches);
     return branches;
   }
 

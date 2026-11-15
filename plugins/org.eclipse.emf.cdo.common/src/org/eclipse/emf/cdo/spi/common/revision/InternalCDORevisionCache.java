@@ -55,4 +55,59 @@ public interface InternalCDORevisionCache extends CDORevisionCache, CDORevisionI
    * @see #getAllRevisions()
    */
   public void getAllRevisions(List<InternalCDORevision> result);
+
+  /**
+   * Interns a revision atomically and returns any cache event for delivery after the caller's publication lock has been
+   * released. Implementations must not execute the returned callback as part of this method.
+   *
+   * @param revision the revision to intern
+   * @return the canonical revision and an optional deferred event callback
+   * @since 4.29
+   */
+  public InternResult internRevisionDeferredEvents(CDORevision revision);
+
+  /**
+   * Result of an atomic cache interning operation whose event delivery is deferred to the caller.
+   *
+   * @author Eike Stepper
+   * @since 4.29
+   */
+  public static final class InternResult
+  {
+    private final CDORevision revision;
+
+    private final Runnable eventDispatcher;
+
+    /**
+     * Creates an interning result.
+     *
+     * @param revision the canonical revision returned by the cache
+     * @param eventDispatcher the optional callback that delivers the cache event
+     */
+    public InternResult(CDORevision revision, Runnable eventDispatcher)
+    {
+      this.revision = revision;
+      this.eventDispatcher = eventDispatcher;
+    }
+
+    /**
+     * Returns the canonical revision selected by the cache.
+     *
+     * @return the canonical revision
+     */
+    public CDORevision getRevision()
+    {
+      return revision;
+    }
+
+    /**
+     * Returns the optional deferred cache-event callback.
+     *
+     * @return the callback, or {@code null} if interning did not add a revision
+     */
+    public Runnable getEventDispatcher()
+    {
+      return eventDispatcher;
+    }
+  }
 }

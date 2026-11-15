@@ -103,7 +103,6 @@ import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.AbstractLocksChangedEvent;
 import org.eclipse.emf.internal.cdo.util.EMFPackageRegistryBootstrap;
-import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -113,9 +112,6 @@ import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
-import org.eclipse.net4j.util.concurrent.IRWOLockManager;
-import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.container.ContainerElementList;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -178,6 +174,7 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -267,11 +264,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private final CDOCollectionLoadingConfigResolver collectionLoadingConfigResolver = new CDOCollectionLoadingConfigResolver();
 
   private CDOFetchRuleManager fetchRuleManager;
-
-  private final IRWOLockManager<CDOSessionImpl, Object> lockManager = new RWOLockManager<>();
-
-  @ExcludeFromDump
-  private Set<CDOSessionImpl> singletonCollection = Collections.singleton(this);
 
   private boolean loginPeek;
 
@@ -695,6 +687,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   public void installLockStateSnapshot(LockStateSnapshotResult snapshot)
   {
+    List<Runnable> snapshotCoveredActions;
+
     synchronized (lockResyncLifecycleLock)
     {
       if (isClosed())
@@ -702,17 +696,49 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         return;
       }
 
-      List<Runnable> snapshotCoveredActions = lockChangeSequencer.installSnapshotAndCollect(snapshot.getLockModCount(),
+      snapshotCoveredActions = lockChangeSequencer.installSnapshotAndCollect(snapshot.getLockModCount(),
           () -> lockStateCache.replaceSnapshot(snapshot.getLockStates()));
+    }
 
-      for (Runnable action : snapshotCoveredActions)
+    Throwable failure = null;
+
+    for (Runnable action : snapshotCoveredActions)
+    {
+      try
       {
         action.run();
       }
+      catch (RuntimeException | Error ex)
+      {
+        if (failure == null)
+        {
+          failure = ex;
+        }
+        else
+        {
+          failure.addSuppressed(ex);
+        }
+      }
+    }
 
-      lockChangeSequencer.resume();
-      lockResyncScheduled.set(false);
-      getExecutorService().submit(lockChangeSequencer::drain);
+    synchronized (lockResyncLifecycleLock)
+    {
+      if (!isClosed())
+      {
+        lockChangeSequencer.resume();
+        lockResyncScheduled.set(false);
+        getExecutorService().submit(lockChangeSequencer::drain);
+      }
+    }
+
+    if (failure instanceof Error)
+    {
+      throw (Error)failure;
+    }
+
+    if (failure instanceof RuntimeException)
+    {
+      throw (RuntimeException)failure;
     }
   }
 
@@ -748,7 +774,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     for (InternalCDOView view : getViews())
     {
-      if (view instanceof AbstractCDOView && ((AbstractCDOView)view).isAccessHeldByCurrentThread())
+      if (view.isAccessHeldByCurrentThread())
       {
         throw new IllegalStateException("Cannot wait for a lock change while holding view Access: " + view); //$NON-NLS-1$
       }
@@ -1129,26 +1155,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
-  public void acquireAtomicRequestLock(Object key)
-  {
-    try
-    {
-      lockManager.lock(key, singletonCollection, LockType.WRITE, 1, IRWOLockManager.NO_TIMEOUT, null, null);
-    }
-    catch (InterruptedException ex)
-    {
-      Thread.currentThread().interrupt();
-      throw WrappedException.wrap(ex);
-    }
-  }
-
-  @Override
-  public void releaseAtomicRequestLock(Object key)
-  {
-    lockManager.unlock(key, singletonCollection, LockType.WRITE, 1, null, null);
-  }
-
-  @Override
   protected void initViewUnsynced(InternalCDOView view)
   {
     view.setSession(this);
@@ -1164,7 +1170,27 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   public Map<CDORevision, CDOPermission> updatePermissions()
   {
-    Map<CDORevision, CDOPermission> oldPermissions = updatePermissions(null);
+    revisionManager.beginPermissionUpdate();
+    Map<CDORevision, CDOPermission> oldPermissions;
+
+    try
+    {
+      revisionManager.enterPermissionUpdater();
+
+      try
+      {
+        oldPermissions = updatePermissions(null);
+      }
+      finally
+      {
+        revisionManager.exitPermissionUpdater();
+      }
+    }
+    finally
+    {
+      revisionManager.endPermissionUpdate();
+    }
+
     if (!ObjectUtil.isEmpty(oldPermissions))
     {
       fireEvent(new SessionPermissionsChangedEvent(oldPermissions));
@@ -1187,6 +1213,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         Map<CDOBranchPoint, Set<InternalCDORevision>> revisionsBySecurityContext = new HashMap<>();
         Map<CDORevision, CDOBranchPoint> securityContextsByRevisions = new HashMap<>();
+        Map<InternalCDOView, Map<CDOID, InternalCDORevision>> revisionsByView = new HashMap<>();
 
         for (InternalCDOView view : getViews())
         {
@@ -1194,7 +1221,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           Set<InternalCDORevision> revisions = revisionsBySecurityContext.computeIfAbsent(securityContext, k -> new HashSet<>());
 
           Map<CDOID, InternalCDORevision> viewedRevisions = CDOIDUtil.createMap();
-          view.collectViewedRevisions(viewedRevisions);
+          boolean collected = view.tryCollectViewedRevisions(viewedRevisions);
+          if (!collected)
+          {
+            collectCachedRevisions(securityContext, viewedRevisions);
+          }
+
+          revisionsByView.put(view, viewedRevisions);
 
           for (InternalCDORevision viewedRevision : viewedRevisions.values())
           {
@@ -1216,7 +1249,46 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         Set<CDORevision> revisionsToRetain = securityContextsByRevisions.keySet();
         retainRevisions(revisionsToRetain);
 
-        return ((CDOPermissionUpdater3)permissionUpdater).updatePermissions(CDOSessionImpl.this, revisionsBySecurityContext, commitInfo);
+        Map<CDORevision, CDOPermission> oldPermissions = null;
+
+        try
+        {
+          oldPermissions = ((CDOPermissionUpdater3)permissionUpdater).updatePermissions(CDOSessionImpl.this, revisionsBySecurityContext, commitInfo);
+        }
+        finally
+        {
+          Map<CDORevision, CDOPermission> propagatedPermissions = new HashMap<>();
+
+          for (Map.Entry<InternalCDOView, Map<CDOID, InternalCDORevision>> entry : revisionsByView.entrySet())
+          {
+            CDOBranchPoint securityContext = CDOBranchUtil.copyBranchPoint(entry.getKey());
+
+            Set<InternalCDORevision> updatedRevisions = revisionsBySecurityContext.get(securityContext);
+            if (updatedRevisions != null)
+            {
+              Map<CDOID, InternalCDORevision> sourceRevisions = CDOIDUtil.createMap();
+
+              for (InternalCDORevision revision : entry.getValue().values())
+              {
+                if (updatedRevisions.contains(revision))
+                {
+                  sourceRevisions.put(revision.getID(), revision);
+                }
+              }
+
+              propagatedPermissions.putAll(entry.getKey().synchronizeTrackedViewedRevisions(sourceRevisions));
+            }
+          }
+
+          if (!propagatedPermissions.isEmpty())
+          {
+            Map<CDORevision, CDOPermission> combinedPermissions = oldPermissions == null ? new HashMap<>() : new HashMap<>(oldPermissions);
+            combinedPermissions.putAll(propagatedPermissions);
+            oldPermissions = combinedPermissions;
+          }
+        }
+
+        return oldPermissions;
       }
 
       Set<InternalCDORevision> revisions = new HashSet<>();
@@ -1240,6 +1312,28 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     return null;
   }
 
+  private void collectCachedRevisions(CDOBranchPoint branchPoint, Map<CDOID, InternalCDORevision> revisions)
+  {
+    InternalCDORevisionCache revisionCache = revisionManager.getCache();
+    CDOBranchPoint effectivePoint = branchPoint;
+
+    for (;;)
+    {
+      for (CDORevision revision : revisionCache.getRevisions(effectivePoint))
+      {
+        revisions.putIfAbsent(revision.getID(), (InternalCDORevision)revision);
+      }
+
+      CDOBranch branch = effectivePoint.getBranch();
+      if (branch.isMainBranch())
+      {
+        return;
+      }
+
+      effectivePoint = branch.getBase();
+    }
+  }
+
   private void retainRevisions(Set<CDORevision> revisionsToRetain)
   {
     List<CDORevision> revisionsToRemove = new ArrayList<>();
@@ -1254,7 +1348,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     for (CDORevision revisionToRemove : revisionsToRemove)
     {
-      revisionCache.removeRevision(revisionToRemove.getID(), revisionToRemove);
+      revisionManager.evictRevision(revisionToRemove);
     }
   }
 
@@ -1339,13 +1433,14 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     }
 
     List<CDOIDAndVersion> detachedObjects = result.getDetachedObjects(branch);
+    long lastUpdateTime = result.getLastUpdateTime();
+
     for (CDOIDAndVersion detachedObject : detachedObjects)
     {
       CDOID id = detachedObject.getID();
-      revisionManager.reviseLatest(id, branch);
+      revisionManager.reviseDetached(id, branch.getVersion(detachedObject.getVersion()), lastUpdateTime);
     }
 
-    long lastUpdateTime = result.getLastUpdateTime();
     for (InternalCDOView view : branchViews)
     {
       ViewInvalidationData invalidationData = new ViewInvalidationData();
@@ -1406,13 +1501,15 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
-    InternalCDORevisionCache cache = getRevisionManager().getCache();
+    InternalCDORevisionManager revisionManager = getRevisionManager();
+    InternalCDORevisionCache cache = revisionManager.getCache();
     List<CDORevision> currentRevisions = cache.getCurrentRevisions();
+
     for (CDORevision revision : currentRevisions)
     {
       if (!set.contains(revision))
       {
-        cache.removeRevision(revision.getID(), revision);
+        revisionManager.evictRevision(revision);
       }
     }
   }
@@ -2333,6 +2430,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     CDOSessionRegistryImpl.INSTANCE.deregister(this);
 
+    invalidator.close();
     lockChangeSequencer.close(null);
 
     super.doDeactivate();
@@ -3153,6 +3251,22 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     private final Set<Object> unfinishedLocalCommits = new HashSet<>();
 
+    private final Set<PermissionUpdateMarker> permissionUpdateMarkers = ConcurrentHashMap.newKeySet();
+
+    private boolean closed;
+
+    private boolean processingInvalidation;
+
+    private boolean processingRevisionUpdate;
+
+    private Thread processingInvalidationThread;
+
+    private Thread revisionMutationThread;
+
+    private int revisionMutationDepth;
+
+    private long revisionMutationGeneration;
+
     private final List<SessionInvalidation> invalidationQueue = new ArrayList<>();
 
     private final Queue<Runnable> postInvalidationQueue = new ConcurrentLinkedQueue<>();
@@ -3163,13 +3277,29 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     {
     }
 
-    public synchronized void syncExec(RunnableWithException runnable) throws Exception
+    public void syncExec(RunnableWithException runnable) throws Exception
     {
-      runnable.run();
+      enterRevisionMutation();
+
+      try
+      {
+        runnable.run();
+      }
+      finally
+      {
+        synchronized (this)
+        {
+          ++revisionMutationGeneration;
+        }
+
+        exitRevisionMutation();
+      }
     }
 
     public synchronized Object startLocalCommit()
     {
+      awaitLocalCommitBarrier();
+
       if (!isActive())
       {
         return null;
@@ -3188,6 +3318,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     public synchronized void endLocalCommit(Object token)
     {
+      awaitLocalCommitBarrier();
+
       if (DEBUG_INVALIDATION)
       {
         IOUtil.OUT().println(CDOSessionImpl.this + " [" + getLastUpdateTime() % 10000 + "] endLocalCommit: " + token);
@@ -3208,10 +3340,40 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           break;
         }
 
-        Runnable postInvalidationRunnable;
-        while ((postInvalidationRunnable = postInvalidationQueue.poll()) != null)
+        Throwable failure = null;
+
+        try
         {
-          postInvalidationRunnable.run();
+          Runnable postInvalidationRunnable;
+
+          while ((postInvalidationRunnable = postInvalidationQueue.poll()) != null)
+          {
+            try
+            {
+              postInvalidationRunnable.run();
+            }
+            catch (RuntimeException | Error ex)
+            {
+              if (failure == null)
+              {
+                failure = ex;
+              }
+            }
+          }
+
+          if (failure instanceof Error)
+          {
+            throw (Error)failure;
+          }
+
+          if (failure instanceof RuntimeException)
+          {
+            throw (RuntimeException)failure;
+          }
+        }
+        finally
+        {
+          finishProcessingInvalidation();
         }
       }
     }
@@ -3228,21 +3390,253 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
     }
 
-    private synchronized boolean processInvalidation()
+    private boolean processInvalidation()
     {
-      if (invalidationQueue.isEmpty() || !canProcess(invalidationQueue.get(0)))
+      SessionInvalidation invalidation;
+      PermissionUpdateMarker marker;
+
+      synchronized (this)
       {
-        return false;
+        if (closed || processingInvalidation || invalidationQueue.isEmpty())
+        {
+          return false;
+        }
+
+        if (closed || !canProcess(invalidationQueue.get(0)))
+        {
+          return false;
+        }
+
+        processingInvalidation = true;
+        processingInvalidationThread = Thread.currentThread();
+        invalidation = invalidationQueue.remove(0);
+        marker = null;
       }
 
-      SessionInvalidation invalidation0 = invalidationQueue.remove(0);
-      Runnable postInvalidationRunnable = invalidation0.process();
-      if (postInvalidationRunnable != null)
+      try
       {
-        postInvalidationQueue.add(postInvalidationRunnable);
+        enterRevisionMutation();
+
+        try
+        {
+          synchronized (this)
+          {
+            processingRevisionUpdate = true;
+            marker = invalidation.requiresPermissionUpdate() ? beginPermissionUpdate() : null;
+          }
+        }
+        finally
+        {
+          exitRevisionMutation();
+        }
+
+        boolean cacheEventsDeferred = false;
+        Runnable postInvalidationRunnable;
+
+        try
+        {
+          revisionManager.beginCacheEventDeferral();
+          cacheEventsDeferred = true;
+          postInvalidationRunnable = invalidation.process(marker);
+        }
+        finally
+        {
+          finishRevisionUpdate();
+
+          if (cacheEventsDeferred)
+          {
+            revisionManager.endCacheEventDeferral();
+          }
+        }
+
+        boolean closeMarker;
+
+        synchronized (this)
+        {
+          closeMarker = closed || postInvalidationRunnable == null;
+          if (!closeMarker)
+          {
+            postInvalidationQueue.add(postInvalidationRunnable);
+          }
+        }
+
+        if (closeMarker && marker != null)
+        {
+          marker.close();
+        }
+      }
+      catch (RuntimeException | Error ex)
+      {
+        if (marker != null)
+        {
+          marker.close();
+        }
+
+        finishProcessingInvalidation();
+        throw ex;
       }
 
       return true;
+    }
+
+    private synchronized void finishProcessingInvalidation()
+    {
+      processingInvalidation = false;
+      processingRevisionUpdate = false;
+      processingInvalidationThread = null;
+      notifyAll();
+    }
+
+    private synchronized void finishRevisionUpdate()
+    {
+      processingRevisionUpdate = false;
+      notifyAll();
+    }
+
+    public void close()
+    {
+      List<PermissionUpdateMarker> markers;
+
+      synchronized (this)
+      {
+        closed = true;
+        markers = new ArrayList<>(permissionUpdateMarkers);
+        postInvalidationQueue.clear();
+      }
+
+      Throwable failure = null;
+
+      for (PermissionUpdateMarker marker : markers)
+      {
+        try
+        {
+          marker.close();
+        }
+        catch (RuntimeException | Error ex)
+        {
+          if (failure == null)
+          {
+            failure = ex;
+          }
+          else
+          {
+            failure.addSuppressed(ex);
+          }
+        }
+      }
+
+      boolean interrupted = false;
+
+      synchronized (this)
+      {
+        while (processingInvalidation && processingInvalidationThread != Thread.currentThread()
+            || revisionMutationThread != null && revisionMutationThread != Thread.currentThread())
+        {
+          try
+          {
+            wait();
+          }
+          catch (InterruptedException ex)
+          {
+            interrupted = true;
+          }
+        }
+      }
+
+      if (interrupted)
+      {
+        Thread.currentThread().interrupt();
+      }
+
+      if (failure != null)
+      {
+        OM.LOG.error(failure);
+      }
+    }
+
+    private void enterRevisionMutation()
+    {
+      synchronized (this)
+      {
+        awaitRevisionMutation();
+        revisionMutationThread = Thread.currentThread();
+        ++revisionMutationDepth;
+      }
+    }
+
+    private void exitRevisionMutation()
+    {
+      synchronized (this)
+      {
+        if (revisionMutationThread != Thread.currentThread() || revisionMutationDepth <= 0)
+        {
+          throw new IllegalStateException("Revision mutation must be exited by its starting thread"); //$NON-NLS-1$
+        }
+
+        if (--revisionMutationDepth == 0)
+        {
+          revisionMutationThread = null;
+          notifyAll();
+        }
+      }
+    }
+
+    private void awaitRevisionMutation()
+    {
+      boolean interrupted = false;
+      while (revisionMutationThread != null && revisionMutationThread != Thread.currentThread() //
+          || processingRevisionUpdate && processingInvalidationThread != Thread.currentThread())
+      {
+        try
+        {
+          wait();
+        }
+        catch (InterruptedException ex)
+        {
+          interrupted = true;
+        }
+      }
+
+      if (interrupted)
+      {
+        Thread.currentThread().interrupt();
+      }
+    }
+
+    private void awaitLocalCommitBarrier()
+    {
+      boolean interrupted = false;
+
+      while (processingRevisionUpdate && processingInvalidationThread != Thread.currentThread() //
+          || revisionMutationThread != null && revisionMutationThread != Thread.currentThread())
+      {
+        try
+        {
+          wait();
+        }
+        catch (InterruptedException ex)
+        {
+          interrupted = true;
+        }
+      }
+
+      if (interrupted)
+      {
+        Thread.currentThread().interrupt();
+      }
+    }
+
+    private synchronized long getRevisionMutationGeneration()
+    {
+      return revisionMutationGeneration;
+    }
+
+    private PermissionUpdateMarker beginPermissionUpdate()
+    {
+      revisionManager.beginPermissionUpdate();
+      PermissionUpdateMarker marker = new PermissionUpdateMarker();
+      permissionUpdateMarkers.add(marker);
+      return marker;
     }
 
     private boolean canProcess(SessionInvalidation invalidation)
@@ -3255,6 +3649,44 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
 
       return unfinishedLocalCommits.size() == 1; // Ourselves
+    }
+
+    /**
+     * Coordinates one permission update across invalidation scheduling and its possibly deferred callback.
+     *
+     * @author Eike Stepper
+     */
+    private final class PermissionUpdateMarker
+    {
+      private final AtomicBoolean closed = new AtomicBoolean();
+
+      public PermissionUpdateMarker()
+      {
+      }
+
+      public void enterUpdater()
+      {
+        if (closed.get())
+        {
+          throw new IllegalStateException("Permission update marker is closed"); //$NON-NLS-1$
+        }
+
+        revisionManager.enterPermissionUpdater();
+      }
+
+      public void exitUpdater()
+      {
+        revisionManager.exitPermissionUpdater();
+      }
+
+      public void close()
+      {
+        if (closed.compareAndSet(false, true))
+        {
+          permissionUpdateMarkers.remove(this);
+          revisionManager.endPermissionUpdate();
+        }
+      }
     }
   }
 
@@ -3286,6 +3718,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return commitInfo.getPreviousTimeStamp();
     }
 
+    public boolean requiresPermissionUpdate()
+    {
+      return commitInfo.getBranch() != null && invalidationData.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE;
+    }
+
     @Override
     public int compareTo(SessionInvalidation o)
     {
@@ -3298,7 +3735,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       return Long.toString(getTimeStamp() % 10000);
     }
 
-    public Runnable process()
+    public Runnable process(SessionInvalidator.PermissionUpdateMarker permissionUpdateMarker)
     {
       long timeStamp = getTimeStamp();
 
@@ -3341,7 +3778,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
             if (invalidationData.getSecurityImpact() != CommitNotificationInfo.IMPACT_NONE)
             {
-              oldPermissions = updatePermissions(commitInfo);
+              permissionUpdateMarker.enterUpdater();
+
+              try
+              {
+                oldPermissions = updatePermissions(commitInfo);
+              }
+              finally
+              {
+                permissionUpdateMarker.exitUpdater();
+              }
             }
 
             if (!lockCoveredBySnapshot && lockChangeInfo != null)
@@ -3365,18 +3811,55 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           }
         };
 
-        Runnable invalidationRunnable = () -> processInvalidation.accept(false);
-        Runnable snapshotCoveredInvalidationRunnable = () -> processInvalidation.accept(true);
+        Runnable invalidationRunnable = () -> {
+          try
+          {
+            processInvalidation.accept(false);
+          }
+          finally
+          {
+            if (permissionUpdateMarker != null)
+            {
+              permissionUpdateMarker.close();
+            }
+          }
+        };
+
+        Runnable snapshotCoveredInvalidationRunnable = () -> {
+          try
+          {
+            processInvalidation.accept(true);
+          }
+          finally
+          {
+            if (permissionUpdateMarker != null)
+            {
+              permissionUpdateMarker.close();
+            }
+          }
+        };
 
         return () -> {
-          long lockModCount = invalidationData.getLockModCount();
-          if (lockModCount > 0L)
+          try
           {
-            enqueueLockChangeAsync(lockModCount, invalidationRunnable, snapshotCoveredInvalidationRunnable);
+            long lockModCount = invalidationData.getLockModCount();
+            if (lockModCount > 0L)
+            {
+              enqueueLockChangeAsync(lockModCount, invalidationRunnable, snapshotCoveredInvalidationRunnable);
+            }
+            else
+            {
+              invalidationRunnable.run();
+            }
           }
-          else
+          catch (RuntimeException | Error ex)
           {
-            invalidationRunnable.run();
+            if (permissionUpdateMarker != null)
+            {
+              permissionUpdateMarker.close();
+            }
+
+            throw ex;
           }
         };
       }
@@ -3409,7 +3892,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         if (key instanceof InternalCDORevision)
         {
           InternalCDORevision newRevision = (InternalCDORevision)key;
-          addNewRevision(newRevision);
+          invalidator.enterRevisionMutation();
+
+          try
+          {
+            addNewRevision(newRevision);
+          }
+          finally
+          {
+            invalidator.exitRevisionMutation();
+          }
         }
       }
 
@@ -3422,41 +3914,85 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           CDORevisionDelta revisionDelta = (CDORevisionDelta)key;
 
           OldValueRequirements requirements = collectOldValueRequirements(revisionDelta);
+          InternalCDORevision oldRevision;
+          InternalCDORevision workingRevision;
+          long mutationGeneration;
+          invalidator.enterRevisionMutation();
 
-          InternalCDORevision oldRevision = (InternalCDORevision)revisionManager.request().lookupCacheOnly().getRevisionByVersion(id, revisionDelta);
+          try
+          {
+            oldRevision = (InternalCDORevision)revisionManager.request().lookupCacheOnly().getRevisionByVersion(id, revisionDelta);
+            workingRevision = oldRevision == null ? null : oldRevision.copy();
+            mutationGeneration = invalidator.getRevisionMutationGeneration();
+          }
+          finally
+          {
+            invalidator.exitRevisionMutation();
+          }
+
           if (oldRevision != null)
           {
-            fulfillOldValueRequirements(oldRevision, revisionDelta, requirements);
-            addOldValuesToDelta(oldRevision, revisionDelta);
-
-            InternalCDORevision newRevision = oldRevision.copy();
-            newRevision.adjustForCommit(newBranch, timeStamp);
-
-            CDORevisable target = revisionDelta.getTarget();
-            if (target != null)
+            for (;;)
             {
-              newRevision.setVersion(target.getVersion());
-            }
+              fulfillOldValueRequirements(workingRevision, revisionDelta, requirements);
+              addOldValuesToDelta(workingRevision, revisionDelta);
 
-            boolean bypassPermissionChecks = newRevision.bypassPermissionChecks(true);
+              boolean retry = false;
+              invalidator.enterRevisionMutation();
 
-            try
-            {
-              revisionDelta.applyTo(newRevision);
-            }
-            finally
-            {
-              newRevision.bypassPermissionChecks(bypassPermissionChecks);
-              newRevision.freeze();
-            }
+              try
+              {
+                long currentMutationGeneration = invalidator.getRevisionMutationGeneration();
+                if (currentMutationGeneration != mutationGeneration)
+                {
+                  workingRevision = oldRevision.copy();
+                  mutationGeneration = currentMutationGeneration;
+                  retry = true;
+                }
+                else
+                {
+                  InternalCDORevision newRevision = workingRevision.copy();
+                  newRevision.adjustForCommit(newBranch, timeStamp);
 
-            addNewRevision(newRevision);
-            if (oldRevisions == null)
-            {
-              oldRevisions = CDOIDUtil.createMap();
-            }
+                  CDORevisable target = revisionDelta.getTarget();
+                  if (target != null)
+                  {
+                    newRevision.setVersion(target.getVersion());
+                  }
 
-            oldRevisions.put(id, oldRevision);
+                  boolean bypassPermissionChecks = newRevision.bypassPermissionChecks(true);
+
+                  try
+                  {
+                    revisionDelta.applyTo(newRevision);
+                    newRevision.setPermission(oldRevision.getPermission());
+                  }
+                  finally
+                  {
+                    newRevision.bypassPermissionChecks(bypassPermissionChecks);
+                    newRevision.freeze();
+                  }
+
+                  addNewRevision(newRevision);
+
+                  if (oldRevisions == null)
+                  {
+                    oldRevisions = CDOIDUtil.createMap();
+                  }
+
+                  oldRevisions.put(id, oldRevision);
+                }
+              }
+              finally
+              {
+                invalidator.exitRevisionMutation();
+              }
+
+              if (!retry)
+              {
+                break;
+              }
+            }
           }
         }
         else
@@ -3464,7 +4000,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           // ... otherwise try to revise old revision if it is in the same branch
           if (key.getBranch() == newBranch)
           {
-            revisionManager.reviseVersion(id, key, timeStamp);
+            invalidator.enterRevisionMutation();
+
+            try
+            {
+              revisionManager.reviseVersion(id, key, timeStamp);
+            }
+            finally
+            {
+              invalidator.exitRevisionMutation();
+            }
           }
         }
       }
@@ -3473,7 +4018,16 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       for (CDOIDAndVersion key : commitInfo.getDetachedObjects())
       {
         CDOID id = key.getID();
-        revisionManager.reviseLatest(id, newBranch);
+        invalidator.enterRevisionMutation();
+
+        try
+        {
+          revisionManager.reviseDetached(id, newBranch.getVersion(key.getVersion()), timeStamp);
+        }
+        finally
+        {
+          invalidator.exitRevisionMutation();
+        }
       }
 
       return oldRevisions;
@@ -3913,6 +4467,20 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @Override
   @Deprecated
   public void cacheRevisions(CDORevisionAvailabilityInfo info)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void acquireAtomicRequestLock(Object key)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void releaseAtomicRequestLock(Object key)
   {
     throw new UnsupportedOperationException();
   }

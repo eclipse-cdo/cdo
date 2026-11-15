@@ -173,6 +173,12 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
   }
 
   @Override
+  public boolean isAuthorizing()
+  {
+    return delegate.isAuthorizing();
+  }
+
+  @Override
   public boolean isSupportingAudits()
   {
     return delegate.isSupportingAudits();
@@ -278,6 +284,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     }
 
     out.writeBoolean(isAuthenticating());
+    out.writeBoolean(isAuthorizing());
     out.writeBoolean(isSupportingLoginPeeks());
     out.writeBoolean(isSupportingAudits());
     out.writeBoolean(isSupportingBranches());

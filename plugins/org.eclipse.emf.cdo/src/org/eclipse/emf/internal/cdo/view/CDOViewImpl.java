@@ -1459,7 +1459,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     if (!ObjectUtil.isEmpty(oldPermissions))
     {
       Map<CDOID, InternalCDORevision> viewedRevisions = CDOIDUtil.createMap();
-      collectViewedRevisions(viewedRevisions);
+      tryCollectViewedRevisions(viewedRevisions);
 
       Map<CDOID, Pair<CDOPermission, CDOPermission>> permissionChanges = CDOIDUtil.createMap();
 

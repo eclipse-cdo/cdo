@@ -32,13 +32,13 @@ import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache.InternResult;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 
 import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -46,10 +46,12 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EClass;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.CancellationException;
 import java.util.function.Consumer;
 
 /**
@@ -63,37 +65,37 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
   private static final Config CONTAINS_REVISION_CONFIG = legacyConfig(0, CDORevision.DEPTH_NONE, false, false);
 
+  private static final int MAX_HEAD_RESOLUTION_RETRIES = 8;
+
   private boolean supportingAudits;
 
   private boolean supportingBranches;
 
   private RevisionLoader revisionLoader;
 
-  private RevisionLocker revisionLocker;
-
   private CDORevisionFactory factory;
 
   private InternalCDORevisionCache cache;
 
-  @ExcludeFromDump
-  private transient Object loadAndAddLock = new Object()
-  {
-    @Override
-    public String toString()
-    {
-      return "LoadAndAddLock"; //$NON-NLS-1$
-    }
-  };
+  private final Object revisionStateLock = new Object();
 
-  @ExcludeFromDump
-  private transient Object reviseLock = new Object()
-  {
-    @Override
-    public String toString()
-    {
-      return "ReviseLock"; //$NON-NLS-1$
-    }
-  };
+  private final List<LoadBatch> loadBatches = new ArrayList<>();
+
+  private final ThreadLocal<LoadBatch> currentLoadBatch = new ThreadLocal<>();
+
+  private final ArrayDeque<Runnable> cacheEvents = new ArrayDeque<>();
+
+  private boolean dispatchingCacheEvents;
+
+  private int cacheEventDeferrals;
+
+  private long permissionGeneration;
+
+  private int permissionUpdates;
+
+  private boolean permissionUpdatesClosed;
+
+  private final ThreadLocal<Integer> permissionUpdateDepth = ThreadLocal.withInitial(() -> 0);
 
   public CDORevisionManagerImpl()
   {
@@ -139,16 +141,17 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   }
 
   @Override
+  @Deprecated
   public RevisionLocker getRevisionLocker()
   {
-    return revisionLocker;
+    return null;
   }
 
   @Override
+  @Deprecated
   public void setRevisionLocker(RevisionLocker revisionLocker)
   {
-    checkInactive();
-    this.revisionLocker = revisionLocker;
+    // Does nothing.
   }
 
   @Override
@@ -220,10 +223,10 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   @Override
   public void reviseLatest(CDOID id, CDOBranch branch)
   {
-    acquireAtomicRequestLock(reviseLock);
-
-    try
+    synchronized (revisionStateLock)
     {
+      recordInvalidation(new RevisionInvalidation(id, branch, CDOBranchVersion.UNSPECIFIED_VERSION, CDORevision.UNSPECIFIED_DATE, true, false));
+
       InternalCDORevision revision = (InternalCDORevision)cache.getRevision(id, branch.getHead());
       if (revision != null)
       {
@@ -231,19 +234,103 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         cache.removeRevision(id, version);
       }
     }
-    finally
+  }
+
+  @Override
+  public void reviseDetached(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
+  {
+    if (branchVersion.getVersion() == CDOBranchVersion.UNSPECIFIED_VERSION)
     {
-      releaseAtomicRequestLock(reviseLock);
+      CDOBranch branch = branchVersion.getBranch();
+
+      synchronized (revisionStateLock)
+      {
+        recordInvalidation(new RevisionInvalidation(id, branch, CDOBranchVersion.UNSPECIFIED_VERSION, timeStamp, true, false));
+
+        InternalCDORevision revision = getCachedRevision(id, branch.getHead());
+        if (revision != null)
+        {
+          cache.removeRevision(id, branch.getVersion(revision.getVersion()));
+        }
+
+        if (supportingBranches && !branch.isMainBranch())
+        {
+          EClass eClass = revision == null ? null : revision.getEClass();
+          if (eClass == null)
+          {
+            InternalCDORevision inheritedRevision = getCachedRevisionRecursively(id, branch.getBase());
+            eClass = inheritedRevision == null ? null : inheritedRevision.getEClass();
+          }
+
+          if (eClass != null)
+          {
+            publishDetachedRevision(id, branch, eClass, timeStamp);
+          }
+        }
+      }
+
+      return;
     }
+
+    synchronized (revisionStateLock)
+    {
+      CDOBranch branch = branchVersion.getBranch();
+      recordInvalidation(new RevisionInvalidation(id, branch, branchVersion.getVersion(), timeStamp, true, false));
+
+      InternalCDORevision revision = getCachedRevisionByVersion(id, branchVersion);
+      if (revision == null && supportingBranches && !branch.isMainBranch())
+      {
+        revision = getCachedRevision(id, branch.getHead());
+      }
+
+      if (revision != null)
+      {
+        if (supportingAudits && timeStamp != CDORevision.UNSPECIFIED_DATE)
+        {
+          revision.setRevised(timeStamp - 1);
+        }
+        else
+        {
+          cache.removeRevision(id, branchVersion);
+        }
+      }
+
+      if (supportingBranches && !branch.isMainBranch())
+      {
+        EClass eClass = revision == null ? null : revision.getEClass();
+        if (eClass == null)
+        {
+          InternalCDORevision inheritedRevision = getCachedRevisionRecursively(id, branch.getBase());
+          eClass = inheritedRevision == null ? null : inheritedRevision.getEClass();
+        }
+
+        if (eClass != null)
+        {
+          publishDetachedRevision(id, branch, eClass, timeStamp);
+        }
+      }
+    }
+  }
+
+  private void publishDetachedRevision(CDOID id, CDOBranch branch, EClass eClass, long timeStamp)
+  {
+    InternalCDORevision revision = getCachedRevision(id, branch.getPoint(timeStamp));
+    if (revision instanceof PointerCDORevision)
+    {
+      cache.removeRevision(id, branch.getVersion(revision.getVersion()));
+    }
+
+    DetachedCDORevision detachedRevision = new DetachedCDORevision(eClass, id, branch, CDOBranchVersion.UNSPECIFIED_VERSION, timeStamp);
+    publishRevision(detachedRevision, currentLoadBatch.get());
   }
 
   @Override
   public void reviseVersion(CDOID id, CDOBranchVersion branchVersion, long timeStamp)
   {
-    acquireAtomicRequestLock(reviseLock);
-
-    try
+    synchronized (revisionStateLock)
     {
+      recordInvalidation(new RevisionInvalidation(id, branchVersion.getBranch(), branchVersion.getVersion(), timeStamp, false, false));
+
       InternalCDORevision revision = getCachedRevisionByVersion(id, branchVersion);
       if (revision != null)
       {
@@ -255,23 +342,248 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
         revision.setRevised(timeStamp - 1);
       }
     }
-    finally
+  }
+
+  @Override
+  public void evictRevision(CDORevision revision)
+  {
+    synchronized (revisionStateLock)
     {
-      releaseAtomicRequestLock(reviseLock);
+      CDOID id = revision.getID();
+      CDOBranchVersion branchVersion = revision.getBranch().getVersion(revision.getVersion());
+      recordInvalidation(new RevisionInvalidation(id, branchVersion.getBranch(), branchVersion.getVersion(), CDORevision.UNSPECIFIED_DATE, false, true));
+      cache.removeRevision(id, branchVersion);
     }
+  }
+
+  @Override
+  public void removeRevisions(CDOBranch... branches)
+  {
+    synchronized (revisionStateLock)
+    {
+      if (branches != null)
+      {
+        for (LoadBatch batch : loadBatches)
+        {
+          for (CDOBranch branch : branches)
+          {
+            if (branch != null && !batch.invalidatedBranches.contains(branch))
+            {
+              batch.invalidatedBranches.add(branch);
+            }
+          }
+        }
+      }
+
+      cache.removeRevisions(branches);
+    }
+  }
+
+  @Override
+  public void clearCache()
+  {
+    synchronized (revisionStateLock)
+    {
+      for (LoadBatch batch : loadBatches)
+      {
+        batch.invalidatedAll = true;
+      }
+
+      cache.clear();
+    }
+  }
+
+  @Override
+  public void beginCacheEventDeferral()
+  {
+    synchronized (revisionStateLock)
+    {
+      if (permissionUpdatesClosed)
+      {
+        throw new CancellationException("Revision manager is closed"); //$NON-NLS-1$
+      }
+
+      ++cacheEventDeferrals;
+    }
+  }
+
+  @Override
+  public void endCacheEventDeferral()
+  {
+    boolean dispatchEvents;
+
+    synchronized (revisionStateLock)
+    {
+      if (cacheEventDeferrals <= 0)
+      {
+        throw new IllegalStateException("No cache event deferral is active"); //$NON-NLS-1$
+      }
+
+      --cacheEventDeferrals;
+      dispatchEvents = cacheEventDeferrals == 0 && permissionUpdates == 0 && !permissionUpdatesClosed;
+    }
+
+    if (dispatchEvents)
+    {
+      dispatchCacheEvents();
+    }
+  }
+
+  @Override
+  public void beginPermissionUpdate()
+  {
+    synchronized (revisionStateLock)
+    {
+      if (permissionUpdatesClosed)
+      {
+        throw new CancellationException("Revision manager is closed"); //$NON-NLS-1$
+      }
+
+      ++permissionGeneration;
+      ++permissionUpdates;
+    }
+  }
+
+  @Override
+  public void enterPermissionUpdater()
+  {
+    synchronized (revisionStateLock)
+    {
+      if (permissionUpdates <= 0 || permissionUpdatesClosed)
+      {
+        throw new IllegalStateException("A permission updater requires an active permission update"); //$NON-NLS-1$
+      }
+
+      permissionUpdateDepth.set(permissionUpdateDepth.get() + 1);
+    }
+  }
+
+  @Override
+  public void exitPermissionUpdater()
+  {
+    synchronized (revisionStateLock)
+    {
+      int depth = permissionUpdateDepth.get();
+      if (depth <= 0)
+      {
+        throw new IllegalStateException("Permission updater execution must be exited by its starting thread"); //$NON-NLS-1$
+      }
+
+      if (depth == 1)
+      {
+        permissionUpdateDepth.remove();
+      }
+      else
+      {
+        permissionUpdateDepth.set(depth - 1);
+      }
+    }
+  }
+
+  @Override
+  public void endPermissionUpdate()
+  {
+    boolean dispatchEvents;
+
+    synchronized (revisionStateLock)
+    {
+      if (permissionUpdates <= 0)
+      {
+        throw new IllegalStateException("No permission update is active"); //$NON-NLS-1$
+      }
+
+      --permissionUpdates;
+      ++permissionGeneration;
+      dispatchEvents = permissionUpdates == 0 && !permissionUpdatesClosed;
+      revisionStateLock.notifyAll();
+    }
+
+    if (dispatchEvents)
+    {
+      dispatchCacheEvents();
+    }
+  }
+
+  private long awaitStablePermissionGeneration()
+  {
+    synchronized (revisionStateLock)
+    {
+      if (permissionUpdates != 0 && permissionUpdateDepth.get() != 0)
+      {
+        throw new IllegalStateException("A permission updater must not load revisions while its permission update is active"); //$NON-NLS-1$
+      }
+
+      boolean interrupted = false;
+
+      while (permissionUpdates != 0 && !permissionUpdatesClosed)
+      {
+        try
+        {
+          revisionStateLock.wait();
+        }
+        catch (InterruptedException ex)
+        {
+          interrupted = true;
+          break;
+        }
+      }
+
+      if (interrupted)
+      {
+        Thread.currentThread().interrupt();
+        throw new CancellationException("Interrupted while waiting for a permission update"); //$NON-NLS-1$
+      }
+
+      if (permissionUpdatesClosed)
+      {
+        throw new CancellationException("Revision manager is closed"); //$NON-NLS-1$
+      }
+
+      return permissionGeneration;
+    }
+  }
+
+  private boolean isStablePermissionGeneration(long generation)
+  {
+    return permissionUpdates == 0 && permissionGeneration == generation && !permissionUpdatesClosed;
   }
 
   @Override
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, Request.Config config)
   {
     checkArg(branchVersion.getVersion() >= CDOBranchVersion.FIRST_VERSION, "Invalid version: " + branchVersion.getVersion()); //$NON-NLS-1$
-    acquireAtomicRequestLock(loadAndAddLock);
 
-    try
+    if (config.getLookupMode() == LookupMode.CACHE_ONLY)
     {
-      InternalCDORevision revision = config.getLookupMode() == LookupMode.LOADER_ONLY ? null : getCachedRevisionByVersion(id, branchVersion);
-      if (revision == null && config.getLookupMode() != LookupMode.CACHE_ONLY)
+      synchronized (revisionStateLock)
       {
+        return getCachedRevisionByVersion(id, branchVersion);
+      }
+    }
+
+    for (;;)
+    {
+      long generation = awaitStablePermissionGeneration();
+      LoadBatch batch = beginLoadBatch();
+
+      try
+      {
+        InternalCDORevision revision;
+
+        synchronized (revisionStateLock)
+        {
+          if (!isStablePermissionGeneration(generation))
+          {
+            continue;
+          }
+
+          revision = config.getLookupMode() == LookupMode.LOADER_ONLY ? null : getCachedRevisionByVersion(id, branchVersion);
+          if (revision != null || config.getLookupMode() == LookupMode.CACHE_ONLY)
+          {
+            return revision;
+          }
+        }
+
         if (TRACER.isEnabled())
         {
           TRACER.format("Loading revision {0} from {1}", id, branchVersion); //$NON-NLS-1$
@@ -288,14 +600,33 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
           revision = revisionLoader.loadRevisionByVersion(id, branchVersion, referenceChunk);
         }
 
-        revision = (InternalCDORevision)internRevision(revision);
-      }
+        synchronized (revisionStateLock)
+        {
+          if (!isStablePermissionGeneration(generation))
+          {
+            continue;
+          }
 
-      return revision;
-    }
-    finally
-    {
-      releaseAtomicRequestLock(loadAndAddLock);
+          revision = (InternalCDORevision)publishRevision(revision, batch);
+        }
+
+        dispatchCacheEvents();
+
+        synchronized (revisionStateLock)
+        {
+          if (!isStablePermissionGeneration(generation))
+          {
+            continue;
+          }
+
+        }
+
+        return revision;
+      }
+      finally
+      {
+        endLoadBatch(batch);
+      }
     }
   }
 
@@ -374,38 +705,154 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   private List<CDORevision> getRevisions(List<CDOID> ids, CDOBranchPoint branchPoint, Request.Config config, SyntheticCDORevision[] synthetics,
       List<CDORevision> additionalRevisions, Consumer<CDORevision> consumer)
   {
-    RevisionInfo[] allInfos = new RevisionInfo[ids.size()];
-
     if (additionalRevisions == null)
     {
       additionalRevisions = new ArrayList<>();
     }
 
-    // Create revision infos for all ids in the allInfos[] array and return only those that need loading (or null).
-    List<RevisionInfo> infosToLoad = createRevisionInfos(ids, branchPoint, config, allInfos);
-    if (infosToLoad != null)
+    if (config.getLookupMode() == LookupMode.CACHE_ONLY)
     {
-      // Load the requested revision infos, then process the additional revisions.
-      loadRevisions(infosToLoad, branchPoint, config, additionalRevisions, consumer);
+      RevisionInfo[] allInfos = new RevisionInfo[ids.size()];
+      List<CDORevision> primaryRevisions;
+      SyntheticCDORevision[] attemptSynthetics = synthetics == null ? null : new SyntheticCDORevision[synthetics.length];
+
+      synchronized (revisionStateLock)
+      {
+        createRevisionInfos(ids, branchPoint, config, allInfos);
+        primaryRevisions = processResults(allInfos, attemptSynthetics, null);
+      }
+
+      dispatchCacheEvents();
+
+      if (synthetics != null && attemptSynthetics != null)
+      {
+        System.arraycopy(attemptSynthetics, 0, synthetics, 0, synthetics.length);
+      }
+
+      if (consumer != null)
+      {
+        for (RevisionInfo info : allInfos)
+        {
+          deliverResult(info, consumer);
+        }
+      }
+
+      return primaryRevisions;
     }
 
-    List<CDORevision> primaryRevisions = processResults(allInfos, synthetics, consumer);
+    int headResolutionRetries = 0;
 
-    if (infosToLoad != null)
+    for (;;)
     {
-      if (!ObjectUtil.isEmpty(primaryRevisions) || !ObjectUtil.isEmpty(additionalRevisions))
+      long generation = awaitStablePermissionGeneration();
+      LoadBatch batch = beginLoadBatch();
+      batch.requestedBranchPoint = branchPoint;
+
+      try
       {
-        if (primaryRevisions == null)
+        RevisionInfo[] allInfos = new RevisionInfo[ids.size()];
+        List<RevisionInfo> infosToLoad;
+
+        synchronized (revisionStateLock)
         {
-          primaryRevisions = Collections.emptyList();
+          if (!isStablePermissionGeneration(generation))
+          {
+            continue;
+          }
+
+          infosToLoad = createRevisionInfos(ids, branchPoint, config, allInfos);
         }
 
-        additionalRevisions = Collections.unmodifiableList(additionalRevisions);
-        fireEvent(new RevisionsLoadedEvent(this, primaryRevisions, additionalRevisions, config.getPrefetchDepth()));
+        List<RevisionInfo> additionalInfos = null;
+
+        if (infosToLoad != null)
+        {
+          additionalInfos = loadRevisionInfos(infosToLoad, branchPoint, config);
+        }
+
+        List<CDORevision> loadedAdditionalRevisions = new ArrayList<>();
+        SyntheticCDORevision[] attemptSynthetics = synthetics == null ? null : new SyntheticCDORevision[synthetics.length];
+        List<CDORevision> primaryRevisions;
+
+        synchronized (revisionStateLock)
+        {
+          if (!isStablePermissionGeneration(generation))
+          {
+            continue;
+          }
+
+          if (additionalInfos != null)
+          {
+            for (RevisionInfo info : additionalInfos)
+            {
+              processResult(info, loadedAdditionalRevisions, null, 0, null);
+            }
+          }
+
+          primaryRevisions = processResults(allInfos, attemptSynthetics, null);
+        }
+
+        dispatchCacheEvents();
+
+        synchronized (revisionStateLock)
+        {
+          if (!isStablePermissionGeneration(generation))
+          {
+            continue;
+          }
+
+          if (requiresHeadResolution(allInfos, additionalInfos, batch))
+          {
+            if (++headResolutionRetries > MAX_HEAD_RESOLUTION_RETRIES)
+            {
+              throw new IllegalStateException("Revision results kept becoming invalid at the requested branch head"); //$NON-NLS-1$
+            }
+
+            continue;
+          }
+        }
+
+        additionalRevisions.addAll(loadedAdditionalRevisions);
+
+        if (synthetics != null && attemptSynthetics != null)
+        {
+          System.arraycopy(attemptSynthetics, 0, synthetics, 0, synthetics.length);
+        }
+
+        if (consumer != null)
+        {
+          if (additionalInfos != null)
+          {
+            for (RevisionInfo info : additionalInfos)
+            {
+              deliverResult(info, consumer);
+            }
+          }
+
+          for (RevisionInfo info : allInfos)
+          {
+            deliverResult(info, consumer);
+          }
+        }
+
+        if (infosToLoad != null && (!ObjectUtil.isEmpty(primaryRevisions) || !ObjectUtil.isEmpty(additionalRevisions)))
+        {
+          if (primaryRevisions == null)
+          {
+            primaryRevisions = Collections.emptyList();
+          }
+
+          List<CDORevision> loadedRevisions = Collections.unmodifiableList(new ArrayList<>(additionalRevisions));
+          fireEvent(new RevisionsLoadedEvent(this, primaryRevisions, loadedRevisions, config.getPrefetchDepth()));
+        }
+
+        return primaryRevisions;
+      }
+      finally
+      {
+        endLoadBatch(batch);
       }
     }
-
-    return primaryRevisions;
   }
 
   /**
@@ -513,39 +960,25 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   /**
    * Loads the requested revision infos, then processes and returns additional revisions.
    */
-  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, Request.Config config, List<CDORevision> additionalRevisions,
-      Consumer<CDORevision> consumer)
+  protected List<RevisionInfo> loadRevisionInfos(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, Request.Config config)
   {
-    acquireAtomicRequestLock(loadAndAddLock);
+    List<RevisionInfo> additionalRevisionInfos;
 
-    try
+    if (revisionLoader instanceof RevisionLoader4)
     {
-      List<RevisionInfo> additionalRevisionInfos;
-
-      if (revisionLoader instanceof RevisionLoader4)
-      {
-        additionalRevisionInfos = ((RevisionLoader4)revisionLoader).loadRevisions(infosToLoad, branchPoint, config);
-      }
-      else
-      {
-        int referenceChunk = config.getReferenceChunk() == CDORevisionManager.Request.Config.REFERENCE_CHUNK_UNSPECIFIED ? CDORevision.UNCHUNKED
-            : config.getReferenceChunk();
-        additionalRevisionInfos = ((RevisionLoader3)revisionLoader).loadRevisions(infosToLoad, branchPoint, referenceChunk, config.getPrefetchDepth(),
-            config.isPrefetchLockStates());
-      }
-
-      if (additionalRevisionInfos != null)
-      {
-        for (RevisionInfo info : additionalRevisionInfos)
-        {
-          processResult(info, additionalRevisions, null, 0, consumer);
-        }
-      }
+      additionalRevisionInfos = ((RevisionLoader4)revisionLoader).loadRevisions(infosToLoad, branchPoint, config);
     }
-    finally
+    else
     {
-      releaseAtomicRequestLock(loadAndAddLock);
+      int referenceChunk = config.getReferenceChunk() == CDORevisionManager.Request.Config.REFERENCE_CHUNK_UNSPECIFIED //
+          ? CDORevision.UNCHUNKED //
+          : config.getReferenceChunk();
+
+      additionalRevisionInfos = ((RevisionLoader3)revisionLoader).loadRevisions(infosToLoad, branchPoint, referenceChunk, config.getPrefetchDepth(),
+          config.isPrefetchLockStates());
     }
+
+    return additionalRevisionInfos;
   }
 
   private static Request.Config legacyConfig(int referenceChunk, int prefetchDepth, boolean prefetchLockStates, boolean loadOnDemand)
@@ -584,14 +1017,248 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
     }
   }
 
+  private void deliverResult(RevisionInfo info, Consumer<CDORevision> consumer)
+  {
+    InternalCDORevision revision = info.getSynthetic();
+    if (revision == null)
+    {
+      revision = info.getResult();
+    }
+
+    if (revision != null)
+    {
+      consumer.accept(revision);
+    }
+  }
+
   @Override
   public CDORevision internRevision(CDORevision revision)
   {
-    if (revision != null)
-    {
-      acquireAtomicRequestLock(loadAndAddLock);
+    return publishRevision(revision, currentLoadBatch.get());
+  }
 
-      try
+  private boolean requiresHeadResolution(RevisionInfo[] primaryInfos, List<RevisionInfo> additionalInfos, LoadBatch batch)
+  {
+    for (RevisionInfo info : primaryInfos)
+    {
+      if (requiresHeadResolution(info, batch))
+      {
+        return true;
+      }
+    }
+
+    if (additionalInfos != null)
+    {
+      for (RevisionInfo info : additionalInfos)
+      {
+        if (requiresHeadResolution(info, batch))
+        {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  private boolean requiresHeadResolution(RevisionInfo info, LoadBatch batch)
+  {
+    CDOBranchPoint requestedBranchPoint = info.getRequestedBranchPoint();
+    if (requestedBranchPoint == null)
+    {
+      requestedBranchPoint = batch.requestedBranchPoint;
+    }
+
+    if (requestedBranchPoint == null || requestedBranchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      return false;
+    }
+
+    InternalCDORevision revision = info.getResult();
+    SyntheticCDORevision synthetic = info.getSynthetic();
+
+    if (revision != null && !isValidAtRequestedPoint(revision, requestedBranchPoint))
+    {
+      return true;
+    }
+
+    if (synthetic != null && !isValidAtRequestedPoint(synthetic, requestedBranchPoint))
+    {
+      return true;
+    }
+
+    for (RevisionInvalidation invalidation : batch.invalidations)
+    {
+      if (invalidation.evicted || !invalidation.id.equals(info.getID()))
+      {
+        continue;
+      }
+
+      CDOBranchPoint effectivePoint = getEffectiveBranchPoint(requestedBranchPoint, invalidation.branch);
+      if (effectivePoint == null || !isAtOrAfter(effectivePoint, invalidation))
+      {
+        continue;
+      }
+
+      if (invalidation.version == CDOBranchVersion.UNSPECIFIED_VERSION)
+      {
+        if (revision == null && synthetic == null || revision != null && !revision.isHistorical())
+        {
+          return true;
+        }
+      }
+      else if (revision == null && synthetic == null)
+      {
+        return true;
+      }
+      else if (revision != null && revision.getBranch() == invalidation.branch && revision.getVersion() == invalidation.version)
+      {
+        return true;
+      }
+      else if (synthetic != null && synthetic.getBranch() == invalidation.branch && synthetic.getVersion() == invalidation.version)
+      {
+        if (invalidation.detached //
+            && synthetic instanceof DetachedCDORevision //
+            && invalidation.timeStamp != CDORevision.UNSPECIFIED_DATE //
+            && synthetic.getTimeStamp() >= invalidation.timeStamp)
+        {
+          continue;
+        }
+
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private boolean isValidAtRequestedPoint(CDORevision revision, CDOBranchPoint requestedBranchPoint)
+  {
+    CDOBranchPoint effectivePoint = getEffectiveBranchPoint(requestedBranchPoint, revision.getBranch());
+    if (effectivePoint == null)
+    {
+      return false;
+    }
+
+    if (effectivePoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
+    {
+      return !revision.isHistorical();
+    }
+
+    return revision.isValid(effectivePoint);
+  }
+
+  private CDOBranchPoint getEffectiveBranchPoint(CDOBranchPoint branchPoint, CDOBranch targetBranch)
+  {
+    CDOBranchPoint effectivePoint = branchPoint;
+
+    while (effectivePoint.getBranch().getID() != targetBranch.getID())
+    {
+      CDOBranch branch = effectivePoint.getBranch();
+      if (branch.isMainBranch())
+      {
+        return null;
+      }
+
+      effectivePoint = branch.getBase();
+    }
+
+    return effectivePoint;
+  }
+
+  private boolean isAtOrAfter(CDOBranchPoint branchPoint, RevisionInvalidation invalidation)
+  {
+    if (invalidation.timeStamp == CDORevision.UNSPECIFIED_DATE)
+    {
+      return branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE && branchPoint.getBranch().getID() == invalidation.branch.getID();
+    }
+
+    return branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE || branchPoint.getTimeStamp() >= invalidation.timeStamp;
+  }
+
+  private CDORevision publishRevision(CDORevision revision, LoadBatch batch)
+  {
+    if (revision == null)
+    {
+      return null;
+    }
+
+    boolean dispatchEvents = !Thread.holdsLock(revisionStateLock);
+    CDORevision publishedRevision = revision;
+
+    synchronized (revisionStateLock)
+    {
+      boolean suppressPublication = batch != null && batch.invalidatedAll;
+
+      if (batch != null && batch.invalidatedBranches.contains(revision.getBranch()))
+      {
+        suppressPublication = true;
+      }
+
+      for (RevisionInvalidation invalidation : batch == null ? Collections.<RevisionInvalidation> emptyList() : batch.invalidations)
+      {
+        if (suppressPublication)
+        {
+          break;
+        }
+
+        if (invalidation.id.equals(revision.getID()) && invalidation.branch == revision.getBranch())
+        {
+          if (invalidation.detached)
+          {
+            if (revision instanceof DetachedCDORevision && revision.getTimeStamp() == invalidation.timeStamp)
+            {
+              continue;
+            }
+
+            if (invalidation.version == CDOBranchVersion.UNSPECIFIED_VERSION)
+            {
+              if (!revision.isHistorical())
+              {
+                suppressPublication = true;
+                break;
+              }
+            }
+            else if (invalidation.version == revision.getVersion())
+            {
+              if (supportingAudits && invalidation.timeStamp != CDORevision.UNSPECIFIED_DATE)
+              {
+                ((InternalCDORevision)revision).setRevised(invalidation.timeStamp - 1);
+              }
+              else
+              {
+                suppressPublication = true;
+                break;
+              }
+            }
+          }
+
+          if (invalidation.evicted && invalidation.version == revision.getVersion())
+          {
+            suppressPublication = true;
+            break;
+          }
+
+          if (!invalidation.detached && !invalidation.evicted && invalidation.version == revision.getVersion())
+          {
+            if (invalidation.timeStamp == CDORevision.UNSPECIFIED_DATE)
+            {
+              suppressPublication = true;
+              break;
+            }
+
+            ((InternalCDORevision)revision).setRevised(invalidation.timeStamp - 1);
+
+            if (!supportingAudits)
+            {
+              suppressPublication = true;
+              break;
+            }
+          }
+        }
+      }
+
+      if (!suppressPublication)
       {
         int oldVersion = revision.getVersion() - 1;
         if (oldVersion >= CDORevision.UNSPECIFIED_VERSION)
@@ -599,7 +1266,15 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
           CDOID id = revision.getID();
           CDOBranchVersion old = revision.getBranch().getVersion(oldVersion);
 
+          if (oldVersion >= CDOBranchVersion.FIRST_VERSION //
+              && !(revision instanceof SyntheticCDORevision) //
+              && revision.getTimeStamp() != CDORevision.UNSPECIFIED_DATE)
+          {
+            recordInvalidation(new RevisionInvalidation(id, revision.getBranch(), oldVersion, revision.getTimeStamp(), false, false));
+          }
+
           InternalCDORevision oldRevision = getCachedRevisionByVersion(id, old);
+
           if (!revision.isHistorical())
           {
             if (oldRevision != null)
@@ -608,33 +1283,118 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
             }
             else
             {
-              // Remove last revision from cache, which is not revised
               InternalCDORevision cachedLatestRevision = getCachedRevision(id, revision);
-              if (cachedLatestRevision != null && !cachedLatestRevision.isHistorical())
+              if (cachedLatestRevision != null && cachedLatestRevision.getVersion() != revision.getVersion() && !cachedLatestRevision.isHistorical())
               {
-                // Found revision is stale.
-                // We cannot revise it now because of lack information, thus remove it from the cache
                 cache.removeRevision(id, cachedLatestRevision);
               }
             }
           }
         }
 
-        revision = cache.internRevision(revision);
-      }
-      finally
-      {
-        releaseAtomicRequestLock(loadAndAddLock);
+        InternResult internResult = cache.internRevisionDeferredEvents(revision);
+        publishedRevision = internResult.getRevision();
+
+        Runnable eventDispatcher = internResult.getEventDispatcher();
+        if (eventDispatcher != null)
+        {
+          cacheEvents.addLast(eventDispatcher);
+        }
       }
     }
 
-    return revision;
+    if (dispatchEvents)
+    {
+      dispatchCacheEvents();
+    }
+
+    return publishedRevision;
+  }
+
+  private void dispatchCacheEvents()
+  {
+    synchronized (revisionStateLock)
+    {
+      if (dispatchingCacheEvents || cacheEventDeferrals != 0 || permissionUpdates != 0 || permissionUpdatesClosed)
+      {
+        return;
+      }
+
+      dispatchingCacheEvents = true;
+    }
+
+    Throwable failure = null;
+    boolean completed = false;
+
+    try
+    {
+      for (;;)
+      {
+        Runnable eventDispatcher;
+
+        synchronized (revisionStateLock)
+        {
+          if (cacheEventDeferrals != 0 || permissionUpdates != 0 || permissionUpdatesClosed)
+          {
+            dispatchingCacheEvents = false;
+            completed = true;
+            break;
+          }
+
+          eventDispatcher = cacheEvents.pollFirst();
+          if (eventDispatcher == null)
+          {
+            dispatchingCacheEvents = false;
+            completed = true;
+            break;
+          }
+        }
+
+        try
+        {
+          eventDispatcher.run();
+        }
+        catch (RuntimeException | Error ex)
+        {
+          if (failure == null)
+          {
+            failure = ex;
+          }
+        }
+      }
+    }
+    finally
+    {
+      if (!completed)
+      {
+        synchronized (revisionStateLock)
+        {
+          dispatchingCacheEvents = false;
+        }
+      }
+    }
+
+    if (failure instanceof RuntimeException)
+    {
+      throw (RuntimeException)failure;
+    }
+
+    if (failure instanceof Error)
+    {
+      throw (Error)failure;
+    }
   }
 
   @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
+
+    synchronized (revisionStateLock)
+    {
+      permissionUpdatesClosed = false;
+    }
+
     if (factory == null)
     {
       factory = CDORevisionFactory.DEFAULT;
@@ -662,24 +1422,15 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   @Override
   protected void doDeactivate() throws Exception
   {
+    synchronized (revisionStateLock)
+    {
+      permissionUpdatesClosed = true;
+      cacheEvents.clear();
+      revisionStateLock.notifyAll();
+    }
+
     LifecycleUtil.deactivate(cache);
     super.doDeactivate();
-  }
-
-  private void acquireAtomicRequestLock(Object key)
-  {
-    if (revisionLocker != null)
-    {
-      revisionLocker.acquireAtomicRequestLock(key);
-    }
-  }
-
-  private void releaseAtomicRequestLock(Object key)
-  {
-    if (revisionLocker != null)
-    {
-      revisionLocker.releaseAtomicRequestLock(key);
-    }
   }
 
   private InternalCDORevision getCachedRevisionByVersion(CDOID id, CDOBranchVersion branchVersion)
@@ -710,6 +1461,93 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
 
     // Reached main branch
     return null;
+  }
+
+  private LoadBatch beginLoadBatch()
+  {
+    LoadBatch batch = new LoadBatch(currentLoadBatch.get());
+
+    synchronized (revisionStateLock)
+    {
+      loadBatches.add(batch);
+    }
+
+    currentLoadBatch.set(batch);
+    return batch;
+  }
+
+  private void endLoadBatch(LoadBatch batch)
+  {
+    synchronized (revisionStateLock)
+    {
+      loadBatches.remove(batch);
+    }
+
+    if (batch.parent == null)
+    {
+      currentLoadBatch.remove();
+    }
+    else
+    {
+      currentLoadBatch.set(batch.parent);
+    }
+  }
+
+  private void recordInvalidation(RevisionInvalidation invalidation)
+  {
+    for (LoadBatch batch : loadBatches)
+    {
+      batch.invalidations.add(invalidation);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LoadBatch
+  {
+    public final LoadBatch parent;
+
+    public final List<RevisionInvalidation> invalidations = new ArrayList<>();
+
+    public final List<CDOBranch> invalidatedBranches = new ArrayList<>();
+
+    public CDOBranchPoint requestedBranchPoint;
+
+    public boolean invalidatedAll;
+
+    public LoadBatch(LoadBatch parent)
+    {
+      this.parent = parent;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class RevisionInvalidation
+  {
+    public final CDOID id;
+
+    public final CDOBranch branch;
+
+    public final int version;
+
+    public final long timeStamp;
+
+    public final boolean detached;
+
+    public final boolean evicted;
+
+    public RevisionInvalidation(CDOID id, CDOBranch branch, int version, long timeStamp, boolean detached, boolean evicted)
+    {
+      this.id = id;
+      this.branch = branch;
+      this.version = version;
+      this.timeStamp = timeStamp;
+      this.detached = detached;
+      this.evicted = evicted;
+    }
   }
 
   /**

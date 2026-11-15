@@ -1059,6 +1059,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    public boolean isAuthorizing()
+    {
+      return repository.isAuthorizing();
+    }
+
+    @Override
     public boolean isSupportingLoginPeeks()
     {
       return repository.isSupportingLoginPeeks();
@@ -1144,18 +1150,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public EPackage[] loadPackages(CDOPackageUnit packageUnit)
     {
       return null;
-    }
-
-    @Override
-    public void releaseAtomicRequestLock(Object key)
-    {
-      // Do nothing
-    }
-
-    @Override
-    public void acquireAtomicRequestLock(Object key)
-    {
-      // Do nothing
     }
 
     @Override
@@ -1880,6 +1874,20 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     @Override
     @Deprecated
     public void cacheRevisions(CDORevisionAvailabilityInfo info)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void acquireAtomicRequestLock(Object key)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    @Deprecated
+    public void releaseAtomicRequestLock(Object key)
     {
       throw new UnsupportedOperationException();
     }

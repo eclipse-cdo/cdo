@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -112,19 +111,18 @@ public class TestRevisionManager extends CDORevisionManagerImpl
   }
 
   @Override
-  protected void loadRevisions(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, Request.Config config, List<CDORevision> additionalRevisions,
-      Consumer<CDORevision> consumer)
+  protected List<RevisionInfo> loadRevisionInfos(List<RevisionInfo> infosToLoad, CDOBranchPoint branchPoint, Request.Config config)
   {
-    super.loadRevisions(infosToLoad, branchPoint, config, additionalRevisions, consumer);
-
-    countLoadedRevisions(infosToLoad, additionalRevisions);
+    List<RevisionInfo> additionalRevisionInfos = super.loadRevisionInfos(infosToLoad, branchPoint, config);
+    countLoadedRevisions(infosToLoad, additionalRevisionInfos);
+    return additionalRevisionInfos;
   }
 
-  private void countLoadedRevisions(List<RevisionInfo> infosToLoad, List<CDORevision> additionalRevisions)
+  private void countLoadedRevisions(List<RevisionInfo> infosToLoad, List<RevisionInfo> additionalRevisionInfos)
   {
     synchronized (lock)
     {
-      additionalCounter += additionalRevisions == null ? 0 : additionalRevisions.size();
+      additionalCounter += additionalRevisionInfos == null ? 0 : additionalRevisionInfos.size();
       loadCounter += infosToLoad.size();
     }
   }

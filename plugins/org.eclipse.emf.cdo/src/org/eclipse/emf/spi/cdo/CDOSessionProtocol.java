@@ -434,6 +434,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private boolean authenticating;
 
+    private boolean authorizing;
+
     private boolean supportingLoginPeeks;
 
     private boolean supportingAudits;
@@ -487,6 +489,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       tagModCount = in.readXInt();
       rootResourceID = in.readCDOID();
       authenticating = in.readBoolean();
+      authorizing = in.readBoolean();
       supportingLoginPeeks = in.readBoolean();
       supportingAudits = in.readBoolean();
       supportingBranches = in.readBoolean();
@@ -624,6 +627,12 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public boolean isAuthenticating()
     {
       return authenticating;
+    }
+
+    @Override
+    public boolean isAuthorizing()
+    {
+      return authorizing;
     }
 
     @Override

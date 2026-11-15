@@ -21,6 +21,7 @@ import java.util.Set;
 
 /**
  * A {@link CDOPermissionUpdater permission updater} that can take a {@link CDOCommitInfo commit info} into account.
+ * Implementations are subject to the revision-loading restriction documented by {@link CDOPermissionUpdater}.
  *
  * @author Eike Stepper
  * @since 4.18

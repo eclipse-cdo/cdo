@@ -108,7 +108,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
   private int version;
 
-  private long revised;
+  private volatile long revised;
 
   private CDOID resourceID;
 

@@ -57,6 +57,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer;
@@ -482,10 +483,12 @@ public abstract class SynchronizableRepository extends Repository.Default implem
 
   private void replicateRawReviseRevisions()
   {
-    InternalCDORevisionCache cache = getRevisionManager().getCache();
+    InternalCDORevisionManager revisionManager = getRevisionManager();
+    InternalCDORevisionCache cache = revisionManager.getCache();
+
     for (CDORevision revision : cache.getCurrentRevisions())
     {
-      cache.removeRevision(revision.getID(), revision);
+      revisionManager.evictRevision(revision);
     }
   }
 
@@ -899,8 +902,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     @Override
     public List<CDOPackageUnit> getNewPackageUnits()
     {
-      final InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();
-      return new IndexedList<CDOPackageUnit>()
+      InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();
+
+      return new IndexedList<>()
       {
         @Override
         public CDOPackageUnit get(int index)
@@ -919,8 +923,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     @Override
     public List<CDOIDAndVersion> getNewObjects()
     {
-      final InternalCDORevision[] newObjects = commitContext.getNewObjects();
-      return new IndexedList<CDOIDAndVersion>()
+      InternalCDORevision[] newObjects = commitContext.getNewObjects();
+
+      return new IndexedList<>()
       {
         @Override
         public CDOIDAndVersion get(int index)
@@ -939,8 +944,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     @Override
     public List<CDORevisionKey> getChangedObjects()
     {
-      final InternalCDORevisionDelta[] changedObjects = commitContext.getDirtyObjectDeltas();
-      return new IndexedList<CDORevisionKey>()
+      InternalCDORevisionDelta[] changedObjects = commitContext.getDirtyObjectDeltas();
+
+      return new IndexedList<>()
       {
         @Override
         public CDORevisionKey get(int index)
@@ -959,8 +965,9 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     @Override
     public List<CDOIDAndVersion> getDetachedObjects()
     {
-      final CDOID[] detachedObjects = commitContext.getDetachedObjects();
-      return new IndexedList<CDOIDAndVersion>()
+      CDOID[] detachedObjects = commitContext.getDetachedObjects();
+
+      return new IndexedList<>()
       {
         @Override
         public CDOIDAndVersion get(int index)

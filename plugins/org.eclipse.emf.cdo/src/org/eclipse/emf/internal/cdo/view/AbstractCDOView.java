@@ -139,6 +139,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOViewSet;
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -146,6 +147,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -201,6 +203,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   private InternalCDOViewSet viewSet;
 
   private Map<CDOID, InternalCDOObject> objects;
+
+  private final Object trackedViewedRevisionsLock = new Object();
+
+  private Map<CDOID, WeakReference<InternalCDORevision>> trackedViewedRevisions;
 
   private int objectCreationCounter;
 
@@ -275,6 +281,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     viewLock = lock;
     viewLockCondition = lock.newCondition();
     viewAccess = new Access(lock);
+
+    if (session != null && session.getRepositoryInfo().isAuthorizing())
+    {
+      trackedViewedRevisions = new HashMap<>();
+    }
 
     if (DISABLE_INTRINSIC_MONITOR_CHECK)
     {
@@ -528,11 +539,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     return viewAccess.access();
   }
 
-  /**
-   * Returns whether the current thread holds this view's access lock.
-   *
-   * @since 4.31
-   */
+  @Override
   public final boolean isAccessHeldByCurrentThread()
   {
     return viewLock instanceof NonFairReentrantLock && ((NonFairReentrantLock)viewLock).isHeldByCurrentThread();
@@ -2350,6 +2357,11 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         }
       }
 
+      if (trackedViewedRevisions != null)
+      {
+        updateViewedRevision(object.cdoID(), getTrackedViewedRevision(object));
+      }
+
       objectRegistered(object);
     }
   }
@@ -2365,6 +2377,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
 
       removeObject(object.cdoID());
+      updateViewedRevision(object.cdoID(), null);
     }
   }
 
@@ -2412,6 +2425,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   protected void objectCollected(CDOID id)
   {
+    updateViewedRevision(id, null);
+
     if (bypassRegistrationHandlers)
     {
       return;
@@ -2791,29 +2806,181 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     try (Access access = access())
     {
-      for (InternalCDOObject object : objects.values())
+      collectViewedRevisionsUnsynced(revisions);
+    }
+  }
+
+  @Override
+  public boolean tryCollectViewedRevisions(Map<CDOID, InternalCDORevision> revisions)
+  {
+    if (!viewLock.tryLock())
+    {
+      collectTrackedViewedRevisions(revisions);
+      return false;
+    }
+
+    try
+    {
+      collectViewedRevisionsUnsynced(revisions);
+      return true;
+    }
+    finally
+    {
+      viewLock.unlock();
+    }
+  }
+
+  @Override
+  public boolean updateViewedRevision(CDOID id, InternalCDORevision revision)
+  {
+    Map<CDOID, WeakReference<InternalCDORevision>> trackedRevisions = trackedViewedRevisions;
+    if (trackedRevisions == null)
+    {
+      return false;
+    }
+
+    if (id != null)
+    {
+      synchronized (trackedViewedRevisionsLock)
       {
-        CDOState state = object.cdoState();
-        if (state != CDOState.CLEAN && state != CDOState.DIRTY && state != CDOState.CONFLICT)
-        {
-          continue;
-        }
-
-        CDOID id = object.cdoID();
-        if (revisions.containsKey(id))
-        {
-          continue;
-        }
-
-        InternalCDORevision revision = getViewedRevision(object);
         if (revision == null)
         {
-          continue;
+          trackedRevisions.remove(id);
         }
+        else
+        {
+          WeakReference<InternalCDORevision> reference = trackedRevisions.get(id);
+          InternalCDORevision previousRevision = reference == null ? null : reference.get();
+          if (previousRevision != revision)
+          {
+            if (previousRevision != null && sameRevisionKey(previousRevision, revision) && !revision.isFrozen())
+            {
+              revision.setPermission(previousRevision.getPermission());
+            }
 
-        revisions.put(id, revision);
+            trackedRevisions.put(id, new WeakReference<>(revision));
+          }
+        }
       }
     }
+
+    return true;
+  }
+
+  @Override
+  public Map<CDORevision, CDOPermission> synchronizeTrackedViewedRevisions(Map<CDOID, InternalCDORevision> sourceRevisions)
+  {
+    Map<CDORevision, CDOPermission> oldPermissions = new HashMap<>();
+
+    Map<CDOID, WeakReference<InternalCDORevision>> trackedRevisions = trackedViewedRevisions;
+    if (trackedRevisions == null)
+    {
+      return oldPermissions;
+    }
+
+    synchronized (trackedViewedRevisionsLock)
+    {
+      Iterator<Map.Entry<CDOID, WeakReference<InternalCDORevision>>> iterator = trackedRevisions.entrySet().iterator();
+      while (iterator.hasNext())
+      {
+        Map.Entry<CDOID, WeakReference<InternalCDORevision>> entry = iterator.next();
+        CDOID id = entry.getKey();
+        WeakReference<InternalCDORevision> reference = entry.getValue();
+        InternalCDORevision revision = reference.get();
+        if (revision == null)
+        {
+          iterator.remove();
+        }
+        else
+        {
+          InternalCDORevision sourceRevision = sourceRevisions.get(id);
+          if (sourceRevision != null && sourceRevision != revision && sameRevisionKey(sourceRevision, revision) && !revision.isFrozen())
+          {
+            CDOPermission oldPermission = revision.getPermission();
+            CDOPermission newPermission = sourceRevision.getPermission();
+            if (oldPermission != newPermission)
+            {
+              oldPermissions.put(revision, oldPermission);
+              revision.setPermission(newPermission);
+            }
+          }
+        }
+      }
+    }
+
+    return oldPermissions;
+  }
+
+  private void collectTrackedViewedRevisions(Map<CDOID, InternalCDORevision> revisions)
+  {
+    Map<CDOID, WeakReference<InternalCDORevision>> trackedRevisions = trackedViewedRevisions;
+    if (trackedRevisions == null)
+    {
+      return;
+    }
+
+    synchronized (trackedViewedRevisionsLock)
+    {
+      Iterator<Map.Entry<CDOID, WeakReference<InternalCDORevision>>> iterator = trackedRevisions.entrySet().iterator();
+      while (iterator.hasNext())
+      {
+        Map.Entry<CDOID, WeakReference<InternalCDORevision>> entry = iterator.next();
+
+        CDOID id = entry.getKey();
+        WeakReference<InternalCDORevision> reference = entry.getValue();
+
+        InternalCDORevision revision = reference.get();
+        if (revision == null)
+        {
+          iterator.remove();
+        }
+        else
+        {
+          revisions.putIfAbsent(id, revision);
+        }
+      }
+    }
+  }
+
+  private boolean sameRevisionKey(InternalCDORevision revision1, InternalCDORevision revision2)
+  {
+    CDOID id = revision1.getID();
+    CDOBranch branch = revision1.getBranch();
+    return id != null //
+        && id.equals(revision2.getID()) //
+        && branch != null //
+        && branch.equals(revision2.getBranch()) && revision1.getVersion() == revision2.getVersion() //
+        && revision1.getTimeStamp() == revision2.getTimeStamp();
+  }
+
+  private void collectViewedRevisionsUnsynced(Map<CDOID, InternalCDORevision> revisions)
+  {
+    for (InternalCDOObject object : objects.values())
+    {
+      CDOID id = object.cdoID();
+      if (revisions.containsKey(id))
+      {
+        continue;
+      }
+
+      InternalCDORevision revision = getTrackedViewedRevision(object);
+      if (revision == null)
+      {
+        continue;
+      }
+
+      revisions.put(id, revision);
+    }
+  }
+
+  private InternalCDORevision getTrackedViewedRevision(InternalCDOObject object)
+  {
+    if (!object.cdoState().isTracked())
+    {
+      return null;
+    }
+
+    return object.cdoRevision();
   }
 
   protected InternalCDORevision getViewedRevision(InternalCDOObject object)
@@ -2875,6 +3042,15 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
     viewSet = null;
     objects = null;
+
+    if (trackedViewedRevisions != null)
+    {
+      synchronized (trackedViewedRevisionsLock)
+      {
+        trackedViewedRevisions.clear();
+      }
+    }
+
     store = null;
     resourcePathCache = null;
     lastLookupID = null;

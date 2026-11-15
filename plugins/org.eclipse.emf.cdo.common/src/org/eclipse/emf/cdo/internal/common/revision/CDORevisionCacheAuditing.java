@@ -159,6 +159,20 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
   @Override
   public CDORevision internRevision(CDORevision revision)
   {
+    InternResult result = internRevisionDeferredEvents(revision);
+
+    Runnable eventDispatcher = result.getEventDispatcher();
+    if (eventDispatcher != null)
+    {
+      eventDispatcher.run();
+    }
+
+    return result.getRevision();
+  }
+
+  @Override
+  public InternResult internRevisionDeferredEvents(CDORevision revision)
+  {
     CheckUtil.checkArg(revision, "revision"); //$NON-NLS-1$
 
     CDOBranch branch = revision.getBranch();
@@ -168,42 +182,40 @@ public class CDORevisionCacheAuditing extends AbstractCDORevisionCache
     Object key = createKey(id, branch);
 
     IListener[] listeners = getListeners();
-    CacheAdditionEvent event = null;
+    CDORevision cachedRevision;
+    boolean added = false;
 
-    try
+    synchronized (revisionLists)
     {
-      synchronized (revisionLists)
+      RevisionList list = revisionLists.get(key);
+      if (list == null)
       {
-        RevisionList list = revisionLists.get(key);
-        if (list == null)
-        {
-          list = new RevisionList();
-          revisionLists.put(key, list);
-        }
-
-        CDORevision cachedRevision = list.addRevision(revision, () -> createReference(revision));
-        if (cachedRevision != revision)
-        {
-          return cachedRevision;
-        }
-
-        typeRefIncrease(id, revision.getEClass());
+        list = new RevisionList();
+        revisionLists.put(key, list);
       }
 
-      if (listeners.length != 0)
+      cachedRevision = list.getRevisionByVersion(revision.getVersion());
+      if (cachedRevision == null)
       {
-        event = new CacheAdditionEvent(this, revision);
-      }
+        cachedRevision = list.addRevision(revision, () -> createReference(revision));
 
-      return revision;
-    }
-    finally
-    {
-      if (event != null)
-      {
-        fireEvent(event, listeners);
+        added = cachedRevision == revision;
+        if (added)
+        {
+          typeRefIncrease(id, revision.getEClass());
+        }
       }
     }
+
+    Runnable eventDispatcher = null;
+
+    if (added && listeners.length != 0)
+    {
+      CacheAdditionEvent event = new CacheAdditionEvent(this, revision);
+      eventDispatcher = () -> fireEvent(event, listeners);
+    }
+
+    return new InternResult(cachedRevision, eventDispatcher);
   }
 
   @Override

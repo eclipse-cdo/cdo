@@ -108,6 +108,15 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
       }
     });
 
+    add(new Property<RECEIVER>("authorizing")
+    {
+      @Override
+      protected Object eval(RECEIVER receiver)
+      {
+        return getRepository(receiver).isAuthorizing();
+      }
+    });
+
     add(new Property<RECEIVER>("supportingLoginPeeks")
     {
       @Override
@@ -328,6 +337,12 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
 
   @Override
   public boolean isAuthenticating()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean isAuthorizing()
   {
     throw new UnsupportedOperationException();
   }

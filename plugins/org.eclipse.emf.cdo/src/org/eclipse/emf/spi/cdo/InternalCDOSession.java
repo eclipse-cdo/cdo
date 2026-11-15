@@ -67,6 +67,7 @@ import java.util.concurrent.CompletableFuture;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
+@SuppressWarnings("deprecation")
 public interface InternalCDOSession
     extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, CDORevisionUnchunker, CDOLobLoader, ILifecycle, IExecutorServiceProvider
 {

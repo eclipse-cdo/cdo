@@ -101,7 +101,6 @@ import org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.DetachedCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
@@ -457,12 +456,13 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public boolean isAuthenticating()
   {
-    if (sessionManager != null)
-    {
-      return sessionManager.getAuthenticator() != null;
-    }
+    return sessionManager != null && sessionManager.getAuthenticator() != null;
+  }
 
-    return false;
+  @Override
+  public boolean isAuthorizing()
+  {
+    return sessionManager != null && sessionManager.getPermissionManager() != null;
   }
 
   @Override
@@ -695,8 +695,7 @@ public class Repository extends Container<Object> implements InternalRepository
         }
       }
 
-      InternalCDORevisionCache revisionCache = getRevisionManager().getCache();
-      revisionCache.removeRevisions(branches);
+      getRevisionManager().removeRevisions(branches);
 
       return branches;
     }

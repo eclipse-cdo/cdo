@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.object.CDOLegacyWrapper;
+import org.eclipse.emf.internal.cdo.util.ExtensionRegistryBootstrap;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -81,6 +82,10 @@ public abstract class AbstractCDOTest extends ConfigTest
 {
   static
   {
+    // Make sure that, in standalone mode, the Eclipse extension registry
+    // is initialized BEFORE makeUnmodifiable() is called below!
+    ExtensionRegistryBootstrap.init();
+
     // Make sure that the Net4j resource factories are registered before registrations become impossible.
     CDONet4jUtil.createNet4jSessionConfiguration();
 

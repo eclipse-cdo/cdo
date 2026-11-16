@@ -102,7 +102,7 @@ import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 import org.eclipse.emf.internal.cdo.session.remote.CDORemoteSessionManagerImpl;
 import org.eclipse.emf.internal.cdo.util.AbstractLocksChangedEvent;
-import org.eclipse.emf.internal.cdo.util.EMFPackageRegistryBootstrap;
+import org.eclipse.emf.internal.cdo.util.ExtensionRegistryBootstrap;
 import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -297,7 +297,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   static
   {
-    EMFPackageRegistryBootstrap.init();
+    ExtensionRegistryBootstrap.init();
   }
 
   public CDOSessionImpl()

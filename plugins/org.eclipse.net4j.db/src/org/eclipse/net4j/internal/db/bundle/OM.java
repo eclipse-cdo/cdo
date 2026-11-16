@@ -11,19 +11,11 @@
  */
 package org.eclipse.net4j.internal.db.bundle;
 
-import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.internal.db.DBAdapterDescriptor;
-import org.eclipse.net4j.internal.db.DBAdapterRegistry;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.trace.OMTracer;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 
 /**
 * The <em>Operations &amp; Maintenance</em> class of this bundle.
@@ -52,51 +44,6 @@ public abstract class OM
     public Activator()
     {
       super(BUNDLE);
-    }
-
-    @Override
-    protected void doStart() throws Exception
-    {
-      initDBAdapterRegistry();
-    }
-
-    private void initDBAdapterRegistry()
-    {
-      IExtensionRegistry registry = Platform.getExtensionRegistry();
-      IConfigurationElement[] elements = registry.getConfigurationElementsFor(BUNDLE_ID, EXT_POINT);
-
-      for (final IConfigurationElement element : elements)
-      {
-        if ("dbAdapter".equals(element.getName())) //$NON-NLS-1$
-        {
-          String name = element.getAttribute("name");
-          String version = element.getAttribute("version");
-          String productNames = element.getAttribute("productNames");
-          String productNamePattern = element.getAttribute("productNamePattern");
-          String driverNamePattern = element.getAttribute("driverNamePattern");
-          String urlPattern = element.getAttribute("urlPattern");
-          String[] productNameArray = productNames == null || productNames.trim().isEmpty() ? null : productNames.split("\\s*,\\s*");
-
-          DBAdapterDescriptor descriptor = new DBAdapterDescriptor(name, version, productNameArray, productNamePattern, driverNamePattern, urlPattern)
-          {
-            @Override
-            public IDBAdapter createDBAdapter()
-            {
-              try
-              {
-                return (IDBAdapter)element.createExecutableExtension("class"); //$NON-NLS-1$
-              }
-              catch (CoreException ex)
-              {
-                OM.LOG.error(ex);
-                return null;
-              }
-            }
-          };
-
-          DBAdapterRegistry.INSTANCE.addDescriptor(descriptor);
-        }
-      }
     }
   }
 }

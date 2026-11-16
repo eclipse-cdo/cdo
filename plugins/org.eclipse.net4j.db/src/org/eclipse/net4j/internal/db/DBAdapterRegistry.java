@@ -17,7 +17,24 @@ import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.spi.db.DelegatingDBAdapter;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.om.OMPlatform;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.Platform;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.XMLConstants;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -25,12 +42,15 @@ import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.regex.Pattern;
 
 /**
@@ -40,7 +60,7 @@ import java.util.regex.Pattern;
  */
 public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdapter>> implements Registry
 {
-  public static final DBAdapterRegistry INSTANCE = new DBAdapterRegistry();
+  public static final DBAdapterRegistry INSTANCE = createInstance();
 
   /**
    * Values are either an eagerly registered adapter or a lazy descriptor.
@@ -266,48 +286,6 @@ public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdap
     }
   }
 
-  private Registration[] getRegistrations()
-  {
-    List<Map.Entry<IDBAdapterID, IDBAdapterID>> snapshot = new ArrayList<>();
-
-    synchronized (this)
-    {
-      for (IDBAdapterID id : allKeys())
-      {
-        IDBAdapterID source = descriptors.get(id);
-        if (source == null)
-        {
-          source = entries.get(id);
-        }
-
-        snapshot.add(new AbstractMap.SimpleImmutableEntry<>(DBAdapterID.copy(id), source));
-      }
-    }
-
-    List<Registration> result = new ArrayList<>(snapshot.size());
-
-    for (Map.Entry<IDBAdapterID, IDBAdapterID> entry : snapshot)
-    {
-      IDBAdapterID id = entry.getKey();
-      IDBAdapterID value = entry.getValue();
-
-      if (value instanceof DBAdapterDescriptor)
-      {
-        DBAdapterDescriptor descriptor = (DBAdapterDescriptor)value;
-        result.add(new Registration(id, descriptor.getDatabaseProductNames(), descriptor.getDatabaseProductNamePattern(),
-            descriptor.getDatabaseDriverNamePattern(), descriptor.getDatabaseURLPattern()));
-      }
-      else if (value instanceof IDBAdapter)
-      {
-        IDBAdapter adapter = (IDBAdapter)value;
-        result.add(new Registration(id, adapter.getDatabaseProductNames(), adapter.getDatabaseProductNamePattern(), adapter.getDatabaseDriverNamePattern(),
-            adapter.getDatabaseURLPattern()));
-      }
-    }
-
-    return result.toArray(new Registration[0]);
-  }
-
   @Override
   public synchronized IDBAdapter get(Object key)
   {
@@ -431,7 +409,7 @@ public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdap
   public synchronized Map.Entry<String, IDBAdapter>[] getElements()
   {
     @SuppressWarnings("unchecked")
-    Map.Entry<String, IDBAdapter>[] result = (Map.Entry<String, IDBAdapter>[])entrySet().toArray();
+    Map.Entry<String, IDBAdapter>[] result = entrySet().toArray(new Map.Entry[0]);
     return result;
   }
 
@@ -513,6 +491,48 @@ public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdap
     throw new UnsupportedOperationException("DB adapter deregistration is not supported");
   }
 
+  private Registration[] getRegistrations()
+  {
+    List<Map.Entry<IDBAdapterID, IDBAdapterID>> snapshot = new ArrayList<>();
+
+    synchronized (this)
+    {
+      for (IDBAdapterID id : allKeys())
+      {
+        IDBAdapterID source = descriptors.get(id);
+        if (source == null)
+        {
+          source = entries.get(id);
+        }
+
+        snapshot.add(new AbstractMap.SimpleImmutableEntry<>(DBAdapterID.copy(id), source));
+      }
+    }
+
+    List<Registration> result = new ArrayList<>(snapshot.size());
+
+    for (Map.Entry<IDBAdapterID, IDBAdapterID> entry : snapshot)
+    {
+      IDBAdapterID id = entry.getKey();
+      IDBAdapterID value = entry.getValue();
+
+      if (value instanceof DBAdapterDescriptor)
+      {
+        DBAdapterDescriptor descriptor = (DBAdapterDescriptor)value;
+        result.add(new Registration(id, descriptor.getDatabaseProductNames(), descriptor.getDatabaseProductNamePattern(),
+            descriptor.getDatabaseDriverNamePattern(), descriptor.getDatabaseURLPattern()));
+      }
+      else if (value instanceof IDBAdapter)
+      {
+        IDBAdapter adapter = (IDBAdapter)value;
+        result.add(new Registration(id, adapter.getDatabaseProductNames(), adapter.getDatabaseProductNamePattern(), adapter.getDatabaseDriverNamePattern(),
+            adapter.getDatabaseURLPattern()));
+      }
+    }
+
+    return result.toArray(new Registration[0]);
+  }
+
   private void rejectDuplicate(DBAdapterID id)
   {
     if (entries.containsKey(id))
@@ -574,9 +594,409 @@ public final class DBAdapterRegistry extends Container<Map.Entry<String, IDBAdap
     return result;
   }
 
+  private void initialize()
+  {
+    BiConsumer<DBAdapterDescriptor, Object> consumer = (descriptor, source) -> {
+      try
+      {
+        addDescriptor(descriptor);
+      }
+      catch (IllegalArgumentException ex)
+      {
+        OM.LOG.error("Invalid DB adapter contribution " + descriptor + " from " + source, ex);
+      }
+    };
+
+    if (OMPlatform.INSTANCE.isOSGiRunning())
+    {
+      OSGiDBAdapterDescriptor.collect(consumer);
+    }
+    else
+    {
+      StandaloneDBAdapterDescriptor.collect(consumer);
+    }
+  }
+
+  private static String[] parseProductNames(String productNames)
+  {
+    return productNames == null || productNames.trim().isEmpty() ? null : productNames.split("\\s*,\\s*"); //$NON-NLS-1$
+  }
+
+  private static void validateRequiredAttributes(String name, String version, String className, Object source)
+  {
+    if (name == null || name.trim().isEmpty())
+    {
+      throw new IllegalArgumentException("DB adapter contribution from " + source + " is missing required attribute 'name'"); //$NON-NLS-1$
+    }
+
+    if (version == null || version.trim().isEmpty())
+    {
+      throw new IllegalArgumentException("DB adapter contribution '" + name + "' from " + source + " is missing required attribute 'version'"); //$NON-NLS-1$
+    }
+
+    if (className == null || className.trim().isEmpty())
+    {
+      throw new IllegalArgumentException("DB adapter contribution '" + name + "' from " + source + " is missing required attribute 'class'"); //$NON-NLS-1$
+    }
+  }
+
   private static Map.Entry<String, IDBAdapter> entry(IDBAdapterID id, IDBAdapter adapter)
   {
     return new AbstractMap.SimpleImmutableEntry<>(id.getName(), adapter);
+  }
+
+  private static DBAdapterRegistry createInstance()
+  {
+    DBAdapterRegistry registry = new DBAdapterRegistry();
+    registry.initialize();
+    return registry;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class OSGiDBAdapterDescriptor extends DBAdapterDescriptor
+  {
+    private final IConfigurationElement element;
+
+    private OSGiDBAdapterDescriptor(IConfigurationElement element)
+    {
+      super( //
+          attribute(element, "name"), //$NON-NLS-1$
+          attribute(element, "version"), //$NON-NLS-1$
+          parseProductNames(attribute(element, "productNames")), //$NON-NLS-1$
+          attribute(element, "productNamePattern"), //$NON-NLS-1$
+          attribute(element, "driverNamePattern"), //$NON-NLS-1$
+          attribute(element, "urlPattern") //$NON-NLS-1$
+      );
+
+      validateRequiredAttributes(getName(), getVersion(), attribute(element, "class"), element); //$NON-NLS-1$
+      this.element = element;
+    }
+
+    @Override
+    public IDBAdapter createDBAdapter()
+    {
+      try
+      {
+        return (IDBAdapter)element.createExecutableExtension("class"); //$NON-NLS-1$
+      }
+      catch (CoreException ex)
+      {
+        OM.LOG.error(ex);
+        return null;
+      }
+    }
+
+    public static void collect(BiConsumer<DBAdapterDescriptor, Object> consumer)
+    {
+      IExtensionRegistry registry = Platform.getExtensionRegistry();
+      IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, OM.EXT_POINT);
+
+      for (IConfigurationElement element : elements)
+      {
+        if ("dbAdapter".equals(element.getName())) //$NON-NLS-1$
+        {
+          DBAdapterDescriptor descriptor;
+
+          try
+          {
+            descriptor = new OSGiDBAdapterDescriptor(element);
+          }
+          catch (RuntimeException ex)
+          {
+            OM.LOG.error("Could not create DB adapter contribution from " + element, ex);
+            continue;
+          }
+
+          consumer.accept(descriptor, element);
+        }
+      }
+    }
+
+    private static String attribute(IConfigurationElement element, String name)
+    {
+      String value = element.getAttribute(name);
+      return value == null || value.trim().isEmpty() ? null : value;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class StandaloneDBAdapterDescriptor extends DBAdapterDescriptor
+  {
+    private final ClassLoader loader;
+
+    private final URL resource;
+
+    private final String className;
+
+    private StandaloneDBAdapterDescriptor(ClassLoader loader, URL resource, Element element)
+    {
+      super( //
+          attribute(element, "name"), //$NON-NLS-1$
+          attribute(element, "version"), //$NON-NLS-1$
+          parseProductNames(attribute(element, "productNames")), //$NON-NLS-1$
+          attribute(element, "productNamePattern"), //$NON-NLS-1$
+          attribute(element, "driverNamePattern"), //$NON-NLS-1$
+          attribute(element, "urlPattern") //$NON-NLS-1$
+      );
+
+      this.loader = loader;
+      this.resource = resource;
+      className = attribute(element, "class"); //$NON-NLS-1$
+
+      validateRequiredAttributes(getName(), getVersion(), className, resource);
+    }
+
+    @Override
+    public IDBAdapter createDBAdapter()
+    {
+      try
+      {
+        Class<?> adapterClass = loadAdapterClass(className, loader);
+        return (IDBAdapter)adapterClass.getDeclaredConstructor().newInstance();
+      }
+      catch (Exception | LinkageError ex)
+      {
+        OM.LOG.error("Could not create DB adapter " + getName() + " from " + resource, ex);
+        return null;
+      }
+    }
+
+    public static void collect(BiConsumer<DBAdapterDescriptor, Object> consumer)
+    {
+      Set<URL> discovered = new HashSet<>();
+
+      ClassLoader contextLoader = Thread.currentThread().getContextClassLoader();
+      if (contextLoader != null)
+      {
+        discoverResources(consumer, contextLoader, discovered);
+      }
+
+      ClassLoader registryLoader = DBAdapterRegistry.class.getClassLoader();
+      if (registryLoader != contextLoader)
+      {
+        discoverResources(consumer, registryLoader, discovered);
+      }
+
+      discoverClasspathEntries(consumer, contextLoader == null ? registryLoader : contextLoader, discovered);
+    }
+
+    private static void discoverResources(BiConsumer<DBAdapterDescriptor, Object> consumer, ClassLoader loader, Set<URL> discovered)
+    {
+      try
+      {
+        Enumeration<URL> resources = loader.getResources("plugin.xml"); //$NON-NLS-1$
+
+        while (resources.hasMoreElements())
+        {
+          URL resource = null;
+
+          try
+          {
+            resource = resources.nextElement();
+            resource = normalizeResource(resource);
+            if (discovered.add(resource))
+            {
+              try (InputStream input = resource.openStream())
+              {
+                registerContributions(consumer, loader, resource, input);
+              }
+            }
+          }
+          catch (IllegalStateException ex)
+          {
+            throw ex;
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error("Could not read DB adapter contributions from " + resource, ex);
+          }
+        }
+      }
+      catch (IllegalStateException ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error("Could not discover DB adapter plugin.xml resources", ex);
+      }
+    }
+
+    private static void discoverClasspathEntries(BiConsumer<DBAdapterDescriptor, Object> consumer, ClassLoader loader, Set<URL> discovered)
+    {
+      String classpath = System.getProperty("java.class.path"); //$NON-NLS-1$
+      if (classpath == null || classpath.trim().isEmpty())
+      {
+        return;
+      }
+
+      for (String entry : classpath.split(Pattern.quote(File.pathSeparator)))
+      {
+        File directory = new File(entry.trim());
+        if (!directory.isDirectory())
+        {
+          continue;
+        }
+
+        File candidate = directory;
+        for (int level = 0; level <= 2 && candidate != null; ++level, candidate = candidate.getParentFile())
+        {
+          File pluginXML = new File(candidate, "plugin.xml"); //$NON-NLS-1$
+          if (pluginXML.isFile())
+          {
+            try
+            {
+              URL resource = normalizeResource(pluginXML.toURI().toURL());
+              if (discovered.add(resource))
+              {
+                try (InputStream input = resource.openStream())
+                {
+                  registerContributions(consumer, loader, resource, input);
+                }
+                catch (IllegalStateException ex)
+                {
+                  throw ex;
+                }
+                catch (Exception ex)
+                {
+                  OM.LOG.error("Could not read DB adapter contributions from " + resource, ex);
+                }
+              }
+            }
+            catch (IllegalStateException ex)
+            {
+              throw ex;
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error("Could not locate DB adapter contributions from " + pluginXML, ex);
+            }
+
+            break;
+          }
+        }
+      }
+    }
+
+    private static void registerContributions(BiConsumer<DBAdapterDescriptor, Object> consumer, ClassLoader loader, URL resource, InputStream input)
+        throws Exception
+    {
+      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      factory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true); //$NON-NLS-1$
+      factory.setFeature("http://xml.org/sax/features/external-general-entities", false); //$NON-NLS-1$
+      factory.setFeature("http://xml.org/sax/features/external-parameter-entities", false); //$NON-NLS-1$
+      factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false); //$NON-NLS-1$
+      factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, ""); //$NON-NLS-1$
+      factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_SCHEMA, ""); //$NON-NLS-1$
+      factory.setXIncludeAware(false);
+      factory.setExpandEntityReferences(false);
+
+      Document document = factory.newDocumentBuilder().parse(input);
+      Element root = document.getDocumentElement();
+      NodeList extensions = root.getElementsByTagName("extension"); //$NON-NLS-1$
+
+      for (int i = 0; i < extensions.getLength(); ++i)
+      {
+        Element extension = (Element)extensions.item(i);
+        if ("org.eclipse.net4j.db.dbAdapters".equals(extension.getAttribute("point"))) //$NON-NLS-1$
+        {
+          for (Node node = extension.getFirstChild(); node != null; node = node.getNextSibling())
+          {
+            if (node instanceof Element && "dbAdapter".equals(node.getNodeName())) //$NON-NLS-1$
+            {
+              DBAdapterDescriptor descriptor;
+
+              try
+              {
+                descriptor = new StandaloneDBAdapterDescriptor(loader, resource, (Element)node);
+              }
+              catch (RuntimeException ex)
+              {
+                OM.LOG.error("Could not create DB adapter contribution from " + resource, ex);
+                continue;
+              }
+
+              consumer.accept(descriptor, resource);
+            }
+          }
+        }
+      }
+    }
+
+    private static URL normalizeResource(URL resource) throws Exception
+    {
+      if ("file".equals(resource.getProtocol())) //$NON-NLS-1$
+      {
+        return new File(resource.toURI()).getCanonicalFile().toURI().toURL();
+      }
+
+      return resource.toURI().normalize().toURL();
+    }
+
+    private static Class<?> loadAdapterClass(String className, ClassLoader preferredLoader) throws ClassNotFoundException
+    {
+      Set<ClassLoader> loaders = new LinkedHashSet<>();
+      if (preferredLoader != null)
+      {
+        loaders.add(preferredLoader);
+      }
+
+      ClassLoader contextLoader = Thread.currentThread().getContextClassLoader();
+      if (contextLoader != null)
+      {
+        loaders.add(contextLoader);
+      }
+
+      ClassLoader registryLoader = DBAdapterRegistry.class.getClassLoader();
+      if (registryLoader != null)
+      {
+        loaders.add(registryLoader);
+      }
+
+      ClassLoader systemLoader = ClassLoader.getSystemClassLoader();
+      if (systemLoader != null)
+      {
+        loaders.add(systemLoader);
+      }
+
+      ClassNotFoundException failure = null;
+      for (ClassLoader loader : loaders)
+      {
+        try
+        {
+          Class<?> adapterClass = Class.forName(className, false, loader);
+          if (IDBAdapter.class.isAssignableFrom(adapterClass))
+          {
+            return adapterClass;
+          }
+        }
+        catch (ClassNotFoundException ex)
+        {
+          failure = ex;
+        }
+        catch (LinkageError ex)
+        {
+          failure = new ClassNotFoundException("Could not load DB adapter class " + className, ex); //$NON-NLS-1$
+        }
+      }
+
+      if (failure != null)
+      {
+        throw failure;
+      }
+
+      throw new ClassNotFoundException("Could not load DB adapter class " + className + " from the available class loaders"); //$NON-NLS-1$
+    }
+
+    private static String attribute(Element element, String name)
+    {
+      String value = element.getAttribute(name);
+      return value == null || value.trim().isEmpty() ? null : value;
+    }
   }
 
   /**

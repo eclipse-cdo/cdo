@@ -22,6 +22,8 @@ import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 
+import org.eclipse.emf.internal.cdo.util.ExtensionRegistryBootstrap;
+
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ParameterAware;
 import org.eclipse.net4j.util.StringUtil;
@@ -100,6 +102,11 @@ public class RepositoryConfigurator implements IManagedContainerProvider
       { ELEM_PROPERTY, ELEM_STORE, ELEM_USER_MANAGER, ELEM_AUTHENTICATOR, ELEM_OPERATION_AUTHORIZER, ELEM_ACTIVITY_LOG, ELEM_INITIAL_PACKAGE };
 
   private static final Set<String> BUILTIN_ELEMENTS_SET = new HashSet<>(Arrays.asList(BUILTIN_ELEMENTS));
+
+  static
+  {
+    ExtensionRegistryBootstrap.init();
+  }
 
   private final IManagedContainer container;
 

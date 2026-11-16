@@ -121,7 +121,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator.TreeExtension;
 
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
-import org.eclipse.emf.internal.cdo.util.EMFPackageRegistryBootstrap;
+import org.eclipse.emf.internal.cdo.util.ExtensionRegistryBootstrap;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -327,7 +327,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
   static
   {
-    EMFPackageRegistryBootstrap.init();
+    ExtensionRegistryBootstrap.init();
   }
 
   /**

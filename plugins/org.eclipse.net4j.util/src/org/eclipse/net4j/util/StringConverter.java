@@ -271,6 +271,14 @@ public interface StringConverter extends Function<Object, String>
     }
   };
 
+  /**
+   * Looks up an OMPlatform property by name. With one argument, it returns the property value or {@code null} if absent.
+   * The argument may also be {@code propertyName,defaultValue}; then the default is returned only when the property is
+   * absent, not when its value is empty. For example, {@code $$$system_property(transport,tcp)$$$} returns {@code tcp}
+   * when {@code transport} is undefined.
+   *
+   * @since 3.31
+   */
   public static final StringConverter SYSTEM_PROPERTY = new StringConverter()
   {
     @Override
@@ -282,7 +290,11 @@ public interface StringConverter extends Function<Object, String>
       }
 
       String str = value.toString();
-      return OMPlatform.INSTANCE.getProperty(str);
+      int separator = str.indexOf(',');
+
+      String propertyName = separator < 0 ? str : str.substring(0, separator);
+      String propertyValue = OMPlatform.INSTANCE.getProperty(propertyName);
+      return propertyValue != null || separator < 0 ? propertyValue : str.substring(separator + 1);
     }
   };
 

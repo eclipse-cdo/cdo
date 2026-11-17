@@ -57,7 +57,7 @@ public final class StringUtil
 
   private static final int NO_SEPARATOR = -1;
 
-  private static final Pattern STRING_CONVERTER_PATTERN = Pattern.compile("\\$\\$\\$([^(]+)\\((.*)\\)\\$\\$\\$");
+  private static final String STRING_CONVERTER_DELIMITER = "$$$"; //$NON-NLS-1$
 
   private StringUtil()
   {
@@ -748,14 +748,31 @@ public final class StringUtil
   }
 
   /**
+   * Converts the expressions in a string using converters from the given container. Converter expressions use the
+   * form {@code $$$name(arguments)$$$}; nested expressions are evaluated from the inside out. For example,
+   * {@code $$$equalsIgnoreCase($$$upper(ws)$$$,WS)$$$} evaluates to {@code true}. Multiple independent expressions
+   * are converted in order. Unknown, malformed, and unbalanced expressions are preserved, and converter results are
+   * not parsed again. A {@code null} container leaves the string unchanged.
+   *
+   * @param str the string that may contain converter expressions
+   * @param container the container used to resolve converters
+   * @return the string with recognized converter expressions evaluated
    * @since 3.23
    */
   public static String convert(String str, IManagedContainer container)
   {
-    return convert(str, container, STRING_CONVERTER_PATTERN);
+    return convertExpressions(str, container);
   }
 
   /**
+   * Converts matches of the supplied pattern using the first two capture groups as the converter type and argument.
+   * This overload retains the pattern-based, single-pass behavior; use {@link #convert(String, IManagedContainer)} for
+   * the standard nested {@code $$$name(arguments)$$$} syntax.
+   *
+   * @param str the string to convert
+   * @param container the container used to resolve converters
+   * @param pattern the pattern whose first two capture groups contain the converter type and argument
+   * @return the string with recognized matches converted
    * @since 3.23
    */
   public static String convert(String str, IManagedContainer container, Pattern pattern)
@@ -790,6 +807,96 @@ public final class StringUtil
     }
 
     return str;
+  }
+
+  private static String convertExpressions(String str, IManagedContainer container)
+  {
+    if (str == null || container == null)
+    {
+      return str;
+    }
+
+    StringBuilder builder = new StringBuilder();
+    int offset = 0;
+
+    while (offset < str.length())
+    {
+      int expressionStart = str.indexOf(STRING_CONVERTER_DELIMITER, offset);
+      if (expressionStart < 0)
+      {
+        builder.append(str, offset, str.length());
+        break;
+      }
+
+      builder.append(str, offset, expressionStart);
+
+      int argumentsStart = str.indexOf('(', expressionStart + STRING_CONVERTER_DELIMITER.length());
+      int nextDelimiter = str.indexOf(STRING_CONVERTER_DELIMITER, expressionStart + STRING_CONVERTER_DELIMITER.length());
+
+      if (argumentsStart < 0 || nextDelimiter >= 0 && nextDelimiter < argumentsStart)
+      {
+        builder.append(STRING_CONVERTER_DELIMITER);
+        offset = expressionStart + STRING_CONVERTER_DELIMITER.length();
+        continue;
+      }
+
+      int argumentsEnd = findExpressionEnd(str, argumentsStart);
+      if (argumentsEnd < 0)
+      {
+        int recoveryStart = str.indexOf(STRING_CONVERTER_DELIMITER, expressionStart + STRING_CONVERTER_DELIMITER.length());
+        if (recoveryStart < 0)
+        {
+          builder.append(str.substring(expressionStart));
+          break;
+        }
+
+        builder.append(str, expressionStart, recoveryStart);
+        offset = recoveryStart;
+        continue;
+      }
+
+      String arguments = convertExpressions(str.substring(argumentsStart + 1, argumentsEnd), container);
+      String type = str.substring(expressionStart + STRING_CONVERTER_DELIMITER.length(), argumentsStart);
+
+      StringConverter converter = container.getElementOrNull(StringConverter.PRODUCT_GROUP, type);
+      if (converter == null)
+      {
+        builder.append(str, expressionStart, argumentsStart + 1);
+        builder.append(arguments);
+        builder.append(str, argumentsEnd, argumentsEnd + 1 + STRING_CONVERTER_DELIMITER.length());
+      }
+      else
+      {
+        builder.append(safe(converter.apply(arguments)));
+      }
+
+      offset = argumentsEnd + 1 + STRING_CONVERTER_DELIMITER.length();
+    }
+
+    return builder.toString();
+  }
+
+  private static int findExpressionEnd(String str, int argumentsStart)
+  {
+    int depth = 0;
+
+    for (int i = argumentsStart; i < str.length(); i++)
+    {
+      char c = str.charAt(i);
+      if (c == '(')
+      {
+        ++depth;
+      }
+      else if (c == ')' && depth > 0)
+      {
+        if (--depth == 0)
+        {
+          return str.startsWith(STRING_CONVERTER_DELIMITER, i + 1) ? i : -1;
+        }
+      }
+    }
+
+    return -1;
   }
 
   /**

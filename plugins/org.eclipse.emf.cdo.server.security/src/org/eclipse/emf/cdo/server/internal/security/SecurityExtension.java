@@ -20,10 +20,12 @@ import org.eclipse.emf.cdo.spi.server.AbstractAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension2;
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
+import org.eclipse.emf.cdo.spi.server.IAppExtension6;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.XMLConfiguration;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import org.w3c.dom.Document;
@@ -44,7 +46,7 @@ import java.io.Reader;
 /**
  * @author Eike Stepper
  */
-public class SecurityExtension extends AbstractAppExtension implements IAppExtension2, IAppExtension4, IAppExtension5
+public class SecurityExtension extends AbstractAppExtension implements IAppExtension2, IAppExtension4, IAppExtension5, IAppExtension6
 {
   public static final String DEFAULT_REALM_PATH = "security";
 
@@ -76,6 +78,12 @@ public class SecurityExtension extends AbstractAppExtension implements IAppExten
   public void start(File configFile) throws Exception
   {
     start(getDocument(configFile));
+  }
+
+  @Override
+  public void start(XMLConfiguration configuration) throws Exception
+  {
+    start(configuration.getDocument());
   }
 
   @Override

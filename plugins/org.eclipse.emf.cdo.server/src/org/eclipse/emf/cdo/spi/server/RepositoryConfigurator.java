@@ -28,6 +28,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ParameterAware;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.XMLConfiguration;
 import org.eclipse.net4j.util.XMLUtil.ElementHandler;
 import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -116,6 +117,8 @@ public class RepositoryConfigurator implements IManagedContainerProvider
 
   private final Map<String, String> parameters = new HashMap<>();
 
+  private XMLConfiguration xmlConfiguration;
+
   public RepositoryConfigurator()
   {
     this(null);
@@ -165,6 +168,42 @@ public class RepositoryConfigurator implements IManagedContainerProvider
     }
 
     return parameters.put(key, value);
+  }
+
+  /**
+   * Returns a copy of parameters initialized by this configurator.
+   *
+   * @return mutable copy suitable for an XML configuration preparation phase
+   * @since 4.27
+   */
+  public Map<String, String> copyParameters()
+  {
+    return new HashMap<>(parameters);
+  }
+
+  /**
+   * Configures repositories from an already prepared shared XML snapshot.
+   *
+   * @param configuration the finalized configuration
+   * @return configured repositories
+   * @throws ParserConfigurationException if the XML parser cannot be configured
+   * @throws SAXException if the configuration XML is invalid
+   * @throws IOException if the configuration cannot be read
+   * @throws CoreException if repository extension creation fails
+   * @since 4.27
+   */
+  public IRepository[] configure(XMLConfiguration configuration) throws ParserConfigurationException, SAXException, IOException, CoreException
+  {
+    xmlConfiguration = configuration;
+
+    try
+    {
+      return configure(configuration.getDocument());
+    }
+    finally
+    {
+      xmlConfiguration = null;
+    }
   }
 
   public IRepository[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException, CoreException
@@ -281,7 +320,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
       TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType); //$NON-NLS-1$
     }
 
-    Map<String, String> properties = getProperties(repositoryConfig, 1, parameters, container);
+    Map<String, String> properties = getConfigurationProperties(repositoryConfig, 1);
 
     Element storeConfig = getStoreConfig(repositoryConfig);
     IStore store = createStore(repositoryName, properties, storeConfig);
@@ -612,7 +651,9 @@ public class RepositoryConfigurator implements IManagedContainerProvider
       ((ParameterAware)storeFactory).setParameters(parameters);
     }
 
-    return storeFactory.createStore(repositoryName, repositoryProperties, storeConfig);
+    return xmlConfiguration == null //
+        ? storeFactory.createStore(repositoryName, repositoryProperties, storeConfig) //
+        : storeFactory.createStore(repositoryName, repositoryProperties, storeConfig, xmlConfiguration);
   }
 
   /**
@@ -629,7 +670,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
     String description = getAttribute(element, "description"); //$NON-NLS-1$
     if (StringUtil.isEmpty(description))
     {
-      Map<String, String> properties = getProperties(element, 1, parameters, container);
+      Map<String, String> properties = getConfigurationProperties(element, 1);
       description = PropertiesFactory.createDescription(properties);
     }
 
@@ -667,8 +708,19 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   protected String getAttribute(Element element, String name)
   {
     String value = element.getAttribute(name);
+
+    if (XMLConfiguration.isExpanded(element))
+    {
+      return value;
+    }
+
     value = expandValue(value, parameters, container);
     return value;
+  }
+
+  private Map<String, String> getConfigurationProperties(Element element, int levels)
+  {
+    return getProperties(element, levels, parameters, container);
   }
 
   /**
@@ -734,7 +786,10 @@ public class RepositoryConfigurator implements IManagedContainerProvider
       String name = element.getAttribute("name"); //$NON-NLS-1$
       String value = element.getAttribute("value"); //$NON-NLS-1$
 
-      value = expandValue(value, parameters, container);
+      if (!XMLConfiguration.isExpanded(element))
+      {
+        value = expandValue(value, parameters, container);
+      }
 
       properties.put(prefix + name, value);
       prefix += name + "."; //$NON-NLS-1$

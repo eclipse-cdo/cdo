@@ -14,6 +14,8 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepository;
 
+import org.eclipse.net4j.util.XMLConfiguration;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -23,7 +25,7 @@ import java.io.File;
  * @author Eike Stepper
  * @since 4.10
  */
-public abstract class AppExtension extends AbstractAppExtension implements IAppExtension3, IAppExtension5
+public abstract class AppExtension extends AbstractAppExtension implements IAppExtension3, IAppExtension5, IAppExtension6
 {
   public AppExtension()
   {
@@ -54,6 +56,18 @@ public abstract class AppExtension extends AbstractAppExtension implements IAppE
   public void start(IRepository[] repositories, File configFile) throws Exception
   {
     Document document = getDocument(configFile);
+
+    start(repositories, document);
+  }
+
+  @Override
+  public void start(IRepository[] repositories, XMLConfiguration configuration) throws Exception
+  {
+    start(repositories, configuration.getDocument());
+  }
+
+  private void start(IRepository[] repositories, Document document) throws Exception
+  {
 
     RepositoryConfigurator.forEachChildElement(document.getDocumentElement(), "repository", repositoryConfig -> {
       String repositoryName = getAttribute(repositoryConfig, "name"); //$NON-NLS-1$

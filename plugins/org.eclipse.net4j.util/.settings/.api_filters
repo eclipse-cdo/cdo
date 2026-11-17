@@ -34,6 +34,18 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="EQUALS"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="EQUALS_IGNORE_CASE"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
                 <message_argument value="HEX"/>
             </message_arguments>
         </filter>

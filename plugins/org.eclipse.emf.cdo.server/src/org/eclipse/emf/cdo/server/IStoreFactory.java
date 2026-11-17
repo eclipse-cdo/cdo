@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.server;
 
+import org.eclipse.net4j.util.XMLConfiguration;
+
 import org.w3c.dom.Element;
 
 import java.util.Map;
@@ -28,6 +30,23 @@ public interface IStoreFactory
    * @since 4.0
    */
   public IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig);
+
+  /**
+   * Creates a store from a DOM element belonging to the shared prepared XML configuration. The default delegates to the
+   * original factory method for compatibility; implementations that need the whole configuration may override it.
+   * Attribute expansion state is available directly from {@link XMLConfiguration#isExpanded(org.w3c.dom.Node)}.
+   *
+   * @param repositoryName the repository being configured
+   * @param repositoryProperties effective repository properties
+   * @param storeConfig the prepared store element
+   * @param configuration the shared prepared configuration
+   * @return the created store
+   * @since 4.27
+   */
+  public default IStore createStore(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig, XMLConfiguration configuration)
+  {
+    return createStore(repositoryName, repositoryProperties, storeConfig);
+  }
 
   /**
    * An extension interface for {@link IStoreFactory store factories} that want to receive parameters.

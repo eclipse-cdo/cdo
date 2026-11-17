@@ -13,11 +13,13 @@ import org.eclipse.emf.cdo.spi.server.IAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension3;
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
+import org.eclipse.emf.cdo.spi.server.IAppExtension6;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.emf.internal.cdo.util.ExtensionRegistryBootstrap;
 
 import org.eclipse.net4j.util.PluginUtil;
+import org.eclipse.net4j.util.XMLConfiguration;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -43,6 +45,27 @@ import java.util.List;
  * Concrete entry points provide only their process or framework integration. The application uses the global managed
  * container by default so existing factories and components that access {@link IManagedContainer#INSTANCE} continue
  * to participate in the same server instance.
+ * <p>
+ * CDO server configurations can select transport and store alternatives during XML preprocessing. For example:
+ * <pre>
+ * &lt;cdoServer xmlns:if="urn:org.eclipse.net4j:xml:if"&gt;
+ *   &lt;acceptor type="tcp" listenAddr="0.0.0.0" port="2036"
+ *       if:true="$$$system_property(cdo.tcp.enabled)$$$"/&gt;
+ *   &lt;repository name="main"&gt;
+ *     &lt;store type="db"&gt;
+ *       &lt;mappingStrategy type="horizontal"/&gt;
+ *       &lt;dbAdapter name="h2" if:true="$$$system_property(cdo.db.h2)$$$"/&gt;
+ *       &lt;dataSource class="org.h2.jdbcx.JdbcDataSource" URL="jdbc:h2:@config/main"
+ *           if:true="$$$system_property(cdo.db.h2)$$$"/&gt;
+ *       &lt;dbAdapter name="postgresql" if:true="$$$system_property(cdo.db.postgresql)$$$"/&gt;
+ *       &lt;dataSource class="org.postgresql.ds.PGSimpleDataSource" serverName="localhost"
+ *           databaseName="main" if:true="$$$system_property(cdo.db.postgresql)$$$"/&gt;
+ *     &lt;/store&gt;
+ *   &lt;/repository&gt;
+ * &lt;/cdoServer&gt;
+ * </pre>
+ * Set the relevant JVM system properties to {@code true} or {@code false} so each store has exactly one adapter and
+ * data source. The general preprocessing and expansion rules are documented by {@link XMLConfiguration}.
  *
  * @author Eike Stepper
  */
@@ -67,6 +90,11 @@ public abstract class AbstractCDOServerApplication extends Lifecycle
    * The system property that selects the repository configurator description.
    */
   public static final String PROP_CONFIGURATOR_DESCRIPTION = "org.eclipse.emf.cdo.server.repositoryConfiguratorDescription"; //$NON-NLS-1$
+
+  /**
+   * The system property that restores the historical file-based configuration lifecycle.
+   */
+  public static final String PROP_LEGACY_CONFIGURATION = "org.eclipse.emf.cdo.server.legacyConfiguration"; //$NON-NLS-1$
 
   /**
    * The system property that enables the server browser and selects its port.
@@ -135,6 +163,17 @@ public abstract class AbstractCDOServerApplication extends Lifecycle
   }
 
   /**
+   * Selects the historical file-based extension lifecycle. External subclasses may override this method when they
+   * depend on virtual dispatch through the legacy file-based hooks.
+   *
+   * @return {@code true} when legacy configuration dispatch should be used
+   */
+  protected boolean useLegacyConfiguration()
+  {
+    return OMPlatform.INSTANCE.isProperty(PROP_LEGACY_CONFIGURATION);
+  }
+
+  /**
    * Discovers and orders application extensions from the Eclipse Extension Registry.
    *
    * @param container the application container assigned to container-aware extensions
@@ -189,10 +228,27 @@ public abstract class AbstractCDOServerApplication extends Lifecycle
       {
         IManagedContainer container = getApplicationContainer();
         readExtensions(container);
-        startExtensions(configFile, earlyExtensions);
-        startRepositories(configFile, container);
-        startBrowser(container);
-        startExtensions(configFile, extensions);
+
+        if (useLegacyConfiguration())
+        {
+          startExtensions(configFile, earlyExtensions);
+          startRepositories(configFile, container);
+          startBrowser(container);
+          startExtensions(configFile, extensions);
+        }
+        else
+        {
+          RepositoryConfigurator configurator = getConfigurator(container);
+
+          XMLConfiguration configuration = new XMLConfiguration(container);
+          configuration.replaceParameters(configurator.copyParameters());
+          configuration.prepare(configFile);
+
+          startExtensions(configuration, earlyExtensions);
+          startRepositories(configuration, configurator, configFile);
+          startBrowser(container);
+          startExtensions(configuration, extensions);
+        }
       }
       else
       {
@@ -205,6 +261,69 @@ public abstract class AbstractCDOServerApplication extends Lifecycle
     {
       cleanupAfterActivationFailure(ex);
       throw ex;
+    }
+  }
+
+  /**
+   * Configures repositories through the configurator created for the standard prepared-configuration lifecycle.
+   *
+   * @param configuration the shared prepared XML snapshot
+   * @param configurator the already created configurator
+   * @param configFile the source file used for diagnostics
+   * @throws CoreException if repository extension creation fails
+   */
+  protected void startRepositories(XMLConfiguration configuration, RepositoryConfigurator configurator, File configFile)
+      throws ParserConfigurationException, SAXException, IOException, CoreException
+  {
+    repositories = configurator.configure(configuration);
+    if (repositories == null || repositories.length == 0)
+    {
+      OM.LOG.warn(TS.getString("CDOServerApplication.noRepos") + " " + configFile.getAbsolutePath()); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * Starts extensions with the shared prepared XML snapshot. Extensions that implement {@link IAppExtension6} receive
+   * this snapshot; older extensions continue to receive the historical file callbacks.
+   *
+   * @param configuration the prepared configuration
+   * @param extensions the ordered extensions to start
+   */
+  protected void startExtensions(XMLConfiguration configuration, List<IAppExtension> extensions)
+  {
+    for (IAppExtension extension : extensions)
+    {
+      try
+      {
+        if (extension instanceof IAppExtension5)
+        {
+          IAppExtension5 named = (IAppExtension5)extension;
+          OM.LOG.info(TS.getString("AppExtension.starting", named.getName())); //$NON-NLS-1$
+        }
+
+        if (extension instanceof IAppExtension6)
+        {
+          ((IAppExtension6)extension).start(repositories, configuration);
+        }
+        else if (extension instanceof IAppExtension3)
+        {
+          ((IAppExtension3)extension).start(repositories, configuration.getSourceFile());
+        }
+        else
+        {
+          extension.start(configuration.getSourceFile());
+        }
+
+        if (extension instanceof IAppExtension5)
+        {
+          IAppExtension5 named = (IAppExtension5)extension;
+          OM.LOG.info(TS.getString("AppExtension.started", named.getName())); //$NON-NLS-1$
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
     }
   }
 

@@ -18,6 +18,7 @@ import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.wrapping.StreamWrapperInjector;
 import org.eclipse.net4j.util.ParameterAware;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.XMLConfiguration;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -103,10 +104,31 @@ public class TransportConfigurator implements IManagedContainerProvider, Paramet
       TRACER.trace("Configuring Net4j server from " + configFile.getAbsolutePath()); //$NON-NLS-1$
     }
 
-    List<IAcceptor> acceptors = new ArrayList<>();
     Document document = getDocument(configFile);
+    return configureDocument(document);
+  }
 
+  /**
+   * Configures transport components from a shared prepared XML snapshot.
+   *
+   * @param configuration the finalized configuration
+   * @return configured acceptors
+   * @throws ParserConfigurationException if XML setup fails
+   * @throws SAXException if XML is invalid
+   * @throws IOException if XML cannot be read
+   * @throws CoreException if a transport extension fails
+   * @since 4.23
+   */
+  public IAcceptor[] configure(XMLConfiguration configuration) throws ParserConfigurationException, SAXException, IOException, CoreException
+  {
+    return configureDocument(configuration.getDocument());
+  }
+
+  private IAcceptor[] configureDocument(Document document) throws CoreException
+  {
+    List<IAcceptor> acceptors = new ArrayList<>();
     NodeList acceptorConfigs = document.getElementsByTagName("acceptor"); //$NON-NLS-1$
+
     for (int i = 0; i < acceptorConfigs.getLength(); i++)
     {
       Element acceptorConfig = (Element)acceptorConfigs.item(i);
@@ -115,9 +137,11 @@ public class TransportConfigurator implements IManagedContainerProvider, Paramet
     }
 
     NodeList streamWrapperConfigs = document.getElementsByTagName("streamWrapper"); //$NON-NLS-1$
+
     for (int i = 0; i < streamWrapperConfigs.getLength(); i++)
     {
       Element streamWrapperConfig = (Element)streamWrapperConfigs.item(i);
+
       if (getLevel(streamWrapperConfig) == 2)
       {
         configureStreamWrapper(streamWrapperConfig, null);
@@ -214,6 +238,12 @@ public class TransportConfigurator implements IManagedContainerProvider, Paramet
   protected String getAttribute(Element element, String name)
   {
     String value = element.getAttribute(name);
+
+    if (XMLConfiguration.isExpanded(element))
+    {
+      return value;
+    }
+
     value = expandValue(value, parameters, container);
     return value;
   }
@@ -270,7 +300,10 @@ public class TransportConfigurator implements IManagedContainerProvider, Paramet
       String name = element.getAttribute("name"); //$NON-NLS-1$
       String value = element.getAttribute("value"); //$NON-NLS-1$
 
-      value = expandValue(value, parameters, container);
+      if (!XMLConfiguration.isExpanded(element))
+      {
+        value = expandValue(value, parameters, container);
+      }
 
       properties.put(prefix + name, value);
       prefix += name + "."; //$NON-NLS-1$

@@ -70,6 +70,10 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
 
   private int port = DEFAULT_PORT;
 
+  private String boundAddress;
+
+  private int boundPort;
+
   public TCPAcceptor()
   {
   }
@@ -94,6 +98,18 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
   public void setPort(int port)
   {
     this.port = port;
+  }
+
+  @Override
+  public String getBoundAddress()
+  {
+    return boundAddress;
+  }
+
+  @Override
+  public int getBoundPort()
+  {
+    return boundPort;
   }
 
   @Override
@@ -148,21 +164,8 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
       socket.setReuseAddress(true);
       socket.bind(addr);
 
-      if (addr == null)
-      {
-        address = socket.getInetAddress().toString();
-        if (address.startsWith("/")) //$NON-NLS-1$
-        {
-          address = address.substring(1);
-        }
-
-        int colon = address.indexOf(':');
-        if (colon != -1)
-        {
-          port = Integer.parseInt(address.substring(colon + 1));
-          address = address.substring(0, colon);
-        }
-      }
+      boundAddress = socket.getInetAddress().getHostAddress();
+      boundPort = socket.getLocalPort();
 
       // [MACOSX] Must occur AFTER binding!
       selectionKey = serverSocketChannel.register(selector.getSocketSelector(), SelectionKey.OP_ACCEPT, this);
@@ -194,8 +197,6 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
           TRACER.trace("Accepted socketChannel " + socketChannel); //$NON-NLS-1$
         }
 
-        // socketChannel.socket().setReuseAddress(true);
-        // socketChannel.socket().setKeepAlive(true);
         socketChannel.configureBlocking(false);
 
         TCPConnector connector = createConnector();
@@ -282,6 +283,9 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     }
 
     serverSocketChannel = null;
+    boundAddress = null;
+    boundPort = 0;
+
     super.doDeactivate();
   }
 

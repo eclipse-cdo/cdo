@@ -14,6 +14,7 @@ package org.eclipse.net4j.util.collection;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.XMLConfiguration;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -890,9 +891,12 @@ public final class Tree implements Comparable<Tree>
         if (attrNode.getNodeType() == Node.ATTRIBUTE_NODE)
         {
           Attr attr = (Attr)attrNode;
-
           String value = attr.getValue();
-          value = StringUtil.replace(value, parameters);
+
+          if (!XMLConfiguration.isExpanded(element))
+          {
+            value = StringUtil.replace(value, parameters);
+          }
 
           builder.setAttribute(attr.getName(), value);
         }

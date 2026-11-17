@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.emf.cdo.server.IRepository;
 
 import org.eclipse.net4j.util.ParameterAware;
+import org.eclipse.net4j.util.XMLConfiguration;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
@@ -78,7 +79,12 @@ public abstract class AbstractAppExtension implements IManagedContainerProvider,
   protected final String getAttribute(Element element, String name)
   {
     String value = element.getAttribute(name);
-    value = RepositoryConfigurator.expandValue(value, parameters, container);
+
+    if (!XMLConfiguration.isExpanded(element))
+    {
+      value = RepositoryConfigurator.expandValue(value, parameters, container);
+    }
+
     return value;
   }
 

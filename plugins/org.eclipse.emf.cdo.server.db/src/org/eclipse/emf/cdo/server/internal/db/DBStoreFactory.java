@@ -27,6 +27,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ParameterAware;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.XMLConfiguration;
 import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
@@ -79,7 +80,7 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(getDataSource(storeConfig));
     IModelEvolutionSupport modelEvolutionSupport = getModelEvolutionSupport(storeConfig);
-    Map<String, String> storeProperties = RepositoryConfigurator.getProperties(storeConfig, 1, parameters, container);
+    Map<String, String> storeProperties = getProperties(storeConfig);
 
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
@@ -88,6 +89,11 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
     store.setModelEvolutionSupport(modelEvolutionSupport);
     store.setProperties(storeProperties);
     return store;
+  }
+
+  private Map<String, String> getProperties(Element element)
+  {
+    return RepositoryConfigurator.getProperties(element, 1, parameters, container);
   }
 
   private IMappingStrategy getMappingStrategy(String repositoryName, Map<String, String> repositoryProperties, Element storeConfig)
@@ -106,7 +112,7 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
       throw new IllegalArgumentException("Unknown mapping strategy: " + mappingStrategyType); //$NON-NLS-1$
     }
 
-    Map<String, String> properties = RepositoryConfigurator.getProperties(mappingStrategyConfig, 1, parameters, container);
+    Map<String, String> properties = getProperties(mappingStrategyConfig);
     properties.put("repositoryName", repositoryName);
     properties.putAll(repositoryProperties);
     mappingStrategy.setProperties(properties);
@@ -147,9 +153,12 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
     for (int i = 0; i < attributes.getLength(); i++)
     {
       Attr attribute = (Attr)attributes.item(i);
-
       String value = attribute.getValue();
-      value = RepositoryConfigurator.expandValue(value, parameters, container);
+
+      if (!XMLConfiguration.isExpanded(attribute))
+      {
+        value = RepositoryConfigurator.expandValue(value, parameters, container);
+      }
 
       properties.put(attribute.getName(), value);
     }
@@ -186,7 +195,12 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
   private String getAttribute(Element element, String name)
   {
     String value = element.getAttribute(name);
-    value = RepositoryConfigurator.expandValue(value, parameters, container);
+
+    if (!XMLConfiguration.isExpanded(element))
+    {
+      value = RepositoryConfigurator.expandValue(value, parameters, container);
+    }
+
     return value;
   }
 }

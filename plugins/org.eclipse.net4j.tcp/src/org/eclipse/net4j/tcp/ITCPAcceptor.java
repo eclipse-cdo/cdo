@@ -41,4 +41,14 @@ public interface ITCPAcceptor extends IAcceptor
   public String getAddress();
 
   public int getPort();
+
+  /**
+   * @since 4.6
+   */
+  public String getBoundAddress();
+
+  /**
+   * @since 4.6
+   */
+  public int getBoundPort();
 }

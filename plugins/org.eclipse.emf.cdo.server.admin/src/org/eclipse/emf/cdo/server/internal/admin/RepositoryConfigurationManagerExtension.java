@@ -15,10 +15,12 @@ import org.eclipse.emf.cdo.server.admin.CDORepositoryConfigurationManager;
 import org.eclipse.emf.cdo.server.internal.admin.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.AbstractAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
+import org.eclipse.emf.cdo.spi.server.IAppExtension6;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.XMLConfiguration;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -35,7 +37,7 @@ import java.io.File;
  *
  * @author Christian W. Damus (CEA LIST)
  */
-public class RepositoryConfigurationManagerExtension extends AbstractAppExtension implements IAppExtension5
+public class RepositoryConfigurationManagerExtension extends AbstractAppExtension implements IAppExtension5, IAppExtension6
 {
   private static final String DEFAULT_CATALOG_PATH = "/catalog";
 
@@ -60,10 +62,21 @@ public class RepositoryConfigurationManagerExtension extends AbstractAppExtensio
   @Override
   public void start(File configFile) throws Exception
   {
-    IManagedContainer container = IManagedContainer.INSTANCE;
     Document document = getDocument(configFile);
+    start(IManagedContainer.INSTANCE, document);
+  }
 
+  @Override
+  public void start(XMLConfiguration configuration) throws Exception
+  {
+    Document document = configuration.getDocument();
+    start(IManagedContainer.INSTANCE, document);
+  }
+
+  private void start(IManagedContainer container, Document document)
+  {
     NodeList children = document.getDocumentElement().getChildNodes();
+
     for (int i = 0; i < children.getLength(); i++)
     {
       Node child = children.item(i);
@@ -91,7 +104,8 @@ public class RepositoryConfigurationManagerExtension extends AbstractAppExtensio
 
   protected CDORepositoryConfigurationManager configureAdminRepository(IManagedContainer container, Element repositoryConfig)
   {
-    String name = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+    String name = getAttribute(repositoryConfig, "name"); //$NON-NLS-1$
+
     InternalRepository repository = (InternalRepository)RepositoryFactory.get(container, name);
     if (repository == null)
     {
@@ -109,7 +123,8 @@ public class RepositoryConfigurationManagerExtension extends AbstractAppExtensio
     if (adminRepositories.getLength() == 1)
     {
       Element adminRepositoryElement = (Element)adminRepositories.item(0);
-      String type = getAttribute(adminRepositoryElement, "configurationManager");
+
+      String type = getAttribute(adminRepositoryElement, "configurationManager"); //$NON-NLS-1$
       if (type == null || type.length() == 0)
       {
         OM.LOG.warn("Repository configuration manager type not specified for repository " + repository); //$NON-NLS-1$

@@ -14,16 +14,20 @@ package org.eclipse.emf.cdo.server.internal.net4j.bundle;
 import org.eclipse.emf.cdo.spi.server.AbstractAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
+import org.eclipse.emf.cdo.spi.server.IAppExtension6;
 
 import org.eclipse.net4j.TransportConfigurator;
 import org.eclipse.net4j.acceptor.IAcceptor;
+import org.eclipse.net4j.util.FunctionWithException;
+import org.eclipse.net4j.util.XMLConfiguration;
 
 import java.io.File;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
  */
-public class Net4jAppExtension extends AbstractAppExtension implements IAppExtension4, IAppExtension5
+public class Net4jAppExtension extends AbstractAppExtension implements IAppExtension4, IAppExtension5, IAppExtension6
 {
   private IAcceptor[] acceptors;
 
@@ -52,13 +56,25 @@ public class Net4jAppExtension extends AbstractAppExtension implements IAppExten
   @Override
   public void start(File configFile) throws Exception
   {
-    TransportConfigurator net4jConfigurator = new TransportConfigurator(getContainer());
-    net4jConfigurator.setParameters(getParameters());
+    start(getParameters(), configFile, configurator -> configurator.configure(configFile));
+  }
 
-    acceptors = net4jConfigurator.configure(configFile);
+  @Override
+  public void start(XMLConfiguration configuration) throws Exception
+  {
+    start(configuration.getParameters(), configuration.getSourceFile(), configurator -> configurator.configure(configuration));
+  }
+
+  private void start(Map<String, String> parameters, File configFile, FunctionWithException<TransportConfigurator, IAcceptor[], Exception> configure)
+      throws Exception
+  {
+    TransportConfigurator net4jConfigurator = new TransportConfigurator(getContainer());
+    net4jConfigurator.setParameters(parameters);
+
+    acceptors = configure.apply(net4jConfigurator);
     if (acceptors == null || acceptors.length == 0)
     {
-      OM.LOG.warn("No Net4j acceptors configured" + configFile.getAbsolutePath()); //$NON-NLS-1$
+      OM.LOG.warn("No Net4j acceptors configured" + (configFile == null ? "" : configFile.getAbsolutePath())); //$NON-NLS-1$
     }
   }
 

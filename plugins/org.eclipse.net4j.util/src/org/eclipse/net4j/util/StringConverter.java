@@ -109,6 +109,51 @@ public interface StringConverter extends Function<Object, String>
     }
   };
 
+  /**
+   * Compares two comma-separated operands case-sensitively, as in {@code $$$equals(left,right)$$$}. Surrounding
+   * whitespace is trimmed from each operand.
+   *
+   * @since 3.31
+   */
+  public static final StringConverter EQUALS = new StringConverter()
+  {
+    @Override
+    public String apply(Object value)
+    {
+      String[] operands = StringConverter.splitComparisonOperands(value);
+      return Boolean.toString(operands[0].equals(operands[1]));
+    }
+  };
+
+  /**
+   * Compares two comma-separated operands case-insensitively, as in {@code $$$equalsIgnoreCase(left,right)$$$}.
+   * Surrounding whitespace is trimmed from each operand.
+   *
+   * @since 3.31
+   */
+  public static final StringConverter EQUALS_IGNORE_CASE = new StringConverter()
+  {
+    @Override
+    public String apply(Object value)
+    {
+      String[] operands = StringConverter.splitComparisonOperands(value);
+      return Boolean.toString(operands[0].equalsIgnoreCase(operands[1]));
+    }
+  };
+
+  private static String[] splitComparisonOperands(Object value)
+  {
+    String arguments = value == null ? null : value.toString();
+    int separator = arguments == null ? -1 : arguments.indexOf(',');
+
+    if (separator < 0 || arguments.indexOf(',', separator + 1) >= 0)
+    {
+      throw new IllegalArgumentException("Expected exactly two comma-separated operands: " + arguments); //$NON-NLS-1$
+    }
+
+    return new String[] { arguments.substring(0, separator).trim(), arguments.substring(separator + 1).trim() };
+  }
+
   public static final StringConverter CAP = new StringConverter()
   {
     @Override
@@ -308,6 +353,8 @@ public interface StringConverter extends Function<Object, String>
         new SingletonFactory(PG, "base64", BASE64), //
         new SingletonFactory(PG, "upper", UPPER), //
         new SingletonFactory(PG, "lower", LOWER), //
+        new SingletonFactory(PG, "equals", EQUALS), //
+        new SingletonFactory(PG, "equalsIgnoreCase", EQUALS_IGNORE_CASE), //
         new SingletonFactory(PG, "cap", CAP), //
         new SingletonFactory(PG, "cap_all", CAP_ALL), //
         new SingletonFactory(PG, "uncap", UNCAP), //

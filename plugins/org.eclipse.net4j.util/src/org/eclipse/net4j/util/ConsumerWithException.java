@@ -19,7 +19,7 @@ import java.util.function.Consumer;
  * @param <T>
  *          the element type
  * @param <E>
- *          the element type
+ *          the checked exception type
  * @author Eike Stepper
  * @since 3.12
  */

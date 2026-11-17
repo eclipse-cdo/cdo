@@ -9,9 +9,12 @@
 package org.eclipse.emf.cdo.tests.plain;
 
 import org.eclipse.emf.cdo.internal.server.bundle.CDOStandaloneServerApplication;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.IAppExtension;
+import org.eclipse.emf.cdo.spi.server.IAppExtension6;
 import org.eclipse.emf.cdo.tests.config.impl.PlainTest;
 
+import org.eclipse.net4j.util.XMLConfiguration;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.ManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -52,6 +55,66 @@ public class CDOServerApplicationLifecycleTest extends PlainTest
     finally
     {
       application.deactivate();
+    }
+  }
+
+  public void testIAppExtension6DefaultsDelegateOrFailExplicitly() throws Exception
+  {
+    XMLConfiguration configuration = new XMLConfiguration(null).prepare(new StringReader("<root/>")); //$NON-NLS-1$
+    AtomicReference<XMLConfiguration> started = new AtomicReference<>();
+    IAppExtension6 ordinaryExtension = new IAppExtension6()
+    {
+      @Override
+      public void start(File configFile) throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public void start(XMLConfiguration configuration) throws Exception
+      {
+        started.set(configuration);
+      }
+
+      @Override
+      public void stop()
+      {
+      }
+    };
+
+    ordinaryExtension.start(new IRepository[0], configuration);
+    assertSame(configuration, started.get());
+
+    IAppExtension6 unimplementedExtension = new IAppExtension6()
+    {
+      @Override
+      public void start(File configFile) throws Exception
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public void stop()
+      {
+      }
+    };
+
+    try
+    {
+      unimplementedExtension.start(new File("unused.xml")); //$NON-NLS-1$
+      fail("A missing legacy callback must fail explicitly"); //$NON-NLS-1$
+    }
+    catch (UnsupportedOperationException expected)
+    {
+    }
+
+    try
+    {
+      unimplementedExtension.start(configuration);
+      fail("A missing prepared-configuration callback must fail explicitly"); //$NON-NLS-1$
+    }
+    catch (UnsupportedOperationException expected)
+    {
     }
   }
 
@@ -529,6 +592,12 @@ public class CDOServerApplicationLifecycleTest extends PlainTest
     protected IManagedContainer getApplicationContainer()
     {
       return container;
+    }
+
+    @Override
+    protected boolean useLegacyConfiguration()
+    {
+      return true;
     }
 
     @Override
